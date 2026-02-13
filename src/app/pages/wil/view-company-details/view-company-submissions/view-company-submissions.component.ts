@@ -179,7 +179,8 @@ selectedTask:any;
     const payload = {
       student_id: this.selectedStudent?.student_id,
       "limit": this.formdDeclinedlimit,
-      "offset": this.formdDeclinedpage-1
+      "offset": this.formdDeclinedpage-1,
+      user_type:'company'
     }
     this.service.getSubmittedStudentDeclinedDocuments(payload).subscribe((res: any) => {
       this.submittedDeclinedForms = res.records || [];

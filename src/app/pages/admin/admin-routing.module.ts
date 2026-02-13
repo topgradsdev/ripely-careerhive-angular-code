@@ -125,6 +125,12 @@ const routes: Routes = [
         // },
         loadChildren: () => import('../analytics-page/power-bi.module').then(m => m.PowerBIModule)
       },
+
+      {
+        path: 'system',
+        canActivate: [AdminGuard],
+        loadChildren: () => import('../system/system.module').then(m => m.SystemModule)
+      },
       
       {
         path: 'analytics',

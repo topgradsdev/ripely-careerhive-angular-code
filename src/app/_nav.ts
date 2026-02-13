@@ -70,6 +70,18 @@ import { INavData } from '@coreui/angular';
     url: '/admin/analytics',
     iconComponent: { name: 'cil-bar-chart' },
   },
+
+  {
+    name: 'System',
+    url: '/admin/system',
+    iconComponent: { name: 'cil-list' },
+    children: [
+      {
+        name: 'AI Agents',
+        url: '/admin/system/agent-list',
+      }
+    ]
+  },
   {
     name: 'System Rule',
     url: '/admin/system-rule',

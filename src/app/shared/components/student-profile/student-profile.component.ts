@@ -1338,7 +1338,8 @@ loadMore() {
     const payload = {
       student_id: this.studentProfile?.student_id,
       "limit": this.formdDeclinedlimit,
-      "offset": this.formdDeclinedpage-1
+      "offset": this.formdDeclinedpage-1,
+      user_type:'student'
     }
     this.service.getSubmittedStudentDeclinedDocuments(payload).subscribe((res: any) => {
       this.submittedDeclinedForms = res.records || [];
