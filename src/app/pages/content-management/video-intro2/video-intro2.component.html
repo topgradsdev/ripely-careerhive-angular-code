@@ -1,0 +1,297 @@
+<section class="employer-header-sec">
+	<div class="container">
+		<form [formGroup]="step1Section">
+			<div class="row">
+				<div class="col-md-12">
+					<div class="card">
+						<div class="manage-home-header">
+							<div class="card-header d-flex justify-content-between">
+								<strong>Video Intro Step 2</strong>
+								<div class="slide-cs">
+									<span class="mr-2">Visibility </span>
+									<mat-slide-toggle formControlName="is_visible" (change)="fun($event)"></mat-slide-toggle>
+								</div>
+							</div>
+							<div class="card-body">
+								
+									<div class="home-mng-form">
+										<div class="form-group">
+											<label>Step 2 Heading</label>
+											<input type="text" name="" class="form-control" value="2. Practice your takes" formControlName="heading">
+										</div>
+										<div *ngIf="(step1Section.controls.heading.touched || step1Section.controls.heading.dirty) && step1Section.controls.heading.invalid && step1Section.controls.heading?.errors?.required  " class="invalid">
+											*Please enter heading
+										</div>
+										<div *ngIf="(step1Section.controls.heading.touched || step1Section.controls.heading.dirty) && step1Section.controls.heading.invalid && step1Section.controls.heading?.errors?.maxlength  " class="invalid">
+											**Maximum Length should be 200 characters
+										</div>
+										<div class="form-group">
+											<label>Image</label>
+											<div class="slider-video-cntnt">
+												<div class="prev-upld-img resume_img">
+													<img [src]="HeadingImage1?HeadingImage1:'assets/img/tip_intro.png'"  class="img-fluid">
+													<div class="upload-imag text-center">
+														<button class="btn-primary btn  mt-3 position-relative">
+															<input type="file" name="" class="img-input-upld" (change)="setHeadingImage($event)">
+														Upload Image
+														</button>
+													</div>
+													<div *ngIf="step1Section.controls['Image']?.errors?.required "
+													class="invalid">
+													*Please select image
+													</div>
+													<div *ngIf="step1Section.controls.county?.errors?.required  " class="invalid">
+														*Only images are allowed
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="form-group">
+											<label>Description</label>
+											<quill-editor [modules]="modules" formControlName="description"></quill-editor>
+											<!-- <editor apiKey="zcwi1f81304uers1lcszh0iq2lbhcaxl5cj6ez0v89wr25z3" formControlName="description"></editor> -->
+										</div>
+										<div *ngIf="(step1Section.controls.description.touched || step1Section.controls.description.dirty) && step1Section.controls.description.invalid && step1Section.controls.description?.errors?.required  " class="invalid">
+											*Please enter description
+										</div>
+										<div *ngIf="(step1Section.controls.description.touched || step1Section.controls.description.dirty) && step1Section.controls.description.invalid && step1Section.controls.description?.errors?.maxlength  " class="invalid">
+											**Maximum Length should be 200 characters
+										</div>
+										<div class="edit-btns d-flex justify-content-end">
+											<button class="btn btn-primary mr-4" (click)="postcontent('step1')">Save</button>
+											<!-- <button class="btn btn-primary">Back</button> -->
+										</div>
+									</div>
+								
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</form>
+	</div>
+</section>
+
+<section class="Endorsed-steps-sec resume_tips_sctn video_resm">
+	<div class="container">
+		<form [formGroup]="tipsSection">
+			<div class="row">
+				<div class="col-md-12">
+					<div class="card">
+						<div class="manage-home-header">
+							<div class="card-header d-flex justify-content-between">
+								<strong>Video Resume Tips</strong>
+								<div class="slide-cs">
+									<span class="mr-2">Visibility </span>
+									<mat-slide-toggle formControlName="is_visible" (change)="fun1($event)"></mat-slide-toggle>
+								</div>
+							</div>
+							<div class="card-body">
+								
+									<div class="home-mng-form">
+										<div class="form-group">
+											<label>Main Heading</label>
+											<input type="text" name="" class="form-control" value="Tips on the Video Resume" formControlName="heading">
+										</div>
+										<div *ngIf="(tipsSection.controls.heading.touched || tipsSection.controls.heading.dirty) && tipsSection.controls.heading.invalid && tipsSection.controls.heading?.errors?.required  " class="invalid">
+											*Please enter heading
+										</div>
+										<div *ngIf="(tipsSection.controls.heading.touched || tipsSection.controls.heading.dirty) && tipsSection.controls.heading.invalid && tipsSection.controls.heading?.errors?.maxlength  " class="invalid">
+											**Maximum Length should be 200 characters
+										</div>
+										<div class="endrose-step">
+											<div class="form-group">
+												<ng-container formArrayName="tipsArray"
+													*ngFor="let alias of tipsSection.controls['tipsArray'].controls; let i=index">
+													<ng-container [formGroupName]="i">
+														<label  class="mt-3">{{i+1}}: Image</label>
+														<div class="slider-video-cntnt">
+															<div class="prev-upld-img icons">
+																<img [src]="tipsArray.controls[i].controls['image'].value ? tipsArray.controls[i].controls['image'].value:'assets/img/video_tip1.png'" class="img-fluid">
+																<div class="upload-imag text-center">
+																	<button class="btn-primary btn  mt-3 position-relative">
+																		<input type="file" name="" class="img-input-upld" (change)="onTipsChangeImage($event,i)">
+																	Upload Image
+																	</button>
+																</div>
+																<div *ngIf="tipsArray.controls[i].controls['image']?.errors?.required "
+																class="invalid">
+																*Please select image
+																</div>
+																<div *ngIf="tipsArray.controls[i].controls['image'].county?.errors?.required"
+																	class="invalid">
+																	*Only images are allowed
+																</div>
+															</div>
+														</div>
+														
+													
+														<label class="mt-3">Heading</label>
+														<input type="text" name="" class="form-control" value="Clear Audio" formControlName="heading">
+													    <div *ngIf="tipsArray.controls[i].controls['heading'].errors?.required  "
+															class="invalid">
+															*Please enter heading
+														</div>
+														<div *ngIf="tipsArray.controls[i].controls['heading'].errors?.maxlength  "
+															class="invalid">
+															*Maximum Length should be 50 characters
+														</div>
+
+														<label class="mt-3">Description</label>
+														<quill-editor [modules]="modules" formControlName="description"></quill-editor>
+														<!-- <editor apiKey="zcwi1f81304uers1lcszh0iq2lbhcaxl5cj6ez0v89wr25z3" formControlName="description"></editor> -->
+														<div *ngIf="tipsArray.controls[i].controls['description'].errors?.required  "
+															class="invalid">
+															*Please enter description
+														</div>
+														<div *ngIf="tipsArray.controls[i].controls['description'].errors?.maxlength  "
+															class="invalid">
+															*Maximum Length should be 5000 characters
+														</div>
+													</ng-container>
+												</ng-container>
+											</div>
+										</div>
+										<!-- <div class="endrose-step">
+											<div class="form-group">
+												<label>2: Image</label>
+												<div class="slider-video-cntnt">
+													<div class="prev-upld-img icons">
+														<img src="assets/img/video_tip2.png" class="img-fluid">
+														<div class="upload-imag text-center">
+															<button class="btn-primary btn  mt-3 position-relative">
+																<input type="file" name="" class="img-input-upld">
+															Upload Image
+															</button>
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="form-group">
+												<label>Heading</label>
+												<input type="text" name="" class="form-control" value="Appropriate Attire">
+											</div>
+											<div class="form-group">
+												<label>Description</label>
+												<editor></editor>
+											</div>
+										</div>
+										<div class="endrose-step">
+											<div class="form-group">
+												<label>3: Image</label>
+												<div class="slider-video-cntnt">
+													<div class="prev-upld-img icons">
+														<img src="assets/img/video_tip3.png" class="img-fluid">
+														<div class="upload-imag text-center">
+															<button class="btn-primary btn  mt-3 position-relative">
+																<input type="file" name="" class="img-input-upld">
+															Upload Image
+															</button>
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="form-group">
+												<label>Heading</label>
+												<input type="text" name="" class="form-control" value="Perfect Posture">
+											</div>
+											<div class="form-group">
+												<label>Description</label>
+												<editor></editor>
+											</div>
+										</div>
+										<div class="endrose-step">
+											<div class="form-group">
+												<label>4: Image</label>
+												<div class="slider-video-cntnt">
+													<div class="prev-upld-img icons">
+														<img src="assets/img/video_tip4.png" class="img-fluid">
+														<div class="upload-imag text-center">
+															<button class="btn-primary btn  mt-3 position-relative">
+																<input type="file" name="" class="img-input-upld">
+															Upload Image
+															</button>
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="form-group">
+												<label>Heading</label>
+												<input type="text" name="" class="form-control" value="Smile!">
+											</div>
+											<div class="form-group">
+												<label>Description</label>
+												<editor></editor>
+											</div>
+										</div>
+										<div class="endrose-step">
+											<div class="form-group">
+												<label>5: Image</label>
+												<div class="slider-video-cntnt">
+													<div class="prev-upld-img icons">
+														<img src="assets/img/video_tip5.png" class="img-fluid">
+														<div class="upload-imag text-center">
+															<button class="btn-primary btn  mt-3 position-relative">
+																<input type="file" name="" class="img-input-upld">
+															Upload Image
+															</button>
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="form-group">
+												<label>Heading</label>
+												<input type="text" name="" class="form-control" value="Simple Background">
+											</div>
+											<div class="form-group">
+												<label>Description</label>
+												<editor></editor>
+											</div>
+										</div> -->
+										<div class="edit-btns d-flex justify-content-end">
+											<button class="btn btn-primary mr-4" (click)="postcontent('tips')">Save</button>
+											<!-- <button class="btn btn-primary">Back</button> -->
+										</div>
+									</div>
+								
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</form>
+	</div>
+</section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

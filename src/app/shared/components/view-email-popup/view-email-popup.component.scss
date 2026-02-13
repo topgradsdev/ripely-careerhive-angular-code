@@ -1,0 +1,40 @@
+.col-12-border{
+    border-radius: 10px;
+    border: 1px solid #CECECE !important;
+    padding: 10px 20px;
+}
+@media screen and (max-width: 414px) {
+    body {
+      text-align: center !important;
+    }
+  }
+
+  p {
+    margin: 0px;
+  }
+
+
+.btn_success{
+  background: #26C296 !important;
+  color: #fff !important;
+}
+:host ::ng-deep .html a {
+  cursor: pointer !important;
+  text-decoration: underline  !important; /* Makes links look standard */
+  // color: var(--primary-color-first)  !important; /* Default link color */
+}
+:host ::ng-deep .ql-snow .ql-editor a{
+  cursor: pointer !important;
+  text-decoration: underline  !important; /* Makes links look standard */
+  color: var(--primary-color-first)  !important; /* Default link color */
+}
+
+
+.html span{
+  font-size: 14px !important;
+}
+// .html app-html-email-preview img {
+//   width: 100% !important;
+//   height: auto !important;
+//   display: block;
+// }

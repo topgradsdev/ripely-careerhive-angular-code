@@ -1,0 +1,1304 @@
+<!-- <div class="email_container">
+    <ng-container *ngFor="let template of emailTemplateData">
+        <div *ngIf="template?.data?.id === 'blank'" class="html_section">
+            <div class="section_card" *ngFor="let section of template?.item?.blank">
+                <div class="row">
+                    <div class="col-md-12 text-center" *ngIf="section?.id === 'logo'">
+                        <img [style.height]="section?.elementData?.height + 'px'"
+                            [style.width]="section?.elementData?.width + 'px'"
+                            [style.opacity]="section?.elementData?.transparency + '%'"
+                            [src]="section?.elementData?.logo ? section?.elementData?.logo : 'assets/img/logo-ch-1.svg'"
+                            class="img-fluid" alt="banner">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 text-center" *ngIf="section?.id === 'image'">
+                        <div class="img_container">
+                            <img *ngIf="section?.elementData?.image"
+                                [style.height]="section?.elementData?.height + 'px'"
+                                [style.width]="section?.elementData?.width + 'px'"
+                                [style.opacity]="section?.elementData?.transparency + '%'"
+                                [src]="section?.elementData?.image" class="img-fluid" alt="banner">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 mb-3 text-center" *ngIf="section?.id === 'text'">
+                        <p [style.fontSize]="section?.elementData?.size + 'px'"
+                            [style.color]="section?.elementData?.color"
+                            [style.textAlign]="section?.elementData?.textAlign"
+                            [style.fontFamily]="section?.elementData?.fontFamily"
+                            [style.fontWeight]="section?.elementData?.bold ? 'bold' : ''"
+                            [style.textDecoration]="section?.elementData?.underline ? 'underline' : ''"
+                            [style.fontStyle]="section?.elementData?.italic ? 'italic' : ''">
+                            {{section?.elementData?.value}}</p>
+                    </div>
+                    <div class="col-md-12 mb-3 text-center" *ngIf="section?.id === 'button'">
+                        <button (click)="openLink(section?.elementData?.link)"
+                            [style.background]="section?.elementData?.editButton?.fill"
+                            [style.opacity]="section?.elementData?.editButton?.transparency + '%'"
+                            [style.width]="section?.elementData?.editButton?.width + 'px'"
+                            [style.borderBottomLeftRadius]="section?.elementData?.editButton?.borderRadius?.bottomLeft + 'px !important'"
+                            [style.borderBottomRightRadius]="section?.elementData?.editButton?.borderRadius?.bottomRight + 'px !important'"
+                            [style.borderTopLeftRadius]="section?.elementData?.editButton?.borderRadius?.topLeft + 'px !important'"
+                            [style.borderTopRightRadius]="section?.elementData?.editButton?.borderRadius?.topRight + 'px !important'"
+                            [style.fontWeight]="section?.elementData?.editButton?.bold ? 'bold' : ''"
+                            [style.textDecoration]="section?.elementData?.editButton?.underline ? 'underline' : ''"
+                            [style.fontStyle]="section?.elementData?.editButton?.italic ? 'italic' : ''"
+                            [style.fontSize]="section?.elementData?.editButton?.fontSize + 'px'"
+                            [style.color]="section?.elementData?.editButton?.color + '!important'"
+                            [style.textAlign]="section?.elementData?.editButton?.textAlign"
+                            [style.fontFamily]="section?.elementData?.editButton?.fontFamily"
+                            class="theme_btn btn_primary" mat-button>Button</button>
+                    </div>
+                    <div class="col-md-12" *ngIf="section?.id === 'divider'">
+                        <hr [style.opacity]="section?.elementData?.transparency + '%'"
+                            [style.borderTop]="section?.elementData?.width + 'px ' + section?.elementData?.style + ' ' + section?.elementData?.color">
+                    </div>
+                    <div class="col-md-12 mb-3" *ngIf="section?.id === 'social_link'">
+                        <div class="socialLinks"
+                            [ngClass]="section?.elementData?.socialBar?.direction === 'vertical' ? 'social_links_vertical' : ''"
+                            [style.gap]="section?.elementData?.socialBar?.spacing + 'px'">
+                            <ng-container *ngIf="!section?.elementData?.manageLinks">
+                                <img src="assets/img/insta.svg" alt="logo">
+                                <img src="assets/img/whatsapp.svg" alt="logo">
+                                <img src="assets/img/fb.svg" alt="logo">
+                                <img src="assets/img/linkedin.svg" alt="logo">
+                                <img src="assets/img/youtube.svg" alt="logo">
+                            </ng-container>
+                            <ng-container *ngFor="let logo of section?.elementData?.manageLinks?.logos">
+                                <div class="d-inline-flex justify-content-center align-items-center flex-column">
+                                    <a *ngIf="logo.link" [href]="logo.link"><img [src]="logo.logo" alt="logo.name"></a>
+                                    <img [style.height]="section?.elementData?.socialBar?.iconSize + 'px'"
+                                        *ngIf="!logo.link" [src]="logo.logo" alt="logo.name">
+                                    <span class="d-inline-block mt-1" *ngIf="section?.elementData?.socialBar?.showText"
+                                        [style.fontSize]="section?.elementData?.socialBar?.textSize  + 'px'">{{logo.name}}</span>
+                                </div>
+                            </ng-container>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="html_section" *ngIf="template?.data?.id === 'two'">
+            <div class="section_card" *ngFor="let section of template?.item?.two?.first">
+                <div class="row">
+                    <div class="col-md-12 text-center" *ngIf="section?.id === 'logo'">
+                        <img [style.height]="section?.elementData?.height + 'px'"
+                            [style.width]="section?.elementData?.width + 'px'"
+                            [style.opacity]="section?.elementData?.transparency + '%'"
+                            [src]="section?.elementData?.logo ? section?.elementData?.logo : 'assets/img/logo-ch-1.svg'"
+                            class="img-fluid" alt="banner">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 text-center" *ngIf="section?.id === 'image'">
+                        <div class="img_container">
+                            <img *ngIf="section?.elementData?.image"
+                                [style.height]="section?.elementData?.height + 'px'"
+                                [style.width]="section?.elementData?.width + 'px'"
+                                [style.opacity]="section?.elementData?.transparency + '%'"
+                                [src]="section?.elementData?.image" class="img-fluid" alt="banner">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 mb-3 text-center" *ngIf="section?.id === 'text'">
+                        <p [style.fontSize]="section?.elementData?.size + 'px'"
+                            [style.color]="section?.elementData?.color"
+                            [style.textAlign]="section?.elementData?.textAlign"
+                            [style.fontFamily]="section?.elementData?.fontFamily"
+                            [style.fontWeight]="section?.elementData?.bold ? 'bold' : ''"
+                            [style.textDecoration]="section?.elementData?.underline ? 'underline' : ''"
+                            [style.fontStyle]="section?.elementData?.italic ? 'italic' : ''">
+                            {{section?.elementData?.value}}</p>
+                    </div>
+                    <div class="col-md-12 mb-3 text-center" *ngIf="section?.id === 'button'">
+                        <button (click)="openLink(section?.elementData?.link)"
+                            [style.background]="section?.elementData?.editButton?.fill"
+                            [style.opacity]="section?.elementData?.editButton?.transparency + '%'"
+                            [style.width]="section?.elementData?.editButton?.width + 'px'"
+                            [style.borderBottomLeftRadius]="section?.elementData?.editButton?.borderRadius?.bottomLeft + 'px !important'"
+                            [style.borderBottomRightRadius]="section?.elementData?.editButton?.borderRadius?.bottomRight + 'px !important'"
+                            [style.borderTopLeftRadius]="section?.elementData?.editButton?.borderRadius?.topLeft + 'px !important'"
+                            [style.borderTopRightRadius]="section?.elementData?.editButton?.borderRadius?.topRight + 'px !important'"
+                            [style.fontWeight]="section?.elementData?.editButton?.bold ? 'bold' : ''"
+                            [style.textDecoration]="section?.elementData?.editButton?.underline ? 'underline' : ''"
+                            [style.fontStyle]="section?.elementData?.editButton?.italic ? 'italic' : ''"
+                            [style.fontSize]="section?.elementData?.editButton?.fontSize + 'px'"
+                            [style.color]="section?.elementData?.editButton?.color + '!important'"
+                            [style.textAlign]="section?.elementData?.editButton?.textAlign"
+                            [style.fontFamily]="section?.elementData?.editButton?.fontFamily"
+                            class="theme_btn btn_primary" mat-button>Button</button>
+                    </div>
+                    <div class="col-md-12" *ngIf="section?.id === 'divider'">
+                        <hr [style.opacity]="section?.elementData?.transparency + '%'"
+                            [style.borderTop]="section?.elementData?.width + 'px ' + section?.elementData?.style + ' ' + section?.elementData?.color">
+                    </div>
+                    <div class="col-md-12 mb-3" *ngIf="section?.id === 'social_link'">
+                        <div class="socialLinks"
+                            [ngClass]="section?.elementData?.socialBar?.direction === 'vertical' ? 'social_links_vertical' : ''"
+                            [style.gap]="section?.elementData?.socialBar?.spacing + 'px'">
+                            <ng-container *ngIf="!section?.elementData?.manageLinks">
+                                <img src="assets/img/insta.svg" alt="logo">
+                                <img src="assets/img/whatsapp.svg" alt="logo">
+                                <img src="assets/img/fb.svg" alt="logo">
+                                <img src="assets/img/linkedin.svg" alt="logo">
+                                <img src="assets/img/youtube.svg" alt="logo">
+                            </ng-container>
+                            <ng-container *ngFor="let logo of section?.elementData?.manageLinks?.logos">
+                                <div class="d-inline-flex justify-content-center align-items-center flex-column">
+                                    <a *ngIf="logo.link" [href]="logo.link"><img [src]="logo.logo" alt="logo.name"></a>
+                                    <img [style.height]="section?.elementData?.socialBar?.iconSize + 'px'"
+                                        *ngIf="!logo.link" [src]="logo.logo" alt="logo.name">
+                                    <span class="d-inline-block mt-1" *ngIf="section?.elementData?.socialBar?.showText"
+                                        [style.fontSize]="section?.elementData?.socialBar?.textSize  + 'px'">{{logo.name}}</span>
+                                </div>
+                            </ng-container>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="section_card" *ngFor="let section of template?.item?.two?.second">
+                <div class="row">
+                    <div class="col-md-12 text-center" *ngIf="section?.id === 'logo'">
+                        <img [style.height]="section?.elementData?.height + 'px'"
+                            [style.width]="section?.elementData?.width + 'px'"
+                            [style.opacity]="section?.elementData?.transparency + '%'"
+                            [src]="section?.elementData?.logo ? section?.elementData?.logo : 'assets/img/logo-ch-1.svg'"
+                            class="img-fluid" alt="banner">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 text-center" *ngIf="section?.id === 'image'">
+                        <div class="img_container">
+                            <img *ngIf="section?.elementData?.image"
+                                [style.height]="section?.elementData?.height + 'px'"
+                                [style.width]="section?.elementData?.width + 'px'"
+                                [style.opacity]="section?.elementData?.transparency + '%'"
+                                [src]="section?.elementData?.image" class="img-fluid" alt="banner">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 mb-3 text-center" *ngIf="section?.id === 'text'">
+                        <p [style.fontSize]="section?.elementData?.size + 'px'"
+                            [style.color]="section?.elementData?.color"
+                            [style.textAlign]="section?.elementData?.textAlign"
+                            [style.fontFamily]="section?.elementData?.fontFamily"
+                            [style.fontWeight]="section?.elementData?.bold ? 'bold' : ''"
+                            [style.textDecoration]="section?.elementData?.underline ? 'underline' : ''"
+                            [style.fontStyle]="section?.elementData?.italic ? 'italic' : ''">
+                            {{section?.elementData?.value}}</p>
+                    </div>
+                    <div class="col-md-12 mb-3 text-center" *ngIf="section?.id === 'button'">
+                        <button (click)="openLink(section?.elementData?.link)"
+                            [style.background]="section?.elementData?.editButton?.fill"
+                            [style.opacity]="section?.elementData?.editButton?.transparency + '%'"
+                            [style.width]="section?.elementData?.editButton?.width + 'px'"
+                            [style.borderBottomLeftRadius]="section?.elementData?.editButton?.borderRadius?.bottomLeft + 'px !important'"
+                            [style.borderBottomRightRadius]="section?.elementData?.editButton?.borderRadius?.bottomRight + 'px !important'"
+                            [style.borderTopLeftRadius]="section?.elementData?.editButton?.borderRadius?.topLeft + 'px !important'"
+                            [style.borderTopRightRadius]="section?.elementData?.editButton?.borderRadius?.topRight + 'px !important'"
+                            [style.fontWeight]="section?.elementData?.editButton?.bold ? 'bold' : ''"
+                            [style.textDecoration]="section?.elementData?.editButton?.underline ? 'underline' : ''"
+                            [style.fontStyle]="section?.elementData?.editButton?.italic ? 'italic' : ''"
+                            [style.fontSize]="section?.elementData?.editButton?.fontSize + 'px'"
+                            [style.color]="section?.elementData?.editButton?.color + '!important'"
+                            [style.textAlign]="section?.elementData?.editButton?.textAlign"
+                            [style.fontFamily]="section?.elementData?.editButton?.fontFamily"
+                            class="theme_btn btn_primary" mat-button>Button</button>
+                    </div>
+                    <div class="col-md-12" *ngIf="section?.id === 'divider'">
+                        <hr [style.opacity]="section?.elementData?.transparency + '%'"
+                            [style.borderTop]="section?.elementData?.width + 'px ' + section?.elementData?.style + ' ' + section?.elementData?.color">
+                    </div>
+                    <div class="col-md-12 mb-3" *ngIf="section?.id === 'social_link'">
+                        <div class="socialLinks"
+                            [ngClass]="section?.elementData?.socialBar?.direction === 'vertical' ? 'social_links_vertical' : ''"
+                            [style.gap]="section?.elementData?.socialBar?.spacing + 'px'">
+                            <ng-container *ngIf="!section?.elementData?.manageLinks">
+                                <img src="assets/img/insta.svg" alt="logo">
+                                <img src="assets/img/whatsapp.svg" alt="logo">
+                                <img src="assets/img/fb.svg" alt="logo">
+                                <img src="assets/img/linkedin.svg" alt="logo">
+                                <img src="assets/img/youtube.svg" alt="logo">
+                            </ng-container>
+                            <ng-container *ngFor="let logo of section?.elementData?.manageLinks?.logos">
+                                <div class="d-inline-flex justify-content-center align-items-center flex-column">
+                                    <a *ngIf="logo.link" [href]="logo.link"><img [src]="logo.logo" alt="logo.name"></a>
+                                    <img [style.height]="section?.elementData?.socialBar?.iconSize + 'px'"
+                                        *ngIf="!logo.link" [src]="logo.logo" alt="logo.name">
+                                    <span class="d-inline-block mt-1" *ngIf="section?.elementData?.socialBar?.showText"
+                                        [style.fontSize]="section?.elementData?.socialBar?.textSize  + 'px'">{{logo.name}}</span>
+                                </div>
+                            </ng-container>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="html_section" *ngIf="template?.data?.id === 'three'">
+            <div class="section_card" *ngFor="let section of template?.item?.three?.first">
+                <div class="row">
+                    <div class="col-md-12 text-center" *ngIf="section?.id === 'logo'">
+                        <img [style.height]="section?.elementData?.height + 'px'"
+                            [style.width]="section?.elementData?.width + 'px'"
+                            [style.opacity]="section?.elementData?.transparency + '%'"
+                            [src]="section?.elementData?.logo ? section?.elementData?.logo : 'assets/img/logo-ch-1.svg'"
+                            class="img-fluid" alt="banner">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 text-center" *ngIf="section?.id === 'image'">
+                        <div class="img_container">
+                            <img *ngIf="section?.elementData?.image"
+                                [style.height]="section?.elementData?.height + 'px'"
+                                [style.width]="section?.elementData?.width + 'px'"
+                                [style.opacity]="section?.elementData?.transparency + '%'"
+                                [src]="section?.elementData?.image" class="img-fluid" alt="banner">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 mb-3 text-center" *ngIf="section?.id === 'text'">
+                        <p [style.fontSize]="section?.elementData?.size + 'px'"
+                            [style.color]="section?.elementData?.color"
+                            [style.textAlign]="section?.elementData?.textAlign"
+                            [style.fontFamily]="section?.elementData?.fontFamily"
+                            [style.fontWeight]="section?.elementData?.bold ? 'bold' : ''"
+                            [style.textDecoration]="section?.elementData?.underline ? 'underline' : ''"
+                            [style.fontStyle]="section?.elementData?.italic ? 'italic' : ''">
+                            {{section?.elementData?.value}}</p>
+                    </div>
+                    <div class="col-md-12 mb-3 text-center" *ngIf="section?.id === 'button'">
+                        <button (click)="openLink(section?.elementData?.link)"
+                            [style.background]="section?.elementData?.editButton?.fill"
+                            [style.opacity]="section?.elementData?.editButton?.transparency + '%'"
+                            [style.width]="section?.elementData?.editButton?.width + 'px'"
+                            [style.borderBottomLeftRadius]="section?.elementData?.editButton?.borderRadius?.bottomLeft + 'px !important'"
+                            [style.borderBottomRightRadius]="section?.elementData?.editButton?.borderRadius?.bottomRight + 'px !important'"
+                            [style.borderTopLeftRadius]="section?.elementData?.editButton?.borderRadius?.topLeft + 'px !important'"
+                            [style.borderTopRightRadius]="section?.elementData?.editButton?.borderRadius?.topRight + 'px !important'"
+                            [style.fontWeight]="section?.elementData?.editButton?.bold ? 'bold' : ''"
+                            [style.textDecoration]="section?.elementData?.editButton?.underline ? 'underline' : ''"
+                            [style.fontStyle]="section?.elementData?.editButton?.italic ? 'italic' : ''"
+                            [style.fontSize]="section?.elementData?.editButton?.fontSize + 'px'"
+                            [style.color]="section?.elementData?.editButton?.color + '!important'"
+                            [style.textAlign]="section?.elementData?.editButton?.textAlign"
+                            [style.fontFamily]="section?.elementData?.editButton?.fontFamily"
+                            class="theme_btn btn_primary" mat-button>Button</button>
+                    </div>
+                    <div class="col-md-12" *ngIf="section?.id === 'divider'">
+                        <hr [style.opacity]="section?.elementData?.transparency + '%'"
+                            [style.borderTop]="section?.elementData?.width + 'px ' + section?.elementData?.style + ' ' + section?.elementData?.color">
+                    </div>
+                    <div class="col-md-12 mb-3" *ngIf="section?.id === 'social_link'">
+                        <div class="socialLinks"
+                            [ngClass]="section?.elementData?.socialBar?.direction === 'vertical' ? 'social_links_vertical' : ''"
+                            [style.gap]="section?.elementData?.socialBar?.spacing + 'px'">
+                            <ng-container *ngIf="!section?.elementData?.manageLinks">
+                                <img src="assets/img/insta.svg" alt="logo">
+                                <img src="assets/img/whatsapp.svg" alt="logo">
+                                <img src="assets/img/fb.svg" alt="logo">
+                                <img src="assets/img/linkedin.svg" alt="logo">
+                                <img src="assets/img/youtube.svg" alt="logo">
+                            </ng-container>
+                            <ng-container *ngFor="let logo of section?.elementData?.manageLinks?.logos">
+                                <div class="d-inline-flex justify-content-center align-items-center flex-column">
+                                    <a *ngIf="logo.link" [href]="logo.link"><img [src]="logo.logo" alt="logo.name"></a>
+                                    <img [style.height]="section?.elementData?.socialBar?.iconSize + 'px'"
+                                        *ngIf="!logo.link" [src]="logo.logo" alt="logo.name">
+                                    <span class="d-inline-block mt-1" *ngIf="section?.elementData?.socialBar?.showText"
+                                        [style.fontSize]="section?.elementData?.socialBar?.textSize  + 'px'">{{logo.name}}</span>
+                                </div>
+                            </ng-container>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="section_card" *ngFor="let section of template?.item?.three?.second">
+                <div class="row">
+                    <div class="col-md-12 text-center" *ngIf="section?.id === 'logo'">
+                        <img [style.height]="section?.elementData?.height + 'px'"
+                            [style.width]="section?.elementData?.width + 'px'"
+                            [style.opacity]="section?.elementData?.transparency + '%'"
+                            [src]="section?.elementData?.logo ? section?.elementData?.logo : 'assets/img/logo-ch-1.svg'"
+                            class="img-fluid" alt="banner">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 text-center" *ngIf="section?.id === 'image'">
+                        <div class="img_container">
+                            <img *ngIf="section?.elementData?.image"
+                                [style.height]="section?.elementData?.height + 'px'"
+                                [style.width]="section?.elementData?.width + 'px'"
+                                [style.opacity]="section?.elementData?.transparency + '%'"
+                                [src]="section?.elementData?.image" class="img-fluid" alt="banner">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 mb-3 text-center" *ngIf="section?.id === 'text'">
+                        <p [style.fontSize]="section?.elementData?.size + 'px'"
+                            [style.color]="section?.elementData?.color"
+                            [style.textAlign]="section?.elementData?.textAlign"
+                            [style.fontFamily]="section?.elementData?.fontFamily"
+                            [style.fontWeight]="section?.elementData?.bold ? 'bold' : ''"
+                            [style.textDecoration]="section?.elementData?.underline ? 'underline' : ''"
+                            [style.fontStyle]="section?.elementData?.italic ? 'italic' : ''">
+                            {{section?.elementData?.value}}</p>
+                    </div>
+                    <div class="col-md-12 mb-3 text-center" *ngIf="section?.id === 'button'">
+                        <button (click)="openLink(section?.elementData?.link)"
+                            [style.background]="section?.elementData?.editButton?.fill"
+                            [style.opacity]="section?.elementData?.editButton?.transparency + '%'"
+                            [style.width]="section?.elementData?.editButton?.width + 'px'"
+                            [style.borderBottomLeftRadius]="section?.elementData?.editButton?.borderRadius?.bottomLeft + 'px !important'"
+                            [style.borderBottomRightRadius]="section?.elementData?.editButton?.borderRadius?.bottomRight + 'px !important'"
+                            [style.borderTopLeftRadius]="section?.elementData?.editButton?.borderRadius?.topLeft + 'px !important'"
+                            [style.borderTopRightRadius]="section?.elementData?.editButton?.borderRadius?.topRight + 'px !important'"
+                            [style.fontWeight]="section?.elementData?.editButton?.bold ? 'bold' : ''"
+                            [style.textDecoration]="section?.elementData?.editButton?.underline ? 'underline' : ''"
+                            [style.fontStyle]="section?.elementData?.editButton?.italic ? 'italic' : ''"
+                            [style.fontSize]="section?.elementData?.editButton?.fontSize + 'px'"
+                            [style.color]="section?.elementData?.editButton?.color + '!important'"
+                            [style.textAlign]="section?.elementData?.editButton?.textAlign"
+                            [style.fontFamily]="section?.elementData?.editButton?.fontFamily"
+                            class="theme_btn btn_primary" mat-button>Button</button>
+                    </div>
+                    <div class="col-md-12" *ngIf="section?.id === 'divider'">
+                        <hr [style.opacity]="section?.elementData?.transparency + '%'"
+                            [style.borderTop]="section?.elementData?.width + 'px ' + section?.elementData?.style + ' ' + section?.elementData?.color">
+                    </div>
+                    <div class="col-md-12 mb-3" *ngIf="section?.id === 'social_link'">
+                        <div class="socialLinks"
+                            [ngClass]="section?.elementData?.socialBar?.direction === 'vertical' ? 'social_links_vertical' : ''"
+                            [style.gap]="section?.elementData?.socialBar?.spacing + 'px'">
+                            <ng-container *ngIf="!section?.elementData?.manageLinks">
+                                <img src="assets/img/insta.svg" alt="logo">
+                                <img src="assets/img/whatsapp.svg" alt="logo">
+                                <img src="assets/img/fb.svg" alt="logo">
+                                <img src="assets/img/linkedin.svg" alt="logo">
+                                <img src="assets/img/youtube.svg" alt="logo">
+                            </ng-container>
+                            <ng-container *ngFor="let logo of section?.elementData?.manageLinks?.logos">
+                                <div class="d-inline-flex justify-content-center align-items-center flex-column">
+                                    <a *ngIf="logo.link" [href]="logo.link"><img [src]="logo.logo" alt="logo.name"></a>
+                                    <img [style.height]="section?.elementData?.socialBar?.iconSize + 'px'"
+                                        *ngIf="!logo.link" [src]="logo.logo" alt="logo.name">
+                                    <span class="d-inline-block mt-1" *ngIf="section?.elementData?.socialBar?.showText"
+                                        [style.fontSize]="section?.elementData?.socialBar?.textSize  + 'px'">{{logo.name}}</span>
+                                </div>
+                            </ng-container>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="section_card" *ngFor="let section of template?.item?.three?.third">
+                <div class="row">
+                    <div class="col-md-12 text-center" *ngIf="section?.id === 'logo'">
+                        <img [style.height]="section?.elementData?.height + 'px'"
+                            [style.width]="section?.elementData?.width + 'px'"
+                            [style.opacity]="section?.elementData?.transparency + '%'"
+                            [src]="section?.elementData?.logo ? section?.elementData?.logo : 'assets/img/logo-ch-1.svg'"
+                            class="img-fluid" alt="banner">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 text-center" *ngIf="section?.id === 'image'">
+                        <div class="img_container">
+                            <img *ngIf="section?.elementData?.image"
+                                [style.height]="section?.elementData?.height + 'px'"
+                                [style.width]="section?.elementData?.width + 'px'"
+                                [style.opacity]="section?.elementData?.transparency + '%'"
+                                [src]="section?.elementData?.image" class="img-fluid" alt="banner">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 mb-3 text-center" *ngIf="section?.id === 'text'">
+                        <p [style.fontSize]="section?.elementData?.size + 'px'"
+                            [style.color]="section?.elementData?.color"
+                            [style.textAlign]="section?.elementData?.textAlign"
+                            [style.fontFamily]="section?.elementData?.fontFamily"
+                            [style.fontWeight]="section?.elementData?.bold ? 'bold' : ''"
+                            [style.textDecoration]="section?.elementData?.underline ? 'underline' : ''"
+                            [style.fontStyle]="section?.elementData?.italic ? 'italic' : ''">
+                            {{section?.elementData?.value}}</p>
+                    </div>
+                    <div class="col-md-12 mb-3 text-center" *ngIf="section?.id === 'button'">
+                        <button (click)="openLink(section?.elementData?.link)"
+                            [style.background]="section?.elementData?.editButton?.fill"
+                            [style.opacity]="section?.elementData?.editButton?.transparency + '%'"
+                            [style.width]="section?.elementData?.editButton?.width + 'px'"
+                            [style.borderBottomLeftRadius]="section?.elementData?.editButton?.borderRadius?.bottomLeft + 'px !important'"
+                            [style.borderBottomRightRadius]="section?.elementData?.editButton?.borderRadius?.bottomRight + 'px !important'"
+                            [style.borderTopLeftRadius]="section?.elementData?.editButton?.borderRadius?.topLeft + 'px !important'"
+                            [style.borderTopRightRadius]="section?.elementData?.editButton?.borderRadius?.topRight + 'px !important'"
+                            [style.fontWeight]="section?.elementData?.editButton?.bold ? 'bold' : ''"
+                            [style.textDecoration]="section?.elementData?.editButton?.underline ? 'underline' : ''"
+                            [style.fontStyle]="section?.elementData?.editButton?.italic ? 'italic' : ''"
+                            [style.fontSize]="section?.elementData?.editButton?.fontSize + 'px'"
+                            [style.color]="section?.elementData?.editButton?.color + '!important'"
+                            [style.textAlign]="section?.elementData?.editButton?.textAlign"
+                            [style.fontFamily]="section?.elementData?.editButton?.fontFamily"
+                            class="theme_btn btn_primary" mat-button>Button</button>
+                    </div>
+                    <div class="col-md-12" *ngIf="section?.id === 'divider'">
+                        <hr [style.opacity]="section?.elementData?.transparency + '%'"
+                            [style.borderTop]="section?.elementData?.width + 'px ' + section?.elementData?.style + ' ' + section?.elementData?.color">
+                    </div>
+                    <div class="col-md-12 mb-3" *ngIf="section?.id === 'social_link'">
+                        <div class="socialLinks"
+                            [ngClass]="section?.elementData?.socialBar?.direction === 'vertical' ? 'social_links_vertical' : ''"
+                            [style.gap]="section?.elementData?.socialBar?.spacing + 'px'">
+                            <ng-container *ngIf="!section?.elementData?.manageLinks">
+                                <img src="assets/img/insta.svg" alt="logo">
+                                <img src="assets/img/whatsapp.svg" alt="logo">
+                                <img src="assets/img/fb.svg" alt="logo">
+                                <img src="assets/img/linkedin.svg" alt="logo">
+                                <img src="assets/img/youtube.svg" alt="logo">
+                            </ng-container>
+                            <ng-container *ngFor="let logo of section?.elementData?.manageLinks?.logos">
+                                <div class="d-inline-flex justify-content-center align-items-center flex-column">
+                                    <a *ngIf="logo.link" [href]="logo.link"><img [src]="logo.logo" alt="logo.name"></a>
+                                    <img [style.height]="section?.elementData?.socialBar?.iconSize + 'px'"
+                                        *ngIf="!logo.link" [src]="logo.logo" alt="logo.name">
+                                    <span class="d-inline-block mt-1" *ngIf="section?.elementData?.socialBar?.showText"
+                                        [style.fontSize]="section?.elementData?.socialBar?.textSize  + 'px'">{{logo.name}}</span>
+                                </div>
+                            </ng-container>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 text-center" *ngIf="template?.data?.id === 'logo'">
+                <img [style.height]="template?.data?.elementData?.height + 'px'"
+                    [style.width]="template?.data?.elementData?.width + 'px'"
+                    [style.opacity]="template?.data?.elementData?.transparency + '%'"
+                    [src]="template?.data?.elementData?.logo ? template?.data?.elementData?.logo : 'assets/img/logo-ch-1.svg'"
+                    class="img-fluid" alt="banner">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 text-center" *ngIf="template?.data?.id === 'image'">
+                <div class="img_container">
+                    <img *ngIf="template?.data?.elementData?.image"
+                        [style.height]="template?.data?.elementData?.height + 'px'"
+                        [style.width]="template?.data?.elementData?.width + 'px'"
+                        [style.opacity]="template?.data?.elementData?.transparency + '%'"
+                        [src]="template?.data?.elementData?.image" class="img-fluid" alt="banner">
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 mb-3 text-center" *ngIf="template?.data?.id === 'text'">
+                <p [style.fontSize]="template?.data?.elementData?.size + 'px'"
+                    [style.color]="template?.data?.elementData?.color"
+                    [style.textAlign]="template?.data?.elementData?.textAlign"
+                    [style.fontFamily]="template?.data?.elementData?.fontFamily"
+                    [style.fontWeight]="template?.data?.elementData?.bold ? 'bold' : ''"
+                    [style.textDecoration]="template?.data?.elementData?.underline ? 'underline' : ''"
+                    [style.fontStyle]="template?.data?.elementData?.italic ? 'italic' : ''">
+                    {{template?.data?.elementData?.value}}</p>
+            </div>
+            <div class="col-md-12 mb-3 text-center" *ngIf="template?.data?.id === 'button'">
+                <button (click)="openLink(template?.data?.elementData?.link)"
+                    [style.background]="template?.data?.elementData?.editButton?.fill"
+                    [style.opacity]="template?.data?.elementData?.editButton?.transparency + '%'"
+                    [style.width]="template?.data?.elementData?.editButton?.width + 'px'"
+                    [style.borderBottomLeftRadius]="template?.data?.elementData?.editButton?.borderRadius?.bottomLeft + 'px !important'"
+                    [style.borderBottomRightRadius]="template?.data?.elementData?.editButton?.borderRadius?.bottomRight + 'px !important'"
+                    [style.borderTopLeftRadius]="template?.data?.elementData?.editButton?.borderRadius?.topLeft + 'px !important'"
+                    [style.borderTopRightRadius]="template?.data?.elementData?.editButton?.borderRadius?.topRight + 'px !important'"
+                    [style.fontWeight]="template?.data?.elementData?.editButton?.bold ? 'bold' : ''"
+                    [style.textDecoration]="template?.data?.elementData?.editButton?.underline ? 'underline' : ''"
+                    [style.fontStyle]="template?.data?.elementData?.editButton?.italic ? 'italic' : ''"
+                    [style.fontSize]="template?.data?.elementData?.editButton?.fontSize + 'px'"
+                    [style.color]="template?.data?.elementData?.editButton?.color + '!important'"
+                    [style.textAlign]="template?.data?.elementData?.editButton?.textAlign"
+                    [style.fontFamily]="template?.data?.elementData?.editButton?.fontFamily"
+                    class="theme_btn btn_primary" mat-button>Button</button>
+            </div>
+            <div class="col-md-12" *ngIf="template?.data?.id === 'divider'">
+                <hr [style.opacity]="template?.data?.elementData?.transparency + '%'"
+                    [style.borderTop]="template?.data?.elementData?.width + 'px ' + template?.data?.elementData?.style + ' ' + template?.data?.elementData?.color">
+            </div>
+            <div class="col-md-12 mb-3" *ngIf="template?.data?.id === 'social_link'">
+                <div class="socialLinks"
+                    [ngClass]="template?.data?.elementData?.socialBar?.direction === 'vertical' ? 'social_links_vertical' : ''"
+                    [style.gap]="template?.data?.elementData?.socialBar?.spacing + 'px'">
+                    <ng-container *ngIf="!template?.data?.elementData?.manageLinks">
+                        <img src="assets/img/insta.svg" alt="logo">
+                        <img src="assets/img/whatsapp.svg" alt="logo">
+                        <img src="assets/img/fb.svg" alt="logo">
+                        <img src="assets/img/linkedin.svg" alt="logo">
+                        <img src="assets/img/youtube.svg" alt="logo">
+                    </ng-container>
+                    <ng-container *ngFor="let logo of template?.data?.elementData?.manageLinks?.logos">
+                        <div class="d-inline-flex justify-content-center align-items-center flex-column">
+                            <a *ngIf="logo.link" [href]="logo.link"><img [src]="logo.logo" alt="logo.name"></a>
+                            <img [style.height]="template?.data?.elementData?.socialBar?.iconSize + 'px'"
+                                *ngIf="!logo.link" [src]="logo.logo" alt="logo.name">
+                            <span class="d-inline-block mt-1" *ngIf="template?.data?.elementData?.socialBar?.showText"
+                                [style.fontSize]="template?.data?.elementData?.socialBar?.textSize  + 'px'">{{logo.name}}</span>
+                        </div>
+                    </ng-container>
+                </div>
+            </div>
+        </div>
+    </ng-container>
+</div> -->
+
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet" crossorigin="anonymous">
+    </head>
+
+    <style>
+    p {
+        margin: 0px;
+    }
+</style>
+
+    <body style="
+      width: 100%;
+      font-family: 'DM Sans', sans-serif;
+      height: 100%;
+      background: #fff;
+      margin: 0;
+      padding: 0 0px;
+      box-sizing: border-box;
+      text-align: left;
+      font-weight: 390;
+    ">
+        <table cellspacing="0" cellpadding="0" width="100%" style="
+        padding: 0;
+        border-collapse: collapse;
+        margin: 0px auto;
+        max-width: 536px;
+        width: 100%;
+        font-size: 14px;
+        font-weight: 400;
+        line-height: 18px;
+        color: #2F2E41;
+      " border="0">
+            <tbody>
+                <ng-container *ngFor="let template of emailTemplateData">
+                    <tr *ngIf="template?.data?.id === 'blank'">
+                        <td style="padding: 8px 0px;">
+                            <table cellspacing="0" cellpadding="0" width="100%">
+                                <tbody>
+                                    <tr *ngFor="let section of template?.item?.blank">
+
+                                        <td *ngIf="section?.id === 'logo'">
+                                            <img style="object-fit: contain;"
+                                                [style.height]="section?.elementData?.height + 'px'"
+                                                [style.width]="section?.elementData?.width + 'px'"
+                                                [style.opacity]="section?.elementData?.transparency + '%'"
+                                                [src]="section?.elementData?.logo ? section?.elementData?.logo : DOMAIN_URL+'assets/img/logo-ch-1.svg'"
+                                                alt="logo">
+                                        </td>
+                                        <td *ngIf="section?.id === 'image'">
+                                            <img style="object-fit: cover;" *ngIf="section?.elementData?.image"
+                                                [style.height]="section?.elementData?.height + 'px'"
+                                                [style.width]="section?.elementData?.width + 'px'"
+                                                [style.opacity]="section?.elementData?.transparency + '%'"
+                                                [src]="section?.elementData?.image">
+                                        </td>
+                                        <td *ngIf="section?.id === 'text'">
+                                            <p style="white-space: pre-line;"
+                                                [style.fontSize]="section?.elementData?.size + 'px'"
+                                                [style.color]="section?.elementData?.color"
+                                                [style.textAlign]="section?.elementData?.textAlign"
+                                                [style.fontFamily]="section?.elementData?.fontFamily"
+                                                [style.fontWeight]="section?.elementData?.bold ? 'bold' : ''"
+                                                [style.textDecoration]="section?.elementData?.underline ? 'underline' : ''"
+                                                [style.fontStyle]="section?.elementData?.italic ? 'italic' : ''" [innerHtml]="section?.elementData?.value">
+                                                </p>
+                                        </td>
+                                        <td style="text-align: center;" *ngIf="section?.id === 'button'">
+                                            <a target="_blank"
+                                                [href]="section?.elementData?.link?.document ? section?.elementData?.link?.document : section?.elementData?.link?.url"
+                                                style="
+                      background: #464BA8;
+                      color: #fff;
+                      border-radius: 20px;
+                      display: inline-block;
+                      width: 190.56px;
+                      padding: 10px 0px;
+                      font-size: 14px;
+                      border: 0;
+                      text-decoration: none;
+                    " [style.background]="section?.elementData?.editButton?.fill"
+                                                [style.opacity]="section?.elementData?.editButton?.transparency + '%'"
+                                                [style.width]="section?.elementData?.editButton?.width + 'px'"
+                                                [style.borderBottomLeftRadius]="section?.elementData?.editButton?.borderRadius?.bottomLeft + 'px !important'"
+                                                [style.borderBottomRightRadius]="section?.elementData?.editButton?.borderRadius?.bottomRight + 'px !important'"
+                                                [style.borderTopLeftRadius]="section?.elementData?.editButton?.borderRadius?.topLeft + 'px !important'"
+                                                [style.borderTopRightRadius]="section?.elementData?.editButton?.borderRadius?.topRight + 'px !important'"
+                                                [style.fontWeight]="section?.elementData?.editButton?.bold ? 'bold' : ''"
+                                                [style.textDecoration]="section?.elementData?.editButton?.underline ? 'underline' : ''"
+                                                [style.fontStyle]="section?.elementData?.editButton?.italic ? 'italic' : ''"
+                                                [style.fontSize]="section?.elementData?.editButton?.fontSize + 'px'"
+                                                [style.color]="section?.elementData?.editButton?.color + '!important'"
+                                                [style.textAlign]="section?.elementData?.editButton?.textAlign"
+                                                [style.fontFamily]="section?.elementData?.editButton?.fontFamily">{{section?.elementData?.editButton?.label}}</a>
+                                        </td>
+                                        <td *ngIf="section?.id === 'divider'">
+                                            <hr [style.opacity]="section?.elementData?.transparency + '%'"
+                                                [style.borderTop]="section?.elementData?.width + 'px ' + section?.elementData?.style + ' ' + section?.elementData?.color">
+                                        </td>
+                                        <td style="text-align: center;" *ngIf="section?.id === 'social_link'">
+                                            <div class="socialLinks"
+                                                [ngClass]="section?.elementData?.socialBar?.direction === 'vertical' ? 'social_links_vertical' : ''"
+                                                [style.gap]="section?.elementData?.socialBar?.spacing + 'px'">
+                                                <ng-container *ngIf="!section?.elementData?.manageLinks">
+                                                    <img src="assets/img/insta.svg" alt="logo">
+                                                    <img src="assets/img/whatsapp.svg" alt="logo">
+                                                    <img src="assets/img/fb.svg" alt="logo">
+                                                    <img src="assets/img/linkedin.svg" alt="logo">
+                                                    <img src="assets/img/youtube.svg" alt="logo">
+                                                </ng-container>
+                                                <ng-container
+                                                    *ngFor="let logo of section?.elementData?.manageLinks?.logos">
+                                                    <div
+                                                        class="d-inline-flex justify-content-center align-items-center flex-column">
+                                                        <a *ngIf="logo.link" [href]="logo.link"><img [src]="logo.logo"
+                                                                alt="logo.name"></a>
+                                                        <img
+                                                            [style.height]="section?.elementData?.socialBar?.iconSize + 'px'"
+                                                            *ngIf="!logo.link" [src]="logo.logo" alt="logo.name">
+                                                        <span class="d-inline-block mt-1"
+                                                            *ngIf="section?.elementData?.socialBar?.showText"
+                                                            [style.fontSize]="section?.elementData?.socialBar?.textSize  + 'px'">{{logo.name}}</span>
+                                                    </div>
+                                                </ng-container>
+                                            </div>
+                                        </td>
+                                    </tr>
+
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                    <tr *ngIf="template?.data?.id === 'two'">
+                        <td>
+                            <table cellspacing="0" cellpadding="0" width="100%" style="table-layout: fixed;">
+                                <tbody>
+                                    <tr>
+                                        <td style="padding: 8px 0px;">
+                                            <table cellspacing="0" cellpadding="0" width="100%"
+                                                *ngFor="let section of template?.item?.two?.first">
+                                                <tbody>
+                                                    <tr>
+                                                        <td *ngIf="section?.id === 'logo'">
+                                                            <img style="object-fit: contain;"
+                                                                [style.height]="section?.elementData?.height + 'px'"
+                                                                [style.width]="section?.elementData?.width + 'px'"
+                                                                [style.opacity]="section?.elementData?.transparency + '%'"
+                                                                [src]="section?.elementData?.logo ? section?.elementData?.logo : DOMAIN_URL+'assets/img/logo-ch-1.svg'"
+                                                                alt="logo">
+                                                        </td>
+                                                        <td *ngIf="section?.id === 'image'">
+                                                            <img style="object-fit: cover;"
+                                                                *ngIf="section?.elementData?.image"
+                                                                [style.height]="section?.elementData?.height + 'px'"
+                                                                [style.width]="section?.elementData?.width + 'px'"
+                                                                [style.opacity]="section?.elementData?.transparency + '%'"
+                                                                [src]="section?.elementData?.image" alt="banner">
+                                                        </td>
+                                                        <td *ngIf="section?.id === 'text'">
+                                                            <p style="white-space: pre-line;"
+                                                                [style.fontSize]="section?.elementData?.size + 'px'"
+                                                                [style.color]="section?.elementData?.color"
+                                                                [style.textAlign]="section?.elementData?.textAlign"
+                                                                [style.fontFamily]="section?.elementData?.fontFamily"
+                                                                [style.fontWeight]="section?.elementData?.bold ? 'bold' : ''"
+                                                                [style.textDecoration]="section?.elementData?.underline ? 'underline' : ''"
+                                                                [style.fontStyle]="section?.elementData?.italic ? 'italic' : ''" [innerHtml]="section?.elementData?.value"></p>
+                                                        </td>
+                                                        <td style="text-align: center;"
+                                                            *ngIf="section?.id === 'button'">
+                                                            <a target="_blank"
+                                                                [href]="section?.elementData?.link?.document ? section?.elementData?.link?.document : section?.elementData?.link?.url"
+                                                                style="
+                      background: #464BA8;
+                      color: #fff;
+                      border-radius: 20px;
+                      display: inline-block;
+                      width: 190.56px;
+                      padding: 10px 0px;
+                      font-size: 14px;
+                      border: 0;
+                      text-decoration: none;
+                    " [style.background]="section?.elementData?.editButton?.fill"
+                                                                [style.opacity]="section?.elementData?.editButton?.transparency + '%'"
+                                                                [style.width]="section?.elementData?.editButton?.width + 'px'"
+                                                                [style.borderBottomLeftRadius]="section?.elementData?.editButton?.borderRadius?.bottomLeft + 'px !important'"
+                                                                [style.borderBottomRightRadius]="section?.elementData?.editButton?.borderRadius?.bottomRight + 'px !important'"
+                                                                [style.borderTopLeftRadius]="section?.elementData?.editButton?.borderRadius?.topLeft + 'px !important'"
+                                                                [style.borderTopRightRadius]="section?.elementData?.editButton?.borderRadius?.topRight + 'px !important'"
+                                                                [style.fontWeight]="section?.elementData?.editButton?.bold ? 'bold' : ''"
+                                                                [style.textDecoration]="section?.elementData?.editButton?.underline ? 'underline' : ''"
+                                                                [style.fontStyle]="section?.elementData?.editButton?.italic ? 'italic' : ''"
+                                                                [style.fontSize]="section?.elementData?.editButton?.fontSize + 'px'"
+                                                                [style.color]="section?.elementData?.editButton?.color + '!important'"
+                                                                [style.textAlign]="section?.elementData?.editButton?.textAlign"
+                                                                [style.fontFamily]="section?.elementData?.editButton?.fontFamily">{{section?.elementData?.editButton?.label}}</a>
+                                                        </td>
+                                                        <td *ngIf="section?.id === 'divider'">
+                                                            <hr
+                                                                [style.opacity]="section?.elementData?.transparency + '%'"
+                                                                [style.borderTop]="section?.elementData?.width + 'px ' + section?.elementData?.style + ' ' + section?.elementData?.color">
+                                                        </td>
+                                                        <td *ngIf="section?.id === 'social_link'">
+                                                            <div class="socialLinks"
+                                                                [ngClass]="section?.elementData?.socialBar?.direction === 'vertical' ? 'social_links_vertical' : ''"
+                                                                [style.gap]="section?.elementData?.socialBar?.spacing + 'px'">
+                                                                <ng-container
+                                                                    *ngIf="!section?.elementData?.manageLinks">
+                                                                    <img src="assets/img/insta.svg" alt="logo">
+                                                                    <img src="assets/img/whatsapp.svg" alt="logo">
+                                                                    <img src="assets/img/fb.svg" alt="logo">
+                                                                    <img src="assets/img/linkedin.svg" alt="logo">
+                                                                    <img src="assets/img/youtube.svg" alt="logo">
+                                                                </ng-container>
+                                                                <ng-container
+                                                                    *ngFor="let logo of section?.elementData?.manageLinks?.logos">
+                                                                    <div
+                                                                        class="d-inline-flex justify-content-center align-items-center flex-column">
+                                                                        <a *ngIf="logo.link" [href]="logo.link"><img
+                                                                                [src]="logo.logo" alt="logo.name"></a>
+                                                                        <img
+                                                                            [style.height]="section?.elementData?.socialBar?.iconSize + 'px'"
+                                                                            *ngIf="!logo.link" [src]="logo.logo"
+                                                                            alt="logo.name">
+                                                                        <span class="d-inline-block mt-1"
+                                                                            *ngIf="section?.elementData?.socialBar?.showText"
+                                                                            [style.fontSize]="section?.elementData?.socialBar?.textSize  + 'px'">{{logo.name}}</span>
+                                                                    </div>
+                                                                </ng-container>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </td>
+                                        <td style="padding: 8px 0px;">
+                                            <table cellspacing="0" cellpadding="0" width="100%"
+                                                *ngFor="let section of template?.item?.two?.second">
+                                                <tbody>
+                                                    <tr>
+                                                        <td *ngIf="section?.id === 'logo'">
+                                                            <img style="object-fit: contain;"
+                                                                [style.height]="section?.elementData?.height + 'px'"
+                                                                [style.width]="section?.elementData?.width + 'px'"
+                                                                [style.opacity]="section?.elementData?.transparency + '%'"
+                                                                [src]="section?.elementData?.logo ? section?.elementData?.logo : DOMAIN_UR+'assets/img/logo-ch-1.svg'"
+                                                                alt="logo">
+                                                        </td>
+                                                        <td *ngIf="section?.id === 'image'">
+                                                            <img *ngIf="section?.elementData?.image"
+                                                                style="object-fit: cover;"
+                                                                [style.height]="section?.elementData?.height + 'px'"
+                                                                [style.width]="section?.elementData?.width + 'px'"
+                                                                [style.opacity]="section?.elementData?.transparency + '%'"
+                                                                [src]="section?.elementData?.image" alt="banner">
+                                                        </td>
+                                                        <td *ngIf="section?.id === 'text'">
+                                                            <p style="white-space: pre-line;"
+                                                                [style.fontSize]="section?.elementData?.size + 'px'"
+                                                                [style.color]="section?.elementData?.color"
+                                                                [style.textAlign]="section?.elementData?.textAlign"
+                                                                [style.fontFamily]="section?.elementData?.fontFamily"
+                                                                [style.fontWeight]="section?.elementData?.bold ? 'bold' : ''"
+                                                                [style.textDecoration]="section?.elementData?.underline ? 'underline' : ''"
+                                                                [style.fontStyle]="section?.elementData?.italic ? 'italic' : ''" [innerHtml]="section?.elementData?.value"></p>
+                                                        </td>
+                                                        <td style="text-align: center;"
+                                                            *ngIf="section?.id === 'button'">
+                                                            <a target="_blank"
+                                                                [href]="section?.elementData?.link?.document ? section?.elementData?.link?.document : section?.elementData?.link?.url"
+                                                                style="
+                      background: #464BA8;
+                      color: #fff;
+                      border-radius: 20px;
+                      display: inline-block;
+                      width: 190.56px;
+                      padding: 10px 0px;
+                      font-size: 14px;
+                      border: 0;
+                      text-decoration: none;
+                    " [style.background]="section?.elementData?.editButton?.fill"
+                                                                [style.opacity]="section?.elementData?.editButton?.transparency + '%'"
+                                                                [style.width]="section?.elementData?.editButton?.width + 'px'"
+                                                                [style.borderBottomLeftRadius]="section?.elementData?.editButton?.borderRadius?.bottomLeft + 'px !important'"
+                                                                [style.borderBottomRightRadius]="section?.elementData?.editButton?.borderRadius?.bottomRight + 'px !important'"
+                                                                [style.borderTopLeftRadius]="section?.elementData?.editButton?.borderRadius?.topLeft + 'px !important'"
+                                                                [style.borderTopRightRadius]="section?.elementData?.editButton?.borderRadius?.topRight + 'px !important'"
+                                                                [style.fontWeight]="section?.elementData?.editButton?.bold ? 'bold' : ''"
+                                                                [style.textDecoration]="section?.elementData?.editButton?.underline ? 'underline' : ''"
+                                                                [style.fontStyle]="section?.elementData?.editButton?.italic ? 'italic' : ''"
+                                                                [style.fontSize]="section?.elementData?.editButton?.fontSize + 'px'"
+                                                                [style.color]="section?.elementData?.editButton?.color + '!important'"
+                                                                [style.textAlign]="section?.elementData?.editButton?.textAlign"
+                                                                [style.fontFamily]="section?.elementData?.editButton?.fontFamily">{{section?.elementData?.editButton?.label}}</a>
+                                                        </td>
+                                                        <td *ngIf="section?.id === 'divider'">
+                                                            <hr
+                                                                [style.opacity]="section?.elementData?.transparency + '%'"
+                                                                [style.borderTop]="section?.elementData?.width + 'px ' + section?.elementData?.style + ' ' + section?.elementData?.color">
+                                                        </td>
+                                                        <td *ngIf="section?.id === 'social_link'">
+                                                            <div class="socialLinks"
+                                                                [ngClass]="section?.elementData?.socialBar?.direction === 'vertical' ? 'social_links_vertical' : ''"
+                                                                [style.gap]="section?.elementData?.socialBar?.spacing + 'px'">
+                                                                <ng-container
+                                                                    *ngIf="!section?.elementData?.manageLinks">
+                                                                    <img src="assets/img/insta.svg" alt="logo">
+                                                                    <img src="assets/img/whatsapp.svg" alt="logo">
+                                                                    <img src="assets/img/fb.svg" alt="logo">
+                                                                    <img src="assets/img/linkedin.svg" alt="logo">
+                                                                    <img src="assets/img/youtube.svg" alt="logo">
+                                                                </ng-container>
+                                                                <ng-container
+                                                                    *ngFor="let logo of section?.elementData?.manageLinks?.logos">
+                                                                    <div
+                                                                        class="d-inline-flex justify-content-center align-items-center flex-column">
+                                                                        <a *ngIf="logo.link" [href]="logo.link"><img
+                                                                                [src]="logo.logo" alt="logo.name"></a>
+                                                                        <img
+                                                                            [style.height]="section?.elementData?.socialBar?.iconSize + 'px'"
+                                                                            *ngIf="!logo.link" [src]="logo.logo"
+                                                                            alt="logo.name">
+                                                                        <span class="d-inline-block mt-1"
+                                                                            *ngIf="section?.elementData?.socialBar?.showText"
+                                                                            [style.fontSize]="section?.elementData?.socialBar?.textSize  + 'px'">{{logo.name}}</span>
+                                                                    </div>
+                                                                </ng-container>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                    <tr *ngIf="template?.data?.id === 'three'">
+                        <td>
+                            <table cellspacing="0" cellpadding="0" width="100%" style="table-layout: fixed;">
+                                <tbody>
+                                    <tr>
+                                        <td style="padding: 8px 0px;">
+                                            <table cellspacing="0" cellpadding="0" width="100%"
+                                                *ngFor="let section of template?.item?.three?.first">
+                                                <tbody>
+                                                    <tr>
+                                                        <td *ngIf="section?.id === 'logo'">
+                                                            <img style="object-fit: contain;"
+                                                                [style.height]="section?.elementData?.height + 'px'"
+                                                                [style.width]="section?.elementData?.width + 'px'"
+                                                                [style.opacity]="section?.elementData?.transparency + '%'"
+                                                                [src]="section?.elementData?.logo ? section?.elementData?.logo : DOMAIN_URL+'assets/img/logo-ch-1.svg'"
+                                                                alt="logo">
+                                                        </td>
+                                                        <td *ngIf="section?.id === 'image'">
+                                                            <img *ngIf="section?.elementData?.image"
+                                                                style="object-fit: cover;"
+                                                                [style.height]="section?.elementData?.height + 'px'"
+                                                                [style.width]="section?.elementData?.width + 'px'"
+                                                                [style.opacity]="section?.elementData?.transparency + '%'"
+                                                                [src]="section?.elementData?.image" alt="banner">
+                                                        </td>
+                                                        <td *ngIf="section?.id === 'text'">
+                                                            <p style="white-space: pre-line;"
+                                                                [style.fontSize]="section?.elementData?.size + 'px'"
+                                                                [style.color]="section?.elementData?.color"
+                                                                [style.textAlign]="section?.elementData?.textAlign"
+                                                                [style.fontFamily]="section?.elementData?.fontFamily"
+                                                                [style.fontWeight]="section?.elementData?.bold ? 'bold' : ''"
+                                                                [style.textDecoration]="section?.elementData?.underline ? 'underline' : ''"
+                                                                [style.fontStyle]="section?.elementData?.italic ? 'italic' : ''" [innerHtml]="section?.elementData?.value"></p>
+                                                        </td>
+                                                        <td style="text-align: center;"
+                                                            *ngIf="section?.id === 'button'">
+                                                            <a target="_blank"
+                                                                [href]="section?.elementData?.link?.document ? section?.elementData?.link?.document : section?.elementData?.link?.url"
+                                                                style="
+                      background: #464BA8;
+                      color: #fff;
+                      border-radius: 20px;
+                      display: inline-block;
+                      width: 190.56px;
+                      padding: 10px 0px;
+                      font-size: 14px;
+                      border: 0;
+                      text-decoration: none;
+                    " [style.background]="section?.elementData?.editButton?.fill"
+                                                                [style.opacity]="section?.elementData?.editButton?.transparency + '%'"
+                                                                [style.width]="section?.elementData?.editButton?.width + 'px'"
+                                                                [style.borderBottomLeftRadius]="section?.elementData?.editButton?.borderRadius?.bottomLeft + 'px !important'"
+                                                                [style.borderBottomRightRadius]="section?.elementData?.editButton?.borderRadius?.bottomRight + 'px !important'"
+                                                                [style.borderTopLeftRadius]="section?.elementData?.editButton?.borderRadius?.topLeft + 'px !important'"
+                                                                [style.borderTopRightRadius]="section?.elementData?.editButton?.borderRadius?.topRight + 'px !important'"
+                                                                [style.fontWeight]="section?.elementData?.editButton?.bold ? 'bold' : ''"
+                                                                [style.textDecoration]="section?.elementData?.editButton?.underline ? 'underline' : ''"
+                                                                [style.fontStyle]="section?.elementData?.editButton?.italic ? 'italic' : ''"
+                                                                [style.fontSize]="section?.elementData?.editButton?.fontSize + 'px'"
+                                                                [style.color]="section?.elementData?.editButton?.color + '!important'"
+                                                                [style.textAlign]="section?.elementData?.editButton?.textAlign"
+                                                                [style.fontFamily]="section?.elementData?.editButton?.fontFamily">{{section?.elementData?.editButton?.label}}</a>
+                                                        </td>
+                                                        <td *ngIf="section?.id === 'divider'">
+                                                            <hr
+                                                                [style.opacity]="section?.elementData?.transparency + '%'"
+                                                                [style.borderTop]="section?.elementData?.width + 'px ' + section?.elementData?.style + ' ' + section?.elementData?.color">
+                                                        </td>
+                                                        <td *ngIf="section?.id === 'social_link'">
+                                                            <div class="socialLinks"
+                                                                [ngClass]="section?.elementData?.socialBar?.direction === 'vertical' ? 'social_links_vertical' : ''"
+                                                                [style.gap]="section?.elementData?.socialBar?.spacing + 'px'">
+                                                                <ng-container
+                                                                    *ngIf="!section?.elementData?.manageLinks">
+                                                                    <img src="assets/img/insta.svg" alt="logo">
+                                                                    <img src="assets/img/whatsapp.svg" alt="logo">
+                                                                    <img src="assets/img/fb.svg" alt="logo">
+                                                                    <img src="assets/img/linkedin.svg" alt="logo">
+                                                                    <img src="assets/img/youtube.svg" alt="logo">
+                                                                </ng-container>
+                                                                <ng-container
+                                                                    *ngFor="let logo of section?.elementData?.manageLinks?.logos">
+                                                                    <div
+                                                                        class="d-inline-flex justify-content-center align-items-center flex-column">
+                                                                        <a *ngIf="logo.link" [href]="logo.link"><img
+                                                                                [src]="logo.logo" alt="logo.name"></a>
+                                                                        <img
+                                                                            [style.height]="section?.elementData?.socialBar?.iconSize + 'px'"
+                                                                            *ngIf="!logo.link" [src]="logo.logo"
+                                                                            alt="logo.name">
+                                                                        <span class="d-inline-block mt-1"
+                                                                            *ngIf="section?.elementData?.socialBar?.showText"
+                                                                            [style.fontSize]="section?.elementData?.socialBar?.textSize  + 'px'">{{logo.name}}</span>
+                                                                    </div>
+                                                                </ng-container>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </td>
+                                        <td style="padding: 8px 0px;">
+                                            <table cellspacing="0" cellpadding="0" width="100%"
+                                                *ngFor="let section of template?.item?.three?.second">
+                                                <tbody>
+                                                    <tr>
+                                                        <td *ngIf="section?.id === 'logo'">
+                                                            <img style="object-fit: contain;"
+                                                                [style.height]="section?.elementData?.height + 'px'"
+                                                                [style.width]="section?.elementData?.width + 'px'"
+                                                                [style.opacity]="section?.elementData?.transparency + '%'"
+                                                                [src]="section?.elementData?.logo ? section?.elementData?.logo : DOMAIN_URL+'assets/img/logo-ch-1.svg'"
+                                                                alt="logo">
+                                                        </td>
+                                                        <td *ngIf="section?.id === 'image'">
+                                                            <img *ngIf="section?.elementData?.image"
+                                                                style="object-fit: cover;"
+                                                                [style.height]="section?.elementData?.height + 'px'"
+                                                                [style.width]="section?.elementData?.width + 'px'"
+                                                                [style.opacity]="section?.elementData?.transparency + '%'"
+                                                                [src]="section?.elementData?.image" alt="banner">
+                                                        </td>
+                                                        <td *ngIf="section?.id === 'text'">
+                                                            <p style="white-space: pre-line;"
+                                                                [style.fontSize]="section?.elementData?.size + 'px'"
+                                                                [style.color]="section?.elementData?.color"
+                                                                [style.textAlign]="section?.elementData?.textAlign"
+                                                                [style.fontFamily]="section?.elementData?.fontFamily"
+                                                                [style.fontWeight]="section?.elementData?.bold ? 'bold' : ''"
+                                                                [style.textDecoration]="section?.elementData?.underline ? 'underline' : ''"
+                                                                [style.fontStyle]="section?.elementData?.italic ? 'italic' : ''" [innerHtml]="section?.elementData?.value"></p>
+                                                        </td>
+                                                        <td style="text-align: center;"
+                                                            *ngIf="section?.id === 'button'">
+                                                            <a target="_blank"
+                                                                [href]="section?.elementData?.link?.document ? section?.elementData?.link?.document : section?.elementData?.link?.url"
+                                                                style="
+                      background: #464BA8;
+                      color: #fff;
+                      border-radius: 20px;
+                      display: inline-block;
+                      width: 190.56px;
+                      padding: 10px 0px;
+                      font-size: 14px;
+                      border: 0;
+                      text-decoration: none;
+                    " [style.background]="section?.elementData?.editButton?.fill"
+                                                                [style.opacity]="section?.elementData?.editButton?.transparency + '%'"
+                                                                [style.width]="section?.elementData?.editButton?.width + 'px'"
+                                                                [style.borderBottomLeftRadius]="section?.elementData?.editButton?.borderRadius?.bottomLeft + 'px !important'"
+                                                                [style.borderBottomRightRadius]="section?.elementData?.editButton?.borderRadius?.bottomRight + 'px !important'"
+                                                                [style.borderTopLeftRadius]="section?.elementData?.editButton?.borderRadius?.topLeft + 'px !important'"
+                                                                [style.borderTopRightRadius]="section?.elementData?.editButton?.borderRadius?.topRight + 'px !important'"
+                                                                [style.fontWeight]="section?.elementData?.editButton?.bold ? 'bold' : ''"
+                                                                [style.textDecoration]="section?.elementData?.editButton?.underline ? 'underline' : ''"
+                                                                [style.fontStyle]="section?.elementData?.editButton?.italic ? 'italic' : ''"
+                                                                [style.fontSize]="section?.elementData?.editButton?.fontSize + 'px'"
+                                                                [style.color]="section?.elementData?.editButton?.color + '!important'"
+                                                                [style.textAlign]="section?.elementData?.editButton?.textAlign"
+                                                                [style.fontFamily]="section?.elementData?.editButton?.fontFamily">{{section?.elementData?.editButton?.label}}</a>
+                                                        </td>
+                                                        <td *ngIf="section?.id === 'divider'">
+                                                            <hr
+                                                                [style.opacity]="section?.elementData?.transparency + '%'"
+                                                                [style.borderTop]="section?.elementData?.width + 'px ' + section?.elementData?.style + ' ' + section?.elementData?.color">
+                                                        </td>
+                                                        <td *ngIf="section?.id === 'social_link'">
+                                                            <div class="socialLinks"
+                                                                [ngClass]="section?.elementData?.socialBar?.direction === 'vertical' ? 'social_links_vertical' : ''"
+                                                                [style.gap]="section?.elementData?.socialBar?.spacing + 'px'">
+                                                                <ng-container
+                                                                    *ngIf="!section?.elementData?.manageLinks">
+                                                                    <img src="assets/img/insta.svg" alt="logo">
+                                                                    <img src="assets/img/whatsapp.svg" alt="logo">
+                                                                    <img src="assets/img/fb.svg" alt="logo">
+                                                                    <img src="assets/img/linkedin.svg" alt="logo">
+                                                                    <img src="assets/img/youtube.svg" alt="logo">
+                                                                </ng-container>
+                                                                <ng-container
+                                                                    *ngFor="let logo of section?.elementData?.manageLinks?.logos">
+                                                                    <div
+                                                                        class="d-inline-flex justify-content-center align-items-center flex-column">
+                                                                        <a *ngIf="logo.link" [href]="logo.link"><img
+                                                                                [src]="logo.logo" alt="logo.name"></a>
+                                                                        <img
+                                                                            [style.height]="section?.elementData?.socialBar?.iconSize + 'px'"
+                                                                            *ngIf="!logo.link" [src]="logo.logo"
+                                                                            alt="logo.name">
+                                                                        <span class="d-inline-block mt-1"
+                                                                            *ngIf="section?.elementData?.socialBar?.showText"
+                                                                            [style.fontSize]="section?.elementData?.socialBar?.textSize  + 'px'">{{logo.name}}</span>
+                                                                    </div>
+                                                                </ng-container>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </td>
+                                        <td style="padding: 8px 0px;">
+                                            <table cellspacing="0" cellpadding="0" width="100%"
+                                                *ngFor="let section of template?.item?.three?.third">
+                                                <tbody>
+                                                    <tr>
+                                                        <td *ngIf="section?.id === 'logo'">
+                                                            <img style="object-fit: contain;"
+                                                                [style.height]="section?.elementData?.height + 'px'"
+                                                                [style.width]="section?.elementData?.width + 'px'"
+                                                                [style.opacity]="section?.elementData?.transparency + '%'"
+                                                                [src]="section?.elementData?.logo ? section?.elementData?.logo : DOMAIN_URL+'assets/img/logo-ch-1.svg'"
+                                                                alt="logo">
+                                                        </td>
+                                                        <td *ngIf="section?.id === 'image'">
+                                                            <img *ngIf="section?.elementData?.image"
+                                                                style="object-fit: cover;"
+                                                                [style.height]="section?.elementData?.height + 'px'"
+                                                                [style.width]="section?.elementData?.width + 'px'"
+                                                                [style.opacity]="section?.elementData?.transparency + '%'"
+                                                                [src]="section?.elementData?.image" alt="banner">
+                                                        </td>
+                                                        <td *ngIf="section?.id === 'text'">
+                                                            <p style="white-space: pre-line;"
+                                                                [style.fontSize]="section?.elementData?.size + 'px'"
+                                                                [style.color]="section?.elementData?.color"
+                                                                [style.textAlign]="section?.elementData?.textAlign"
+                                                                [style.fontFamily]="section?.elementData?.fontFamily"
+                                                                [style.fontWeight]="section?.elementData?.bold ? 'bold' : ''"
+                                                                [style.textDecoration]="section?.elementData?.underline ? 'underline' : ''"
+                                                                [style.fontStyle]="section?.elementData?.italic ? 'italic' : ''" [innerHtml]="section?.elementData?.value"></p>
+                                                        </td>
+                                                        <td style="text-align: center;"
+                                                            *ngIf="section?.id === 'button'">
+                                                            <a target="_blank"
+                                                                [href]="section?.elementData?.link?.document ? section?.elementData?.link?.document : section?.elementData?.link?.url"
+                                                                style="
+                      background: #464BA8;
+                      color: #fff;
+                      border-radius: 20px;
+                      display: inline-block;
+                      width: 190.56px;
+                      padding: 10px 0px;
+                      font-size: 14px;
+                      border: 0;
+                      text-decoration: none;
+                    " [style.background]="section?.elementData?.editButton?.fill"
+                                                                [style.opacity]="section?.elementData?.editButton?.transparency + '%'"
+                                                                [style.width]="section?.elementData?.editButton?.width + 'px'"
+                                                                [style.borderBottomLeftRadius]="section?.elementData?.editButton?.borderRadius?.bottomLeft + 'px !important'"
+                                                                [style.borderBottomRightRadius]="section?.elementData?.editButton?.borderRadius?.bottomRight + 'px !important'"
+                                                                [style.borderTopLeftRadius]="section?.elementData?.editButton?.borderRadius?.topLeft + 'px !important'"
+                                                                [style.borderTopRightRadius]="section?.elementData?.editButton?.borderRadius?.topRight + 'px !important'"
+                                                                [style.fontWeight]="section?.elementData?.editButton?.bold ? 'bold' : ''"
+                                                                [style.textDecoration]="section?.elementData?.editButton?.underline ? 'underline' : ''"
+                                                                [style.fontStyle]="section?.elementData?.editButton?.italic ? 'italic' : ''"
+                                                                [style.fontSize]="section?.elementData?.editButton?.fontSize + 'px'"
+                                                                [style.color]="section?.elementData?.editButton?.color + '!important'"
+                                                                [style.textAlign]="section?.elementData?.editButton?.textAlign"
+                                                                [style.fontFamily]="section?.elementData?.editButton?.fontFamily">{{section?.elementData?.editButton?.label}}</a>
+                                                        </td>
+                                                        <td *ngIf="section?.id === 'divider'">
+                                                            <hr
+                                                                [style.opacity]="section?.elementData?.transparency + '%'"
+                                                                [style.borderTop]="section?.elementData?.width + 'px ' + section?.elementData?.style + ' ' + section?.elementData?.color">
+                                                        </td>
+                                                        <td *ngIf="section?.id === 'social_link'">
+                                                            <div class="socialLinks"
+                                                                [ngClass]="section?.elementData?.socialBar?.direction === 'vertical' ? 'social_links_vertical' : ''"
+                                                                [style.gap]="section?.elementData?.socialBar?.spacing + 'px'">
+                                                                <ng-container
+                                                                    *ngIf="!section?.elementData?.manageLinks">
+                                                                    <img src="assets/img/insta.svg" alt="logo">
+                                                                    <img src="assets/img/whatsapp.svg" alt="logo">
+                                                                    <img src="assets/img/fb.svg" alt="logo">
+                                                                    <img src="assets/img/linkedin.svg" alt="logo">
+                                                                    <img src="assets/img/youtube.svg" alt="logo">
+                                                                </ng-container>
+                                                                <ng-container
+                                                                    *ngFor="let logo of section?.elementData?.manageLinks?.logos">
+                                                                    <div
+                                                                        class="d-inline-flex justify-content-center align-items-center flex-column">
+                                                                        <a *ngIf="logo.link" [href]="logo.link"><img
+                                                                                [src]="logo.logo" alt="logo.name"></a>
+                                                                        <img
+                                                                            [style.height]="section?.elementData?.socialBar?.iconSize + 'px'"
+                                                                            *ngIf="!logo.link" [src]="logo.logo"
+                                                                            alt="logo.name">
+                                                                        <span class="d-inline-block mt-1"
+                                                                            *ngIf="section?.elementData?.socialBar?.showText"
+                                                                            [style.fontSize]="section?.elementData?.socialBar?.textSize  + 'px'">{{logo.name}}</span>
+                                                                    </div>
+                                                                </ng-container>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </td>
+
+                    </tr>
+                    <tr *ngIf="template?.data?.id === 'logo'">
+                        <td>
+                            <img style="object-fit: contain;"
+                                [style.height]="template?.data?.elementData?.height + 'px'"
+                                [style.width]="template?.data?.elementData?.width + 'px'"
+                                [style.opacity]="template?.data?.elementData?.transparency + '%'"
+                                [src]="template?.data?.elementData?.logo ? template?.data?.elementData?.logo : DOMAIN_URL+'assets/img/logo-ch-1.svg'"
+                                alt="logo">
+                        </td>
+                    </tr>
+                    <tr *ngIf="template?.data?.id === 'image'">
+                        <td>
+                            <img *ngIf="template?.data?.elementData?.image" style="object-fit: cover;"
+                                [style.height]="template?.data?.elementData?.height + 'px'"
+                                [style.width]="template?.data?.elementData?.width + 'px'"
+                                [style.opacity]="template?.data?.elementData?.transparency + '%'"
+                                [src]="template?.data?.elementData?.image" alt="banner">
+                        </td>
+                    </tr>
+                    <tr *ngIf="template?.data?.id === 'text'">
+                        <td>
+                            <p style="white-space: pre-line;"
+                                [style.fontSize]="template?.data?.elementData?.size + 'px'"
+                                [style.color]="template?.data?.elementData?.color"
+                                [style.textAlign]="template?.data?.elementData?.textAlign"
+                                [style.fontFamily]="template?.data?.elementData?.fontFamily"
+                                [style.fontWeight]="template?.data?.elementData?.bold ? 'bold' : ''"
+                                [style.textDecoration]="template?.data?.elementData?.underline ? 'underline' : ''"
+                                [style.fontStyle]="template?.data?.elementData?.italic ? 'italic' : ''"
+                                [innerHtml]="template?.data?.elementData?.value">
+                               </p>
+                        </td>
+                    </tr>
+                    <tr *ngIf="template?.data?.id === 'button'">
+                        <td style="text-align: center;">
+                            <a target="_blank"
+                                [href]="template?.data?.elementData?.link?.document ? template?.data?.elementData?.link?.document : template?.data?.elementData?.link?.url"
+                                style="
+                      background: #464BA8;
+                      color: #fff;
+                      border-radius: 20px;
+                      display: inline-block;
+                      width: 190.56px;
+                      padding: 10px 0px;
+                      font-size: 14px;
+                      border: 0;
+                      text-decoration: none;
+                    " [style.background]="template?.data?.elementData?.editButton?.fill"
+                                [style.opacity]="template?.data?.elementData?.editButton?.transparency + '%'"
+                                [style.width]="template?.data?.elementData?.editButton?.width + 'px'"
+                                [style.borderBottomLeftRadius]="template?.data?.elementData?.editButton?.borderRadius?.bottomLeft + 'px !important'"
+                                [style.borderBottomRightRadius]="template?.data?.elementData?.editButton?.borderRadius?.bottomRight + 'px !important'"
+                                [style.borderTopLeftRadius]="template?.data?.elementData?.editButton?.borderRadius?.topLeft + 'px !important'"
+                                [style.borderTopRightRadius]="template?.data?.elementData?.editButton?.borderRadius?.topRight + 'px !important'"
+                                [style.fontWeight]="template?.data?.elementData?.editButton?.bold ? 'bold' : ''"
+                                [style.textDecoration]="template?.data?.elementData?.editButton?.underline ? 'underline' : ''"
+                                [style.fontStyle]="template?.data?.elementData?.editButton?.italic ? 'italic' : ''"
+                                [style.fontSize]="template?.data?.elementData?.editButton?.fontSize + 'px'"
+                                [style.color]="template?.data?.elementData?.editButton?.color + '!important'"
+                                [style.textAlign]="template?.data?.elementData?.editButton?.textAlign"
+                                [style.fontFamily]="template?.data?.elementData?.editButton?.fontFamily">{{template?.data?.elementData?.editButton?.label}}</a>
+                        </td>
+                    </tr>
+                    <tr *ngIf="template?.data?.id === 'divider'">
+                        <td>
+                            <hr [style.opacity]="template?.data?.elementData?.transparency + '%'"
+                                [style.borderTop]="template?.data?.elementData?.width + 'px ' + template?.data?.elementData?.style + ' ' + template?.data?.elementData?.color">
+                        </td>
+                    </tr>
+                    <tr *ngIf="template?.data?.id === 'social_link'">
+                        <td style="text-align: center;">
+                            <div class="socialLinks"
+                                [ngClass]="template?.data?.elementData?.socialBar?.direction === 'vertical' ? 'social_links_vertical' : ''"
+                                [style.gap]="template?.data?.elementData?.socialBar?.spacing + 'px'">
+                                <ng-container *ngIf="!template?.data?.elementData?.manageLinks">
+                                    <img src="assets/img/insta.svg" alt="logo">
+                                    <img src="assets/img/whatsapp.svg" alt="logo">
+                                    <img src="assets/img/fb.svg" alt="logo">
+                                    <img src="assets/img/linkedin.svg" alt="logo">
+                                    <img src="assets/img/youtube.svg" alt="logo">
+                                </ng-container>
+                                <ng-container *ngFor="let logo of template?.data?.elementData?.manageLinks?.logos">
+                                    <div class="d-inline-flex justify-content-center align-items-center flex-column">
+                                        <a *ngIf="logo.link" [href]="logo.link"><img [src]="logo.logo"
+                                                alt="logo.name"></a>
+                                        <img [style.height]="template?.data?.elementData?.socialBar?.iconSize + 'px'"
+                                            *ngIf="!logo.link" [src]="logo.logo" alt="logo.name">
+                                        <span class="d-inline-block mt-1"
+                                            *ngIf="template?.data?.elementData?.socialBar?.showText"
+                                            [style.fontSize]="template?.data?.elementData?.socialBar?.textSize  + 'px'">{{logo.name}}</span>
+                                    </div>
+                                </ng-container>
+                            </div>
+                        </td>
+                    </tr>
+                </ng-container>
+            </tbody>
+        </table>
+    </body>
+
+</html>

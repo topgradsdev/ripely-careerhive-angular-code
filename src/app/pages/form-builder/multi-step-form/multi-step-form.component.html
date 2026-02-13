@@ -1,0 +1,872 @@
+<div class="page_header">
+    <a routerLink="/admin/form-builder/form-builder-list" class="back_Link"> <svg xmlns="http://www.w3.org/2000/svg"
+            width="24" height="24" viewBox="0 0 24 24" fill="none">
+            <path d="M19 12H5" stroke="#464BA8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M12 19L5 12L12 5" stroke="#464BA8" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round" />
+        </svg> Back to Form List</a>
+    <div class=" page_header_container align-items-baseline">
+        <div class="page_heading">
+            <h4 *ngIf="!isEditFormName">{{formName}}</h4>
+            <div *ngIf="isEditFormName" class="element_main">
+                <input type="text" class="form-control" [(ngModel)]="formName" name="formbuilder"
+                    (blur)="isEditFormName = !isEditFormName" autocomplete="off">
+            </div>
+            <svg *ngxPermissionsOnly="['Form_Builder_Write']" (click)="isEditFormName = !isEditFormName" width="35"
+                height="35" viewBox="0 0 35 35" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="17.5" cy="17.5" r="17.5" fill="#F8F8F8" />
+                <path fill-rule="evenodd" clip-rule="evenodd"
+                    d="M20.7343 10.2083C21.2117 10.2083 21.6693 10.3989 22.0036 10.7357L24.2646 12.9968C24.6013 13.3335 24.7904 13.79 24.7904 14.2661C24.7904 14.7422 24.6013 15.1988 24.2646 15.5354L16.0094 23.7881C15.5001 24.3756 14.7781 24.7366 13.951 24.7933H10.207V24.0641L10.2094 20.9907C10.2715 20.2218 10.629 19.5068 11.1743 19.0264L19.4641 10.7366C19.8002 10.3984 20.2574 10.2083 20.7343 10.2083ZM13.8995 23.3368C14.2891 23.3092 14.6517 23.1279 14.9428 22.7949L20.4567 17.281L17.7191 14.5433L12.1729 20.0882C11.8775 20.3494 11.6948 20.715 11.6654 21.0494V23.3354L13.8995 23.3368ZM18.7505 13.5122L21.4879 16.2498L23.2334 14.5042C23.2966 14.4411 23.3321 14.3554 23.3321 14.2661C23.3321 14.1768 23.2966 14.0912 23.2334 14.028L20.9704 11.7649C20.9079 11.702 20.8229 11.6666 20.7343 11.6666C20.6456 11.6666 20.5606 11.702 20.4982 11.7649L18.7505 13.5122Z"
+                    fill="#2B2A35" />
+            </svg>
+        </div>
+        <div class="btn_group_header">
+           
+            <button mat-button class="theme_btn btn_primary" style="width: 190px;" (click)="saveMultiPageForm('save')">
+               <svg width="24" height="25" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M21 6.5C21 4.84315 19.6569 3.5 18 3.5C16.3431 3.5 15 4.84315 15 6.5C15 8.15685 16.3431 9.5 18 9.5C19.6569 9.5 21 8.15685 21 6.5Z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M9 18.5C9 16.8431 7.65685 15.5 6 15.5C4.34315 15.5 3 16.8431 3 18.5C3 20.1569 4.34315 21.5 6 21.5C7.65685 21.5 9 20.1569 9 18.5Z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M6 11.5L6 8.5C6 7.96957 6.21071 7.46086 6.58579 7.08579C6.96086 6.71071 7.46957 6.5 8 6.5L15 6.5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M9 18.5L21 18.5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+
+                Conditional Logic</button>
+
+
+            <button mat-button class="theme_btn btn_outline_primary" (click)="openMultiStepPreviewForm()">
+                <svg class="mr-2" width="26" height="16" viewBox="0 0 26 16" fill="none"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <g clip-path="url(#clip0_10961_35632)">
+                        <path
+                            d="M1.71049 8.61941C1.51299 8.37634 1.34741 8.16154 1.21534 7.98461C1.33889 7.81088 1.49333 7.60114 1.67769 7.36437C2.23421 6.64964 3.05735 5.69635 4.12007 4.7451C6.25653 2.83275 9.2782 1 13 1C16.7218 1 19.7435 2.83275 21.8799 4.7451C22.9426 5.69635 23.7658 6.64964 24.3223 7.36437C24.5067 7.60114 24.6611 7.81088 24.7847 7.98461C24.6526 8.16154 24.487 8.37634 24.2895 8.61941C23.7062 9.3373 22.8507 10.2942 21.7647 11.249C19.5757 13.1734 16.5535 15 13 15C9.44653 15 6.42433 13.1734 4.23526 11.249C3.14927 10.2942 2.29378 9.3373 1.71049 8.61941Z"
+                            stroke="#464BA8" stroke-width="2" />
+                        <circle cx="13" cy="8" r="4" stroke="#464BA8" stroke-width="2" />
+                    </g>
+                    <defs>
+                        <clippath id="clip0_10961_35632">
+                            <rect width="26" height="16" fill="white" />
+                        </clippath>
+                    </defs>
+                </svg>
+                Preview</button>
+            <!-- <button mat-button class="theme_btn btn_primary">
+                <svg class="mr-2" width="21" height="21" viewBox="0 0 21 21" fill="none"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <g clip-path="url(#clip0_12849_93628)">
+                        <circle cx="10.0625" cy="10.5" r="9.3125" stroke="white" stroke-width="1.5" />
+                        <path
+                            d="M7.54726 10.4508C7.54726 9.16938 7.54607 7.88852 7.54786 6.60706C7.54845 6.25824 7.57643 6.24189 7.87171 6.41509C10.0452 7.68928 12.2181 8.96468 14.3909 10.2395C14.4082 10.2498 14.4249 10.2601 14.4421 10.2704C14.7505 10.4593 14.7529 10.4678 14.4487 10.6483C13.5754 11.1667 12.7009 11.6838 11.8246 12.1974C10.5191 12.9629 9.21116 13.7253 7.90385 14.4878C7.55976 14.6889 7.54786 14.681 7.54726 14.2643C7.54667 12.9932 7.54726 11.722 7.54726 10.4508Z"
+                            fill="white" />
+                    </g>
+                    <defs>
+                        <clippath id="clip0_12849_93628">
+                            <rect width="21" height="21" fill="white" />
+                        </clippath>
+                    </defs>
+                </svg>
+                Activate</button> -->
+        </div>
+    </div>
+    <div class="submiter_title">
+        <div class="p"><span class="label">Submitters:</span> &nbsp; {{selectedSubmitter}}
+        </div>
+    </div>
+    <!-- <div class="submiter_title">
+        <div class="p"><span class="label">Submitters:</span> &nbsp;
+            <div class="custom_chip_list" *ngIf="!isAddSubmitter">
+                <span class="custom_chip" *ngFor="let submitter of savedSubmitters"
+                    [ngClass]="submitter.selected ? 'active' : ''" (click)="submitter.selected = !submitter.selected">
+                    <span>{{submitter.name}}</span>
+                    <svg *ngIf="!submitter.selected" class="close_icon_chip" width="17" height="18" viewBox="0 0 17 18"
+                        fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12.75 4.75L4.25 13.25" stroke="currentColor" stroke-linecap="round"
+                            stroke-linejoin="round" />
+                        <path d="M4.25 4.75L12.75 13.25" stroke="currentColor" stroke-linecap="round"
+                            stroke-linejoin="round" />
+                    </svg>
+                    <svg *ngIf="submitter.selected" class="close_icon_chip" width="17" height="18" viewBox="0 0 17 18"
+                        fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12.75 4.75L4.25 13.25" stroke="currentColor" stroke-linecap="round"
+                            stroke-linejoin="round" />
+                        <path d="M4.25 4.75L12.75 13.25" stroke="currentColor" stroke-linecap="round"
+                            stroke-linejoin="round" />
+                    </svg>
+                </span>
+            </div>
+            <a href="void:javascript(0)" (click)="isAddSubmitter = !isAddSubmitter">
+                <span *ngIf="!isAddSubmitter && !isSubmittersAdded()">Add Submitters</span>
+                <span *ngIf="!isAddSubmitter && isSubmittersAdded()">Edit</span>
+            </a>
+            <div class="custom_chip_list" *ngIf="isAddSubmitter">
+                <span class="custom_chip" *ngFor="let submitter of submitters"
+                    [ngClass]="submitter.selected ? 'active' : ''" (click)="submitter.selected = !submitter.selected">
+                    <span>{{submitter.name}}</span>
+                    <svg *ngIf="!submitter.selected" class="close_icon_chip" width="17" height="18" viewBox="0 0 17 18"
+                        fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12.75 4.75L4.25 13.25" stroke="currentColor" stroke-linecap="round"
+                            stroke-linejoin="round" />
+                        <path d="M4.25 4.75L12.75 13.25" stroke="currentColor" stroke-linecap="round"
+                            stroke-linejoin="round" />
+                    </svg>
+                    <svg *ngIf="submitter.selected" class="close_icon_chip" width="17" height="18" viewBox="0 0 17 18"
+                        fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12.75 4.75L4.25 13.25" stroke="currentColor" stroke-linecap="round"
+                            stroke-linejoin="round" />
+                        <path d="M4.25 4.75L12.75 13.25" stroke="currentColor" stroke-linecap="round"
+                            stroke-linejoin="round" />
+                    </svg>
+                </span>
+            </div>
+            <button *ngIf="isAddSubmitter" mat-icon-button (click)="saveSubmitters()">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M20 6L9 17L4 12" stroke="#26C296" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round" />
+                </svg>
+            </button>
+            <button *ngIf="isAddSubmitter" mat-icon-button (click)="removeSubmitters()">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M18 6L6 18" stroke="#F47761" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round" />
+                    <path d="M6 6L18 18" stroke="#F47761" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round" />
+                </svg>
+            </button>
+        </div>
+    </div> -->
+</div>
+<section class="form_main_container">
+    <div class="left_side_bar">
+        <!-- <mat-tab-group animationDuration="0ms" class="custom_nav_tabs"> -->
+            <!-- <mat-tab label="Steps">
+                <div class="search_header">
+                    <div class="search_container">
+                        <form autocomplete="off">
+                              <input type="text" placeholder="Search Step" name="formbuildersteps" class="form-control"
+                            [(ngModel)]="searchStep" autocomplete="new-step">
+                        </form>
+                      
+                        <button mat-button class="theme_btn btn_primary" autocomplete="off">
+                            <svg width="20" height="20" viewBox="0 0 20 20" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd" clip-rule="evenodd"
+                                    d="M8.11887 16.2377C3.63494 16.2377 0 12.6028 0 8.11886C0 3.63494 3.63494 0 8.11887 0C12.6028 0 16.2377 3.63494 16.2377 8.11886C16.2377 9.99479 15.6015 11.7221 14.5331 13.0968L20.0009 18.5647L18.5657 20L13.0979 14.5322C11.723 15.6012 9.9953 16.2377 8.11887 16.2377ZM14.2096 8.11893C14.2096 11.4819 11.4833 14.2081 8.1204 14.2081C4.75746 14.2081 2.03125 11.4819 2.03125 8.11893C2.03125 4.75599 4.75746 2.02979 8.1204 2.02979C11.4833 2.02979 14.2096 4.75599 14.2096 8.11893Z"
+                                    fill="white" />
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+                <div class="history_container">
+                    <button mat-button class="theme_btn sm-theme_btn btn_primary" (click)="openAddStepModal(false)">
+
+                        <svg class="mr-1" width="19" height="19" viewBox="0 0 19 19" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path d="M9.5 3.95825V15.0416" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" />
+                            <path d="M3.96094 9.5H15.0443" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" />
+                        </svg>
+
+                        Add Step</button>
+                    <div class="history_title">
+                        History
+                    </div>
+                    <div class="history_step_card_list">
+                        <div class="step_card history_step_card"
+                            *ngFor="let step of stepper  | filter: 'step': searchStep" [dndDraggable]="{data:step}"
+                            [dndObject]="step" [dndEffectAllowed]="'copy'" [dropZone]="'step'">
+                            <div class="sr" [style.background-color]="step.color"></div>
+                            <div class="drag_icon">
+                                <svg cdkDragHandle width="15" height="15" viewBox="0 0 15 15" fill="none"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <g clip-path="url(#clip0_10846_106651)">
+                                        <path
+                                            d="M6.87571 13.0129C6.87571 11.4041 6.87571 9.91922 6.87651 8.43435C6.87651 8.23797 6.78801 8.13335 6.58768 8.13415C5.11536 8.13737 3.64303 8.14059 2.17071 8.14542C2.15059 8.14542 2.12968 8.17359 2.07094 8.21705C2.31875 8.49471 2.56333 8.76995 2.80872 9.04439C3.11364 9.38563 3.13697 9.75423 2.86825 10.0013C2.59471 10.2524 2.2399 10.1969 1.92291 9.85322C1.37823 9.26249 0.83194 8.67418 0.291284 8.08023C-0.102141 7.64724 -0.0957042 7.36878 0.302547 6.93257C0.844008 6.33943 1.38225 5.74307 1.93015 5.15556C2.26967 4.79179 2.58827 4.75316 2.87147 5.01472C3.14019 5.2634 3.12168 5.62718 2.81354 5.97405C2.61804 6.19376 2.40885 6.40221 2.21174 6.62111C2.15381 6.6855 2.03796 6.75069 2.11117 6.85129C2.14496 6.89716 2.25519 6.90038 2.33162 6.90119C2.98733 6.90521 3.64384 6.9036 4.29954 6.9036C5.02203 6.9036 5.74532 6.89555 6.4678 6.90763C6.74618 6.91246 6.88617 6.84083 6.88375 6.52856C6.87329 5.14912 6.87973 3.76968 6.87812 2.39105C6.87812 2.30091 6.91272 2.18019 6.8218 2.1319C6.6971 2.0651 6.63676 2.20272 6.56274 2.26711C6.32137 2.47958 6.09771 2.71136 5.8483 2.91337C5.55625 3.14998 5.24167 3.13388 5.01801 2.90049C4.79193 2.66388 4.7879 2.28884 5.05341 2.03693C5.71153 1.40918 6.38413 0.795919 7.06075 0.18668C7.33993 -0.0644198 7.65049 -0.0620054 7.92967 0.190704C8.59583 0.79109 9.25798 1.3955 9.91047 2.01118C10.184 2.26952 10.2009 2.62927 9.98931 2.87474C9.76082 3.14032 9.42049 3.1532 9.09867 2.88118C8.7849 2.61559 8.49044 2.32747 8.18954 2.05142C8.07207 2.13834 8.11069 2.24055 8.11069 2.32666C8.10747 3.7061 8.11632 5.08554 8.10345 6.46418C8.10023 6.78851 8.19678 6.91245 8.5363 6.90843C9.88794 6.89314 11.2404 6.9036 12.592 6.90038C12.6934 6.90038 12.8326 6.95109 12.8873 6.84244C12.9476 6.72413 12.8084 6.66055 12.7425 6.5857C12.5301 6.34507 12.2984 6.11972 12.0964 5.87103C11.8526 5.57004 11.8728 5.23041 12.1198 5.00828C12.3796 4.77408 12.695 4.78213 12.9742 5.07749C13.6001 5.73824 14.2124 6.41267 14.8214 7.08871C15.0644 7.35832 15.0515 7.66575 14.819 7.92651C14.2051 8.61623 13.5816 9.2979 12.9452 9.9675C12.7006 10.225 12.3491 10.217 12.1141 9.9997C11.872 9.77596 11.8575 9.41702 12.0972 9.13453C12.3611 8.82387 12.6395 8.52529 12.9509 8.17842C12.8141 8.15347 12.7521 8.13335 12.6902 8.13254C11.2846 8.13093 9.87909 8.13174 8.47354 8.13013C8.25953 8.13013 8.10828 8.17922 8.10908 8.43837C8.1123 9.92324 8.11069 11.4081 8.11069 13.0185C8.45343 12.7111 8.72456 12.4705 8.99167 12.2266C9.36096 11.8902 9.72059 11.8516 9.97724 12.1252C10.2307 12.3956 10.1647 12.7795 9.81151 13.1038C9.22982 13.6382 8.65135 14.1758 8.06805 14.7086C7.64003 15.099 7.34315 15.0982 6.91272 14.7054C6.31896 14.1646 5.72842 13.6197 5.13869 13.0749C4.81043 12.7715 4.76055 12.3868 5.00916 12.1228C5.25052 11.8668 5.60854 11.8854 5.93519 12.1751C6.22241 12.4278 6.50723 12.6845 6.87571 13.0129Z"
+                                            fill="#2B2A35" />
+                                    </g>
+                                    <defs>
+                                        <clippath id="clip0_10846_106651">
+                                            <rect width="15" height="15" fill="white" />
+                                        </clippath>
+                                    </defs>
+                                </svg>
+
+                            </div>
+                            <div class="content">
+                                <p class="mb-0">{{step.name}}</p>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </mat-tab> -->
+            <!-- <mat-tab label="Components"> -->
+                <div class="d-block" style="padding: 20px 25px 0 25px !important;">
+                    <h2 class="title m-0">
+                        Form Components
+                    </h2>
+                </div>
+                <div class="search_header">
+                    <div class="search_container">
+                        <form autocomplete="off">
+                                      <input type="text" placeholder="Search Section Component" name="formbuildercomponents"
+                            class="form-control" [(ngModel)]="searchValue" autocomplete="my-component">
+                        </form>
+              
+                        <button mat-button class="theme_btn btn_primary">
+                            <svg width="20" height="20" viewBox="0 0 20 20" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd" clip-rule="evenodd"
+                                    d="M8.11887 16.2377C3.63494 16.2377 0 12.6028 0 8.11886C0 3.63494 3.63494 0 8.11887 0C12.6028 0 16.2377 3.63494 16.2377 8.11886C16.2377 9.99479 15.6015 11.7221 14.5331 13.0968L20.0009 18.5647L18.5657 20L13.0979 14.5322C11.723 15.6012 9.9953 16.2377 8.11887 16.2377ZM14.2096 8.11893C14.2096 11.4819 11.4833 14.2081 8.1204 14.2081C4.75746 14.2081 2.03125 11.4819 2.03125 8.11893C2.03125 4.75599 4.75746 2.02979 8.1204 2.02979C11.4833 2.02979 14.2096 4.75599 14.2096 8.11893Z"
+                                    fill="white" />
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+                <div class="element_section"
+                    *ngFor="let elements of draggableElements | filter: 'nested': searchValue; let m=index;">
+                    <h5>{{elements.element}} <span *ngIf="elements.info" matTooltipClass="info_primary_my_task"
+                            matTooltipPosition="above" matTooltip="{{elements.info_des}}">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path
+                                    d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z"
+                                    stroke="#464BA8" stroke-width="1.5" stroke-linecap="round"
+                                    stroke-linejoin="round" />
+                                <path d="M12 16V12" stroke="#464BA8" stroke-width="1.5" stroke-linecap="round"
+                                    stroke-linejoin="round" />
+                                <path d="M12 8H12.0113" stroke="#464BA8" stroke-width="1.5" stroke-linecap="round"
+                                    stroke-linejoin="round" />
+                            </svg>
+
+                        </span></h5>
+                    <div class="element_section_container">
+                        <!-- [draggable] [dragClass]="'active'"
+                            [dragData]="item" [dragScope]="item.type" [dragEnabled]="true" -->
+                        <div class="form_element" *ngFor="let item of elements.items; let i = index"
+                            [dndDraggable]="{data:item, m, i}" [dndObject]="item" [dndDropZone]="'componentZone'"
+                            [dndEffectAllowed]="'move'">
+                            <figure>
+                                <img src="../../../../assets/icons/element-icons/{{item.icon}}.svg" alt="icons">
+                            </figure>
+                            <span>{{item.name}}</span>
+                        </div>
+                    </div>
+                </div>
+            <!-- </mat-tab>
+        </mat-tab-group> -->
+    </div>
+    <div class="right_bar">
+        <div class="steps_container">
+            <ul class='steps'>
+                <li [ngClass]="selectedIndex === step.index ? 'active' : ''"
+                    *ngFor="let step of droppedSteps; let i = index">
+                    <button class="active" (click)="btnTabs(step.index)">{{step.index}}</button>
+                    <label class="label_title">{{step.name}}</label>
+                </li>
+            </ul>
+            <div class="steps_card">
+                <div class="d-flex align-items-center justify-content-between">
+                     <div class="steps_card_header">
+                        Pages
+                    </div>
+                    <button mat-button class="theme_btn sm-theme_btn btn_primary add-step" (click)="selectedStep = false;openAddStepModal(false)">
+
+                        <svg class="mr-1" width="19" height="19" viewBox="0 0 19 19" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path d="M9.5 3.95825V15.0416" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" />
+                            <path d="M3.96094 9.5H15.0443" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" />
+                        </svg>
+
+                        Add Page
+                    </button>
+                </div>
+                <!-- <div class="steps_card_list" droppable [dropScope]="stepsType" [dragHintClass]="'drag-hint'"
+                    (onDrop)="onStepDrop($event)">
+                    <div class="row" cdkDropList
+                        (cdkDropListDropped)="sortElement($event)" [cdkDropListData]="droppedSteps">
+                        <div class="col-12" *ngIf="droppedSteps.length === 0">
+                            <div class="drop_container">
+                                <span>Drag & drop a step here</span>
+                            </div>
+                        </div> -->
+
+                <!-- cdkDropList
+                        [cdkDropListData]="droppedSteps"
+                        (cdkDropListDropped)="onStepDrop($event)" -->
+                <div class="steps_card_list" dndDropzone (dndAllowDrop)="canDrop($event)"
+                    (dndDrop)="onStepDrop($event, -1)">
+
+                    <!-- Placeholder when empty -->
+                    <div class="col-12" *ngIf="droppedSteps?.length === 0">
+                        <div class="drop_container" style="border: none !important;">
+                            <span>To get started, add a Form Page</span>
+                        </div>
+                    </div>
+                    <!-- Inner draggable list -->
+                    <div class="row" *ngIf="droppedSteps?.length > 0">
+                        <!-- <div class="col-12" *ngFor="let step of droppedSteps; let i = index" dndDropzone cdkDrag
+                            [dropZone]="'step'" (dndDrop)="onStepDrop($event, i)">
+                            <div class="drag-hint">
+                                {{ step.label }}
+                            </div>
+                        </div> -->
+
+
+                        <!-- </div> -->
+
+                        <div class="col-md-6 col-lg-6 col-xl-4" *ngFor="let step of droppedSteps; let i = index;"
+                            dndDropzone [dropZone]="'step'" (dndDrop)="onStepDrop($event, i)">
+                            <div class="step_card" [dndDraggable]="{data:step._id}" [dragEnabled]="true" [dndObject]="step._id"
+                                [dndEffectAllowed]="'move'" [dropZone]="'step'">
+                                <div class="sr" [style.background-color]="step.color">{{step.index}}</div>
+                                <div class="drag_icon">
+                                    <svg width="15" height="15" viewBox="0 0 15 15" fill="none"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <g clip-path="url(#clip0_10846_106651)">
+                                            <path
+                                                d="M6.87571 13.0129C6.87571 11.4041 6.87571 9.91922 6.87651 8.43435C6.87651 8.23797 6.78801 8.13335 6.58768 8.13415C5.11536 8.13737 3.64303 8.14059 2.17071 8.14542C2.15059 8.14542 2.12968 8.17359 2.07094 8.21705C2.31875 8.49471 2.56333 8.76995 2.80872 9.04439C3.11364 9.38563 3.13697 9.75423 2.86825 10.0013C2.59471 10.2524 2.2399 10.1969 1.92291 9.85322C1.37823 9.26249 0.83194 8.67418 0.291284 8.08023C-0.102141 7.64724 -0.0957042 7.36878 0.302547 6.93257C0.844008 6.33943 1.38225 5.74307 1.93015 5.15556C2.26967 4.79179 2.58827 4.75316 2.87147 5.01472C3.14019 5.2634 3.12168 5.62718 2.81354 5.97405C2.61804 6.19376 2.40885 6.40221 2.21174 6.62111C2.15381 6.6855 2.03796 6.75069 2.11117 6.85129C2.14496 6.89716 2.25519 6.90038 2.33162 6.90119C2.98733 6.90521 3.64384 6.9036 4.29954 6.9036C5.02203 6.9036 5.74532 6.89555 6.4678 6.90763C6.74618 6.91246 6.88617 6.84083 6.88375 6.52856C6.87329 5.14912 6.87973 3.76968 6.87812 2.39105C6.87812 2.30091 6.91272 2.18019 6.8218 2.1319C6.6971 2.0651 6.63676 2.20272 6.56274 2.26711C6.32137 2.47958 6.09771 2.71136 5.8483 2.91337C5.55625 3.14998 5.24167 3.13388 5.01801 2.90049C4.79193 2.66388 4.7879 2.28884 5.05341 2.03693C5.71153 1.40918 6.38413 0.795919 7.06075 0.18668C7.33993 -0.0644198 7.65049 -0.0620054 7.92967 0.190704C8.59583 0.79109 9.25798 1.3955 9.91047 2.01118C10.184 2.26952 10.2009 2.62927 9.98931 2.87474C9.76082 3.14032 9.42049 3.1532 9.09867 2.88118C8.7849 2.61559 8.49044 2.32747 8.18954 2.05142C8.07207 2.13834 8.11069 2.24055 8.11069 2.32666C8.10747 3.7061 8.11632 5.08554 8.10345 6.46418C8.10023 6.78851 8.19678 6.91245 8.5363 6.90843C9.88794 6.89314 11.2404 6.9036 12.592 6.90038C12.6934 6.90038 12.8326 6.95109 12.8873 6.84244C12.9476 6.72413 12.8084 6.66055 12.7425 6.5857C12.5301 6.34507 12.2984 6.11972 12.0964 5.87103C11.8526 5.57004 11.8728 5.23041 12.1198 5.00828C12.3796 4.77408 12.695 4.78213 12.9742 5.07749C13.6001 5.73824 14.2124 6.41267 14.8214 7.08871C15.0644 7.35832 15.0515 7.66575 14.819 7.92651C14.2051 8.61623 13.5816 9.2979 12.9452 9.9675C12.7006 10.225 12.3491 10.217 12.1141 9.9997C11.872 9.77596 11.8575 9.41702 12.0972 9.13453C12.3611 8.82387 12.6395 8.52529 12.9509 8.17842C12.8141 8.15347 12.7521 8.13335 12.6902 8.13254C11.2846 8.13093 9.87909 8.13174 8.47354 8.13013C8.25953 8.13013 8.10828 8.17922 8.10908 8.43837C8.1123 9.92324 8.11069 11.4081 8.11069 13.0185C8.45343 12.7111 8.72456 12.4705 8.99167 12.2266C9.36096 11.8902 9.72059 11.8516 9.97724 12.1252C10.2307 12.3956 10.1647 12.7795 9.81151 13.1038C9.22982 13.6382 8.65135 14.1758 8.06805 14.7086C7.64003 15.099 7.34315 15.0982 6.91272 14.7054C6.31896 14.1646 5.72842 13.6197 5.13869 13.0749C4.81043 12.7715 4.76055 12.3868 5.00916 12.1228C5.25052 11.8668 5.60854 11.8854 5.93519 12.1751C6.22241 12.4278 6.50723 12.6845 6.87571 13.0129Z"
+                                                fill="#2B2A35" />
+                                        </g>
+                                        <defs>
+                                            <clippath id="clip0_10846_106651">
+                                                <rect width="15" height="15" fill="white" />
+                                            </clippath>
+                                        </defs>
+                                    </svg>
+
+                                </div>
+                                <div class="content">
+                                    <p class="mb-0">{{step.name}}</p>
+                                    <div class="icon_btn_group">
+
+                                       <div style="    display: flex;
+    align-items: center;
+    justify-content: end;">
+                                         <button class="p-0" mat-icon-button class="icon-svg" (click)="setValue(step);setPermissionPage.show();">
+                                           <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <circle cx="10" cy="10" r="10" fill="#F8F8F8"/>
+                                            <path d="M5 9.58333C5 9.58333 6.81818 6.25 10 6.25C13.1818 6.25 15 9.58333 15 9.58333C15 9.58333 13.1818 12.9167 10 12.9167C6.81818 12.9167 5 9.58333 5 9.58333Z" stroke="black" stroke-linecap="round" stroke-linejoin="round"/>
+                                            <path d="M9.99645 10.835C10.7496 10.835 11.3601 10.2753 11.3601 9.58496C11.3601 8.8946 10.7496 8.33496 9.99645 8.33496C9.24333 8.33496 8.63281 8.8946 8.63281 9.58496C8.63281 10.2753 9.24333 10.835 9.99645 10.835Z" stroke="black" stroke-linecap="round" stroke-linejoin="round"/>
+                                            </svg>
+                                        </button>
+
+
+                                          <button class="p-0" mat-icon-button [matMenuTriggerFor]="menu" class="td-btn">
+                                                <mat-icon>more_horizantal</mat-icon>
+                                            </button>
+                                            <mat-menu #menu="matMenu" class="td-menu custome_theme_menu">
+                                                <a mat-menu-item (click)="openAddStepModal(true, step)">
+                                                    <span>Rename</span>
+                                                </a>
+                                                <a mat-menu-item (click)="selectedStep = step;" data-toggle="modal"
+                                            data-target="#deleteStep">
+                                                    <span class="danger">Delete</span>
+                                                </a>
+                                             
+                                            </mat-menu>
+                                       </div>
+
+                                            
+                                        <!-- <svg (click)="openAddStepModal(true, step)" width="20" height="20"
+                                            viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path fill-rule="evenodd" clip-rule="evenodd"
+                                                d="M13.6991 1.66675C14.2447 1.66675 14.7677 1.8846 15.1497 2.2696L17.7338 4.85368C18.1185 5.23841 18.3347 5.76022 18.3347 6.30431C18.3347 6.84841 18.1185 7.37021 17.7338 7.75495L8.29922 17.1865C7.71716 17.858 6.89205 18.2705 5.9468 18.3354H1.66797V17.502L1.67068 13.9895C1.74167 13.1108 2.15019 12.2937 2.77338 11.7446L12.2475 2.2706C12.6316 1.88411 13.1541 1.66675 13.6991 1.66675ZM5.88795 16.6708C6.33314 16.6393 6.74754 16.4321 7.0803 16.0514L13.3819 9.74985L10.2532 6.62108L3.91472 12.9581C3.57709 13.2567 3.36823 13.6744 3.33464 14.0566V16.6692L5.88795 16.6708ZM11.4319 5.44271L14.5604 8.57133L16.5553 6.57643C16.6275 6.50426 16.668 6.40638 16.668 6.30431C16.668 6.20225 16.6275 6.10437 16.5553 6.0322L13.9689 3.4458C13.8975 3.37387 13.8004 3.33341 13.6991 3.33341C13.5978 3.33341 13.5006 3.37387 13.4293 3.4458L11.4319 5.44271Z"
+                                                fill="#2B2A35" />
+                                        </svg> -->
+
+                                        <!-- <svg (click)="selectedStep = step;" data-toggle="modal"
+                                            data-target="#deleteStep" width="17" height="18" viewBox="0 0 17 18"
+                                            fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path
+                                                d="M8.76675 17.8036C7.27543 17.8036 5.7838 17.7931 4.29248 17.807C3.05556 17.8184 1.9594 16.7738 1.96094 15.4781C1.96433 12.4752 1.96186 9.47191 1.96217 6.46895C1.96217 6.03736 2.23844 5.72855 2.63022 5.71991C3.0303 5.71096 3.33029 6.02903 3.33122 6.4742C3.33337 7.72672 3.33214 8.97923 3.33214 10.2318C3.33214 11.9773 3.33153 13.7224 3.33307 15.468C3.33337 15.8912 3.57269 16.23 3.96384 16.3814C4.07133 16.4231 4.18221 16.4342 4.29525 16.4342C7.27789 16.4342 10.2608 16.436 13.2435 16.4326C13.805 16.432 14.2047 16.0177 14.2051 15.4513C14.2066 12.4687 14.2063 9.4861 14.2051 6.50351C14.2051 6.22986 14.2796 5.99479 14.5164 5.83868C14.9803 5.53265 15.563 5.85164 15.6018 6.42977C15.604 6.46032 15.6034 6.49147 15.6034 6.52202C15.6034 9.49443 15.6055 12.4665 15.6021 15.439C15.6009 16.5647 14.8466 17.5056 13.7594 17.7567C13.6091 17.7913 13.4569 17.8045 13.3023 17.8045C11.7907 17.803 10.2787 17.8036 8.76675 17.8036Z"
+                                                fill="#C4C4C4" />
+                                            <path
+                                                d="M8.76702 4.33944C6.32706 4.33944 3.88742 4.33914 1.44747 4.34037C1.25158 4.34037 1.07079 4.30366 0.919869 4.16946C0.700575 3.97449 0.62758 3.68542 0.727679 3.41301C0.825622 3.14616 1.07017 2.97031 1.36831 2.96815C1.95258 2.96384 2.53685 2.96661 3.12112 2.96661C3.96688 2.96661 4.81264 2.96661 5.6584 2.96661C5.86568 2.96661 5.86661 2.9663 5.86599 2.7522C5.86507 2.36781 5.85429 1.98434 5.9855 1.61136C6.27778 0.781493 7.07889 0.198733 7.95606 0.194722C8.4892 0.192254 9.02235 0.192254 9.55518 0.194722C10.7003 0.200275 11.6354 1.14182 11.6369 2.28883C11.6372 2.46344 11.644 2.63837 11.6348 2.81236C11.628 2.93885 11.6797 2.96908 11.7965 2.96846C12.637 2.96476 13.4778 2.96661 14.3184 2.96661C14.918 2.96661 15.5177 2.96569 16.1174 2.96692C16.5372 2.96785 16.8504 3.26277 16.8501 3.65334C16.8498 4.04421 16.5378 4.33914 16.1164 4.33944C13.6672 4.33975 11.2171 4.33944 8.76702 4.33944ZM8.77379 2.9953C9.22994 2.9953 9.68608 2.99283 10.1422 2.99715C10.2516 2.99808 10.3021 2.96908 10.2971 2.85031C10.2898 2.66582 10.2984 2.48072 10.2941 2.29593C10.2854 1.92017 9.98453 1.60211 9.61216 1.59594C9.05376 1.58668 8.49475 1.5873 7.93635 1.59594C7.5726 1.60149 7.27908 1.9029 7.26522 2.26785C7.25783 2.45758 7.26738 2.64793 7.25999 2.83766C7.25537 2.95767 7.29941 2.99931 7.42045 2.99777C7.87167 2.99191 8.32258 2.9953 8.77379 2.9953Z"
+                                                fill="#C4C4C4" />
+                                            <path
+                                                d="M5.58494 13.0372C5.58032 12.8666 5.66625 12.7003 5.81132 12.5553C6.43594 11.9324 7.05563 11.3049 7.68425 10.6861C7.78404 10.588 7.77634 10.5398 7.68178 10.4464C7.04361 9.81548 6.40914 9.18058 5.77836 8.54229C5.4177 8.17734 5.52365 7.59242 5.98688 7.41194C6.26838 7.30242 6.52926 7.35888 6.74855 7.57915C7.3744 8.20788 8.00456 8.83229 8.6261 9.46564C8.73421 9.57578 8.79026 9.58102 8.90145 9.46749C9.52576 8.83013 10.1599 8.20202 10.7895 7.5699C10.986 7.37245 11.2234 7.31816 11.4822 7.39096C11.7473 7.46531 11.9032 7.65658 11.9552 7.9256C12.0045 8.1798 11.9078 8.38681 11.7307 8.5642C11.1073 9.18799 10.4867 9.81486 9.85871 10.4343C9.75645 10.5352 9.74352 10.5877 9.85347 10.6966C10.4735 11.3092 11.0864 11.9293 11.6978 12.5507C12.027 12.8854 12.0014 13.3629 11.6482 13.6249C11.3596 13.839 11.0371 13.809 10.7618 13.5348C10.2166 12.9921 9.67422 12.4464 9.1306 11.9022C9.069 11.8405 9.00802 11.7782 8.9458 11.7174C8.73205 11.5092 8.79427 11.5079 8.57744 11.7226C7.97962 12.3143 7.38549 12.9094 6.78736 13.5008C6.48552 13.7995 6.18892 13.8451 5.8917 13.6452C5.69027 13.5098 5.58494 13.3207 5.58494 13.0372Z"
+                                                fill="#C4C4C4" />
+                                        </svg> -->
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="steps_card" *ngIf="droppedSteps.length > 0">
+            <div class="steps_card_header">
+                {{selectedHeaderStepForComponent?.name}}
+            </div>
+            <div class="steps_card_list">
+                <div class="row">
+                    <!-- droppable [dropScope]="itemsType" [dragHintClass]="'drag-hint'"
+                        (onDrop)="onElementDrop($event)" -->
+                    <div class="col-12" dndDropzone (dndDrop)="onElementDrop($event)">
+                        <div cdkDropList (cdkDropListDropped)="sortDroppedElement($event)"
+                            [cdkDropListData]="droppedSteps[selectedIndex - 1]?.component">
+                            <ng-template #dynamic></ng-template>
+                        </div>
+                        <div class="drop_container" *ngIf="droppedSteps[selectedIndex - 1]?.component.length === 0">
+                            <span>Drag & drop a step here</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<div bsModal #previewMultiStepPageModal="bs-modal" class="modal ch_modal fade multi_preview" tabindex="-1" role="dialog"
+    aria-labelledby="previewMultiStepPageModal" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button mat-icon-button class="close" aria-label="Close" (click)="closeMultiStepPreviewModal()">
+                    <mat-icon>close</mat-icon>
+                </button>
+            </div>
+            <div class="modal-body pt-3" id="html_template">
+                <h2 class="modal-title" id="exampleModalLabel">{{formName}}</h2>
+                <app-preview-multi-form [multiStepFormPreviewData]="multiStepFormPreviewData"></app-preview-multi-form>
+
+
+                <div class="row preview_form_card check_box_link mt-1 m-0" *ngIf="selectedSubmitter !='Students & Employers'">
+
+                    <div class="col-md-8 col-8 mb-3 p-0" *ngIf="selectedSubmitter=='Students' || selectedSubmitter=='Employers'">
+
+                        <div class="col-12 p-0">
+                            <label class="label_title">Select Form Type</label>
+                        </div>
+                        <div class="col-12 p-0">
+                          <ng-select
+                            [items]="selectedSubmitter=='Students'
+                                        ? ['Workflow', 'Additional Student Forms', 'Incident Reporting']
+                                        : ['Workflow', 'Host Company Agreement & Assessment Form (HCAAF)', 'Incident Reporting']"
+                            [clearable]="true"
+                            [multiple]="false"
+                            [searchable]="true"
+                            placeholder="Search & Select Contact"
+                            [(ngModel)]="form_type"
+                            (change)="onFormTypeChange($event)"
+                            class="custom-ng-select">
+
+                            <ng-template ng-option-tmp let-item="item">
+                                {{ item }}
+                            </ng-template>
+                            </ng-select>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <div class="col-md-12 col-12" *ngIf="form_type=='Host Company Agreement & Assessment Form (HCAAF)'">
+
+
+                        <div class="form-group hcaaf-toogle">
+                            <label> Mark this form as a Host Company Agreement & Assessment Form (HCAAF)</label> &nbsp; &nbsp;
+                            <mat-slide-toggle color="success" [(ngModel)]="checked" name="checked"
+                                [ngModelOptions]="{standalone: true}" class="ios-toggle p-0">
+                              
+                            </mat-slide-toggle>
+                        </div>
+
+                        <div class="row p-0" *ngIf="checked">
+                            <div class="col-5">
+                                <div class="form-group d-flex align-items-center justify-content-between w-100">
+                                    <label>Select Validity Period</label>
+                                    <div class="d-flex align-items-center gap-2">
+                                        <ng-select class="select_ng_custom" style=" min-width: 150px !important;"
+                                            [searchable]="true" [multiple]="false" bindLabel="name" bindValue="staff_id"
+                                            [clearable]="false" placeholder="Select Validity Period"
+                                            [(ngModel)]="hcaaf_validation" [ngModelOptions]="{ standalone: true }">
+                                            <ng-option [value]="12">
+                                                12
+                                            </ng-option>
+                                            <ng-option [value]="18">
+                                                18
+                                            </ng-option>
+                                            <ng-option [value]="24">
+                                                24
+                                            </ng-option>
+                                        </ng-select>
+                                        <label class="mb-0 ms-2">Month</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                         <div class="form-group hcaaf-toogle mb-2"  *ngIf="checked">
+                            <label> Automatically Request Renewal of HCAAF</label> &nbsp; &nbsp;
+                            <mat-slide-toggle color="success" [(ngModel)]="autoRenewal" name="checked"
+                                [ngModelOptions]="{standalone: true}" class="ios-toggle p-0">
+                            </mat-slide-toggle>
+                        </div>
+
+                        <p class="p-tag">
+                            When enabled, the agreement form will be automatically resent to companies 1 month before expiry.<br /> The associated contact person will also be notified by email.
+                            <!-- When enabled, the agreement form will be automatically resent to companies as it nears <br /> expiry (e.g. for a 12-month validity period, the agreement form will be resent in the last 3 <br /> months). -->
+                        </p>
+
+
+                        <!-- <mat-checkbox [(ngModel)]="checked" name="checked" [ngModelOptions]="{standalone: true}"
+                            class="example-margin">
+                            Mark this form as a Host Company Agreement & Assessment Form (HCAAF)</mat-checkbox> -->
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer justify-content-right" *ngxPermissionsOnly="['Form_Builder_Write']">
+                <button [disabled]="!isSuccess" mat-button class="theme_btn btn_outline_primary"
+                    (click)="saveMultiPageForm()">
+                    <svg class="mr-2" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="M19 21H5C4.46957 21 3.96086 20.7893 3.58579 20.4142C3.21071 20.0391 3 19.5304 3 19V5C3 4.46957 3.21071 3.96086 3.58579 3.58579C3.96086 3.21071 4.46957 3 5 3H16L21 8V19C21 19.5304 20.7893 20.0391 20.4142 20.4142C20.0391 20.7893 19.5304 21 19 21Z"
+                            stroke="#464BA8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                        <path d="M17 21V13H7V21" stroke="#464BA8" stroke-width="2" stroke-linecap="round"
+                            stroke-linejoin="round" />
+                        <path d="M7 3V8H15" stroke="#464BA8" stroke-width="2" stroke-linecap="round"
+                            stroke-linejoin="round" />
+                    </svg>
+                    Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div bsModal #addStepModal="bs-modal" class="modal ch_modal fade" tabindex="-1" role="dialog"
+    aria-labelledby="addStepModal" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document" style="min-width:700px">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title" id="exampleModalLabel">{{stepHeadingForAddModal}} Page</h2>
+            </div>
+            <div class="modal-body pt-3">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label>Name</label>
+                            <input type="text" placeholder="Name" class="form-control" [(ngModel)]="step_name"
+                                maxlength="100" autocomplete="off">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer justify-content-end">
+                <button mat-button type="button" class="theme_btn btn_outline_primary"
+                    (click)="cancelAddStepModal()">Cancel</button>
+                <button *ngIf="!selectedStep" mat-button type="submit" class="theme_btn btn_primary"
+                    (click)="createStep()" [disabled]="step_name.trim() === ''">Add</button>
+                <button *ngIf="selectedStep" mat-button type="submit" class="theme_btn btn_primary"
+                    (click)="renameStep()" [disabled]="step_name.trim() === ''">Rename</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade bsModal ch_modal delete_step_modal" id="deleteStep" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header text-center justify-content-center">
+                <h2 class="modal-title" id="exampleModalLabel">Are you sure you want to delete <br>
+                    the following page?</h2>
+            </div>
+            <div class="modal-body pt-3">
+                <div class="row">
+                    <div class="col-md-12 text-center">
+                        <h3>{{selectedStep?.name}}</h3>
+                    </div>
+                </div>
+                <div class="modal-footer justify-content-center">
+                    <button mat-button type="button" class="theme_btn btn_outline_primary"
+                        data-dismiss="modal">Nevermind</button>
+                    <button mat-button type="submit" class="theme_btn btn_primary" data-dismiss="modal"
+                        (click)="deleteDroppedStep()">Delete</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<!-- Delete user group modal confim password -->
+<div bsModal #deleteAlert="bs-modal" class="modal fade bsModal ch_modal" id="deleteAlert" tabindex="-1" role="dialog"
+    aria-labelledby="deleteAlert" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" mat-icon-button id="closeModal" class="close" (click)="deleteAlert.hide()"
+                    aria-label="Close">
+                    <mat-icon>close</mat-icon>
+                </button>
+            </div>
+            <div class="modal-body pt-0 active_deactive_modal body-model">
+                <svg width="126" height="101" viewBox="0 0 126 101" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <g clip-path="url(#clip0_32945_181524)">
+                        <path
+                            d="M95.371 100.165L11.656 100.194C7.45041 100.195 3.68314 98.0063 1.57906 94.3385C0.526894 92.5044 0.000693685 90.4924 6.85071e-07 88.48C-0.000692315 86.4678 0.52438 84.4552 1.57504 82.6206L43.4059 5.91924C45.5077 2.24973 49.2735 0.0583503 53.4791 0.0568855C57.6848 0.0554207 61.452 2.24417 63.5564 5.91222L105.445 82.5939C106.495 84.4232 107.02 86.4328 107.02 88.444C107.02 90.4551 106.495 92.4674 105.444 94.3023C103.342 97.9716 99.5766 100.163 95.371 100.165ZM1.0523 88.4786C1.05217 90.3102 10.2898 86.3633 11.2468 88.0317C13.1611 91.3685 7.82944 99.1376 11.6557 99.1362C11.6557 99.1362 102.623 97.112 104.534 93.7738C105.49 92.1048 105.968 90.2737 105.967 88.443C105.967 86.6124 105.488 84.7819 104.531 83.1135L62.6416 6.43178C60.7327 3.10449 57.3057 1.11314 53.4795 1.11448C49.655 1.11581 1.05245 86.6466 1.0523 88.4786Z"
+                            fill="#3F3D56" />
+                        <path
+                            d="M77.9031 83.2491C99.0694 83.2491 116.228 65.9664 116.228 44.647C116.228 23.3277 99.0694 6.04492 77.9031 6.04492C56.7368 6.04492 39.5781 23.3277 39.5781 44.647C39.5781 65.9664 56.7368 83.2491 77.9031 83.2491Z"
+                            fill="#464BA8" />
+                        <path
+                            d="M76.3835 53.0815L69.5859 23.488L74.9271 22.3555L80.5508 52.198L76.3835 53.0815ZM81.0564 64.2961C80.0781 64.5035 79.191 64.3645 78.3948 63.8791C77.6296 63.3462 77.1488 62.6099 76.9525 61.6702C76.7561 60.7305 76.9055 59.8811 77.4006 59.1219C77.9267 58.3152 78.6789 57.8082 79.6572 57.6008C80.5963 57.4017 81.4484 57.5685 82.2136 58.1014C83.0098 58.5868 83.506 59.2994 83.7024 60.2391C83.8988 61.1788 83.7339 62.052 83.2078 62.8586C82.7127 63.6178 81.9955 64.097 81.0564 64.2961Z"
+                            fill="white" />
+                    </g>
+                    <defs>
+                        <clipPath id="clip0_32945_181524">
+                            <rect width="126" height="101" fill="white" />
+                        </clipPath>
+                    </defs>
+                </svg>
+                <br />
+                <h4 class="mb-2">Deleting this field may impact autofill functionality in other forms.</h4>
+                <p class="mb-2">Please review the following affected forms and corresponding fields before proceeding.
+                </p>
+                <ul class="mb-2">
+                    <li class="list-style" *ngFor="let item of listLink; let i = index;">
+                        {{item.current_form_name}} - {{item.link_field_name}}
+                    </li>
+                </ul>
+            </div>
+            <div class="modal-footer justify-content-center">
+                <button mat-button type="button" class="theme_btn btn_outline_primary cancel-btn"
+                    (click)="deleteAlert.hide()">Cancel</button>
+                <button mat-button type="submit" class="theme_btn btn_primary" (click)="deleteAlert.hide()"
+                    data-toggle="modal" data-target="#passwordConfirm">Proceed</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End -->
+
+
+<!-- Delete user group modal confim password -->
+<div class="modal fade bsModal ch_modal" id="passwordConfirm" tabindex="-1" role="dialog"
+    aria-labelledby="passwordConfirm" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" mat-icon-button id="closeModal" class="close" data-dismiss="modal"
+                    aria-label="Close">
+                    <mat-icon>close</mat-icon>
+                </button>
+            </div>
+            <div class="modal-body pt-0 active_deactive_modal">
+                <h4 class="mb-5">Please type your password to confirm</h4>
+                <!-- <div class="form-group mb-0 pt-2">
+          <label>Current Password</label>
+          <input type="text" class="form-control" [(ngModel)]="password">
+        </div> -->
+                <div class="form-group position-relative">
+                    <label for="exampleInputPassword1">Password</label>
+                    <input [type]="pass" id="exampleInputPassword1" class="form-control" placeholder="Password"
+                        autocomplete="current-password" required aria-required="true" [(ngModel)]="password"
+                        aria-describedby="passwordHelpBlock">
+
+                    <!-- Show password button -->
+                    <span class="eye_icon" *ngIf="pass == 'text'" (click)="onEyeClick('pass', 'password')" role="button"
+                        tabindex="0" aria-label="Hide password">
+                        <svg width="20" height="13" viewBox="0 0 20 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M1.29565 6.7632C1.1361 6.56013 1.00404 6.38224 0.900947 6.23866C0.997612 6.09726 1.1211 5.92302 1.27053 5.72458C1.69179 5.16511 2.31455 4.41936 3.11828 3.6754C4.7353 2.17866 7.01653 0.75 9.82143 0.75C12.6263 0.75 14.9076 2.17866 16.5246 3.6754C17.3283 4.41936 17.9511 5.16511 18.3723 5.72458C18.5218 5.92302 18.6452 6.09726 18.7419 6.23866C18.6388 6.38224 18.5068 6.56013 18.3472 6.7632C17.9058 7.32498 17.2587 8.07347 16.4375 8.82004C14.7807 10.3262 12.4992 11.75 9.82143 11.75C7.14368 11.75 4.86212 10.3262 3.2054 8.82004C2.38417 8.07347 1.73706 7.32498 1.29565 6.7632Z"
+                                stroke="#545465" stroke-width="1.5" />
+                            <circle cx="9.82143" cy="6.24965" r="2.82143" stroke="#545465" stroke-width="1.5" />
+                        </svg>
+                    </span>
+
+                    <!-- Hide password button -->
+                    <span *ngIf="pass == 'password'" class="eye_icon pswrd_hide" (click)="onEyeClick('pass', 'text')"
+                        role="button" tabindex="0" aria-label="Show password">
+                        <svg width="20" height="16" viewBox="0 0 20 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M1.30849 8.89459C1.14302 8.68399 1.00656 8.49996 0.900682 8.35228C0.999999 8.20676 1.12767 8.0264 1.28274 7.82046C1.71202 7.25034 2.34663 6.49038 3.16572 5.73222C4.81343 4.20707 7.1393 2.75 10 2.75C12.8607 2.75 15.1866 4.20707 16.8343 5.73222C17.6534 6.49038 18.288 7.25034 18.7173 7.82046C18.8723 8.0264 19 8.20676 19.0993 8.35228C18.9934 8.49996 18.857 8.68399 18.6915 8.89459C18.2417 9.46703 17.5824 10.2297 16.7455 10.9905C15.0575 12.525 12.7313 13.9773 10 13.9773C7.26867 13.9773 4.94248 12.525 3.2545 10.9905C2.41765 10.2297 1.75826 9.46703 1.30849 8.89459Z"
+                                stroke="#545465" stroke-width="1.5" />
+                            <circle cx="10.0001" cy="8.36293" r="2.88636" stroke="#545465" stroke-width="1.5" />
+                            <rect x="2.1875" y="1.44922" width="1.52727" height="20.3636"
+                                transform="rotate(-45 2.1875 1.44922)" fill="#545465" />
+                        </svg>
+                    </span>
+                </div>
+            </div>
+            <div class="modal-footer justify-content-center">
+                <!-- <button mat-button type="button" class="theme_btn btn_outline_primary" data-dismiss="modal">Cancel</button>
+        <button mat-button type="submit" class="theme_btn btn_danger" data-dismiss="modal" (click)="removeComponent(deleteResult)">Delete</button> -->
+
+
+                <button mat-button type="button" class="theme_btn btn_outline_primary cancel-btn"
+                    data-dismiss="modal">Cancel</button>
+                <button mat-button type="submit" class="theme_btn btn_primary" (click)="removeComponent(deleteResult)"
+                    data-dismiss="modal">Confirm</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End -->
+
+
+<!-- Delete user group modal confim password -->
+<div bsModal #alreadyExist="bs-modal" class="modal fade bsModal ch_modal" id="alreadyExist" tabindex="-1" role="dialog"
+    aria-labelledby="alreadyExist" aria-hidden="true"  data-bs-backdrop="static" 
+     data-bs-keyboard="false" [config]="{ backdrop: 'static', keyboard: false }">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" mat-icon-button id="closeModal" class="close" (click)="alreadyExist.hide()"
+                    aria-label="Close">
+                    <mat-icon>close</mat-icon>
+                </button>
+            </div>
+            <div class="modal-body pt-0 active_deactive_modal body-model">
+               <svg width="126" height="101" viewBox="0 0 126 101" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <g clip-path="url(#clip0_6768_255077)">
+                <path d="M95.371 100.166L11.656 100.196C7.45041 100.197 3.68314 98.008 1.57906 94.3402C0.526894 92.5061 0.000693685 90.4941 6.85071e-07 88.4817C-0.000692315 86.4695 0.52438 84.4569 1.57504 82.6223L43.4059 5.92095C45.5077 2.25144 49.2735 0.0600592 53.4791 0.0585945C57.6848 0.0571297 61.452 2.24588 63.5564 5.91393L105.445 82.5956C106.495 84.4249 107.02 86.4345 107.02 88.4457C107.02 90.4568 106.495 92.4692 105.444 94.304C103.342 97.9733 99.5766 100.165 95.371 100.166ZM1.0523 88.4803C1.05217 90.312 10.2898 86.365 11.2468 88.0334C13.1611 91.3702 7.82944 99.1393 11.6557 99.138C11.6557 99.138 102.623 97.1137 104.534 93.7756C105.49 92.1065 105.968 90.2754 105.967 88.4447C105.967 86.6141 105.488 84.7836 104.531 83.1152L62.6416 6.43349C60.7327 3.1062 57.3057 1.11485 53.4795 1.11619C49.655 1.11752 1.05245 86.6483 1.0523 88.4803Z" fill="#3F3D56"/>
+                <path d="M77.9031 83.2511C99.0694 83.2511 116.228 65.9683 116.228 44.649C116.228 23.3296 99.0694 6.04688 77.9031 6.04688C56.7368 6.04688 39.5781 23.3296 39.5781 44.649C39.5781 65.9683 56.7368 83.2511 77.9031 83.2511Z" fill="#464BA8"/>
+                <path d="M76.3835 53.0796L69.5859 23.486L74.9271 22.3536L80.5508 52.196L76.3835 53.0796ZM81.0564 64.2942C80.0781 64.5016 79.191 64.3626 78.3948 63.8771C77.6296 63.3443 77.1488 62.608 76.9525 61.6683C76.7561 60.7286 76.9055 59.8791 77.4006 59.1199C77.9267 58.3133 78.6789 57.8062 79.6572 57.5988C80.5963 57.3997 81.4484 57.5666 82.2136 58.0995C83.0098 58.5849 83.506 59.2975 83.7024 60.2372C83.8988 61.1769 83.7339 62.05 83.2078 62.8567C82.7127 63.6159 81.9955 64.0951 81.0564 64.2942Z" fill="white"/>
+                </g>
+                <defs>
+                <clipPath id="clip0_6768_255077">
+                <rect width="126" height="101" fill="white"/>
+                </clipPath>
+                </defs>
+                </svg>
+
+                <br />
+                <h4 class="mb-2">There is currently an existing Incident Report Form.</h4>
+                <p class="mb-2">Employer Incident Report Form V1 29 Sept
+                </p>
+                <h4 class="mb-2">Would you like to replace it?</h4>
+            </div>
+            <div class="modal-footer justify-content-center">
+                <button mat-button type="button" class="theme_btn btn_outline_primary" (click)="alreadyExist.hide();form_type='Workflow'">Cancel</button>
+                &nbsp;&nbsp;<button mat-button type="submit" class="theme_btn btn_primary" (click)="alreadyExist.hide();saveMultiPageForm()">Save & Replace</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div bsModal #setPermissionPage="bs-modal" class="modal fade bsModal ch_modal" id="alreadyExist" tabindex="-1" role="dialog"
+    aria-labelledby="alreadyExist" aria-hidden="true"  data-bs-backdrop="static" 
+     data-bs-keyboard="false" [config]="{ backdrop: 'static', keyboard: false }">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" mat-icon-button id="closeModal" class="close" (click)="setPermissionPage.hide()"
+                    aria-label="Close">
+                    <mat-icon>close</mat-icon>
+                </button>
+            </div>
+            <div class="modal-body pt-0 active_deactive_modal body-model" style="align-items: normal;">
+               <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <div class="permissions_List"> 
+                                <div class="heading">Read Access (Student Details)</div>
+                                <p class="p-tag">
+                                    When read access is disabled, the associated end user will not <br />be able to view this page.
+                                </p>
+                                <div class="row permissions_list_head">
+                                    <div class="col-6 pl-5">Users</div>
+                                    <div class="col-6">Read</div>
+                                </div>
+                                <div class="permissions_list_card">
+                                    <div class="row" *ngIf="selectedStep">
+                                        <div class="col-6 pl-5">Students</div>
+                                        <div class="col-6"> <mat-slide-toggle class="custom_switch" [(ngModel)]="student_read" [ngModelOptions]="{standalone: true}" (change)="addPermission('read', 'student', selectedStep)"></mat-slide-toggle></div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-6 pl-5">Employers</div>
+                                        <div class="col-6"> <mat-slide-toggle class="custom_switch" [(ngModel)]="employer_read" [ngModelOptions]="{standalone: true}" (change)="addPermission('read', 'employer', selectedStep)"></mat-slide-toggle></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+               </div>
+            </div>
+            <div class="modal-footer justify-content-center">
+                <button mat-button type="button" class="theme_btn btn_outline_primary" (click)="setPermissionPage.hide();form_type='Workflow'">Cancel</button>
+                &nbsp;&nbsp;<button mat-button type="submit" class="theme_btn btn_primary" (click)="saveRule()">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End -->
+
+<!-- Delete user group modal confim password -->
+<div bsModal #ruleReadSuccess="bs-modal" class="modal fade bsModal ch_modal" id="deleteAlert" tabindex="-1" role="dialog"
+    aria-labelledby="deleteAlert" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" mat-icon-button id="closeModal" class="close" (click)="selectedStep = null;ruleReadSuccess.hide()"
+                    aria-label="Close">
+                    <mat-icon>close</mat-icon>
+                </button>
+            </div>
+            <div class="modal-body pt-0 active_deactive_modal body-model">
+                <svg width="112" height="112" viewBox="0 0 112 112" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="56" cy="56" r="56" fill="#26C296"/>
+                <path d="M65.3307 49L52.4974 61.8333L46.6641 56" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+
+                <br />
+                <h4 class="mb-2">Read Permissions updated for {{selectedStep?.name}}!</h4>
+            </div>
+            <div class="modal-footer justify-content-center">
+                <button mat-button type="button" class="theme_btn btn_primary cancel-btn"
+                    (click)="selectedStep = null;ruleReadSuccess.hide()">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End -->
+ <!-- rename filter popup -->
+<div bsModal #removeLogicModel="bs-modal" class="modal fade bsModal ch_modal" id="addNewColumnPopup" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" style="max-width:700px" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <!-- <h2 class="modal-title " id="exampleModalLabel">Save as Favorite</h2> -->
+                <button mat-icon-button type="button" class="close" (click)="removeLogicModel.hide()" aria-label="Close">
+                    <mat-icon>close</mat-icon>
+                </button>
+            </div>
+            <form>
+                <div class="modal-body pt-3">
+                    <div class="row">
+                        <svg width="126" height="101" viewBox="0 0 126 101" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <g clip-path="url(#clip0_1514_66833)">
+                        <path d="M95.371 100.166L11.656 100.196C7.45041 100.197 3.68314 98.008 1.57906 94.3402C0.526894 92.5061 0.000693685 90.4941 6.85071e-07 88.4817C-0.000692315 86.4695 0.52438 84.4569 1.57504 82.6223L43.4059 5.92095C45.5077 2.25144 49.2735 0.0600592 53.4791 0.0585945C57.6848 0.0571297 61.452 2.24588 63.5564 5.91393L105.445 82.5956C106.495 84.4249 107.02 86.4345 107.02 88.4457C107.02 90.4568 106.495 92.4692 105.444 94.304C103.342 97.9733 99.5766 100.165 95.371 100.166ZM1.0523 88.4803C1.05217 90.312 10.2898 86.365 11.2468 88.0334C13.1611 91.3702 7.82944 99.1393 11.6557 99.138C11.6557 99.138 102.623 97.1137 104.534 93.7756C105.49 92.1065 105.968 90.2754 105.967 88.4447C105.967 86.6141 105.488 84.7836 104.531 83.1152L62.6416 6.43349C60.7327 3.1062 57.3057 1.11485 53.4795 1.11619C49.655 1.11752 1.05245 86.6483 1.0523 88.4803Z" fill="#3F3D56"/>
+                        <path d="M77.9031 83.2511C99.0694 83.2511 116.228 65.9683 116.228 44.649C116.228 23.3296 99.0694 6.04688 77.9031 6.04688C56.7368 6.04688 39.5781 23.3296 39.5781 44.649C39.5781 65.9683 56.7368 83.2511 77.9031 83.2511Z" fill="#464BA8"/>
+                        <path d="M76.3835 53.0796L69.5859 23.486L74.9271 22.3536L80.5508 52.196L76.3835 53.0796ZM81.0564 64.2942C80.0781 64.5016 79.191 64.3626 78.3948 63.8771C77.6296 63.3443 77.1488 62.608 76.9525 61.6683C76.7561 60.7286 76.9055 59.8791 77.4006 59.1199C77.9267 58.3133 78.6789 57.8062 79.6572 57.5988C80.5963 57.3997 81.4484 57.5666 82.2136 58.0995C83.0098 58.5849 83.506 59.2975 83.7024 60.2372C83.8988 61.1769 83.7339 62.05 83.2078 62.8567C82.7127 63.6159 81.9955 64.0951 81.0564 64.2942Z" fill="white"/>
+                        </g>
+                        <defs>
+                        <clipPath id="clip0_1514_66833">
+                        <rect width="126" height="101" fill="white"/>
+                        </clipPath>
+                        </defs>
+                        </svg>
+
+                        <h2 class="text-center mt-4">
+                           Removing this field will affect the corresponding <br /> Conditional Logic.
+                        </h2>
+                        <p class="text-center mt-2">
+                            Please review the corresponding logic before proceeding.
+                        </p>
+                    </div>
+                </div>
+                <div class="modal-footer justify-content-between">
+                    <button  (click)="removeLogicModel.hide()" mat-button type="button" class="theme_btn btn_outline_primary">Cancel</button>
+                    <button mat-button type="submit" class="theme_btn btn_primary" (click)="removeLogic(this.deleteResult)">Proceed</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

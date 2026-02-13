@@ -1,0 +1,1114 @@
+<div class="page_header">
+    <a routerLink="/admin/form-builder/form-builder-list" class="back_Link"> <svg xmlns="http://www.w3.org/2000/svg"
+            width="24" height="24" viewBox="0 0 24 24" fill="none">
+            <path d="M19 12H5" stroke="#464BA8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M12 19L5 12L12 5" stroke="#464BA8" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round" />
+        </svg> Back to Form List</a>
+    <div class="page_header_container">
+        <div>
+            <h4>{{formData?.title}}</h4>
+            <p><svg width="13" height="13" viewBox="0 0 13 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect width="13" height="13" rx="6.5" fill="#26C296" />
+                </svg>
+                {{formData?.status | titlecase}} | {{formData?.submitted}} Total Submissions</p>
+        </div>
+    </div>
+    <!-- <div class="alert alert_success custom_alert small_alert alert-dismissible fade show" role="alert">
+        <div class="alert_body">
+            <div class="content">
+                <p><svg class="mr-2" width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12.2537 1.75029C15.2761 1.77417 17.9402 2.76684 20.2497 4.71529C20.3351 4.78764 20.419 4.86361 20.4965 4.94465C20.8135 5.27675 20.8272 5.76657 20.5319 6.10735C20.2345 6.44958 19.7452 6.51542 19.3768 6.24554C19.1474 6.07769 18.9411 5.87944 18.716 5.70579C17.1064 4.46133 15.2949 3.70742 13.2633 3.53523C9.8212 3.24292 6.88786 4.34847 4.51759 6.85837C3.01003 8.45446 2.11476 10.3703 1.83105 12.5525C1.47062 15.3315 2.0764 17.8863 3.72726 20.1582C5.40201 22.4633 7.66444 23.88 10.4755 24.3495C13.3386 24.8285 15.994 24.241 18.36 22.5436C20.7092 20.8593 22.1299 18.5671 22.6178 15.7143C22.9159 13.9699 22.7603 12.2558 22.1936 10.5787C22.0113 10.0382 22.2334 9.56362 22.7336 9.40227C23.1794 9.25829 23.6484 9.49488 23.8141 9.95722C24.0956 10.7422 24.2853 11.5504 24.3902 12.3767C24.6688 14.569 24.4293 16.7062 23.5318 18.7285C21.7485 22.744 18.6979 25.2597 14.3613 26.0375C10.4147 26.7451 6.90595 25.6758 3.93859 22.9741C1.75795 20.9895 0.456653 18.5049 0.104189 15.5768C-0.385063 11.515 0.850371 8.01528 3.77648 5.15664C5.69874 3.27837 8.03283 2.1902 10.7056 1.84291C11.2195 1.77634 11.7341 1.74668 12.2537 1.75029Z" fill="#26C296"/>
+                    <path d="M26.8284 2.60412C26.8572 2.87617 26.7112 3.07421 26.542 3.26168C25.9616 3.90445 25.3812 4.54721 24.8007 5.18997C22.5619 7.6694 20.3237 10.1481 18.0848 12.6276C16.5337 14.3451 14.9833 16.0634 13.4308 17.7795C13.0841 18.1629 12.5731 18.1841 12.1871 17.8394C12.1548 17.8105 12.124 17.7788 12.0931 17.7485C10.1139 15.7758 8.13466 13.8031 6.15404 11.8319C5.98981 11.6683 5.85646 11.4921 5.83611 11.2518C5.80312 10.8621 5.97156 10.5456 6.29652 10.3849C6.60954 10.2306 6.96047 10.2856 7.24542 10.5372C7.33806 10.6189 7.4272 10.7056 7.51423 10.793C9.19796 12.4746 10.8824 14.1555 12.5612 15.8421C12.7016 15.983 12.7788 15.9943 12.9178 15.84C14.8149 13.7291 16.7176 11.6225 18.6196 9.51593C20.0977 7.87943 21.5765 6.24362 23.0553 4.60782C23.8217 3.75997 24.5874 2.91282 25.3538 2.06496C25.7307 1.64773 26.2971 1.64491 26.648 2.05721C26.7821 2.21438 26.8487 2.3941 26.8284 2.60412Z" fill="#26C296"/>
+                    </svg>
+                    235 files marked complete! <a class="undo_link"><svg width="12" height="13" viewBox="0 0 12 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M2.0519 2.25766C2.38732 2.25766 2.71991 2.26085 3.05249 2.25589C3.1584 2.25448 3.26359 2.24208 3.36878 2.2651C3.60361 2.31681 3.75875 2.51339 3.73714 2.7344C3.71518 2.95719 3.53136 3.13287 3.29688 3.13889C2.67847 3.15447 2.0597 3.1651 1.44128 3.17643C1.28792 3.17927 1.13455 3.18245 0.981541 3.17785C0.731836 3.17077 0.551907 3.00748 0.545886 2.75849C0.52676 1.98104 0.514009 1.20324 0.506571 0.425436C0.504446 0.178565 0.691459 0.00359534 0.933016 5.34348e-05C1.18272 -0.00348847 1.35663 0.169356 1.37859 0.427207C1.41082 0.801586 1.39984 1.17774 1.41472 1.58789C1.54399 1.48801 1.64813 1.40654 1.75368 1.3265C2.75603 0.564279 3.88484 0.138896 5.1408 0.0397228C8.35649 -0.214586 11.2137 1.99273 11.8587 5.05931C12.6018 8.59271 10.3375 11.9674 6.85118 12.6489C4.19511 13.1678 1.6081 12.0174 0.176466 9.72152C0.1329 9.65174 0.089689 9.5809 0.0535616 9.50688C-0.0601336 9.27347 0.0117671 9.02978 0.225698 8.91184C0.440692 8.79318 0.681541 8.85552 0.822155 9.08114C0.987562 9.34643 1.15226 9.61172 1.35309 9.85221C2.33951 11.0359 3.59086 11.7184 5.1323 11.864C7.85638 12.1215 10.3226 10.3045 10.9555 7.68882C11.7068 4.58363 9.65177 1.4749 6.49664 0.980098C4.88684 0.727561 3.43502 1.11859 2.1571 2.13618C2.11707 2.16734 2.06359 2.18895 2.0519 2.25766Z" fill="#9A9A9A"/>
+                        </svg>Undo</a>
+                </p>
+            </div>
+        </div>
+        <button mat-icon-button class="close" data-dismiss="alert" aria-label="Close">
+            <svg width="24" height="25" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M18 6.76074L6 18.7607" stroke="#2B2A35" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M6 6.76074L18 18.7607" stroke="#2B2A35" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+        </button>
+    </div> -->
+</div>
+<section>
+    <div class="row sub_header">
+        <!-- <div class="col-md-7 action_btns_header">
+            <button  mat-button class="theme_btn btn_secondary main_ac">
+                Close
+            </button>
+            <button mat-button class="theme_btn theme_link_btn">
+                <svg class="mr-2"  width="24" height="25" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path
+                        d="M4 4.5H20C21.1 4.5 22 5.4 22 6.5V18.5C22 19.6 21.1 20.5 20 20.5H4C2.9 20.5 2 19.6 2 18.5V6.5C2 5.4 2.9 4.5 4 4.5Z"
+                        stroke="#464BA8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                    <path d="M22 6.5L12 13.5L2 6.5" stroke="#464BA8" stroke-width="1.5" stroke-linecap="round"
+                        stroke-linejoin="round" />
+                </svg>
+                Email
+            </button>
+            <button mat-button class="theme_btn theme_link_btn">
+                <svg class="mr-2"  width="24" height="25" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path
+                        d="M23.1511 4.59559L23.1471 4.61258C23.0448 5.04619 22.9749 5.48086 22.9041 5.92165C22.8663 6.15631 22.8284 6.3927 22.785 6.63158L22.785 6.63163C22.7194 6.99256 22.6577 7.35426 22.596 7.7169L22.5906 7.74829C22.5307 8.10026 22.4706 8.45311 22.407 8.80557M23.1511 4.59559L17.6982 7.32088C17.535 7.29066 17.3195 7.25074 17.1059 7.35382L17.1057 7.35389C16.8219 7.49125 16.6607 7.79135 16.6987 8.10498L16.6988 8.10522C16.7185 8.26543 16.7856 8.40746 16.8979 8.5174C17.0093 8.62657 17.158 8.69707 17.3308 8.72855L17.3309 8.72857C18.7097 8.97873 20.0888 9.22809 21.4688 9.47245L21.4688 9.47246C21.7077 9.5147 21.9246 9.48929 22.096 9.36681C22.2666 9.24485 22.3635 9.04697 22.407 8.80557M23.1511 4.59559V4.57812M23.1511 4.59559V4.57812M22.407 8.80557L22.2593 8.77893L22.407 8.80549C22.407 8.80552 22.407 8.80554 22.407 8.80557ZM20.22 7.78038C20.2295 7.7831 20.2388 7.78602 20.2458 7.78818C20.263 7.79354 20.2696 7.79536 20.2739 7.7961C20.2778 7.79679 20.267 7.79403 20.2497 7.79907C20.2404 7.80179 20.2307 7.80634 20.2218 7.81291C20.213 7.81939 20.2073 7.82615 20.2039 7.83108L20.3278 7.91571L20.2038 7.83126C20.2003 7.83638 20.1963 7.84397 20.1936 7.8538C20.1909 7.86369 20.1902 7.87334 20.1908 7.88184C20.1916 7.8946 20.1952 7.90206 20.1954 7.90237C20.1955 7.90244 20.1953 7.90212 20.1949 7.90139C20.1927 7.89734 20.1885 7.89116 20.1783 7.87724L20.1763 7.87454C20.1733 7.87045 20.1697 7.86559 20.1661 7.86056C20.1648 7.85877 20.1635 7.85696 20.1623 7.85516L20.22 7.78038ZM20.22 7.78038L20.2723 7.7495L20.2197 7.7803L20.22 7.78038ZM23.1511 4.57812V4.57746C23.1511 4.48047 23.1511 4.38276 23.1503 4.28453L23.15 4.24817L23.1331 4.21599C23.117 4.18533 23.1015 4.15591 23.0865 4.12626L23.0863 4.12583M23.1511 4.57812L23.0863 4.12583M3.3625 11.1506L3.36249 11.1507C3.32409 11.3842 3.30406 11.6196 3.28348 11.8615C3.27759 11.9307 3.27165 12.0005 3.26522 12.0709L3.26521 12.071C3.24569 12.2829 3.16954 12.4676 3.03512 12.5974C2.89894 12.7289 2.71627 12.7912 2.51213 12.78C2.31497 12.7691 2.14109 12.6877 2.02008 12.5448C1.89964 12.4026 1.84142 12.2114 1.85103 11.997L1.85103 11.997C1.88897 11.1568 2.02742 10.3315 2.26163 9.52433L2.26163 9.52433C2.7219 7.93834 3.4965 6.52972 4.60405 5.31401L4.60406 5.314C6.37943 3.36559 8.56877 2.22504 11.1668 1.92342C13.6916 1.6289 16.0192 2.2253 18.1382 3.6244L18.0555 3.74957L18.1382 3.6244C19.431 4.47813 20.4668 5.59465 21.278 6.91939C21.3768 6.35913 21.4748 5.79861 21.5729 5.23799C21.6171 4.98539 21.6613 4.73277 21.7055 4.48015C21.7055 4.4801 21.7055 4.48004 21.7056 4.47999L21.8533 4.50588L3.3625 11.1506ZM3.3625 11.1506C3.75066 8.78526 4.83207 6.8275 6.67211 5.32017C8.11681 4.13685 9.77359 3.4732 11.6193 3.32571C12.9838 3.21681 14.3131 3.40497 15.595 3.91564L3.3625 11.1506ZM23.0863 4.12583C22.9387 3.83606 22.6881 3.66426 22.381 3.6982L23.0863 4.12583ZM18.2623 7.42348C18.0819 7.39068 17.9014 7.35787 17.7209 7.32508L15.595 3.91565C17.5258 4.68522 19.0252 5.96384 20.1022 7.75702C19.4888 7.64645 18.8757 7.53499 18.2623 7.42348Z"
+                        fill="#464BA8" stroke="#464BA8" stroke-width="0.3" />
+                    <path
+                        d="M11.4648 23.1499L11.454 23.1483C11.4035 23.1409 11.3529 23.1335 11.3022 23.1261C11.1712 23.107 11.0395 23.0878 10.9084 23.0675L10.9084 23.0675C10.7068 23.0364 10.5345 22.9522 10.4162 22.8163C10.2966 22.6791 10.2431 22.5015 10.259 22.3074L11.4648 23.1499ZM11.4648 23.1499H11.4758H11.4648ZM11.0369 21.6403L11.037 21.6403C11.3357 21.656 11.6327 21.6905 11.9256 21.7331L11.9257 21.7331C12.2442 21.7796 12.4624 22.0172 12.5187 22.3165C12.5187 22.3165 12.5187 22.3165 12.5187 22.3165L12.3713 22.3442L11.0369 21.6403ZM11.0369 21.6403C10.6141 21.6181 10.292 21.9027 10.259 22.3074L11.0369 21.6403Z"
+                        fill="#464BA8" stroke="#464BA8" stroke-width="0.3" />
+                    <path
+                        d="M11.732 7.92032L11.7322 7.92032C11.9405 7.92106 12.1245 7.99085 12.2553 8.13361C12.3847 8.27476 12.4464 8.47001 12.4471 8.69293M11.732 7.92032L11.3777 13.7742C12.3617 13.7721 13.3455 13.772 14.3294 13.7719C14.9033 13.7718 15.4773 13.7717 16.0515 13.7713C16.2068 13.7712 16.3551 13.7263 16.4852 13.6343L16.4854 13.6342C16.739 13.4544 16.85 13.1445 16.7628 12.8481L16.7628 12.848C16.7171 12.6933 16.6351 12.5629 16.5108 12.4722C16.387 12.3819 16.2342 12.3404 16.0633 12.34H16.0632C15.2784 12.3379 14.4937 12.3381 13.7091 12.3383C13.3525 12.3383 12.996 12.3384 12.6395 12.3383H12.6395C12.5508 12.3383 12.4968 12.3381 12.4591 12.3339C12.4572 12.3337 12.4554 12.3335 12.4537 12.3333C12.4535 12.332 12.4534 12.3307 12.4532 12.3293C12.449 12.2923 12.4488 12.2392 12.4488 12.1513C12.4488 11.8481 12.4489 11.5448 12.4491 11.2415C12.4495 10.3922 12.4499 9.5425 12.4471 8.69293M11.732 7.92032C11.5238 7.91982 11.3417 7.98848 11.2138 8.13399C11.0885 8.27657 11.0322 8.47349 11.0317 8.69767L11.732 7.92032ZM12.4471 8.69293L12.2971 8.6934M12.4471 8.69293L12.2971 8.6934M12.2971 8.6934C12.2999 9.54268 12.2995 10.392 12.2991 11.2412C12.2989 11.5446 12.2988 11.8479 12.2988 12.1513C12.2988 12.4883 12.2992 12.4883 12.6395 12.4883L11.7316 8.07031C12.0805 8.07157 12.2959 8.30042 12.2971 8.6934ZM11.0297 13.3841L11.0297 13.3839C11.0322 12.7857 11.0319 12.1875 11.0315 11.5887C11.0314 11.389 11.0313 11.1893 11.0313 10.9895C11.0313 10.7605 11.0312 10.5315 11.0311 10.3024C11.0309 9.76761 11.0306 9.23259 11.0317 8.69769L11.0297 13.3841ZM11.0297 13.3841C11.0295 13.4541 11.0324 13.5572 11.0876 13.641M11.0297 13.3841L11.0876 13.641M11.0876 13.641C11.154 13.7419 11.2637 13.7745 11.3777 13.7742L11.0876 13.641Z"
+                        fill="#464BA8" stroke="#464BA8" stroke-width="0.3" />
+                    <path
+                        d="M16.3498 21.8787L16.3498 21.8788C16.3495 22.0256 16.319 22.162 16.2439 22.2782C16.1681 22.3954 16.0555 22.4787 15.9151 22.5333L15.9149 22.5333C15.6116 22.6508 15.2995 22.7568 14.9754 22.8292C14.9754 22.8292 14.9753 22.8293 14.9753 22.8293L14.9426 22.6829C14.6668 22.7447 14.4087 22.6002 14.3019 22.3287L16.3498 21.8787ZM16.3498 21.8787C16.3503 21.4624 16.0142 21.0733 15.5673 21.1569L16.3498 21.8787ZM14.4601 21.527C14.1519 21.6891 14.0451 22.087 14.1624 22.3838L15.5672 21.1569C15.189 21.2274 14.8107 21.3425 14.4601 21.527Z"
+                        fill="#464BA8" stroke="#464BA8" stroke-width="0.3" />
+                    <path
+                        d="M21.2359 15.9323V15.9325C21.7492 15.9325 22.09 16.4221 21.9098 16.891L21.9098 16.891C21.7862 17.2121 21.6282 17.5142 21.4577 17.8043L21.4577 17.8044C21.2794 18.1078 20.9083 18.2396 20.5939 18.1042C20.5939 18.1042 20.5938 18.1042 20.5938 18.1041L20.6532 17.9664C20.4066 17.8603 20.236 17.5571 20.3174 17.3011L21.2359 15.9323ZM21.2359 15.9323L21.2284 15.9327C21.0604 15.9411 20.8258 15.9995 20.6992 16.2081L20.6991 16.2082L20.6952 16.2147C20.5019 16.5338 20.2954 16.8747 20.1744 17.2557L21.2359 15.9323Z"
+                        fill="#464BA8" stroke="#464BA8" stroke-width="0.3" />
+                    <path
+                        d="M2.53394 15.8579C2.43613 15.5556 2.34777 15.249 2.2779 14.9391L3.74772 15.4993C3.6758 15.1913 3.58691 14.8869 3.48751 14.5886L3.48749 14.5885C3.36644 14.2257 2.98483 14.0223 2.63437 14.1207L2.63431 14.1207C2.26123 14.2256 2.04239 14.5747 2.13154 14.972L2.13158 14.9721C2.20271 15.2876 2.29243 15.5987 2.39119 15.904M2.53394 15.8579L2.39115 15.9039C2.39116 15.9039 2.39117 15.9039 2.39119 15.904M2.53394 15.8579C2.61202 16.1005 2.80025 16.2183 3.05094 16.2166L2.39119 15.904M2.53394 15.8579L2.39122 15.9041C2.39121 15.904 2.3912 15.904 2.39119 15.904"
+                        fill="#464BA8" stroke="#464BA8" stroke-width="0.3" />
+                    <path
+                        d="M8.37307 20.7961L8.37312 20.7961C8.74149 21.0021 8.89093 21.4108 8.71067 21.783C8.62425 21.9615 8.4797 22.0883 8.30202 22.1426C8.1252 22.1967 7.92835 22.1753 7.74074 22.0826L8.37307 20.7961ZM8.37307 20.7961C8.23774 20.7205 8.0998 20.6462 7.96308 20.5725C7.88264 20.5291 7.80262 20.486 7.72381 20.443C7.61619 20.3839 7.48729 20.3345 7.34782 20.3402C7.0078 20.3383 6.73232 20.5267 6.63592 20.8421C6.54066 21.1509 6.66089 21.4782 6.95597 21.6557L6.95601 21.6557M8.37307 20.7961L6.95601 21.6557M6.95601 21.6557C7.21148 21.8093 7.47446 21.9511 7.74069 22.0826L6.95601 21.6557Z"
+                        fill="#464BA8" stroke="#464BA8" stroke-width="0.3" />
+                    <path
+                        d="M4.49734 19.5725L4.49727 19.5724C4.25866 19.3278 4.04905 19.0592 3.86191 18.7767C3.76166 18.6256 3.71825 18.4594 3.73711 18.2965C3.75596 18.1337 3.8358 17.9854 3.96237 17.8684L3.96241 17.8683C4.20654 17.6427 4.60264 17.5854 4.8775 17.8306L4.49734 19.5725ZM4.49734 19.5725C4.70348 19.7836 5.00746 19.8469 5.26685 19.7333L4.49734 19.5725ZM5.6134 18.7434L5.6134 18.7434C5.68193 18.8531 5.68461 18.9809 5.68264 19.0665C5.68515 19.3587 5.53024 19.6181 5.26689 19.7333L5.6134 18.7434ZM5.6134 18.7434L5.613 18.7428M5.6134 18.7434L5.613 18.7428M5.613 18.7428C5.40754 18.4176 5.17479 18.0957 4.87752 17.8306L5.613 18.7428Z"
+                        fill="#464BA8" stroke="#464BA8" stroke-width="0.3" />
+                    <path
+                        d="M18.7604 20.949L18.7603 20.9491C18.4546 21.1911 18.057 21.1673 17.7981 20.8905L17.9077 20.7881L17.7983 20.8906C17.5427 20.6179 17.5213 20.173 17.81 19.8914C18.0105 19.6958 18.232 19.5207 18.4457 19.3517C18.4898 19.3168 18.5337 19.2821 18.5769 19.2476L18.577 19.2475C18.7014 19.1484 18.8514 19.1264 18.9693 19.1321C19.1197 19.1305 19.2549 19.166 19.3683 19.2407C19.4829 19.3161 19.5652 19.425 19.6194 19.5531C19.6195 19.5531 19.6195 19.5532 19.6195 19.5532L19.4813 19.6116C19.5705 19.8221 19.5463 20.033 19.3794 20.2084L18.7604 20.949ZM18.7604 20.949C19.0065 20.7539 19.2611 20.5506 19.4881 20.3118L18.7604 20.949Z"
+                        fill="#464BA8" stroke="#464BA8" stroke-width="0.3" />
+                </svg>
+                Mark as Pending
+            </button>
+            <button mat-button class="theme_btn theme_link_btn">
+                <svg class="mr-2"  width="25" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <g clip-path="url(#clip0_13004_85420)">
+                        <path
+                            d="M11.0032 2.00025C13.5938 2.02072 15.8773 2.87158 17.8568 4.54168C17.93 4.60369 18.002 4.66881 18.0684 4.73827C18.3401 5.02292 18.3519 5.44277 18.0988 5.73487C17.8438 6.02821 17.4245 6.08464 17.1087 5.85332C16.9121 5.70944 16.7352 5.53952 16.5423 5.39068C15.1627 4.324 13.6099 3.67779 11.8686 3.53019C8.91817 3.27965 6.40388 4.22726 4.37222 6.3786C3.08002 7.74668 2.31265 9.38887 2.06947 11.2593C1.76053 13.6413 2.27977 15.8311 3.6948 17.7784C5.13029 19.7543 7.06952 20.9685 9.47897 21.371C11.9331 21.7816 14.2092 21.278 16.2371 19.8231C18.2508 18.3794 19.4685 16.4147 19.8866 13.9694C20.1422 12.4742 20.0089 11.005 19.5231 9.56748C19.3668 9.10421 19.5572 8.69739 19.9859 8.55909C20.368 8.43568 20.77 8.63847 20.9121 9.03476C21.1534 9.70763 21.3159 10.4004 21.4059 11.1086C21.6447 12.9877 21.4394 14.8196 20.6702 16.553C19.1416 19.9949 16.5268 22.1512 12.8097 22.8179C9.42686 23.4244 6.41939 22.5078 3.87594 20.1921C2.00681 18.491 0.891417 16.3614 0.589305 13.8516C0.169946 10.37 1.22889 7.37024 3.73698 4.91998C5.38464 3.31004 7.38528 2.37731 9.67625 2.07963C10.1167 2.02258 10.5578 1.99715 11.0032 2.00025Z"
+                            fill="#464BA8" />
+                        <path
+                            d="M23.4969 2.7321C23.5215 2.96529 23.3964 3.13504 23.2514 3.29573C22.7539 3.84667 22.2564 4.39761 21.7589 4.94855C19.8398 7.07377 17.9214 9.19839 16.0023 11.3236C14.6728 12.7958 13.3439 14.2686 12.0132 15.7396C11.7161 16.0682 11.2781 16.0863 10.9472 15.7909C10.9196 15.7662 10.8931 15.739 10.8666 15.713C9.17015 14.0221 7.47368 12.3313 5.77601 10.6416C5.63524 10.5014 5.52094 10.3504 5.50349 10.1444C5.47522 9.81034 5.6196 9.5391 5.89813 9.40137C6.16644 9.26907 6.46723 9.31619 6.71148 9.53186C6.79088 9.60193 6.86729 9.67624 6.94188 9.75114C8.38508 11.1925 9.82889 12.6333 11.2679 14.0789C11.3882 14.1997 11.4544 14.2094 11.5735 14.0771C13.1996 12.2678 14.8305 10.4622 16.4608 8.65651C17.7277 7.25379 18.9952 5.85168 20.2628 4.44956C20.9197 3.72283 21.576 2.9967 22.2329 2.26997C22.556 1.91234 23.0415 1.90992 23.3423 2.26332C23.4572 2.39804 23.5143 2.55208 23.4969 2.7321Z"
+                            fill="#464BA8" />
+                    </g>
+                    <defs>
+                        <clipPath id="clip0_13004_85420">
+                            <rect width="24" height="24" fill="white" transform="translate(0.5 0.5)" />
+                        </clipPath>
+                    </defs>
+                </svg>
+                Complete
+            </button>
+            <button mat-button class="theme_btn theme_link_btn">
+                <svg class="mr-2"  width="24" height="25" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path
+                        d="M21 15.5V19.5C21 20.0304 20.7893 20.5391 20.4142 20.9142C20.0391 21.2893 19.5304 21.5 19 21.5H5C4.46957 21.5 3.96086 21.2893 3.58579 20.9142C3.21071 20.5391 3 20.0304 3 19.5V15.5"
+                        stroke="#464BA8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                    <path d="M7 10.5L12 15.5L17 10.5" stroke="#464BA8" stroke-width="1.5" stroke-linecap="round"
+                        stroke-linejoin="round" />
+                    <path d="M12 15.5L12 3.5" stroke="#464BA8" stroke-width="1.5" stroke-linecap="round"
+                        stroke-linejoin="round" />
+                </svg>
+
+                Download (pdf)
+            </button>
+            <button mat-button class="theme_btn theme_link_btn theme_link_btn_danger" data-toggle="modal"
+                data-target="#form_delete">
+                <svg class="mr-2" width="24" height="25" viewBox="0 0 24 25" fill="none"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path
+                        d="M12.0028 22.7671C10.2449 22.7671 8.48666 22.7547 6.72877 22.7711C5.27076 22.7845 3.97866 21.5527 3.98047 20.0248C3.98446 16.4836 3.98156 12.9421 3.98192 9.40096C3.98192 8.89202 4.30758 8.52786 4.76938 8.51767C5.24099 8.50712 5.5946 8.88219 5.59569 9.40715C5.59823 10.8841 5.59678 12.3611 5.59678 13.8381C5.59678 15.8965 5.59605 17.9544 5.59786 20.0128C5.59823 20.5119 5.88032 20.9114 6.34139 21.09C6.4681 21.1391 6.5988 21.1522 6.73204 21.1522C10.2478 21.1522 13.764 21.1544 17.2798 21.1504C17.9416 21.1496 18.4129 20.6611 18.4132 19.9931C18.415 16.476 18.4147 12.9589 18.4132 9.44171C18.4132 9.11902 18.5011 8.84181 18.7803 8.65773C19.327 8.29685 20.0139 8.67301 20.0597 9.35476C20.0622 9.39077 20.0615 9.42752 20.0615 9.46353C20.0615 12.9687 20.064 16.4734 20.06 19.9786C20.0586 21.3061 19.1695 22.4156 17.8879 22.7118C17.7107 22.7525 17.5314 22.7681 17.3491 22.7681C15.5673 22.7663 13.785 22.7671 12.0028 22.7671Z"
+                        fill="#F47761" />
+                    <path
+                        d="M12.001 6.88973C9.1249 6.88973 6.24917 6.88937 3.37307 6.89083C3.14217 6.89083 2.92906 6.84753 2.75117 6.68928C2.49267 6.45937 2.40663 6.11849 2.52462 5.79727C2.64007 5.48258 2.92833 5.27522 3.27977 5.27268C3.96848 5.26758 4.65719 5.27086 5.34589 5.27086C6.34283 5.27086 7.33977 5.27086 8.33671 5.27086C8.58105 5.27086 8.58213 5.27049 8.58141 5.01802C8.58032 4.56474 8.56761 4.11254 8.72227 3.67272C9.06681 2.69412 10.0111 2.00691 11.0451 2.00218C11.6735 1.99927 12.302 1.99927 12.93 2.00218C14.2799 2.00873 15.3821 3.11903 15.3839 4.47161C15.3843 4.67751 15.3923 4.88378 15.3814 5.08896C15.3734 5.23812 15.4344 5.27377 15.572 5.27304C16.5627 5.26867 17.5539 5.27086 18.5446 5.27086C19.2515 5.27086 19.9583 5.26977 20.6652 5.27122C21.16 5.27231 21.5293 5.6201 21.5289 6.08066C21.5285 6.54158 21.1608 6.88937 20.6641 6.88973C17.7771 6.8901 14.8891 6.88973 12.001 6.88973ZM12.009 5.30469C12.5467 5.30469 13.0843 5.30178 13.622 5.30687C13.7509 5.30796 13.8104 5.27377 13.8046 5.13371C13.7959 4.91616 13.8061 4.69788 13.801 4.47997C13.7908 4.03687 13.4361 3.6618 12.9972 3.65453C12.339 3.64361 11.6801 3.64434 11.0218 3.65453C10.5931 3.66108 10.2471 4.0165 10.2308 4.44687C10.222 4.6706 10.2333 4.89506 10.2246 5.11879C10.2191 5.26031 10.271 5.30942 10.4137 5.3076C10.9456 5.30069 11.4771 5.30469 12.009 5.30469Z"
+                        fill="#F47761" />
+                    <path
+                        d="M8.2452 17.146C8.23975 16.9448 8.34105 16.7487 8.51204 16.5778C9.24831 15.8433 9.97877 15.1033 10.7198 14.3735C10.8374 14.2579 10.8283 14.2011 10.7169 14.0909C9.96461 13.3469 9.21673 12.5982 8.4732 11.8455C8.04806 11.4152 8.17295 10.7254 8.71898 10.5126C9.05081 10.3835 9.35832 10.45 9.61681 10.7098C10.3545 11.4512 11.0973 12.1875 11.83 12.9344C11.9574 13.0643 12.0235 13.0704 12.1545 12.9366C12.8904 12.185 13.638 11.4443 14.38 10.6989C14.6117 10.466 14.8916 10.402 15.1965 10.4879C15.5091 10.5755 15.6928 10.8011 15.7542 11.1183C15.8123 11.4181 15.6983 11.6622 15.4895 11.8714C14.7547 12.607 14.0232 13.3462 13.2829 14.0767C13.1624 14.1956 13.1471 14.2575 13.2767 14.3859C14.0076 15.1084 14.73 15.8396 15.4507 16.5723C15.8388 16.967 15.8086 17.5302 15.3922 17.839C15.0521 18.0915 14.6719 18.0562 14.3474 17.7328C13.7048 17.0929 13.0654 16.4493 12.4246 15.8076C12.352 15.7349 12.2802 15.6614 12.2068 15.5897C11.9549 15.3441 12.0282 15.3427 11.7726 15.5959C11.0679 16.2936 10.3676 16.9954 9.66255 17.6928C9.30676 18.0449 8.95714 18.0988 8.6068 17.863C8.36936 17.7033 8.2452 17.4803 8.2452 17.146Z"
+                        fill="#F47761" />
+                </svg>
+                Delete
+            </button>
+        </div> -->
+        <div class="col-md-12 text-right">
+            <div class="d-inline-flex align-items-center">
+                <div class="search-container">
+                    <svg class="icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20"
+                        fill="none">
+                        <path
+                            d="M9.16667 15.8333C12.8486 15.8333 15.8333 12.8486 15.8333 9.16667C15.8333 5.48477 12.8486 2.5 9.16667 2.5C5.48477 2.5 2.5 5.48477 2.5 9.16667C2.5 12.8486 5.48477 15.8333 9.16667 15.8333Z"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                        <path d="M17.5 17.5L13.875 13.875" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                            stroke-linejoin="round" />
+                    </svg>
+                    <input type="text" class="form-control" placeholder="Search Keywords" [(ngModel)]="searchForm"
+                    (input)="searchForms()">
+                </div>
+                <button mat-button class="theme_btn btn_primary ml-4" data-toggle="modal" data-target="#filterForm">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="23" viewBox="0 0 24 23" fill="none">
+                        <path d="M22 3.10669H2L10 11.9629V18.0854L14 19.9578V11.9629L22 3.10669Z" stroke="white"
+                            stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg> Filters</button>
+            </div>
+        </div>
+    </div>
+    <div class="table-responsive">
+        <table mat-table [dataSource]="formList" matSort #formTbSort="matSort" class="ch_table">
+            <!-- Checkbox Column -->
+            <ng-container matColumnDef="checkbox">
+                <th mat-header-cell *matHeaderCellDef>
+                    <mat-checkbox class="example-margin"></mat-checkbox>
+                </th>
+                <td mat-cell *matCellDef="let row"> <mat-checkbox class="example-margin"></mat-checkbox> </td>
+            </ng-container>
+            <!-- FORM ID Column -->
+            <ng-container matColumnDef="form_id">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Form Id</th>
+                <td mat-cell *matCellDef="let row">
+                   {{formId}}
+                </td>
+            </ng-container>
+
+            <!-- Submitter Name Column -->
+            <ng-container matColumnDef="submitter_name">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Submitter Name</th>
+                <td mat-cell *matCellDef="let row">
+                    <a class="link_student_link" routerLink="/admin/wil/view-student-profile">{{row.submitter_name}}</a>
+                </td>
+            </ng-container>
+
+            <!-- Submitted at Column -->
+            <ng-container matColumnDef="submitted_at">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Submitted at</th>
+                <td mat-cell *matCellDef="let row"> {{row.submitted_at | date:'dd/MM/yyyy HH:mm:ss a'}} </td>
+            </ng-container>
+
+            <!-- Due Date Column -->
+            <!-- <ng-container matColumnDef="due_date">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Due date</th>
+                <td mat-cell *matCellDef="let row">15/10/2023 23:59:59</td>
+            </ng-container> -->
+
+            <!-- Status Column -->
+            <ng-container matColumnDef="status">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Status</th>
+                <td mat-cell *matCellDef="let row">
+                    <span class="group_badge completed">{{row.task_status}}</span>
+                </td>
+            </ng-container>
+            <!-- Files Column -->
+            <ng-container matColumnDef="file">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>forms</th>
+                <td mat-cell *matCellDef="let row">
+                    <button  data-toggle="modal"
+                    data-target="#previewMultiStepPageModalApprovaltab" class
+                    (click)="getSelectedTask(row); initializeSign();" mat-icon-button><svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M14 2H6C5.46957 2 4.96086 2.21071 4.58579 2.58579C4.21071 2.96086 4 3.46957 4 4V20C4 20.5304 4.21071 21.0391 4.58579 21.4142C4.96086 21.7893 5.46957 22 6 22H18C18.5304 22 19.0391 21.7893 19.4142 21.4142C19.7893 21.0391 20 20.5304 20 20V8L14 2Z"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                            <path d="M14 2V8H20" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" />
+                            <path d="M16 13H8" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" />
+                            <path d="M16 17H8" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" />
+                            <path d="M10 9H9H8" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" />
+                        </svg>
+                    </button>
+                </td>
+            </ng-container>
+
+            <!-- Action column -->
+            <ng-container matColumnDef="actions">
+                <th mat-header-cell *matHeaderCellDef class="text-center"> Actions </th>
+                <td mat-cell *matCellDef="let row" class="text-center">
+                    <button mat-icon-button [matMenuTriggerFor]="menu" class="td-btn">
+                        <mat-icon>more_horizantal</mat-icon>
+                    </button>
+                    <mat-menu #menu="matMenu" class="td-menu custome_theme_menu">
+                        <a mat-menu-item>
+                            <span>Send Email</span>
+                        </a>
+                        <!-- <a mat-menu-item>
+                            <span>Mark Complete</span>
+                        </a> -->
+                        <a mat-menu-item>
+                            <span>Download</span>
+                        </a>
+                        <!-- <a mat-menu-item class="danger" data-toggle="modal"
+                        data-target="#form_delete">
+                            <span>Delete</span>
+                        </a> -->
+                    </mat-menu>
+                </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            <tr class="mat-row no_data_in_table" *matNoDataRow>
+                <td  class="mat-cell text-center" colspan="8"><p>Currently, there are no submitted forms</p></td>
+            </tr>
+        </table>
+    </div>
+    <app-paginator [paginationObj]="paginationObj" (pagination)="getPaginationData($event)"></app-paginator>
+</section>
+
+<div class="modal fade bsModal ch_modal placement_confirmation_modal" id="form_delete" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" mat-icon-button id="closeModal" class="close" data-dismiss="modal"
+                    aria-label="Close">
+                    <mat-icon>close</mat-icon>
+                </button>
+            </div>
+            <div class="modal-body">
+                <img src="../../../../assets/img/form-delete.svg" alt="delete">
+                <h3>Please Confirm Submitted Form Deletion</h3>
+                <p>By confirming the deletion of the submitted form, you will erase the filled form along with any associated records.</p>
+            </div>
+            <div class="modal-footer justify-content-center">
+                <button mat-button type="button" class="theme_btn btn_secondary" data-dismiss="modal">Close</button>
+                <button mat-button type="submit" class="theme_btn btn_outline_danger" data-dismiss="modal">Delete</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade bsModal ch_modal filter_modals" id="filterForm" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header d-flex justify-content-between">
+                <button mat-icon-button class="close" data-dismiss="modal" aria-label="Close">
+                    <mat-icon>close</mat-icon>
+                </button>
+                <h2 class="modal-title">Filters</h2>
+                <button mat-button class="theme_btn btn_primary" data-dismiss="modal" (click)="searchForms()">Apply
+                    Filter</button>
+            </div>
+            <div class="modal-body pt-3 pb-5">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h3 class="filter_title">Parameters</h3>
+                    </div>
+                    <div class="col-md-5">
+                        <div class="filter_sidebar">
+                            <ul>
+                                <li *ngFor="let filter of filters"
+                                    [ngClass]="{'active': activeFilter?.name === filter.name}"
+                                    (click)="applyFilter(filter)">
+                                    <div class="check_box">
+                                        <mat-checkbox [(ngModel)]="filter.selected"></mat-checkbox>
+                                        <span class="check_box_label">{{filter.label}}</span>
+                                    </div>
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M9 18L15 12L9 6" stroke="currentColor" stroke-width="2"
+                                            stroke-linecap="round" stroke-linejoin="round" />
+                                    </svg>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-md-7">
+                        <div class="right_container">
+                            <ng-container *ngIf="activeFilter?.name === 'ASSIGNED_TO'">
+                                <h4 class="title">Select Staff Member</h4>
+                                <div class="form-group">
+                                    <ng-select class="mb-2" [searchable]="false" [multiple]="true" bindLabel="name"
+                                    bindValue="id" [clearable]="false" placeholder="Select a Staff Member">
+                                    <ng-option>Jenny Hart</ng-option>
+                                </ng-select>
+                                <div class="custom_chip_list">
+                                    <span class="custom_chip">
+                                        <span><img src="../../../../assets/img/avatars/5.jpg" alt="owner">Jenny Hart</span>
+                                        <svg class="close_icon_chip" xmlns="http://www.w3.org/2000/svg" width="14"
+                                            height="14" viewBox="0 0 14 14" fill="none">
+                                            <path fill-rule="evenodd" clip-rule="evenodd"
+                                                d="M7 8.73459L1.73459 14L0 12.2654L5.26541 7L0 1.73459L1.73459 0L7 5.26541L12.2654 0L14 1.73459L8.73459 7L14 12.2654L12.2654 14L7 8.73459Z"
+                                                fill="currentColor" />
+                                        </svg>
+                                    </span>
+                                </div>    
+                                </div>
+                            </ng-container>
+                            <ng-container *ngIf="activeFilter?.name === 'STATUS'">
+                                <h4 class="title">Select Status</h4>
+                                <div class="form-group">
+                                    <ng-select [searchable]="false" [multiple]="false" bindLabel="name" bindValue="name"
+                                        [clearable]="false" placeholder="Select Status">
+                                        <ng-option value="Completed">Completed</ng-option>
+                                        <ng-option value="Under Review">Under Review</ng-option>
+                                        <ng-option value="Action Pending">Action Pending</ng-option>
+                                        <ng-option value="Closed">Closed</ng-option>
+                                    </ng-select>
+                                    <div class="custom_chip_list">
+                                        <span class="custom_chip">
+                                            <span>Completed</span>
+                                            <svg class="close_icon_chip" xmlns="http://www.w3.org/2000/svg" width="14"
+                                                height="14" viewBox="0 0 14 14" fill="none">
+                                                <path fill-rule="evenodd" clip-rule="evenodd"
+                                                    d="M7 8.73459L1.73459 14L0 12.2654L5.26541 7L0 1.73459L1.73459 0L7 5.26541L12.2654 0L14 1.73459L8.73459 7L14 12.2654L12.2654 14L7 8.73459Z"
+                                                    fill="currentColor" />
+                                            </svg>
+                                        </span>
+                                    </div>
+                                </div>
+                            </ng-container>
+                            <ng-container *ngIf="activeFilter?.name === 'SUBMITED_DATE'">
+                                <h4 class="title">File Submit Date</h4>
+                               
+                                <div class="date_group file_upload_date">
+                                    <div class="form-group mb-0 custom_datepicker">
+                                        <div class="custom_datepicker_container">
+                                            <input  placeholder="Select Starting Date"
+                                                class="form-control" 
+                                                 [matDatepicker]="taskStartPicker">
+                                            <mat-datepicker-toggle matSuffix [for]="taskStartPicker">
+                                                <svg matDatepickerToggleIcon width="18" height="18" viewBox="0 0 18 18"
+                                                    fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <path
+                                                        d="M14.25 3H3.75C2.92157 3 2.25 3.67157 2.25 4.5V15C2.25 15.8284 2.92157 16.5 3.75 16.5H14.25C15.0784 16.5 15.75 15.8284 15.75 15V4.5C15.75 3.67157 15.0784 3 14.25 3Z"
+                                                        stroke="#2B2A35" stroke-width="1.5" stroke-linecap="round"
+                                                        stroke-linejoin="round" />
+                                                    <path d="M12 1.5V4.5" stroke="#2B2A35" stroke-width="1.5"
+                                                        stroke-linecap="round" stroke-linejoin="round" />
+                                                    <path d="M6 1.5V4.5" stroke="#2B2A35" stroke-width="1.5"
+                                                        stroke-linecap="round" stroke-linejoin="round" />
+                                                    <path d="M2.25 7.5H15.75" stroke="#2B2A35" stroke-width="1.5"
+                                                        stroke-linecap="round" stroke-linejoin="round" />
+                                                </svg>
+                                            </mat-datepicker-toggle>
+                                            <mat-datepicker #taskStartPicker></mat-datepicker>
+                                        </div>
+                                    </div>
+                                    <span class="to">to</span>
+                                    <div class="form-group custom_datepicker">
+                                        <div class="custom_datepicker_container">
+                                            <input  placeholder="Select End Date"
+                                                class="form-control" [matDatepicker]="taskEndPicker">
+                                            <mat-datepicker-toggle matSuffix [for]="taskEndPicker">
+                                                <svg matDatepickerToggleIcon width="18" height="18" viewBox="0 0 18 18"
+                                                    fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <path
+                                                        d="M14.25 3H3.75C2.92157 3 2.25 3.67157 2.25 4.5V15C2.25 15.8284 2.92157 16.5 3.75 16.5H14.25C15.0784 16.5 15.75 15.8284 15.75 15V4.5C15.75 3.67157 15.0784 3 14.25 3Z"
+                                                        stroke="#2B2A35" stroke-width="1.5" stroke-linecap="round"
+                                                        stroke-linejoin="round" />
+                                                    <path d="M12 1.5V4.5" stroke="#2B2A35" stroke-width="1.5"
+                                                        stroke-linecap="round" stroke-linejoin="round" />
+                                                    <path d="M6 1.5V4.5" stroke="#2B2A35" stroke-width="1.5"
+                                                        stroke-linecap="round" stroke-linejoin="round" />
+                                                    <path d="M2.25 7.5H15.75" stroke="#2B2A35" stroke-width="1.5"
+                                                        stroke-linecap="round" stroke-linejoin="round" />
+                                                </svg>
+                                            </mat-datepicker-toggle>
+                                            <mat-datepicker #taskEndPicker></mat-datepicker>
+                                        </div>
+                                    </div>
+                                </div>
+                            </ng-container>
+                            <ng-container *ngIf="activeFilter?.name === 'FILE_DUE_DATE'">
+                                <h4 class="title">File Due Date</h4>
+                               
+                                <div class="date_group file_upload_date">
+                                    <div class="form-group mb-0 custom_datepicker">
+                                        <div class="custom_datepicker_container">
+                                            <input  placeholder="Select Starting Date"
+                                                class="form-control" 
+                                                 [matDatepicker]="taskStartPicker">
+                                            <mat-datepicker-toggle matSuffix [for]="taskStartPicker">
+                                                <svg matDatepickerToggleIcon width="18" height="18" viewBox="0 0 18 18"
+                                                    fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <path
+                                                        d="M14.25 3H3.75C2.92157 3 2.25 3.67157 2.25 4.5V15C2.25 15.8284 2.92157 16.5 3.75 16.5H14.25C15.0784 16.5 15.75 15.8284 15.75 15V4.5C15.75 3.67157 15.0784 3 14.25 3Z"
+                                                        stroke="#2B2A35" stroke-width="1.5" stroke-linecap="round"
+                                                        stroke-linejoin="round" />
+                                                    <path d="M12 1.5V4.5" stroke="#2B2A35" stroke-width="1.5"
+                                                        stroke-linecap="round" stroke-linejoin="round" />
+                                                    <path d="M6 1.5V4.5" stroke="#2B2A35" stroke-width="1.5"
+                                                        stroke-linecap="round" stroke-linejoin="round" />
+                                                    <path d="M2.25 7.5H15.75" stroke="#2B2A35" stroke-width="1.5"
+                                                        stroke-linecap="round" stroke-linejoin="round" />
+                                                </svg>
+                                            </mat-datepicker-toggle>
+                                            <mat-datepicker #taskStartPicker></mat-datepicker>
+                                        </div>
+                                    </div>
+                                    <span class="to">to</span>
+                                    <div class="form-group custom_datepicker">
+                                        <div class="custom_datepicker_container">
+                                            <input placeholder="Select End Date"
+                                                class="form-control" [matDatepicker]="taskEndPicker">
+                                            <mat-datepicker-toggle matSuffix [for]="taskEndPicker">
+                                                <svg matDatepickerToggleIcon width="18" height="18" viewBox="0 0 18 18"
+                                                    fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <path
+                                                        d="M14.25 3H3.75C2.92157 3 2.25 3.67157 2.25 4.5V15C2.25 15.8284 2.92157 16.5 3.75 16.5H14.25C15.0784 16.5 15.75 15.8284 15.75 15V4.5C15.75 3.67157 15.0784 3 14.25 3Z"
+                                                        stroke="#2B2A35" stroke-width="1.5" stroke-linecap="round"
+                                                        stroke-linejoin="round" />
+                                                    <path d="M12 1.5V4.5" stroke="#2B2A35" stroke-width="1.5"
+                                                        stroke-linecap="round" stroke-linejoin="round" />
+                                                    <path d="M6 1.5V4.5" stroke="#2B2A35" stroke-width="1.5"
+                                                        stroke-linecap="round" stroke-linejoin="round" />
+                                                    <path d="M2.25 7.5H15.75" stroke="#2B2A35" stroke-width="1.5"
+                                                        stroke-linecap="round" stroke-linejoin="round" />
+                                                </svg>
+                                            </mat-datepicker-toggle>
+                                            <mat-datepicker #taskEndPicker></mat-datepicker>
+                                        </div>
+                                    </div>
+                                </div>
+                            </ng-container>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div id="previewMultiStepPageModalApprovaltab" class="modal bsModal ch_modal fade multi_preview" tabindex="-1"
+    role="dialog">
+    <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title" id="exampleModalLabel">{{selectedTask?.form_title}}</h2>
+                <button mat-icon-button class="close" aria-label="Close" data-dismiss="modal">
+                    <mat-icon>close</mat-icon>
+                </button>
+            </div>
+            <div class="modal-body">
+                <!-- <ng-container *ngIf="selectedTask?.form_fields?.type === 'multi_step'">
+            <app-preview-multi-form></app-preview-multi-form>
+        </ng-container>
+        <ng-container *ngIf="selectedTask?.form_fields?.type === 'simple'">
+            <app-preview-single-form></app-preview-single-form>
+        </ng-container> -->
+                <div [style.display]="selectedTask?.form_fields?.type === 'multi_step' ? '' : 'none'"
+                    class="intern_stepper student_form_submit">
+                    <mat-horizontal-stepper labelPosition="bottom" #multiStepFormStepper>
+                        <mat-step *ngFor="let steps of selectedTask?.form_fields?.fields; let i = index">
+                            <ng-template matStepLabel>{{steps.name}}</ng-template>
+                            <div class="preview_form_card_student pb-0 "
+                                [style.pointerEvents]="selectedTask?.staff_status === 'completed' ? 'none' : ''">
+                                <div class="form_title">{{steps.name}}</div>
+                                <div class="row main_container pb-0">
+                                    <div [ngClass]="field.isElementWidthFull ? 'col-md-12' : 'col-md-6'"
+                                        *ngFor="let field of steps.component">
+                                        <div class="form-group">
+                                            <label *ngIf="field.id !== 'description'">{{field.name}} <span
+                                                    *ngIf="field.elementData?.required">(Required)</span>
+                                                <br /><small
+                                                    class="description-opacity">{{field.elementData?.description}}</small></label>
+                                            <p  *ngIf="field.id === 'description'"  [innerHTML]="field.elementData.value ? field.elementData.value : field.elementData.title" [ngClass]="checkFieldPermission(field.elementData?.permissions)" [attr.tabindex]="checkFieldPermission(field.elementData?.permissions) === 'readOnly' ? '-1' : null"></p>
+                                            <input *ngIf="field.id === 'single'" type="text" class="form-control"
+                                                [(ngModel)]="field.elementData.value">
+                                            <textarea *ngIf="field.id === 'multi'" class="form-control mb-0"
+                                                cols="30"
+                                                rows="2"
+                                                [(ngModel)]="field.elementData.value"></textarea>
+                                            <input *ngIf="field.id === 'number'" type="number" (wheel)="$event.preventDefault()"  (keydown.arrowup)="$event.preventDefault()"  (keydown.arrowdown)="$event.preventDefault()"  class="form-control"
+                                                [(ngModel)]="field.elementData.value">
+                                            <div *ngIf="field.id === 'time'" class="custom_datepicker_container custom_timepicker_wrapper">
+                                                <input class="form-control" placeholder="hh:mm" matInput
+                                                    [ngxTimepicker]="toggleTimepicker"
+                                                    [format]="field?.elementData?.display"
+                                                    [disableClick]="true" readonly
+                                                    [(ngModel)]="field.elementData.value">
+                                                <ngx-material-timepicker-toggle class="time_picker_toggle"
+                                                    [for]="toggleTimepicker">
+                                                    <svg ngxMaterialTimepickerToggleIcon width="17" height="9"
+                                                        viewBox="0 0 17 9"
+                                                        fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                        <path d="M1 1L8.5 8L16 0.999997" stroke="#2B2A35"
+                                                            stroke-width="2"
+                                                            stroke-linecap="round" stroke-linejoin="round" />
+                                                    </svg>
+                                                </ngx-material-timepicker-toggle>
+                                                <ngx-material-timepicker
+                                                    #toggleTimepicker></ngx-material-timepicker>
+                                            </div>
+                                            <mat-radio-group *ngIf="field.id === 'yes_no'" class="radio_group"
+                                                [(ngModel)]="field.elementData.value"
+                                                [ngClass]="field.elementData?.display === 'horizontal' ? 'radio_horizontal' : ''">
+                                                  <mat-radio-button [value]="'Yes'">Yes</mat-radio-button>
+                            <mat-radio-button [value]="'No'">No</mat-radio-button>
+                                            </mat-radio-group>
+                                            <mat-radio-group *ngIf=" field.id === 'radio'" class="radio_group"
+                                                [(ngModel)]="field.elementData.value"
+                                                [ngClass]="field.elementData?.display === 'horizontal' ? 'radio_horizontal' : ''">
+                                                <mat-radio-button [value]="list.item"
+                                                    *ngFor="let list of field.elementData.items">{{list.item}}</mat-radio-button>
+                                            </mat-radio-group>
+                                            <ng-select *ngIf="field.id === 'dropdown'"
+                                                [(ngModel)]="field.elementData.value"
+                                                [searchable]="false" [multiple]="false" bindLabel="item"
+                                                [items]="field.elementData.items" bindValue="item"
+                                                [clearable]="false"
+                                                placeholder="Select" [(ngModel)]="field.elementData.value">
+                                                <ng-option *ngFor="let list of field.elementData.items"
+                                                    [value]="list">{{list}}</ng-option>
+                                            </ng-select>
+                                            <ul *ngIf="field.id === 'likert'" [ngClass]="field.elementData?.display === 'vertical' ? '' : 'likert'">
+                                                <mat-radio-group [ngClass]="field.elementData?.display === 'vertical' ? '' : 'likert'" [(ngModel)]="field.elementData.value">
+                                                    <li *ngFor="let item of field.elementData.items">
+                                                        <mat-radio-button [value]="item.item">{{item.item}}</mat-radio-button>
+                                                        <label *ngIf="field.elementData?.display !== 'vertical'" class="label_title">{{item.item}}</label>
+                                                    </li>
+                                                </mat-radio-group>
+                                            </ul>
+                                            <ul *ngIf="field.id === 'chips'" class="chipsList">
+                                                <li *ngFor="let list of field.elementData.items">
+                                                    <span>{{list.item}}</span>
+                                                </li>
+                                            </ul>
+                                              <div *ngIf="field.id === 'image'" [ngClass]="[
+                                  checkFieldPermission(field.elementData?.permissions)
+                                ]">
+                                    <img [src]="field?.elementData?.value"
+                                        [height]="field?.elementData?.height"
+                                        [width]="field?.elementData?.width"
+                                        [style.opacity]="(+ (field?.elementData?.transparency ?? 100)) / 100"/>
+                                </div>
+<ng-container *ngIf="field.id === 'attachment'">
+                                                <div class="file_upload">
+                                                    <p><strong>Drag file here or <span>browse</span></strong> <br>
+                                                        Accepted file types: <ng-container
+                                                            *ngFor="let extention of field?.elementData?.extenstions">{{extention}},
+                                                        </ng-container>. <br>
+                                                        {{field?.elementData?.size}}MB file size limit.
+
+                                                    </p>
+                                                    <label class="file_upload_label" for="image{{i}}"></label>
+                                                    <input name="img" type="file" id="image{{i}}"
+                                                        [multiple]="field?.elementData?.selection_type === 'multi' ? true : false"
+                                                        [accept]="getValueInsideSingleBracket(field?.elementData?.extenstions)"
+                                                        (change)="uploadFile($event, field)">
+                                                    <!-- <p *ngIf="field.elementData?.value?.name">{{field.elementData?.value.name}}</p> -->
+                                                </div>
+                                                <ul class="files_list">
+                                                    <li *ngFor="let attachment of field.elementData?.value">
+                                                        <div class="file_card">
+                                                            <div class="content">
+                                                                <div class="svg-width d-flex justify-content-center align-items-center"  style="width: 60px;height:48px; padding-right: 8px;"[innerHTML]="getSafeSvg(attachment?.name)"></div>
+                                                                <p>{{attachment.name}}</p>
+                                                                <div class="btn_group">
+                                                                    <button mat-icon-button
+                                                                        (click)="viewPDF(attachment?.url)">
+                                                                        <svg width="35" height="35"
+                                                                            viewBox="0 0 35 35"
+                                                                            fill="none"
+                                                                            xmlns="http://www.w3.org/2000/svg">
+                                                                            <circle cx="17.5" cy="17.5" r="17.5"
+                                                                                fill="#F8F8F8" />
+                                                                            <path
+                                                                                d="M9.29565 17.7632C9.1361 17.5601 9.00404 17.3822 8.90095 17.2387C8.99761 17.0973 9.1211 16.923 9.27053 16.7246C9.69179 16.1651 10.3145 15.4194 11.1183 14.6754C12.7353 13.1787 15.0165 11.75 17.8214 11.75C20.6263 11.75 22.9076 13.1787 24.5246 14.6754C25.3283 15.4194 25.9511 16.1651 26.3723 16.7246C26.5218 16.923 26.6452 17.0973 26.7419 17.2387C26.6388 17.3822 26.5068 17.5601 26.3472 17.7632C25.9058 18.325 25.2587 19.0735 24.4375 19.82C22.7807 21.3262 20.4992 22.75 17.8214 22.75C15.1437 22.75 12.8621 21.3262 11.2054 19.82C10.3842 19.0735 9.73706 18.325 9.29565 17.7632Z"
+                                                                                stroke="#2B2A35"
+                                                                                stroke-width="1.5" />
+                                                                            <circle cx="17.8214" cy="17.2511"
+                                                                                r="2.82143" stroke="#2B2A35"
+                                                                                stroke-width="1.5" />
+                                                                        </svg>
+                                                                    </button>
+                                                                    <button mat-icon-button
+                                                                        (click)="downloadPDF(attachment?.url, attachment?.name)">
+                                                                        <svg width="35" height="35"
+                                                                            viewBox="0 0 35 35"
+                                                                            fill="none"
+                                                                            xmlns="http://www.w3.org/2000/svg">
+                                                                            <circle cx="17.5" cy="17.5" r="17.5"
+                                                                                fill="#F8F8F8" />
+                                                                            <path fill-rule="evenodd"
+                                                                                clip-rule="evenodd"
+                                                                                d="M24.7923 20.4141V23.3307C24.7923 24.1361 24.1394 24.7891 23.334 24.7891H11.6673C10.8619 24.7891 10.209 24.1361 10.209 23.3307V20.4141H11.6673V23.3307H23.334V20.4141H24.7923Z"
+                                                                                fill="#2B2A35" />
+                                                                            <path fill-rule="evenodd"
+                                                                                clip-rule="evenodd"
+                                                                                d="M18.2295 17.9258L20.6305 15.5248L21.6617 16.556L17.5003 20.7174L13.3389 16.556L14.3701 15.5248L16.7711 17.9258V10.207H18.2295V17.9258Z"
+                                                                                fill="#2B2A35" />
+                                                                        </svg>
+
+                                                                    </button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                            </ng-container>
+                                            <div *ngIf="field.id === 'date'" class="form-group custom_datepicker">
+                                                <div class="custom_datepicker_container">
+                                                    <input placeholder="dd/mm/yyyy" class="form-control" matInput
+                                                        [matDatepicker]="projectStartPicker"
+                                                        [(ngModel)]="field.elementData.value">
+                                                    <mat-datepicker-toggle matSuffix [for]="projectStartPicker">
+
+                                                        <svg matDatepickerToggleIcon width="17" height="9"
+                                                            viewBox="0 0 17 9"
+                                                            fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                            <path d="M1 1L8.5 8L16 0.999997" stroke="#2B2A35"
+                                                                stroke-width="2"
+                                                                stroke-linecap="round" stroke-linejoin="round" />
+                                                        </svg>
+                                                    </mat-datepicker-toggle>
+                                                    <mat-datepicker #projectStartPicker></mat-datepicker>
+                                                </div>
+                                            </div>
+                                            <div *ngIf="field.id === 'checkbox'" class="checkbox_group "
+                                                [ngClass]="field.elementData?.display === 'horizontal' ? 'checkbox_horizontal' : ''">
+                                                <ul class="pl-0 checkbox-size">
+                                                    <li *ngFor="let item of field.elementData.items">
+                                                        <mat-checkbox [(ngModel)]="item.selected">
+                                                            {{item.item}}
+                                                        </mat-checkbox>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                            <div class="pt-2" *ngIf="field.id === 'signature'">
+                                                <div class="form-group mb-0"
+                                                    [style.pointerEvents]="item.item === 'Staff' ? '' : 'none'"
+                                                    [style.opacity]="item.item === 'Staff' ? '' : '0.5'"
+                                                    *ngFor="let item of field.elementData?.items; let i = index">
+                                                    <div class="sign_from">
+                                                        <label>{{item.item}} Signature:</label>
+                                                        <div
+                                                            class="form-control canvas_container p-0 overflow-auto">
+                                                            <canvas *ngIf="!item?.signature?.url"
+                                                                id="signaturePad-{{ i }}"
+                                                                height="90px" width="1018"
+                                                                style="touch-action: none;"></canvas>
+                                                            <img class="img-fluid" *ngIf="item?.signature?.url"
+                                                                [src]="item?.signature?.url" />
+                                                        </div>
+                                                    </div>
+                                                    <div class="sign_foot_btn">
+                                                        <button *ngIf="item?.signature?.url"
+                                                            (click)="cancelSignature(i, item)" mat-button
+                                                            class="bs_btn with_icon_text default"><svg
+                                                                width="24" height="24" viewBox="0 0 24 24"
+                                                                fill="none"
+                                                                xmlns="http://www.w3.org/2000/svg">
+                                                                <path d="M3.59375 4L20.034 20.4402" stroke="white"
+                                                                    stroke-width="2" />
+                                                                <path d="M20.5625 4L4.12227 20.4402" stroke="white"
+                                                                    stroke-width="2" />
+                                                            </svg>
+                                                            Cancel</button>
+                                                        <button *ngIf="!item?.signature?.url"
+                                                            (click)="getFile(i, item)"
+                                                            mat-button class="bs_btn with_icon_text success"><svg
+                                                                width="20" height="16" viewBox="0 0 20 16"
+                                                                fill="none"
+                                                                xmlns="http://www.w3.org/2000/svg">
+                                                                <path d="M19 1L6.625 15L1 8.63636" stroke="white"
+                                                                    stroke-width="2" stroke-linecap="round"
+                                                                    stroke-linejoin="round" />
+                                                            </svg>
+
+                                                            Confirm</button>
+                                                        <button *ngIf="!item?.signature?.url"
+                                                            (click)="cancelSignature(i, item)" mat-button
+                                                            class="bs_btn with_icon_text danger"><svg
+                                                                width="24" height="24" viewBox="0 0 24 24"
+                                                                fill="none"
+                                                                xmlns="http://www.w3.org/2000/svg">
+                                                                <path d="M1 4V10H7" stroke="white" stroke-width="2"
+                                                                    stroke-linecap="round"
+                                                                    stroke-linejoin="round" />
+                                                                <path
+                                                                    d="M3.51 15.0004C4.15839 16.8408 5.38734 18.4206 7.01166 19.5018C8.63598 20.583 10.5677 21.107 12.5157 20.9949C14.4637 20.8828 16.3226 20.1406 17.8121 18.8802C19.3017 17.6198 20.3413 15.9094 20.7742 14.0068C21.2072 12.1042 21.0101 10.1124 20.2126 8.33154C19.4152 6.55068 18.0605 5.07723 16.3528 4.1332C14.6451 3.18917 12.6769 2.8257 10.7447 3.09755C8.81245 3.36941 7.02091 4.26186 5.64 5.64044L1 10.0004"
+                                                                    stroke="white" stroke-width="2"
+                                                                    stroke-linecap="round"
+                                                                    stroke-linejoin="round" />
+                                                            </svg>
+                                                            Clear</button>
+                                                    </div>
+                                                    <div class="sign_from">
+                                                        <label>Name:</label>
+                                                        <input type="text" placeholder class="form-control"
+                                                            [(ngModel)]="item.name">
+                                                    </div>
+                                                    <div class="sign_from custom_datepicker">
+                                                        <label>Date:</label>
+                                                        <!-- <input type="text" placeholder="" class="form-control"
+                                                [(ngModel)]="item.date"> -->
+                                                        <div class="custom_datepicker_container"
+                                                            style="width: 100%;">
+                                                            <input placeholder="dd/mm/yyyy" class="form-control"
+                                                                matInput readonly
+                                                                [matDatepicker]="signDate" [(ngModel)]="item.date">
+                                                            <mat-datepicker-toggle matSuffix [for]="signDate">
+
+                                                                <svg matDatepickerToggleIcon width="17" height="9"
+                                                                    viewBox="0 0 17 9"
+                                                                    fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                                    <path d="M1 1L8.5 8L16 0.999997"
+                                                                        stroke="#2B2A35"
+                                                                        stroke-width="2"
+                                                                        stroke-linecap="round"
+                                                                        stroke-linejoin="round" />
+                                                                </svg>
+                                                            </mat-datepicker-toggle>
+                                                            <mat-datepicker #signDate></mat-datepicker>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <ng-container *ngIf="field.id === 'downloadable'">
+                                                <ul class="files_list">
+                                                    <li *ngFor="let attachment of field.elementData?.value">
+                                                        <div class="file_card">
+                                                            <div class="content">
+                                                              <div class="svg-width d-flex justify-content-center align-items-center"  style="width: 60px;height:48px; padding-right: 8px;"[innerHTML]="getSafeSvg(attachment?.name)"></div>
+                                                                <p>{{attachment.name}}</p>
+                                                                <div class="btn_group">
+                                                                    <button mat-icon-button (click)="viewPDF(attachment?.url)">
+                                                                        <svg width="35" height="35" viewBox="0 0 35 35" fill="none"
+                                                                            xmlns="http://www.w3.org/2000/svg">
+                                                                            <circle cx="17.5" cy="17.5" r="17.5" fill="#F8F8F8" />
+                                                                            <path
+                                                                                d="M9.29565 17.7632C9.1361 17.5601 9.00404 17.3822 8.90095 17.2387C8.99761 17.0973 9.1211 16.923 9.27053 16.7246C9.69179 16.1651 10.3145 15.4194 11.1183 14.6754C12.7353 13.1787 15.0165 11.75 17.8214 11.75C20.6263 11.75 22.9076 13.1787 24.5246 14.6754C25.3283 15.4194 25.9511 16.1651 26.3723 16.7246C26.5218 16.923 26.6452 17.0973 26.7419 17.2387C26.6388 17.3822 26.5068 17.5601 26.3472 17.7632C25.9058 18.325 25.2587 19.0735 24.4375 19.82C22.7807 21.3262 20.4992 22.75 17.8214 22.75C15.1437 22.75 12.8621 21.3262 11.2054 19.82C10.3842 19.0735 9.73706 18.325 9.29565 17.7632Z"
+                                                                                stroke="#2B2A35" stroke-width="1.5" />
+                                                                            <circle cx="17.8214" cy="17.2511" r="2.82143" stroke="#2B2A35"
+                                                                                stroke-width="1.5" />
+                                                                        </svg>
+                                                                    </button>
+                                                                    <button style="pointer-events: auto;" mat-icon-button (click)="downloadPDF(attachment?.url, attachment?.name)">
+                                                                        <svg width="35" height="35" viewBox="0 0 35 35" fill="none"
+                                                                            xmlns="http://www.w3.org/2000/svg">
+                                                                            <circle cx="17.5" cy="17.5" r="17.5" fill="#F8F8F8" />
+                                                                            <path fill-rule="evenodd" clip-rule="evenodd"
+                                                                                d="M24.7923 20.4141V23.3307C24.7923 24.1361 24.1394 24.7891 23.334 24.7891H11.6673C10.8619 24.7891 10.209 24.1361 10.209 23.3307V20.4141H11.6673V23.3307H23.334V20.4141H24.7923Z"
+                                                                                fill="#2B2A35" />
+                                                                            <path fill-rule="evenodd" clip-rule="evenodd"
+                                                                                d="M18.2295 17.9258L20.6305 15.5248L21.6617 16.556L17.5003 20.7174L13.3389 16.556L14.3701 15.5248L16.7711 17.9258V10.207H18.2295V17.9258Z"
+                                                                                fill="#2B2A35" />
+                                                                        </svg>
+                        
+                        
+                                                                    </button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                            </ng-container>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="" [ngClass]="{ 'step_footer_end': i === 0, 'step_footer': i !== 0 }">
+                                <button *ngIf="i !== 0" mat-button class="theme_btn btn_outline_primary"
+                                    matStepperPrevious>Back</button>
+                                <button *ngIf="i !== selectedTask?.form_fields?.fields?.length - 1" mat-button
+                                    class="theme_btn btn_primary ml-3"
+                                    matStepperNext [disabled]="checkIsFormValid(steps.component)">Next</button>
+                                <!-- <button
+                                    *ngIf="i === selectedTask?.form_fields?.fields?.length - 1 && selectedTask?.staff_status !== 'completed'"
+                                    mat-button
+                                    class="theme_btn btn_primary ml-3" (click)="submitForm()"
+                                    [disabled]="checkIsFormValid(steps.component)">Submit</button> -->
+                            </div>
+                        </mat-step>
+                    </mat-horizontal-stepper>
+                </div>
+                <section [style.display]="selectedTask?.form_fields?.type === 'simple' ? '' : 'none'">
+                    <div class="preview_form_card_student">
+                        <!-- <div class="form_title">{{formName}}</div> -->
+                        <div class="row main_container pb-0"
+                            [style.pointerEvents]="selectedTask?.staff_status === 'completed' ? 'none' : ''">
+                            <div [ngClass]="field.isElementWidthFull ? 'col-md-12' : 'col-md-6'"
+                                *ngFor="let field of selectedTask?.form_fields?.fields; let i = index">
+                                <div class="form-group">
+                                    <label *ngIf="field.id !== 'description'">{{field.name}} <span
+                                            *ngIf="field.elementData?.required">(Required)</span>
+                                        <br /><small
+                                            class="description-opacity">{{field.elementData?.description}}</small></label>
+                                    <p  *ngIf="field.id === 'description'"  [innerHTML]="field.elementData.value ? field.elementData.value : field.elementData.title" [ngClass]="checkFieldPermission(field.elementData?.permissions)" [attr.tabindex]="checkFieldPermission(field.elementData?.permissions) === 'readOnly' ? '-1' : null"></p>
+                                    <input *ngIf="field.id === 'single'" type="text" class="form-control"
+                                        [(ngModel)]="field.elementData.value">
+                                    <textarea *ngIf="field.id === 'multi'" class="form-control mb-0" cols="30"
+                                        rows="2"
+                                        [(ngModel)]="field.elementData.value"></textarea>
+                                    <input *ngIf="field.id === 'number'" type="number" (wheel)="$event.preventDefault()"  (keydown.arrowup)="$event.preventDefault()"  (keydown.arrowdown)="$event.preventDefault()"  class="form-control"
+                                        [(ngModel)]="field.elementData.value">
+                                    <div *ngIf="field.id === 'time'" class="custom_datepicker_container custom_timepicker_wrapper">
+                                        <input class="form-control" placeholder="hh:mm" matInput
+                                            [ngxTimepicker]="toggleTimepicker"
+                                            [format]="field?.elementData?.display" [disableClick]="true" readonly
+                                            [(ngModel)]="field.elementData.value">
+                                        <ngx-material-timepicker-toggle class="time_picker_toggle"
+                                            [for]="toggleTimepicker">
+                                            <svg ngxMaterialTimepickerToggleIcon width="17" height="9"
+                                                viewBox="0 0 17 9"
+                                                fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M1 1L8.5 8L16 0.999997" stroke="#2B2A35" stroke-width="2"
+                                                    stroke-linecap="round" stroke-linejoin="round" />
+                                            </svg>
+                                        </ngx-material-timepicker-toggle>
+                                        <ngx-material-timepicker #toggleTimepicker></ngx-material-timepicker>
+                                    </div>
+                                    <mat-radio-group *ngIf="field.id === 'yes_no'" class="radio_group"
+                                        [(ngModel)]="field.elementData.value"
+                                        [ngClass]="field.elementData?.display === 'horizontal' ? 'radio_horizontal' : ''">
+                                        <mat-radio-button [value]="'Yes'">Yes</mat-radio-button>
+                                        <mat-radio-button [value]="'No'">No</mat-radio-button>
+                                    </mat-radio-group>
+                                    <mat-radio-group *ngIf=" field.id === 'radio'" class="radio_group"
+                                        [(ngModel)]="field.elementData.value"
+                                        [ngClass]="field.elementData?.display === 'horizontal' ? 'radio_horizontal' : ''">
+                                        <mat-radio-button [value]="list.item"
+                                            *ngFor="let list of field.elementData.items">{{list.item}}</mat-radio-button>
+                                    </mat-radio-group>
+                                    <ng-select *ngIf="field.id === 'dropdown'" [(ngModel)]="field.elementData.value"
+                                        [searchable]="false" [multiple]="false" bindLabel="item"
+                                        [items]="field.elementData.items"
+                                        bindValue="item" [clearable]="false" placeholder="Select"
+                                        [(ngModel)]="field.elementData.value">
+                                        <ng-option *ngFor="let list of field.elementData.items"
+                                            [value]="list">{{list}}</ng-option>
+                                    </ng-select>
+                                    <ul *ngIf="field.id === 'likert'" [ngClass]="field.elementData?.display === 'vertical' ? '' : 'likert'">
+                                        <mat-radio-group [ngClass]="field.elementData?.display === 'vertical' ? '' : 'likert'" [(ngModel)]="field.elementData.value">
+                                            <li *ngFor="let item of field.elementData.items">
+                                                <mat-radio-button [value]="item.item">{{item.item}}</mat-radio-button>
+                                                <label *ngIf="field.elementData?.display !== 'vertical'" class="label_title">{{item.item}}</label>
+                                            </li>
+                                        </mat-radio-group>
+                                    </ul>
+                                    <ul *ngIf="field.id === 'chips'" class="chipsList">
+                                        <li *ngFor="let list of field.elementData.items">
+                                            <span>{{list.item}}</span>
+                                        </li>
+                                    </ul>
+                                      <div *ngIf="field.id === 'image'" [ngClass]="[
+                                  checkFieldPermission(field.elementData?.permissions)
+                                ]">
+                                    <img [src]="field?.elementData?.value"
+                                        [height]="field?.elementData?.height"
+                                        [width]="field?.elementData?.width"
+                                        [style.opacity]="(+ (field?.elementData?.transparency ?? 100)) / 100"/>
+                                </div>
+<ng-container *ngIf="field.id === 'attachment'">
+                                        <div class="file_upload">
+                                            <p><strong>Drag file here or <span>browse</span></strong> <br>
+                                                Accepted file types: <ng-container
+                                                    *ngFor="let extention of field?.elementData?.extenstions">{{extention}},
+                                                </ng-container>. <br>
+                                                {{field?.elementData?.size}}MB file size limit.</p>
+                                            <label class="file_upload_label" for="image{{i}}"></label>
+                                            <input name="img" type="file" id="image{{i}}"
+                                                [multiple]="field?.elementData?.selection_type === 'multi' ? true : false"
+                                                [accept]="getValueInsideSingleBracket(field?.elementData?.extenstions)"
+                                                (change)="uploadFile($event, field)">
+                                        </div>
+                                        <ul class="files_list">
+                                            <li *ngFor="let attachment of field.elementData?.value">
+                                                <div class="file_card">
+                                                    <div class="content">
+                                                         <div class="svg-width d-flex justify-content-center align-items-center"  style="width: 60px;height:48px; padding-right: 8px;"[innerHTML]="getSafeSvg(attachment?.name)"></div>
+                                                        <p>{{attachment.name}}</p>
+                                                        <div class="btn_group">
+                                                            <button mat-icon-button
+                                                                (click)="viewPDF(attachment?.url)">
+                                                                <svg width="35" height="35" viewBox="0 0 35 35"
+                                                                    fill="none"
+                                                                    xmlns="http://www.w3.org/2000/svg">
+                                                                    <circle cx="17.5" cy="17.5" r="17.5"
+                                                                        fill="#F8F8F8" />
+                                                                    <path
+                                                                        d="M9.29565 17.7632C9.1361 17.5601 9.00404 17.3822 8.90095 17.2387C8.99761 17.0973 9.1211 16.923 9.27053 16.7246C9.69179 16.1651 10.3145 15.4194 11.1183 14.6754C12.7353 13.1787 15.0165 11.75 17.8214 11.75C20.6263 11.75 22.9076 13.1787 24.5246 14.6754C25.3283 15.4194 25.9511 16.1651 26.3723 16.7246C26.5218 16.923 26.6452 17.0973 26.7419 17.2387C26.6388 17.3822 26.5068 17.5601 26.3472 17.7632C25.9058 18.325 25.2587 19.0735 24.4375 19.82C22.7807 21.3262 20.4992 22.75 17.8214 22.75C15.1437 22.75 12.8621 21.3262 11.2054 19.82C10.3842 19.0735 9.73706 18.325 9.29565 17.7632Z"
+                                                                        stroke="#2B2A35" stroke-width="1.5" />
+                                                                    <circle cx="17.8214" cy="17.2511" r="2.82143"
+                                                                        stroke="#2B2A35"
+                                                                        stroke-width="1.5" />
+                                                                </svg>
+                                                            </button>
+                                                            <button mat-icon-button
+                                                                (click)="downloadPDF(attachment?.url, attachment?.name)">
+                                                                <svg width="35" height="35" viewBox="0 0 35 35"
+                                                                    fill="none"
+                                                                    xmlns="http://www.w3.org/2000/svg">
+                                                                    <circle cx="17.5" cy="17.5" r="17.5"
+                                                                        fill="#F8F8F8" />
+                                                                    <path fill-rule="evenodd" clip-rule="evenodd"
+                                                                        d="M24.7923 20.4141V23.3307C24.7923 24.1361 24.1394 24.7891 23.334 24.7891H11.6673C10.8619 24.7891 10.209 24.1361 10.209 23.3307V20.4141H11.6673V23.3307H23.334V20.4141H24.7923Z"
+                                                                        fill="#2B2A35" />
+                                                                    <path fill-rule="evenodd" clip-rule="evenodd"
+                                                                        d="M18.2295 17.9258L20.6305 15.5248L21.6617 16.556L17.5003 20.7174L13.3389 16.556L14.3701 15.5248L16.7711 17.9258V10.207H18.2295V17.9258Z"
+                                                                        fill="#2B2A35" />
+                                                                </svg>
+
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </ng-container>
+                                    <div *ngIf="field.id === 'date'" class="form-group custom_datepicker">
+                                        <div class="custom_datepicker_container">
+                                            <input placeholder="dd/mm/yyyy" class="form-control" matInput
+                                                [matDatepicker]="projectStartPicker"
+                                                [(ngModel)]="field.elementData.value">
+                                            <mat-datepicker-toggle matSuffix [for]="projectStartPicker">
+                                                <svg matDatepickerToggleIcon width="17" height="9"
+                                                    viewBox="0 0 17 9"
+                                                    fill="none"
+                                                    xmlns="http://www.w3.org/2000/svg">
+                                                    <path d="M1 1L8.5 8L16 0.999997" stroke="#2B2A35"
+                                                        stroke-width="2"
+                                                        stroke-linecap="round" stroke-linejoin="round" />
+                                                </svg>
+                                            </mat-datepicker-toggle>
+                                            <mat-datepicker #projectStartPicker></mat-datepicker>
+                                        </div>
+                                    </div>
+                                    <div *ngIf="field.id === 'checkbox'" class="checkbox_group "
+                                        [ngClass]="field.elementData?.display === 'horizontal' ? 'checkbox_horizontal' : ''">
+                                          <ul class="pl-0 checkbox-size">
+                                            <li *ngFor="let item of field.elementData.items">
+                                                <mat-checkbox [(ngModel)]="item.selected">
+                                                    {{item.item}}
+                                                </mat-checkbox>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="pt-2" *ngIf="field.id === 'signature'">
+                                        <div class="form-group mb-0"
+                                            [style.pointerEvents]="item.item === 'Staff' ? '' : 'none'"
+                                            [style.opacity]="item.item === 'Staff' ? '' : '0.5'"
+                                            *ngFor="let item of field.elementData?.items; let i = index">
+                                            <div class="sign_from">
+                                                <label>{{item.item}} Signature:</label>
+                                                <div class="form-control canvas_container p-0 overflow-auto">
+                                                    <canvas *ngIf="!item?.signature?.url" id="signaturePad-{{ i }}"
+                                                        height="90px" width="1018"
+                                                        style="touch-action: none;"></canvas>
+                                                    <img class="img-fluid" *ngIf="item?.signature?.url"
+                                                        [src]="item?.signature?.url" />
+                                                </div>
+                                            </div>
+                                            <div class="sign_foot_btn">
+                                                <button *ngIf="item?.signature?.url"
+                                                    (click)="cancelSignature(i, item)"
+                                                    mat-button class="bs_btn with_icon_text default"><svg
+                                                        width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                                        xmlns="http://www.w3.org/2000/svg">
+                                                        <path d="M3.59375 4L20.034 20.4402" stroke="white"
+                                                            stroke-width="2" />
+                                                        <path d="M20.5625 4L4.12227 20.4402" stroke="white"
+                                                            stroke-width="2" />
+                                                    </svg>
+                                                    Cancel</button>
+                                                <button *ngIf="!item?.signature?.url" (click)="getFile(i, item)"
+                                                    mat-button class="bs_btn with_icon_text success"><svg
+                                                        width="20" height="16" viewBox="0 0 20 16" fill="none"
+                                                        xmlns="http://www.w3.org/2000/svg">
+                                                        <path d="M19 1L6.625 15L1 8.63636" stroke="white"
+                                                            stroke-width="2" stroke-linecap="round"
+                                                            stroke-linejoin="round" />
+                                                    </svg>
+
+                                                    Confirm</button>
+                                                <button *ngIf="!item?.signature?.url"
+                                                    (click)="cancelSignature(i, item)"
+                                                    mat-button class="bs_btn with_icon_text danger"><svg
+                                                        width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                                        xmlns="http://www.w3.org/2000/svg">
+                                                        <path d="M1 4V10H7" stroke="white" stroke-width="2"
+                                                            stroke-linecap="round" stroke-linejoin="round" />
+                                                        <path
+                                                            d="M3.51 15.0004C4.15839 16.8408 5.38734 18.4206 7.01166 19.5018C8.63598 20.583 10.5677 21.107 12.5157 20.9949C14.4637 20.8828 16.3226 20.1406 17.8121 18.8802C19.3017 17.6198 20.3413 15.9094 20.7742 14.0068C21.2072 12.1042 21.0101 10.1124 20.2126 8.33154C19.4152 6.55068 18.0605 5.07723 16.3528 4.1332C14.6451 3.18917 12.6769 2.8257 10.7447 3.09755C8.81245 3.36941 7.02091 4.26186 5.64 5.64044L1 10.0004"
+                                                            stroke="white" stroke-width="2" stroke-linecap="round"
+                                                            stroke-linejoin="round" />
+                                                    </svg>
+                                                    Clear</button>
+                                            </div>
+                                            <div class="sign_from">
+                                                <label>Name:</label>
+                                                <input type="text" placeholder class="form-control"
+                                                    [(ngModel)]="item.name">
+                                            </div>
+                                            <div class="sign_from custom_datepicker">
+                                                <label>Date:</label>
+                                                <!-- <input type="text" placeholder="" class="form-control" [(ngModel)]="item.date"> -->
+                                                <div class="custom_datepicker_container" style="width: 100%;">
+                                                    <input placeholder="dd/mm/yyyy" class="form-control" matInput
+                                                        readonly
+                                                        [matDatepicker]="signDate" [(ngModel)]="item.date">
+                                                    <mat-datepicker-toggle matSuffix [for]="signDate">
+
+                                                        <svg matDatepickerToggleIcon width="17" height="9"
+                                                            viewBox="0 0 17 9"
+                                                            fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                            <path d="M1 1L8.5 8L16 0.999997" stroke="#2B2A35"
+                                                                stroke-width="2"
+                                                                stroke-linecap="round" stroke-linejoin="round" />
+                                                        </svg>
+                                                    </mat-datepicker-toggle>
+                                                    <mat-datepicker #signDate></mat-datepicker>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <ng-container *ngIf="field.id === 'downloadable'">
+                                        <ul class="files_list">
+                                            <li *ngFor="let attachment of field.elementData?.value">
+                                                <div class="file_card">
+                                                    <div class="content">
+                                                          <div class="svg-width d-flex justify-content-center align-items-center"  style="width: 60px;height:48px; padding-right: 8px;"[innerHTML]="getSafeSvg(attachment?.name)"></div>
+                                                        <p>{{attachment.name}}</p>
+                                                        <div class="btn_group">
+                                                            <button mat-icon-button (click)="viewPDF(attachment?.url)">
+                                                                <svg width="35" height="35" viewBox="0 0 35 35" fill="none"
+                                                                    xmlns="http://www.w3.org/2000/svg">
+                                                                    <circle cx="17.5" cy="17.5" r="17.5" fill="#F8F8F8" />
+                                                                    <path
+                                                                        d="M9.29565 17.7632C9.1361 17.5601 9.00404 17.3822 8.90095 17.2387C8.99761 17.0973 9.1211 16.923 9.27053 16.7246C9.69179 16.1651 10.3145 15.4194 11.1183 14.6754C12.7353 13.1787 15.0165 11.75 17.8214 11.75C20.6263 11.75 22.9076 13.1787 24.5246 14.6754C25.3283 15.4194 25.9511 16.1651 26.3723 16.7246C26.5218 16.923 26.6452 17.0973 26.7419 17.2387C26.6388 17.3822 26.5068 17.5601 26.3472 17.7632C25.9058 18.325 25.2587 19.0735 24.4375 19.82C22.7807 21.3262 20.4992 22.75 17.8214 22.75C15.1437 22.75 12.8621 21.3262 11.2054 19.82C10.3842 19.0735 9.73706 18.325 9.29565 17.7632Z"
+                                                                        stroke="#2B2A35" stroke-width="1.5" />
+                                                                    <circle cx="17.8214" cy="17.2511" r="2.82143" stroke="#2B2A35"
+                                                                        stroke-width="1.5" />
+                                                                </svg>
+                                                            </button>
+                                                            <button style="pointer-events: auto;" mat-icon-button (click)="downloadPDF(attachment?.url, attachment?.name)">
+                                                                <svg width="35" height="35" viewBox="0 0 35 35" fill="none"
+                                                                    xmlns="http://www.w3.org/2000/svg">
+                                                                    <circle cx="17.5" cy="17.5" r="17.5" fill="#F8F8F8" />
+                                                                    <path fill-rule="evenodd" clip-rule="evenodd"
+                                                                        d="M24.7923 20.4141V23.3307C24.7923 24.1361 24.1394 24.7891 23.334 24.7891H11.6673C10.8619 24.7891 10.209 24.1361 10.209 23.3307V20.4141H11.6673V23.3307H23.334V20.4141H24.7923Z"
+                                                                        fill="#2B2A35" />
+                                                                    <path fill-rule="evenodd" clip-rule="evenodd"
+                                                                        d="M18.2295 17.9258L20.6305 15.5248L21.6617 16.556L17.5003 20.7174L13.3389 16.556L14.3701 15.5248L16.7711 17.9258V10.207H18.2295V17.9258Z"
+                                                                        fill="#2B2A35" />
+                                                                </svg>
+                
+                
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </ng-container>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- <div class="step_footer" *ngIf="selectedTask?.staff_status !== 'completed'">
+                        <button mat-button class="theme_btn btn_primary" (click)="submitForm()"
+                            [disabled]="checkIsFormValid(selectedTask?.form_fields?.fields)">Submit</button>
+                    </div> -->
+                </section>
+            </div>
+            <div class="modal-footer justify-content-center">
+                <button mat-button class="theme_btn btn_outline_primary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>

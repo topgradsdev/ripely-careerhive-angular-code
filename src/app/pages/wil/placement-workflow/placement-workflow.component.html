@@ -1,0 +1,1390 @@
+<section class="form_main_container pt-0">
+    <div class="left_side_bar">
+        <mat-tab-group animationDuration="0ms" class="mat_tab_bordred mat_ink_hide">
+            <mat-tab>
+                <ng-template mat-tab-label>Tasks</ng-template>
+                <!-- <div class="search_header">
+                    <div class="search_container">
+                        <input type="text" placeholder="Search Tasks" class="form-control">
+                        <button mat-button class="theme_btn btn_primary">
+                            <svg width="20" height="20" viewBox="0 0 20 20" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd" clip-rule="evenodd"
+                                    d="M8.11887 16.2377C3.63494 16.2377 0 12.6028 0 8.11886C0 3.63494 3.63494 0 8.11887 0C12.6028 0 16.2377 3.63494 16.2377 8.11886C16.2377 9.99479 15.6015 11.7221 14.5331 13.0968L20.0009 18.5647L18.5657 20L13.0979 14.5322C11.723 15.6012 9.9953 16.2377 8.11887 16.2377ZM14.2096 8.11893C14.2096 11.4819 11.4833 14.2081 8.1204 14.2081C4.75746 14.2081 2.03125 11.4819 2.03125 8.11893C2.03125 4.75599 4.75746 2.02979 8.1204 2.02979C11.4833 2.02979 14.2096 4.75599 14.2096 8.11893Z"
+                                    fill="white" />
+                            </svg>
+                        </button>
+                    </div>
+                </div> -->
+                <div class="history_container">
+                    <ng-container>
+                        <button *ngxPermissionsOnly="['WIL_Write']" mat-button class="theme_btn sm-theme_btn btn_primary w-auto"
+                        routerLink="/admin/wil/workflow-task/{{placementId}}" [queryParams]="{ type:'internship'}">
+                        <svg class="mr-1" width="19" height="19" viewBox="0 0 19 19" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path d="M9.5 3.95825V15.0416" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" />
+                            <path d="M3.96094 9.5H15.0443" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" />
+                        </svg>
+                        Create Task
+                    </button>
+                    </ng-container>
+                    
+                    
+                    <div class="history_title">
+                        Recent Tasks
+                    </div>
+                    <!-- [draggable] [dragClass]="'active'" [dragData]="task"
+                        [dragScope]="task.name" [dragEnabled]="true"  -->
+
+                        <!-- [dndDraggable]="task"
+                        [dragEnabled]="true"
+                        [dragData]="row"
+                        [dropZones]="['taskZone']" -->
+                    <div *ngFor="let task of taskList" 
+                        [dndDraggable]="task"
+                        [dragEnabled]="true"
+                        [dragData]="task"
+                        [dropZones]="['taskZone']"
+                        class="history_step_card_list task_list_recent">
+                        <div class="step_card history_step_card">
+                            <div class="sr"></div>
+                            <div cdkDragHandle class="drag_icon">
+                                <svg width="15" height="15" viewBox="0 0 15 15" fill="none"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <g clip-path="url(#clip0_10846_106651)">
+                                        <path
+                                            d="M6.87571 13.0129C6.87571 11.4041 6.87571 9.91922 6.87651 8.43435C6.87651 8.23797 6.78801 8.13335 6.58768 8.13415C5.11536 8.13737 3.64303 8.14059 2.17071 8.14542C2.15059 8.14542 2.12968 8.17359 2.07094 8.21705C2.31875 8.49471 2.56333 8.76995 2.80872 9.04439C3.11364 9.38563 3.13697 9.75423 2.86825 10.0013C2.59471 10.2524 2.2399 10.1969 1.92291 9.85322C1.37823 9.26249 0.83194 8.67418 0.291284 8.08023C-0.102141 7.64724 -0.0957042 7.36878 0.302547 6.93257C0.844008 6.33943 1.38225 5.74307 1.93015 5.15556C2.26967 4.79179 2.58827 4.75316 2.87147 5.01472C3.14019 5.2634 3.12168 5.62718 2.81354 5.97405C2.61804 6.19376 2.40885 6.40221 2.21174 6.62111C2.15381 6.6855 2.03796 6.75069 2.11117 6.85129C2.14496 6.89716 2.25519 6.90038 2.33162 6.90119C2.98733 6.90521 3.64384 6.9036 4.29954 6.9036C5.02203 6.9036 5.74532 6.89555 6.4678 6.90763C6.74618 6.91246 6.88617 6.84083 6.88375 6.52856C6.87329 5.14912 6.87973 3.76968 6.87812 2.39105C6.87812 2.30091 6.91272 2.18019 6.8218 2.1319C6.6971 2.0651 6.63676 2.20272 6.56274 2.26711C6.32137 2.47958 6.09771 2.71136 5.8483 2.91337C5.55625 3.14998 5.24167 3.13388 5.01801 2.90049C4.79193 2.66388 4.7879 2.28884 5.05341 2.03693C5.71153 1.40918 6.38413 0.795919 7.06075 0.18668C7.33993 -0.0644198 7.65049 -0.0620054 7.92967 0.190704C8.59583 0.79109 9.25798 1.3955 9.91047 2.01118C10.184 2.26952 10.2009 2.62927 9.98931 2.87474C9.76082 3.14032 9.42049 3.1532 9.09867 2.88118C8.7849 2.61559 8.49044 2.32747 8.18954 2.05142C8.07207 2.13834 8.11069 2.24055 8.11069 2.32666C8.10747 3.7061 8.11632 5.08554 8.10345 6.46418C8.10023 6.78851 8.19678 6.91245 8.5363 6.90843C9.88794 6.89314 11.2404 6.9036 12.592 6.90038C12.6934 6.90038 12.8326 6.95109 12.8873 6.84244C12.9476 6.72413 12.8084 6.66055 12.7425 6.5857C12.5301 6.34507 12.2984 6.11972 12.0964 5.87103C11.8526 5.57004 11.8728 5.23041 12.1198 5.00828C12.3796 4.77408 12.695 4.78213 12.9742 5.07749C13.6001 5.73824 14.2124 6.41267 14.8214 7.08871C15.0644 7.35832 15.0515 7.66575 14.819 7.92651C14.2051 8.61623 13.5816 9.2979 12.9452 9.9675C12.7006 10.225 12.3491 10.217 12.1141 9.9997C11.872 9.77596 11.8575 9.41702 12.0972 9.13453C12.3611 8.82387 12.6395 8.52529 12.9509 8.17842C12.8141 8.15347 12.7521 8.13335 12.6902 8.13254C11.2846 8.13093 9.87909 8.13174 8.47354 8.13013C8.25953 8.13013 8.10828 8.17922 8.10908 8.43837C8.1123 9.92324 8.11069 11.4081 8.11069 13.0185C8.45343 12.7111 8.72456 12.4705 8.99167 12.2266C9.36096 11.8902 9.72059 11.8516 9.97724 12.1252C10.2307 12.3956 10.1647 12.7795 9.81151 13.1038C9.22982 13.6382 8.65135 14.1758 8.06805 14.7086C7.64003 15.099 7.34315 15.0982 6.91272 14.7054C6.31896 14.1646 5.72842 13.6197 5.13869 13.0749C4.81043 12.7715 4.76055 12.3868 5.00916 12.1228C5.25052 11.8668 5.60854 11.8854 5.93519 12.1751C6.22241 12.4278 6.50723 12.6845 6.87571 13.0129Z"
+                                            fill="#2B2A35" />
+                                    </g>
+                                    <defs>
+                                        <clippath id="clip0_10846_106651">
+                                            <rect width="15" height="15" fill="white" />
+                                        </clippath>
+                                    </defs>
+                                </svg>
+                            </div>
+                            <div class="content">
+                                <p class="mb-0">{{task.name}}</p>
+                            </div>
+                            <button *ngxPermissionsOnly="['WIL_Write']" mat-icon-button [matMenuTriggerFor]="menu" class="td-btn">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path
+                                        d="M12 13C12.5523 13 13 12.5523 13 12C13 11.4477 12.5523 11 12 11C11.4477 11 11 11.4477 11 12C11 12.5523 11.4477 13 12 13Z"
+                                        stroke="#575757" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round" />
+                                    <path
+                                        d="M12 6C12.5523 6 13 5.55228 13 5C13 4.44772 12.5523 4 12 4C11.4477 4 11 4.44772 11 5C11 5.55228 11.4477 6 12 6Z"
+                                        stroke="#575757" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round" />
+                                    <path
+                                        d="M12 20C12.5523 20 13 19.5523 13 19C13 18.4477 12.5523 18 12 18C11.4477 18 11 18.4477 11 19C11 19.5523 11.4477 20 12 20Z"
+                                        stroke="#575757" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round" />
+                                </svg>
+                            </button>
+                            <mat-menu #menu="matMenu" class="td-menu custome_theme_menu">
+                                <!-- -->
+                                <a  mat-menu-item routerLink="/admin/wil/workflow-task/{{placementId}}"
+                                    [queryParams]="{taskId: task._id, type:'internship'}">
+                                    <span>Edit Task</span>
+                                </a>
+                                <a mat-menu-item data-toggle="modal" (click)="onSlectedTask(task)"
+                                    data-target="#duplicateTask">
+                                    <span>Duplicate</span>
+                                </a>
+                                <a *ngIf="!placementGroupDetails.is_publish" mat-menu-item class="danger"
+                                    data-toggle="modal" data-target="#deleteTask" (click)="onSlectedTask(task)">
+                                    <span>Delete Task</span>
+                                </a>
+                            </mat-menu>
+                        </div>
+                    </div>
+                    <br /><br />
+                </div>
+            </mat-tab>
+            <mat-tab>
+                <ng-template mat-tab-label [lazy]="true">Placement Types</ng-template>
+                <div class="history_container pt-4">
+                    <div class="d-inline-flex align-items-center mb-4 w-100">
+                        <div class="search-container w-100">
+                            <svg class="icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20"
+                                fill="none">
+                                <path
+                                    d="M9.16667 15.8333C12.8486 15.8333 15.8333 12.8486 15.8333 9.16667C15.8333 5.48477 12.8486 2.5 9.16667 2.5C5.48477 2.5 2.5 5.48477 2.5 9.16667C2.5 12.8486 5.48477 15.8333 9.16667 15.8333Z"
+                                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                <path d="M17.5 17.5L13.875 13.875" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" />
+                            </svg>
+                            <input type="text" (keyup)="applyFilter($event)" #input class="form-control"
+                                placeholder="Search Keywords">
+                        </div>
+                    </div>
+
+                   <div class="history_step_card_list task_list_recent"
+                    cdkDropList
+                    [cdkDropListData]="displayedPlacementTypes"
+                    [cdkDropListConnectedTo]="['dropZone']" infiniteScroll
+     [infiniteScrollDistance]="1"
+     [infiniteScrollThrottle]="100"
+     [scrollWindow]="false"
+     (scrolled)="loadMore()"
+     style="height: 600px; overflow-y: auto; display: block;">
+                     <div *ngFor="let allPlacementType of displayedPlacementTypes; trackBy: trackByPlacementType"
+                        cdkDrag
+                        [cdkDragData]="allPlacementType"
+                        class="step_card history_step_card placement_type_card">
+                            <div class="sr"></div>
+                            <div class="drag_icon">
+                                <svg width="15" height="15" viewBox="0 0 15 15" fill="none"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <g clip-path="url(#clip0_10846_106651)">
+                                        <path
+                                            d="M6.87571 13.0129C6.87571 11.4041 6.87571 9.91922 6.87651 8.43435C6.87651 8.23797 6.78801 8.13335 6.58768 8.13415C5.11536 8.13737 3.64303 8.14059 2.17071 8.14542C2.15059 8.14542 2.12968 8.17359 2.07094 8.21705C2.31875 8.49471 2.56333 8.76995 2.80872 9.04439C3.11364 9.38563 3.13697 9.75423 2.86825 10.0013C2.59471 10.2524 2.2399 10.1969 1.92291 9.85322C1.37823 9.26249 0.83194 8.67418 0.291284 8.08023C-0.102141 7.64724 -0.0957042 7.36878 0.302547 6.93257C0.844008 6.33943 1.38225 5.74307 1.93015 5.15556C2.26967 4.79179 2.58827 4.75316 2.87147 5.01472C3.14019 5.2634 3.12168 5.62718 2.81354 5.97405C2.61804 6.19376 2.40885 6.40221 2.21174 6.62111C2.15381 6.6855 2.03796 6.75069 2.11117 6.85129C2.14496 6.89716 2.25519 6.90038 2.33162 6.90119C2.98733 6.90521 3.64384 6.9036 4.29954 6.9036C5.02203 6.9036 5.74532 6.89555 6.4678 6.90763C6.74618 6.91246 6.88617 6.84083 6.88375 6.52856C6.87329 5.14912 6.87973 3.76968 6.87812 2.39105C6.87812 2.30091 6.91272 2.18019 6.8218 2.1319C6.6971 2.0651 6.63676 2.20272 6.56274 2.26711C6.32137 2.47958 6.09771 2.71136 5.8483 2.91337C5.55625 3.14998 5.24167 3.13388 5.01801 2.90049C4.79193 2.66388 4.7879 2.28884 5.05341 2.03693C5.71153 1.40918 6.38413 0.795919 7.06075 0.18668C7.33993 -0.0644198 7.65049 -0.0620054 7.92967 0.190704C8.59583 0.79109 9.25798 1.3955 9.91047 2.01118C10.184 2.26952 10.2009 2.62927 9.98931 2.87474C9.76082 3.14032 9.42049 3.1532 9.09867 2.88118C8.7849 2.61559 8.49044 2.32747 8.18954 2.05142C8.07207 2.13834 8.11069 2.24055 8.11069 2.32666C8.10747 3.7061 8.11632 5.08554 8.10345 6.46418C8.10023 6.78851 8.19678 6.91245 8.5363 6.90843C9.88794 6.89314 11.2404 6.9036 12.592 6.90038C12.6934 6.90038 12.8326 6.95109 12.8873 6.84244C12.9476 6.72413 12.8084 6.66055 12.7425 6.5857C12.5301 6.34507 12.2984 6.11972 12.0964 5.87103C11.8526 5.57004 11.8728 5.23041 12.1198 5.00828C12.3796 4.77408 12.695 4.78213 12.9742 5.07749C13.6001 5.73824 14.2124 6.41267 14.8214 7.08871C15.0644 7.35832 15.0515 7.66575 14.819 7.92651C14.2051 8.61623 13.5816 9.2979 12.9452 9.9675C12.7006 10.225 12.3491 10.217 12.1141 9.9997C11.872 9.77596 11.8575 9.41702 12.0972 9.13453C12.3611 8.82387 12.6395 8.52529 12.9509 8.17842C12.8141 8.15347 12.7521 8.13335 12.6902 8.13254C11.2846 8.13093 9.87909 8.13174 8.47354 8.13013C8.25953 8.13013 8.10828 8.17922 8.10908 8.43837C8.1123 9.92324 8.11069 11.4081 8.11069 13.0185C8.45343 12.7111 8.72456 12.4705 8.99167 12.2266C9.36096 11.8902 9.72059 11.8516 9.97724 12.1252C10.2307 12.3956 10.1647 12.7795 9.81151 13.1038C9.22982 13.6382 8.65135 14.1758 8.06805 14.7086C7.64003 15.099 7.34315 15.0982 6.91272 14.7054C6.31896 14.1646 5.72842 13.6197 5.13869 13.0749C4.81043 12.7715 4.76055 12.3868 5.00916 12.1228C5.25052 11.8668 5.60854 11.8854 5.93519 12.1751C6.22241 12.4278 6.50723 12.6845 6.87571 13.0129Z"
+                                            fill="#2B2A35" />
+                                    </g>
+                                    <defs>
+                                        <clippath id="clip0_10846_106651">
+                                            <rect width="15" height="15" fill="white" />
+                                        </clippath>
+                                    </defs>
+                                </svg>
+                            </div>
+                            <div class="content">
+                                <p class="mb-0">{{allPlacementType.placement_group_title}}<br>
+                                    {{allPlacementType.type}}
+                                </p>
+                                <span class="date">Created on {{allPlacementType?.publish_at}}
+                                    <!-- {{allPlacementType?.created_by}} -->
+                                </span>
+                                <div class="icon_btn_group">
+                                    <button mat-icon-button data-toggle="modal" data-target="#viewPlacements"
+                                        (click)="selectedPTabIndex = 0;getWorkflowTaskOfPlacementType('Pre-Placement', allPlacementType)">
+                                        <svg width="19" height="19" viewBox="0 0 19 19" fill="none"
+                                            xmlns="http://www.w3.org/2000/svg">
+                                            <circle cx="9.5" cy="9.5" r="9.5" fill="#F8F8F8" />
+                                            <path
+                                                d="M4.07379 9.49199C4.01212 9.4135 3.95662 9.34068 3.90749 9.27472C3.95255 9.21144 4.00327 9.14192 4.05952 9.06721C4.34212 8.6919 4.7599 8.19168 5.29837 7.69326C6.38485 6.68759 7.8944 5.75 9.73469 5.75C11.575 5.75 13.0845 6.68759 14.171 7.69326C14.7095 8.19168 15.1273 8.6919 15.4099 9.06721C15.4661 9.14192 15.5168 9.21144 15.5619 9.27472C15.5128 9.34068 15.4573 9.4135 15.3956 9.49199C15.0989 9.86963 14.664 10.3726 14.1128 10.8736C12.9963 11.8887 11.4864 12.8214 9.73469 12.8214C7.98296 12.8214 6.47309 11.8887 5.35655 10.8736C4.8054 10.3726 4.37051 9.86963 4.07379 9.49199Z"
+                                                stroke="#2B2A35" stroke-width="1.5" />
+                                            <circle cx="9.73414" cy="9.28492" r="1.69898" stroke="#2B2A35"
+                                                stroke-width="1.5" />
+                                        </svg>
+
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </mat-tab>
+        </mat-tab-group>
+    </div>
+    <div class="right_bar">
+        <div class="steps_container">
+            <div class="steps_card">
+                <div class="steps_card_header">
+                    {{placementGroupDetails?.title | titlecase}} Placement Types
+                    <button *ngxPermissionsOnly="['WIL_Write']" (click)="formWorkflow()" mat-icon-button data-toggle="modal" data-target="#createPlacement"
+                        [disabled]="placementTypes.length >= 8" [ngClass]="{disableIcon: placementTypes.length >= 8}">
+                        <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="16" cy="16" r="16" fill="#F8F8F8" />
+                            <path d="M16 9V23" stroke="black" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" />
+                            <path d="M9 16H23" stroke="black" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" />
+                        </svg>
+                    </button>
+                </div>
+                
+                
+                   <!--  -->
+                <div class="workflow_card_list"
+                    cdkDropList
+                    #dropZone="cdkDropList"
+                    id="dropZone"
+                    [cdkDropListData]="placementType.items"
+                    [cdkDropListConnectedTo]="['dropZone', 'sourceList']"
+                    (cdkDropListDropped)="onPlacementDrop($event, placementType)">
+                    <ng-container *ngFor="let placementType of placementTypes">
+
+                        <div class="workflow_card_tab" [ngClass]="placementType.selected ? 'active' :''"
+                            (click)="onSelectPlacementType(placementType)">
+                            <div class="content">
+                                <div class="favorite_block">
+                                <svg *ngIf="placementType.is_favorite" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                    <path d="M11.1033 3.81663C11.4701 3.07346 12.5299 3.07346 12.8967 3.81663L14.8576 7.78909C15.0031 8.08394 15.2843 8.2884 15.6096 8.33595L19.9962 8.97712C20.8161 9.09696 21.1429 10.1048 20.5493 10.683L17.3768 13.773C17.1409 14.0027 17.0333 14.3339 17.0889 14.6584L17.8374 19.0226C17.9775 19.8396 17.12 20.4626 16.3864 20.0767L12.4655 18.0148C12.1741 17.8615 11.8259 17.8615 11.5345 18.0148L7.61363 20.0767C6.88 20.4626 6.02245 19.8396 6.16257 19.0226L6.91109 14.6584C6.96675 14.3339 6.85908 14.0027 6.62321 13.773L3.45068 10.683C2.85708 10.1048 3.18387 9.09696 4.00378 8.97712L8.39037 8.33595C8.71572 8.2884 8.99691 8.08394 9.14245 7.78909L11.1033 3.81663Z" fill="#F2C94C"/>
+                                    </svg>
+                                <p class="favorite">{{placementType.type}}</p>
+                                </div>
+                                <span>{{placementType.student_count}} Students</span>
+                                <div *ngxPermissionsOnly="['WIL_Write']" class="icon_btn_group">
+                                    <svg [matMenuTriggerFor]="menu2" width="24" height="24" viewBox="0 0 24 24"
+                                        fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path
+                                            d="M12 13C12.5523 13 13 12.5523 13 12C13 11.4477 12.5523 11 12 11C11.4477 11 11 11.4477 11 12C11 12.5523 11.4477 13 12 13Z"
+                                            stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                            stroke-linejoin="round" />
+                                        <path
+                                            d="M12 6C12.5523 6 13 5.55228 13 5C13 4.44772 12.5523 4 12 4C11.4477 4 11 4.44772 11 5C11 5.55228 11.4477 6 12 6Z"
+                                            stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                            stroke-linejoin="round" />
+                                        <path
+                                            d="M12 20C12.5523 20 13 19.5523 13 19C13 18.4477 12.5523 18 12 18C11.4477 18 11 18.4477 11 19C11 19.5523 11.4477 20 12 20Z"
+                                            stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                            stroke-linejoin="round" />
+                                    </svg>
+                                    <mat-menu #menu2="matMenu" class="td-menu custome_theme_menu">
+                                        <a mat-menu-item data-toggle="modal" data-target="#renamePlacementType"
+                                            (click)="setetPlacementTypeOnEditWindow()">
+                                            <span>Update</span>
+                                        </a>
+                                        <a *ngIf="!placementType.is_favorite" mat-menu-item data-toggle="modal" data-target="#favorite"
+                                        (click)="selectPlacementTypeForFavorite(placementType)">
+                                            <span>Save as Favorite</span>
+                                        </a>
+                                        <a *ngIf="placementType.is_favorite" mat-menu-item data-toggle="modal" data-target="#favorite" 
+                                        (click)="selectPlacementTypeForFavorite(placementType)">
+                                            <span>Remove from Favorites</span>
+                                        </a>
+                                        <a *ngIf="!placementGroupDetails.is_publish" mat-menu-item class="danger"
+                                            data-toggle="modal" data-target="#deleteWorkflow"
+                                            (click)="selectPlacementTypeForDelete(placementType)">
+                                            <span>Delete Placement Type</span>
+                                        </a>
+                                    </mat-menu>
+
+                                </div>
+                            </div>
+                        </div>
+                    </ng-container>
+                    <div *ngIf="placementTypes.length==0">
+                        <p class="empty_text_placement_type">No Placement Types yet. Get started by clicking the + button on the top right or dragging an existing Placement Type here!</p>
+                    </div>
+                </div>
+            </div>
+            <div class="task_steps_main_card track_progress">
+                <mat-tab-group animationDuration="0ms" class="mat_tab_bordred mat_ink_hide"
+                    (selectedTabChange)="onSelectPlacementProgress($event)" [(selectedIndex)]="selectedTabIndex">
+                    <!-- ========================= -->
+                    <!-- Pre-Placement -->
+                    <mat-tab label="Pre-Placement">
+                        <ng-template mat-tab-label>Pre-Placement</ng-template>
+                        <div class="task_steps_card_body">
+                            <!-- Step Card Start -->
+                               <!-- dndDropzone
+                                    [dropZones]="['taskZone']"
+                                    (dndDrop)="drop($event, steps.get_tasks)" -->
+
+                                     <!-- cdkDropList
+                                    (cdkDropListDropped)="drop($event, steps.get_tasks)" droppable
+                                    [dropScope]="stepsType" [dragHintClass]="'drag-hint'"
+                                    (onDrop)="onStepDrop($event, steps._id, selectedWorkflowType.workflow_type_id, stage)" -->
+                            <ng-container *ngFor="let steps of workFlowTask; let i = index">
+                                <div class="task_steps_card" 
+                                    dndDropzone
+                                    [dropZones]="['taskZone']"
+                                    (dndDrop)="drop($event, steps.get_tasks, steps._id, selectedWorkflowType.workflow_type_id, stage)"
+                                    cdkDropList
+                                    (cdkDropListDropped)="drop($event, steps.get_tasks, steps._id, selectedWorkflowType.workflow_type_id, stage)" droppable
+                                    [dropScope]="stepsType" [dragHintClass]="'drag-hint'"
+                                    >
+                                    <div class="task_steps_card_header">
+                                        <h3>{{selectedWorkflowType?.type}} Workflow</h3>
+                                        <button *ngIf="rearrange_task" mat-button (click)="rearrange()"
+                                            class="theme_btn sm-theme_btn btn_primary">Save</button>
+                                     <ng-container *ngxPermissionsOnly="['WIL_Write']">
+                                        <button *ngIf="!rearrange_task" routerLink="/admin/wil/workflow-task/{{placementId}}"
+                                                [queryParams]="{stepId: steps._id, workflowTypeId: selectedWorkflowType.workflow_type_id, stage: stage, type:'internship'}" mat-button class="theme_btn btn_primary btn-w">
+                                            <svg width="19" height="19" viewBox="0 0 19 19" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M9.5 3.9585V15.0418" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                            <path d="M3.95801 9.5H15.0413" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                            </svg>
+
+                                            &nbsp;
+                                            Create Task
+                                        </button>
+                                        <!-- <button *ngIf="!rearrange_task" mat-icon-button
+                                            [matMenuTriggerFor]="stepCardMenu" class="td-btn">
+                                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                                xmlns="http://www.w3.org/2000/svg">
+                                                <path
+                                                    d="M12 13C12.5523 13 13 12.5523 13 12C13 11.4477 12.5523 11 12 11C11.4477 11 11 11.4477 11 12C11 12.5523 11.4477 13 12 13Z"
+                                                    stroke="#575757" stroke-width="2" stroke-linecap="round"
+                                                    stroke-linejoin="round" />
+                                                <path
+                                                    d="M12 6C12.5523 6 13 5.55228 13 5C13 4.44772 12.5523 4 12 4C11.4477 4 11 4.44772 11 5C11 5.55228 11.4477 6 12 6Z"
+                                                    stroke="#575757" stroke-width="2" stroke-linecap="round"
+                                                    stroke-linejoin="round" />
+                                                <path
+                                                    d="M12 20C12.5523 20 13 19.5523 13 19C13 18.4477 12.5523 18 12 18C11.4477 18 11 18.4477 11 19C11 19.5523 11.4477 20 12 20Z"
+                                                    stroke="#575757" stroke-width="2" stroke-linecap="round"
+                                                    stroke-linejoin="round" />
+                                            </svg>
+                                        </button> -->
+                                        </ng-container>
+                                        <mat-menu #stepCardMenu="matMenu" class="td-menu custome_theme_menu">
+                                            <a mat-menu-item routerLink="/admin/wil/workflow-task/{{placementId}}"
+                                                [queryParams]="{stepId: steps._id, workflowTypeId: selectedWorkflowType.workflow_type_id, stage: stage, type:'internship'}">
+                                                <span>Create Task</span>
+                                            </a>
+                                            <!-- <a mat-menu-item (click)="rearrange()"
+                                                [disabled]="steps.get_tasks.length == 0">
+                                                <span>Rearrange Tasks</span>
+                                            </a> -->
+                                            <a *ngIf="steps.get_tasks.length == 0 && !placementGroupDetails?.is_publish" mat-menu-item class="danger"
+                                                (click)="selectStepForDelete(steps); deleteStep()">
+                                                <span>Delete Step</span>
+                                            </a>
+                                            <a *ngIf="steps.get_tasks.length > 0 && !placementGroupDetails?.is_publish" mat-menu-item class="danger"
+                                                data-toggle="modal"
+                                                data-target="#deleteStep" (click)="selectStepForDelete(steps)">
+                                                <span>Delete Step</span>
+                                            </a>
+                                        </mat-menu>
+                                    </div>
+                                    <div class="step_task_card_body empty_task_steps_card">
+                                        <p *ngIf="steps.get_tasks.length == 0" class="empty_text">No tasks yet. Get
+                                            started by dragging a new task from the left or adding one through the menu!
+                                        </p>
+                                        <ng-container *ngFor="let step of steps.get_tasks">
+                                            <div class="step_task_card" cdkDrag [cdkDragData]="step"
+                                                [ngClass]="rearrange_task == true ? 'rearrange' : ''"
+                                                (cdkDropListDropped)="drop($event, steps.get_tasks)">
+                                                <div class="color_bar"></div>
+                                                <div class="content">
+                                                    <button *ngxPermissionsOnly="['WIL_Write']" mat-icon-button [matMenuTriggerFor]="stepTaskCardMenu"
+                                                        class="td-btn" (click)="onSelectTask(step)">
+                                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                                            xmlns="http://www.w3.org/2000/svg">
+                                                            <path
+                                                                d="M12 13C12.5523 13 13 12.5523 13 12C13 11.4477 12.5523 11 12 11C11.4477 11 11 11.4477 11 12C11 12.5523 11.4477 13 12 13Z"
+                                                                stroke="#575757" stroke-width="2" stroke-linecap="round"
+                                                                stroke-linejoin="round" />
+                                                            <path
+                                                                d="M12 6C12.5523 6 13 5.55228 13 5C13 4.44772 12.5523 4 12 4C11.4477 4 11 4.44772 11 5C11 5.55228 11.4477 6 12 6Z"
+                                                                stroke="#575757" stroke-width="2" stroke-linecap="round"
+                                                                stroke-linejoin="round" />
+                                                            <path
+                                                                d="M12 20C12.5523 20 13 19.5523 13 19C13 18.4477 12.5523 18 12 18C11.4477 18 11 18.4477 11 19C11 19.5523 11.4477 20 12 20Z"
+                                                                stroke="#575757" stroke-width="2" stroke-linecap="round"
+                                                                stroke-linejoin="round" />
+                                                        </svg>
+                                                    </button>
+                                                    <mat-menu #stepTaskCardMenu="matMenu"
+                                                        class="td-menu custome_theme_menu">
+                                                        <!-- -->
+                                                        <a mat-menu-item
+                                                            routerLink="/admin/wil/workflow-task/{{placementId}}"
+                                                            [queryParams]="{taskId: step._id, stepId: step.step_id, stage: stage, type:'internship'}">
+                                                            <span>Edit</span>
+                                                        </a>
+                                                        <a mat-menu-item data-toggle="modal"
+                                                            data-target="#sendReminderModal" (click)="selectedTask = step;">
+                                                            <span>Send Reminder</span>
+                                                        </a>
+                                                        <!-- <a *ngIf="!placementGroupDetails.is_publish" mat-menu-item
+                                                            class="danger" (click)="deleteTask(step)">
+                                                            <span>Delete==</span>
+                                                        </a> -->
+                                                        <a *ngIf="!placementGroupDetails.is_publish" mat-menu-item
+                                                            class="danger" data-toggle="modal"
+                                                            data-target="#deleteTaskStep" (click)="onSlectedTask(step)">
+                                                            <span>Delete</span>
+                                                        </a>
+                                                    </mat-menu>
+                                                    <h5><svg *ngIf="rearrange_task" width="15" height="15"
+                                                            viewBox="0 0 15 15" fill="none"
+                                                            xmlns="http://www.w3.org/2000/svg">
+                                                            <g clip-path="url(#clip0_23605_97034)">
+                                                                <path
+                                                                    d="M6.87571 13.0131C6.87571 11.4043 6.87571 9.91946 6.87651 8.43459C6.87651 8.23822 6.78801 8.13359 6.58768 8.1344C5.11536 8.13762 3.64303 8.14083 2.17071 8.14566C2.15059 8.14566 2.12968 8.17383 2.07094 8.21729C2.31875 8.49495 2.56333 8.77019 2.80872 9.04463C3.11364 9.38587 3.13697 9.75447 2.86825 10.0015C2.59471 10.2526 2.2399 10.1971 1.92291 9.85347C1.37823 9.26274 0.83194 8.67442 0.291284 8.08047C-0.102141 7.64749 -0.0957042 7.36902 0.302547 6.93282C0.844008 6.33968 1.38225 5.74331 1.93015 5.1558C2.26967 4.79203 2.58827 4.7534 2.87147 5.01496C3.14019 5.26365 3.12168 5.62742 2.81354 5.97429C2.61804 6.19401 2.40885 6.40245 2.21174 6.62136C2.15381 6.68574 2.03796 6.75093 2.11117 6.85153C2.14496 6.89741 2.25519 6.90063 2.33162 6.90143C2.98733 6.90546 3.64384 6.90385 4.29954 6.90385C5.02203 6.90385 5.74532 6.8958 6.4678 6.90787C6.74618 6.9127 6.88617 6.84107 6.88375 6.52881C6.87329 5.14937 6.87973 3.76993 6.87812 2.39129C6.87812 2.30115 6.91272 2.18043 6.8218 2.13214C6.6971 2.06534 6.63676 2.20297 6.56274 2.26735C6.32137 2.47982 6.09771 2.71161 5.8483 2.91361C5.55625 3.15022 5.24167 3.13413 5.01801 2.90073C4.79193 2.66412 4.7879 2.28908 5.05341 2.03718C5.71153 1.40943 6.38413 0.796163 7.06075 0.186924C7.33993 -0.0641757 7.65049 -0.0617613 7.92967 0.190948C8.59583 0.791335 9.25798 1.39574 9.91047 2.01142C10.184 2.26977 10.2009 2.62951 9.98931 2.87498C9.76082 3.14057 9.42049 3.15344 9.09867 2.88142C8.7849 2.61583 8.49044 2.32771 8.18954 2.05166C8.07207 2.13858 8.11069 2.24079 8.11069 2.32691C8.10747 3.70635 8.11632 5.08579 8.10345 6.46442C8.10023 6.78876 8.19678 6.9127 8.5363 6.90867C9.88794 6.89338 11.2404 6.90385 12.592 6.90063C12.6934 6.90063 12.8326 6.95133 12.8873 6.84268C12.9476 6.72437 12.8084 6.66079 12.7425 6.58595C12.5301 6.34531 12.2984 6.11996 12.0964 5.87128C11.8526 5.57028 11.8728 5.23065 12.1198 5.00852C12.3796 4.77433 12.695 4.78237 12.9742 5.07774C13.6001 5.73849 14.2124 6.41291 14.8214 7.08895C15.0644 7.35856 15.0515 7.666 14.819 7.92676C14.2051 8.61648 13.5816 9.29815 12.9452 9.96775C12.7006 10.2253 12.3491 10.2172 12.1141 9.99994C11.872 9.7762 11.8575 9.41726 12.0972 9.13477C12.3611 8.82412 12.6395 8.52553 12.9509 8.17866C12.8141 8.15371 12.7521 8.13359 12.6902 8.13279C11.2846 8.13118 9.87909 8.13198 8.47354 8.13037C8.25953 8.13037 8.10828 8.17947 8.10908 8.43861C8.1123 9.92348 8.11069 11.4084 8.11069 13.0188C8.45343 12.7113 8.72456 12.4707 8.99167 12.2268C9.36096 11.8904 9.72059 11.8518 9.97724 12.1254C10.2307 12.3959 10.1647 12.7797 9.81151 13.1041C9.22982 13.6385 8.65135 14.1761 8.06805 14.7089C7.64003 15.0992 7.34315 15.0984 6.91272 14.7056C6.31896 14.1648 5.72842 13.62 5.13869 13.0751C4.81043 12.7717 4.76055 12.387 5.00916 12.123C5.25052 11.8671 5.60854 11.8856 5.93519 12.1753C6.22241 12.428 6.50723 12.6848 6.87571 13.0131Z"
+                                                                    fill="#2B2A35" />
+                                                            </g>
+                                                            <defs>
+                                                                <clippath id="clip0_23605_97034">
+                                                                    <rect width="15" height="15" fill="white" />
+                                                                </clippath>
+                                                            </defs>
+                                                        </svg>{{step.title}}</h5>
+                                                    <h3>{{step.name}}</h3>
+                                                    <p>Completion Criteria: {{step.completion_criteria}}</p>
+                                                    <p *ngIf="step.additional_criteria">Additional Criteria:
+                                                        {{step.additional_criteria}}</p>
+                                                    <div class="task_status_card_container">
+                                                        <div class="left">
+                                                            <div class="task_status_card">
+                                                                <p>Pending</p>
+                                                                <h5>{{step?.pending}}</h5>
+                                                                <div class="icon_container complete">
+                                                                    <svg width="18" height="18" viewBox="0 0 18 18"
+                                                                        fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                                        <path d="M15 4.5L6.75 12.75L3 9" stroke="white"
+                                                                            stroke-width="2" stroke-linecap="round"
+                                                                            stroke-linejoin="round" />
+                                                                    </svg>
+                                                                </div>
+                                                            </div>
+                                                            <div class="task_status_card">
+                                                                <p>Completed</p>
+                                                                <h5>{{step?.completed}}</h5>
+                                                                <div class="icon_container complete">
+                                                                    <svg width="18" height="18" viewBox="0 0 18 18"
+                                                                        fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                                        <path d="M15 4.5L6.75 12.75L3 9" stroke="white"
+                                                                            stroke-width="2" stroke-linecap="round"
+                                                                            stroke-linejoin="round" />
+                                                                    </svg>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </ng-container>
+                                    </div>
+                                </div>
+                            </ng-container>
+                            <div *ngIf="workFlowTask.length == 0" class="task_steps_card empty_task_steps_card">
+                                <div class="task_steps_card_header">
+                                    <h3></h3>
+                                    <button *ngxPermissionsOnly="['WIL_Write']" mat-icon-button [matMenuTriggerFor]="stepCardMenu" class="td-btn">
+                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                            xmlns="http://www.w3.org/2000/svg">
+                                            <path
+                                                d="M12 13C12.5523 13 13 12.5523 13 12C13 11.4477 12.5523 11 12 11C11.4477 11 11 11.4477 11 12C11 12.5523 11.4477 13 12 13Z"
+                                                stroke="#575757" stroke-width="2" stroke-linecap="round"
+                                                stroke-linejoin="round" />
+                                            <path
+                                                d="M12 6C12.5523 6 13 5.55228 13 5C13 4.44772 12.5523 4 12 4C11.4477 4 11 4.44772 11 5C11 5.55228 11.4477 6 12 6Z"
+                                                stroke="#575757" stroke-width="2" stroke-linecap="round"
+                                                stroke-linejoin="round" />
+                                            <path
+                                                d="M12 20C12.5523 20 13 19.5523 13 19C13 18.4477 12.5523 18 12 18C11.4477 18 11 18.4477 11 19C11 19.5523 11.4477 20 12 20Z"
+                                                stroke="#575757" stroke-width="2" stroke-linecap="round"
+                                                stroke-linejoin="round" />
+                                        </svg>
+                                    </button>
+                                </div>
+                                <div class="step_task_card_body">
+                                    <p class="empty_text">No steps yet. Get started by clicking the button below or drag
+                                        & drop an existing workflow!</p>
+                                </div>
+                            </div>
+                            <!-- <div class="add_step_btn_container">
+
+                                <ng-container *ngIf="taskOfPlacementType.length>0">
+                                    <button *ngxPermissionsOnly="['WIL_Write']" mat-button (click)="addStep()" class="theme_btn sm-theme_btn btn_primary">
+                                        <svg class="mr-2" width="19" height="19" viewBox="0 0 19 19" fill="none"
+                                            xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M9.5 3.95825V15.0416" stroke="currentColor" stroke-width="2"
+                                                stroke-linecap="round" stroke-linejoin="round" />
+                                            <path d="M3.96094 9.5H15.0443" stroke="currentColor" stroke-width="2"
+                                                stroke-linecap="round" stroke-linejoin="round" />
+                                        </svg> Add Step
+                                    </button>
+                                </ng-container>
+                                
+                            </div> -->
+                        </div>
+                    </mat-tab>
+                    <!-- Ongoing -->
+                    <mat-tab label="Ongoing">
+                        <ng-template mat-tab-label>Ongoing/Post-Placement</ng-template>
+                        <div class="task_steps_card_body">
+                            <!-- Step Card Start -->
+                            <ng-container *ngFor="let steps of workFlowTask; let i = index">
+                                 <!-- cdkDropList
+                                    (cdkDropListDropped)="drop($event, steps.get_tasks)" droppable
+                                    [dropScope]="stepsType" [dragHintClass]="'drag-hint'"
+                                    (onDrop)="onStepDrop($event, steps._id, selectedWorkflowType.workflow_type_id, stage)" -->
+
+                                       <!-- dndDropzone
+                                    [dropZones]="['taskZone']"
+                                    (dndDrop)="drop($event, steps.get_tasks, steps._id, selectedWorkflowType.workflow_type_id, stage)" -->
+                                <div class="task_steps_card"
+                                   
+
+                                                       dndDropzone
+                                    [dropZones]="['taskZone']"
+                                    (dndDrop)="drop($event, steps.get_tasks, steps._id, selectedWorkflowType.workflow_type_id, stage)"
+                                    cdkDropList
+                                    (cdkDropListDropped)="drop($event, steps.get_tasks, steps._id, selectedWorkflowType.workflow_type_id, stage)" droppable
+                                    [dropScope]="stepsType" [dragHintClass]="'drag-hint'"
+                                
+                               >
+                                    <div class="task_steps_card_header">
+                                       <h3>{{selectedWorkflowType?.type}} Workflow</h3>
+                                        <button *ngIf="rearrange_task" mat-button (click)="rearrange()"
+                                            class="theme_btn sm-theme_btn btn_primary">Save</button>
+                                            <ng-container *ngxPermissionsOnly="['WIL_Write']">
+
+                                                 <button *ngIf="!rearrange_task" routerLink="/admin/wil/workflow-task/{{placementId}}"
+                                                    [queryParams]="{stepId: steps._id, workflowTypeId: selectedWorkflowType.workflow_type_id, stage: stage, type:'internship'}" mat-button class="theme_btn btn_primary btn-w">
+                                                    <svg width="19" height="19" viewBox="0 0 19 19" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <path d="M9.5 3.9585V15.0418" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                                    <path d="M3.95801 9.5H15.0413" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                                    </svg>
+
+                                                    &nbsp;
+                                                    Create Task
+                                                </button>
+                                        <!-- <button *ngIf="!rearrange_task" mat-icon-button
+                                            [matMenuTriggerFor]="stepCardMenu" class="td-btn">
+                                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                                xmlns="http://www.w3.org/2000/svg">
+                                                <path
+                                                    d="M12 13C12.5523 13 13 12.5523 13 12C13 11.4477 12.5523 11 12 11C11.4477 11 11 11.4477 11 12C11 12.5523 11.4477 13 12 13Z"
+                                                    stroke="#575757" stroke-width="2" stroke-linecap="round"
+                                                    stroke-linejoin="round" />
+                                                <path
+                                                    d="M12 6C12.5523 6 13 5.55228 13 5C13 4.44772 12.5523 4 12 4C11.4477 4 11 4.44772 11 5C11 5.55228 11.4477 6 12 6Z"
+                                                    stroke="#575757" stroke-width="2" stroke-linecap="round"
+                                                    stroke-linejoin="round" />
+                                                <path
+                                                    d="M12 20C12.5523 20 13 19.5523 13 19C13 18.4477 12.5523 18 12 18C11.4477 18 11 18.4477 11 19C11 19.5523 11.4477 20 12 20Z"
+                                                    stroke="#575757" stroke-width="2" stroke-linecap="round"
+                                                    stroke-linejoin="round" />
+                                            </svg>
+                                        </button> -->
+                                        </ng-container>
+                                        <mat-menu #stepCardMenu="matMenu" class="td-menu custome_theme_menu">
+                                            <a mat-menu-item routerLink="/admin/wil/workflow-task/{{placementId}}"
+                                                [queryParams]="{stepId: steps._id, workflowTypeId: selectedWorkflowType.workflow_type_id, stage: stage, type:'internship'}">
+                                                <span>Create Task</span>
+                                            </a>
+                                            <!-- <a mat-menu-item (click)="rearrange()">
+                                                <span>Rearrange Tasks</span>
+                                            </a> -->
+                                            <a *ngIf="steps.get_tasks.length == 0 && !placementGroupDetails?.is_publish" mat-menu-item class="danger"
+                                                (click)="selectStepForDelete(steps); deleteStep()">
+                                                <span>Delete Step</span>
+                                            </a>
+                                            <a *ngIf="steps.get_tasks.length > 0 && !placementGroupDetails?.is_publish" mat-menu-item class="danger"
+                                                data-toggle="modal"
+                                                data-target="#deleteStep" (click)="selectStepForDelete(steps)">
+                                                <span>Delete Step</span>
+                                            </a>
+                                        </mat-menu>
+                                    </div>
+                                    <div class="step_task_card_body empty_task_steps_card">
+                                        <p *ngIf="steps.get_tasks.length == 0" class="empty_text">No tasks yet. Get
+                                            started by dragging a new task from the left or adding one through the menu!
+                                        </p>
+                                        <ng-container *ngFor="let step of steps.get_tasks">
+                                            <div class="step_task_card" cdkDrag [cdkDragData]="step"
+                                                [ngClass]="rearrange_task == true ? 'rearrange' : ''">
+                                                <div class="color_bar"></div>
+                                                <div class="content">
+                                                    <button *ngxPermissionsOnly="['WIL_Write']" mat-icon-button [matMenuTriggerFor]="stepTaskCardMenu"
+                                                        class="td-btn">
+                                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                                            xmlns="http://www.w3.org/2000/svg">
+                                                            <path
+                                                                d="M12 13C12.5523 13 13 12.5523 13 12C13 11.4477 12.5523 11 12 11C11.4477 11 11 11.4477 11 12C11 12.5523 11.4477 13 12 13Z"
+                                                                stroke="#575757" stroke-width="2" stroke-linecap="round"
+                                                                stroke-linejoin="round" />
+                                                            <path
+                                                                d="M12 6C12.5523 6 13 5.55228 13 5C13 4.44772 12.5523 4 12 4C11.4477 4 11 4.44772 11 5C11 5.55228 11.4477 6 12 6Z"
+                                                                stroke="#575757" stroke-width="2" stroke-linecap="round"
+                                                                stroke-linejoin="round" />
+                                                            <path
+                                                                d="M12 20C12.5523 20 13 19.5523 13 19C13 18.4477 12.5523 18 12 18C11.4477 18 11 18.4477 11 19C11 19.5523 11.4477 20 12 20Z"
+                                                                stroke="#575757" stroke-width="2" stroke-linecap="round"
+                                                                stroke-linejoin="round" />
+                                                        </svg>
+                                                    </button>
+                                                    <mat-menu #stepTaskCardMenu="matMenu"
+                                                        class="td-menu custome_theme_menu">
+                                                        <!--  -->
+                                                        <a mat-menu-item
+                                                            routerLink="/admin/wil/workflow-task/{{placementId}}"
+                                                            [queryParams]="{taskId: step._id, stepId: step.step_id, stage: stage, type:'internship'}">
+                                                            <span>Edit</span>
+                                                        </a>
+                                                        <a mat-menu-item data-toggle="modal"
+                                                            data-target="#sendReminderModal" (click)="selectedTask = step;">
+                                                            <span>Send Reminder</span>
+                                                        </a>
+
+                                                        <!-- <a *ngIf="!placementGroupDetails.is_publish" mat-menu-item
+                                                            class="danger" (click)="deleteTask(step)">
+                                                            <span>Delete</span>
+                                                        </a> -->
+                                                        <a *ngIf="!placementGroupDetails.is_publish" mat-menu-item
+                                                            class="danger" data-toggle="modal"
+                                                            data-target="#deleteTaskStep" (click)="onSlectedTask(step)">
+                                                            <span>Delete</span>
+                                                        </a>
+                                                    </mat-menu>
+                                                    <h5><svg *ngIf="rearrange_task" width="15" height="15"
+                                                            viewBox="0 0 15 15" fill="none"
+                                                            xmlns="http://www.w3.org/2000/svg">
+                                                            <g clip-path="url(#clip0_23605_97034)">
+                                                                <path
+                                                                    d="M6.87571 13.0131C6.87571 11.4043 6.87571 9.91946 6.87651 8.43459C6.87651 8.23822 6.78801 8.13359 6.58768 8.1344C5.11536 8.13762 3.64303 8.14083 2.17071 8.14566C2.15059 8.14566 2.12968 8.17383 2.07094 8.21729C2.31875 8.49495 2.56333 8.77019 2.80872 9.04463C3.11364 9.38587 3.13697 9.75447 2.86825 10.0015C2.59471 10.2526 2.2399 10.1971 1.92291 9.85347C1.37823 9.26274 0.83194 8.67442 0.291284 8.08047C-0.102141 7.64749 -0.0957042 7.36902 0.302547 6.93282C0.844008 6.33968 1.38225 5.74331 1.93015 5.1558C2.26967 4.79203 2.58827 4.7534 2.87147 5.01496C3.14019 5.26365 3.12168 5.62742 2.81354 5.97429C2.61804 6.19401 2.40885 6.40245 2.21174 6.62136C2.15381 6.68574 2.03796 6.75093 2.11117 6.85153C2.14496 6.89741 2.25519 6.90063 2.33162 6.90143C2.98733 6.90546 3.64384 6.90385 4.29954 6.90385C5.02203 6.90385 5.74532 6.8958 6.4678 6.90787C6.74618 6.9127 6.88617 6.84107 6.88375 6.52881C6.87329 5.14937 6.87973 3.76993 6.87812 2.39129C6.87812 2.30115 6.91272 2.18043 6.8218 2.13214C6.6971 2.06534 6.63676 2.20297 6.56274 2.26735C6.32137 2.47982 6.09771 2.71161 5.8483 2.91361C5.55625 3.15022 5.24167 3.13413 5.01801 2.90073C4.79193 2.66412 4.7879 2.28908 5.05341 2.03718C5.71153 1.40943 6.38413 0.796163 7.06075 0.186924C7.33993 -0.0641757 7.65049 -0.0617613 7.92967 0.190948C8.59583 0.791335 9.25798 1.39574 9.91047 2.01142C10.184 2.26977 10.2009 2.62951 9.98931 2.87498C9.76082 3.14057 9.42049 3.15344 9.09867 2.88142C8.7849 2.61583 8.49044 2.32771 8.18954 2.05166C8.07207 2.13858 8.11069 2.24079 8.11069 2.32691C8.10747 3.70635 8.11632 5.08579 8.10345 6.46442C8.10023 6.78876 8.19678 6.9127 8.5363 6.90867C9.88794 6.89338 11.2404 6.90385 12.592 6.90063C12.6934 6.90063 12.8326 6.95133 12.8873 6.84268C12.9476 6.72437 12.8084 6.66079 12.7425 6.58595C12.5301 6.34531 12.2984 6.11996 12.0964 5.87128C11.8526 5.57028 11.8728 5.23065 12.1198 5.00852C12.3796 4.77433 12.695 4.78237 12.9742 5.07774C13.6001 5.73849 14.2124 6.41291 14.8214 7.08895C15.0644 7.35856 15.0515 7.666 14.819 7.92676C14.2051 8.61648 13.5816 9.29815 12.9452 9.96775C12.7006 10.2253 12.3491 10.2172 12.1141 9.99994C11.872 9.7762 11.8575 9.41726 12.0972 9.13477C12.3611 8.82412 12.6395 8.52553 12.9509 8.17866C12.8141 8.15371 12.7521 8.13359 12.6902 8.13279C11.2846 8.13118 9.87909 8.13198 8.47354 8.13037C8.25953 8.13037 8.10828 8.17947 8.10908 8.43861C8.1123 9.92348 8.11069 11.4084 8.11069 13.0188C8.45343 12.7113 8.72456 12.4707 8.99167 12.2268C9.36096 11.8904 9.72059 11.8518 9.97724 12.1254C10.2307 12.3959 10.1647 12.7797 9.81151 13.1041C9.22982 13.6385 8.65135 14.1761 8.06805 14.7089C7.64003 15.0992 7.34315 15.0984 6.91272 14.7056C6.31896 14.1648 5.72842 13.62 5.13869 13.0751C4.81043 12.7717 4.76055 12.387 5.00916 12.123C5.25052 11.8671 5.60854 11.8856 5.93519 12.1753C6.22241 12.428 6.50723 12.6848 6.87571 13.0131Z"
+                                                                    fill="#2B2A35" />
+                                                            </g>
+                                                            <defs>
+                                                                <clippath id="clip0_23605_97034">
+                                                                    <rect width="15" height="15" fill="white" />
+                                                                </clippath>
+                                                            </defs>
+                                                        </svg> {{step.title}}</h5>
+                                                    <h3>{{step.name}}</h3>
+                                                    <p>Completion Criteria: {{step.completion_criteria}}</p>
+                                                    <p *ngIf="step.additional_criteria">Additional Criteria:
+                                                        {{step.additional_criteria}}</p>
+                                                    <div class="task_status_card_container">
+                                                        <div class="left">
+                                                            <div class="task_status_card">
+                                                                <p>Pending</p>
+                                                                <h5>{{step?.pending}}</h5>
+                                                                <div class="icon_container complete">
+                                                                    <svg width="18" height="18" viewBox="0 0 18 18"
+                                                                        fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                                        <path d="M15 4.5L6.75 12.75L3 9" stroke="white"
+                                                                            stroke-width="2" stroke-linecap="round"
+                                                                            stroke-linejoin="round" />
+                                                                    </svg>
+                                                                </div>
+                                                            </div>
+                                                            <div class="task_status_card">
+                                                                <p>Completed</p>
+                                                                <h5>{{step?.completed}}</h5>
+                                                                <div class="icon_container complete">
+                                                                    <svg width="18" height="18" viewBox="0 0 18 18"
+                                                                        fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                                        <path d="M15 4.5L6.75 12.75L3 9" stroke="white"
+                                                                            stroke-width="2" stroke-linecap="round"
+                                                                            stroke-linejoin="round" />
+                                                                    </svg>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </ng-container>
+                                    </div>
+                                </div>
+                            </ng-container>
+                            <div *ngIf="workFlowTask.length == 0" class="task_steps_card empty_task_steps_card">
+                                <div class="task_steps_card_header">
+                                    <h3></h3>
+                                    <button *ngxPermissionsOnly="['WIL_Write']" mat-icon-button [matMenuTriggerFor]="stepCardMenu" class="td-btn">
+                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                            xmlns="http://www.w3.org/2000/svg">
+                                            <path
+                                                d="M12 13C12.5523 13 13 12.5523 13 12C13 11.4477 12.5523 11 12 11C11.4477 11 11 11.4477 11 12C11 12.5523 11.4477 13 12 13Z"
+                                                stroke="#575757" stroke-width="2" stroke-linecap="round"
+                                                stroke-linejoin="round" />
+                                            <path
+                                                d="M12 6C12.5523 6 13 5.55228 13 5C13 4.44772 12.5523 4 12 4C11.4477 4 11 4.44772 11 5C11 5.55228 11.4477 6 12 6Z"
+                                                stroke="#575757" stroke-width="2" stroke-linecap="round"
+                                                stroke-linejoin="round" />
+                                            <path
+                                                d="M12 20C12.5523 20 13 19.5523 13 19C13 18.4477 12.5523 18 12 18C11.4477 18 11 18.4477 11 19C11 19.5523 11.4477 20 12 20Z"
+                                                stroke="#575757" stroke-width="2" stroke-linecap="round"
+                                                stroke-linejoin="round" />
+                                        </svg>
+                                    </button>
+                                </div>
+                                <div class="step_task_card_body">
+                                    <p class="empty_text">No steps yet. Get started by clicking the button below or drag
+                                        & drop an existing workflow!</p>
+                                </div>
+                            </div>
+                            <!-- <div class="add_step_btn_container">
+                                <button *ngxPermissionsOnly="['WIL_Write']" mat-button (click)="addStep()" class="theme_btn sm-theme_btn btn_primary">
+                                    <svg class="mr-2" width="19" height="19" viewBox="0 0 19 19" fill="none"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M9.5 3.95825V15.0416" stroke="currentColor" stroke-width="2"
+                                            stroke-linecap="round" stroke-linejoin="round" />
+                                        <path d="M3.96094 9.5H15.0443" stroke="currentColor" stroke-width="2"
+                                            stroke-linecap="round" stroke-linejoin="round" />
+                                    </svg> Add Step
+                                </button>
+                            </div> -->
+                        </div>
+                    </mat-tab>
+       
+                    <!-- ========================= -->
+                    <!-- Disable regarding PLH-204?focusedCommentId=15372 -->
+                    <mat-tab disabled>
+                        <ng-template mat-tab-label>
+                            <!-- <button [disabled]="disabledTrackProgress"
+                                routerLink="/admin/wil/workflow-track-progress/{{placementId}}" mat-button
+                                class="theme_btn md-theme_btn btn_primary w-auto ml-4">
+                                Track Progress
+                            </button> -->
+                        </ng-template>
+                    </mat-tab>
+                </mat-tab-group>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<!-- create Placement -->
+
+<div class="modal fade bsModal ch_modal" id="createPlacement" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title" id="exampleModalLabel">Create Workflow</h2>
+                <button mat-icon-button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <mat-icon>close</mat-icon>
+                </button>
+            </div>
+            <form [formGroup]="createPlacementType">
+                <div class="modal-body pt-4">
+                      <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group mb-0">
+                                <label>Workflow Name</label>
+                                <input formControlName="placementType" type="text" class="form-control"
+                                    placeholder="Name of your Workflow"
+                                    [class.invalid_field]="checkFieldInvalid('placementType')" name="Add new placement">
+                                <span *ngIf="checkFieldInvalid('placementType')" class="error">This field is required.</span>
+                            </div>
+                        </div>
+                         <div class="col-md-6">
+                            <div class="form-group mb-0">
+                                <label>Workflow Code</label>
+                                <input formControlName="workflow_code" type="text" class="form-control"
+                                    placeholder="Code of your Workflow"
+                                    [class.invalid_field]="checkFieldInvalid('workflow_code')" name="Add new placement">
+                                <span *ngIf="checkFieldInvalid('workflow_code')" class="error">This field is required.</span>
+                            </div>
+                        </div>
+
+                          <div class="col-md-12 mb-3 mt-3">
+                            <div class="form-group mb-0">
+                                <label>Description (Optional)</label>
+                                <textarea rows="5" cols="5" formControlName="description" type="text" class="form-control" placeholder="Description of workflow. This will be visible to students upon selection." [class.invalid_field]="checkFieldInvalid('description')"></textarea>
+                                <!-- // <input formControlName="description" type="text" class="form-control"
+                                //     placeholder="Name of your Placement Type"
+                                //     [class.invalid_field]="checkFieldInvalid('description')" name="Add new placement"> -->
+                                <span *ngIf="checkFieldInvalid('description')" class="error">This field is required.</span>
+                            </div>
+                        </div>
+
+                    </div>
+                     <div class="col-12  mb-3 hcaaf-toogle" style="padding-left: 0px;padding-top: 10px;">
+                        <mat-slide-toggle color="success" formControlName="self_source" class="ios-toggle">
+                            Enable Company Onboarding & Approval
+                        </mat-slide-toggle>
+                    </div>
+                </div>
+                <div class="modal-footer justify-content-center">
+                    <button mat-button type="button" #closeCreatePlacementModal
+                        class="theme_btn btn_outline_primary  mr-4" data-dismiss="modal">Cancel</button>
+                    <button mat-button class="theme_btn btn_primary" data-toggle="modal"
+                        (click)="onAddNewPlacementType(createPlacementType)">Create</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade bsModal ch_modal view_placements_modal" id="viewPlacements" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title"
+                    id="exampleModalLabel">{{selectedPlacementTypeFromAllPlacement?.placement_group_title}}</h2>
+            </div>
+            <form>
+                <div class="modal-body">
+                    <div class="task_steps_main_card">
+                        <mat-tab-group animationDuration="0ms" class="mat_tab_bordred mat_ink_hide" [(selectedIndex)]="selectedPTabIndex"
+                            (selectedTabChange)="onSelectPlacementProgressOfAllPlacementTypes($event, selectedPlacementTypeFromAllPlacement)">
+                            <mat-tab label="Pre-Placement">
+                                <ng-template mat-tab-label>Pre-Placement</ng-template>
+                                <div class="task_steps_card_body"
+                                    *ngFor="let step of taskOfPlacementType; let i = index">
+                                    <!-- Step Card Start -->
+                                    <div class="task_steps_card">
+                                        <!-- <div class="task_steps_card_header">
+                                            <h3>Step {{i+1}}</h3>
+                                        </div> -->
+                                        <div class="step_task_card_body">
+                                            <div class="step_task_card" *ngFor="let task of step?.get_tasks">
+                                                <div class="color_bar"></div>
+                                                <div class="content">
+                                                    <h5>{{task.name}}</h5>
+                                                    <p>Completion Criteria: {{task.completion_criteria}}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- Step Card End -->
+                                </div>
+                            </mat-tab>
+                            <mat-tab label="Ongoing">
+                                <ng-template mat-tab-label>Ongoing/Post-Placement</ng-template>
+                                <div class="task_steps_card_body"
+                                    *ngFor="let step of taskOfPlacementType; let i = index">
+                                    <!-- Step Card Start -->
+                                    <div class="task_steps_card">
+                                        <!-- <div class="task_steps_card_header">
+                                            <h3>Step {{i+1}}</h3>
+                                        </div> -->
+                                        <div class="step_task_card_body">
+                                            <div class="step_task_card" *ngFor="let task of step?.get_tasks">
+                                                <div class="color_bar"></div>
+                                                <div class="content">
+                                                    <h5>{{task.name}}</h5>
+                                                    <p>Completion Criteria: {{task.completion_criteria}}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- Step Card End -->
+                                </div>
+                            </mat-tab>
+                            <!-- <mat-tab label="Post-Placement">
+                                <ng-template mat-tab-label>Post-Placement</ng-template>
+                                <div class="task_steps_card_body"
+                                    *ngFor="let step of taskOfPlacementType; let i = index">
+                                    <div class="task_steps_card">
+                                        <div class="task_steps_card_header">
+                                            <h3>Step {{i+1}}</h3>
+                                        </div>
+                                        <div class="step_task_card_body">
+                                            <div class="step_task_card" *ngFor="let task of step?.get_tasks">
+                                                <div class="color_bar"></div>
+                                                <div class="content">
+                                                    <h5>{{task.name}}</h5>
+                                                    <p>Completion Criteria: {{task.completion_criteria}}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </mat-tab> -->
+                        </mat-tab-group>
+                    </div>
+                </div>
+                <div class="modal-footer justify-content-center">
+                    <button mat-button type="button" class="theme_btn btn_primary" data-dismiss="modal">Close</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Rename Placement Type -->
+
+<div class="modal fade bsModal ch_modal" id="renamePlacementType" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title" id="exampleModalLabel">Update Workflow
+
+                </h2>
+                <button mat-icon-button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <mat-icon>close</mat-icon>
+                </button>
+            </div>
+            <form [formGroup]="renamePlacementType">
+                <div class="modal-body pt-4">
+                   <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group mb-0">
+                                <label>Workflow Name</label>
+                                <input formControlName="placementType" type="text" class="form-control"
+                                    placeholder="Name of your Workflow"
+                                    [class.invalid_field]="checkFieldInvalid('placementType')" name="Add new placement">
+                                <span *ngIf="checkFieldInvalid('placementType')" class="error">This field is required.</span>
+                            </div>
+                        </div>
+                         <div class="col-md-6">
+                            <div class="form-group mb-0">
+                                <label>Workflow Code</label>
+                                <input formControlName="workflow_code" type="text" class="form-control"
+                                    placeholder="Code of your Workflow"
+                                    [class.invalid_field]="checkFieldInvalid('workflow_code')" name="Add new placement">
+                                <span *ngIf="checkFieldInvalid('workflow_code')" class="error">This field is required.</span>
+                            </div>
+                        </div>
+
+                          <div class="col-md-12  mb-3 mt-3">
+                            <div class="form-group mb-0">
+                                <label>Description (Optional)</label>
+                                <textarea rows="5" cols="5" formControlName="description" type="text" class="form-control" placeholder="Description of workflow. This will be visible to students upon selection." [class.invalid_field]="checkFieldInvalid('description')"></textarea>
+                                <!-- // <input formControlName="description" type="text" class="form-control"
+                                //     placeholder="Name of your Placement Type"
+                                //     [class.invalid_field]="checkFieldInvalid('description')" name="Add new placement"> -->
+                                <span *ngIf="checkFieldInvalid('description')" class="error">This field is required.</span>
+                            </div>
+                        </div>
+
+                    </div>
+                     <div class="col-12 mb-3 hcaaf-toogle" style="padding-left: 0px;padding-top: 10px;">
+                        <mat-slide-toggle color="success" formControlName="self_source" class="ios-toggle">
+                            Enable Company Onboarding & Approval
+                        </mat-slide-toggle>
+                    </div>
+                </div>
+                <div class="modal-footer justify-content-center">
+                    <button #renamePlacementModal mat-button type="button" class="theme_btn btn_outline_primary  mr-4"
+                        data-dismiss="modal">Cancel</button>
+                    <button mat-button class="theme_btn btn_primary" (click)="onRenamePlacementType()">Update</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- Delete Workflow -->
+<div class="modal fade bsModal ch_modal delete_workflow_modal" id="deleteWorkflow" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header text-center justify-content-center">
+                <h2 class="modal-title" id="exampleModalLabel">Are you sure you want to delete <br>
+
+                    the following Placement Type?</h2>
+            </div>
+            <div class="modal-body pt-3">
+                <div class="row">
+                    <div class="col-md-12 text-center">
+                        <h3>{{selectedPlacementType?.type}}</h3>
+                    </div>
+                </div>
+                <div class="modal-footer justify-content-center">
+                    <button mat-button type="button" class="theme_btn btn_outline_primary"
+                        data-dismiss="modal">Nevermind</button>
+                    <button mat-button type="submit" class="theme_btn btn_primary" data-dismiss="modal"
+                        (click)="onDeletePlacementType()">Delete</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Duplicate Task -->
+<div class="modal fade bsModal ch_modal delete_workflow_modal" id="duplicateTask" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header text-center justify-content-center">
+                <h2 class="modal-title" id="exampleModalLabel">Are you sure you want to duplicate <br>
+                    the following task?</h2>
+            </div>
+            <div class="modal-body pt-3">
+                <div class="row">
+                    <div class="col-md-12 text-center">
+                        <h3>{{selectedTask?.name}}</h3>
+                    </div>
+                </div>
+                <div class="modal-footer justify-content-center">
+                    <button mat-button type="button" class="theme_btn btn_outline_primary mr-4"
+                        data-dismiss="modal">Nevermind</button>
+                    <button mat-button type="submit" class="theme_btn btn_primary" data-dismiss="modal"
+                        (click)="duplicateTask()">Duplicate</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Delete Task Steps -->
+<div class="modal fade bsModal ch_modal delete_task_step_modal" id="deleteStep" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header pt-4 text-center justify-content-center">
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <img src="../../../../assets/img/undraw_warning.svg" alt="undraw_warning">
+                    </div>
+                    <div class="col-md-12 text-center">
+                        <h2 class="modal-title">This step currently has tasks. <br>
+                            Are you sure you want to remove this step?</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer justify-content-center">
+                <button mat-button type="button" class="theme_btn btn_outline_primary mr-4"
+                    data-dismiss="modal">Cancel</button>
+                <button mat-button class="theme_btn btn_danger" data-dismiss="modal"
+                    (click)="deleteStep()">Remove</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Delete Task -->
+<div class="modal fade bsModal ch_modal delete_task_modal" id="deleteTask" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header text-center justify-content-center">
+                <h2 class="modal-title" id="exampleModalLabel">Are you sure you want to delete this task?
+                </h2>
+            </div>
+            <div class="modal-footer justify-content-center">
+                <button mat-button type="button" class="theme_btn btn_outline_primary mr-4"
+                    data-dismiss="modal">Cancel</button>
+                <button mat-button class="theme_btn btn_danger" data-dismiss="modal"
+                    (click)="deleteTask()">Delete</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Delete Task From Step -->
+<div class="modal fade bsModal ch_modal delete_task_modal" id="deleteTaskStep" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header text-center justify-content-center">
+                <h2 class="modal-title" id="exampleModalLabel">Are you sure you want to delete this task?
+                </h2>
+            </div>
+            <div class="modal-footer justify-content-center">
+                <button mat-button type="button" class="theme_btn btn_outline_primary mr-4"
+                    data-dismiss="modal">Cancel</button>
+                <button mat-button class="theme_btn btn_danger" data-dismiss="modal"
+                    (click)="deleteTaskFromStep()">Delete</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Send Reminder -->
+<div class="modal fade bsModal ch_modal" id="sendReminderModal" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document"  style="max-width: 900px;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title" id="exampleModalLabel">Send Email Reminder</h2>
+            </div>
+            <form [formGroup]="emailReminder">
+                <div class="modal-body pt-3">
+                    <div class="row">
+                        <div class="col-md-5">
+                            <div class="form-group">
+                                <label>Select Category</label>
+                                <ng-select [searchable]="false" [multiple]="false" bindLabel="category_title"
+                                    bindValue="_id"
+                                    [clearable]="false" placeholder="Choose a Category"
+                                    (change)="selectCategory($event)" formControlName="category_id">
+                                    <ng-option *ngFor="let category of categories"
+                                        [value]="category._id">{{category.category_title}}</ng-option>
+                                </ng-select>
+                                <div
+                                    *ngIf="(emailReminder.controls.category_id.touched || emailReminder.controls.category_id.dirty) && emailReminder.controls.category_id.invalid && emailReminder.controls.category_id?.errors?.required  "
+                                    class="invalid">
+                                    Please select category
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-7">
+                            <div class="form-group">
+                                <label>Select a Template</label>
+                                <ng-select [searchable]="false" [multiple]="false" bindLabel="template_name"
+                                    bindValue="_id"
+                                    [clearable]="false" placeholder="Choose a Template"
+                                    (change)="selectTemplate($event)" formControlName="template_id">
+                                    <ng-option *ngFor="let template of emailTemplateList"
+                                        [value]="template._id">{{template.template_name}}</ng-option>
+                                </ng-select>
+                                <div
+                                    *ngIf="(emailReminder.controls.template_id.touched || emailReminder.controls.template_id.dirty) && emailReminder.controls.template_id.invalid && emailReminder.controls.template_id?.errors?.required  "
+                                    class="invalid">
+                                    Please select template
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="email">Email Subject</label>
+                                <input type="email" name id="title" placeholder="Subject" class="form-control"
+                                    formControlName="subject">
+                                <div
+                                    *ngIf="(emailReminder.controls.subject.touched || emailReminder.controls.subject.dirty) && emailReminder.controls.subject.invalid && emailReminder.controls.subject?.errors?.required  "
+                                    class="invalid">
+                                    Please enter subject
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- <div class="col-md-12">
+                            <div class="form-group">
+                                <label>Message</label>
+                                <quill-editor [modules]="modules" formControlName="message" (onEditorCreated)="onEditorCreated($event)"
+                                (onSelectionChanged)="onSelectionChanged($event)"></quill-editor>
+                                <div
+                                    *ngIf="(emailReminder.controls.message.touched || emailReminder.controls.message.dirty) && emailReminder.controls.message.invalid && emailReminder.controls.message?.errors?.required  "
+                                    class="invalid">
+                                    Please enter message
+                                </div>
+                            </div>
+                        </div> -->
+
+                        <div #dynamicContainer *ngIf="selectedTemplate?.widgets" style="padding: 0 15px;">
+
+                            <div *ngFor="let email of selectedTemplate.widgets.values; let i = index;">
+                                
+                                <ng-container *ngIf="email?.data?.id === 'image'">
+                                    <img class=" mt-3"  *ngIf="email?.data?.elementData?.image" style="object-fit: cover;"
+                                [style.height]="email?.data?.elementData?.height + 'px'"
+                                [style.width]="email?.data?.elementData?.width + 'px'"
+                                style="max-width:100%"
+                                [style.opacity]="email?.data?.elementData?.transparency + '%'"
+                                [src]="email?.data?.elementData?.image" alt="banner">
+                                </ng-container>
+
+                                <ng-container class=" mt-3" *ngIf="email?.data?.id === 'logo'">
+                                    <img class=" mt-3"  style="object-fit: contain;"
+                                    style="max-width:100%"
+                                    [style.height]="email?.data?.elementData?.height + 'px'"
+                                    [style.width]="email?.data?.elementData?.width + 'px'"
+                                    [style.opacity]="email?.data?.elementData?.transparency + '%'"
+                                    [src]="email?.data?.elementData?.logo ? email?.data?.elementData?.logo : domain+'assets/img/logo-ch-1.svg'"
+                                    alt="logo">
+                                </ng-container>
+
+
+
+                                <ng-container *ngIf="email?.data?.id === 'attachment'">
+                                    <div class="divider_container_inner attachment mt-3">
+                                        <div  class="form-group">
+                                           <div class="p-3">
+                                            <h3 class="mail-header-title"> Email Attachments</h3>
+                                             <ul class="files_list p-0 mt-3" *ngIf="email?.data?.elementData?.attachments.length > 0">
+                                                 <li style="list-style: none;" *ngFor="let file of email?.data?.elementData?.attachments; let i = index;">
+                                                     <div class="file_card w-100 d-flex justify-content-between">
+                                                         <div class="content w-100 d-flex align-items-center">
+                                                             <svg width="25" height="32" viewBox="0 0 25 32" fill="none"
+                                                                 xmlns="http://www.w3.org/2000/svg">
+                                                                 <path
+                                                                     d="M21.1761 5.17688C20.8764 4.88148 20.5691 4.58109 20.2671 4.27585C19.9625 3.97307 19.663 3.66538 19.3682 3.36506C17.2671 1.21606 16.0158 0 14.7104 0H4.94144C2.2349 0 0.0293812 2.20931 0.0293812 4.92326V24.6657C0.0293812 25.3182 0.55831 25.8471 1.21078 25.8471C1.86324 25.8471 2.39217 25.3182 2.39217 24.6657V4.90854C2.39217 3.54972 3.49247 2.44691 4.8482 2.44691L13.8446 2.44195C14.7191 2.44195 14.7191 3.75896 14.7191 4.85069V8.60098C14.7104 9.84532 14.7104 9.8318 15.9471 9.8318H19.6312C20.8555 9.8318 22.0872 9.83795 22.0872 11.0626V27.0767C22.0872 28.4356 20.9869 29.5384 19.6312 29.5384H4.8482C3.49247 29.5384 2.39217 28.4356 2.39217 27.0767V24.3343C2.39217 23.6737 1.85667 23.1382 1.19609 23.1382C0.535506 23.1382 0 23.6737 0 24.3343V27.0767C0 29.7907 2.20429 32 4.91206 32H19.6213C22.329 32 24.5333 29.7907 24.5333 27.0767V9.84532C24.5333 8.5382 23.3202 7.2828 21.1761 5.17688Z"
+                                                                     fill="#9A9A9A" />
+                                                             </svg>
+                                                             <ng-component style="display: block !important;">
+                                                                <p class="m-0 pl-3">{{file.name}}</p>
+                                                                <p class="file-size">{{getFileSize(file.size)}}</p>
+                                                             </ng-component>
+                                                             
+                                                         </div>
+                                                         <div class="btn_group">
+                                                             <button  mat-icon-button>
+                                                                <svg width="36" height="35" viewBox="0 0 36 35" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                                    <circle cx="18" cy="17.5" r="17.5" fill="#F8F8F8"/>
+                                                                    <g clip-path="url(#clip0_34289_206089)">
+                                                                    <path d="M6.5 18C6.5 18 10.5 10 17.5 10C24.5 10 28.5 18 28.5 18C28.5 18 24.5 26 17.5 26C10.5 26 6.5 18 6.5 18Z" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                                                    <path d="M17.5 21C19.1569 21 20.5 19.6569 20.5 18C20.5 16.3431 19.1569 15 17.5 15C15.8431 15 14.5 16.3431 14.5 18C14.5 19.6569 15.8431 21 17.5 21Z" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                                                    </g>
+                                                                    <defs>
+                                                                    <clipPath id="clip0_34289_206089">
+                                                                    <rect width="24" height="24" fill="white" transform="translate(5.5 6)"/>
+                                                                    </clipPath>
+                                                                    </defs>
+                                                                    </svg>
+                                                                    
+                                                             </button>
+                                                         </div>
+                                                     </div>
+                                                 </li>
+                                             </ul>
+                                            </div>
+                                         </div>
+                                    </div>
+                                </ng-container>
+
+                                <ng-container *ngIf="email?.data?.id === 'button'" class="button_container">
+                                    <div class="button_container_inner mt-3">
+                              
+                                        <a target="_blank"
+                                        [href]="email?.data?.elementData?.link?.document ? email?.data?.elementData?.link?.document : email?.data?.elementData?.link?.url"
+                                        style="
+              background: #464BA8;
+              color: #fff;
+              border-radius: 20px;
+              display: inline-block;
+              width: 190.56px;
+              padding: 10px 0px;
+              font-size: 14px;
+              border: 0;
+              text-decoration: none;
+            " [style.background]="email?.data?.elementData?.editButton?.fill"
+                                        [style.opacity]="email?.data?.elementData?.editButton?.transparency + '%'"
+                                        [style.width]="email?.data?.elementData?.editButton?.width + 'px'"
+                                        [style.borderBottomLeftRadius]="email?.data?.elementData?.editButton?.borderRadius?.bottomLeft + 'px !important'"
+                                        [style.borderBottomRightRadius]="email?.data?.elementData?.editButton?.borderRadius?.bottomRight + 'px !important'"
+                                        [style.borderTopLeftRadius]="email?.data?.elementData?.editButton?.borderRadius?.topLeft + 'px !important'"
+                                        [style.borderTopRightRadius]="email?.data?.elementData?.editButton?.borderRadius?.topRight + 'px !important'"
+                                        [style.fontWeight]="email?.data?.elementData?.editButton?.bold ? 'bold' : ''"
+                                        [style.textDecoration]="email?.data?.elementData?.editButton?.underline ? 'underline' : ''"
+                                        [style.fontStyle]="email?.data?.elementData?.editButton?.italic ? 'italic' : ''"
+                                        [style.fontSize]="email?.data?.elementData?.editButton?.fontSize + 'px'"
+                                        [style.color]="email?.data?.elementData?.editButton?.color + '!important'"
+                                        [style.textAlign]="email?.data?.elementData?.editButton?.textAlign"
+                                        [style.fontFamily]="email?.data?.elementData?.editButton?.fontFamily">{{email?.data?.elementData?.editButton?.label}}</a>
+                                    </div>
+                                </ng-container>
+
+                                <ng-container class="mt-3" *ngIf="email?.data?.id === 'divider'">
+                                    <hr class=" mt-3"  [style.opacity]="email?.data?.elementData?.transparency + '%'"
+                                    [style.borderTop]="email?.data?.elementData?.width + 'px ' + email?.data?.elementData?.style + ' ' + email?.data?.elementData?.color">
+                                </ng-container>
+
+                                <ng-container *ngIf="email?.data?.id === 'social_link'">
+                                    <div class="socialLinks mt-3"
+                                                [ngClass]="email?.data?.elementData?.socialBar?.direction === 'vertical' ? 'social_links_vertical' : ''"
+                                                [style.gap]="email?.data?.elementData?.socialBar?.spacing + 'px'">
+                                                <ng-container *ngIf="!email?.data?.elementData?.manageLinks">
+                                                    <img [src]="domain+'assets/img/insta.svg'" alt="logo">
+                                                    <img [src]="domain+'assets/img/whatsapp.svg'" alt="logo">
+                                                    <img [src]="domain+'assets/img/fb.svg'" alt="logo">
+                                                    <img [src]="domain+'assets/img/linkedin.svg'" alt="logo">
+                                                    <img [src]="domain+'assets/img/youtube.svg'" alt="logo">
+                                                </ng-container>
+                                                <ng-container
+                                                    *ngFor="let logo of email?.data?.elementData?.manageLinks?.logos">
+                                                    <div
+                                                        class="d-inline-flex justify-content-center align-items-center flex-column">
+                                                        <a *ngIf="logo.link" [href]="logo.link"><img [src]="logo.logo"
+                                                                alt="logo.name"></a>
+                                                        <img
+                                                            [style.height]="email?.data?.elementData?.socialBar?.iconSize + 'px'"
+                                                            *ngIf="!logo.link" [src]="logo.logo" alt="logo.name">
+                                                        <span class="d-inline-block mt-1"
+                                                            *ngIf="email?.data?.elementData?.socialBar?.showText"
+                                                            [style.fontSize]="email?.data?.elementData?.socialBar?.textSize  + 'px'">{{logo.name}}</span>
+                                                    </div>
+                                                </ng-container>
+                                            </div>
+                                </ng-container>
+                                
+                                <ng-container class=" mt-3" *ngIf="email?.data?.id === 'text'">
+                                    <quill-editor 
+                                        (onEditorCreated)="onEditorCreated($event)" 
+                                        [modules]="modules"
+                                        (onSelectionChanged)="onSelectionChanged($event)"
+                                        (onContentChanged)="onContentChanged($event, email)"
+                                        [style.fontSize]="email?.data?.elementData?.size + 'px'" 
+                                        [style.color]="email?.data?.elementData?.color"
+                                        [style.textAlign]="email?.data?.elementData?.textAlign" 
+                                        [style.fontFamily]="email?.data?.elementData?.fontFamily"
+                                        [style.fontWeight]="email?.data?.elementData?.bold ? 'bold' : ''"
+                                        [style.textDecoration]="email?.data?.elementData?.underline ? 'underline' : ''"
+                                        [style.fontStyle]="email?.data?.elementData?.italic ? 'italic' : ''"
+                                        name 
+                                        placeholder="Enter text here"
+                                        class="form-control p-0 mt-3"
+                                        [(ngModel)]="email?.data?.elementData.value"
+                                        formControlName="message">
+                                    </quill-editor>
+                                </ng-container>
+                        
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="modal-footer justify-content-center">
+                    <button #closeSendEmailModal mat-button type="button" class="theme_btn btn_outline_primary"
+                        data-dismiss="modal" (click)="cancelEmail()">Cancel</button>
+                    <button mat-button data-dismiss="modal" data-target="#sendDone"
+                        class="theme_btn btn_primary" [disabled]="emailReminder.invalid"
+                        (click)="sendEmail()">Send</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div bsModal #placeholderModel="bs-modal" id="placeholderModel"
+    class="modal bsModal ch_modal fade multi_preview" tabindex="-1" role="dialog"
+    aria-labelledby="placeholderModel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-xl" style="max-width:600px" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title text_primary" id="exampleModalLabel">Insert Placeholder token</h2>
+                <button mat-icon-button class="close" aria-label="Close" (click)="placeholderModel.hide()">
+                    <mat-icon>close</mat-icon>
+                </button>
+            </div>
+            <div class="modal-body" style="max-height: 60vh; overflow: auto;">
+                <div class="form-group">
+                    <label>Select a Category</label>
+                    <ng-select [searchable]="false"
+                        [multiple]="false" bindLabel="name" [(ngModel)]="selectedType" (change)="getKey()" bindValue="_id" [clearable]="false"
+                        placeholder="Choose a Category">
+                        <ng-option value="Student">Student</ng-option>
+                        <ng-option value="Employer">Employer</ng-option>
+                    </ng-select>
+                </div>
+                <hr />
+                <div class="vacancy_search_container">
+                    <div class="form-group mb-0 position-relative rounded_search">
+                    
+                        <input type="text" #searchpInput [placeholder]=" selectedType ?  'Search '+selectedType:'Search Student'" (keyup)="applyFilter1($event)" [(ngModel)]="selectedKey" class="form-control">
+                    
+                        <button (click)="search()" mat-button class="theme_btn btn_primary"><svg width="20" height="20" viewBox="0 0 20 20"
+                                fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd" clip-rule="evenodd"
+                                    d="M8 16C3.58172 16 0 12.4183 0 8C0 3.58172 3.58172 0 8 0C12.4183 0 16 3.58172 16 8C16 9.84871 15.3729 11.551 14.3199 12.9056L19.7071 18.2929L18.2929 19.7071L12.9056 14.3199C11.551 15.3729 9.84871 16 8 16ZM14 8C14 11.3137 11.3137 14 8 14C4.68629 14 2 11.3137 2 8C2 4.68629 4.68629 2 8 2C11.3137 2 14 4.68629 14 8Z"
+                                    fill="currentColor"></path>
+                            </svg></button>
+                    </div>
+                </div>
+
+                <div class="row mt-3">
+                    <ng-container *ngIf="selectedType">
+                        <div class="col-12" *ngFor="let item of filteredplaceholderList; let i = index">
+                            <p class="m-0 p-3" [ngClass]="selectedItem==item.title ? 'selected-item' : ''" (click)="selectedItem=item.title">
+                                {{selectedType}} : {{item.title}}
+                            </p>
+                        </div>
+                    </ng-container>
+                </div>
+            </div>
+            <div class="modal-footer justify-content-end">
+                <button mat-button type="button" class="theme_btn btn_outline_primary mr-4" (click)="placeholderModel.hide()">Cancel</button>
+                <button mat-button class="theme_btn btn_primary" [disabled]="!selectedType || !selectedItem" (click)="chooseValue()">Insert</button>
+            </div>
+        </div>
+    </div>
+    </div>
+
+</div>
+<!-- favorite popup -->
+<div class="modal fade bsModal ch_modal delete_workflow_modal" id="favorite" tabindex="-1" role="dialog"
+aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+        <div class="modal-header text-center justify-content-center">
+            <h2 *ngIf="!selectedPlacementType?.is_favorite" class="modal-title" id="exampleModalLabel">Would you like to save and favorite the following <br>
+
+                Placement Type for future use?</h2>
+            <h2 *ngIf="selectedPlacementType?.is_favorite" class="modal-title" id="exampleModalLabel">Would you like to remove the following <br>
+
+                Placement Type from favorites?</h2>
+        </div>
+        <div class="modal-body pt-3">
+            <div class="row">
+                <div class="col-md-12 text-center">
+                    <h3>{{selectedPlacementType?.type}}</h3>
+                </div>
+            </div>
+            <div class="modal-footer justify-content-center">
+                <button mat-button type="button" class="theme_btn btn_outline_primary"
+                    data-dismiss="modal">No</button>
+                <button mat-button type="submit" class="theme_btn btn_primary" data-dismiss="modal"
+                    (click)="saveAsFavorite()">Yes</button>
+            </div>
+        </div>
+    </div>
+</div>
+</div>

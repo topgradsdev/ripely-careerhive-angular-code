@@ -1,0 +1,170 @@
+<section class="employer-header-sec">
+	<div class="container">
+		<form [formGroup]="step1Section">
+			<div class="row">
+				<div class="col-md-12">
+					<div class="card">
+						<div class="manage-home-header">
+							<div class="card-header d-flex justify-content-between">
+								<strong>Video Intro Step 3</strong>
+								<div class="slide-cs">
+									<span class="mr-2">Visibility </span>
+									<mat-slide-toggle formControlName="is_visible" (change)="fun($event)"></mat-slide-toggle>
+								</div>
+							</div>
+							<div class="card-body">
+								
+									<div class="home-mng-form">
+										<div class="form-group">
+											<label>Step 3 Heading</label>
+											<input type="text" name="" class="form-control" value="3. Upload your video" formControlName="heading">
+										</div>
+										<div *ngIf="(step1Section.controls.heading.touched || step1Section.controls.heading.dirty) && step1Section.controls.heading.invalid && step1Section.controls.heading?.errors?.required  " class="invalid">
+											*Please enter heading
+										</div>
+										<div *ngIf="(step1Section.controls.heading.touched || step1Section.controls.heading.dirty) && step1Section.controls.heading.invalid && step1Section.controls.heading?.errors?.maxlength  " class="invalid">
+											**Maximum Length should be 200 characters
+										</div>
+										<div class="form-group">
+											<label>Image</label>
+											<div class="slider-video-cntnt">
+												<div class="prev-upld-img resume_img">
+													<img [src]="HeadingImage1?HeadingImage1:'assets/img/tip_intro.png'" class="img-fluid">
+													<div class="upload-imag text-center">
+														<button class="btn-primary btn  mt-3 position-relative">
+															<input type="file" name="" class="img-input-upld" (change)="setHeadingImage($event)">
+														Upload Image
+														</button>
+													</div>
+													<div *ngIf="step1Section.controls['Image']?.errors?.required "
+													class="invalid">
+													*Please select image
+													</div>
+													<div *ngIf="step1Section.controls.county?.errors?.required  " class="invalid">
+														*Only images are allowed
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="form-group">
+											<label >Description</label>
+											<quill-editor [modules]="modules" formControlName="description"></quill-editor>
+											<!-- <editor apiKey="zcwi1f81304uers1lcszh0iq2lbhcaxl5cj6ez0v89wr25z3" formControlName="description"></editor> -->
+										</div>
+										<div *ngIf="(step1Section.controls.description.touched || step1Section.controls.description.dirty) && step1Section.controls.description.invalid && step1Section.controls.description?.errors?.required  " class="invalid">
+											*Please enter description
+										</div>
+										<div *ngIf="(step1Section.controls.description.touched || step1Section.controls.description.dirty) && step1Section.controls.description.invalid && step1Section.controls.description?.errors?.maxlength  " class="invalid">
+											**Maximum Length should be 200 characters
+										</div>
+										<div class="edit-btns d-flex justify-content-end">
+											<button class="btn btn-primary mr-4" (click)="postcontent('step1')">Save</button>
+											<!-- <button class="btn btn-primary">Back</button> -->
+										</div>
+									</div>
+								
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</form>
+	</div>
+</section>
+
+<section class="work-for-sec">
+	<div class="container">
+		<form [formGroup]="step2Section">
+			<div class="row">
+				<div class="col-md-12">
+					<div class="card">
+						<div class="manage-home-header">
+							<div class="card-header d-flex justify-content-between">
+								<strong>Last section</strong>
+								<div class="slide-cs">
+									<span class="mr-2">Visibility </span>
+									<mat-slide-toggle formControlName="is_visible" (change)="fun1($event)"></mat-slide-toggle>
+								</div>
+							</div>
+							<div class="card-body">
+								
+									<div class="home-mng-form">
+										<div class="form-group">
+											<label>Image</label>
+											<div class="slider-video-cntnt">
+												<div class="prev-upld-img resume_img">
+													<img [src]="HeadingImage2?HeadingImage2:'assets/img/stepsl_img.png'"  class="img-fluid">
+													<div class="upload-imag text-center">
+														<button class="btn-primary btn  mt-3 position-relative">
+															<input type="file" name="" class="img-input-upld" (change)="setHeadingImage1($event)">
+														Upload Image
+														</button>
+													</div>
+													<div *ngIf="step2Section.controls['Image']?.errors?.required "
+													class="invalid">
+													*Please select image
+													</div>
+													<div *ngIf="step2Section.controls.county?.errors?.required  " class="invalid">
+														*Only images are allowed
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="form-group">
+											<label>Description</label>
+											<quill-editor [modules]="modules" formControlName="description"></quill-editor>
+											<!-- <editor apiKey="zcwi1f81304uers1lcszh0iq2lbhcaxl5cj6ez0v89wr25z3" formControlName="description"></editor> -->
+										</div>
+										<div *ngIf="(step2Section.controls.description.touched || step2Section.controls.description.dirty) && step2Section.controls.description.invalid && step2Section.controls.description?.errors?.required  " class="invalid">
+											*Please enter description
+										</div>
+										<div *ngIf="(step2Section.controls.description.touched || step2Section.controls.description.dirty) && step2Section.controls.description.invalid && step2Section.controls.description?.errors?.maxlength  " class="invalid">
+											**Maximum Length should be 5000 characters
+										</div>
+										<div class="edit-btns d-flex justify-content-end">
+											<button class="btn btn-primary mr-4" (click)="postcontent('step2')">Save</button>
+											<!-- <button class="btn btn-primary">Back</button> -->
+										</div>
+									</div>
+								
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</form>
+	</div>
+</section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

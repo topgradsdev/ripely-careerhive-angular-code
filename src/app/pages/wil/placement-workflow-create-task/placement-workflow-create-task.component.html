@@ -1,0 +1,1595 @@
+<div class="page_header">
+    <a *ngIf="Projecttype=='project'" [routerLink]="['/admin/wil/placement-groups/project', placementId]" [state]="{type: 'view'}"
+        [queryParams]="{redirectTo: 'worfkflow'}" class="back_Link"> <svg xmlns="http://www.w3.org/2000/svg" width="24"
+            height="24" viewBox="0 0 24 24" fill="none">
+            <path d="M19 12H5" stroke="#464BA8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M12 19L5 12L12 5" stroke="#464BA8" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round" />
+        </svg> Back to Workflow</a>
+
+    <a  *ngIf="Projecttype!='project'" [routerLink]="['/admin/wil/placement-groups', placementId]" [state]="{type: 'view'}"
+    [queryParams]="{redirectTo: 'worfkflow'}" class="back_Link"> <svg xmlns="http://www.w3.org/2000/svg" width="24"
+        height="24" viewBox="0 0 24 24" fill="none">
+        <path d="M19 12H5" stroke="#464BA8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+        <path d="M12 19L5 12L12 5" stroke="#464BA8" stroke-width="2" stroke-linecap="round"
+            stroke-linejoin="round" />
+    </svg> Back to Workflow</a>
+    <div class=" page_header_container">
+        <h2 *ngIf="!taskId">Create Task</h2>
+        <h2 *ngIf="taskId">Edit Task</h2>
+    </div>
+</div>
+
+<section>
+    <form [formGroup]="createTask">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="cards">
+                    <div class="card_body">
+                        <div class="form_heading">
+                            <h5>Task Information</h5>
+                        </div>
+                        <div class="bold_lable_form">
+                            <!-- Name -->
+                            <div class="row form-group">
+                                <div class="col-md-3">
+                                    <label class="label_title">Name</label>
+                                </div>
+                                <div class="col-md-9">
+                                    <input formControlName="name" type="text" placeholder="Name of Task"
+                                        class="form-control">
+                                    <div
+                                        *ngIf="(createTask.get('name')?.touched || createTask.get('name')?.dirty) && createTask.get('name')?.invalid && createTask.get('name')?.errors?.required"
+                                        class="invalid-feedback">Please enter task name.</div>
+                                </div>
+                            </div>
+                            <!-- Completion Criteria -->
+                            <div class="row form-group">
+                                <div class="col-md-3"><label class="label_title">Completion Criteria</label></div>
+                                <div class="col-md-9">
+                                    <ng-select formControlName="completion_criteria" [searchable]="false"
+                                        [multiple]="false" bindLabel="name" bindValue="id" [clearable]="false"
+                                        placeholder="Select the criteria" (change)="onChangeCompletionCriteria($event)">
+                                        <ng-option *ngFor="let criteria of completionCriteriaList"
+                                            value="{{criteria.completion_criteria}}">{{criteria.completion_criteria}}</ng-option>
+                                    </ng-select>
+                                    <div
+                                        *ngIf="(createTask.get('completion_criteria')?.touched || createTask.get('completion_criteria')?.dirty) && createTask.get('completion_criteria')?.invalid && createTask.get('completion_criteria')?.errors?.required"
+                                        class="invalid-feedback">Please select completion criteria.</div>
+                                </div>
+                            </div>
+                            <ng-container *ngIf="selectedCompletionCriteria === completionCriteria.sendEmail">
+                                <!-- Unlock Task On -->
+                                <div class="row form-group">
+                                    <div class="col-md-3"><label class="label_title">Unlock Task On</label></div>
+                                    <div class="col-md-9">
+                                        <ng-select formControlName="unlock_task_on" [searchable]="false"
+                                            [multiple]="false" bindLabel="name" bindValue="id" [clearable]="false"
+                                            placeholder="Select Unlock Task On">
+                                            <ng-container *ngFor="let unlockTaskOn of unlockTaskOnList" >
+                                            <ng-container *ngIf="Projecttype=='project'">
+                                                <ng-option *ngIf="unlockTaskOn._id=='67f36f09248c7823ab8a38dc' || unlockTaskOn._id=='67f36f09248c7823ab8a38dd' || unlockTaskOn._id=='67f36f09248c7823ab8a38df' || unlockTaskOn._id=='67f36f09248c7823ab8a38e1'" value="{{unlockTaskOn._id}}" [title]="unlockTaskOn.unlock_task_on">
+                                                    {{unlockTaskOn.unlock_task_on}}
+
+
+                                                    <!-- <span class="custom-option">{{ unlockTaskOn.unlock_task_on }}</span> -->
+                                                </ng-option>
+                                            </ng-container>
+                                            <ng-container *ngIf="Projecttype!='project'">
+                                                <ng-option *ngIf="unlockTaskOn._id=='65c71d433aee90c7dbc84d0e' || unlockTaskOn._id=='65c71d433aee90c7dbc84d12' || unlockTaskOn._id=='65c71d433aee90c7dbc84d10' || unlockTaskOn._id=='65c71d433aee90c7dbc84d11'" value="{{unlockTaskOn._id}}" [title]="unlockTaskOn.unlock_task_on">
+                                                    {{unlockTaskOn.unlock_task_on}}
+
+
+                                                    <!-- <span class="custom-option">{{ unlockTaskOn.unlock_task_on }}</span> -->
+                                                </ng-option>
+                                            </ng-container>
+                                               
+                                            </ng-container>
+                                          
+                                        </ng-select>
+                                        <!-- <small>Select the action that will mark this activity as complete</small> -->
+                                    </div>
+                                </div>
+                                <div class="row form-group"
+                                *ngIf="(createTask.get('unlock_task_on').value === '67f36f09248c7823ab8a38dc' || createTask.get('unlock_task_on').value === '67f36f09248c7823ab8a38df'  || createTask.get('unlock_task_on').value === '67f36f09248c7823ab8a38e0'  || createTask.get('unlock_task_on').value === '67f36f09248c7823ab8a38e1'  || createTask.get('unlock_task_on').value === '65c71d433aee90c7dbc84d11'  || createTask.get('unlock_task_on').value === '65c71d433aee90c7dbc84d12'  || createTask.get('unlock_task_on').value === '65c71d433aee90c7dbc84d0f'  || createTask.get('unlock_task_on').value === '65c71d433aee90c7dbc84d10')" >
+                                    <div class="col-md-3"><label class="label_title">Set Days</label></div>
+                                    <div class="col-md-5">
+                                        <div class="days_container">
+                                            <input type="number" (wheel)="$event.preventDefault()"  (keydown.arrowup)="$event.preventDefault()"  (keydown.arrowdown)="$event.preventDefault()"  class="form-control" placeholder="e.g 5"
+                                                formControlName="set_days">
+                                            <label class="label_title">Days</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Select Category/Template -->
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Select a Category</label>
+                                            <ng-select formControlName="category" [searchable]="false"
+                                                [multiple]="false" bindLabel="name" bindValue="_id" [clearable]="false"
+                                                placeholder="Choose a Category"
+                                                (change)="getEmailTemplate($event)">
+                                                <ng-option [value]="category._id"
+                                                    *ngFor="let category of categories">{{category.category_title}}</ng-option>
+                                                <!-- <ng-option value="Student">Student</ng-option>
+                                            <ng-option value="Companies">Companies</ng-option>
+                                            <ng-option value="Companies - WIL">Companies - WIL</ng-option>
+                                            <ng-option value="Custom Email">Custom Email</ng-option> -->
+                                            </ng-select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Select a Template</label>
+                                            <ng-select formControlName="template" [searchable]="false"
+                                                [multiple]="false" bindLabel="name" bindValue="id" [clearable]="false"
+                                                placeholder="Select Template"
+                                                (change)="onSelectTemplate($event, 'template')">
+                                                <ng-option *ngFor="let template of emailTemplates"
+                                                    [value]="template._id">{{template.template_name}}</ng-option>
+                                            </ng-select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <a class="preview_email_link" data-target="#emailPreviewModal"
+                                                data-toggle="modal">Preview Email</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- <div class="email_priview_crate_task form-group" [innerHtml]="widget"></div> -->
+                                <!-- Set Email Date -->
+                                <div class="row form-group custom_datepicker">
+                                    <div class="col-md-3"><label class="label_title">Send Email Date<br>
+                                            <span>(optional)</span></label></div>
+                                    <div class="col-md-9">
+                                        <div class="custom_datepicker_container">
+                                            <input formControlName="email_date" placeholder="Select a Date"
+                                                class="form-control" [matDatepicker]="projectStartPicker">
+                                            <mat-datepicker-toggle matSuffix [for]="projectStartPicker">
+                                                <svg matDatepickerToggleIcon width="18" height="18" viewBox="0 0 18 18"
+                                                    fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <path
+                                                        d="M14.25 3H3.75C2.92157 3 2.25 3.67157 2.25 4.5V15C2.25 15.8284 2.92157 16.5 3.75 16.5H14.25C15.0784 16.5 15.75 15.8284 15.75 15V4.5C15.75 3.67157 15.0784 3 14.25 3Z"
+                                                        stroke="#2B2A35" stroke-width="1.5" stroke-linecap="round"
+                                                        stroke-linejoin="round" />
+                                                    <path d="M12 1.5V4.5" stroke="#2B2A35" stroke-width="1.5"
+                                                        stroke-linecap="round" stroke-linejoin="round" />
+                                                    <path d="M6 1.5V4.5" stroke="#2B2A35" stroke-width="1.5"
+                                                        stroke-linecap="round" stroke-linejoin="round" />
+                                                    <path d="M2.25 7.5H15.75" stroke="#2B2A35" stroke-width="1.5"
+                                                        stroke-linecap="round" stroke-linejoin="round" />
+                                                </svg>
+                                            </mat-datepicker-toggle>
+                                            <mat-datepicker #projectStartPicker></mat-datepicker>
+                                        </div>
+                                    </div>
+                                </div>
+                            </ng-container>
+                            <ng-container *ngIf="selectedCompletionCriteria === completionCriteria.submitWorkingHours">
+                                <!-- Description -->
+                                <div class="row form-group">
+                                    <div class="col-md-3"><label class="label_title">Description</label></div>
+                                    <div class="col-md-9">
+                                        <quill-editor [modules]="modules" formControlName="description"></quill-editor>
+                                        <!-- <editor formControlName="description" class="ch_editor"
+                                            apiKey="zcwi1f81304uers1lcszh0iq2lbhcaxl5cj6ez0v89wr25z3" [init]="{
+                                            height: 177,
+                                            menubar: false,
+                                            statusbar: true,
+                                            placeholder: 'Description of Task',
+                                            plugins: [
+                                            'textcolor',
+                                            'advlist autolink lists link image charmap print preview anchor',
+                                            'searchreplace visualblocks code fullscreen',
+                                            'insertdatetime media table paste code help wordcount'
+                                            ],
+                                            toolbar:
+                                            'bold italic | \
+                                            bullist | formatselect | link |',
+                                            contextmenu: false
+                                            }"></editor> -->
+                                    </div>
+                                </div>
+                                <!-- Unlock Task On -->
+                                <div class="row form-group">
+                                    <div class="col-md-3"><label class="label_title">Unlock Task On</label></div>
+                                    <div class="col-md-9">
+                                        <ng-select formControlName="unlock_task_on" [searchable]="false"
+                                            [multiple]="false" bindLabel="name" bindValue="id" [clearable]="false"
+                                            placeholder="Select Unlock Task On">
+                                            <ng-option *ngFor="let unlockTaskOn of unlockTaskOnList"
+                                                value="{{unlockTaskOn._id}}">{{unlockTaskOn.unlock_task_on}}</ng-option>
+                                        </ng-select>
+                                        <!-- <small>Select the action that will mark this activity as complete</small> -->
+                                    </div>
+                                </div>
+                                <!-- Required Activity -->
+                                <div class="row form-group">
+                                    <div class="col-md-3"><label class="label_title">Required Activity</label></div>
+                                    <div class="col-md-9">
+                                        <mat-radio-group formControlName="required_activity" class="radio_group">
+                                            <mat-radio-button class="mr-4" [value]="true">Yes</mat-radio-button>
+                                            <mat-radio-button [value]="false">No</mat-radio-button>
+                                        </mat-radio-group>
+                                    </div>
+                                </div>
+                                <!-- Select Time Period -->
+                                <div class="row form-group">
+                                    <div class="col-md-3"><label class="label_title">Select Time Periods</label></div>
+                                    <div class="col-md-9">
+                                        <ng-select formControlName="time_periods" [searchable]="false"
+                                            [multiple]="false" bindLabel="name" bindValue="id" [clearable]="false"
+                                            placeholder="Select Time Periods">
+                                            <ng-option value="Weeks 1-4">Weeks 1-4</ng-option>
+                                            <ng-option value="Weeks 4-8">Weeks 4-8</ng-option>
+                                            <ng-option value="Weeks 8-12">Weeks 8-12</ng-option>
+                                        </ng-select>
+                                    </div>
+                                </div>
+                                <!-- Set Deadline -->
+                                <div class="row form-group">
+                                    <div class="col-md-3"><label class="label_title">Set Deadline to <br>
+                                            <span>(optional)</span>
+                                        </label></div>
+                                    <div class="col-md-9">
+                                        <ng-select [searchable]="false" [multiple]="false" bindLabel="name"
+                                            bindValue="id" [clearable]="false" placeholder="No Deadline">
+                                            <ng-option value="Days after Internship start date">Days after Internship
+                                                start date</ng-option>
+                                            <ng-option value="Days after Internship completion">Days after Internship
+                                                completion</ng-option>
+                                            <ng-option value="Specific Date">Specific Date</ng-option>
+                                        </ng-select>
+                                    </div>
+                                </div>
+                                <!--  -->
+                                <div class="row form-group custom_datepicker">
+                                    <div class="col-md-3"><label class="label_title">Send Email Date</label></div>
+                                    <div class="col-md-5">
+                                        <div class="custom_datepicker_container">
+                                            <input formControlName="deadline" placeholder="Select a Date"
+                                                class="form-control" [matDatepicker]="projectStartPicker">
+                                            <mat-datepicker-toggle matSuffix [for]="projectStartPicker">
+                                                <svg matDatepickerToggleIcon width="18" height="18" viewBox="0 0 18 18"
+                                                    fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <path
+                                                        d="M14.25 3H3.75C2.92157 3 2.25 3.67157 2.25 4.5V15C2.25 15.8284 2.92157 16.5 3.75 16.5H14.25C15.0784 16.5 15.75 15.8284 15.75 15V4.5C15.75 3.67157 15.0784 3 14.25 3Z"
+                                                        stroke="#2B2A35" stroke-width="1.5" stroke-linecap="round"
+                                                        stroke-linejoin="round" />
+                                                    <path d="M12 1.5V4.5" stroke="#2B2A35" stroke-width="1.5"
+                                                        stroke-linecap="round" stroke-linejoin="round" />
+                                                    <path d="M6 1.5V4.5" stroke="#2B2A35" stroke-width="1.5"
+                                                        stroke-linecap="round" stroke-linejoin="round" />
+                                                    <path d="M2.25 7.5H15.75" stroke="#2B2A35" stroke-width="1.5"
+                                                        stroke-linecap="round" stroke-linejoin="round" />
+                                                </svg>
+                                            </mat-datepicker-toggle>
+                                            <mat-datepicker #projectStartPicker></mat-datepicker>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row form-group custom_datepicker">
+                                    <div class="col-md-3"><label class="label_title">Set Date</label></div>
+                                    <div class="col-md-5">
+                                        <div class="custom_datepicker_container">
+                                            <input placeholder="Select a Date" class="form-control"
+                                                [matDatepicker]="setDate">
+                                            <mat-datepicker-toggle matSuffix [for]="setDate">
+                                                <svg matDatepickerToggleIcon width="18" height="18" viewBox="0 0 18 18"
+                                                    fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <path
+                                                        d="M14.25 3H3.75C2.92157 3 2.25 3.67157 2.25 4.5V15C2.25 15.8284 2.92157 16.5 3.75 16.5H14.25C15.0784 16.5 15.75 15.8284 15.75 15V4.5C15.75 3.67157 15.0784 3 14.25 3Z"
+                                                        stroke="#2B2A35" stroke-width="1.5" stroke-linecap="round"
+                                                        stroke-linejoin="round" />
+                                                    <path d="M12 1.5V4.5" stroke="#2B2A35" stroke-width="1.5"
+                                                        stroke-linecap="round" stroke-linejoin="round" />
+                                                    <path d="M6 1.5V4.5" stroke="#2B2A35" stroke-width="1.5"
+                                                        stroke-linecap="round" stroke-linejoin="round" />
+                                                    <path d="M2.25 7.5H15.75" stroke="#2B2A35" stroke-width="1.5"
+                                                        stroke-linecap="round" stroke-linejoin="round" />
+                                                </svg>
+                                            </mat-datepicker-toggle>
+                                            <mat-datepicker #setDate></mat-datepicker>
+                                        </div>
+                                    </div>
+                                </div>
+                            </ng-container>
+                            <ng-container *ngIf="selectedCompletionCriteria === completionCriteria.submitForm">
+                                <!-- Description -->
+                                <div class="row form-group">
+                                    <div class="col-md-3"><label class="label_title">Description</label></div>
+                                    <div class="col-md-9">
+                                        <quill-editor [modules]="modules" formControlName="description"></quill-editor>
+                                        <!-- <editor formControlName="description" class="ch_editor"
+                                            apiKey="zcwi1f81304uers1lcszh0iq2lbhcaxl5cj6ez0v89wr25z3" [init]="{
+                                            height: 177,
+                                            menubar: false,
+                                            statusbar: true,
+                                            placeholder: 'Description of Task',
+                                            plugins: [
+                                            'textcolor',
+                                            'advlist autolink lists link image charmap print preview anchor',
+                                            'searchreplace visualblocks code fullscreen',
+                                            'insertdatetime media table paste code help wordcount'
+                                            ],
+                                            toolbar:
+                                            'bold italic | \
+                                            bullist | formatselect | link |',
+                                            contextmenu: false
+                                            }"></editor> -->
+                                    </div>
+                                </div>
+                                <!-- Unlock Task On -->
+                                <div class="row form-group">
+                                    <div class="col-md-3"><label class="label_title">Unlock Task On</label></div>
+                                    <div class="col-md-9">
+                                        <ng-select formControlName="unlock_task_on" [searchable]="false"
+                                            [multiple]="false" bindLabel="name" bindValue="id" [clearable]="false"
+                                            placeholder="Select Unlock Task On">
+                                            <ng-option *ngFor="let unlockTaskOn of unlockTaskOnList"
+                                                value="{{unlockTaskOn._id}}">{{unlockTaskOn.unlock_task_on}}</ng-option>
+                                        </ng-select>
+                                        <!-- <small>Select the action that will mark this activity as complete</small> -->
+                                    </div>
+                                </div>
+                                <div class="row form-group"
+                                *ngIf="(createTask.get('unlock_task_on').value === '67f36f09248c7823ab8a38dc' || createTask.get('unlock_task_on').value === '67f36f09248c7823ab8a38df'  || createTask.get('unlock_task_on').value === '67f36f09248c7823ab8a38e0'  || createTask.get('unlock_task_on').value === '67f36f09248c7823ab8a38e1' || createTask.get('unlock_task_on').value === '65c71d433aee90c7dbc84d11'  || createTask.get('unlock_task_on').value === '65c71d433aee90c7dbc84d12'  || createTask.get('unlock_task_on').value === '65c71d433aee90c7dbc84d0f'  || createTask.get('unlock_task_on').value === '65c71d433aee90c7dbc84d10')" >
+                                    <div class="col-md-3"><label class="label_title">Set Days</label></div>
+                                    <div class="col-md-5">
+                                        <div class="days_container">
+                                            <input type="number" (wheel)="$event.preventDefault()"  (keydown.arrowup)="$event.preventDefault()"  (keydown.arrowdown)="$event.preventDefault()"  class="form-control" placeholder="e.g 5"
+                                                formControlName="set_days">
+                                            <label class="label_title">Days</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Required Activity -->
+                                <div class="row form-group">
+                                    <div class="col-md-3"><label class="label_title">Required Activity</label></div>
+                                    <div class="col-md-9">
+                                        <mat-radio-group formControlName="required_activity" class="radio_group">
+                                            <mat-radio-button class="mr-4" [value]="true">Yes</mat-radio-button>
+                                            <mat-radio-button [value]="false">No</mat-radio-button>
+                                        </mat-radio-group>
+                                    </div>
+                                </div>
+                                <!-- Category -->
+                                <div class="row form-group custom_datepicker">
+                                    <div class="col-md-3">
+                                        <label class="label_title">Category</label>
+                                    </div>
+                                    <div class="col-md-9">
+                                        <ng-select formControlName="category" [searchable]="false" [multiple]="false"
+                                            bindLabel="name" bindValue="id" [clearable]="false" placeholder="Category"
+                                            (change)="getCustomFormBySubmitter($event)">
+                                            <ng-option value="s">Students</ng-option>
+                                            <ng-option value="e">Employers</ng-option>
+                                            <ng-option value="se">Students & Employers</ng-option>
+                                        </ng-select>
+                                    </div>
+                                </div>
+                                <!-- Select a Form -->
+                                <div class="row form-group custom_datepicker">
+                                    <div class="col-md-3">
+                                        <label class="label_title">Select a Form</label>
+                                    </div>
+                                    <div class="col-md-9">
+                                        <ng-select formControlName="select_form" [searchable]="false" [multiple]="false"
+                                            bindLabel="title" bindValue="_id" [clearable]="false"
+                                            placeholder="select form">
+                                            <ng-option *ngFor="let form of formList"
+                                                value="{{form._id}}">{{form.title}}</ng-option>
+                                        </ng-select>
+                                    </div>
+                                </div>
+                                <!-- Additional Criteria -->
+                                <div class="row form-group custom_datepicker">
+                                    <div class="col-md-3">
+                                        <label class="label_title">Additional Criteria</label>
+                                    </div>
+                                    <div class="col-md-9">
+                                        <ng-select formControlName="additional_criteria" [searchable]="false"
+                                            [multiple]="false" bindLabel="name" bindValue="id" [clearable]="false"
+                                            placeholder="Additional Criteria">
+                                            <ng-option *ngFor="let additionalCriteria of additionalCriteriaList"
+                                                value="{{additionalCriteria._id}}"><span
+                                                    title="{{additionalCriteria.additional_criteria}}">{{additionalCriteria.additional_criteria}}</span></ng-option>
+                                        </ng-select>
+                                        <div
+                                            *ngIf="(createTask.get('additional_criteria')?.touched || createTask.get('additional_criteria')?.dirty) && createTask.get('additional_criteria')?.invalid && createTask.get('additional_criteria')?.errors?.required"
+                                            class="invalid-feedback">Please select additional criteria.</div>
+                                    </div>
+                                </div>
+
+
+                                  <!-- Additional Criteria -->
+                                <div class="row form-group custom_datepicker" *ngIf="createTask.get('additional_criteria').value =='661ad55d356417e51f1fc69b' || createTask.get('additional_criteria').value =='66c3eabe6bd5e980dd2b1e1b' || createTask.get('additional_criteria').value =='661ad55d356417e51f1fc69f' || createTask.get('additional_criteria').value =='661ad55d356417e51f1fc69d'">
+                                    <div class="col-md-3">
+                                        <label class="label_title">Assign to Staff <br /> <span>(optional)</span></label>
+                                    </div>
+                                    <div class="col-md-9">
+                                        <ng-select formControlName="select_staff" [searchable]="false"
+                                            [multiple]="true" bindLabel="first_name" bindValue="staff_id" [clearable]="false"
+                                            placeholder="Select a Staff Member">
+                                            <ng-option *ngFor="let staffMember of staffMembers" [value]="staffMember.staff_id">
+                                                {{ staffMember.first_name }} {{ staffMember.last_name }}
+                                            </ng-option>
+                                        </ng-select>
+                                        <div
+                                            *ngIf="(createTask.get('select_staff')?.touched || createTask.get('select_staff')?.dirty) && createTask.get('select_staff')?.invalid && createTask.get('select_staff')?.errors?.required"
+                                            class="invalid-feedback">Please select Staff Member.</div>
+                                    </div>
+                                </div>
+
+
+                                <!-- Set Deadline -->
+                                <div class="row form-group custom_datepicker">
+                                    <div class="col-md-3"><label class="label_title">Set Deadline <br>
+                                            <span>(optional)</span></label></div>
+                                    <div class="col-md-9">
+                                        <div class="custom_datepicker_container">
+                                            <input formControlName="deadline" placeholder="Select a Date"
+                                                class="form-control" [matDatepicker]="projectStartPicker">
+                                            <mat-datepicker-toggle matSuffix [for]="projectStartPicker">
+                                                <svg matDatepickerToggleIcon width="18" height="18" viewBox="0 0 18 18"
+                                                    fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <path
+                                                        d="M14.25 3H3.75C2.92157 3 2.25 3.67157 2.25 4.5V15C2.25 15.8284 2.92157 16.5 3.75 16.5H14.25C15.0784 16.5 15.75 15.8284 15.75 15V4.5C15.75 3.67157 15.0784 3 14.25 3Z"
+                                                        stroke="#2B2A35" stroke-width="1.5" stroke-linecap="round"
+                                                        stroke-linejoin="round" />
+                                                    <path d="M12 1.5V4.5" stroke="#2B2A35" stroke-width="1.5"
+                                                        stroke-linecap="round" stroke-linejoin="round" />
+                                                    <path d="M6 1.5V4.5" stroke="#2B2A35" stroke-width="1.5"
+                                                        stroke-linecap="round" stroke-linejoin="round" />
+                                                    <path d="M2.25 7.5H15.75" stroke="#2B2A35" stroke-width="1.5"
+                                                        stroke-linecap="round" stroke-linejoin="round" />
+                                                </svg>
+                                            </mat-datepicker-toggle>
+                                            <mat-datepicker #projectStartPicker></mat-datepicker>
+                                        </div>
+                                    </div>
+                                </div>
+                            </ng-container>
+                            <ng-container *ngIf="selectedCompletionCriteria === completionCriteria.attendAppointment">
+                                <!-- Description -->
+                                <div class="row form-group">
+                                    <div class="col-md-3"><label class="label_title">Description</label></div>
+                                    <div class="col-md-9">
+                                        <quill-editor [modules]="modules" formControlName="description"></quill-editor>
+                                        <!-- <editor formControlName="description" class="ch_editor"
+                                            apiKey="zcwi1f81304uers1lcszh0iq2lbhcaxl5cj6ez0v89wr25z3" [init]="{
+                                            height: 177,
+                                            menubar: false,
+                                            statusbar: true,
+                                            placeholder: 'Description of Task',
+                                            plugins: [
+                                            'textcolor',
+                                            'advlist autolink lists link image charmap print preview anchor',
+                                            'searchreplace visualblocks code fullscreen',
+                                            'insertdatetime media table paste code help wordcount'
+                                            ],
+                                            toolbar:
+                                            'bold italic | \
+                                            bullist | formatselect | link |',
+                                            contextmenu: false
+                                            }"></editor> -->
+                                    </div>
+                                </div>
+                                <!-- Unlock Task On -->
+                                <div class="row form-group">
+                                    <div class="col-md-3"><label class="label_title">Unlock Task On</label></div>
+                                    <div class="col-md-9">
+                                        <ng-select formControlName="unlock_task_on" [searchable]="false"
+                                            [multiple]="false" bindLabel="name" bindValue="id" [clearable]="false"
+                                            placeholder="Select Unlock Task On">
+                                            <ng-option *ngFor="let unlockTaskOn of unlockTaskOnList"
+                                                value="{{unlockTaskOn._id}}">{{unlockTaskOn.unlock_task_on}}</ng-option>
+                                        </ng-select>
+                                        <!-- <small>Select the action that will mark this activity as complete</small> -->
+                                    </div>
+                                </div>
+
+                                <div class="row form-group"
+                                *ngIf="(createTask.get('unlock_task_on').value === '67f36f09248c7823ab8a38dc' || createTask.get('unlock_task_on').value === '67f36f09248c7823ab8a38df'  || createTask.get('unlock_task_on').value === '67f36f09248c7823ab8a38e0'  || createTask.get('unlock_task_on').value === '67f36f09248c7823ab8a38e1' || createTask.get('unlock_task_on').value === '65c71d433aee90c7dbc84d11'  || createTask.get('unlock_task_on').value === '65c71d433aee90c7dbc84d12'  || createTask.get('unlock_task_on').value === '65c71d433aee90c7dbc84d0f'  || createTask.get('unlock_task_on').value === '65c71d433aee90c7dbc84d10')" >
+                                    <div class="col-md-3"><label class="label_title">Set Days</label></div>
+                                    <div class="col-md-5">
+                                        <div class="days_container">
+                                            <input type="number" (wheel)="$event.preventDefault()"  (keydown.arrowup)="$event.preventDefault()"  (keydown.arrowdown)="$event.preventDefault()"  class="form-control" placeholder="e.g 5"
+                                                formControlName="set_days">
+                                            <label class="label_title">Days</label>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <!-- Required Activity -->
+                                <div class="row form-group">
+                                    <div class="col-md-3"><label class="label_title">Required Activity</label></div>
+                                    <div class="col-md-9">
+                                        <mat-radio-group formControlName="required_activity" class="radio_group">
+                                            <mat-radio-button class="mr-4" [value]="true">Yes</mat-radio-button>
+                                            <mat-radio-button [value]="false">No</mat-radio-button>
+                                        </mat-radio-group>
+                                    </div>
+                                </div>
+
+
+                                <div class="row form-group custom_datepicker">
+                                    <div class="col-md-3">
+                                        <label class="label_title">
+                                            Appointment URL
+                                        </label>
+                                    </div>
+                                    <div class="col-md-9">
+                                        <input formControlName="appointment_url" type="text" placeholder="Appointment Link"
+                                        class="form-control">
+                                        <div *ngIf="(createTask.get('appointment_url')?.touched || createTask.get('appointment_url')?.dirty) && createTask.get('appointment_url')?.invalid && createTask.get('appointment_url')?.errors?.required"
+                                            class="invalid-feedback">Please enter appointment url.</div>
+                                      
+                                    </div>
+                                </div>
+
+                                
+
+
+                                <!-- Additional Criteria -->
+                                <div class="row form-group custom_datepicker">
+                                    <div class="col-md-3">
+                                        <label class="label_title">Additional Criteria</label>
+                                    </div>
+                                    <div class="col-md-9">
+                                        <ng-select formControlName="additional_criteria" [searchable]="false"
+                                            [multiple]="false" bindLabel="name" bindValue="id" [clearable]="false"
+                                            placeholder="Additional Criteria">
+
+                                            <ng-container *ngFor="let additionalCriteria of additionalCriteriaList">
+                                                <ng-option
+                                                    *ngIf="additionalCriteria._id !== '661ad55d356417e51f1fc6a0'"
+                                                    [value]="additionalCriteria._id">
+                                                    {{ additionalCriteria.additional_criteria }}
+                                                </ng-option>
+                                            </ng-container>
+
+                                            <!-- <ng-option *ngFor="let additionalCriteria of additionalCriteriaList"
+                                                value="{{additionalCriteria._id}}"><span
+                                                    title="{{additionalCriteria.additional_criteria}}">{{additionalCriteria.additional_criteria}}</span></ng-option> -->
+                                        </ng-select>
+                                        <div
+                                            *ngIf="(createTask.get('additional_criteria')?.touched || createTask.get('additional_criteria')?.dirty) && createTask.get('additional_criteria')?.invalid && createTask.get('additional_criteria')?.errors?.required"
+                                            class="invalid-feedback">Please select additional criteria.</div>
+                                    </div>
+                                </div>
+
+                             
+                                <!-- Set Deadline -->
+                                <!-- <div class="row form-group custom_datepicker">
+                                    <div class="col-md-3"><label class="label_title">Set Deadline <br>
+                                            <span>(optional)</span></label></div>
+                                    <div class="col-md-9">
+                                        <div class="custom_datepicker_container">
+                                            <input formControlName="deadline" placeholder="Select a Date"
+                                                class="form-control" [matDatepicker]="projectStartPicker">
+                                            <mat-datepicker-toggle matSuffix [for]="projectStartPicker">
+                                                <svg matDatepickerToggleIcon width="18" height="18" viewBox="0 0 18 18"
+                                                    fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <path
+                                                        d="M14.25 3H3.75C2.92157 3 2.25 3.67157 2.25 4.5V15C2.25 15.8284 2.92157 16.5 3.75 16.5H14.25C15.0784 16.5 15.75 15.8284 15.75 15V4.5C15.75 3.67157 15.0784 3 14.25 3Z"
+                                                        stroke="#2B2A35" stroke-width="1.5" stroke-linecap="round"
+                                                        stroke-linejoin="round" />
+                                                    <path d="M12 1.5V4.5" stroke="#2B2A35" stroke-width="1.5"
+                                                        stroke-linecap="round" stroke-linejoin="round" />
+                                                    <path d="M6 1.5V4.5" stroke="#2B2A35" stroke-width="1.5"
+                                                        stroke-linecap="round" stroke-linejoin="round" />
+                                                    <path d="M2.25 7.5H15.75" stroke="#2B2A35" stroke-width="1.5"
+                                                        stroke-linecap="round" stroke-linejoin="round" />
+                                                </svg>
+                                            </mat-datepicker-toggle>
+                                            <mat-datepicker #projectStartPicker></mat-datepicker>
+                                        </div>
+                                    </div>
+                                </div> -->
+                            </ng-container>
+                            <ng-container *ngIf="selectedCompletionCriteria === completionCriteria.attendEvent">
+                                <!-- Description -->
+                                <div class="row form-group">
+                                    <div class="col-md-3"><label class="label_title">Description</label></div>
+                                    <div class="col-md-9">
+                                        <quill-editor [modules]="modules" formControlName="description"></quill-editor>
+                                        <!-- <editor formControlName="description" class="ch_editor"
+                                            apiKey="zcwi1f81304uers1lcszh0iq2lbhcaxl5cj6ez0v89wr25z3" [init]="{
+                                            height: 177,
+                                            menubar: false,
+                                            statusbar: true,
+                                            placeholder: 'Description of Task',
+                                            plugins: [
+                                            'textcolor',
+                                            'advlist autolink lists link image charmap print preview anchor',
+                                            'searchreplace visualblocks code fullscreen',
+                                            'insertdatetime media table paste code help wordcount'
+                                            ],
+                                            toolbar:
+                                            'bold italic | \
+                                            bullist | formatselect | link |',
+                                            contextmenu: false
+                                            }"></editor> -->
+                                    </div>
+                                </div>
+                                <!-- Unlock Task On -->
+                                <div class="row form-group">
+                                    <div class="col-md-3"><label class="label_title">Unlock Task On</label></div>
+                                    <div class="col-md-9">
+                                        <ng-select formControlName="unlock_task_on" [searchable]="false"
+                                            [multiple]="false" bindLabel="name" bindValue="id" [clearable]="false"
+                                            placeholder="Select Unlock Task On">
+                                            <ng-option *ngFor="let unlockTaskOn of unlockTaskOnList"
+                                                value="{{unlockTaskOn._id}}">{{unlockTaskOn.unlock_task_on}}</ng-option>
+                                        </ng-select>
+                                        <!-- <small>Select the action that will mark this activity as complete</small> -->
+                                    </div>
+                                </div>
+
+                                <div class="row form-group"
+                                *ngIf="(createTask.get('unlock_task_on').value === '67f36f09248c7823ab8a38dc' || createTask.get('unlock_task_on').value === '67f36f09248c7823ab8a38df'  || createTask.get('unlock_task_on').value === '67f36f09248c7823ab8a38e0'  || createTask.get('unlock_task_on').value === '67f36f09248c7823ab8a38e1' || createTask.get('unlock_task_on').value === '65c71d433aee90c7dbc84d11'  || createTask.get('unlock_task_on').value === '65c71d433aee90c7dbc84d12'  || createTask.get('unlock_task_on').value === '65c71d433aee90c7dbc84d0f'  || createTask.get('unlock_task_on').value === '65c71d433aee90c7dbc84d10')" >
+                                    <div class="col-md-3"><label class="label_title">Set Days</label></div>
+                                    <div class="col-md-5">
+                                        <div class="days_container">
+                                            <input type="number" (wheel)="$event.preventDefault()"  (keydown.arrowup)="$event.preventDefault()"  (keydown.arrowdown)="$event.preventDefault()"  class="form-control" placeholder="e.g 5"
+                                                formControlName="set_days">
+                                            <label class="label_title">Days</label>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <!-- Required Activity -->
+                                <div class="row form-group">
+                                    <div class="col-md-3"><label class="label_title">Required Activity</label></div>
+                                    <div class="col-md-9">
+                                        <mat-radio-group formControlName="required_activity" class="radio_group">
+                                            <mat-radio-button class="mr-4" [value]="true">Yes</mat-radio-button>
+                                            <mat-radio-button [value]="false">No</mat-radio-button>
+                                        </mat-radio-group>
+                                    </div>
+                                </div>
+                                <!-- Event Date -->
+                                <!-- <div class="row form-group custom_datepicker">
+                                    <div class="col-md-3">
+                                        <label class="label_title">Event Date</label>
+                                    </div> -->
+                                    <!-- <div class="col-md-9 event_date_time_container"> -->
+                                        <!-- <div class="custom_datepicker_container">
+                                            <input formControlName="event_date" placeholder="Select a Date"
+                                                class="form-control" [matDatepicker]="projectStartPicker">
+                                            <mat-datepicker-toggle matSuffix [for]="projectStartPicker">
+                                                <svg matDatepickerToggleIcon width="18" height="18" viewBox="0 0 18 18"
+                                                    fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <path
+                                                        d="M14.25 3H3.75C2.92157 3 2.25 3.67157 2.25 4.5V15C2.25 15.8284 2.92157 16.5 3.75 16.5H14.25C15.0784 16.5 15.75 15.8284 15.75 15V4.5C15.75 3.67157 15.0784 3 14.25 3Z"
+                                                        stroke="#2B2A35" stroke-width="1.5" stroke-linecap="round"
+                                                        stroke-linejoin="round" />
+                                                    <path d="M12 1.5V4.5" stroke="#2B2A35" stroke-width="1.5"
+                                                        stroke-linecap="round" stroke-linejoin="round" />
+                                                    <path d="M6 1.5V4.5" stroke="#2B2A35" stroke-width="1.5"
+                                                        stroke-linecap="round" stroke-linejoin="round" />
+                                                    <path d="M2.25 7.5H15.75" stroke="#2B2A35" stroke-width="1.5"
+                                                        stroke-linecap="round" stroke-linejoin="round" />
+                                                </svg>
+                                            </mat-datepicker-toggle>
+                                            <mat-datepicker #projectStartPicker></mat-datepicker>
+                                        </div> -->
+                                        <!-- <div class="custom_datepicker_container">
+                                            <input formControlName="deadline" placeholder="Select a Date"
+                                                class="form-control" [matDatepicker]="projectStartPicker">
+                                            <mat-datepicker-toggle matSuffix [for]="projectStartPicker">
+                                                <svg matDatepickerToggleIcon width="18" height="18" viewBox="0 0 18 18"
+                                                    fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <path
+                                                        d="M14.25 3H3.75C2.92157 3 2.25 3.67157 2.25 4.5V15C2.25 15.8284 2.92157 16.5 3.75 16.5H14.25C15.0784 16.5 15.75 15.8284 15.75 15V4.5C15.75 3.67157 15.0784 3 14.25 3Z"
+                                                        stroke="#2B2A35" stroke-width="1.5" stroke-linecap="round"
+                                                        stroke-linejoin="round" />
+                                                    <path d="M12 1.5V4.5" stroke="#2B2A35" stroke-width="1.5"
+                                                        stroke-linecap="round" stroke-linejoin="round" />
+                                                    <path d="M6 1.5V4.5" stroke="#2B2A35" stroke-width="1.5"
+                                                        stroke-linecap="round" stroke-linejoin="round" />
+                                                    <path d="M2.25 7.5H15.75" stroke="#2B2A35" stroke-width="1.5"
+                                                        stroke-linecap="round" stroke-linejoin="round" />
+                                                </svg>
+                                            </mat-datepicker-toggle>
+                                            <mat-datepicker #projectStartPicker></mat-datepicker>
+                                        </div> -->
+                                    <!-- </div> -->
+                                <!-- </div> -->
+
+                                 <div class="row form-group custom_datepicker">
+                                    <div class="col-md-3">
+                                        <label class="label_title">
+                                            Event URL
+                                        </label>
+                                    </div>
+                                    <div class="col-md-9">
+                                        <input formControlName="event_url" type="text" placeholder="Event Link"
+                                        class="form-control">
+                                        <div *ngIf="(createTask.get('event_url')?.touched || createTask.get('event_url')?.dirty) && createTask.get('event_url')?.invalid && createTask.get('event_url')?.errors?.required"
+                                            class="invalid-feedback">Please enter event url.</div>
+                                    </div>
+                                </div>
+
+
+                                <!-- Event Time -->
+                                <!-- <div class="row form-group custom_datepicker">
+                                    <div class="col-md-3">
+                                        <label class="label_title">Event Time</label>
+                                    </div>
+                                    <div class="col-md-9 event_date_time_container">
+                                        <div class="custom_datepicker_container">
+                                            <input formControlName="event_time" class="form-control"
+                                                placeholder="Select Time"
+                                                [ngxTimepicker]="toggleTimepicker" [disableClick]="true" readonly>
+                                            <ngx-material-timepicker-toggle class="time_picker_toggle"
+                                                [for]="toggleTimepicker">
+                                                <svg ngxMaterialTimepickerToggleIcon width="17" height="9"
+                                                    viewBox="0 0 17 9" fill="none"
+                                                    xmlns="http://www.w3.org/2000/svg">
+                                                    <path d="M1 1L8.5 8L16 0.999997" stroke="#2B2A35"
+                                                        stroke-width="2" stroke-linecap="round"
+                                                        stroke-linejoin="round" />
+                                                </svg>
+                                            </ngx-material-timepicker-toggle>
+                                            <ngx-material-timepicker #toggleTimepicker></ngx-material-timepicker>
+                                        </div>
+                                    </div>
+                                </div> -->
+                                <!-- Additional Criteria -->
+                                   <div class="row form-group custom_datepicker">
+                                    <div class="col-md-3">
+                                        <label class="label_title">Additional Criteria</label>
+                                    </div>
+                                    <div class="col-md-9">
+                                        <ng-select formControlName="additional_criteria" [searchable]="false"
+                                            [multiple]="false" bindLabel="name" bindValue="id" [clearable]="false"
+                                            placeholder="Additional Criteria">
+
+                                            <ng-container *ngFor="let additionalCriteria of additionalCriteriaList">
+                                                <ng-option
+                                                    *ngIf="additionalCriteria._id !== '661ad55d356417e51f1fc6a0'"
+                                                    [value]="additionalCriteria._id">
+                                                    {{ additionalCriteria.additional_criteria }}
+                                                </ng-option>
+                                            </ng-container>
+
+                                            <!-- <ng-option *ngFor="let additionalCriteria of additionalCriteriaList"
+                                                value="{{additionalCriteria._id}}"><span
+                                                    title="{{additionalCriteria.additional_criteria}}">{{additionalCriteria.additional_criteria}}</span></ng-option> -->
+                                        </ng-select>
+                                        <div
+                                            *ngIf="(createTask.get('additional_criteria')?.touched || createTask.get('additional_criteria')?.dirty) && createTask.get('additional_criteria')?.invalid && createTask.get('additional_criteria')?.errors?.required"
+                                            class="invalid-feedback">Please select additional criteria.</div>
+                                    </div>
+                                </div>
+
+                                <!-- Set Deadline -->
+                                <!-- <div class="row form-group custom_datepicker">
+                                    <div class="col-md-3"><label class="label_title">Set Deadline <br>
+                                            <span>(optional)</span></label></div>
+                                    <div class="col-md-9">
+                                        <div class="custom_datepicker_container">
+                                            <input formControlName="deadline" placeholder="Select a Date"
+                                                class="form-control" [matDatepicker]="setDeadLineAttendEvent">
+                                            <mat-datepicker-toggle matSuffix [for]="setDeadLineAttendEvent">
+                                                <svg matDatepickerToggleIcon width="18" height="18" viewBox="0 0 18 18"
+                                                    fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <path
+                                                        d="M14.25 3H3.75C2.92157 3 2.25 3.67157 2.25 4.5V15C2.25 15.8284 2.92157 16.5 3.75 16.5H14.25C15.0784 16.5 15.75 15.8284 15.75 15V4.5C15.75 3.67157 15.0784 3 14.25 3Z"
+                                                        stroke="#2B2A35" stroke-width="1.5" stroke-linecap="round"
+                                                        stroke-linejoin="round" />
+                                                    <path d="M12 1.5V4.5" stroke="#2B2A35" stroke-width="1.5"
+                                                        stroke-linecap="round" stroke-linejoin="round" />
+                                                    <path d="M6 1.5V4.5" stroke="#2B2A35" stroke-width="1.5"
+                                                        stroke-linecap="round" stroke-linejoin="round" />
+                                                    <path d="M2.25 7.5H15.75" stroke="#2B2A35" stroke-width="1.5"
+                                                        stroke-linecap="round" stroke-linejoin="round" />
+                                                </svg>
+                                            </mat-datepicker-toggle>
+                                            <mat-datepicker #setDeadLineAttendEvent></mat-datepicker>
+                                        </div>
+                                    </div>
+                                </div> -->
+                            </ng-container>
+                            <ng-container *ngIf="selectedCompletionCriteria === completionCriteria.getDocumentApproved">
+                                <!-- Description -->
+                                <div class="row form-group">
+                                    <div class="col-md-3"><label class="label_title">Description</label></div>
+                                    <div class="col-md-9">
+                                        <quill-editor [modules]="modules" formControlName="description"></quill-editor>
+                                        <!-- <editor formControlName="description" class="ch_editor"
+                                            apiKey="zcwi1f81304uers1lcszh0iq2lbhcaxl5cj6ez0v89wr25z3" [init]="{
+                                            height: 177,
+                                            menubar: false,
+                                            statusbar: true,
+                                            placeholder: 'Description of Task',
+                                            plugins: [
+                                            'textcolor',
+                                            'advlist autolink lists link image charmap print preview anchor',
+                                            'searchreplace visualblocks code fullscreen',
+                                            'insertdatetime media table paste code help wordcount'
+                                            ],
+                                            toolbar:
+                                            'bold italic | \
+                                            bullist | formatselect | link |',
+                                            contextmenu: false
+                                            }"></editor> -->
+                                    </div>
+                                </div>
+                                <!-- Unlock Task On -->
+                                <div class="row form-group">
+                                    <div class="col-md-3"><label class="label_title">Unlock Task On</label></div>
+                                    <div class="col-md-9">
+                                        <ng-select formControlName="unlock_task_on" [searchable]="false"
+                                            [multiple]="false" bindLabel="name" bindValue="id" [clearable]="false"
+                                            placeholder="Select Unlock Task On">
+                                            <ng-option *ngFor="let unlockTaskOn of unlockTaskOnList"
+                                                value="{{unlockTaskOn._id}}">{{unlockTaskOn.unlock_task_on}}</ng-option>
+                                        </ng-select>
+                                        <!-- <small>Select the action that will mark this activity as complete</small> -->
+                                    </div>
+                                </div>
+
+                              <div class="row form-group"
+                                *ngIf="(createTask.get('unlock_task_on').value === '67f36f09248c7823ab8a38dc' || createTask.get('unlock_task_on').value === '67f36f09248c7823ab8a38df'  || createTask.get('unlock_task_on').value === '67f36f09248c7823ab8a38e0'  || createTask.get('unlock_task_on').value === '67f36f09248c7823ab8a38e1' || createTask.get('unlock_task_on').value === '65c71d433aee90c7dbc84d11'  || createTask.get('unlock_task_on').value === '65c71d433aee90c7dbc84d12'  || createTask.get('unlock_task_on').value === '65c71d433aee90c7dbc84d0f'  || createTask.get('unlock_task_on').value === '65c71d433aee90c7dbc84d10')" >
+                                    <div class="col-md-3"><label class="label_title">Set Days</label></div>
+                                    <div class="col-md-5">
+                                        <div class="days_container">
+                                            <input type="number" (wheel)="$event.preventDefault()"  (keydown.arrowup)="$event.preventDefault()"  (keydown.arrowdown)="$event.preventDefault()"  class="form-control" placeholder="e.g 5"
+                                                formControlName="set_days">
+                                            <label class="label_title">Days</label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Required Activity -->
+                                <div class="row form-group">
+                                    <div class="col-md-3"><label class="label_title">Required Activity</label></div>
+                                    <div class="col-md-9">
+                                        <mat-radio-group formControlName="required_activity" class="radio_group">
+                                            <mat-radio-button class="mr-4" [value]="true">Yes</mat-radio-button>
+                                            <mat-radio-button [value]="false">No</mat-radio-button>
+                                        </mat-radio-group>
+                                    </div>
+                                </div>
+                                <!-- Type of Document -->
+                                <div class="row form-group">
+                                    <div class="col-md-3"><label class="label_title">Type of Document</label></div>
+                                    <div class="col-md-9">
+                                        <ng-select formControlName="document_types" [searchable]="false"
+                                            [multiple]="false" bindLabel="name" bindValue="id" [clearable]="false"
+                                            placeholder="Select Document Type">
+                                            <ng-option *ngFor="let documentType of documentTypes"
+                                                value="{{documentType.name}}">{{documentType.name}}</ng-option>
+                                        </ng-select>
+                                    </div>
+                                </div>
+
+                                <div class="row form-group" *ngIf="[
+                                    'National Police Check',
+                                    'Working with Children Check',
+                                    'NDIS Worker Screening Check',
+                                    'Manual Handling Certificate',
+                                    'CPR Certificate',
+                                    'First Aid Certificate',
+                                    'Hand Hygiene Certificate',
+                                    'Aged Care Statutory Declaration',
+                                    'COVID-19 Placement Declaration Form',
+                                    'Immunisation Record'
+                                ].includes(createTask.get('document_types')?.value)">
+                                    <div class="col-md-3"><label class="label_title">Check Validity</label></div>
+                                    <div class="col-md-9">
+                                      <div class="form-group hcaaf-toogle">
+                                        <mat-slide-toggle color="success" formControlName="show_validity" name="checked"
+                                            [ngModelOptions]="{standalone: true}" class="ios-toggle p-0">
+                                        
+                                        </mat-slide-toggle>
+                                    </div>
+                                    </div>
+                                </div>
+
+                                <div class="row form-group" *ngIf="createTask.get('show_validity')?.value">
+                                    <div class="col-md-3"><label class="label_title">Set Validity</label></div>
+                                    <div class="col-md-9">
+                                        <div class="days_container">
+                                            <input type="number" (wheel)="$event.preventDefault()" (keydown.arrowup)="$event.preventDefault()"  (keydown.arrowdown)="$event.preventDefault()"  class="form-control" placeholder="e.g 5"
+                                                formControlName="set_days_validity">
+
+                                             <ng-select formControlName="set_days_type_validity" style="max-width:100%" [searchable]="false"
+                                            [multiple]="false" bindLabel="name" bindValue="id" [clearable]="false"
+                                            placeholder="Select Option">
+                                                <ng-option value="week">Week</ng-option>
+                                                <ng-option value="month">Month</ng-option>
+                                                <ng-option value="years">Years</ng-option>
+                                            </ng-select>
+                                            <!-- <p> Before Purging</p> -->
+                                        </div>
+                                        
+                                    </div>
+                                </div>
+
+
+
+                                <!-- Additional Criteria -->
+                                <div class="row form-group custom_datepicker">
+                                    <div class="col-md-3">
+                                        <label class="label_title">Additional Criteria</label>
+                                    </div>
+                                    <div class="col-md-9">
+                                        <ng-select formControlName="additional_criteria" [searchable]="false"
+                                            [multiple]="false" bindLabel="name" bindValue="id" [clearable]="false"
+                                            placeholder="Additional Criteria">
+                                            <ng-option *ngFor="let additionalCriteria of additionalCriteriaList"
+                                                value="{{additionalCriteria._id}}"><span
+                                                    title="{{additionalCriteria.additional_criteria}}">{{additionalCriteria.additional_criteria}}</span></ng-option>
+                                        </ng-select>
+                                        <div
+                                            *ngIf="(createTask.get('additional_criteria')?.touched || createTask.get('additional_criteria')?.dirty) && createTask.get('additional_criteria')?.invalid && createTask.get('additional_criteria')?.errors?.required"
+                                            class="invalid-feedback">Please select additional criteria.</div>
+                                    </div>
+                                </div>
+
+                                 <div class="row form-group custom_datepicker" *ngIf="createTask.get('additional_criteria').value =='661ad55d356417e51f1fc6a4'">
+                                    <div class="col-md-3">
+                                        <label class="label_title">Assign to Staff <br /> <span>(optional)</span></label>
+                                    </div>
+                                    <div class="col-md-9">
+                                        <ng-select formControlName="select_staff" [searchable]="false"
+                                            [multiple]="true" bindLabel="first_name" bindValue="staff_id" [clearable]="false"
+                                            placeholder="Select a Staff Member">
+                                            <ng-option *ngFor="let staffMember of staffMembers" [value]="staffMember.staff_id">
+                                                {{ staffMember.first_name }} {{ staffMember.last_name }}
+                                            </ng-option>
+                                        </ng-select>
+                                        <div
+                                            *ngIf="(createTask.get('select_staff')?.touched || createTask.get('select_staff')?.dirty) && createTask.get('select_staff')?.invalid && createTask.get('select_staff')?.errors?.required"
+                                            class="invalid-feedback">Please select Staff Member.</div>
+                                    </div>
+                                </div>
+
+
+
+                                <!-- Set Deadline -->
+                                <!-- <div class="row form-group custom_datepicker">
+                                    <div class="col-md-3"><label class="label_title">Set Deadline <br>
+                                            <span>(optional)</span></label></div>
+                                    <div class="col-md-9">
+                                        <div class="custom_datepicker_container">
+                                            <input formControlName="deadline" placeholder="Select a Date"
+                                                class="form-control" [matDatepicker]="projectStartPicker">
+                                            <mat-datepicker-toggle matSuffix [for]="projectStartPicker">
+                                                <svg matDatepickerToggleIcon width="18" height="18" viewBox="0 0 18 18"
+                                                    fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <path
+                                                        d="M14.25 3H3.75C2.92157 3 2.25 3.67157 2.25 4.5V15C2.25 15.8284 2.92157 16.5 3.75 16.5H14.25C15.0784 16.5 15.75 15.8284 15.75 15V4.5C15.75 3.67157 15.0784 3 14.25 3Z"
+                                                        stroke="#2B2A35" stroke-width="1.5" stroke-linecap="round"
+                                                        stroke-linejoin="round" />
+                                                    <path d="M12 1.5V4.5" stroke="#2B2A35" stroke-width="1.5"
+                                                        stroke-linecap="round" stroke-linejoin="round" />
+                                                    <path d="M6 1.5V4.5" stroke="#2B2A35" stroke-width="1.5"
+                                                        stroke-linecap="round" stroke-linejoin="round" />
+                                                    <path d="M2.25 7.5H15.75" stroke="#2B2A35" stroke-width="1.5"
+                                                        stroke-linecap="round" stroke-linejoin="round" />
+                                                </svg>
+                                            </mat-datepicker-toggle>
+                                            <mat-datepicker #projectStartPicker></mat-datepicker>
+                                        </div>
+                                    </div>
+                                </div> -->
+                            </ng-container>
+
+                            <ng-container *ngIf="selectedCompletionCriteria === completionCriteria.getWatchVideo">
+                                <!-- Description -->
+                                <div class="row form-group">
+                                    <div class="col-md-3"><label class="label_title">Description</label></div>
+                                    <div class="col-md-9">
+                                        <quill-editor [modules]="modules" formControlName="description"></quill-editor>
+                                    </div>
+                                </div>
+                                <!-- Unlock Task On -->
+                                <div class="row form-group">
+                                    <div class="col-md-3"><label class="label_title">Unlock Task On</label></div>
+                                    <div class="col-md-9">
+                                        <ng-select formControlName="unlock_task_on" [searchable]="false"
+                                            [multiple]="false" bindLabel="name" bindValue="id" [clearable]="false"
+                                            placeholder="Select Unlock Task On">
+                                            <ng-option *ngFor="let unlockTaskOn of unlockTaskOnList"
+                                                value="{{unlockTaskOn._id}}">{{unlockTaskOn.unlock_task_on}}</ng-option>
+                                        </ng-select>
+                                        <!-- <small>Select the action that will mark this activity as complete</small> -->
+                                    </div>
+                                </div>
+                                <div class="row form-group" *ngIf="(createTask.get('unlock_task_on').value === '67f36f09248c7823ab8a38dc' || createTask.get('unlock_task_on').value === '67f36f09248c7823ab8a38df'  || createTask.get('unlock_task_on').value === '67f36f09248c7823ab8a38e0'  || createTask.get('unlock_task_on').value === '67f36f09248c7823ab8a38e1' || createTask.get('unlock_task_on').value === '65c71d433aee90c7dbc84d11'  || createTask.get('unlock_task_on').value === '65c71d433aee90c7dbc84d12'  || createTask.get('unlock_task_on').value === '65c71d433aee90c7dbc84d0f'  || createTask.get('unlock_task_on').value === '65c71d433aee90c7dbc84d10')" >
+                                    <div class="col-md-3"><label class="label_title">Set Days</label></div>
+                                    <div class="col-md-5">
+                                        <div class="days_container">
+                                            <input type="number" (wheel)="$event.preventDefault()"  (keydown.arrowup)="$event.preventDefault()"  (keydown.arrowdown)="$event.preventDefault()"  class="form-control" placeholder="e.g 5"
+                                                formControlName="set_days">
+                                            <label class="label_title">Days</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Required Activity -->
+                                <div class="row form-group">
+                                    <div class="col-md-3"><label class="label_title">Required Activity</label></div>
+                                    <div class="col-md-9">
+                                        <mat-radio-group formControlName="required_activity" class="radio_group">
+                                            <mat-radio-button class="mr-4" [value]="true">Yes</mat-radio-button>
+                                            <mat-radio-button [value]="false">No</mat-radio-button>
+                                        </mat-radio-group>
+                                    </div>
+                                </div>
+                                <!-- Category -->
+                                <!-- <div class="row form-group">
+                                    <div class="col-md-3"><label class="label_title">Completion Criteria</label></div>
+                                    <div class="col-md-9">
+                                        <ng-select formControlName="completion_criteria" [searchable]="false"
+                                            [multiple]="false" bindLabel="name" bindValue="id" [clearable]="false"
+                                            placeholder="Select the criteria" (change)="onChangeCompletionCriteria($event)">
+                                            <ng-option *ngFor="let criteria of completionCriteriaList"
+                                                value="{{criteria.completion_criteria}}">{{criteria.completion_criteria}}</ng-option>
+                                        </ng-select>
+                                        <div
+                                            *ngIf="(createTask.get('completion_criteria')?.touched || createTask.get('completion_criteria')?.dirty) && createTask.get('completion_criteria')?.invalid && createTask.get('completion_criteria')?.errors?.required"
+                                            class="invalid-feedback">Please select completion criteria.</div>
+                                    </div>
+                                </div> -->
+                                <!-- Select a Form -->
+                                <!-- <div class="row form-group custom_datepicker">
+                                    <div class="col-md-3">
+                                        <label class="label_title">Select a Form</label>
+                                    </div>
+                                    <div class="col-md-9">
+                                        <ng-select formControlName="select_form" [searchable]="false" [multiple]="false"
+                                            bindLabel="title" bindValue="_id" [clearable]="false"
+                                            placeholder="select form">
+                                            <ng-option *ngFor="let form of formList"
+                                                value="{{form._id}}">{{form.title}}</ng-option>
+                                        </ng-select>
+                                    </div>
+                                </div> -->
+
+                                <!-- Additional Criteria -->
+
+                                <div class="row form-group custom_datepicker">
+                                    <div class="col-md-3">
+                                        <label class="label_title">
+                                            Video URL 
+                                               &nbsp;<span matTooltip="Accepted Video URLs are as follows: Youtube (https://youtube.com) & Vimeo (https://vimeo.com)" 
+                                                matTooltipPosition="above"  matTooltipClass="custom-tooltip">
+                                                    <svg width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                        <path d="M12.25 22C17.7728 22 22.25 17.5228 22.25 12C22.25 6.47715 17.7728 2 12.25 2C6.72715 2 2.25 6.47715 2.25 12C2.25 17.5228 6.72715 22 12.25 22Z" stroke="#464BA8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                                        <path d="M12.25 16V12" stroke="#464BA8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                                        <path d="M12.25 8H12.2613" stroke="#464BA8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                                        </svg>
+                                                </span>
+
+                                           
+                                        </label>
+                                    </div>
+                                    <div class="col-md-9">
+                                        <input formControlName="video_url" type="text" placeholder="e.g http://youtube.com"
+                                        class="form-control" appYoutubeVimeoUrl>
+                                        <div *ngIf="(createTask.get('video_url')?.touched || createTask.get('video_url')?.dirty) && createTask.get('video_url')?.invalid && createTask.get('video_url')?.errors?.required"
+                                            class="invalid-feedback">Please enter video url.</div>
+                                         <div *ngIf="createTask.get('video_url')?.touched && createTask.get('video_url')?.invalid" class="text-danger">
+                                            Please enter a valid YouTube or Vimeo URL.
+                                        </div>
+                                    </div>
+                                </div>
+                             
+                                <div class="row form-group custom_datepicker">
+                                    <div class="col-md-3">
+                                        <label class="label_title">Additional Criteria</label>
+                                    </div>
+                                    <div class="col-md-9">
+                                        <ng-select formControlName="additional_criteria" [searchable]="false"
+                                            [multiple]="false" bindLabel="name" bindValue="id" [clearable]="false"
+                                            placeholder="Additional Criteria">
+                                            <ng-option *ngFor="let additionalCriteria of additionalCriteriaList"
+                                                value="{{additionalCriteria._id}}"><span
+                                                    title="{{additionalCriteria.additional_criteria}}">{{additionalCriteria.additional_criteria}}</span></ng-option>
+                                        </ng-select>
+                                        <div
+                                            *ngIf="(createTask.get('additional_criteria')?.touched || createTask.get('additional_criteria')?.dirty) && createTask.get('additional_criteria')?.invalid && createTask.get('additional_criteria')?.errors?.required"
+                                            class="invalid-feedback">Please select additional criteria.</div>
+                                    </div>
+                                </div>
+                                <!-- Set Deadline -->
+                                <div class="row form-group custom_datepicker">
+                                    <div class="col-md-3"><label class="label_title">Set Deadline <br>
+                                            <span>(optional)</span></label></div>
+                                    <div class="col-md-9">
+                                        <div class="custom_datepicker_container">
+                                            <input formControlName="deadline" placeholder="Select a Date"
+                                                class="form-control" [matDatepicker]="projectStartPicker">
+                                            <mat-datepicker-toggle matSuffix [for]="projectStartPicker">
+                                                <svg matDatepickerToggleIcon width="18" height="18" viewBox="0 0 18 18"
+                                                    fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <path
+                                                        d="M14.25 3H3.75C2.92157 3 2.25 3.67157 2.25 4.5V15C2.25 15.8284 2.92157 16.5 3.75 16.5H14.25C15.0784 16.5 15.75 15.8284 15.75 15V4.5C15.75 3.67157 15.0784 3 14.25 3Z"
+                                                        stroke="#2B2A35" stroke-width="1.5" stroke-linecap="round"
+                                                        stroke-linejoin="round" />
+                                                    <path d="M12 1.5V4.5" stroke="#2B2A35" stroke-width="1.5"
+                                                        stroke-linecap="round" stroke-linejoin="round" />
+                                                    <path d="M6 1.5V4.5" stroke="#2B2A35" stroke-width="1.5"
+                                                        stroke-linecap="round" stroke-linejoin="round" />
+                                                    <path d="M2.25 7.5H15.75" stroke="#2B2A35" stroke-width="1.5"
+                                                        stroke-linecap="round" stroke-linejoin="round" />
+                                                </svg>
+                                            </mat-datepicker-toggle>
+                                            <mat-datepicker #projectStartPicker></mat-datepicker>
+                                        </div>
+                                    </div>
+                                </div>
+                            </ng-container>
+
+                              <ng-container *ngIf="selectedCompletionCriteria === completionCriteria.getStudentUploadsVideo">
+                                <!-- Description -->
+                                <div class="row form-group">
+                                    <div class="col-md-3"><label class="label_title">Description</label></div>
+                                    <div class="col-md-9">
+                                        <quill-editor [modules]="modules" formControlName="description"></quill-editor>
+                                    </div>
+                                </div>
+                                <!-- Unlock Task On -->
+                                <div class="row form-group">
+                                    <div class="col-md-3"><label class="label_title">Unlock Task On</label></div>
+                                    <div class="col-md-9">
+                                        <ng-select formControlName="unlock_task_on" [searchable]="false"
+                                            [multiple]="false" bindLabel="name" bindValue="id" [clearable]="false"
+                                            placeholder="Select Unlock Task On">
+                                            <ng-option *ngFor="let unlockTaskOn of unlockTaskOnList"
+                                                value="{{unlockTaskOn._id}}">{{unlockTaskOn.unlock_task_on}}</ng-option>
+                                        </ng-select>
+                                        <!-- <small>Select the action that will mark this activity as complete</small> -->
+                                    </div>
+                                </div>
+                                <div class="row form-group"
+                                *ngIf="(createTask.get('unlock_task_on').value === '67f36f09248c7823ab8a38dc' || createTask.get('unlock_task_on').value === '67f36f09248c7823ab8a38df'  || createTask.get('unlock_task_on').value === '67f36f09248c7823ab8a38e0'  || createTask.get('unlock_task_on').value === '67f36f09248c7823ab8a38e1'  || createTask.get('unlock_task_on').value === '65c71d433aee90c7dbc84d11'  || createTask.get('unlock_task_on').value === '65c71d433aee90c7dbc84d12'  || createTask.get('unlock_task_on').value === '65c71d433aee90c7dbc84d0f'  || createTask.get('unlock_task_on').value === '65c71d433aee90c7dbc84d10')" >
+                                    <div class="col-md-3"><label class="label_title">Set Days</label></div>
+                                    <div class="col-md-5">
+                                        <div class="days_container">
+                                            <input type="number" (wheel)="$event.preventDefault()"  (keydown.arrowup)="$event.preventDefault()"  (keydown.arrowdown)="$event.preventDefault()"  class="form-control" placeholder="e.g 5"
+                                                formControlName="set_days">
+                                            <label class="label_title">Days</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Required Activity -->
+                                <div class="row form-group">
+                                    <div class="col-md-3"><label class="label_title">Required Activity</label></div>
+                                    <div class="col-md-9">
+                                        <mat-radio-group formControlName="required_activity" class="radio_group">
+                                            <mat-radio-button class="mr-4" [value]="true">Yes</mat-radio-button>
+                                            <mat-radio-button [value]="false">No</mat-radio-button>
+                                        </mat-radio-group>
+                                    </div>
+                                </div>
+                                <!-- Category -->
+                                <!-- <div class="row form-group">
+                                    <div class="col-md-3"><label class="label_title">Completion Criteria</label></div>
+                                    <div class="col-md-9">
+                                        <ng-select formControlName="completion_criteria" [searchable]="false"
+                                            [multiple]="false" bindLabel="name" bindValue="id" [clearable]="false"
+                                            placeholder="Select the criteria" (change)="onChangeCompletionCriteria($event)">
+                                            <ng-option *ngFor="let criteria of completionCriteriaList"
+                                                value="{{criteria.completion_criteria}}">{{criteria.completion_criteria}}</ng-option>
+                                        </ng-select>
+                                        <div
+                                            *ngIf="(createTask.get('completion_criteria')?.touched || createTask.get('completion_criteria')?.dirty) && createTask.get('completion_criteria')?.invalid && createTask.get('completion_criteria')?.errors?.required"
+                                            class="invalid-feedback">Please select completion criteria.</div>
+                                    </div>
+                                </div> -->
+                                <!-- Select a Form -->
+                                <!-- <div class="row form-group custom_datepicker">
+                                    <div class="col-md-3">
+                                        <label class="label_title">Select a Form</label>
+                                    </div>
+                                    <div class="col-md-9">
+                                        <ng-select formControlName="select_form" [searchable]="false" [multiple]="false"
+                                            bindLabel="title" bindValue="_id" [clearable]="false"
+                                            placeholder="select form">
+                                            <ng-option *ngFor="let form of formList"
+                                                value="{{form._id}}">{{form.title}}</ng-option>
+                                        </ng-select>
+                                    </div>
+                                </div> -->
+                                <!-- Additional Criteria -->
+
+                                <!-- <div class="row form-group custom_datepicker">
+                                    <div class="col-md-3">
+                                        <label class="label_title">
+                                            Video URL 
+                                               &nbsp;<span matTooltip="Accepted Video URLs are as follows: Youtube (https://youtube.com) & Vimeo (https://vimeo.com)" 
+                                                matTooltipPosition="above"  matTooltipClass="custom-tooltip">
+                                                    <svg width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                        <path d="M12.25 22C17.7728 22 22.25 17.5228 22.25 12C22.25 6.47715 17.7728 2 12.25 2C6.72715 2 2.25 6.47715 2.25 12C2.25 17.5228 6.72715 22 12.25 22Z" stroke="#464BA8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                                        <path d="M12.25 16V12" stroke="#464BA8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                                        <path d="M12.25 8H12.2613" stroke="#464BA8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                                        </svg>
+                                                        
+                                                </span>
+
+                                           
+                                        </label>
+                                    </div>
+                                    <div class="col-md-9">
+                                        <input formControlName="video_url" type="text" placeholder="e.g http://youtube.com"
+                                        class="form-control">
+                                        <div
+                                            *ngIf="(createTask.get('video_url')?.touched || createTask.get('video_url')?.dirty) && createTask.get('video_url')?.invalid && createTask.get('video_url')?.errors?.required"
+                                            class="invalid-feedback">Please enter video url.</div>
+                                    </div>
+                                </div> -->
+                             
+                                <div class="row form-group custom_datepicker">
+                                    <div class="col-md-3">
+                                        <label class="label_title">Additional Criteria</label>
+                                    </div>
+                                    <div class="col-md-9">
+                                        <ng-select formControlName="additional_criteria" [searchable]="false"
+                                            [multiple]="false" bindLabel="name" bindValue="id" [clearable]="false"
+                                            placeholder="Additional Criteria">
+                                            <ng-option *ngFor="let additionalCriteria of additionalCriteriaList"
+                                                value="{{additionalCriteria._id}}"><span
+                                                    title="{{additionalCriteria.additional_criteria}}">{{additionalCriteria.additional_criteria}}</span></ng-option>
+                                        </ng-select>
+                                        <div
+                                            *ngIf="(createTask.get('additional_criteria')?.touched || createTask.get('additional_criteria')?.dirty) && createTask.get('additional_criteria')?.invalid && createTask.get('additional_criteria')?.errors?.required"
+                                            class="invalid-feedback">Please select additional criteria.</div>
+                                    </div>
+                                </div>
+
+                                 <div class="row form-group custom_datepicker" *ngIf="createTask.get('additional_criteria').value =='689065f6386523bc8a9d21c8'">
+                                    <div class="col-md-3">
+                                        <label class="label_title">Assign to Staff <br /> <span>(optional)</span></label>
+                                    </div>
+                                    <div class="col-md-9">
+                                        <ng-select formControlName="select_staff" [searchable]="false"
+                                            [multiple]="true" bindLabel="first_name" bindValue="staff_id" [clearable]="false"
+                                            placeholder="Select a Staff Member">
+                                            <ng-option *ngFor="let staffMember of staffMembers" [value]="staffMember.staff_id">
+                                                {{ staffMember.first_name }} {{ staffMember.last_name }}
+                                            </ng-option>
+                                        </ng-select>
+                                        <div
+                                            *ngIf="(createTask.get('select_staff')?.touched || createTask.get('select_staff')?.dirty) && createTask.get('select_staff')?.invalid && createTask.get('select_staff')?.errors?.required"
+                                            class="invalid-feedback">Please select Staff Member.</div>
+                                    </div>
+                                </div>
+
+
+                                <!-- Set Deadline -->
+                                <div class="row form-group custom_datepicker">
+                                    <div class="col-md-3"><label class="label_title">Set Deadline <br>
+                                            <span>(optional)</span></label></div>
+                                    <div class="col-md-9">
+                                        <div class="custom_datepicker_container">
+                                            <input formControlName="deadline" placeholder="Select a Date"
+                                                class="form-control" [matDatepicker]="projectStartPicker">
+                                            <mat-datepicker-toggle matSuffix [for]="projectStartPicker">
+                                                <svg matDatepickerToggleIcon width="18" height="18" viewBox="0 0 18 18"
+                                                    fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <path
+                                                        d="M14.25 3H3.75C2.92157 3 2.25 3.67157 2.25 4.5V15C2.25 15.8284 2.92157 16.5 3.75 16.5H14.25C15.0784 16.5 15.75 15.8284 15.75 15V4.5C15.75 3.67157 15.0784 3 14.25 3Z"
+                                                        stroke="#2B2A35" stroke-width="1.5" stroke-linecap="round"
+                                                        stroke-linejoin="round" />
+                                                    <path d="M12 1.5V4.5" stroke="#2B2A35" stroke-width="1.5"
+                                                        stroke-linecap="round" stroke-linejoin="round" />
+                                                    <path d="M6 1.5V4.5" stroke="#2B2A35" stroke-width="1.5"
+                                                        stroke-linecap="round" stroke-linejoin="round" />
+                                                    <path d="M2.25 7.5H15.75" stroke="#2B2A35" stroke-width="1.5"
+                                                        stroke-linecap="round" stroke-linejoin="round" />
+                                                </svg>
+                                            </mat-datepicker-toggle>
+                                            <mat-datepicker #projectStartPicker></mat-datepicker>
+                                        </div>
+                                    </div>
+                                </div>
+                            </ng-container>
+
+                            <ng-container *ngIf="selectedCompletionCriteria === completionCriteria.getStaffAttachesDocuments || selectedCompletionCriteria === completionCriteria.getStudentUploadsDocument">
+                                <!-- Description -->
+                                <div class="row form-group">
+                                    <div class="col-md-3"><label class="label_title">Description</label></div>
+                                    <div class="col-md-9">
+                                        <quill-editor [modules]="modules" formControlName="description"></quill-editor>
+                                    </div>
+                                </div>
+                                <!-- Unlock Task On -->
+                                <div class="row form-group">
+                                    <div class="col-md-3"><label class="label_title">Unlock Task On</label></div>
+                                    <div class="col-md-9">
+                                        <ng-select formControlName="unlock_task_on" [searchable]="false"
+                                            [multiple]="false" bindLabel="name" bindValue="id" [clearable]="false"
+                                            placeholder="Select Unlock Task On">
+                                            <ng-option *ngFor="let unlockTaskOn of unlockTaskOnList"
+                                                value="{{unlockTaskOn._id}}">{{unlockTaskOn.unlock_task_on}}</ng-option>
+                                        </ng-select>
+                                        <!-- <small>Select the action that will mark this activity as complete</small> -->
+                                    </div>
+                                </div>
+                               <div class="row form-group"
+                                *ngIf="(createTask.get('unlock_task_on').value === '67f36f09248c7823ab8a38dc' || createTask.get('unlock_task_on').value === '67f36f09248c7823ab8a38df'  || createTask.get('unlock_task_on').value === '67f36f09248c7823ab8a38e0'  || createTask.get('unlock_task_on').value === '67f36f09248c7823ab8a38e1'  || createTask.get('unlock_task_on').value === '65c71d433aee90c7dbc84d11'  || createTask.get('unlock_task_on').value === '65c71d433aee90c7dbc84d12'  || createTask.get('unlock_task_on').value === '65c71d433aee90c7dbc84d0f'  || createTask.get('unlock_task_on').value === '65c71d433aee90c7dbc84d10')" >
+                                    <div class="col-md-3"><label class="label_title">Set Days</label></div>
+                                    <div class="col-md-5">
+                                        <div class="days_container">
+                                            <input type="number" (wheel)="$event.preventDefault()"  (keydown.arrowup)="$event.preventDefault()"  (keydown.arrowdown)="$event.preventDefault()"  class="form-control" placeholder="e.g 5"
+                                                formControlName="set_days">
+                                            <label class="label_title">Days</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Required Activity -->
+                                <div class="row form-group">
+                                    <div class="col-md-3"><label class="label_title">Required Activity</label></div>
+                                    <div class="col-md-9">
+                                        <mat-radio-group formControlName="required_activity" class="radio_group">
+                                            <mat-radio-button class="mr-4" [value]="true">Yes</mat-radio-button>
+                                            <mat-radio-button [value]="false">No</mat-radio-button>
+                                        </mat-radio-group>
+                                    </div>
+                                </div>
+                                <!-- Category -->
+                                <!-- <div class="row form-group">
+                                    <div class="col-md-3"><label class="label_title">Completion Criteria</label></div>
+                                    <div class="col-md-9">
+                                        <ng-select formControlName="completion_criteria" [searchable]="false"
+                                            [multiple]="false" bindLabel="name" bindValue="id" [clearable]="false"
+                                            placeholder="Select the criteria" (change)="onChangeCompletionCriteria($event)">
+                                            <ng-option *ngFor="let criteria of completionCriteriaList"
+                                                value="{{criteria.completion_criteria}}">{{criteria.completion_criteria}}</ng-option>
+                                        </ng-select>
+                                        <div
+                                            *ngIf="(createTask.get('completion_criteria')?.touched || createTask.get('completion_criteria')?.dirty) && createTask.get('completion_criteria')?.invalid && createTask.get('completion_criteria')?.errors?.required"
+                                            class="invalid-feedback">Please select completion criteria.</div>
+                                    </div>
+                                </div> -->
+                                <!-- Select a Form -->
+                                <!-- <div class="row form-group custom_datepicker">
+                                    <div class="col-md-3">
+                                        <label class="label_title">Select a Form</label>
+                                    </div>
+                                    <div class="col-md-9">
+                                        <ng-select formControlName="select_form" [searchable]="false" [multiple]="false"
+                                            bindLabel="title" bindValue="_id" [clearable]="false"
+                                            placeholder="select form">
+                                            <ng-option *ngFor="let form of formList"
+                                                value="{{form._id}}">{{form.title}}</ng-option>
+                                        </ng-select>
+                                    </div>
+                                </div> -->
+                                <!-- Additional Criteria -->
+
+                                <!-- <div class="row form-group custom_datepicker">
+                                    <div class="col-md-3">
+                                        <label class="label_title">Video URL</label>
+                                    </div>
+                                    <div class="col-md-9">
+                                        <input formControlName="video_url" type="text" placeholder="e.g http://youtube.com"
+                                        class="form-control">
+                                        <div
+                                            *ngIf="(createTask.get('video_url')?.touched || createTask.get('video_url')?.dirty) && createTask.get('video_url')?.invalid && createTask.get('video_url')?.errors?.required"
+                                            class="invalid-feedback">Please enter video url.</div>
+                                    </div>
+                                </div>-->
+                             
+                                <div class="row form-group custom_datepicker">
+                                    <div class="col-md-3">
+                                        <label class="label_title">Additional Criteria</label>
+                                    </div>
+                                    <div class="col-md-9">
+                                        <ng-select formControlName="additional_criteria" [searchable]="false"
+                                            [multiple]="false" bindLabel="name" bindValue="id" [clearable]="false"
+                                            placeholder="Additional Criteria">
+                                            <ng-option *ngFor="let additionalCriteria of additionalCriteriaList"
+                                                value="{{additionalCriteria._id}}"><span
+                                                    title="{{additionalCriteria.additional_criteria}}">{{additionalCriteria.additional_criteria}}</span></ng-option>
+                                        </ng-select>
+                                        <div
+                                            *ngIf="(createTask.get('additional_criteria')?.touched || createTask.get('additional_criteria')?.dirty) && createTask.get('additional_criteria')?.invalid && createTask.get('additional_criteria')?.errors?.required"
+                                            class="invalid-feedback">Please select additional criteria.</div>
+                                    </div>
+                                </div> 
+
+                                <div *ngIf="selectedCompletionCriteria === completionCriteria.getStaffAttachesDocuments" class="p-0 mt-3 mb-3" style="padding: 15px 0px;">
+                                    <h2 class="h2-doc">
+                                      Project Documents (Maximum 5)
+                                      <span>
+                                        <svg width="25" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                          <path d="M12.5 22.1396C18.0228 22.1396 22.5 17.6625 22.5 12.1396C22.5 6.6168 18.0228 2.13965 12.5 2.13965C6.97715 2.13965 2.5 6.6168 2.5 12.1396C2.5 17.6625 6.97715 22.1396 12.5 22.1396Z" stroke="#464BA8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                          <path d="M12.5 16.1396V12.1396" stroke="#464BA8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                          <path d="M12.5 8.13965H12.5113" stroke="#464BA8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                          </svg>
+                                          
+                                      </span>
+                                    </h2>
+                                    <p style="color:#cacaca">
+                                        Accepted File Types: Adobe PDF (.pdf), Microsoft Word (.docx). 5MB file size limit.
+                                    </p> 
+                                    <div class="file_upload ">
+                                        <p class="p-4" style="color:#cacaca">
+                                          Accepted file types: Adobe PDF (.pdf), Word (.doc, .docx), Excel (.xlsx), Images (.jpg, .png, .gif)
+                                          <br/>
+                                          5MB size limit per file.
+                                        </p>
+                                        <br />
+                                       
+                                        <label class="file_upload_label" for="image"></label>
+                                        <input name="img" type="file" id="image" accept=".docx, .pdf, .xlsx, .xls, .doc, .jpg, .png, .jpeg, .gif" (change)="getFilDoc($event)" [disabled]="media?.documents?.length >= 5" #fileInput [readonly]="media?.documents?.length >= 5" >
+                                    </div>
+                                    <ul class="files_list mt-3" *ngIf="media?.documents?.length > 0">
+                                        <li *ngFor="let file of media.documents; let i = index;">
+                                            <div class="file_card">
+                                                <div class="content">
+                                                    <div class="svg-width d-flex justify-content-center align-items-center" style="width: 60px;height:48px;padding-right: 8px;" [innerHTML]="getSafeSvg(file?.name)"></div>
+                                                    <p>{{file.name}}</p>
+                                                </div>
+                                                <div class="btn_group">
+
+                                                
+                                                    
+                                                    <button (click)="viewFile(i, file)" mat-icon-button>
+                                                      <svg width="35" height="36" viewBox="0 0 35 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                        <circle cx="17.5" cy="17.9297" r="17.5" fill="#F8F8F8"/>
+                                                        <path d="M9.29565 18.1929C9.1361 17.9898 9.00404 17.8119 8.90095 17.6683C8.99761 17.5269 9.1211 17.3527 9.27053 17.1543C9.69179 16.5948 10.3145 15.849 11.1183 15.1051C12.7353 13.6083 15.0165 12.1797 17.8214 12.1797C20.6263 12.1797 22.9076 13.6083 24.5246 15.1051C25.3283 15.849 25.9511 16.5948 26.3723 17.1543C26.5218 17.3527 26.6452 17.5269 26.7419 17.6683C26.6388 17.8119 26.5068 17.9898 26.3472 18.1929C25.9058 18.7547 25.2587 19.5032 24.4375 20.2497C22.7807 21.7558 20.4992 23.1797 17.8214 23.1797C15.1437 23.1797 12.8621 21.7558 11.2054 20.2497C10.3842 19.5032 9.73706 18.7547 9.29565 18.1929Z" stroke="#2B2A35" stroke-width="1.5"/>
+                                                        <circle cx="17.8214" cy="17.6808" r="2.82143" stroke="#2B2A35" stroke-width="1.5"/>
+                                                        </svg>
+                                                  </button>
+
+                                                    <button (click)="removeFile(i)" mat-icon-button>
+                                                        <svg width="35" height="35" viewBox="0 0 35 35" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                            <circle cx="17.5" cy="17.5" r="17.5" fill="#F8F8F8"/>
+                                                            <path fill-rule="evenodd" clip-rule="evenodd" d="M15.0952 9H19.4588C20.2621 9 20.9134 9.65122 20.9134 10.4545V11.1817H23.0909C23.8942 11.1817 24.5455 11.8329 24.5455 12.6362V14.0908C24.5455 14.8941 23.8942 15.5453 23.0909 15.5453H23.0318L22.3628 23.5454C22.3628 24.3488 21.7116 25 20.9083 25H13.6356C12.8322 25 12.181 24.3488 12.1835 23.6058L11.5118 15.5453H11.4545C10.6512 15.5453 10 14.8941 10 14.0908V12.6362C10 11.8329 10.6512 11.1817 11.4545 11.1817H13.6406V10.4545C13.6406 9.65122 14.2918 9 15.0952 9ZM13.6406 12.6364V12.6358H11.4531V14.0904H23.0895V12.6358H20.9134V12.6364H13.6406ZM21.57 15.5453H12.9688L13.6331 23.545H20.9059L20.9084 23.4846L21.57 15.5453ZM19.4574 10.4541V11.1814H15.0938V10.4541H19.4574Z" fill="#2B2A35"/>
+                                                            </svg>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ul>
+        
+                                </div>
+                                <!-- Set Deadline -->
+                                <div class="row form-group custom_datepicker">
+                                    <div class="col-md-3"><label class="label_title">Set Deadline <br>
+                                            <span>(optional)</span></label></div>
+                                    <div class="col-md-9">
+                                        <div class="custom_datepicker_container">
+                                            <input formControlName="deadline" placeholder="Select a Date"
+                                                class="form-control" [matDatepicker]="projectStartPicker">
+                                            <mat-datepicker-toggle matSuffix [for]="projectStartPicker">
+                                                <svg matDatepickerToggleIcon width="18" height="18" viewBox="0 0 18 18"
+                                                    fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <path
+                                                        d="M14.25 3H3.75C2.92157 3 2.25 3.67157 2.25 4.5V15C2.25 15.8284 2.92157 16.5 3.75 16.5H14.25C15.0784 16.5 15.75 15.8284 15.75 15V4.5C15.75 3.67157 15.0784 3 14.25 3Z"
+                                                        stroke="#2B2A35" stroke-width="1.5" stroke-linecap="round"
+                                                        stroke-linejoin="round" />
+                                                    <path d="M12 1.5V4.5" stroke="#2B2A35" stroke-width="1.5"
+                                                        stroke-linecap="round" stroke-linejoin="round" />
+                                                    <path d="M6 1.5V4.5" stroke="#2B2A35" stroke-width="1.5"
+                                                        stroke-linecap="round" stroke-linejoin="round" />
+                                                    <path d="M2.25 7.5H15.75" stroke="#2B2A35" stroke-width="1.5"
+                                                        stroke-linecap="round" stroke-linejoin="round" />
+                                                </svg>
+                                            </mat-datepicker-toggle>
+                                            <mat-datepicker #projectStartPicker></mat-datepicker>
+                                        </div>
+                                    </div>
+                                </div>
+                            </ng-container>
+                        </div>
+                    </div>
+                </div>
+                <div class="cards_footer">
+                    <button mat-button type="button" class="theme_btn btn_outline_primary"
+                        (click)="onCancelCreateTask()">Clear</button>
+                    <button mat-button class="theme_btn btn_primary" [disabled]="
+    selectedCompletionCriteria === completionCriteria.getStaffAttachesDocuments
+    && (!media?.documents || media.documents.length < 1)
+  " (click)="onCreateTask()">{{buttonText}}</button>
+                </div>
+            </div>
+         
+        </div>
+    </form>
+</section>
+<div class="modal fade bsModal ch_modal archived_placement_group_modal" id="cancelCreateTask" tabindex="-1"
+    role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header pt-4 text-center justify-content-center">
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <img src="../../../../assets/img/undraw_warning.svg" alt="undraw_warning">
+                    </div>
+                    <div class="col-md-12 text-center">
+                        <h2 class="modal-title">Are you sure you want to stop Creating a Task?</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer justify-content-center">
+                <button mat-button type="button" class="theme_btn btn_outline_primary mr-3"
+                    data-dismiss="modal">Cancel</button>
+                <button mat-button type="button" class="theme_btn btn_primary" data-dismiss="modal">Exit</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade bsModal ch_modal archived_vacancies_modal" id="featureNotAvilable" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header pt-4 text-center justify-content-center">
+                <button type="button" mat-icon-button id="closeModal" class="close" data-dismiss="modal"
+                    aria-label="Close">
+                    <mat-icon>close</mat-icon>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <img src="../../../../assets/img/undraw_warning.svg" alt="undraw_warning">
+                    </div>
+                    <div class="col-md-12 text-center">
+                        <h2 class="modal-title">This feature is not available for your account</h2>
+                        <p>Please contact an Admin for more information about this feature</p>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer justify-content-center">
+                <button mat-button class="theme_btn btn_primary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade bsModal ch_modal email_preview_popup" id="emailPreviewModal" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" mat-icon-button id="closeModal" class="close" data-dismiss="modal"
+                    aria-label="Close">
+                    <mat-icon>close</mat-icon>
+                </button>
+                <h2 class="modal-title">Preview Email Template</h2>
+            </div>
+            <div class="modal-body">
+                <div class="email_temp_container">
+                    <div class="p-3"><div class="email_priview_crate_task form-group" [innerHtml]="widget"></div></div>
+                    <!-- <app-email-preview-html></app-email-preview-html> -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade bsModal ch_modal email_preview_popup" id="emailPreviewModalFollowupEmail" tabindex="-1"
+    role="dialog"
+    aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" mat-icon-button id="closeModal" class="close" data-dismiss="modal"
+                    aria-label="Close">
+                    <mat-icon>close</mat-icon>
+                </button>
+                <h2 class="modal-title">Preview Email Template</h2>
+            </div>
+            <div class="modal-body">
+                <div class="email_temp_container">
+                    <div class="p-3"><div class="email_priview_crate_task form-group"
+                            [innerHtml]="followupEmailWidget"></div></div>
+                    <!-- <app-email-preview-html></app-email-preview-html> -->
+                </div>
+            </div>
+        </div>
+    </div>

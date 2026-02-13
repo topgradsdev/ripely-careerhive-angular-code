@@ -1,0 +1,104 @@
+<header *ngIf="!hiddenHeader" class="header-navbar">
+     <div class="custom_container universal_header header-container">
+        <!-- <div class="d-flex justify-content-between align-items-center logo_top_header"  [ngClass]="isDisabledNav ? 'disabled-nav' : ''">
+            <a routerLink="/employer/vacancies">
+                <img src="../../../assets/img/careerHive/career-hive-logo-student.svg" class="img-fluid"
+                    alt="career_hive_logo">
+                <h1>Work Integrated Learning</h1>
+            </a>
+        </div> -->
+          <div class="nav-header">
+            <nav class="navbar navbar-expand-lg p-0">
+                <button class="navbar-toggler" style="color:#fff" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"><i class="fa fa-bars"></i></span>
+                </button>
+                <div  class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav emp-header-1" [ngClass]="isDisabledNav ? 'disabled-nav' : ''">
+                        <li class="nav-item">
+                            <a class="nav-link" [routerLinkActive]="'active'" routerLink="/employer/dashboard">Dashboard</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" [routerLinkActive]="'active'" routerLink="/employer/vacancies">Posted Vacancies</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" style="min-width: 180px;" [routerLinkActive]="'active'" routerLink="/employer/placements">Placements</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" style="min-width: 180px;" [routerLinkActive]="'active'" routerLink="/employer/projects">Projects</a>
+                        </li>
+                        <!-- <li class="nav-item">
+                            <a class="nav-link" style="min-width: 180px;" [routerLinkActive]="'active'" routerLink="/employer/ongoing">Ongoing Placements</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" style="min-width: 180px;" [routerLinkActive]="'active'" routerLink="/employer/completed">Completed Placements</a>
+                        </li> -->
+                        <li class="nav-item">
+                            <a class="nav-link" [routerLinkActive]="'active'" routerLink="/employer/employer-support">Support</a>
+                        </li>
+                    </ul>
+                    <ul class="navbar-nav ml-auto align-items-center" [ngClass]="{
+                    'enabled-nav': (employerProfile?.self_source_status === 'pending' && employerProfile?.self_source_status === 'rejected') && !isDisabledNav && !window.location.hash.includes('create-vacancies-self'),
+                    'enabled-nav': !employerProfile?.self_source_status && isDisabledNav
+                    }">
+                        <!-- <li class="nav-item mr-4">
+                            <a class="nav-link underline" routerLink="/employer/vacancies">Back to Career Hive</a>
+                        </li> -->
+
+                        <!-- <li class="nav-item">
+                            <a class="nav-link underline" style="min-width: auto;" routerLink="/employer/my-company-profile">My Profile</a>
+                        </li> -->
+                        <!-- <li class="nav-item">
+                            <button mat-icon-button>
+                                <svg width="21" height="18" viewBox="0 0 21 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M2.1 18C1.5225 18 1.02795 17.7795 0.616352 17.3385C0.204752 16.8975 -0.000698217 16.368 1.78268e-06 15.75V2.25C1.78268e-06 1.63125 0.205802 1.10138 0.617402 0.660377C1.029 0.219377 1.5232 -0.00074809 2.1 1.91002e-06H18.9C19.4775 1.91002e-06 19.972 0.220502 20.3836 0.661502C20.7952 1.1025 21.0007 1.632 21 2.25V15.75C21 16.3687 20.7942 16.8986 20.3826 17.3396C19.971 17.7806 19.4768 18.0007 18.9 18H2.1ZM10.5 10.125L2.1 4.5V15.75H18.9V4.5L10.5 10.125ZM10.5 7.875L18.9 2.25H2.1L10.5 7.875ZM2.1 4.5V2.25V15.75V4.5Z" fill="#464BA8"/>
+                                    </svg>
+                            </button>
+                        </li> -->
+                        <li class="nav-item">
+                            <button mat-icon-button class="d-flex justify-content-center align-items-center">
+                                <svg style="width:36px; height: 36px;" width="36" height="36" viewBox="0 0 36 36" fill="none"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path
+                                        d="M16.543 8.37472C16.7007 7.96855 16.9713 7.6207 17.3199 7.37578C17.6686 7.13085 18.0795 7 18.5 7C18.9205 7 19.3314 7.13085 19.6801 7.37578C20.0287 7.6207 20.2993 7.96855 20.457 8.37472C22.0178 8.82202 23.3947 9.79088 24.3759 11.1325C25.3572 12.4741 25.8887 14.1143 25.8888 15.8011V20.9673L27.8225 23.9898C27.9286 24.1554 27.9895 24.348 27.9988 24.5469C28.008 24.7457 27.9653 24.9435 27.8752 25.1191C27.785 25.2947 27.6508 25.4415 27.4869 25.5438C27.3229 25.6461 27.1354 25.7001 26.9443 25.7001H22.1574C22.0303 26.6164 21.5907 27.4543 20.919 28.0604C20.2473 28.6664 19.3885 29 18.5 29C17.6115 29 16.7527 28.6664 16.081 28.0604C15.4093 27.4543 14.9697 26.6164 14.8426 25.7001H10.0557C9.8646 25.7001 9.67708 25.6461 9.51314 25.5438C9.3492 25.4415 9.215 25.2947 9.12484 25.1191C9.03469 24.9435 8.99197 24.7457 9.00124 24.5469C9.01051 24.348 9.07143 24.1554 9.17749 23.9898L11.1112 20.9673V15.8011C11.1112 12.2551 13.4123 9.26783 16.543 8.37472ZM17.0075 25.7001C17.1165 26.022 17.3186 26.3007 17.586 26.4979C17.8534 26.695 18.173 26.8009 18.5005 26.8009C18.8281 26.8009 19.1476 26.695 19.415 26.4979C19.6824 26.3007 19.8846 26.022 19.9936 25.7001H17.0064H17.0075ZM18.5 10.3017C17.1003 10.3017 15.7579 10.8811 14.7681 11.9125C13.7784 12.9438 13.2223 14.3426 13.2223 15.8011V21.3006C13.2224 21.5178 13.1607 21.7302 13.045 21.911L12.0285 23.5003H24.9704L23.954 21.911C23.8387 21.7301 23.7773 21.5177 23.7777 21.3006V15.8011C23.7777 14.3426 23.2216 12.9438 22.2319 11.9125C21.2421 10.8811 19.8997 10.3017 18.5 10.3017Z"
+                                        fill="#FFF" />
+                                </svg>
+                            </button>
+                        </li>
+                        <li class="nav-item dropdown" >
+                            <button  [matMenuTriggerFor]="menu" class="profile_btn_student">
+                                <img *ngIf="userDetail?.company_logo" [src]="userDetail?.company_logo" alt="avtar">
+                                <span *ngIf="!userDetail?.company_logo" class="profile-letter">{{ userDetail?.company_name ? userDetail?.company_name?.split(' ')[0][0] : '' }} {{userDetail?.company_name ? userDetail?.company_name?.split(' ')[0][1] : '' }}</span>            
+                            </button>
+                            <mat-menu #menu="matMenu">
+                                <a mat-menu-item routerLink="/employer/my-company-profile" *ngIf="(employerProfile?.self_source_status !== 'pending' && employerProfile?.self_source_status !== 'rejected') && !isDisabledNav">
+                                My Company  Profile</a>
+                                <a mat-menu-item routerLink="/employer/employer-support" *ngIf="(employerProfile?.self_source_status !== 'pending' && employerProfile?.self_source_status !== 'rejected') && !isDisabledNav">
+                                    Support</a>
+
+                                <div class="pt-3 pb-1 px-2 mt-2 text-center" [ngClass]="{'border-top': (employerProfile?.self_source_status !== 'pending' && employerProfile?.self_source_status !== 'rejected' && !isDisabledNav)}">
+                                    <a mat-button class="theme_link_btn_c" (click)="logout()">
+                                    Log Out</a>
+                                </div>
+                            </mat-menu>
+                        </li>
+                        <!-- <li class="nav-item dropdown" *ngIf="!employerProfile?.self_source_status && isDisabledNav">
+                            <button [matMenuTriggerFor]="menu" class="profile_btn_student">
+                                <img *ngIf="userDetail?.company_logo" [src]="userDetail?.company_logo" alt="avtar">
+                                <span *ngIf="!userDetail?.company_logo" class="profile-letter">{{ userDetail?.company_name ? userDetail?.company_name?.split(' ')[0][0] : '' }} {{userDetail?.company_name ? userDetail?.company_name?.split(' ')[0][1] : '' }}</span>            
+                            </button>
+                            <mat-menu #menu="matMenu">
+                            
+
+                                <div class="pt-3 pb-1 px-2 mt-2 text-center">
+                                    <a mat-button class="theme_link_btn_c" (click)="logout()">
+                                    Log Out</a>
+                                </div>
+                            </mat-menu>
+                        </li> -->
+                    </ul>
+                </div>
+            </nav>
+        </div>
+    </div>
+</header>

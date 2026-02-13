@@ -1,0 +1,1309 @@
+<section>
+    <div class="row">
+        <div class="col-md-7">
+            <!-- Job Preference  -->
+            <div class="details_card" *ngIf="!preference">
+                <div class="details_card_header">
+                    <h4>Job Preference</h4>
+                    <button (click)="preferenceEdit()" mat-icon-button><svg width="35" height="35" viewBox="0 0 35 35"
+                            fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="17.5" cy="17.5" r="17.5" fill="#F8F8F8" />
+                            <path fill-rule="evenodd" clip-rule="evenodd"
+                                d="M20.7343 10.2083C21.2117 10.2083 21.6693 10.3989 22.0036 10.7357L24.2646 12.9968C24.6013 13.3335 24.7904 13.79 24.7904 14.2661C24.7904 14.7422 24.6013 15.1988 24.2646 15.5354L16.0094 23.7881C15.5001 24.3756 14.7781 24.7366 13.951 24.7933H10.207V24.0641L10.2094 20.9907C10.2715 20.2218 10.629 19.5068 11.1743 19.0264L19.4641 10.7366C19.8002 10.3984 20.2574 10.2083 20.7343 10.2083ZM13.8995 23.3368C14.2891 23.3092 14.6517 23.1279 14.9428 22.7949L20.4567 17.281L17.7191 14.5433L12.1729 20.0882C11.8775 20.3494 11.6948 20.715 11.6654 21.0494V23.3354L13.8995 23.3368ZM18.7505 13.5122L21.4879 16.2498L23.2334 14.5042C23.2966 14.4411 23.3321 14.3554 23.3321 14.2661C23.3321 14.1768 23.2966 14.0912 23.2334 14.028L20.9704 11.7649C20.9079 11.702 20.8229 11.6666 20.7343 11.6666C20.6456 11.6666 20.5606 11.702 20.4982 11.7649L18.7505 13.5122Z"
+                                fill="#2B2A35" />
+                        </svg>
+                    </button>
+                </div>
+                <div class="details_card_body p-0">
+                    <mat-tab-group animationDuration="0ms" class="mat_tab_bordred">
+                        <mat-tab>
+                            <ng-template mat-tab-label>Preference 1</ng-template>
+                            <div>
+                                <div class="row">
+                                    <!-- <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Area</label>
+                                            <input disabled type="text" class="form-control" placeholder="Area"
+                                                value="User Interface">
+                                        </div>
+                                    </div> -->
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Intership Title</label>
+                                            <input disabled type="text" class="form-control"
+                                                placeholder="Enter Intership Title" value="Designer">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group label_span mb-0">
+                                    <label class="d-flex justify-content-between align-items-center">Selected Skills
+                                        <span>(1/10 skills added)</span></label>
+                                    <div class="custom_chip_list1 pb-0">
+                                        <span class="custom_chip active">
+                                            <span>Adobe Photoshop</span>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </mat-tab>
+                        <mat-tab>
+                            <ng-template mat-tab-label>Preference 2</ng-template>
+                            Preference 2
+                        </mat-tab>
+                        <mat-tab>
+                            <ng-template mat-tab-label>Preference 3</ng-template>
+                            Preference 3
+                        </mat-tab>
+                    </mat-tab-group>
+                </div>
+            </div>
+            <!-- Job Preference Edit View -->
+            <div class="details_card" *ngIf="preference">
+                <div class="details_card_header">
+                    <h4>Job Preference - Edit</h4>
+                </div>
+                <div class="details_card_body p-0">
+                    <mat-tab-group animationDuration="0ms" class="mat_tab_bordred">
+                        <mat-tab>
+                            <ng-template mat-tab-label>Preference 1</ng-template>
+                            <div>
+                                <div class="form-group">
+                                    <label>Intership Title</label>
+                                    <input type="text" class="form-control" placeholder="Enter Intership Title"
+                                        value="Designer">
+                                </div>
+                                <div class="form-group label_span">
+                                    <label class="d-flex justify-content-between align-items-center">Selected Skills
+                                        <span>(1/10 skills added)</span></label>
+                                    <ng-container>
+                                        <div class="search_with_skills_container">
+                                            <div class="input_container">
+                                                <input type="text" placeholder="Add additional skills"
+                                                    class="form-control">
+                                                <div class="btn_group">
+                                                    <button mat-icon-button>
+                                                        <svg width="35" height="35" viewBox="0 0 35 35" fill="none"
+                                                            xmlns="http://www.w3.org/2000/svg">
+                                                            <circle cx="17.5" cy="17.5" r="17.5" fill="#F8F8F8" />
+                                                            <path d="M24.6221 11.2725L13.6221 22.2725L8.62207 17.2725"
+                                                                stroke="#26C296" stroke-width="2" stroke-linecap="round"
+                                                                stroke-linejoin="round" />
+                                                        </svg>
+
+                                                    </button>
+                                                    <button mat-icon-button>
+                                                        <svg width="35" height="35" viewBox="0 0 35 35" fill="none"
+                                                            xmlns="http://www.w3.org/2000/svg">
+                                                            <circle cx="17.5" cy="17.5" r="17.5" fill="#F8F8F8" />
+                                                            <path d="M23.1689 11L11.1689 23" stroke="#F47761"
+                                                                stroke-width="2" stroke-linecap="round"
+                                                                stroke-linejoin="round" />
+                                                            <path d="M11.1689 11L23.1689 23" stroke="#F47761"
+                                                                stroke-width="2" stroke-linecap="round"
+                                                                stroke-linejoin="round" />
+                                                        </svg>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                            <!-- <div class="dropdown_options">
+                                                <div class="plus_suggestion">
+                                                    <p>Suggested</p>
+                                                    <div class="typed_text">
+                                                        <div>
+                                                            <span>Skill Name</span> <span>Skill Name</span> <span>Skill
+                                                                Name</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div> -->
+                                        </div>
+                                        <div class="custom_chip_list1">
+                                            <span class="custom_chip">
+                                                <span>Adobe Photoshop</span>
+                                                <svg class="close_icon_chip" width="17" height="17" viewBox="0 0 17 17"
+                                                    fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <path d="M12.75 4.25L4.25 12.75" stroke="currentColor"
+                                                        stroke-linecap="round" stroke-linejoin="round" />
+                                                    <path d="M4.25 4.25L12.75 12.75" stroke="currentColor"
+                                                        stroke-linecap="round" stroke-linejoin="round" />
+                                                </svg>
+
+                                            </span>
+                                        </div>
+                                    </ng-container>
+                                </div>
+                                <div class="details_foot_btn">
+                                    <button class="theme_btn btn_primary" mat-button>Save</button>
+                                    <button class="theme_btn btn_outline_danger" mat-button
+                                        (click)="preferenceEdit()">Cancel</button>
+                                </div>
+                            </div>
+                        </mat-tab>
+                        <mat-tab>
+                            <ng-template mat-tab-label>Preference 2</ng-template>
+                            Preference 2
+                        </mat-tab>
+                        <mat-tab>
+                            <ng-template mat-tab-label>Preference 3</ng-template>
+                            Preference 3
+                        </mat-tab>
+                    </mat-tab-group>
+                </div>
+            </div>
+            <!-- Job Preference Edit view End -->
+            <!-- Licenses Start -->
+            <div class="details_card licenses">
+                <div class="details_card_header">
+                    <h4>Licenses & Certifications selected</h4>
+                    <button mat-icon-button><svg width="35" height="35" viewBox="0 0 35 35" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="17.5" cy="17.5" r="17.5" fill="#F8F8F8" />
+                            <path fill-rule="evenodd" clip-rule="evenodd"
+                                d="M20.7343 10.2083C21.2117 10.2083 21.6693 10.3989 22.0036 10.7357L24.2646 12.9968C24.6013 13.3335 24.7904 13.79 24.7904 14.2661C24.7904 14.7422 24.6013 15.1988 24.2646 15.5354L16.0094 23.7881C15.5001 24.3756 14.7781 24.7366 13.951 24.7933H10.207V24.0641L10.2094 20.9907C10.2715 20.2218 10.629 19.5068 11.1743 19.0264L19.4641 10.7366C19.8002 10.3984 20.2574 10.2083 20.7343 10.2083ZM13.8995 23.3368C14.2891 23.3092 14.6517 23.1279 14.9428 22.7949L20.4567 17.281L17.7191 14.5433L12.1729 20.0882C11.8775 20.3494 11.6948 20.715 11.6654 21.0494V23.3354L13.8995 23.3368ZM18.7505 13.5122L21.4879 16.2498L23.2334 14.5042C23.2966 14.4411 23.3321 14.3554 23.3321 14.2661C23.3321 14.1768 23.2966 14.0912 23.2334 14.028L20.9704 11.7649C20.9079 11.702 20.8229 11.6666 20.7343 11.6666C20.6456 11.6666 20.5606 11.702 20.4982 11.7649L18.7505 13.5122Z"
+                                fill="#2B2A35" />
+                        </svg>
+                    </button>
+                </div>
+                <div class="details_card_body">
+                    <div class="custom_chip_list1">
+                        <span class="custom_chip">
+                            <span>Own Private Transport</span>
+                        </span>
+                        <span class="custom_chip active">
+                            <span>Australian Driving License</span>
+                        </span>
+                        <span class="custom_chip active">
+                            <span>White Card</span>
+                        </span>
+                        <span class="custom_chip">
+                            <span>Working with Children’s Check</span>
+                        </span>
+                        <span class="custom_chip active">
+                            <span>Police Check</span>
+                        </span>
+                    </div>
+                    <div class="form-group">
+                        <label class="files_list_label"> Files</label>
+                        <ul class="files_list">
+                            <li>
+                                <div class="file_card">
+                                    <div class="content">
+                                        <svg width="25" height="32" viewBox="0 0 25 32" fill="none"
+                                            xmlns="http://www.w3.org/2000/svg">
+                                            <path
+                                                d="M21.1761 5.17688C20.8764 4.88148 20.5691 4.58109 20.2671 4.27585C19.9625 3.97307 19.663 3.66538 19.3682 3.36506C17.2671 1.21606 16.0158 0 14.7104 0H4.94144C2.2349 0 0.0293812 2.20931 0.0293812 4.92326V24.6657C0.0293812 25.3182 0.55831 25.8471 1.21078 25.8471C1.86324 25.8471 2.39217 25.3182 2.39217 24.6657V4.90854C2.39217 3.54972 3.49247 2.44691 4.8482 2.44691L13.8446 2.44195C14.7191 2.44195 14.7191 3.75896 14.7191 4.85069V8.60098C14.7104 9.84532 14.7104 9.8318 15.9471 9.8318H19.6312C20.8555 9.8318 22.0872 9.83795 22.0872 11.0626V27.0767C22.0872 28.4356 20.9869 29.5384 19.6312 29.5384H4.8482C3.49247 29.5384 2.39217 28.4356 2.39217 27.0767V24.3343C2.39217 23.6737 1.85667 23.1382 1.19609 23.1382C0.535506 23.1382 0 23.6737 0 24.3343V27.0767C0 29.7907 2.20429 32 4.91206 32H19.6213C22.329 32 24.5333 29.7907 24.5333 27.0767V9.84532C24.5333 8.5382 23.3202 7.2828 21.1761 5.17688Z"
+                                                fill="#9A9A9A" />
+                                        </svg>
+                                        <p>Working with Children Check <br>
+                                            <span>Jan 2019 - Jan 2025</span>
+                                        </p>
+                                    </div>
+                                    <div class="btn_group">
+                                        <button mat-icon-button>
+                                            <svg width="35" height="35" viewBox="0 0 35 35" fill="none"
+                                                xmlns="http://www.w3.org/2000/svg">
+                                                <circle cx="17.5" cy="17.5" r="17.5" fill="#F8F8F8" />
+                                                <path
+                                                    d="M9.29565 17.7632C9.1361 17.5601 9.00404 17.3822 8.90095 17.2387C8.99761 17.0973 9.1211 16.923 9.27053 16.7246C9.69179 16.1651 10.3145 15.4194 11.1183 14.6754C12.7353 13.1787 15.0165 11.75 17.8214 11.75C20.6263 11.75 22.9076 13.1787 24.5246 14.6754C25.3283 15.4194 25.9511 16.1651 26.3723 16.7246C26.5218 16.923 26.6452 17.0973 26.7419 17.2387C26.6388 17.3822 26.5068 17.5601 26.3472 17.7632C25.9058 18.325 25.2587 19.0735 24.4375 19.82C22.7807 21.3262 20.4992 22.75 17.8214 22.75C15.1437 22.75 12.8621 21.3262 11.2054 19.82C10.3842 19.0735 9.73706 18.325 9.29565 17.7632Z"
+                                                    stroke="#2B2A35" stroke-width="1.5" />
+                                                <circle cx="17.8214" cy="17.2511" r="2.82143" stroke="#2B2A35"
+                                                    stroke-width="1.5" />
+                                            </svg>
+                                        </button>
+                                        <button mat-icon-button>
+                                            <svg width="35" height="35" viewBox="0 0 35 35" fill="none"
+                                                xmlns="http://www.w3.org/2000/svg">
+                                                <circle cx="17.5" cy="17.5" r="17.5" fill="#F8F8F8" />
+                                                <path fill-rule="evenodd" clip-rule="evenodd"
+                                                    d="M24.7923 20.4141V23.3307C24.7923 24.1361 24.1394 24.7891 23.334 24.7891H11.6673C10.8619 24.7891 10.209 24.1361 10.209 23.3307V20.4141H11.6673V23.3307H23.334V20.4141H24.7923Z"
+                                                    fill="#2B2A35" />
+                                                <path fill-rule="evenodd" clip-rule="evenodd"
+                                                    d="M18.2295 17.9258L20.6305 15.5248L21.6617 16.556L17.5003 20.7174L13.3389 16.556L14.3701 15.5248L16.7711 17.9258V10.207H18.2295V17.9258Z"
+                                                    fill="#2B2A35" />
+                                            </svg>
+
+
+                                        </button>
+                                    </div>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="file_card">
+                                    <div class="content">
+                                        <svg width="25" height="32" viewBox="0 0 25 32" fill="none"
+                                            xmlns="http://www.w3.org/2000/svg">
+                                            <path
+                                                d="M21.1761 5.17688C20.8764 4.88148 20.5691 4.58109 20.2671 4.27585C19.9625 3.97307 19.663 3.66538 19.3682 3.36506C17.2671 1.21606 16.0158 0 14.7104 0H4.94144C2.2349 0 0.0293812 2.20931 0.0293812 4.92326V24.6657C0.0293812 25.3182 0.55831 25.8471 1.21078 25.8471C1.86324 25.8471 2.39217 25.3182 2.39217 24.6657V4.90854C2.39217 3.54972 3.49247 2.44691 4.8482 2.44691L13.8446 2.44195C14.7191 2.44195 14.7191 3.75896 14.7191 4.85069V8.60098C14.7104 9.84532 14.7104 9.8318 15.9471 9.8318H19.6312C20.8555 9.8318 22.0872 9.83795 22.0872 11.0626V27.0767C22.0872 28.4356 20.9869 29.5384 19.6312 29.5384H4.8482C3.49247 29.5384 2.39217 28.4356 2.39217 27.0767V24.3343C2.39217 23.6737 1.85667 23.1382 1.19609 23.1382C0.535506 23.1382 0 23.6737 0 24.3343V27.0767C0 29.7907 2.20429 32 4.91206 32H19.6213C22.329 32 24.5333 29.7907 24.5333 27.0767V9.84532C24.5333 8.5382 23.3202 7.2828 21.1761 5.17688Z"
+                                                fill="#9A9A9A" />
+                                        </svg>
+                                        <p>VIC Responsible Service of Alcohol Licence <br>
+                                            <span>Issued Feb 2021</span>
+                                        </p>
+                                    </div>
+                                    <div class="btn_group">
+                                        <button mat-icon-button>
+                                            <svg width="35" height="35" viewBox="0 0 35 35" fill="none"
+                                                xmlns="http://www.w3.org/2000/svg">
+                                                <circle cx="17.5" cy="17.5" r="17.5" fill="#F8F8F8" />
+                                                <path
+                                                    d="M9.29565 17.7632C9.1361 17.5601 9.00404 17.3822 8.90095 17.2387C8.99761 17.0973 9.1211 16.923 9.27053 16.7246C9.69179 16.1651 10.3145 15.4194 11.1183 14.6754C12.7353 13.1787 15.0165 11.75 17.8214 11.75C20.6263 11.75 22.9076 13.1787 24.5246 14.6754C25.3283 15.4194 25.9511 16.1651 26.3723 16.7246C26.5218 16.923 26.6452 17.0973 26.7419 17.2387C26.6388 17.3822 26.5068 17.5601 26.3472 17.7632C25.9058 18.325 25.2587 19.0735 24.4375 19.82C22.7807 21.3262 20.4992 22.75 17.8214 22.75C15.1437 22.75 12.8621 21.3262 11.2054 19.82C10.3842 19.0735 9.73706 18.325 9.29565 17.7632Z"
+                                                    stroke="#2B2A35" stroke-width="1.5" />
+                                                <circle cx="17.8214" cy="17.2511" r="2.82143" stroke="#2B2A35"
+                                                    stroke-width="1.5" />
+                                            </svg>
+                                        </button>
+                                        <button mat-icon-button>
+                                            <svg width="35" height="35" viewBox="0 0 35 35" fill="none"
+                                                xmlns="http://www.w3.org/2000/svg">
+                                                <circle cx="17.5" cy="17.5" r="17.5" fill="#F8F8F8" />
+                                                <path fill-rule="evenodd" clip-rule="evenodd"
+                                                    d="M24.7923 20.4141V23.3307C24.7923 24.1361 24.1394 24.7891 23.334 24.7891H11.6673C10.8619 24.7891 10.209 24.1361 10.209 23.3307V20.4141H11.6673V23.3307H23.334V20.4141H24.7923Z"
+                                                    fill="#2B2A35" />
+                                                <path fill-rule="evenodd" clip-rule="evenodd"
+                                                    d="M18.2295 17.9258L20.6305 15.5248L21.6617 16.556L17.5003 20.7174L13.3389 16.556L14.3701 15.5248L16.7711 17.9258V10.207H18.2295V17.9258Z"
+                                                    fill="#2B2A35" />
+                                            </svg>
+
+
+                                        </button>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <!-- Licenses End -->
+            <!-- Licenses Edit view Start -->
+            <div class="details_card licenses_edit">
+                <div class="details_card_header">
+                    <div>
+                        <h4>Licenses & Certifications selected - Edit</h4>
+                        <p>(3/5 Licenses & Certifications selected)</p>
+                    </div>
+                </div>
+                <div class="details_card_body">
+                    <div class="custom_chip_list1">
+                        <span class="custom_chip">
+                            <span>Own Private Transport</span>
+                        </span>
+                        <span class="custom_chip active">
+                            <span>Australian Driving License</span>
+                        </span>
+                        <span class="custom_chip active">
+                            <span>White Card</span>
+                        </span>
+                        <span class="custom_chip">
+                            <span>Working with Children’s Check</span>
+                        </span>
+                        <span class="custom_chip active">
+                            <span>Police Check</span>
+                        </span>
+                    </div>
+                    <div class="details_foot_btn">
+                        <button class="theme_btn btn_primary" mat-button>Save</button>
+                        <button class="theme_btn btn_outline_danger" mat-button>Cancel</button>
+                    </div>
+                </div>
+            </div>
+            <!-- Licenses edit view End -->
+        </div>
+        <div class="col-md-5">
+            <!-- Contact Details start -->
+            <div class="details_card">
+                <div class="details_card_header">
+                    <h4>Details</h4>
+                    <button mat-icon-button><svg width="35" height="35" viewBox="0 0 35 35" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="17.5" cy="17.5" r="17.5" fill="#F8F8F8" />
+                            <path fill-rule="evenodd" clip-rule="evenodd"
+                                d="M20.7343 10.2083C21.2117 10.2083 21.6693 10.3989 22.0036 10.7357L24.2646 12.9968C24.6013 13.3335 24.7904 13.79 24.7904 14.2661C24.7904 14.7422 24.6013 15.1988 24.2646 15.5354L16.0094 23.7881C15.5001 24.3756 14.7781 24.7366 13.951 24.7933H10.207V24.0641L10.2094 20.9907C10.2715 20.2218 10.629 19.5068 11.1743 19.0264L19.4641 10.7366C19.8002 10.3984 20.2574 10.2083 20.7343 10.2083ZM13.8995 23.3368C14.2891 23.3092 14.6517 23.1279 14.9428 22.7949L20.4567 17.281L17.7191 14.5433L12.1729 20.0882C11.8775 20.3494 11.6948 20.715 11.6654 21.0494V23.3354L13.8995 23.3368ZM18.7505 13.5122L21.4879 16.2498L23.2334 14.5042C23.2966 14.4411 23.3321 14.3554 23.3321 14.2661C23.3321 14.1768 23.2966 14.0912 23.2334 14.028L20.9704 11.7649C20.9079 11.702 20.8229 11.6666 20.7343 11.6666C20.6456 11.6666 20.5606 11.702 20.4982 11.7649L18.7505 13.5122Z"
+                                fill="#2B2A35" />
+                        </svg>
+                    </button>
+                </div>
+                <div class="details_card_body p-0">
+                    <mat-tab-group animationDuration="0ms" class="mat_tab_bordred">
+                            <mat-tab>
+                            <ng-template mat-tab-label>Contact</ng-template>
+                            <div class="details_list_item">
+                                <div class="col-left">
+                                    <h5>Phone Number:</h5>
+                                </div>
+                                <div class="col-right text-right">
+                                    <p>0 123 456 789</p>
+                                </div>
+                            </div>
+                            <div class="details_list_item">
+                                <div class="col-left">
+                                    <h5>Primary Email</h5>
+                                </div>
+                                <div class="col-right text-right">
+                                    <p><button [matTooltipDisabled]="true"
+                                            (click)="tooltip3.disabled = false; tooltip3.show();" #tooltip3="matTooltip"
+                                            matTooltip="Copied to clipboard!" mat-icon-button class="mr-2 copy_btn"><svg
+                                                width="35" height="35" viewBox="0 0 35 35" fill="none"
+                                                xmlns="http://www.w3.org/2000/svg">
+                                                <circle cx="17.5" cy="17.5" r="17.5" fill="#F8F8F8" />
+                                                <g clip-path="url(#clip0_20224_10929)">
+                                                    <path
+                                                        d="M15.5209 9H21.0404C21.1909 9 21.3252 9.07544 21.4092 9.19176L24.8757 13.0911C24.954 13.1795 24.9974 13.2952 24.9974 13.4152L25 21.763C25 22.3485 24.7683 22.8826 24.3959 23.2705L24.3937 23.2728C24.0206 23.6596 23.5073 23.8999 22.9447 23.8999H22.3036C22.294 24.4729 22.0645 24.9933 21.7001 25.3719C21.3274 25.7594 20.8131 26 20.2483 26H13.0553C12.4905 26 11.9762 25.7594 11.6038 25.3719C11.2314 24.985 11 24.4506 11 23.863V13.5155C11 12.928 11.2311 12.3929 11.6035 12.006C11.9755 11.6189 12.4901 11.3786 13.0553 11.3786H13.4657V11.137C13.4657 10.5494 13.6968 10.0143 14.0691 9.62746C14.4412 9.24028 14.9558 9 15.5209 9ZM21.3021 10.4769V12.1064C21.3328 12.5152 21.4687 12.8342 21.7065 13.0456C21.9558 13.2669 22.3323 13.3916 22.8326 13.4009L23.8998 13.3996L21.3021 10.4769ZM24.0775 14.358L22.8255 14.356C22.0971 14.3444 21.5224 14.14 21.1084 13.7721C20.6776 13.3886 20.434 12.8462 20.3842 12.1759L20.3797 12.1094V9.95914H15.5209C15.2099 9.95914 14.9261 10.0921 14.7209 10.3051C14.516 10.5185 14.3881 10.8136 14.3881 11.137V21.763C14.3881 22.0867 14.5163 22.3815 14.7212 22.5945C14.9264 22.8078 15.2099 22.9408 15.5209 22.9408H22.9447C23.2564 22.9408 23.5399 22.8085 23.7442 22.5958C23.9503 22.3818 24.0775 22.0873 24.0775 21.763V14.358ZM21.3805 23.8999H15.5209C14.9558 23.8999 14.4415 23.6593 14.0695 23.2725C13.6971 22.8853 13.4657 22.3509 13.4657 21.763V12.3377H13.0553C12.7439 12.3377 12.4604 12.4707 12.2552 12.6837C12.0503 12.8971 11.9225 13.1918 11.9225 13.5155V23.863C11.9225 24.1864 12.0506 24.4809 12.2555 24.6942C12.4611 24.9079 12.7446 25.0409 13.0553 25.0409H20.2483C20.559 25.0409 20.8425 24.9079 21.048 24.6942C21.2453 24.4892 21.3715 24.2087 21.3805 23.8999Z"
+                                                        fill="#2B2A35" />
+                                                </g>
+                                                <defs>
+                                                    <clipPath id="clip0_20224_10929">
+                                                        <rect width="14" height="17" fill="white"
+                                                            transform="translate(11 9)" />
+                                                    </clipPath>
+                                                </defs>
+                                            </svg>
+                                        </button> mwatson@email.com.au</p>
+                                </div>
+                            </div>
+                            <div class="details_list_item">
+                                <div class="col-left">
+                                    <h5>Secondary Email</h5>
+                                </div>
+                                <div class="col-right text-right">
+                                    <p><button [matTooltipDisabled]="true"
+                                            (click)="tooltip4.disabled = false; tooltip4.show();" #tooltip4="matTooltip"
+                                            matTooltip="Copied to clipboard!" mat-icon-button class="mr-2 copy_btn"><svg
+                                                width="35" height="35" viewBox="0 0 35 35" fill="none"
+                                                xmlns="http://www.w3.org/2000/svg">
+                                                <circle cx="17.5" cy="17.5" r="17.5" fill="#F8F8F8" />
+                                                <g clip-path="url(#clip0_20224_10929)">
+                                                    <path
+                                                        d="M15.5209 9H21.0404C21.1909 9 21.3252 9.07544 21.4092 9.19176L24.8757 13.0911C24.954 13.1795 24.9974 13.2952 24.9974 13.4152L25 21.763C25 22.3485 24.7683 22.8826 24.3959 23.2705L24.3937 23.2728C24.0206 23.6596 23.5073 23.8999 22.9447 23.8999H22.3036C22.294 24.4729 22.0645 24.9933 21.7001 25.3719C21.3274 25.7594 20.8131 26 20.2483 26H13.0553C12.4905 26 11.9762 25.7594 11.6038 25.3719C11.2314 24.985 11 24.4506 11 23.863V13.5155C11 12.928 11.2311 12.3929 11.6035 12.006C11.9755 11.6189 12.4901 11.3786 13.0553 11.3786H13.4657V11.137C13.4657 10.5494 13.6968 10.0143 14.0691 9.62746C14.4412 9.24028 14.9558 9 15.5209 9ZM21.3021 10.4769V12.1064C21.3328 12.5152 21.4687 12.8342 21.7065 13.0456C21.9558 13.2669 22.3323 13.3916 22.8326 13.4009L23.8998 13.3996L21.3021 10.4769ZM24.0775 14.358L22.8255 14.356C22.0971 14.3444 21.5224 14.14 21.1084 13.7721C20.6776 13.3886 20.434 12.8462 20.3842 12.1759L20.3797 12.1094V9.95914H15.5209C15.2099 9.95914 14.9261 10.0921 14.7209 10.3051C14.516 10.5185 14.3881 10.8136 14.3881 11.137V21.763C14.3881 22.0867 14.5163 22.3815 14.7212 22.5945C14.9264 22.8078 15.2099 22.9408 15.5209 22.9408H22.9447C23.2564 22.9408 23.5399 22.8085 23.7442 22.5958C23.9503 22.3818 24.0775 22.0873 24.0775 21.763V14.358ZM21.3805 23.8999H15.5209C14.9558 23.8999 14.4415 23.6593 14.0695 23.2725C13.6971 22.8853 13.4657 22.3509 13.4657 21.763V12.3377H13.0553C12.7439 12.3377 12.4604 12.4707 12.2552 12.6837C12.0503 12.8971 11.9225 13.1918 11.9225 13.5155V23.863C11.9225 24.1864 12.0506 24.4809 12.2555 24.6942C12.4611 24.9079 12.7446 25.0409 13.0553 25.0409H20.2483C20.559 25.0409 20.8425 24.9079 21.048 24.6942C21.2453 24.4892 21.3715 24.2087 21.3805 23.8999Z"
+                                                        fill="#2B2A35" />
+                                                </g>
+                                                <defs>
+                                                    <clipPath id="clip0_20224_10929">
+                                                        <rect width="14" height="17" fill="white"
+                                                            transform="translate(11 9)" />
+                                                    </clipPath>
+                                                </defs>
+                                            </svg>
+                                        </button> mwatson@email.com.au</p>
+                                </div>
+                            </div>
+                            <div class="details_list_item">
+                                <div class="col-left">
+                                    <h5>Address:</h5>
+                                </div>
+                                <div class="col-right text-right">
+                                    <p>U123/123 Smith Street, Melbourne, VIC 3000, Australia</p>
+                                </div>
+                            </div>
+                            <!-- <ul class="contact_details">
+                                <li>Phone Number: <span>0 123 456 789</span> </li>
+                                <li>Email Address: <span>mwatson@email.com.au </span> </li>
+                                <li>Address: <span>U123/123 Smith Street, Melbourne</span> </li>
+                            </ul> -->
+                        </mat-tab>
+
+                            <!-- <mat-tab>
+                            <ng-template mat-tab-label>Education</ng-template>
+                            <div class="details_list_item">
+                                <div class="col-left">
+                                    <h5>Phone Number:</h5>
+                                </div>
+                                <div class="col-right text-right">
+                                    <p>0 123 456 789</p>
+                                </div>
+                            </div>
+                            <div class="details_list_item">
+                                <div class="col-left">
+                                    <h5>Primary Email</h5>
+                                </div>
+                                <div class="col-right text-right">
+                                    <p><button [matTooltipDisabled]="true"
+                                            (click)="tooltip3.disabled = false; tooltip3.show();" #tooltip3="matTooltip"
+                                            matTooltip="Copied to clipboard!" mat-icon-button class="mr-2 copy_btn"><svg
+                                                width="35" height="35" viewBox="0 0 35 35" fill="none"
+                                                xmlns="http://www.w3.org/2000/svg">
+                                                <circle cx="17.5" cy="17.5" r="17.5" fill="#F8F8F8" />
+                                                <g clip-path="url(#clip0_20224_10929)">
+                                                    <path
+                                                        d="M15.5209 9H21.0404C21.1909 9 21.3252 9.07544 21.4092 9.19176L24.8757 13.0911C24.954 13.1795 24.9974 13.2952 24.9974 13.4152L25 21.763C25 22.3485 24.7683 22.8826 24.3959 23.2705L24.3937 23.2728C24.0206 23.6596 23.5073 23.8999 22.9447 23.8999H22.3036C22.294 24.4729 22.0645 24.9933 21.7001 25.3719C21.3274 25.7594 20.8131 26 20.2483 26H13.0553C12.4905 26 11.9762 25.7594 11.6038 25.3719C11.2314 24.985 11 24.4506 11 23.863V13.5155C11 12.928 11.2311 12.3929 11.6035 12.006C11.9755 11.6189 12.4901 11.3786 13.0553 11.3786H13.4657V11.137C13.4657 10.5494 13.6968 10.0143 14.0691 9.62746C14.4412 9.24028 14.9558 9 15.5209 9ZM21.3021 10.4769V12.1064C21.3328 12.5152 21.4687 12.8342 21.7065 13.0456C21.9558 13.2669 22.3323 13.3916 22.8326 13.4009L23.8998 13.3996L21.3021 10.4769ZM24.0775 14.358L22.8255 14.356C22.0971 14.3444 21.5224 14.14 21.1084 13.7721C20.6776 13.3886 20.434 12.8462 20.3842 12.1759L20.3797 12.1094V9.95914H15.5209C15.2099 9.95914 14.9261 10.0921 14.7209 10.3051C14.516 10.5185 14.3881 10.8136 14.3881 11.137V21.763C14.3881 22.0867 14.5163 22.3815 14.7212 22.5945C14.9264 22.8078 15.2099 22.9408 15.5209 22.9408H22.9447C23.2564 22.9408 23.5399 22.8085 23.7442 22.5958C23.9503 22.3818 24.0775 22.0873 24.0775 21.763V14.358ZM21.3805 23.8999H15.5209C14.9558 23.8999 14.4415 23.6593 14.0695 23.2725C13.6971 22.8853 13.4657 22.3509 13.4657 21.763V12.3377H13.0553C12.7439 12.3377 12.4604 12.4707 12.2552 12.6837C12.0503 12.8971 11.9225 13.1918 11.9225 13.5155V23.863C11.9225 24.1864 12.0506 24.4809 12.2555 24.6942C12.4611 24.9079 12.7446 25.0409 13.0553 25.0409H20.2483C20.559 25.0409 20.8425 24.9079 21.048 24.6942C21.2453 24.4892 21.3715 24.2087 21.3805 23.8999Z"
+                                                        fill="#2B2A35" />
+                                                </g>
+                                                <defs>
+                                                    <clipPath id="clip0_20224_10929">
+                                                        <rect width="14" height="17" fill="white"
+                                                            transform="translate(11 9)" />
+                                                    </clipPath>
+                                                </defs>
+                                            </svg>
+                                        </button> mwatson@email.com.au</p>
+                                </div>
+                            </div>
+                            <div class="details_list_item">
+                                <div class="col-left">
+                                    <h5>Secondary Email</h5>
+                                </div>
+                                <div class="col-right text-right">
+                                    <p><button [matTooltipDisabled]="true"
+                                            (click)="tooltip4.disabled = false; tooltip4.show();" #tooltip4="matTooltip"
+                                            matTooltip="Copied to clipboard!" mat-icon-button class="mr-2 copy_btn"><svg
+                                                width="35" height="35" viewBox="0 0 35 35" fill="none"
+                                                xmlns="http://www.w3.org/2000/svg">
+                                                <circle cx="17.5" cy="17.5" r="17.5" fill="#F8F8F8" />
+                                                <g clip-path="url(#clip0_20224_10929)">
+                                                    <path
+                                                        d="M15.5209 9H21.0404C21.1909 9 21.3252 9.07544 21.4092 9.19176L24.8757 13.0911C24.954 13.1795 24.9974 13.2952 24.9974 13.4152L25 21.763C25 22.3485 24.7683 22.8826 24.3959 23.2705L24.3937 23.2728C24.0206 23.6596 23.5073 23.8999 22.9447 23.8999H22.3036C22.294 24.4729 22.0645 24.9933 21.7001 25.3719C21.3274 25.7594 20.8131 26 20.2483 26H13.0553C12.4905 26 11.9762 25.7594 11.6038 25.3719C11.2314 24.985 11 24.4506 11 23.863V13.5155C11 12.928 11.2311 12.3929 11.6035 12.006C11.9755 11.6189 12.4901 11.3786 13.0553 11.3786H13.4657V11.137C13.4657 10.5494 13.6968 10.0143 14.0691 9.62746C14.4412 9.24028 14.9558 9 15.5209 9ZM21.3021 10.4769V12.1064C21.3328 12.5152 21.4687 12.8342 21.7065 13.0456C21.9558 13.2669 22.3323 13.3916 22.8326 13.4009L23.8998 13.3996L21.3021 10.4769ZM24.0775 14.358L22.8255 14.356C22.0971 14.3444 21.5224 14.14 21.1084 13.7721C20.6776 13.3886 20.434 12.8462 20.3842 12.1759L20.3797 12.1094V9.95914H15.5209C15.2099 9.95914 14.9261 10.0921 14.7209 10.3051C14.516 10.5185 14.3881 10.8136 14.3881 11.137V21.763C14.3881 22.0867 14.5163 22.3815 14.7212 22.5945C14.9264 22.8078 15.2099 22.9408 15.5209 22.9408H22.9447C23.2564 22.9408 23.5399 22.8085 23.7442 22.5958C23.9503 22.3818 24.0775 22.0873 24.0775 21.763V14.358ZM21.3805 23.8999H15.5209C14.9558 23.8999 14.4415 23.6593 14.0695 23.2725C13.6971 22.8853 13.4657 22.3509 13.4657 21.763V12.3377H13.0553C12.7439 12.3377 12.4604 12.4707 12.2552 12.6837C12.0503 12.8971 11.9225 13.1918 11.9225 13.5155V23.863C11.9225 24.1864 12.0506 24.4809 12.2555 24.6942C12.4611 24.9079 12.7446 25.0409 13.0553 25.0409H20.2483C20.559 25.0409 20.8425 24.9079 21.048 24.6942C21.2453 24.4892 21.3715 24.2087 21.3805 23.8999Z"
+                                                        fill="#2B2A35" />
+                                                </g>
+                                                <defs>
+                                                    <clipPath id="clip0_20224_10929">
+                                                        <rect width="14" height="17" fill="white"
+                                                            transform="translate(11 9)" />
+                                                    </clipPath>
+                                                </defs>
+                                            </svg>
+                                        </button> mwatson@email.com.au</p>
+                                </div>
+                            </div>
+                            <div class="details_list_item">
+                                <div class="col-left">
+                                    <h5>Address:</h5>
+                                </div>
+                                <div class="col-right text-right">
+                                    <p>U123/123 Smith Street, Melbourne, VIC 3000, Australia</p>
+                                </div>
+                            </div>
+                        </mat-tab> -->
+                        <mat-tab>
+                            <ng-template mat-tab-label>Miscellaneous</ng-template>
+                            <div class="details_list_item">
+                                <!-- <div class="col-left">
+                                    <h5>Monthly Cohort</h5>
+                                </div> -->
+                                <div class="col-right text-right">
+                                    <p>February 25th, 2024</p>
+                                    <button mat-icon-button><svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                            xmlns="http://www.w3.org/2000/svg">
+                                            <circle cx="12" cy="12" r="12" fill="#F8F8F8" />
+                                            <path fill-rule="evenodd" clip-rule="evenodd"
+                                                d="M14.2187 7C14.546 7 14.8599 7.13071 15.0891 7.36171L16.6395 8.91216C16.8703 9.143 17 9.45608 17 9.78254C17 10.109 16.8703 10.4221 16.6395 10.6529L10.9788 16.3119C10.6295 16.7147 10.1344 16.9623 9.5673 17.0012H7V16.5012L7.00162 14.3937C7.04422 13.8664 7.28933 13.3762 7.66325 13.0467L13.3477 7.36231C13.5782 7.13041 13.8917 7 14.2187 7ZM9.53199 16.0024C9.7991 15.9835 10.0477 15.8592 10.2474 15.6308L14.0283 11.8499L12.1512 9.9726L8.34805 13.7748C8.14548 13.954 8.02015 14.2046 8 14.4339V16.0015L9.53199 16.0024ZM12.8584 9.26558L14.7355 11.1428L15.9324 9.94581C15.9757 9.90251 16 9.84378 16 9.78254C16 9.7213 15.9757 9.66257 15.9324 9.61927L14.3806 8.06743C14.3377 8.02427 14.2795 8 14.2187 8C14.1579 8 14.0996 8.02427 14.0568 8.06743L12.8584 9.26558Z"
+                                                fill="#2B2A35" />
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="details_list_item">
+                                <div class="col-left">
+                                    <h5>Campus</h5>
+                                </div>
+                                <div class="col-right text-right">
+                                    <p>Parramatta Campus</p>
+                                    <button mat-icon-button><svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                            xmlns="http://www.w3.org/2000/svg">
+                                            <circle cx="12" cy="12" r="12" fill="#F8F8F8" />
+                                            <path fill-rule="evenodd" clip-rule="evenodd"
+                                                d="M14.2187 7C14.546 7 14.8599 7.13071 15.0891 7.36171L16.6395 8.91216C16.8703 9.143 17 9.45608 17 9.78254C17 10.109 16.8703 10.4221 16.6395 10.6529L10.9788 16.3119C10.6295 16.7147 10.1344 16.9623 9.5673 17.0012H7V16.5012L7.00162 14.3937C7.04422 13.8664 7.28933 13.3762 7.66325 13.0467L13.3477 7.36231C13.5782 7.13041 13.8917 7 14.2187 7ZM9.53199 16.0024C9.7991 15.9835 10.0477 15.8592 10.2474 15.6308L14.0283 11.8499L12.1512 9.9726L8.34805 13.7748C8.14548 13.954 8.02015 14.2046 8 14.4339V16.0015L9.53199 16.0024ZM12.8584 9.26558L14.7355 11.1428L15.9324 9.94581C15.9757 9.90251 16 9.84378 16 9.78254C16 9.7213 15.9757 9.66257 15.9324 9.61927L14.3806 8.06743C14.3377 8.02427 14.2795 8 14.2187 8C14.1579 8 14.0996 8.02427 14.0568 8.06743L12.8584 9.26558Z"
+                                                fill="#2B2A35" />
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="details_list_item">
+                                <div class="col-left">
+                                    <h5>Course</h5>
+                                </div>
+                                <div class="col-right text-right">
+                                    <p>ACS Professional Year - PYPIT</p>
+                                    <button mat-icon-button><svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                            xmlns="http://www.w3.org/2000/svg">
+                                            <circle cx="12" cy="12" r="12" fill="#F8F8F8" />
+                                            <path fill-rule="evenodd" clip-rule="evenodd"
+                                                d="M14.2187 7C14.546 7 14.8599 7.13071 15.0891 7.36171L16.6395 8.91216C16.8703 9.143 17 9.45608 17 9.78254C17 10.109 16.8703 10.4221 16.6395 10.6529L10.9788 16.3119C10.6295 16.7147 10.1344 16.9623 9.5673 17.0012H7V16.5012L7.00162 14.3937C7.04422 13.8664 7.28933 13.3762 7.66325 13.0467L13.3477 7.36231C13.5782 7.13041 13.8917 7 14.2187 7ZM9.53199 16.0024C9.7991 15.9835 10.0477 15.8592 10.2474 15.6308L14.0283 11.8499L12.1512 9.9726L8.34805 13.7748C8.14548 13.954 8.02015 14.2046 8 14.4339V16.0015L9.53199 16.0024ZM12.8584 9.26558L14.7355 11.1428L15.9324 9.94581C15.9757 9.90251 16 9.84378 16 9.78254C16 9.7213 15.9757 9.66257 15.9324 9.61927L14.3806 8.06743C14.3377 8.02427 14.2795 8 14.2187 8C14.1579 8 14.0996 8.02427 14.0568 8.06743L12.8584 9.26558Z"
+                                                fill="#2B2A35" />
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="details_list_item">
+                                <div class="col-left">
+                                    <h5>Internship Start</h5>
+                                </div>
+                                <div class="col-right text-right">
+                                    <p>March 10th, 2024</p>
+                                    <button mat-icon-button><svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                            xmlns="http://www.w3.org/2000/svg">
+                                            <circle cx="12" cy="12" r="12" fill="#F8F8F8" />
+                                            <path fill-rule="evenodd" clip-rule="evenodd"
+                                                d="M14.2187 7C14.546 7 14.8599 7.13071 15.0891 7.36171L16.6395 8.91216C16.8703 9.143 17 9.45608 17 9.78254C17 10.109 16.8703 10.4221 16.6395 10.6529L10.9788 16.3119C10.6295 16.7147 10.1344 16.9623 9.5673 17.0012H7V16.5012L7.00162 14.3937C7.04422 13.8664 7.28933 13.3762 7.66325 13.0467L13.3477 7.36231C13.5782 7.13041 13.8917 7 14.2187 7ZM9.53199 16.0024C9.7991 15.9835 10.0477 15.8592 10.2474 15.6308L14.0283 11.8499L12.1512 9.9726L8.34805 13.7748C8.14548 13.954 8.02015 14.2046 8 14.4339V16.0015L9.53199 16.0024ZM12.8584 9.26558L14.7355 11.1428L15.9324 9.94581C15.9757 9.90251 16 9.84378 16 9.78254C16 9.7213 15.9757 9.66257 15.9324 9.61927L14.3806 8.06743C14.3377 8.02427 14.2795 8 14.2187 8C14.1579 8 14.0996 8.02427 14.0568 8.06743L12.8584 9.26558Z"
+                                                fill="#2B2A35" />
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="details_list_item">
+                                <div class="col-left">
+                                    <h5>Internship End</h5>
+                                </div>
+                                <div class="col-right text-right">
+                                    <p>June 10th, 2024</p>
+                                    <button mat-icon-button><svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                            xmlns="http://www.w3.org/2000/svg">
+                                            <circle cx="12" cy="12" r="12" fill="#F8F8F8" />
+                                            <path fill-rule="evenodd" clip-rule="evenodd"
+                                                d="M14.2187 7C14.546 7 14.8599 7.13071 15.0891 7.36171L16.6395 8.91216C16.8703 9.143 17 9.45608 17 9.78254C17 10.109 16.8703 10.4221 16.6395 10.6529L10.9788 16.3119C10.6295 16.7147 10.1344 16.9623 9.5673 17.0012H7V16.5012L7.00162 14.3937C7.04422 13.8664 7.28933 13.3762 7.66325 13.0467L13.3477 7.36231C13.5782 7.13041 13.8917 7 14.2187 7ZM9.53199 16.0024C9.7991 15.9835 10.0477 15.8592 10.2474 15.6308L14.0283 11.8499L12.1512 9.9726L8.34805 13.7748C8.14548 13.954 8.02015 14.2046 8 14.4339V16.0015L9.53199 16.0024ZM12.8584 9.26558L14.7355 11.1428L15.9324 9.94581C15.9757 9.90251 16 9.84378 16 9.78254C16 9.7213 15.9757 9.66257 15.9324 9.61927L14.3806 8.06743C14.3377 8.02427 14.2795 8 14.2187 8C14.1579 8 14.0996 8.02427 14.0568 8.06743L12.8584 9.26558Z"
+                                                fill="#2B2A35" />
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
+                        </mat-tab>
+                    
+                    </mat-tab-group>
+                </div>
+                <!-- Contact Details start -->
+
+            </div>
+            <!-- Contact Details Edit View start -->
+            <div class="details_card">
+                <div class="details_card_header">
+                    <h4>Contact Details - Edit</h4>
+                </div>
+                <div class="details_card_body">
+                    <div class="form-group">
+                        <label>Phone Number</label>
+                        <input type="text" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label>Primary Email</label>
+                        <input type="text" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label>Secondary Email (optional)</label>
+                        <input type="text" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label>Address line 01</label>
+                        <input type="text" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label>Suburb</label>
+                        <ng-select [searchable]="false" [multiple]="false" bindLabel="name" bindValue="id"
+                            [clearable]="false" placeholder="Select">
+                            <ng-option value="Melbourne">Melbourne</ng-option>
+                        </ng-select>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>State</label>
+                                <ng-select [searchable]="false" [multiple]="false" bindLabel="name" bindValue="id"
+                                    [clearable]="false" placeholder="Select">
+                                    <ng-option value="VIC">VIC</ng-option>
+
+                                </ng-select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Post Code</label>
+                                <ng-select [searchable]="false" [multiple]="false" bindLabel="name" bindValue="id"
+                                    [clearable]="false" placeholder="Select">
+                                    <ng-option value="3000">3000</ng-option>
+
+                                </ng-select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Country</label>
+                        <ng-select [searchable]="false" [multiple]="false" bindLabel="name" bindValue="id"
+                            [clearable]="false" placeholder="Select">
+                            <ng-option value="Australia">Australia</ng-option>
+
+                        </ng-select>
+                    </div>
+                    <div class="details_foot_btn">
+                        <button class="theme_btn btn_primary" mat-button>Save</button>
+                        <button class="theme_btn btn_outline_primary" mat-button>Cancel</button>
+                    </div>
+                </div>
+            </div>
+            <!-- Contact Details Edit View End -->
+            <!-- Contact details Misce -->
+            <div class="details_card licenses_edit">
+                <div class="details_card_header">
+                    <div>
+                        <h4>Details</h4>
+                        <p>Changing these properties will also be reflected in the company table & analytics</p>
+                    </div>
+                    
+                </div>
+                <div class="details_card_body">
+                    <div class="details_list_item">
+                        <!-- <div class="col-left">
+                            <h5>Monthly Cohort</h5>
+                        </div> -->
+                        <div class="col-right text-right">
+                            <div class="form-group custom_datepicker mb-0">
+                                <div class="custom_datepicker_container">
+                                    <input placeholder="Select Date" class="form-control"
+                                        [matDatepicker]="monthlyPicker">
+                                    <mat-datepicker-toggle matSuffix [for]="monthlyPicker">
+
+                                        <svg matDatepickerToggleIcon width="18" height="18" viewBox="0 0 18 18"
+                                            fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path
+                                                d="M14.25 3H3.75C2.92157 3 2.25 3.67157 2.25 4.5V15C2.25 15.8284 2.92157 16.5 3.75 16.5H14.25C15.0784 16.5 15.75 15.8284 15.75 15V4.5C15.75 3.67157 15.0784 3 14.25 3Z"
+                                                stroke="#2B2A35" stroke-width="1.5" stroke-linecap="round"
+                                                stroke-linejoin="round" />
+                                            <path d="M12 1.5V4.5" stroke="#2B2A35" stroke-width="1.5"
+                                                stroke-linecap="round" stroke-linejoin="round" />
+                                            <path d="M6 1.5V4.5" stroke="#2B2A35" stroke-width="1.5"
+                                                stroke-linecap="round" stroke-linejoin="round" />
+                                            <path d="M2.25 7.5H15.75" stroke="#2B2A35" stroke-width="1.5"
+                                                stroke-linecap="round" stroke-linejoin="round" />
+                                        </svg>
+                                    </mat-datepicker-toggle>
+                                    <mat-datepicker #monthlyPicker></mat-datepicker>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="details_list_item">
+                        <div class="col-left">
+                            <h5>Campus</h5>
+                        </div>
+                        <div class="col-right text-right">
+                            <div class="form-group mb-0">
+                                <ng-select [searchable]="false" [multiple]="false" bindLabel="name" bindValue="id"
+                                    [clearable]="false" placeholder="Select">
+                                    <ng-option value="Parramata Campus">Parramata Campus</ng-option>
+                                    <ng-option value="Melbourne Campus">Melbourne Campus</ng-option>
+                                    <ng-option value="Sydney Campus">Sydney Campus</ng-option>
+
+                                </ng-select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="details_list_item">
+                        <div class="col-left">
+                            <h5>Course</h5>
+                        </div>
+                        <div class="col-right text-right">
+                            <div class="form-group mb-0">
+                                <ng-select [searchable]="false" [multiple]="false" bindLabel="name" bindValue="id"
+                                    [clearable]="false" placeholder="Select">
+                                    <ng-option value="ACS Professional Year - PYPIT">ACS Professional Year -
+                                        PYPIT</ng-option>
+                                    <ng-option value="ACS Professional Year - PYPIT">ACS Professional Year -
+                                        PYPIT</ng-option>
+                                    <ng-option value="ACS Professional Year - PYPIT">ACS Professional Year -
+                                        PYPIT</ng-option>
+                                </ng-select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="details_list_item">
+                        <div class="col-left">
+                            <h5>Internship Start</h5>
+                        </div>
+                        <div class="col-right text-right">
+                            <div class="form-group custom_datepicker mb-0">
+                                <div class="custom_datepicker_container">
+                                    <input placeholder="Select Date" class="form-control"
+                                        [matDatepicker]="internshipStart">
+                                    <mat-datepicker-toggle matSuffix [for]="internshipStart">
+
+                                        <svg matDatepickerToggleIcon width="18" height="18" viewBox="0 0 18 18"
+                                            fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path
+                                                d="M14.25 3H3.75C2.92157 3 2.25 3.67157 2.25 4.5V15C2.25 15.8284 2.92157 16.5 3.75 16.5H14.25C15.0784 16.5 15.75 15.8284 15.75 15V4.5C15.75 3.67157 15.0784 3 14.25 3Z"
+                                                stroke="#2B2A35" stroke-width="1.5" stroke-linecap="round"
+                                                stroke-linejoin="round" />
+                                            <path d="M12 1.5V4.5" stroke="#2B2A35" stroke-width="1.5"
+                                                stroke-linecap="round" stroke-linejoin="round" />
+                                            <path d="M6 1.5V4.5" stroke="#2B2A35" stroke-width="1.5"
+                                                stroke-linecap="round" stroke-linejoin="round" />
+                                            <path d="M2.25 7.5H15.75" stroke="#2B2A35" stroke-width="1.5"
+                                                stroke-linecap="round" stroke-linejoin="round" />
+                                        </svg>
+                                    </mat-datepicker-toggle>
+                                    <mat-datepicker #internshipStart></mat-datepicker>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="details_list_item">
+                        <div class="col-left">
+                            <h5>Internship End</h5>
+                        </div>
+                        <div class="col-right text-right">
+                            <div class="form-group custom_datepicker mb-0">
+                                <div class="custom_datepicker_container">
+                                    <input placeholder="Select Date" class="form-control"
+                                        [matDatepicker]="internshipEnd">
+                                    <mat-datepicker-toggle matSuffix [for]="internshipEnd">
+
+                                        <svg matDatepickerToggleIcon width="18" height="18" viewBox="0 0 18 18"
+                                            fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path
+                                                d="M14.25 3H3.75C2.92157 3 2.25 3.67157 2.25 4.5V15C2.25 15.8284 2.92157 16.5 3.75 16.5H14.25C15.0784 16.5 15.75 15.8284 15.75 15V4.5C15.75 3.67157 15.0784 3 14.25 3Z"
+                                                stroke="#2B2A35" stroke-width="1.5" stroke-linecap="round"
+                                                stroke-linejoin="round" />
+                                            <path d="M12 1.5V4.5" stroke="#2B2A35" stroke-width="1.5"
+                                                stroke-linecap="round" stroke-linejoin="round" />
+                                            <path d="M6 1.5V4.5" stroke="#2B2A35" stroke-width="1.5"
+                                                stroke-linecap="round" stroke-linejoin="round" />
+                                            <path d="M2.25 7.5H15.75" stroke="#2B2A35" stroke-width="1.5"
+                                                stroke-linecap="round" stroke-linejoin="round" />
+                                        </svg>
+                                    </mat-datepicker-toggle>
+                                    <mat-datepicker #internshipEnd></mat-datepicker>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- End -->
+            <!-- Resume Start -->
+            <div class="details_card licenses_edit">
+                <div class="details_card_header">
+                    <h4>Resume</h4>
+                    <p>Resume Level:  {{studentProfile?.resume_level}}</p>
+                </div>
+                <div class="details_card_body">
+                    <ul class="files_list">
+                        <li>
+                            <div class="file_card">
+                                <div class="content">
+                                    <svg width="25" height="32" viewBox="0 0 25 32" fill="none"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <path
+                                            d="M21.1761 5.17688C20.8764 4.88148 20.5691 4.58109 20.2671 4.27585C19.9625 3.97307 19.663 3.66538 19.3682 3.36506C17.2671 1.21606 16.0158 0 14.7104 0H4.94144C2.2349 0 0.0293812 2.20931 0.0293812 4.92326V24.6657C0.0293812 25.3182 0.55831 25.8471 1.21078 25.8471C1.86324 25.8471 2.39217 25.3182 2.39217 24.6657V4.90854C2.39217 3.54972 3.49247 2.44691 4.8482 2.44691L13.8446 2.44195C14.7191 2.44195 14.7191 3.75896 14.7191 4.85069V8.60098C14.7104 9.84532 14.7104 9.8318 15.9471 9.8318H19.6312C20.8555 9.8318 22.0872 9.83795 22.0872 11.0626V27.0767C22.0872 28.4356 20.9869 29.5384 19.6312 29.5384H4.8482C3.49247 29.5384 2.39217 28.4356 2.39217 27.0767V24.3343C2.39217 23.6737 1.85667 23.1382 1.19609 23.1382C0.535506 23.1382 0 23.6737 0 24.3343V27.0767C0 29.7907 2.20429 32 4.91206 32H19.6213C22.329 32 24.5333 29.7907 24.5333 27.0767V9.84532C24.5333 8.5382 23.3202 7.2828 21.1761 5.17688Z"
+                                            fill="#9A9A9A" />
+                                    </svg>
+                                    <p>Michelle_Documentation.pdf</p>
+                                </div>
+                                <div class="btn_group">
+                                    <button mat-icon-button>
+                                        <svg width="35" height="35" viewBox="0 0 35 35" fill="none"
+                                            xmlns="http://www.w3.org/2000/svg">
+                                            <circle cx="17.5" cy="17.5" r="17.5" fill="#F8F8F8" />
+                                            <path
+                                                d="M9.29565 17.7632C9.1361 17.5601 9.00404 17.3822 8.90095 17.2387C8.99761 17.0973 9.1211 16.923 9.27053 16.7246C9.69179 16.1651 10.3145 15.4194 11.1183 14.6754C12.7353 13.1787 15.0165 11.75 17.8214 11.75C20.6263 11.75 22.9076 13.1787 24.5246 14.6754C25.3283 15.4194 25.9511 16.1651 26.3723 16.7246C26.5218 16.923 26.6452 17.0973 26.7419 17.2387C26.6388 17.3822 26.5068 17.5601 26.3472 17.7632C25.9058 18.325 25.2587 19.0735 24.4375 19.82C22.7807 21.3262 20.4992 22.75 17.8214 22.75C15.1437 22.75 12.8621 21.3262 11.2054 19.82C10.3842 19.0735 9.73706 18.325 9.29565 17.7632Z"
+                                                stroke="#2B2A35" stroke-width="1.5" />
+                                            <circle cx="17.8214" cy="17.2511" r="2.82143" stroke="#2B2A35"
+                                                stroke-width="1.5" />
+                                        </svg>
+                                    </button>
+                                    <button mat-icon-button>
+                                        <svg width="35" height="35" viewBox="0 0 35 35" fill="none"
+                                            xmlns="http://www.w3.org/2000/svg">
+                                            <circle cx="17.5" cy="17.5" r="17.5" fill="#F8F8F8" />
+                                            <path fill-rule="evenodd" clip-rule="evenodd"
+                                                d="M24.7923 20.4141V23.3307C24.7923 24.1361 24.1394 24.7891 23.334 24.7891H11.6673C10.8619 24.7891 10.209 24.1361 10.209 23.3307V20.4141H11.6673V23.3307H23.334V20.4141H24.7923Z"
+                                                fill="#2B2A35" />
+                                            <path fill-rule="evenodd" clip-rule="evenodd"
+                                                d="M18.2295 17.9258L20.6305 15.5248L21.6617 16.556L17.5003 20.7174L13.3389 16.556L14.3701 15.5248L16.7711 17.9258V10.207H18.2295V17.9258Z"
+                                                fill="#2B2A35" />
+                                        </svg>
+
+
+                                    </button>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <!-- Resume End -->
+
+            <!-- <div class="details_card licenses_edit" *ngIf="interviewList.length>0">
+                <div class="details_card_header">
+                    <h4>Video Interview</h4>
+                </div>
+                <div class="details_card_body">
+                        <mat-tab-group animationDuration="0ms" class="my-custom-tab">
+                        <mat-tab *ngFor="let video of interviewList; let i = index;" class="p-0">
+                            <ng-template mat-tab-label>Submission {{i + 1}}</ng-template>
+                            <div class="d-flex align-items-center video p-0 pt-3 overflow-hidden">
+                                <iframe width="440" height="265" [src]="getVideoUrl({video_url:video.video_url})" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" style="border-radius: 25px;" allowfullscreen></iframe>
+                                <p class="border-name">{{video.video_url}}</p>
+
+                                <button mat-button type="button" class="theme_btn btn_primary" (click)="updateRecords(video)">View Rating</button>
+                            </div>
+                        </mat-tab>
+                    </mat-tab-group>
+                </div>
+            </div> -->
+
+            <!-- Submission Start -->
+            <div class="details_card" *ngIf="!preference">
+                <div class="details_card_header">
+                    <h4>Submission</h4>
+                </div>
+                <div class="details_card_body p-0">
+                    <mat-tab-group animationDuration="0ms" class="mat_tab_bordred">
+                        <mat-tab>
+                            <ng-template mat-tab-label>Documents</ng-template>
+                            <ul class="files_list">
+                                <li>
+                                    <div class="file_card">
+                                        <div class="content">
+                                            <svg width="25" height="32" viewBox="0 0 25 32" fill="none"
+                                                xmlns="http://www.w3.org/2000/svg">
+                                                <path
+                                                    d="M21.1761 5.17688C20.8764 4.88148 20.5691 4.58109 20.2671 4.27585C19.9625 3.97307 19.663 3.66538 19.3682 3.36506C17.2671 1.21606 16.0158 0 14.7104 0H4.94144C2.2349 0 0.0293812 2.20931 0.0293812 4.92326V24.6657C0.0293812 25.3182 0.55831 25.8471 1.21078 25.8471C1.86324 25.8471 2.39217 25.3182 2.39217 24.6657V4.90854C2.39217 3.54972 3.49247 2.44691 4.8482 2.44691L13.8446 2.44195C14.7191 2.44195 14.7191 3.75896 14.7191 4.85069V8.60098C14.7104 9.84532 14.7104 9.8318 15.9471 9.8318H19.6312C20.8555 9.8318 22.0872 9.83795 22.0872 11.0626V27.0767C22.0872 28.4356 20.9869 29.5384 19.6312 29.5384H4.8482C3.49247 29.5384 2.39217 28.4356 2.39217 27.0767V24.3343C2.39217 23.6737 1.85667 23.1382 1.19609 23.1382C0.535506 23.1382 0 23.6737 0 24.3343V27.0767C0 29.7907 2.20429 32 4.91206 32H19.6213C22.329 32 24.5333 29.7907 24.5333 27.0767V9.84532C24.5333 8.5382 23.3202 7.2828 21.1761 5.17688Z"
+                                                    fill="#9A9A9A" />
+                                            </svg>
+                                            <p>Michelle_Documentation.pdf</p>
+                                        </div>
+                                        <div class="btn_group">
+                                            <button mat-icon-button>
+                                                <svg width="35" height="35" viewBox="0 0 35 35" fill="none"
+                                                    xmlns="http://www.w3.org/2000/svg">
+                                                    <circle cx="17.5" cy="17.5" r="17.5" fill="#F8F8F8" />
+                                                    <path
+                                                        d="M9.29565 17.7632C9.1361 17.5601 9.00404 17.3822 8.90095 17.2387C8.99761 17.0973 9.1211 16.923 9.27053 16.7246C9.69179 16.1651 10.3145 15.4194 11.1183 14.6754C12.7353 13.1787 15.0165 11.75 17.8214 11.75C20.6263 11.75 22.9076 13.1787 24.5246 14.6754C25.3283 15.4194 25.9511 16.1651 26.3723 16.7246C26.5218 16.923 26.6452 17.0973 26.7419 17.2387C26.6388 17.3822 26.5068 17.5601 26.3472 17.7632C25.9058 18.325 25.2587 19.0735 24.4375 19.82C22.7807 21.3262 20.4992 22.75 17.8214 22.75C15.1437 22.75 12.8621 21.3262 11.2054 19.82C10.3842 19.0735 9.73706 18.325 9.29565 17.7632Z"
+                                                        stroke="#2B2A35" stroke-width="1.5" />
+                                                    <circle cx="17.8214" cy="17.2511" r="2.82143" stroke="#2B2A35"
+                                                        stroke-width="1.5" />
+                                                </svg>
+                                            </button>
+                                            <button mat-icon-button>
+                                                <svg width="35" height="35" viewBox="0 0 35 35" fill="none"
+                                                    xmlns="http://www.w3.org/2000/svg">
+                                                    <circle cx="17.5" cy="17.5" r="17.5" fill="#F8F8F8" />
+                                                    <path fill-rule="evenodd" clip-rule="evenodd"
+                                                        d="M24.7923 20.4141V23.3307C24.7923 24.1361 24.1394 24.7891 23.334 24.7891H11.6673C10.8619 24.7891 10.209 24.1361 10.209 23.3307V20.4141H11.6673V23.3307H23.334V20.4141H24.7923Z"
+                                                        fill="#2B2A35" />
+                                                    <path fill-rule="evenodd" clip-rule="evenodd"
+                                                        d="M18.2295 17.9258L20.6305 15.5248L21.6617 16.556L17.5003 20.7174L13.3389 16.556L14.3701 15.5248L16.7711 17.9258V10.207H18.2295V17.9258Z"
+                                                        fill="#2B2A35" />
+                                                </svg>
+
+
+                                            </button>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="file_card">
+                                        <div class="content">
+                                            <svg width="25" height="32" viewBox="0 0 25 32" fill="none"
+                                                xmlns="http://www.w3.org/2000/svg">
+                                                <path
+                                                    d="M21.1761 5.17688C20.8764 4.88148 20.5691 4.58109 20.2671 4.27585C19.9625 3.97307 19.663 3.66538 19.3682 3.36506C17.2671 1.21606 16.0158 0 14.7104 0H4.94144C2.2349 0 0.0293812 2.20931 0.0293812 4.92326V24.6657C0.0293812 25.3182 0.55831 25.8471 1.21078 25.8471C1.86324 25.8471 2.39217 25.3182 2.39217 24.6657V4.90854C2.39217 3.54972 3.49247 2.44691 4.8482 2.44691L13.8446 2.44195C14.7191 2.44195 14.7191 3.75896 14.7191 4.85069V8.60098C14.7104 9.84532 14.7104 9.8318 15.9471 9.8318H19.6312C20.8555 9.8318 22.0872 9.83795 22.0872 11.0626V27.0767C22.0872 28.4356 20.9869 29.5384 19.6312 29.5384H4.8482C3.49247 29.5384 2.39217 28.4356 2.39217 27.0767V24.3343C2.39217 23.6737 1.85667 23.1382 1.19609 23.1382C0.535506 23.1382 0 23.6737 0 24.3343V27.0767C0 29.7907 2.20429 32 4.91206 32H19.6213C22.329 32 24.5333 29.7907 24.5333 27.0767V9.84532C24.5333 8.5382 23.3202 7.2828 21.1761 5.17688Z"
+                                                    fill="#9A9A9A" />
+                                            </svg>
+                                            <p>Michelle_Documentation.pdf</p>
+                                        </div>
+                                        <div class="btn_group">
+                                            <button mat-icon-button>
+                                                <svg width="35" height="35" viewBox="0 0 35 35" fill="none"
+                                                    xmlns="http://www.w3.org/2000/svg">
+                                                    <circle cx="17.5" cy="17.5" r="17.5" fill="#F8F8F8" />
+                                                    <path
+                                                        d="M9.29565 17.7632C9.1361 17.5601 9.00404 17.3822 8.90095 17.2387C8.99761 17.0973 9.1211 16.923 9.27053 16.7246C9.69179 16.1651 10.3145 15.4194 11.1183 14.6754C12.7353 13.1787 15.0165 11.75 17.8214 11.75C20.6263 11.75 22.9076 13.1787 24.5246 14.6754C25.3283 15.4194 25.9511 16.1651 26.3723 16.7246C26.5218 16.923 26.6452 17.0973 26.7419 17.2387C26.6388 17.3822 26.5068 17.5601 26.3472 17.7632C25.9058 18.325 25.2587 19.0735 24.4375 19.82C22.7807 21.3262 20.4992 22.75 17.8214 22.75C15.1437 22.75 12.8621 21.3262 11.2054 19.82C10.3842 19.0735 9.73706 18.325 9.29565 17.7632Z"
+                                                        stroke="#2B2A35" stroke-width="1.5" />
+                                                    <circle cx="17.8214" cy="17.2511" r="2.82143" stroke="#2B2A35"
+                                                        stroke-width="1.5" />
+                                                </svg>
+                                            </button>
+                                            <button mat-icon-button>
+                                                <svg width="35" height="35" viewBox="0 0 35 35" fill="none"
+                                                    xmlns="http://www.w3.org/2000/svg">
+                                                    <circle cx="17.5" cy="17.5" r="17.5" fill="#F8F8F8" />
+                                                    <path fill-rule="evenodd" clip-rule="evenodd"
+                                                        d="M24.7923 20.4141V23.3307C24.7923 24.1361 24.1394 24.7891 23.334 24.7891H11.6673C10.8619 24.7891 10.209 24.1361 10.209 23.3307V20.4141H11.6673V23.3307H23.334V20.4141H24.7923Z"
+                                                        fill="#2B2A35" />
+                                                    <path fill-rule="evenodd" clip-rule="evenodd"
+                                                        d="M18.2295 17.9258L20.6305 15.5248L21.6617 16.556L17.5003 20.7174L13.3389 16.556L14.3701 15.5248L16.7711 17.9258V10.207H18.2295V17.9258Z"
+                                                        fill="#2B2A35" />
+                                                </svg>
+
+
+                                            </button>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="file_card">
+                                        <div class="content">
+                                            <svg width="25" height="32" viewBox="0 0 25 32" fill="none"
+                                                xmlns="http://www.w3.org/2000/svg">
+                                                <path
+                                                    d="M21.1761 5.17688C20.8764 4.88148 20.5691 4.58109 20.2671 4.27585C19.9625 3.97307 19.663 3.66538 19.3682 3.36506C17.2671 1.21606 16.0158 0 14.7104 0H4.94144C2.2349 0 0.0293812 2.20931 0.0293812 4.92326V24.6657C0.0293812 25.3182 0.55831 25.8471 1.21078 25.8471C1.86324 25.8471 2.39217 25.3182 2.39217 24.6657V4.90854C2.39217 3.54972 3.49247 2.44691 4.8482 2.44691L13.8446 2.44195C14.7191 2.44195 14.7191 3.75896 14.7191 4.85069V8.60098C14.7104 9.84532 14.7104 9.8318 15.9471 9.8318H19.6312C20.8555 9.8318 22.0872 9.83795 22.0872 11.0626V27.0767C22.0872 28.4356 20.9869 29.5384 19.6312 29.5384H4.8482C3.49247 29.5384 2.39217 28.4356 2.39217 27.0767V24.3343C2.39217 23.6737 1.85667 23.1382 1.19609 23.1382C0.535506 23.1382 0 23.6737 0 24.3343V27.0767C0 29.7907 2.20429 32 4.91206 32H19.6213C22.329 32 24.5333 29.7907 24.5333 27.0767V9.84532C24.5333 8.5382 23.3202 7.2828 21.1761 5.17688Z"
+                                                    fill="#9A9A9A" />
+                                            </svg>
+                                            <p>Michelle_Documentation.pdf</p>
+                                        </div>
+                                        <div class="btn_group">
+                                            <button mat-icon-button>
+                                                <svg width="35" height="35" viewBox="0 0 35 35" fill="none"
+                                                    xmlns="http://www.w3.org/2000/svg">
+                                                    <circle cx="17.5" cy="17.5" r="17.5" fill="#F8F8F8" />
+                                                    <path
+                                                        d="M9.29565 17.7632C9.1361 17.5601 9.00404 17.3822 8.90095 17.2387C8.99761 17.0973 9.1211 16.923 9.27053 16.7246C9.69179 16.1651 10.3145 15.4194 11.1183 14.6754C12.7353 13.1787 15.0165 11.75 17.8214 11.75C20.6263 11.75 22.9076 13.1787 24.5246 14.6754C25.3283 15.4194 25.9511 16.1651 26.3723 16.7246C26.5218 16.923 26.6452 17.0973 26.7419 17.2387C26.6388 17.3822 26.5068 17.5601 26.3472 17.7632C25.9058 18.325 25.2587 19.0735 24.4375 19.82C22.7807 21.3262 20.4992 22.75 17.8214 22.75C15.1437 22.75 12.8621 21.3262 11.2054 19.82C10.3842 19.0735 9.73706 18.325 9.29565 17.7632Z"
+                                                        stroke="#2B2A35" stroke-width="1.5" />
+                                                    <circle cx="17.8214" cy="17.2511" r="2.82143" stroke="#2B2A35"
+                                                        stroke-width="1.5" />
+                                                </svg>
+                                            </button>
+                                            <button mat-icon-button>
+                                                <svg width="35" height="35" viewBox="0 0 35 35" fill="none"
+                                                    xmlns="http://www.w3.org/2000/svg">
+                                                    <circle cx="17.5" cy="17.5" r="17.5" fill="#F8F8F8" />
+                                                    <path fill-rule="evenodd" clip-rule="evenodd"
+                                                        d="M24.7923 20.4141V23.3307C24.7923 24.1361 24.1394 24.7891 23.334 24.7891H11.6673C10.8619 24.7891 10.209 24.1361 10.209 23.3307V20.4141H11.6673V23.3307H23.334V20.4141H24.7923Z"
+                                                        fill="#2B2A35" />
+                                                    <path fill-rule="evenodd" clip-rule="evenodd"
+                                                        d="M18.2295 17.9258L20.6305 15.5248L21.6617 16.556L17.5003 20.7174L13.3389 16.556L14.3701 15.5248L16.7711 17.9258V10.207H18.2295V17.9258Z"
+                                                        fill="#2B2A35" />
+                                                </svg>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                            <div class="show_more_links">
+                                <a><svg width="13" height="7" viewBox="0 0 13 7" fill="none"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M12 6L6.5 1L1 6" stroke="#9A9A9A" stroke-width="1.5"
+                                            stroke-linecap="round" stroke-linejoin="round" />
+                                    </svg>
+                                    <span>Hide</span></a>
+                                <a><svg width="13" height="7" viewBox="0 0 13 7" fill="none"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M1 1L6.5 6L12 1" stroke="#9A9A9A" stroke-width="1.5"
+                                            stroke-linecap="round" stroke-linejoin="round" />
+                                    </svg>
+                                    <span>Show more (3 of 55)</span></a>
+                            </div>
+                        </mat-tab>
+                        <mat-tab>
+                            <ng-template mat-tab-label>Forms</ng-template>
+                            <ul class="files_list">
+                                <li>
+                                    <div class="file_card">
+                                        <div class="content">
+                                            <div class="svg-width d-flex justify-content-center align-items-center" style="width: 48px;height:48px; padding-right: 8px;" [innerHTML]="getSafeSvg('form')"></div>
+                                            <p>Michelle_Documentation.pdf</p>
+                                        </div>
+                                        <div class="btn_group">
+                                            <button mat-icon-button>
+                                                <svg width="35" height="35" viewBox="0 0 35 35" fill="none"
+                                                    xmlns="http://www.w3.org/2000/svg">
+                                                    <circle cx="17.5" cy="17.5" r="17.5" fill="#F8F8F8" />
+                                                    <path
+                                                        d="M9.29565 17.7632C9.1361 17.5601 9.00404 17.3822 8.90095 17.2387C8.99761 17.0973 9.1211 16.923 9.27053 16.7246C9.69179 16.1651 10.3145 15.4194 11.1183 14.6754C12.7353 13.1787 15.0165 11.75 17.8214 11.75C20.6263 11.75 22.9076 13.1787 24.5246 14.6754C25.3283 15.4194 25.9511 16.1651 26.3723 16.7246C26.5218 16.923 26.6452 17.0973 26.7419 17.2387C26.6388 17.3822 26.5068 17.5601 26.3472 17.7632C25.9058 18.325 25.2587 19.0735 24.4375 19.82C22.7807 21.3262 20.4992 22.75 17.8214 22.75C15.1437 22.75 12.8621 21.3262 11.2054 19.82C10.3842 19.0735 9.73706 18.325 9.29565 17.7632Z"
+                                                        stroke="#2B2A35" stroke-width="1.5" />
+                                                    <circle cx="17.8214" cy="17.2511" r="2.82143" stroke="#2B2A35"
+                                                        stroke-width="1.5" />
+                                                </svg>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="file_card">
+                                        <div class="content">
+                                            <svg width="25" height="32" viewBox="0 0 25 32" fill="none"
+                                                xmlns="http://www.w3.org/2000/svg">
+                                                <path
+                                                    d="M21.1761 5.17688C20.8764 4.88148 20.5691 4.58109 20.2671 4.27585C19.9625 3.97307 19.663 3.66538 19.3682 3.36506C17.2671 1.21606 16.0158 0 14.7104 0H4.94144C2.2349 0 0.0293812 2.20931 0.0293812 4.92326V24.6657C0.0293812 25.3182 0.55831 25.8471 1.21078 25.8471C1.86324 25.8471 2.39217 25.3182 2.39217 24.6657V4.90854C2.39217 3.54972 3.49247 2.44691 4.8482 2.44691L13.8446 2.44195C14.7191 2.44195 14.7191 3.75896 14.7191 4.85069V8.60098C14.7104 9.84532 14.7104 9.8318 15.9471 9.8318H19.6312C20.8555 9.8318 22.0872 9.83795 22.0872 11.0626V27.0767C22.0872 28.4356 20.9869 29.5384 19.6312 29.5384H4.8482C3.49247 29.5384 2.39217 28.4356 2.39217 27.0767V24.3343C2.39217 23.6737 1.85667 23.1382 1.19609 23.1382C0.535506 23.1382 0 23.6737 0 24.3343V27.0767C0 29.7907 2.20429 32 4.91206 32H19.6213C22.329 32 24.5333 29.7907 24.5333 27.0767V9.84532C24.5333 8.5382 23.3202 7.2828 21.1761 5.17688Z"
+                                                    fill="#9A9A9A" />
+                                            </svg>
+                                            <p>Michelle_Documentation.pdf</p>
+                                        </div>
+                                        <div class="btn_group">
+                                            <button mat-icon-button>
+                                                <svg width="35" height="35" viewBox="0 0 35 35" fill="none"
+                                                    xmlns="http://www.w3.org/2000/svg">
+                                                    <circle cx="17.5" cy="17.5" r="17.5" fill="#F8F8F8" />
+                                                    <path
+                                                        d="M9.29565 17.7632C9.1361 17.5601 9.00404 17.3822 8.90095 17.2387C8.99761 17.0973 9.1211 16.923 9.27053 16.7246C9.69179 16.1651 10.3145 15.4194 11.1183 14.6754C12.7353 13.1787 15.0165 11.75 17.8214 11.75C20.6263 11.75 22.9076 13.1787 24.5246 14.6754C25.3283 15.4194 25.9511 16.1651 26.3723 16.7246C26.5218 16.923 26.6452 17.0973 26.7419 17.2387C26.6388 17.3822 26.5068 17.5601 26.3472 17.7632C25.9058 18.325 25.2587 19.0735 24.4375 19.82C22.7807 21.3262 20.4992 22.75 17.8214 22.75C15.1437 22.75 12.8621 21.3262 11.2054 19.82C10.3842 19.0735 9.73706 18.325 9.29565 17.7632Z"
+                                                        stroke="#2B2A35" stroke-width="1.5" />
+                                                    <circle cx="17.8214" cy="17.2511" r="2.82143" stroke="#2B2A35"
+                                                        stroke-width="1.5" />
+                                                </svg>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="file_card">
+                                        <div class="content">
+                                            <svg width="25" height="32" viewBox="0 0 25 32" fill="none"
+                                                xmlns="http://www.w3.org/2000/svg">
+                                                <path
+                                                    d="M21.1761 5.17688C20.8764 4.88148 20.5691 4.58109 20.2671 4.27585C19.9625 3.97307 19.663 3.66538 19.3682 3.36506C17.2671 1.21606 16.0158 0 14.7104 0H4.94144C2.2349 0 0.0293812 2.20931 0.0293812 4.92326V24.6657C0.0293812 25.3182 0.55831 25.8471 1.21078 25.8471C1.86324 25.8471 2.39217 25.3182 2.39217 24.6657V4.90854C2.39217 3.54972 3.49247 2.44691 4.8482 2.44691L13.8446 2.44195C14.7191 2.44195 14.7191 3.75896 14.7191 4.85069V8.60098C14.7104 9.84532 14.7104 9.8318 15.9471 9.8318H19.6312C20.8555 9.8318 22.0872 9.83795 22.0872 11.0626V27.0767C22.0872 28.4356 20.9869 29.5384 19.6312 29.5384H4.8482C3.49247 29.5384 2.39217 28.4356 2.39217 27.0767V24.3343C2.39217 23.6737 1.85667 23.1382 1.19609 23.1382C0.535506 23.1382 0 23.6737 0 24.3343V27.0767C0 29.7907 2.20429 32 4.91206 32H19.6213C22.329 32 24.5333 29.7907 24.5333 27.0767V9.84532C24.5333 8.5382 23.3202 7.2828 21.1761 5.17688Z"
+                                                    fill="#9A9A9A" />
+                                            </svg>
+                                            <p>Michelle_Documentation.pdf</p>
+                                        </div>
+                                        <div class="btn_group">
+                                            <button mat-icon-button>
+                                                <svg width="35" height="35" viewBox="0 0 35 35" fill="none"
+                                                    xmlns="http://www.w3.org/2000/svg">
+                                                    <circle cx="17.5" cy="17.5" r="17.5" fill="#F8F8F8" />
+                                                    <path
+                                                        d="M9.29565 17.7632C9.1361 17.5601 9.00404 17.3822 8.90095 17.2387C8.99761 17.0973 9.1211 16.923 9.27053 16.7246C9.69179 16.1651 10.3145 15.4194 11.1183 14.6754C12.7353 13.1787 15.0165 11.75 17.8214 11.75C20.6263 11.75 22.9076 13.1787 24.5246 14.6754C25.3283 15.4194 25.9511 16.1651 26.3723 16.7246C26.5218 16.923 26.6452 17.0973 26.7419 17.2387C26.6388 17.3822 26.5068 17.5601 26.3472 17.7632C25.9058 18.325 25.2587 19.0735 24.4375 19.82C22.7807 21.3262 20.4992 22.75 17.8214 22.75C15.1437 22.75 12.8621 21.3262 11.2054 19.82C10.3842 19.0735 9.73706 18.325 9.29565 17.7632Z"
+                                                        stroke="#2B2A35" stroke-width="1.5" />
+                                                    <circle cx="17.8214" cy="17.2511" r="2.82143" stroke="#2B2A35"
+                                                        stroke-width="1.5" />
+                                                </svg>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                            <div class="show_more_links">
+                                <a><svg width="13" height="7" viewBox="0 0 13 7" fill="none"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M12 6L6.5 1L1 6" stroke="#9A9A9A" stroke-width="1.5"
+                                            stroke-linecap="round" stroke-linejoin="round" />
+                                    </svg>
+                                    <span>Hide</span></a>
+                                <a><svg width="13" height="7" viewBox="0 0 13 7" fill="none"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M1 1L6.5 6L12 1" stroke="#9A9A9A" stroke-width="1.5"
+                                            stroke-linecap="round" stroke-linejoin="round" />
+                                    </svg>
+                                    <span>Show more (3 of 55)</span></a>
+                            </div>
+                        </mat-tab>
+                    </mat-tab-group>
+                </div>
+            </div>
+            <!-- Submission End -->
+            <!-- Visa Start -->
+            <!-- <div class="details_card licenses_edit">
+                <div class="details_card_header">
+                    <div>
+                        <h4>Visa</h4>
+                        <p>Please upload your valid visa to help confirm your working rights.</p>
+                    </div>
+                </div>
+                <div class="details_card_body">
+                    <div class="icon_btn_container_main">
+                        <div class="icon_btn_container">
+                            <button mat-icon-button>
+                                <svg width="70" height="70" viewBox="0 0 70 70" fill="none"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <circle cx="35" cy="35" r="35" fill="#F8F8F8" />
+                                    <path fill-rule="evenodd" clip-rule="evenodd"
+                                        d="M46.6667 39.3999V43.7999C46.6667 45.0149 45.6519 45.9999 44.4 45.9999H26.2667C25.0148 45.9999 24 45.0149 24 43.7999V39.3999H26.2667V43.7999H44.4V39.3999H46.6667Z"
+                                        fill="#545465" />
+                                    <path fill-rule="evenodd" clip-rule="evenodd"
+                                        d="M34.2033 28.2111L30.4713 31.8333L28.8686 30.2776L35.3366 23.9998L41.8047 30.2776L40.2019 31.8333L36.47 28.2111L36.47 39.8555L34.2033 39.8555L34.2033 28.2111Z"
+                                        fill="#545465" />
+                                </svg>
+
+                            </button>
+                            <p>Upload visa</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="details_card licenses_edit">
+                <div class="details_card_header">
+                    <h4>Upload Visa</h4>
+                </div>
+                <div class="details_card_body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label>Visa Grant Number</label>
+                                <input type="text" class="form-control" placeholder="Visa Number">
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group custom_datepicker">
+                                <label>Start Date</label>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="custom_datepicker_container">
+                                            <input placeholder="Month" class="form-control"
+                                                [matDatepicker]="visaMonthStart" >
+                                            <mat-datepicker-toggle matSuffix [for]="visaMonthStart">
+                                                <svg matDatepickerToggleIcon width="20" height="11" viewBox="0 0 20 11"
+                                                    fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <path fill-rule="evenodd" clip-rule="evenodd"
+                                                        d="M8.90972 10.6023C9.46297 11.1326 10.36 11.1326 10.9132 10.6023L19.4132 2.45562C19.9664 1.92537 19.9664 1.06567 19.4132 0.535421C18.86 0.0051736 17.963 0.00517352 17.4097 0.535421L9.91146 7.72202L2.41319 0.535421C1.85995 0.00517307 0.962966 0.00517299 0.409722 0.535421C-0.143519 1.06567 -0.143518 1.92537 0.409724 2.45562L8.90972 10.6023Z"
+                                                        fill="#9A9A9A" />
+                                                </svg>
+                                            </mat-datepicker-toggle>
+                                            <mat-datepicker #visaMonthStart></mat-datepicker>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="custom_datepicker_container">
+                                            <input placeholder="Year" class="form-control"
+                                                [matDatepicker]="visaYearStart" >
+                                            <mat-datepicker-toggle matSuffix [for]="visaYearStart">
+                                                <svg matDatepickerToggleIcon width="20" height="11" viewBox="0 0 20 11"
+                                                    fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <path fill-rule="evenodd" clip-rule="evenodd"
+                                                        d="M8.90972 10.6023C9.46297 11.1326 10.36 11.1326 10.9132 10.6023L19.4132 2.45562C19.9664 1.92537 19.9664 1.06567 19.4132 0.535421C18.86 0.0051736 17.963 0.00517352 17.4097 0.535421L9.91146 7.72202L2.41319 0.535421C1.85995 0.00517307 0.962966 0.00517299 0.409722 0.535421C-0.143519 1.06567 -0.143518 1.92537 0.409724 2.45562L8.90972 10.6023Z"
+                                                        fill="#9A9A9A" />
+                                                </svg>
+                                            </mat-datepicker-toggle>
+                                            <mat-datepicker #visaYearStart></mat-datepicker>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group custom_datepicker">
+                                <label>Expiry Date</label>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="custom_datepicker_container">
+                                            <input placeholder="Month" class="form-control"
+                                                [matDatepicker]="visaMonthExpiry" >
+                                            <mat-datepicker-toggle matSuffix [for]="visaMonthExpiry">
+                                                <svg matDatepickerToggleIcon width="20" height="11" viewBox="0 0 20 11"
+                                                    fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <path fill-rule="evenodd" clip-rule="evenodd"
+                                                        d="M8.90972 10.6023C9.46297 11.1326 10.36 11.1326 10.9132 10.6023L19.4132 2.45562C19.9664 1.92537 19.9664 1.06567 19.4132 0.535421C18.86 0.0051736 17.963 0.00517352 17.4097 0.535421L9.91146 7.72202L2.41319 0.535421C1.85995 0.00517307 0.962966 0.00517299 0.409722 0.535421C-0.143519 1.06567 -0.143518 1.92537 0.409724 2.45562L8.90972 10.6023Z"
+                                                        fill="#9A9A9A" />
+                                                </svg>
+                                            </mat-datepicker-toggle>
+                                            <mat-datepicker #visaMonthExpiry></mat-datepicker>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="custom_datepicker_container">
+                                            <input placeholder="Year" class="form-control"
+                                                [matDatepicker]="visaYearExpiry" >
+                                            <mat-datepicker-toggle matSuffix [for]="visaYearExpiry">
+                                                <svg matDatepickerToggleIcon width="20" height="11" viewBox="0 0 20 11"
+                                                    fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <path fill-rule="evenodd" clip-rule="evenodd"
+                                                        d="M8.90972 10.6023C9.46297 11.1326 10.36 11.1326 10.9132 10.6023L19.4132 2.45562C19.9664 1.92537 19.9664 1.06567 19.4132 0.535421C18.86 0.0051736 17.963 0.00517352 17.4097 0.535421L9.91146 7.72202L2.41319 0.535421C1.85995 0.00517307 0.962966 0.00517299 0.409722 0.535421C-0.143519 1.06567 -0.143518 1.92537 0.409724 2.45562L8.90972 10.6023Z"
+                                                        fill="#9A9A9A" />
+                                                </svg>
+                                            </mat-datepicker-toggle>
+                                            <mat-datepicker #visaYearExpiry></mat-datepicker>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group upload_label">
+                                <label>Accepted File Types: Adobe PDF (.pdf). <br>
+                            5MB file size limit.</label>
+                            <div class="file_upload mb-3">
+                                <p><strong>Drag file here or <span>browse</span> </strong><br>
+                                    <label class="file_upload_label" for="image"></label>
+                                    <input name="img" type="file" id="image" accept=".doc, .docx, .pdf">
+                            </div>
+                            </div>
+                        </div>
+                    </div>
+                    <ul class="files_list mb-3">
+                        <li>
+                            <div class="file_card">
+                                <div class="content">
+                                    <svg width="25" height="32" viewBox="0 0 25 32" fill="none"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <path
+                                            d="M21.1761 5.17688C20.8764 4.88148 20.5691 4.58109 20.2671 4.27585C19.9625 3.97307 19.663 3.66538 19.3682 3.36506C17.2671 1.21606 16.0158 0 14.7104 0H4.94144C2.2349 0 0.0293812 2.20931 0.0293812 4.92326V24.6657C0.0293812 25.3182 0.55831 25.8471 1.21078 25.8471C1.86324 25.8471 2.39217 25.3182 2.39217 24.6657V4.90854C2.39217 3.54972 3.49247 2.44691 4.8482 2.44691L13.8446 2.44195C14.7191 2.44195 14.7191 3.75896 14.7191 4.85069V8.60098C14.7104 9.84532 14.7104 9.8318 15.9471 9.8318H19.6312C20.8555 9.8318 22.0872 9.83795 22.0872 11.0626V27.0767C22.0872 28.4356 20.9869 29.5384 19.6312 29.5384H4.8482C3.49247 29.5384 2.39217 28.4356 2.39217 27.0767V24.3343C2.39217 23.6737 1.85667 23.1382 1.19609 23.1382C0.535506 23.1382 0 23.6737 0 24.3343V27.0767C0 29.7907 2.20429 32 4.91206 32H19.6213C22.329 32 24.5333 29.7907 24.5333 27.0767V9.84532C24.5333 8.5382 23.3202 7.2828 21.1761 5.17688Z"
+                                            fill="#9A9A9A" />
+                                    </svg>
+                                    <p>NathanJones_CV.pdf <br>
+                                        <span>126 KB • Added 02/05/19</span>
+                                    </p>
+                                </div>
+                                <div class="btn_group">
+                                    <button mat-icon-button>
+                                        <svg width="35" height="35" viewBox="0 0 35 35" fill="none"
+                                            xmlns="http://www.w3.org/2000/svg">
+                                            <circle cx="17.5" cy="17.5" r="17.5" fill="#F8F8F8" />
+                                            <path fill-rule="evenodd" clip-rule="evenodd"
+                                                d="M15.0952 9H19.4588C20.2621 9 20.9134 9.65122 20.9134 10.4545V11.1817H23.0909C23.8942 11.1817 24.5455 11.8329 24.5455 12.6362V14.0908C24.5455 14.8941 23.8942 15.5453 23.0909 15.5453H23.0318L22.3628 23.5454C22.3628 24.3488 21.7116 25 20.9083 25H13.6356C12.8322 25 12.181 24.3488 12.1835 23.6058L11.5118 15.5453H11.4545C10.6512 15.5453 10 14.8941 10 14.0908V12.6362C10 11.8329 10.6512 11.1817 11.4545 11.1817H13.6406V10.4545C13.6406 9.65122 14.2918 9 15.0952 9ZM13.6406 12.6364V12.6358H11.4531V14.0904H23.0895V12.6358H20.9134V12.6364H13.6406ZM21.57 15.5453H12.9688L13.6331 23.545H20.9059L20.9084 23.4846L21.57 15.5453ZM19.4574 10.4541V11.1814H15.0938V10.4541H19.4574Z"
+                                                fill="#2B2A35" />
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                    <div class="details_foot_btn">
+                        <button class="theme_btn btn_primary" mat-button>Save</button>
+                        <button class="theme_btn btn_outline_primary"
+                            mat-button>Cancel</button>
+                    </div>
+                </div>
+              
+            </div>
+            <div class="details_card licenses_edit">
+                <div class="details_card_header">
+                    <h4 class="mb-0">Visa</h4>
+                    <button class="ml-2" mat-icon-button><svg width="35" height="35"
+                            viewBox="0 0 35 35" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="17.5" cy="17.5" r="17.5" fill="#F8F8F8" />
+                            <path fill-rule="evenodd" clip-rule="evenodd"
+                                d="M20.7343 10.2083C21.2117 10.2083 21.6693 10.3989 22.0036 10.7357L24.2646 12.9968C24.6013 13.3335 24.7904 13.79 24.7904 14.2661C24.7904 14.7422 24.6013 15.1988 24.2646 15.5354L16.0094 23.7881C15.5001 24.3756 14.7781 24.7366 13.951 24.7933H10.207V24.0641L10.2094 20.9907C10.2715 20.2218 10.629 19.5068 11.1743 19.0264L19.4641 10.7366C19.8002 10.3984 20.2574 10.2083 20.7343 10.2083ZM13.8995 23.3368C14.2891 23.3092 14.6517 23.1279 14.9428 22.7949L20.4567 17.281L17.7191 14.5433L12.1729 20.0882C11.8775 20.3494 11.6948 20.715 11.6654 21.0494V23.3354L13.8995 23.3368ZM18.7505 13.5122L21.4879 16.2498L23.2334 14.5042C23.2966 14.4411 23.3321 14.3554 23.3321 14.2661C23.3321 14.1768 23.2966 14.0912 23.2334 14.028L20.9704 11.7649C20.9079 11.702 20.8229 11.6666 20.7343 11.6666C20.6456 11.6666 20.5606 11.702 20.4982 11.7649L18.7505 13.5122Z"
+                                fill="#2B2A35" />
+                        </svg>
+                    </button>
+                </div>
+                <div class="details_card_body">
+                    <ul class="files_list">
+                        <li>
+                            <div class="file_card">
+                                <div class="content">
+                                    <svg width="25" height="32" viewBox="0 0 25 32" fill="none"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <path
+                                            d="M21.1761 5.17688C20.8764 4.88148 20.5691 4.58109 20.2671 4.27585C19.9625 3.97307 19.663 3.66538 19.3682 3.36506C17.2671 1.21606 16.0158 0 14.7104 0H4.94144C2.2349 0 0.0293812 2.20931 0.0293812 4.92326V24.6657C0.0293812 25.3182 0.55831 25.8471 1.21078 25.8471C1.86324 25.8471 2.39217 25.3182 2.39217 24.6657V4.90854C2.39217 3.54972 3.49247 2.44691 4.8482 2.44691L13.8446 2.44195C14.7191 2.44195 14.7191 3.75896 14.7191 4.85069V8.60098C14.7104 9.84532 14.7104 9.8318 15.9471 9.8318H19.6312C20.8555 9.8318 22.0872 9.83795 22.0872 11.0626V27.0767C22.0872 28.4356 20.9869 29.5384 19.6312 29.5384H4.8482C3.49247 29.5384 2.39217 28.4356 2.39217 27.0767V24.3343C2.39217 23.6737 1.85667 23.1382 1.19609 23.1382C0.535506 23.1382 0 23.6737 0 24.3343V27.0767C0 29.7907 2.20429 32 4.91206 32H19.6213C22.329 32 24.5333 29.7907 24.5333 27.0767V9.84532C24.5333 8.5382 23.3202 7.2828 21.1761 5.17688Z"
+                                            fill="#9A9A9A" />
+                                    </svg>
+                                    <p>NathanJones_Visa2024.pdf</p>
+                                </div>
+                                <div class="btn_group">
+                                    <a target="_blank" href="" mat-icon-button>
+                                        <svg width="35" height="35" viewBox="0 0 35 35" fill="none"
+                                            xmlns="http://www.w3.org/2000/svg">
+                                            <circle cx="17.5" cy="17.5" r="17.5" fill="#F8F8F8" />
+                                            <path
+                                                d="M9.29565 17.7632C9.1361 17.5601 9.00404 17.3822 8.90095 17.2387C8.99761 17.0973 9.1211 16.923 9.27053 16.7246C9.69179 16.1651 10.3145 15.4194 11.1183 14.6754C12.7353 13.1787 15.0165 11.75 17.8214 11.75C20.6263 11.75 22.9076 13.1787 24.5246 14.6754C25.3283 15.4194 25.9511 16.1651 26.3723 16.7246C26.5218 16.923 26.6452 17.0973 26.7419 17.2387C26.6388 17.3822 26.5068 17.5601 26.3472 17.7632C25.9058 18.325 25.2587 19.0735 24.4375 19.82C22.7807 21.3262 20.4992 22.75 17.8214 22.75C15.1437 22.75 12.8621 21.3262 11.2054 19.82C10.3842 19.0735 9.73706 18.325 9.29565 17.7632Z"
+                                                stroke="#2B2A35" stroke-width="1.5" />
+                                            <circle cx="17.8214" cy="17.2511" r="2.82143" stroke="#2B2A35"
+                                                stroke-width="1.5" />
+                                        </svg>
+                                    </a>
+                                    <button mat-icon-button>
+                                        <svg width="35" height="35" viewBox="0 0 35 35" fill="none"
+                                            xmlns="http://www.w3.org/2000/svg">
+                                            <circle cx="17.5" cy="17.5" r="17.5" fill="#F8F8F8" />
+                                            <path fill-rule="evenodd" clip-rule="evenodd"
+                                                d="M24.7923 20.4141V23.3307C24.7923 24.1361 24.1394 24.7891 23.334 24.7891H11.6673C10.8619 24.7891 10.209 24.1361 10.209 23.3307V20.4141H11.6673V23.3307H23.334V20.4141H24.7923Z"
+                                                fill="#2B2A35" />
+                                            <path fill-rule="evenodd" clip-rule="evenodd"
+                                                d="M18.2295 17.9258L20.6305 15.5248L21.6617 16.556L17.5003 20.7174L13.3389 16.556L14.3701 15.5248L16.7711 17.9258V10.207H18.2295V17.9258Z"
+                                                fill="#2B2A35" />
+                                        </svg>
+
+
+                                    </button>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                    <div class="visa_details_container">
+                        <h5>Grant Number: 12345678910</h5>
+                        <p>Valid from January 2022 - January 2024</p>
+                    </div>
+                </div>
+            </div> -->
+            <!-- Visa End -->
+        </div>
+    </div>
+</section>

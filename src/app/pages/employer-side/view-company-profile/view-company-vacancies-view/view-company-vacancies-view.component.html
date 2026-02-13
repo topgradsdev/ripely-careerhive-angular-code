@@ -1,0 +1,691 @@
+<section class="main-div">
+
+    <div class="d-flex align-items-end justify-content-between  pt-3 pb-2">
+         <h2 class="header-text">
+            Vacancies
+        </h2>
+        <div class="d-flex align-items-end justify-content-end pt-3 pb-2">
+            <div class="search-container mr-3" style="height:44px">
+                <svg class="icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                    <path
+                        d="M9.16667 15.8333C12.8486 15.8333 15.8333 12.8486 15.8333 9.16667C15.8333 5.48477 12.8486 2.5 9.16667 2.5C5.48477 2.5 2.5 5.48477 2.5 9.16667C2.5 12.8486 5.48477 15.8333 9.16667 15.8333Z"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                    <path d="M17.5 17.5L13.875 13.875" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round" />
+                </svg>
+                  <input type="text" class="form-control" placeholder="Search Keywords"
+                   [(ngModel)]="searchText" (input)="searchVacancies()">
+            </div>
+
+            <!-- <button mat-button class="theme_btn btn_primary mt-3 " data-toggle="modal" data-target="#addVacancyPopup">Create
+                Vacancy</button> -->
+        </div>
+    </div>
+    
+
+
+    <div class="web_placements_tab_bs bg-transparent p-0">
+        <div class="custom_container p-0  w-100  m-0">
+            <div class="nav nav-tabs p-0" id="nav-tab" role="tablist">
+                <!-- Pre-Placement Tab -->
+                <a matRipple style="padding: 5px 0px;" class="nav-item nav-link"
+                    [ngClass]="selectedTab === 'Vacancies' ? 'active' : ''" id="Vacancies" data-toggle="tab"
+                    href="#Vacancies" role="tab" aria-controls="Vacancies" [class.active]="activeTab === 'Vacancies'"
+                    (click)="searchText='';setActiveTab('Vacancies'); goToTab('Vacancies')" aria-selected="true">
+                    Internships 
+                     <span class="tab-span-babge" [ngClass]="selectedTab === 'Vacancies' ? 'active' : ''">{{totalvacancyList}}</span>
+                    <!-- <span>{{totalvacancyList || 0}}</span> -->
+                </a>
+
+                <a matRipple style="padding: 5px 0px;" class="nav-item nav-link"
+                    [ngClass]="selectedTab === 'Projects' ? 'active' : ''" id="Projects" data-toggle="tab"
+                    href="#nav-pre-placement" role="tab" aria-controls="Projects"
+                    [class.active]="activeTab === 'Projects'" (click)="searchText='';setActiveTab('Projects'); goToTab('Projects')"
+                    aria-selected="true">
+                    Projects
+                     <span class="tab-span-babge" [ngClass]="selectedTab === 'Projects' ? 'active' : ''">{{totalvacancyListp}}</span>
+                </a>
+
+            </div>
+        </div>
+
+        <div class="tab-content border-0" id="nav-tabContent">
+            <!-- Pre-Placement Tab Content -->
+            <div *ngIf="activeTab === 'Vacancies' || loadedTabs.has('Vacancies')" class="tab-pane fade"
+                [class.show]="activeTab === 'Vacancies'" style="padding: 20px 0;"
+                [class.active]="activeTab === 'Vacancies'">
+                <div class="activity_list">
+                    <div class="activity_card mt-4 mb-4" *ngFor="let item of vacancies; let j = index;">
+                        <div class="activity_card_header">
+                            <div class="left">
+                                <div class="content main-title">
+                                    <div class="complete_placemet_card w-100">
+                                        <div class="complete_placemet_card_container w-100 details d-flex">
+                                            <figure>
+                                                <img *ngIf="employerProfile?.company_logo"
+                                                    [src]="employerProfile?.company_logo" alt="avtar">
+                                                <span *ngIf="!employerProfile?.company_logo"
+                                                    class="small-profile-letter">{{
+                                                    employerProfile?.company_name[0]
+                                                    }}
+                                                    {{employerProfile?.company_name?.split(' ')?.length > 1 ?
+                                                    employerProfile?.company_name?.split(' ')[1][0] : ''}}</span>
+                                            </figure>
+                                             <div class="row d-flex align-items-center w-100">
+                                                        <div class="col-md-6">
+                                                            <div class="content align-self-center d-flex flex-column">
+                                                                <h1 class="title"> {{item?.job_title}} </h1>
+                                                                <!-- <span class="span"> {{employerProfile?.company_name}}</span> -->
+
+                                                                <p class="p"> Posted on {{item?.createdAt | date: 'dd MMM YYYY'}} by
+                                                                    {{item?.created_by_name}}</p>
+                                                                <p class="p pt-1"> Job Id {{item?.job_id}}</p>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6 p-0">
+                                                        <div class="vacancy_card_steps_container d-flex justify-content-end" style="margin-left: -10px;">
+                                                        <ul class='vacancy_steps' *ngIf="!item.is_pending">
+                                                            <li class="p-0">
+                                                                <span>{{(item.students_allocatted && item.students_allocatted.applications)? item.students_allocatted.applications: 0}}</span>
+                                                                <label class="label_title">Applications</label>
+                                                            </li>
+                                                            <li>
+                                                                <span>{{(item.students_allocatted && item.students_allocatted.interview)? item.students_allocatted.interview: 0}}</span>
+                                                                <label class="label_title">Interviews</label>
+                                                            </li>
+                                                            <!-- <li>
+                                                                <span>{{(item.students_allocatted && item.students_allocatted.rejected)? item.students_allocatted.rejected: 0}}</span>
+                                                                <label class="label_title">Rejected</label>
+                                                            </li> -->
+                                                            <li>
+                                                                <span>{{(item.students_allocatted && item.students_allocatted.accepted)? item.students_allocatted.accepted: 0}}</span>
+                                                                <label class="label_title">Shortlisted</label>
+                                                            </li>
+                                                            <li>
+                                                                <span>{{(item.students_allocatted && item.students_allocatted.placed)? item.students_allocatted.placed: 0}}</span>
+                                                                <label class="label_title">Placed</label>
+                                                            </li>
+                                                        </ul>
+                                                        <ul class='vacancy_steps' *ngIf="item.is_pending">
+                                                            <h2 class="waiting">
+                                                                Awaiting Approval
+                                                            </h2>
+                                                        </ul>
+                                                        
+                                                    </div>
+                                                        </div>
+                                                   </div>
+                                           
+                                        </div>
+                                     
+                                    </div>
+                                </div>
+
+                              
+                            </div>
+                            <div class="right">
+                                <div class="d-inline-flex align-items-center">
+
+                                     
+
+
+                                    <!-- *ngxPermissionsOnly="['WIL_Write']" -->
+                                    <!-- <button mat-icon-button [matMenuTriggerFor]="menu" class="td-btn">
+                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                            xmlns="http://www.w3.org/2000/svg">
+                                            <path
+                                                d="M4 12C4 12.2652 4.10536 12.5196 4.29289 12.7071C4.48043 12.8946 4.73478 13 5 13C5.26522 13 5.51957 12.8946 5.70711 12.7071C5.89464 12.5196 6 12.2652 6 12C6 11.7348 5.89464 11.4804 5.70711 11.2929C5.51957 11.1054 5.26522 11 5 11C4.73478 11 4.48043 11.1054 4.29289 11.2929C4.10536 11.4804 4 11.7348 4 12ZM11 12C11 12.2652 11.1054 12.5196 11.2929 12.7071C11.4804 12.8946 11.7348 13 12 13C12.2652 13 12.5196 12.8946 12.7071 12.7071C12.8946 12.5196 13 12.2652 13 12C13 11.7348 12.8946 11.4804 12.7071 11.2929C12.5196 11.1054 12.2652 11 12 11C11.7348 11 11.4804 11.1054 11.2929 11.2929C11.1054 11.4804 11 11.7348 11 12ZM18 12C18 12.2652 18.1054 12.5196 18.2929 12.7071C18.4804 12.8946 18.7348 13 19 13C19.2652 13 19.5196 12.8946 19.7071 12.7071C19.8946 12.5196 20 12.2652 20 12C20 11.7348 19.8946 11.4804 19.7071 11.2929C19.5196 11.1054 19.2652 11 19 11C18.7348 11 18.4804 11.1054 18.2929 11.2929C18.1054 11.4804 18 11.7348 18 12Z"
+                                                stroke="black" stroke-width="2" stroke-linecap="round"
+                                                stroke-linejoin="round" />
+                                        </svg>
+
+                                    </button>
+                                    <mat-menu #menu="matMenu" class="td-menu custome_theme_menu">
+                                       <a mat-menu-item (click)="job_details = item;viewVacancy();">
+                                            <span>View</span>
+                                        </a>
+                                        <a mat-menu-item (click)="job_details = item;editVacancy();">
+                                            <span>Edit</span>
+                                        </a>
+                                        <a mat-menu-item *ngIf="item.status=='active'" class="danger"  data-toggle="modal" data-target="#archiveDialog" (click)="job_details = item;selectedJob=item;">
+                                            <span>Archive</span>
+                                        </a>
+                                        <a mat-menu-item *ngIf="item.status=='inactive'" class="success"  data-toggle="modal" data-target="#republishDialog" (click)="job_details = item;selectedJob=item;">
+                                            <span>Publish</span>
+                                        </a>
+                                    </mat-menu> -->
+
+                                    <button class="see-details" (click)="item.toggle = !item.toggle"
+                                        [ngClass]="item.toggle ? 'show' : ''" mat-icon-button><svg width="18" height="8"
+                                            viewBox="0 0 18 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M1 1L9 7L17 1" stroke="#2B2A35" stroke-width="2"
+                                                stroke-linecap="round" stroke-linejoin="round" />
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="pt-2" *ngIf="item.toggle">
+
+                            <div class="row">
+                                <!-- Left Column: Description -->
+                                <div class="col-md-6">
+                                    <p class="vacancy-count mb-3">
+                                        {{ item.no_limit ? 'No Vacancy Limit' : item?.no_of_vacancy + ' Vacancies' }}
+                                    </p>
+
+                                    <div class="job-section mb-4">
+                                      <p class="text-body">
+                                            <span *ngIf="!item.showFull" [innerHTML]="getShortText(item.job_description) + '...'"></span>
+                                            <span *ngIf="item.showFull" [innerHTML]="item.job_description"></span>
+
+                                            <span>
+                                                  <a href="javascript:void(0)"
+                                                        class="text-primary fw-medium view-more" 
+                                                        (click)="toggleDescription(j)">
+                                                        {{ item.showFull ? 'View Less' : 'View More' }}
+                                                    </a>
+                                            </span>
+                                        </p>
+
+                                      
+                                    </div>
+                                </div>
+
+                                <!-- Right Column: Skills & Other Info -->
+                                <div class="col-md-6">
+                                    <div class="job-section mb-4">
+                                        <h6 class="section-title">Skills Required</h6>
+                                        <ul class="skills-chips">
+                                            <li *ngFor="let skill of item?.skills">
+                                                <span>{{ skill.name }}</span>
+                                            </li>
+                                        </ul>
+                                    </div>
+
+                                    <div class="job-section mb-4" *ngIf="item?.skills_to_develop">
+                                        <h6 class="section-title">Skills to Develop</h6>
+                                        <ul class="skills-chips">
+                                            <li *ngFor="let skill of item?.skills_to_develop">
+                                                <span>{{ skill.name }}</span>
+                                            </li>
+                                        </ul>
+                                    </div>
+
+                                    <div class="job-section mb-4">
+                                        <h6 class="section-title">Licenses & Certifications Required</h6>
+                                        <div class="chips-wrap">
+                                            <span class="custom-chip-1"
+                                                *ngFor="let license of item?.license_certification">
+                                                {{ license }}
+                                            </span>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-6 mb-3">
+                                            <h6 class="section-title">Work Commitment</h6>
+                                            <span class="custom-chip-1">{{ item?.contract_type }}</span>
+                                        </div>
+                                        <div class="col-md-6 mb-3">
+                                            <h6 class="section-title">Workplace Arrangement</h6>
+                                            <span class="custom-chip-1">{{ item?.work_type }}</span>
+                                        </div>
+                                    </div>
+                                     <div class="job-section mb-4">
+                                        <h6 class="section-title">Application Routing Destinations</h6>
+                                        <div class="chips-wrap">
+                                            <span class="custom-chip-2">
+                                               {{ getApplication(item) }}
+                                            </span>
+                                        </div>
+                                    </div>
+                                     <div class="job-section mb-4">
+                                        <h6 class="section-title">Default Supervisor</h6>
+                                        <div class="chips-wrap">
+                                            <span class="custom-chip-2">
+                                                {{ item.placement_supervisor_name?item.placement_supervisor_name:'none' }}
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                  <div class="show_more_links" *ngIf="vacancies.length > 0">
+                        <!-- Previous Button -->
+                          <button [disabled]="vacancypage==0" mat-button  (click)="onPrevPage()">
+                              <svg *ngIf="vacancypage!=0" width="7" height="14" viewBox="0 0 7 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M7 13L1 7L7 1" stroke="#464ba9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                                <svg *ngIf="vacancypage==0" width="7" height="14" viewBox="0 0 7 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M7 13L1 7L7 1" stroke="#C4C4C4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                        </button>
+
+                        <!-- Page Range Display -->
+                        <span>
+                         {{ startNoteIndex }} - {{ endNoteIndex }} of {{ totalvacancyList }}
+                        </span>
+
+                        <!-- Next Button -->
+                          <button [disabled]="vacancypage >= totalvacancies - 1" mat-button (click)="onNextPage()">
+                           <svg *ngIf="(vacancypage + 1) !== totalvacancies" width="8" height="14" viewBox="0 0 8 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M1 13L7 7L1 1" stroke="#464ba9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                        <svg *ngIf="(vacancypage + 1) === totalvacancies" width="8" height="14" viewBox="0 0 8 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M1 13L7 7L1 1" stroke="#C4C4C4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                        </button>
+                        </div>
+
+
+
+                    <p class="pt-3 pb-3 text-center p-no" *ngIf="vacancies.length == 0">
+                        There are currently no active internships available
+                    </p>
+                </div>
+            </div>
+
+            <!-- Ongoing Tab Content -->
+            <div *ngIf="activeTab === 'Projects' || loadedTabs.has('Projects')" class="tab-pane fade"
+                [class.show]="activeTab === 'Projects'" style="padding: 20px 0;"
+                [class.active]="activeTab === 'Projects'">
+                <div class="activity_list">
+                   <div class="activity_card mt-4 mb-4" *ngFor="let item of vacanciesp; let j = index;">
+                        <div class="activity_card_header">
+                            <div class="left">
+                                <div class="content main-title">
+                                    <div class="complete_placemet_card w-100">
+                                        <div class="complete_placemet_card_container w-100 details d-flex">
+                                            <figure>
+                                                <img *ngIf="employerProfile?.company_logo"
+                                                    [src]="employerProfile?.company_logo" alt="avtar">
+                                                <span *ngIf="!employerProfile?.company_logo"
+                                                    class="small-profile-letter">{{
+                                                    employerProfile?.company_name[0]
+                                                    }}
+                                                    {{employerProfile?.company_name?.split(' ')?.length > 1 ?
+                                                    employerProfile?.company_name?.split(' ')[1][0] : ''}}</span>
+                                            </figure>
+                                              <div class="row d-flex align-items-center w-100">
+                                                        <div class="col-md-6">
+                                                            <div class="content align-self-center d-flex flex-column">
+                                                                <h1 class="title"> {{item?.job_title}} </h1>
+                                                                <!-- <span class="span"> {{employerProfile?.company_name}}</span> -->
+
+                                                                <p class="p"> Posted on {{item?.createdAt | date: 'dd MMM YYYY'}} by
+                                                                    {{item?.created_by_name}}</p>
+                                                                <p class="p pt-1"> Job Id {{item?.job_id}}</p>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6 p-0">
+                                                        <div class="vacancy_card_steps_container d-flex justify-content-end" style="margin-left: -10px;">
+                                                        <ul class='vacancy_steps' *ngIf="!item.is_pending">
+                                                           <li class="p-0">
+                                                                <span>{{(item.students_allocatted && item.students_allocatted.applications)? item.students_allocatted.applications: 0}}</span>
+                                                                <label class="label_title">Applications</label>
+                                                            </li>
+                                                            <li>
+                                                                <span>{{(item.students_allocatted && item.students_allocatted.interview)? item.students_allocatted.interview: 0}}</span>
+                                                                <label class="label_title">Interviews</label>
+                                                            </li>
+                                                            <!-- <li>
+                                                                <span>{{(item.students_allocatted && item.students_allocatted.rejected)? item.students_allocatted.rejected: 0}}</span>
+                                                                <label class="label_title">Rejected</label>
+                                                            </li> -->
+                                                            <li>
+                                                                <span>{{(item.students_allocatted && item.students_allocatted.accepted)? item.students_allocatted.accepted: 0}}</span>
+                                                                <label class="label_title">Shortlisted</label>
+                                                            </li>
+                                                            <li>
+                                                                <span>{{(item.students_allocatted && item.students_allocatted.placed)? item.students_allocatted.placed: 0}}</span>
+                                                                <label class="label_title">Placed</label>
+                                                            </li>
+                                                        </ul>
+                                                        <ul class='vacancy_steps' *ngIf="item.is_pending">
+                                                            <h2 class="waiting">
+                                                                Awaiting Approval
+                                                            </h2>
+                                                        </ul>
+                                                        
+                                                    </div>
+                                                        </div>
+                                                   </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="right">
+                                <div class="d-inline-flex align-items-center">
+                                    <!-- *ngxPermissionsOnly="['WIL_Write']" -->
+                                    <!-- <button mat-icon-button [matMenuTriggerFor]="menu" class="td-btn">
+                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                            xmlns="http://www.w3.org/2000/svg">
+                                            <path
+                                                d="M4 12C4 12.2652 4.10536 12.5196 4.29289 12.7071C4.48043 12.8946 4.73478 13 5 13C5.26522 13 5.51957 12.8946 5.70711 12.7071C5.89464 12.5196 6 12.2652 6 12C6 11.7348 5.89464 11.4804 5.70711 11.2929C5.51957 11.1054 5.26522 11 5 11C4.73478 11 4.48043 11.1054 4.29289 11.2929C4.10536 11.4804 4 11.7348 4 12ZM11 12C11 12.2652 11.1054 12.5196 11.2929 12.7071C11.4804 12.8946 11.7348 13 12 13C12.2652 13 12.5196 12.8946 12.7071 12.7071C12.8946 12.5196 13 12.2652 13 12C13 11.7348 12.8946 11.4804 12.7071 11.2929C12.5196 11.1054 12.2652 11 12 11C11.7348 11 11.4804 11.1054 11.2929 11.2929C11.1054 11.4804 11 11.7348 11 12ZM18 12C18 12.2652 18.1054 12.5196 18.2929 12.7071C18.4804 12.8946 18.7348 13 19 13C19.2652 13 19.5196 12.8946 19.7071 12.7071C19.8946 12.5196 20 12.2652 20 12C20 11.7348 19.8946 11.4804 19.7071 11.2929C19.5196 11.1054 19.2652 11 19 11C18.7348 11 18.4804 11.1054 18.2929 11.2929C18.1054 11.4804 18 11.7348 18 12Z"
+                                                stroke="black" stroke-width="2" stroke-linecap="round"
+                                                stroke-linejoin="round" />
+                                        </svg>
+
+                                    </button>
+                                    <mat-menu #menu="matMenu" class="td-menu custome_theme_menu">
+                                        <a mat-menu-item (click)="job_details = item;viewVacancy();">
+                                            <span>View</span>
+                                        </a>
+                                        <a mat-menu-item (click)="job_details = item;editProject();">
+                                            <span>Edit</span>
+                                        </a>
+                                        <a mat-menu-item *ngIf="item.status=='active'" class="danger"  data-toggle="modal" data-target="#archiveDialog" (click)="job_details = item;selectedJob=item;">
+                                            <span>Archive</span>
+                                        </a>
+                                        <a mat-menu-item *ngIf="item.status=='inactive'" class="success"  data-toggle="modal" data-target="#republishDialog" (click)="job_details = item;selectedJob=item;">
+                                            <span>Publish</span>
+                                        </a>
+                                    </mat-menu> -->
+
+                                    <button class="see-details" (click)="item.toggle = !item.toggle"
+                                        [ngClass]="item.toggle ? 'show' : ''" mat-icon-button><svg width="18" height="8"
+                                            viewBox="0 0 18 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M1 1L9 7L17 1" stroke="#2B2A35" stroke-width="2"
+                                                stroke-linecap="round" stroke-linejoin="round" />
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="pt-2" *ngIf="item.toggle">
+
+                            <div class="row">
+                                <!-- Left Column: Description -->
+                                <div class="col-md-6">
+                                    <p class="vacancy-count mb-3">
+                                        {{ item.no_limit ? 'No Vacancy Limit' : item?.no_of_vacancy + ' Vacancies' }}
+                                    </p>
+
+                                    <div class="job-section mb-4">
+                                      <p class="text-body">
+                                            <span *ngIf="!item.showFull" [innerHTML]="getShortText(item.job_description) + '...'"></span>
+                                            <span *ngIf="item.showFull" [innerHTML]="item.job_description"></span>
+
+                                            <span>
+                                                  <a href="javascript:void(0)"
+                                                        class="text-primary fw-medium view-more" 
+                                                        (click)="toggleDescriptionp(j)">
+                                                        {{ item.showFull ? 'View Less' : 'View More' }}
+                                                    </a>
+                                            </span>
+                                        </p>
+
+                                      
+                                    </div>
+                                </div>
+
+                                <!-- Right Column: Skills & Other Info -->
+                                <div class="col-md-6">
+                                    <div class="job-section mb-4">
+                                        <h6 class="section-title">Skills Required</h6>
+                                        <ul class="skills-chips">
+                                            <li *ngFor="let skill of item?.skills">
+                                                <span>{{ skill.name }}</span>
+                                            </li>
+                                        </ul>
+                                    </div>
+
+                                    <div class="job-section mb-4" *ngIf="item?.skills_to_develop">
+                                        <h6 class="section-title">Skills to Develop</h6>
+                                        <ul class="skills-chips">
+                                            <li *ngFor="let skill of item?.skills_to_develop">
+                                                <span>{{ skill.name }}</span>
+                                            </li>
+                                        </ul>
+                                    </div>
+
+                                    <div class="job-section mb-4">
+                                        <h6 class="section-title">Licenses & Certifications Required</h6>
+                                        <div class="chips-wrap">
+                                            <span class="custom-chip-1"
+                                                *ngFor="let license of item?.license_certification">
+                                                {{ license }}
+                                            </span>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-6 mb-3">
+                                            <h6 class="section-title">Work Commitment</h6>
+                                            <span class="custom-chip-1">{{ item?.contract_type }}</span>
+                                        </div>
+                                        <div class="col-md-6 mb-3">
+                                            <h6 class="section-title">Workplace Arrangement</h6>
+                                            <span class="custom-chip-1">{{ item?.work_type }}</span>
+                                        </div>
+                                    </div>
+                                     <div class="job-section mb-4">
+                                        <h6 class="section-title">Application Routing Destinations</h6>
+                                        <div class="chips-wrap">
+                                            <span class="custom-chip-2">
+                                               {{ getApplication(item) }}
+                                            </span>
+                                        </div>
+                                    </div>
+                                     <div class="job-section mb-4">
+                                        <h6 class="section-title">Default Supervisor</h6>
+                                        <div class="chips-wrap">
+                                            <span class="custom-chip-2">
+                                                {{ item.placement_supervisor_name?item.placement_supervisor_name:'none' }}
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                              <div class="show_more_links" *ngIf="vacanciesp.length > 0">
+                        <!-- Previous Button -->
+                          <button [disabled]="vacancypagep==0" mat-button  (click)="onPrevPagep()">
+                              <svg *ngIf="vacancypagep!=0" width="7" height="14" viewBox="0 0 7 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M7 13L1 7L7 1" stroke="#464ba9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                                <svg *ngIf="vacancypagep==0" width="7" height="14" viewBox="0 0 7 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M7 13L1 7L7 1" stroke="#C4C4C4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                        </button>
+
+                        <!-- Page Range Display -->
+                        <span>
+                         {{ startNoteIndexp }} - {{ endNoteIndexp }} of {{ totalvacancyListp }}
+                        </span>
+
+                        <!-- Next Button -->
+                          <button [disabled]="vacancypagep >= totalvacanciesp - 1" mat-button (click)="onNextPagep()">
+                           <svg *ngIf="(vacancypagep + 1) !== totalvacanciesp" width="8" height="14" viewBox="0 0 8 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M1 13L7 7L1 1" stroke="#464ba9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                        <svg *ngIf="(vacancypagep + 1) === totalvacanciesp" width="8" height="14" viewBox="0 0 8 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M1 13L7 7L1 1" stroke="#C4C4C4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                        </button>
+                        </div>
+                     <p class="pt-3 pb-3 text-center p-no" *ngIf="vacanciesp.length == 0">
+                       There are currently no active projects available
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Add Compnay Popup Confirm -->
+<div class="modal fade bsModal ch_modal" id="addVacancyPopup" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" style="max-width: 800px;" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title" style="color: #464BA8;">What Type of Vacancy Are You Creating?</h2>
+                <button type="button" mat-icon-button id="closeModal" class="close" data-dismiss="modal"
+                    aria-label="Close">
+                    <mat-icon>close</mat-icon>
+                </button>
+            </div>
+            <div class="modal-body p-5">
+                <div class="add-company-main-div">
+                    <div class="add-company-box">
+                        <svg width="116" height="153" viewBox="0 0 116 153" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <rect x="2.03809" y="2" width="111.925" height="148.927" rx="12" fill="#ECEDFF"
+                                stroke="#2B2A35" stroke-width="4" />
+                            <rect x="22.542" y="20.9609" width="70.9218" height="3.08356" rx="1.54178" fill="#464BA8" />
+                            <rect x="22.542" y="51.0234" width="70.9218" height="3.08356" rx="1.54178" fill="#464BA8" />
+                            <rect x="22.542" y="80.3203" width="70.9218" height="3.08356" rx="1.54178" fill="#464BA8" />
+                            <rect x="22.542" y="39.4609" width="24.6685" height="3.08356" rx="1.54178" fill="#464BA8" />
+                            <rect x="22.542" y="68.7578" width="24.6685" height="3.08356" rx="1.54178" fill="#464BA8" />
+                            <rect x="22.542" y="98.8203" width="24.6685" height="3.08356" rx="1.54178" fill="#464BA8" />
+                            <rect x="22.542" y="30.2109" width="24.6685" height="3.08356" rx="1.54178" fill="#464BA8" />
+                            <rect x="22.542" y="59.5078" width="24.6685" height="3.08356" rx="1.54178" fill="#464BA8" />
+                            <rect x="22.542" y="89.5703" width="24.6685" height="3.08356" rx="1.54178" fill="#464BA8" />
+                            <rect x="22.542" y="113.469" width="53.1914" height="19.2722" rx="9.63612" fill="#464BA8" />
+                            <path
+                                d="M35.2052 125.901C34.6919 125.901 34.2419 125.811 33.8552 125.631C33.4686 125.451 33.1652 125.195 32.9452 124.861C32.7319 124.528 32.6219 124.131 32.6152 123.671H33.7352C33.7419 124.045 33.8719 124.361 34.1252 124.621C34.3786 124.881 34.7352 125.011 35.1952 125.011C35.6019 125.011 35.9186 124.915 36.1452 124.721C36.3786 124.521 36.4952 124.268 36.4952 123.961C36.4952 123.715 36.4386 123.515 36.3252 123.361C36.2186 123.208 36.0686 123.081 35.8752 122.981C35.6886 122.881 35.4719 122.791 35.2252 122.711C34.9786 122.631 34.7186 122.545 34.4452 122.451C33.9052 122.271 33.4986 122.038 33.2252 121.751C32.9586 121.465 32.8252 121.088 32.8252 120.621C32.8186 120.228 32.9086 119.885 33.0952 119.591C33.2886 119.298 33.5552 119.071 33.8952 118.911C34.2419 118.745 34.6452 118.661 35.1052 118.661C35.5586 118.661 35.9552 118.745 36.2952 118.911C36.6419 119.078 36.9119 119.311 37.1052 119.611C37.2986 119.905 37.3986 120.248 37.4052 120.641H36.2852C36.2852 120.461 36.2386 120.291 36.1452 120.131C36.0519 119.965 35.9152 119.828 35.7352 119.721C35.5552 119.615 35.3352 119.561 35.0752 119.561C34.7419 119.555 34.4652 119.638 34.2452 119.811C34.0319 119.985 33.9252 120.225 33.9252 120.531C33.9252 120.805 34.0052 121.015 34.1652 121.161C34.3252 121.308 34.5452 121.431 34.8252 121.531C35.1052 121.625 35.4252 121.735 35.7852 121.861C36.1319 121.975 36.4419 122.111 36.7152 122.271C36.9886 122.431 37.2052 122.641 37.3652 122.901C37.5319 123.161 37.6152 123.491 37.6152 123.891C37.6152 124.245 37.5252 124.575 37.3452 124.881C37.1652 125.181 36.8952 125.428 36.5352 125.621C36.1752 125.808 35.7319 125.901 35.2052 125.901ZM40.5641 125.901C39.9641 125.901 39.4908 125.715 39.1441 125.341C38.8041 124.968 38.6341 124.411 38.6341 123.671V120.821H39.6941V123.561C39.6941 124.521 40.0875 125.001 40.8741 125.001C41.2675 125.001 41.5908 124.861 41.8441 124.581C42.0975 124.301 42.2241 123.901 42.2241 123.381V120.821H43.2841V125.781H42.3441L42.2641 124.911C42.1108 125.218 41.8841 125.461 41.5841 125.641C41.2908 125.815 40.9508 125.901 40.5641 125.901ZM47.4226 125.901C47.0359 125.901 46.6926 125.825 46.3926 125.671C46.0993 125.518 45.8659 125.301 45.6926 125.021L45.5826 125.781H44.6326V118.581H45.6926V121.591C45.8526 121.358 46.0726 121.151 46.3526 120.971C46.6326 120.791 46.9926 120.701 47.4326 120.701C47.9126 120.701 48.3359 120.815 48.7026 121.041C49.0693 121.268 49.3559 121.578 49.5626 121.971C49.7759 122.365 49.8826 122.811 49.8826 123.311C49.8826 123.811 49.7759 124.258 49.5626 124.651C49.3559 125.038 49.0693 125.345 48.7026 125.571C48.3359 125.791 47.9093 125.901 47.4226 125.901ZM47.2426 124.981C47.6959 124.981 48.0693 124.828 48.3626 124.521C48.6559 124.208 48.8026 123.801 48.8026 123.301C48.8026 122.975 48.7359 122.685 48.6026 122.431C48.4693 122.178 48.2859 121.981 48.0526 121.841C47.8193 121.695 47.5493 121.621 47.2426 121.621C46.7893 121.621 46.4159 121.778 46.1226 122.091C45.8359 122.405 45.6926 122.808 45.6926 123.301C45.6926 123.801 45.8359 124.208 46.1226 124.521C46.4159 124.828 46.7893 124.981 47.2426 124.981ZM51.0291 125.781V120.821H51.9691L52.0591 121.521C52.2191 121.268 52.4291 121.068 52.6891 120.921C52.9557 120.775 53.2624 120.701 53.6091 120.701C54.3957 120.701 54.9424 121.011 55.2491 121.631C55.4291 121.345 55.6691 121.118 55.9691 120.951C56.2757 120.785 56.6057 120.701 56.9591 120.701C57.5791 120.701 58.0657 120.888 58.4191 121.261C58.7724 121.635 58.9491 122.191 58.9491 122.931V125.781H57.8891V123.041C57.8891 122.081 57.5224 121.601 56.7891 121.601C56.4157 121.601 56.1091 121.741 55.8691 122.021C55.6357 122.301 55.5191 122.701 55.5191 123.221V125.781H54.4591V123.041C54.4591 122.081 54.0891 121.601 53.3491 121.601C52.9824 121.601 52.6791 121.741 52.4391 122.021C52.2057 122.301 52.0891 122.701 52.0891 123.221V125.781H51.0291ZM60.7892 119.881C60.5892 119.881 60.4226 119.821 60.2892 119.701C60.1626 119.575 60.0992 119.418 60.0992 119.231C60.0992 119.045 60.1626 118.891 60.2892 118.771C60.4226 118.645 60.5892 118.581 60.7892 118.581C60.9892 118.581 61.1526 118.645 61.2792 118.771C61.4126 118.891 61.4792 119.045 61.4792 119.231C61.4792 119.418 61.4126 119.575 61.2792 119.701C61.1526 119.821 60.9892 119.881 60.7892 119.881ZM60.2592 125.781V120.821H61.3192V125.781H60.2592ZM64.7985 125.781C64.3119 125.781 63.9252 125.665 63.6385 125.431C63.3519 125.191 63.2085 124.768 63.2085 124.161V121.711H62.3585V120.821H63.2085L63.3385 119.561H64.2685V120.821H65.6685V121.711H64.2685V124.161C64.2685 124.435 64.3252 124.625 64.4385 124.731C64.5585 124.831 64.7619 124.881 65.0485 124.881H65.6185V125.781H64.7985Z"
+                                fill="white" />
+                        </svg>
+
+
+
+
+                        <h2>Internship Vacancy</h2>
+                        <p>
+                            Internships offer students practical workplace experience, bridging the gap between academic
+                            studies and professional careers.
+                        </p>
+                        <button mat-button type="button" routerLink="/admin/wil/create-vacancy"
+                            [queryParams]="{ company_id: employerProfile._id }" class="theme_btn btn_primary"
+                            data-dismiss="modal">Select</button>
+                    </div>
+
+                    <div class=" add-company-box">
+                        <svg width="116" height="153" viewBox="0 0 116 153" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <rect x="2.03809" y="2" width="111.925" height="148.927" rx="12" fill="#ECEDFF"
+                                stroke="#2B2A35" stroke-width="4" />
+                            <path
+                                d="M4.03809 14C4.03809 8.47715 8.51524 4 14.0381 4H101.963C107.485 4 111.963 8.47715 111.963 14V24.0431H4.03809V14Z"
+                                fill="#464BA8" />
+                            <rect x="22.5381" y="61.8125" width="70.9218" height="3.08356" rx="1.54178"
+                                fill="#464BA8" />
+                            <rect x="22.5381" y="79.5469" width="24.6685" height="3.08356" rx="1.54178"
+                                fill="#464BA8" />
+                            <rect x="22.5381" y="70.2969" width="24.6685" height="3.08356" rx="1.54178"
+                                fill="#464BA8" />
+                            <rect x="23.0381" y="116.281" width="27.9586" height="13.6469" rx="6.82345" fill="white"
+                                stroke="#464BA8" />
+                            <path
+                                d="M27.4247 126.125V119.125H29.8747C30.4213 119.125 30.8747 119.218 31.2347 119.405C31.5947 119.585 31.8613 119.835 32.0347 120.155C32.2147 120.468 32.3047 120.825 32.3047 121.225C32.3047 121.605 32.218 121.955 32.0447 122.275C31.878 122.588 31.6147 122.838 31.2547 123.025C30.8947 123.212 30.4347 123.305 29.8747 123.305H28.4847V126.125H27.4247ZM28.4847 122.435H29.8247C30.3247 122.435 30.6813 122.328 30.8947 122.115C31.1147 121.895 31.2247 121.598 31.2247 121.225C31.2247 120.838 31.1147 120.538 30.8947 120.325C30.6813 120.105 30.3247 119.995 29.8247 119.995H28.4847V122.435ZM33.3124 126.125V121.165H34.2624L34.3524 122.105C34.5257 121.778 34.7657 121.522 35.0724 121.335C35.3857 121.142 35.7624 121.045 36.2024 121.045V122.155H35.9124C35.6191 122.155 35.3557 122.205 35.1224 122.305C34.8957 122.398 34.7124 122.562 34.5724 122.795C34.4391 123.022 34.3724 123.338 34.3724 123.745V126.125H33.3124ZM39.2945 126.245C38.8078 126.245 38.3745 126.138 37.9945 125.925C37.6212 125.705 37.3278 125.402 37.1145 125.015C36.9012 124.628 36.7945 124.178 36.7945 123.665C36.7945 123.145 36.8978 122.688 37.1045 122.295C37.3178 121.902 37.6112 121.595 37.9845 121.375C38.3645 121.155 38.8045 121.045 39.3045 121.045C39.7912 121.045 40.2145 121.155 40.5745 121.375C40.9345 121.588 41.2145 121.875 41.4145 122.235C41.6145 122.595 41.7145 122.992 41.7145 123.425C41.7145 123.492 41.7112 123.565 41.7045 123.645C41.7045 123.718 41.7012 123.802 41.6945 123.895H37.8345C37.8678 124.375 38.0245 124.742 38.3045 124.995C38.5912 125.242 38.9212 125.365 39.2945 125.365C39.5945 125.365 39.8445 125.298 40.0445 125.165C40.2512 125.025 40.4045 124.838 40.5045 124.605H41.5645C41.4312 125.072 41.1645 125.462 40.7645 125.775C40.3712 126.088 39.8812 126.245 39.2945 126.245ZM39.2945 121.915C38.9412 121.915 38.6278 122.022 38.3545 122.235C38.0812 122.442 37.9145 122.755 37.8545 123.175H40.6545C40.6345 122.788 40.4978 122.482 40.2445 122.255C39.9912 122.028 39.6745 121.915 39.2945 121.915ZM44.009 126.125L42.149 121.165H43.259L44.639 125.115L46.019 121.165H47.119L45.269 126.125H44.009Z"
+                                fill="#464BA8" />
+                            <rect x="64.1709" y="115.781" width="28.9586" height="14.6469" rx="7.32345"
+                                fill="#464BA8" />
+                            <path
+                                d="M68.3885 126.125V119.125H69.4485L72.9585 124.395V119.125H74.0185V126.125H72.9585L69.4485 120.855V126.125H68.3885ZM77.7193 126.245C77.2326 126.245 76.7993 126.138 76.4193 125.925C76.046 125.705 75.7526 125.402 75.5393 125.015C75.326 124.628 75.2193 124.178 75.2193 123.665C75.2193 123.145 75.3226 122.688 75.5293 122.295C75.7426 121.902 76.036 121.595 76.4093 121.375C76.7893 121.155 77.2293 121.045 77.7293 121.045C78.216 121.045 78.6393 121.155 78.9993 121.375C79.3593 121.588 79.6393 121.875 79.8393 122.235C80.0393 122.595 80.1393 122.992 80.1393 123.425C80.1393 123.492 80.136 123.565 80.1293 123.645C80.1293 123.718 80.126 123.802 80.1193 123.895H76.2593C76.2926 124.375 76.4493 124.742 76.7293 124.995C77.016 125.242 77.346 125.365 77.7193 125.365C78.0193 125.365 78.2693 125.298 78.4693 125.165C78.676 125.025 78.8293 124.838 78.9293 124.605H79.9893C79.856 125.072 79.5893 125.462 79.1893 125.775C78.796 126.088 78.306 126.245 77.7193 126.245ZM77.7193 121.915C77.366 121.915 77.0526 122.022 76.7793 122.235C76.506 122.442 76.3393 122.755 76.2793 123.175H79.0793C79.0593 122.788 78.9226 122.482 78.6693 122.255C78.416 122.028 78.0993 121.915 77.7193 121.915ZM80.4662 126.125L82.2262 123.645L80.4662 121.165H81.5962L82.9262 123.065L84.2462 121.165H85.3862L83.6262 123.645L85.3862 126.125H84.2462L82.9262 124.225L81.5962 126.125H80.4662ZM88.3289 126.125C87.8423 126.125 87.4556 126.008 87.1689 125.775C86.8823 125.535 86.7389 125.112 86.7389 124.505V122.055H85.8889V121.165H86.7389L86.8689 119.905H87.7989V121.165H89.1989V122.055H87.7989V124.505C87.7989 124.778 87.8556 124.968 87.9689 125.075C88.0889 125.175 88.2923 125.225 88.5789 125.225H89.1489V126.125H88.3289Z"
+                                fill="white" />
+                        </svg>
+
+
+
+
+                        <h2>Project Vacancy</h2>
+                        <p>
+                            Students apply academic knowledge to real-world challenges through company-sponsored
+                            projects, gaining hands-on industry experience.
+                        </p>
+                        <button mat-button type="button" routerLink="/admin/wil/create-project"
+                            [queryParams]="{ company_id: employerProfile._id }" class="theme_btn btn_primary"
+                            data-dismiss="modal">Select</button>
+                    </div>
+                </div>
+            </div>
+            <!-- <div class="modal-footer justify-content-around">
+        <button mat-button type="button" class="theme_btn btn_outline_primary"
+            data-dismiss="modal">Cancel</button>
+        <button mat-button type="submit" class="theme_btn btn_primary" (click)="addToPlacementGroup()" [disabled]="placemenGroupIds.length === 0" data-dismiss="modal">Add</button>
+    </div> -->
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade bsModal ch_modal" id="archiveDialog" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" mat-icon-button id="closeModal" class="close" data-dismiss="modal"
+                    aria-label="Close">
+                    <mat-icon>close</mat-icon>
+                </button>
+            </div>
+            <div class="modal-body pt-3 active_deactive_modal">
+                <h4>Are you sure you want to archive this vacancy?</h4>
+                <p>Students will not be able to view & apply to this</p>
+            </div>
+            <div class="modal-footer justify-content-center">
+                    <button mat-button class="theme_btn btn_outline_primary mr-3" data-dismiss="modal">No</button>
+                    <button mat-button class="theme_btn btn_primary" data-dismiss="modal" data-toggle="modal"
+                    data-target="#archiveDialogConfirm" (click)="updateVacanciesStatus('inactive');">Yes</button>    
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade bsModal ch_modal done_modal_popup" id="archiveDialogConfirm" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+            </div>
+            <div class="modal-body text-center">
+                <h2>{{selectedJob?.job_title ? selectedJob?.job_title : 'Vacancies' }} has been archived.</h2>
+            </div>
+            <div class="modal-footer justify-content-center">
+                <button mat-button class="theme_btn btn_primary" (click)="resetCheckbox()" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade bsModal ch_modal done_modal_popup" id="republishDialog" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+            </div>
+            <div class="modal-body text-center">
+                <h2>Are you sure you want to publish this vacancy?</h2>
+            </div>
+            <div class="modal-footer justify-content-center">
+                <button mat-button class="theme_btn btn_outline_primary mr-3" data-dismiss="modal">No</button>
+                <button mat-button class="theme_btn btn_primary" data-dismiss="modal" data-toggle="modal"
+                    data-target="#republishDialogConfirm" (click)="updateVacanciesStatus('active');">Yes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade bsModal ch_modal done_modal_popup" id="republishDialogConfirm" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+            </div>
+            <div class="modal-body text-center">
+                <h2>{{selectedJob?.job_title ? selectedJob?.job_title : 'Vacancies'}} has been re-published.</h2>
+            </div>
+            <div class="modal-footer justify-content-center">
+                <button mat-button class="theme_btn btn_primary" (click)="resetCheckbox()" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>

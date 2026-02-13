@@ -1,0 +1,762 @@
+<div class="details_card">
+    <div class="details_card_header pt-0">
+    </div>
+    <div class="details_card_body p-0">
+        <mat-tab-group animationDuration="0ms" class="mat_tab_bordred">
+            <mat-tab>
+                <ng-template mat-tab-label>Pending <span
+                        class="mat_label_count">{{studentsApprovalTasktodo.length}}</span></ng-template>
+                <ul class="approvals_card_list">
+                    <li *ngFor="let item of studentsApprovalTasktodo; let i=index;">
+                        <div class="approvals_card">
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <p>{{item.task_name}}
+
+                                        <a *ngIf="item?.task_type === 'attachments'" target="_blank"
+                                            [href]="item?.attachments?.url" class="link">{{item?.attachments?.name}}</a>
+
+                                        <a *ngIf="item?.task_type === 'form'" data-toggle="modal"
+                                            data-target="#previewMultiStepPageModalApprovaltab" class
+                                            (click)="getSelectedTask(item); initializeSign();"><svg width="13"
+                                                height="13" viewBox="0 0 13 13" fill="none"
+                                                xmlns="http://www.w3.org/2000/svg">
+                                                <path
+                                                    d="M7.58464 1.08398H3.2513C2.96398 1.08398 2.68843 1.19812 2.48527 1.40129C2.28211 1.60445 2.16797 1.88 2.16797 2.16732V10.834C2.16797 11.1213 2.28211 11.3969 2.48527 11.6C2.68843 11.8032 2.96398 11.9173 3.2513 11.9173H9.7513C10.0386 11.9173 10.3142 11.8032 10.5173 11.6C10.7205 11.3969 10.8346 11.1213 10.8346 10.834V4.33398L7.58464 1.08398Z"
+                                                    stroke="#2B2A35" stroke-linecap="round" stroke-linejoin="round" />
+                                                <path d="M7.58203 1.08398V4.33398H10.832" stroke="#2B2A35"
+                                                    stroke-linecap="round" stroke-linejoin="round" />
+                                                <path d="M8.66536 7.04102H4.33203" stroke="#2B2A35"
+                                                    stroke-linecap="round" stroke-linejoin="round" />
+                                                <path d="M8.66536 9.20898H4.33203" stroke="#2B2A35"
+                                                    stroke-linecap="round" stroke-linejoin="round" />
+                                                <path d="M5.41536 4.875H4.8737H4.33203" stroke="#2B2A35"
+                                                    stroke-linecap="round" stroke-linejoin="round" />
+                                            </svg>{{item?.form_title}}</a>
+
+                                    </p>
+                                </div>
+                                <div class="col-md-4 text-right">
+                                    <div>
+                                        <span class="date">Uploaded {{item.updated_at | date:'dd/MM/YYYY'}}</span>
+                                        <!-- <button mat-icon-button><svg width="35" height="35" viewBox="0 0 35 35"
+                                                fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <circle cx="17.5" cy="17.5" r="17.5" fill="#F8F8F8" />
+                                                <path d="M24.6221 11.2734L13.6221 22.2734L8.62207 17.2734"
+                                                    stroke="#26C296" stroke-width="2" stroke-linecap="round"
+                                                    stroke-linejoin="round" />
+                                            </svg>
+                                        </button>
+                                        <button mat-icon-button><svg width="35" height="35" viewBox="0 0 35 35"
+                                                fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <circle cx="17.5" cy="17.5" r="17.5" fill="#F8F8F8" />
+                                                <path d="M23.1689 11L11.1689 23" stroke="#F47761" stroke-width="2"
+                                                    stroke-linecap="round" stroke-linejoin="round" />
+                                                <path d="M11.1689 11L23.1689 23" stroke="#F47761" stroke-width="2"
+                                                    stroke-linecap="round" stroke-linejoin="round" />
+                                            </svg>
+                                        </button> -->
+
+                                        <!-- && item?.completion_criteria != 'Student Uploads Document' -->
+                                        <ng-container
+                                            *ngIf="item?.completion_criteria != 'Watch Video' && item?.completion_criteria != 'Staff Attaches Documents for Student Review'">
+
+                                            <button mat-icon-button [matMenuTriggerFor]="menu" class="td-btn">
+                                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                                    xmlns="http://www.w3.org/2000/svg">
+                                                    <path
+                                                        d="M4 12C4 12.2652 4.10536 12.5196 4.29289 12.7071C4.48043 12.8946 4.73478 13 5 13C5.26522 13 5.51957 12.8946 5.70711 12.7071C5.89464 12.5196 6 12.2652 6 12C6 11.7348 5.89464 11.4804 5.70711 11.2929C5.51957 11.1054 5.26522 11 5 11C4.73478 11 4.48043 11.1054 4.29289 11.2929C4.10536 11.4804 4 11.7348 4 12ZM11 12C11 12.2652 11.1054 12.5196 11.2929 12.7071C11.4804 12.8946 11.7348 13 12 13C12.2652 13 12.5196 12.8946 12.7071 12.7071C12.8946 12.5196 13 12.2652 13 12C13 11.7348 12.8946 11.4804 12.7071 11.2929C12.5196 11.1054 12.2652 11 12 11C11.7348 11 11.4804 11.1054 11.2929 11.2929C11.1054 11.4804 11 11.7348 11 12ZM18 12C18 12.2652 18.1054 12.5196 18.2929 12.7071C18.4804 12.8946 18.7348 13 19 13C19.2652 13 19.5196 12.8946 19.7071 12.7071C19.8946 12.5196 20 12.2652 20 12C20 11.7348 19.8946 11.4804 19.7071 11.2929C19.5196 11.1054 19.2652 11 19 11C18.7348 11 18.4804 11.1054 18.2929 11.2929C18.1054 11.4804 18 11.7348 18 12Z"
+                                                        stroke="#2B2A35" stroke-width="2" stroke-linecap="round"
+                                                        stroke-linejoin="round" />
+                                                </svg>
+
+                                            </button>
+                                            <mat-menu #menu="matMenu" class="td-menu">
+                                                <a *ngIf="item?.task_type !== 'attachments' && item?.task_type !== 'Video'"
+                                                    mat-menu-item data-toggle="modal"
+                                                    data-target="#previewMultiStepPageModalApprovaltab"
+                                                    (click)="getSelectedTask(item); initializeSign();">
+                                                    <span>View</span>
+                                                </a>
+                                                <a *ngIf="item?.task_type === 'Video'" mat-menu-item
+                                                    (click)="getSelectedTaskVideo(item);">
+                                                    <span>View</span>
+                                                </a>
+                                                <a *ngIf="item?.task_type === 'attachments'" target="_blank"
+                                                    [href]="item?.attachments?.url" mat-menu-item>
+                                                    <span>Download</span>
+                                                </a>
+                                            </mat-menu>
+                                        </ng-container>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </li>
+                    <!-- <li>
+                        <div class="approvals_card">
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <p>Login to Placement Hive & complete Placement Type Selection <svg width="2"
+                                            height="3" viewBox="0 0 2 3" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path
+                                                d="M1.0055 2.44C0.738833 2.44 0.514833 2.35467 0.3335 2.184C0.162833 2.00267 0.0775 1.784 0.0775 1.528C0.0775 1.26133 0.162833 1.04267 0.3335 0.872C0.514833 0.701333 0.738833 0.616 1.0055 0.616C1.2615 0.616 1.47483 0.701333 1.6455 0.872C1.82683 1.04267 1.9175 1.26133 1.9175 1.528C1.9175 1.784 1.82683 2.00267 1.6455 2.184C1.47483 2.35467 1.2615 2.44 1.0055 2.44Z"
+                                                fill="#2B2A35" />
+                                        </svg> <span><svg width="13" height="13" viewBox="0 0 13 13" fill="none"
+                                                xmlns="http://www.w3.org/2000/svg">
+                                                <path
+                                                    d="M7.58366 1.08398H3.25033C2.96301 1.08398 2.68746 1.19812 2.48429 1.40129C2.28113 1.60445 2.16699 1.88 2.16699 2.16732V10.834C2.16699 11.1213 2.28113 11.3969 2.48429 11.6C2.68746 11.8032 2.96301 11.9173 3.25033 11.9173H9.75033C10.0376 11.9173 10.3132 11.8032 10.5164 11.6C10.7195 11.3969 10.8337 11.1213 10.8337 10.834V4.33398L7.58366 1.08398Z"
+                                                    stroke="#2B2A35" stroke-linecap="round" stroke-linejoin="round" />
+                                                <path d="M7.58301 1.08398V4.33398H10.833" stroke="#2B2A35"
+                                                    stroke-linecap="round" stroke-linejoin="round" />
+                                                <path d="M8.66634 7.04102H4.33301" stroke="#2B2A35"
+                                                    stroke-linecap="round" stroke-linejoin="round" />
+                                                <path d="M8.66634 9.20898H4.33301" stroke="#2B2A35"
+                                                    stroke-linecap="round" stroke-linejoin="round" />
+                                                <path d="M5.41634 4.875H4.87467H4.33301" stroke="#2B2A35"
+                                                    stroke-linecap="round" stroke-linejoin="round" />
+                                            </svg>
+                                            Placement Type Selection (PTS)</span></p>
+                                </div>
+                                <div class="col-md-4 text-right">
+                                    <div>
+                                        <span class="date">Uploaded 24/06/23</span>
+                                        <button mat-icon-button><svg width="35" height="35" viewBox="0 0 35 35"
+                                                fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <circle cx="17.5" cy="17.5" r="17.5" fill="#F8F8F8" />
+                                                <path d="M24.6221 11.2734L13.6221 22.2734L8.62207 17.2734"
+                                                    stroke="#26C296" stroke-width="2" stroke-linecap="round"
+                                                    stroke-linejoin="round" />
+                                            </svg>
+                                        </button>
+                                        <button mat-icon-button><svg width="35" height="35" viewBox="0 0 35 35"
+                                                fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <circle cx="17.5" cy="17.5" r="17.5" fill="#F8F8F8" />
+                                                <path d="M23.1689 11L11.1689 23" stroke="#F47761" stroke-width="2"
+                                                    stroke-linecap="round" stroke-linejoin="round" />
+                                                <path d="M11.1689 11L23.1689 23" stroke="#F47761" stroke-width="2"
+                                                    stroke-linecap="round" stroke-linejoin="round" />
+                                            </svg>
+                                        </button>
+                                        <button mat-icon-button [matMenuTriggerFor]="menu" class="td-btn">
+                                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                                xmlns="http://www.w3.org/2000/svg">
+                                                <path
+                                                    d="M4 12C4 12.2652 4.10536 12.5196 4.29289 12.7071C4.48043 12.8946 4.73478 13 5 13C5.26522 13 5.51957 12.8946 5.70711 12.7071C5.89464 12.5196 6 12.2652 6 12C6 11.7348 5.89464 11.4804 5.70711 11.2929C5.51957 11.1054 5.26522 11 5 11C4.73478 11 4.48043 11.1054 4.29289 11.2929C4.10536 11.4804 4 11.7348 4 12ZM11 12C11 12.2652 11.1054 12.5196 11.2929 12.7071C11.4804 12.8946 11.7348 13 12 13C12.2652 13 12.5196 12.8946 12.7071 12.7071C12.8946 12.5196 13 12.2652 13 12C13 11.7348 12.8946 11.4804 12.7071 11.2929C12.5196 11.1054 12.2652 11 12 11C11.7348 11 11.4804 11.1054 11.2929 11.2929C11.1054 11.4804 11 11.7348 11 12ZM18 12C18 12.2652 18.1054 12.5196 18.2929 12.7071C18.4804 12.8946 18.7348 13 19 13C19.2652 13 19.5196 12.8946 19.7071 12.7071C19.8946 12.5196 20 12.2652 20 12C20 11.7348 19.8946 11.4804 19.7071 11.2929C19.5196 11.1054 19.2652 11 19 11C18.7348 11 18.4804 11.1054 18.2929 11.2929C18.1054 11.4804 18 11.7348 18 12Z"
+                                                    stroke="#2B2A35" stroke-width="2" stroke-linecap="round"
+                                                    stroke-linejoin="round" />
+                                            </svg>
+
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </li>
+                    <li>
+                        <div class="approvals_card">
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <p>Login to Placement Hive & complete Placement Type Selection <svg width="2"
+                                            height="3" viewBox="0 0 2 3" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path
+                                                d="M1.0055 2.44C0.738833 2.44 0.514833 2.35467 0.3335 2.184C0.162833 2.00267 0.0775 1.784 0.0775 1.528C0.0775 1.26133 0.162833 1.04267 0.3335 0.872C0.514833 0.701333 0.738833 0.616 1.0055 0.616C1.2615 0.616 1.47483 0.701333 1.6455 0.872C1.82683 1.04267 1.9175 1.26133 1.9175 1.528C1.9175 1.784 1.82683 2.00267 1.6455 2.184C1.47483 2.35467 1.2615 2.44 1.0055 2.44Z"
+                                                fill="#2B2A35" />
+                                        </svg> <span><a href="#">mwatson_resume.pdf</a></span></p>
+                                </div>
+                                <div class="col-md-4 text-right">
+                                    <div>
+                                        <span class="date">Uploaded 24/06/23</span>
+                                        <button mat-icon-button><svg width="35" height="35" viewBox="0 0 35 35"
+                                                fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <circle cx="17.5" cy="17.5" r="17.5" fill="#F8F8F8" />
+                                                <path d="M24.6221 11.2734L13.6221 22.2734L8.62207 17.2734"
+                                                    stroke="#26C296" stroke-width="2" stroke-linecap="round"
+                                                    stroke-linejoin="round" />
+                                            </svg>
+                                        </button>
+                                        <button mat-icon-button><svg width="35" height="35" viewBox="0 0 35 35"
+                                                fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <circle cx="17.5" cy="17.5" r="17.5" fill="#F8F8F8" />
+                                                <path d="M23.1689 11L11.1689 23" stroke="#F47761" stroke-width="2"
+                                                    stroke-linecap="round" stroke-linejoin="round" />
+                                                <path d="M11.1689 11L23.1689 23" stroke="#F47761" stroke-width="2"
+                                                    stroke-linecap="round" stroke-linejoin="round" />
+                                            </svg>
+                                        </button>
+                                        <button mat-icon-button [matMenuTriggerFor]="menu" class="td-btn">
+                                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                                xmlns="http://www.w3.org/2000/svg">
+                                                <path
+                                                    d="M4 12C4 12.2652 4.10536 12.5196 4.29289 12.7071C4.48043 12.8946 4.73478 13 5 13C5.26522 13 5.51957 12.8946 5.70711 12.7071C5.89464 12.5196 6 12.2652 6 12C6 11.7348 5.89464 11.4804 5.70711 11.2929C5.51957 11.1054 5.26522 11 5 11C4.73478 11 4.48043 11.1054 4.29289 11.2929C4.10536 11.4804 4 11.7348 4 12ZM11 12C11 12.2652 11.1054 12.5196 11.2929 12.7071C11.4804 12.8946 11.7348 13 12 13C12.2652 13 12.5196 12.8946 12.7071 12.7071C12.8946 12.5196 13 12.2652 13 12C13 11.7348 12.8946 11.4804 12.7071 11.2929C12.5196 11.1054 12.2652 11 12 11C11.7348 11 11.4804 11.1054 11.2929 11.2929C11.1054 11.4804 11 11.7348 11 12ZM18 12C18 12.2652 18.1054 12.5196 18.2929 12.7071C18.4804 12.8946 18.7348 13 19 13C19.2652 13 19.5196 12.8946 19.7071 12.7071C19.8946 12.5196 20 12.2652 20 12C20 11.7348 19.8946 11.4804 19.7071 11.2929C19.5196 11.1054 19.2652 11 19 11C18.7348 11 18.4804 11.1054 18.2929 11.2929C18.1054 11.4804 18 11.7348 18 12Z"
+                                                    stroke="#2B2A35" stroke-width="2" stroke-linecap="round"
+                                                    stroke-linejoin="round" />
+                                            </svg>
+
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </li> -->
+                </ul>
+            </mat-tab>
+            <mat-tab>
+                <ng-template mat-tab-label>Accepted <span
+                        class="mat_label_count">{{studentsApprovalTaskapprove.length}}</span></ng-template>
+                <ul class="approvals_card_list">
+                    <li *ngFor="let item of studentsApprovalTaskapprove; let i=index;">
+                        <div class="approvals_card">
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <p>
+                                        <span *ngIf="item?.task_type === 'attachments'">
+                                            {{item.task_name}}
+                                        </span>
+                                        <span *ngIf="item?.task_type === 'Video'" (click)="getSelectedTaskVideo(item);">
+                                            {{item.task_name}}
+                                        </span>
+
+
+                                        <a *ngIf="item?.task_type === 'attachments'" target="_blank"
+                                            [href]="item?.attachments?.url" class="link">{{item?.attachments?.name}}</a>
+
+                                        <a *ngIf="item?.task_type === 'form'" data-toggle="modal"
+                                            data-target="#previewMultiStepPageModalApprovaltab" class
+                                            (click)="getSelectedTask(item); initializeSign();"><svg width="13"
+                                                height="13" viewBox="0 0 13 13" fill="none"
+                                                xmlns="http://www.w3.org/2000/svg">
+                                                <path
+                                                    d="M7.58464 1.08398H3.2513C2.96398 1.08398 2.68843 1.19812 2.48527 1.40129C2.28211 1.60445 2.16797 1.88 2.16797 2.16732V10.834C2.16797 11.1213 2.28211 11.3969 2.48527 11.6C2.68843 11.8032 2.96398 11.9173 3.2513 11.9173H9.7513C10.0386 11.9173 10.3142 11.8032 10.5173 11.6C10.7205 11.3969 10.8346 11.1213 10.8346 10.834V4.33398L7.58464 1.08398Z"
+                                                    stroke="#2B2A35" stroke-linecap="round" stroke-linejoin="round" />
+                                                <path d="M7.58203 1.08398V4.33398H10.832" stroke="#2B2A35"
+                                                    stroke-linecap="round" stroke-linejoin="round" />
+                                                <path d="M8.66536 7.04102H4.33203" stroke="#2B2A35"
+                                                    stroke-linecap="round" stroke-linejoin="round" />
+                                                <path d="M8.66536 9.20898H4.33203" stroke="#2B2A35"
+                                                    stroke-linecap="round" stroke-linejoin="round" />
+                                                <path d="M5.41536 4.875H4.8737H4.33203" stroke="#2B2A35"
+                                                    stroke-linecap="round" stroke-linejoin="round" />
+                                            </svg>{{item?.form_title}}</a>
+                                    </p>
+                                </div>
+                                <div class="col-md-4 text-right">
+                                    <div>
+                                        <span class="date">Approved {{item.updated_at | date:'dd/MM/YYYY'}}</span>
+                                        <ng-container
+                                            *ngIf="item?.completion_criteria != 'Watch Video' && item?.completion_criteria != 'Staff Attaches Documents for Student Review'">
+
+
+
+                                            <button
+                                                *ngIf="item?.task_type !== 'attachments' && item?.task_type !== 'Video'"
+                                                mat-icon-button data-toggle="modal"
+                                                data-target="#previewMultiStepPageModalApprovaltab"
+                                                (click)="getSelectedTask(item); initializeSign();"><svg width="35"
+                                                    height="35" viewBox="0 0 35 35" fill="none"
+                                                    xmlns="http://www.w3.org/2000/svg">
+                                                    <circle cx="17.5" cy="17.5" r="17.5" fill="#F8F8F8" />
+                                                    <path
+                                                        d="M7 18C7 18 11 10 18 10C25 10 29 18 29 18C29 18 25 26 18 26C11 26 7 18 7 18Z"
+                                                        stroke="#2B2A35" stroke-width="1.5" stroke-linecap="round"
+                                                        stroke-linejoin="round" />
+                                                    <path
+                                                        d="M18 21C19.6569 21 21 19.6569 21 18C21 16.3431 19.6569 15 18 15C16.3431 15 15 16.3431 15 18C15 19.6569 16.3431 21 18 21Z"
+                                                        stroke="#2B2A35" stroke-width="1.5" stroke-linecap="round"
+                                                        stroke-linejoin="round" />
+                                                </svg>
+
+                                            </button>
+
+                                            <button *ngIf="item?.task_type === 'Video'" mat-icon-button
+                                                (click)="getSelectedTaskVideo(item);"><svg width="35" height="35"
+                                                    viewBox="0 0 35 35" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <circle cx="17.5" cy="17.5" r="17.5" fill="#F8F8F8" />
+                                                    <path
+                                                        d="M7 18C7 18 11 10 18 10C25 10 29 18 29 18C29 18 25 26 18 26C11 26 7 18 7 18Z"
+                                                        stroke="#2B2A35" stroke-width="1.5" stroke-linecap="round"
+                                                        stroke-linejoin="round" />
+                                                    <path
+                                                        d="M18 21C19.6569 21 21 19.6569 21 18C21 16.3431 19.6569 15 18 15C16.3431 15 15 16.3431 15 18C15 19.6569 16.3431 21 18 21Z"
+                                                        stroke="#2B2A35" stroke-width="1.5" stroke-linecap="round"
+                                                        stroke-linejoin="round" />
+                                                </svg>
+
+                                            </button>
+                                            <a *ngIf="item?.task_type === 'attachments'" target="_blank"
+                                                [href]="item?.attachments?.url" mat-icon-button>
+
+                                                <svg width="35" height="35" viewBox="0 0 35 35" fill="none"
+                                                    xmlns="http://www.w3.org/2000/svg">
+                                                    <circle cx="17.5" cy="17.5" r="17.5" fill="#F8F8F8" />
+                                                    <path
+                                                        d="M26.125 20.375V24.2083C26.125 24.7167 25.9231 25.2042 25.5636 25.5636C25.2042 25.9231 24.7167 26.125 24.2083 26.125H10.7917C10.2833 26.125 9.79582 25.9231 9.43638 25.5636C9.07693 25.2042 8.875 24.7167 8.875 24.2083V20.375"
+                                                        stroke="#2B2A35" stroke-width="1.5" stroke-linecap="round"
+                                                        stroke-linejoin="round" />
+                                                    <path d="M12.708 15.582L17.4997 20.3737L22.2913 15.582"
+                                                        stroke="#2B2A35" stroke-width="1.5" stroke-linecap="round"
+                                                        stroke-linejoin="round" />
+                                                    <path d="M17.5 20.375V8.875" stroke="#2B2A35" stroke-width="1.5"
+                                                        stroke-linecap="round" stroke-linejoin="round" />
+                                                </svg>
+
+                                            </a>
+                                        </ng-container>
+
+
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </li>
+                    <!-- <li>
+                        <div class="approvals_card">
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <p>Upload signed Insurance document <svg width="2" height="3" viewBox="0 0 2 3"
+                                            fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path
+                                                d="M1.0055 2.44C0.738833 2.44 0.514833 2.35467 0.3335 2.184C0.162833 2.00267 0.0775 1.784 0.0775 1.528C0.0775 1.26133 0.162833 1.04267 0.3335 0.872C0.514833 0.701333 0.738833 0.616 1.0055 0.616C1.2615 0.616 1.47483 0.701333 1.6455 0.872C1.82683 1.04267 1.9175 1.26133 1.9175 1.528C1.9175 1.784 1.82683 2.00267 1.6455 2.184C1.47483 2.35467 1.2615 2.44 1.0055 2.44Z"
+                                                fill="#2B2A35" />
+                                        </svg> <span>
+                                            <a href="#">michelle_insurance(1).pdf </a></span></p>
+                                </div>
+                                <div class="col-md-4 text-right">
+                                    <div>
+                                        <span class="date">Approved 24/06/23</span>
+                                        <button mat-icon-button><svg width="35" height="35" viewBox="0 0 35 35"
+                                                fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <circle cx="17.5" cy="17.5" r="17.5" fill="#F8F8F8" />
+                                                <path
+                                                    d="M7 18C7 18 11 10 18 10C25 10 29 18 29 18C29 18 25 26 18 26C11 26 7 18 7 18Z"
+                                                    stroke="#2B2A35" stroke-width="1.5" stroke-linecap="round"
+                                                    stroke-linejoin="round" />
+                                                <path
+                                                    d="M18 21C19.6569 21 21 19.6569 21 18C21 16.3431 19.6569 15 18 15C16.3431 15 15 16.3431 15 18C15 19.6569 16.3431 21 18 21Z"
+                                                    stroke="#2B2A35" stroke-width="1.5" stroke-linecap="round"
+                                                    stroke-linejoin="round" />
+                                            </svg>
+
+                                        </button>
+                                        <button mat-icon-button><svg width="35" height="35" viewBox="0 0 35 35"
+                                                fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <circle cx="17.5" cy="17.5" r="17.5" fill="#F8F8F8" />
+                                                <path
+                                                    d="M26.125 20.375V24.2083C26.125 24.7167 25.9231 25.2042 25.5636 25.5636C25.2042 25.9231 24.7167 26.125 24.2083 26.125H10.7917C10.2833 26.125 9.79582 25.9231 9.43638 25.5636C9.07693 25.2042 8.875 24.7167 8.875 24.2083V20.375"
+                                                    stroke="#2B2A35" stroke-width="1.5" stroke-linecap="round"
+                                                    stroke-linejoin="round" />
+                                                <path d="M12.708 15.582L17.4997 20.3737L22.2913 15.582" stroke="#2B2A35"
+                                                    stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                                <path d="M17.5 20.375V8.875" stroke="#2B2A35" stroke-width="1.5"
+                                                    stroke-linecap="round" stroke-linejoin="round" />
+                                            </svg>
+
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </li> -->
+                </ul>
+
+            </mat-tab>
+            <mat-tab>
+                <ng-template mat-tab-label>Declined <span
+                        class="mat_label_count">{{studentsApprovalTaskdeclined.length}}</span></ng-template>
+                <ul class="approvals_card_list">
+                    <li *ngFor="let item of studentsApprovalTaskdeclined; let i=index;">
+                        <div class="approvals_card">
+                            <div class="row">
+                                <div class="col-md-7">
+                                    <p>
+                                        <span *ngIf="item?.task_type === 'attachments'">
+                                            {{item.task_name}}
+                                        </span>
+                                        <span *ngIf="item?.task_type === 'Video'" (click)="getSelectedTaskVideo(item);">
+                                            {{item.task_name}}
+                                        </span>
+
+                                        <a *ngIf="item?.task_type === 'attachments'" target="_blank"
+                                            [href]="item?.attachments?.url" class="link">{{item?.attachments?.name}}</a>
+
+                                        <ng-container
+                                            *ngIf="item?.completion_criteria != 'Watch Video' && item?.completion_criteria != 'Staff Attaches Documents for Student Review'">
+                                            <a *ngIf="item?.task_type === 'form'" data-toggle="modal"
+                                                data-target="#previewMultiStepPageModalApprovaltab" class
+                                                (click)="getSelectedTask(item); initializeSign();"><svg width="13"
+                                                    height="13" viewBox="0 0 13 13" fill="none"
+                                                    xmlns="http://www.w3.org/2000/svg">
+                                                    <path
+                                                        d="M7.58464 1.08398H3.2513C2.96398 1.08398 2.68843 1.19812 2.48527 1.40129C2.28211 1.60445 2.16797 1.88 2.16797 2.16732V10.834C2.16797 11.1213 2.28211 11.3969 2.48527 11.6C2.68843 11.8032 2.96398 11.9173 3.2513 11.9173H9.7513C10.0386 11.9173 10.3142 11.8032 10.5173 11.6C10.7205 11.3969 10.8346 11.1213 10.8346 10.834V4.33398L7.58464 1.08398Z"
+                                                        stroke="#2B2A35" stroke-linecap="round"
+                                                        stroke-linejoin="round" />
+                                                    <path d="M7.58203 1.08398V4.33398H10.832" stroke="#2B2A35"
+                                                        stroke-linecap="round" stroke-linejoin="round" />
+                                                    <path d="M8.66536 7.04102H4.33203" stroke="#2B2A35"
+                                                        stroke-linecap="round" stroke-linejoin="round" />
+                                                    <path d="M8.66536 9.20898H4.33203" stroke="#2B2A35"
+                                                        stroke-linecap="round" stroke-linejoin="round" />
+                                                    <path d="M5.41536 4.875H4.8737H4.33203" stroke="#2B2A35"
+                                                        stroke-linecap="round" stroke-linejoin="round" />
+                                                </svg>{{item?.form_title}}</a>
+
+                                        </ng-container>
+                                    </p>
+                                </div>
+                                <div class="col-md-5 text-right">
+                                    <div>
+                                        <span class="date">Declined {{item.updated_at | date:'dd/MM/YYYY'}}</span>
+
+                                        <!-- <button *ngIf="item?.task_type !== 'attachments' && item?.task_type !== 'Video'" mat-icon-button data-toggle="modal"
+                                            data-target="#previewMultiStepPageModalApprovaltab"
+                                            (click)="getSelectedTask(item); initializeSign();"><svg width="35"
+                                                height="35" viewBox="0 0 35 35"
+                                                fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <circle cx="17.5" cy="17.5" r="17.5" fill="#F8F8F8" />
+                                                <path
+                                                    d="M7 18C7 18 11 10 18 10C25 10 29 18 29 18C29 18 25 26 18 26C11 26 7 18 7 18Z"
+                                                    stroke="#2B2A35" stroke-width="1.5" stroke-linecap="round"
+                                                    stroke-linejoin="round" />
+                                                <path
+                                                    d="M18 21C19.6569 21 21 19.6569 21 18C21 16.3431 19.6569 15 18 15C16.3431 15 15 16.3431 15 18C15 19.6569 16.3431 21 18 21Z"
+                                                    stroke="#2B2A35" stroke-width="1.5" stroke-linecap="round"
+                                                    stroke-linejoin="round" />
+                                            </svg>
+
+                                        </button> -->
+
+                                        <button *ngIf="item?.task_type === 'Video'" mat-icon-button
+                                            (click)="getSelectedTaskVideo(item);"><svg width="35" height="35"
+                                                viewBox="0 0 35 35" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <circle cx="17.5" cy="17.5" r="17.5" fill="#F8F8F8" />
+                                                <path
+                                                    d="M7 18C7 18 11 10 18 10C25 10 29 18 29 18C29 18 25 26 18 26C11 26 7 18 7 18Z"
+                                                    stroke="#2B2A35" stroke-width="1.5" stroke-linecap="round"
+                                                    stroke-linejoin="round" />
+                                                <path
+                                                    d="M18 21C19.6569 21 21 19.6569 21 18C21 16.3431 19.6569 15 18 15C16.3431 15 15 16.3431 15 18C15 19.6569 16.3431 21 18 21Z"
+                                                    stroke="#2B2A35" stroke-width="1.5" stroke-linecap="round"
+                                                    stroke-linejoin="round" />
+                                            </svg>
+
+                                        </button>
+
+
+                                        <button *ngIf="item?.task_type !== 'attachments' && item?.task_type !== 'Video'"
+                                            mat-icon-button data-toggle="modal"
+                                            data-target="#previewMultiStepPageModalApprovaltab" class
+                                            (click)="getSelectedTask(item); initializeSign();"><svg width="35"
+                                                height="35" viewBox="0 0 35 35" fill="none"
+                                                xmlns="http://www.w3.org/2000/svg">
+                                                <circle cx="17.5" cy="17.5" r="17.5" fill="#F8F8F8" />
+                                                <path
+                                                    d="M7 18C7 18 11 10 18 10C25 10 29 18 29 18C29 18 25 26 18 26C11 26 7 18 7 18Z"
+                                                    stroke="#2B2A35" stroke-width="1.5" stroke-linecap="round"
+                                                    stroke-linejoin="round" />
+                                                <path
+                                                    d="M18 21C19.6569 21 21 19.6569 21 18C21 16.3431 19.6569 15 18 15C16.3431 15 15 16.3431 15 18C15 19.6569 16.3431 21 18 21Z"
+                                                    stroke="#2B2A35" stroke-width="1.5" stroke-linecap="round"
+                                                    stroke-linejoin="round" />
+                                            </svg>
+
+                                        </button>
+                                        <button mat-icon-button (click)="item.showComments = !item.showComments;">
+
+                                            <svg *ngIf="!item.showComments" width="18" height="8" viewBox="0 0 18 8"
+                                                fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M1 1L9 7L17 1" stroke="#2B2A35" stroke-width="2"
+                                                    stroke-linecap="round" stroke-linejoin="round" />
+                                            </svg>
+
+                                            <svg *ngIf="item.showComments" width="18" height="8" viewBox="0 0 18 8"
+                                                fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M17 7L9 1L1 7" stroke="#2B2A35" stroke-width="2"
+                                                    stroke-linecap="round" stroke-linejoin="round" />
+                                            </svg>
+
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <div *ngIf="item.showComments">
+                                    {{item.comment}}
+                                </div>
+                            </div>
+
+                        </div>
+                    </li>
+                    <!-- <li>
+                        <div class="approvals_card">
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <p>Upload signed Insurance document <svg width="2" height="3" viewBox="0 0 2 3"
+                                            fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path
+                                                d="M1.0055 2.44C0.738833 2.44 0.514833 2.35467 0.3335 2.184C0.162833 2.00267 0.0775 1.784 0.0775 1.528C0.0775 1.26133 0.162833 1.04267 0.3335 0.872C0.514833 0.701333 0.738833 0.616 1.0055 0.616C1.2615 0.616 1.47483 0.701333 1.6455 0.872C1.82683 1.04267 1.9175 1.26133 1.9175 1.528C1.9175 1.784 1.82683 2.00267 1.6455 2.184C1.47483 2.35467 1.2615 2.44 1.0055 2.44Z"
+                                                fill="#2B2A35" />
+                                        </svg> <span>
+                                            <a href="#">michelle_insurance(1).pdf </a></span></p>
+                                </div>
+                                <div class="col-md-4 text-right">
+                                    <div>
+                                        <span class="date">Declined 25/06/23</span>
+                                        <button mat-icon-button><svg width="35" height="35" viewBox="0 0 35 35"
+                                                fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <circle cx="17.5" cy="17.5" r="17.5" fill="#F8F8F8" />
+                                                <path
+                                                    d="M7 18C7 18 11 10 18 10C25 10 29 18 29 18C29 18 25 26 18 26C11 26 7 18 7 18Z"
+                                                    stroke="#2B2A35" stroke-width="1.5" stroke-linecap="round"
+                                                    stroke-linejoin="round" />
+                                                <path
+                                                    d="M18 21C19.6569 21 21 19.6569 21 18C21 16.3431 19.6569 15 18 15C16.3431 15 15 16.3431 15 18C15 19.6569 16.3431 21 18 21Z"
+                                                    stroke="#2B2A35" stroke-width="1.5" stroke-linecap="round"
+                                                    stroke-linejoin="round" />
+                                            </svg>
+
+                                        </button>
+                                        <button (click)="comment()" mat-icon-button>
+                                            <svg *ngIf="showComments" width="18" height="8" viewBox="0 0 18 8"
+                                                fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M17 7L9 1L1 7" stroke="#2B2A35" stroke-width="2"
+                                                    stroke-linecap="round" stroke-linejoin="round" />
+                                            </svg>
+
+                                            <svg *ngIf="!showComments" width="18" height="8"
+                                                viewBox="0 0 18 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M1 1L9 7L17 1" stroke="#2B2A35" stroke-width="2"
+                                                    stroke-linecap="round" stroke-linejoin="round" />
+                                            </svg>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="comments_container" *ngIf="showComments">
+                                <h6>Your Comment</h6>
+                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Tellus viverra semper lacus
+                                    nunc iaculis tellus purus suscipit. Malesuada nunc, nunc rhoncus quam sit et cras
+                                    eget. Placerat justo, molestie blandit risus, nisi at. In in sit risus, dui,
+                                    ultricies sollicitudin velit viverra.</p>
+                            </div>
+                        </div>
+                    </li> -->
+                </ul>
+            </mat-tab>
+        </mat-tab-group>
+    </div>
+
+</div>
+
+<div id="previewMultiStepPageModalApprovaltab" class="modal bsModal ch_modal fade multi_preview" tabindex="-1"
+    role="dialog">
+    <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <!-- <h2 class="modal-title" id="exampleModalLabel">{{selectedTask?.form_title}}</h2> -->
+                <button mat-icon-button class="close" aria-label="Close" data-dismiss="modal">
+                    <mat-icon>close</mat-icon>
+                </button>
+            </div>
+            <div class="modal-body">
+                <ng-container *ngIf="selectedTask">
+                    <app-preview-forms *ngIf="selectedTask" [type]="'student'"
+                        [selectedTask]="selectedTask"></app-preview-forms>
+                </ng-container>
+            </div>
+            <div class="modal-footer justify-content-center">
+                <button mat-button class="theme_btn btn_outline_primary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div bsModal #previewVideoInterview="bs-modal" id="previewVideoInterview"
+    class="modal bsModal ch_modal fade multi_preview" tabindex="-1" role="dialog"
+    aria-labelledby="previewVideoInterview" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false"
+    [config]="{ backdrop: 'static', keyboard: false }">
+    <div class="modal-dialog modal-dialog-centered modal-xl" role="document" style="max-width: 900px;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <!-- <p *ngIf="selectedTask && selectedTask.status!='to_do'">show</p>
+                <p *ngIf="selectedTask && selectedTask.status=='to_do'">hide</p> -->
+                <h2 class="modal-title" id="exampleModalLabel">{{selectedTask?.task_name}}</h2>
+                <button mat-icon-button class="close" aria-label="Close" data-dismiss="modal"
+                    (click)="this.safeVideoUrl = null;previewVideoInterview.hide()">
+                    <mat-icon>close</mat-icon>
+                </button>
+            </div>
+            <div class="modal-body">
+                <section>
+                    <div class="preview_form_card_student p-0 mt-0">
+                        <div class="mod_groups user-image pl-0 text-hidden">
+                            <div class="avatar">
+                                <img *ngIf="selectedTask?.image" [src]="selectedTask?.image" alt="woolworths">
+                                <div class="profile" *ngIf="!selectedTask?.image">
+                                    <span style="color: #fff">
+
+                                        <!-- {{ selectedTask?.first_name ? selectedTask?.first_name.split('')[0] : '' }}
+                                    {{ selectedTask?.last_name ? selectedTask?.last_name.split('')[0] : '' }} -->
+                                        {{ selectedTask?.student_name ? selectedTask?.student_name?.split(' ')[0][0]
+                                        : '' }} {{selectedTask?.student_name ? selectedTask?.student_name?.split('
+                                        ')[0][1] : '' }}
+                                    </span>
+                                </div>
+                            </div>
+                            <div>
+                                <span class="pb-2">{{selectedTask?.student_name}}</span>
+                                <p>{{selectedTask?.StudentCode || ''}}</p>
+                            </div>
+
+
+                        </div>
+                        <div class="d-flex align-items-center video">
+                            <iframe *ngIf="safeVideoUrl" width="560" height="315" [src]="safeVideoUrl"
+                                title="YouTube video player" frameborder="0"
+                                referrerpolicy="strict-origin-when-cross-origin"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"></iframe>
+
+                            <p>{{selectedTask?.video_url}}</p>
+                        </div>
+                    </div>
+
+                    <div class="charts p-0 mt-3 position-relative">
+
+                        <div class="video-iframe">
+                            <div class="row p-2">
+                                <div class="video-iframe">
+                                    <div class="row p-2">
+                                        <div [ngClass]="selectedTask?.feedback ? 'col-6' : 'col-12'">
+                                            <div class="d-flex align-items-center justify-content-between">
+                                                <h2 class="heading m-0">Ratings</h2>
+                                                <div class="tab-right-content">
+                                                    Overall Ratings: {{ overallRating }} of 5
+                                                </div>
+                                            </div>
+                                            <div class="d-flex align-items-center justify-content-center w-100"
+                                                style="height:300px">
+                                                <canvas baseChart [data]="radarChartData" [options]="radarChartOptions"
+                                                    [type]="radarChartType">
+                                                </canvas>
+                                            </div>
+                                        </div>
+                                        <div class="col-6" *ngIf="selectedTask?.feedback">
+                                            <h2 class="heading">Feedback</h2>
+                                            <div class="p-content">
+                                                {{selectedTask?.feedback}}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- <mat-tab-group animationDuration="0ms" class="mat_tab_bordred position-relative">
+                            <mat-tab>
+                                <ng-template mat-tab-label>
+                                    Ratings
+                                </ng-template>
+
+                      
+                                <div class="row p-2" style="min-height: 400px;align-items: center;margin: 10px;overflow: hidden;">
+                                    <div class="col-6">
+                                        <div style="display: block; width: 100%; margin: auto;">
+                                        <canvas baseChart
+                                                    [data]="radarChartData"
+                                                    [options]="radarChartOptions"
+                                                    [type]="radarChartType">
+                                            </canvas>
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="rating-container">
+
+                                           <div class="rating-row" *ngFor="let item of ratings">
+                                            <label class="label">{{ item.label }}</label>
+
+                                            <mat-slider 
+                                                class="custom-slider read-only-slider"
+                                                min="0" max="5" step="1" discrete 
+                                                [ngStyle]="{ '--slider-color': getColor(item.value) }">
+                                                <input 
+                                                matSliderThumb 
+                                                [(ngModel)]="item.value" 
+                                                (ngModelChange)="updateChart()" disabled />
+                                            </mat-slider>
+
+
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </mat-tab>
+                            <mat-tab>
+                                <ng-template mat-tab-label>
+                                    Feedback
+                                </ng-template>
+                                <div class="row m-3">
+                                    <div class="col-md-12">
+                                       <div class="p-content">
+                                            {{selectedTask?.feedback}}
+                                        </div>
+                                    </div>
+                                </div>
+                            </mat-tab>
+                        </mat-tab-group>
+                         <div class="tab-right-content"> 
+                                Overall Ratings: {{ overallRating }} of 5
+                         </div> -->
+                    </div>
+
+                    <div class="submitted-by-form">
+
+                        <p class="error-validation" *ngIf="is_rating"> Please provide a rating prior to approval</p>
+
+                        <p class="border-name" *ngIf="selectedTask?.student_name">{{selectedTask?.student_name}}
+                            submitted this task on {{selectedTask?.student_submitted_at | date: 'dd/MM/yyyy HH:mm:ss
+                            a'}}</p>
+                        <p class="border-name" *ngIf="selectedTask?.employer_name">{{selectedTask?.employer_name}}
+                            submitted this task on {{selectedTask?.employer_submitted_at | date: 'dd/MM/yyyy HH:mm:ss
+                            a'}}</p>
+
+
+                        <p class="border-name" *ngIf="selectedTask?.staff_name">{{selectedTask?.staff_name}}
+                            {{selectedTask?.move_back ? "modified this task on" :"submitted this task on"}}
+                            {{selectedTask?.staff_submitted_at | date: 'dd/MM/yyyy HH:mm:ss a'}}</p>
+
+
+                        <p class="border-name" *ngIf="selectedTask?.move_back_user_name">
+                            {{selectedTask?.move_back_user_name}} Move back this task on {{selectedTask?.move_back_date
+                            | date: 'dd/MM/yyyy HH:mm:ss a'}}</p>
+
+
+                    </div>
+
+
+                    <div class="modal-footer justify-content-center">
+                        <!-- <button mat-button class="theme_btn btn_danger" *ngIf="selectedTask?.status !== 'declined'" data-dismiss="modal" data-toggle="modal" data-target="#disApprove"  (click)="this.safeVideoUrl = null;previewVideoInterview.hide()">Disapprove</button> -->
+
+                        <button mat-button class="theme_btn btn_primary" data-dismiss="modal"
+                            (click)="this.safeVideoUrl = null;previewVideoInterview.hide()">Close</button>
+                        <!-- checApproveTaskIsResume(); -->
+                        <!-- data-dismiss="modal" -->
+                        <!-- <button mat-button class="theme_btn btn_success" *ngIf="selectedTask?.status !== 'approve'" (click)="this.safeVideoUrl = null;submitVideoInterview();" >Approve</button> -->
+                    </div>
+                </section>
+            </div>
+
+            <!-- <a *ngxPermissionsOnly="['My_Tasks_Write']" mat-menu-item class="success" (click)="checApproveTaskIsResume()">
+                <span>Approve</span>
+            </a>
+            <a *ngxPermissionsOnly="['My_Tasks_Write']" mat-menu-item class="danger" data-toggle="modal" data-target="#disApprove">
+                <span>Disapprove</span>
+            </a> -->
+
+
+        </div>
+    </div>
+</div>

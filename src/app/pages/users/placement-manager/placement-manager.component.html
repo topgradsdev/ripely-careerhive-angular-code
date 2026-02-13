@@ -1,0 +1,178 @@
+<div class="page_header">
+    <a routerLink="/admin/users/user-group" class="back_Link"> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+            viewBox="0 0 24 24" fill="none">
+            <path d="M19 12H5" stroke="#464BA8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M12 19L5 12L12 5" stroke="#464BA8" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round" />
+        </svg> Back to User Groups</a>
+    <div class=" page_header_container">
+        <div>
+            <h4>Edit User Group </h4>
+        </div>
+    </div>
+</div>
+<section [formGroup]="userGroupForm">
+    <div class="row">
+        <div class="col-md-7">
+            <div class="form-group group_name">
+                <label>Group Name*</label>
+                <input type="text" placeholder="" class="form-control" formControlName="group_name">
+                <div *ngIf="userGroupForm.get('group_name') && (userGroupForm.get('group_name')?.touched || userGroupForm.get('group_name')?.dirty) && userGroupForm.get('group_name')?.invalid && userGroupForm.get('group_name')?.errors?.required" class="invalid-feedback">
+                  Please enter group name
+                </div>
+                <!-- <ng-select [searchable]="false" [multiple]="false" bindLabel="name" bindValue="id"
+                    [clearable]="false" placeholder="Select a User Group">
+                    <ng-option value="Career Advisor">Career Advisor</ng-option>
+                    <ng-option value="Event Manager">Event Manager</ng-option>
+                    <ng-option value="IT Manager">IT Manager</ng-option>
+                    <ng-option value="IT Support">IT Support</ng-option>
+                </ng-select> -->
+            </div>
+            <!-- <div class="permissions_form">
+                <div class="form-group">
+                    <button mat-button class="theme_btn btn_primary w-100">Copy</button>
+                </div>
+            </div> -->
+            <div class="permissions_List">
+                <div class="row permissions_list_head">
+                    <div class="col-5 pl-5">Navigation</div>
+                    <div class="col-3">Read</div>
+                    <div class="col-4">Write</div>
+                </div>
+                <div class="permissions_list_card">
+                    <div class="row" *ngFor="let permission of permissions">
+                        <div class="col-5 pl-5">{{permission.title}}</div>
+                        <div class="col-3"> <mat-slide-toggle class="custom_switch" [(ngModel)]="permission.is_view" [ngModelOptions]="{standalone: true}" (change)="addPermission('read', permission)"></mat-slide-toggle></div>
+                        <div class="col-4"> <mat-slide-toggle class="custom_switch" [(ngModel)]="permission.is_write" [ngModelOptions]="{standalone: true}" (change)="addPermission('write', permission)"></mat-slide-toggle></div>
+                    </div>
+                    <div *ngIf="userGroupForm.get('permissions') && (userGroupForm.get('permissions')?.touched || userGroupForm.get('permissions')?.dirty) && userGroupForm.get('permissions')?.invalid && userGroupForm.get('permissions')?.errors?.required" class="invalid-feedback">
+                        Please select permissions
+                    </div>
+                    <!-- <div class="row">
+                        <div class="col-5 pl-5">Student</div>
+                        <div class="col-3"> <mat-slide-toggle class="custom_switch"></mat-slide-toggle></div>
+                        <div class="col-4"> <mat-slide-toggle class="custom_switch"></mat-slide-toggle></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-5 pl-5">WIL (includes My Tasks)</div>
+                        <div class="col-3"> <mat-slide-toggle class="custom_switch"></mat-slide-toggle></div>
+                        <div class="col-4"> <mat-slide-toggle class="custom_switch"></mat-slide-toggle></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-5 pl-5">Jobs</div>
+                        <div class="col-3"> <mat-slide-toggle class="custom_switch"></mat-slide-toggle></div>
+                        <div class="col-4"> <mat-slide-toggle class="custom_switch"></mat-slide-toggle></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-5 pl-5">Form Builder</div>
+                        <div class="col-3"> <mat-slide-toggle class="custom_switch"></mat-slide-toggle></div>
+                        <div class="col-4"> <mat-slide-toggle class="custom_switch"></mat-slide-toggle></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-5 pl-5">Email Templates</div>
+                        <div class="col-3"> <mat-slide-toggle class="custom_switch"></mat-slide-toggle></div>
+                        <div class="col-4"> <mat-slide-toggle class="custom_switch"></mat-slide-toggle></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-5 pl-5">Analytics</div>
+                        <div class="col-3"> <mat-slide-toggle class="custom_switch"></mat-slide-toggle></div>
+                        <div class="col-4"> <mat-slide-toggle class="custom_switch"></mat-slide-toggle></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-5 pl-5">Courses</div>
+                        <div class="col-3"> <mat-slide-toggle class="custom_switch"></mat-slide-toggle></div>
+                        <div class="col-4"> <mat-slide-toggle class="custom_switch"></mat-slide-toggle></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-5 pl-5">Articles</div>
+                        <div class="col-3"> <mat-slide-toggle class="custom_switch"></mat-slide-toggle></div>
+                        <div class="col-4"> <mat-slide-toggle class="custom_switch"></mat-slide-toggle></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-5 pl-5">Appointments</div>
+                        <div class="col-3"> <mat-slide-toggle class="custom_switch"></mat-slide-toggle></div>
+                        <div class="col-4"> <mat-slide-toggle class="custom_switch"></mat-slide-toggle></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-5 pl-5">Events</div>
+                        <div class="col-3"> <mat-slide-toggle class="custom_switch"></mat-slide-toggle></div>
+                        <div class="col-4"> <mat-slide-toggle class="custom_switch"></mat-slide-toggle></div>
+                    </div> -->
+                </div>
+                <!-- <div class="permissions_list_card">
+                    <div class="row">
+                        <div class="col-5 pl-5">Jobs</div>
+                        <div class="col-3"> <mat-slide-toggle class="custom_switch"></mat-slide-toggle></div>
+                        <div class="col-4"> 
+                            <div class="d-flex justify-content-between align-items-center">
+                                <mat-slide-toggle class="custom_switch"></mat-slide-toggle>
+                            <button mat-icon-button class="toggle_btn" (click)="collapsToggle()" [ngClass]="showCollapes ? 'show' : ''">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40" fill="none">
+                                    <path d="M10 15L20 25L30 15" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                  </svg>
+                            </button>
+                            </div>
+                        </div>
+                    </div>
+                    <ng-container *ngIf="showCollapes">
+                        <div class="row">
+                            <div class="col-5 pl-5">Job Postings</div>
+                            <div class="col-3"> <mat-slide-toggle class="custom_switch"></mat-slide-toggle></div>
+                            <div class="col-4"> <mat-slide-toggle class="custom_switch"></mat-slide-toggle></div>
+                        </div>
+                        <div class="row">
+                            <div class="col-5 pl-5">Job Shadow</div>
+                            <div class="col-3"> <mat-slide-toggle class="custom_switch"></mat-slide-toggle></div>
+                            <div class="col-4"> <mat-slide-toggle class="custom_switch"></mat-slide-toggle></div>
+                        </div>
+                        <div class="row">
+                            <div class="col-5 pl-5">Employers</div>
+                            <div class="col-3"> <mat-slide-toggle class="custom_switch"></mat-slide-toggle></div>
+                            <div class="col-4"> <mat-slide-toggle class="custom_switch"></mat-slide-toggle></div>
+                        </div>
+                    </ng-container>
+                </div> -->
+            </div>
+        </div>
+        <!-- <div class="col-md-5">
+            <div class="form-group">
+                <label>Group Color*</label>
+                <div class="color_picker_container">
+                    <div class="d-flex flex-column align-items-center">
+                        <div class="color_picker">
+                            <label for="pick">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                    fill="none">
+                                    <path
+                                        d="M11 7.00002L17 13M4 16L15.7 4.30002C15.8869 4.11679 16.1382 4.01416 16.4 4.01416C16.6618 4.01416 16.9131 4.11679 17.1 4.30002L19.7 6.90002C19.8832 7.08695 19.9859 7.33826 19.9859 7.60002C19.9859 7.86177 19.8832 8.11309 19.7 8.30002L8 20H4V16Z"
+                                        stroke="black" stroke-linecap="round" stroke-linejoin="round" />
+                                </svg>
+                            </label>
+                            <input type="color" id="pick" class="color_pick" value="#ECEDFF" />
+                        </div>
+                        <small>Current Color</small>
+                    </div>
+                    <div class="statick_colors">
+                        <span style="background-color: #26C296;"></span>
+                        <span style="background-color: #702F8B;"></span>
+                        <span style="background-color: #65DAB9;"></span>
+                        <span style="background-color: #7378DC;"></span>
+                        <span style="background-color: #A0616A;"></span>
+                        <span style="background-color: #9A9A9A;"></span>
+
+                        <span style="background-color: #FFD569;"></span>
+                        <span style="background-color: #9747FF;"></span>
+                        <span style="background-color: #27AE60;"></span>
+                        <span style="background-color: #ED893E;"></span>
+                        <span style="background-color: #F25094;"></span>
+                        <span style="background-color: #202C76;"></span>
+                    </div>
+                </div>
+            </div>
+        </div> -->
+        <div class="col-md-12 foot_btn">
+            <button mat-button class="theme_btn btn_primary mr-5" [disabled]="userGroupForm.invalid" (click)="updateUserGroup()">Save Changes</button>
+            <button mat-button class="theme_btn btn_outline_primary" (click)="resetChanges()">Reset Changes</button>
+        </div>
+    </div>
+</section>

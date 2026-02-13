@@ -1,0 +1,953 @@
+<div *ngIf="prePlacementWorkFlow.length > 0 && isAllTaskCompleted"
+    class="alert alert_success custom_alert alert-dismissible fade show" role="alert">
+    <div class="alert_body">
+        <div class="content">
+            <h4><svg class="mr-2" width="20" height="26" viewBox="0 0 20 26" fill="none"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path
+                        d="M14.8897 2.50586H17.3349C17.9834 2.50586 18.6053 2.76985 19.0639 3.23977C19.5225 3.70968 19.7801 4.34703 19.7801 5.01159V22.5517C19.7801 23.2162 19.5225 23.8536 19.0639 24.3235C18.6053 24.7934 17.9834 25.0574 17.3349 25.0574H2.66392C2.01542 25.0574 1.39348 24.7934 0.934922 24.3235C0.476365 23.8536 0.21875 23.2162 0.21875 22.5517V5.01159C0.21875 4.34703 0.476365 3.70968 0.934922 3.23977C1.39348 2.76985 2.01542 2.50586 2.66392 2.50586H5.10908"
+                        fill="#26C296" />
+                    <path fill-rule="evenodd" clip-rule="evenodd"
+                        d="M6.33196 0H13.6675C14.3427 0 14.89 0.560926 14.89 1.25286V3.75859C14.89 4.45053 14.3427 5.01146 13.6675 5.01146H6.33196C5.65674 5.01146 5.10938 4.45053 5.10938 3.75859V1.25286C5.10938 0.560926 5.65674 0 6.33196 0ZM7.75 1H12.25C12.6642 1 13 1.33579 13 1.75V3.25C13 3.66421 12.6642 4 12.25 4H7.75C7.33579 4 7 3.66421 7 3.25V1.75C7 1.33579 7.33579 1 7.75 1Z"
+                        fill="#26C296" />
+                    <path d="M17 8.72656L8.0625 17.7266L4 13.6357" stroke="white" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+                Congratulations! You have completed all pre-placement tasks.</h4>
+            <p>
+                <!-- Your placement has been confirmed, and you can proceed with the Ongoing tasks required by that company. -->
+                <a (click)="goToOngoingTab()">Start your ongoing tasks</a>
+            </p>
+        </div>
+    </div>
+    <button mat-icon-button class="close" data-dismiss="alert" aria-label="Close">
+        <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M1 1L13.9529 13.9538" stroke="#26C296" stroke-width="2" />
+            <path d="M14 1.04688L1.04709 14.0007" stroke="#26C296" stroke-width="2" />
+        </svg>
+
+    </button>
+</div>
+<!-- 'alert_approve': getFirstWord(contactForm.get('contacts')?.value[0]?.first_name) === 'John',
+    'alert_reject': getFirstWord(contactForm.get('contacts')?.value[0]?.first_name) === 'John' -->
+
+<ng-container *ngIf="studentProfile?.is_publish">
+    <div class="alert alert_info custom_alert alert-dismissible fade show"
+        *ngIf="studentProfile?.is_self_source && studentProfile?.self_sourced_status!='done'" [ngClass]="{
+  'alert_info': ['company_creation', 'company_already_exists', 'company_pending']
+    .includes(studentProfile?.self_sourced_status),
+
+  'alert_reject': ['company_declined']
+    .includes(studentProfile?.self_sourced_status),
+
+  'alert_approve': ['company_success']
+    .includes(studentProfile?.self_sourced_status)
+}" role="alert">
+        <div class="onboading_company">
+            <div class="svg">
+                <svg width="47" height="48" viewBox="0 0 47 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path
+                        d="M23.4998 44C34.3154 44 43.0832 35.0457 43.0832 24C43.0832 12.9543 34.3154 4 23.4998 4C12.6843 4 3.9165 12.9543 3.9165 24C3.9165 35.0457 12.6843 44 23.4998 44Z"
+                        stroke="#464BA8" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+                    <path d="M23.5 32V24" stroke="#464BA8" stroke-width="4" stroke-linecap="round"
+                        stroke-linejoin="round" />
+                    <path d="M23.5 16H23.5188" stroke="#464BA8" stroke-width="4" stroke-linecap="round"
+                        stroke-linejoin="round" />
+                </svg>
+
+            </div>
+            <div class="content start d-flex justify-content-between align-items-center flex-row" *ngIf="studentProfile?.self_sourced_status=='company_creation'">
+                <div>
+                    <h3>Action Needed: Register a Company to Proceed</h3>
+                    <p class="m-0" style="margin: 0px !important;">
+                        You'll need to onboard a company as part of your internship process before moving forward.
+                    </p>
+                </div>
+                <button mat-button class="theme_btn btn_primary"
+                    [routerLink]="['/student/my-placements/company-onboard']">Register Company</button>
+            </div>
+
+            <div class="content reject" *ngIf="studentProfile?.self_sourced_status=='company_declined'">
+                <h3>Your Company’s Registration has been declined</h3>
+                <p>
+                    An email has been sent to indicate this decision. Please speak with a staff member for further
+                    instructions.
+                </p>
+            </div>
+
+            <div class="content approve" *ngIf="studentProfile?.self_sourced_status=='company_success'">
+                <h3>Your Company’s Registration has been approved!</h3>
+                <p>
+                    You can now proceed with the next tasks.
+                </p>
+            </div>
+            <div class="content already d-flex justify-content-between align-items-center"
+                *ngIf="studentProfile?.self_sourced_status=='company_already_exists'">
+                <div>
+                    <h3>Action Needed: Contact Staff About Registered Company</h3>
+                    <p>
+                        You’ve selected a company that’s already registered. Please speak with a staff member to
+                        continue your placement process.
+                    </p>
+                </div>
+                <button (click)="callUpdate()" mat-button class="theme_btn btn_primary">I Have Already
+                    Contacted</button>
+                <!-- [routerLink]="['/student/my-placements/onboarding-company']" -->
+            </div>
+            <div class="content done" *ngIf="studentProfile?.self_sourced_status=='company_pending'">
+                <div>
+                    <h3>Company Registration Pending</h3>
+                    <p>
+                        An invitation has been sent to the company contact. You’ll be able to continue once they have
+                        registered and get approved. To expedite this process, please follow up with the nominated
+                        contact.
+                    </p>
+                </div>
+            </div>
+        </div>
+         <button mat-icon-button  (click)="callUpdate()"  class="close" data-dismiss="alert" aria-label="Close">
+            <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M1 1L13.9529 13.9538" stroke="#26C296" stroke-width="2" />
+                <path d="M14 1.04688L1.04709 14.0007" stroke="#26C296" stroke-width="2" />
+            </svg>
+
+        </button>
+    </div>
+</ng-container>
+
+<div *ngIf="!loader && prePlacementWorkFlow.length === 0" class="no_data">
+    <svg width="126" height="101" viewBox="0 0 126 101" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <g clip-path="url(#clip0_15421_144016)">
+            <path
+                d="M95.371 100.164L11.656 100.194C7.45041 100.195 3.68314 98.0061 1.57906 94.3383C0.526894 92.5041 0.000693685 90.4921 6.85071e-07 88.4797C-0.000692315 86.4676 0.52438 84.455 1.57504 82.6203L43.4059 5.91899C45.5077 2.24948 49.2735 0.0581061 53.4791 0.0566414C57.6848 0.0551766 61.452 2.24393 63.5564 5.91197L105.445 82.5937C106.495 84.4229 107.02 86.4326 107.02 88.4437C107.02 90.4548 106.495 92.4672 105.444 94.3021C103.342 97.9713 99.5766 100.163 95.371 100.164ZM1.0523 88.4783C1.05217 90.31 10.2898 86.363 11.2468 88.0314C13.1611 91.3683 7.82944 99.1373 11.6557 99.136C11.6557 99.136 102.623 97.1118 104.534 93.7736C105.49 92.1045 105.968 90.2734 105.967 88.4428C105.967 86.6122 105.488 84.7817 104.531 83.1133L62.6416 6.43154C60.7327 3.10425 57.3057 1.1129 53.4795 1.11423C49.655 1.11557 1.05245 86.6464 1.0523 88.4783Z"
+                fill="#3F3D56" />
+            <path
+                d="M77.9031 83.2491C99.0694 83.2491 116.228 65.9664 116.228 44.647C116.228 23.3277 99.0694 6.04492 77.9031 6.04492C56.7368 6.04492 39.5781 23.3277 39.5781 44.647C39.5781 65.9664 56.7368 83.2491 77.9031 83.2491Z"
+                fill="#464BA8" />
+            <path
+                d="M76.3835 53.0815L69.5859 23.488L74.9271 22.3555L80.5508 52.198L76.3835 53.0815ZM81.0564 64.2961C80.0781 64.5035 79.191 64.3645 78.3948 63.8791C77.6296 63.3462 77.1488 62.6099 76.9525 61.6702C76.7561 60.7305 76.9055 59.8811 77.4006 59.1219C77.9267 58.3152 78.6789 57.8082 79.6572 57.6008C80.5963 57.4017 81.4484 57.5685 82.2136 58.1014C83.0098 58.5868 83.506 59.2994 83.7024 60.2391C83.8988 61.1788 83.7339 62.052 83.2078 62.8586C82.7127 63.6178 81.9955 64.097 81.0564 64.2961Z"
+                fill="white" />
+        </g>
+        <defs>
+            <clippath id="clip0_15421_144016">
+                <rect width="126" height="101" fill="white" />
+            </clippath>
+        </defs>
+    </svg>
+    <h3>You currently don’t have any placements!</h3>
+    <p>Check back later to see if your Placement Coordinator will assign you a placement.</p>
+</div>
+<div class="row" *ngIf="prePlacementWorkFlow.length > 0">
+    <div class="col-md-12">
+        <div class="icon_with_title">
+            <svg width="45" height="45" viewBox="0 0 45 45" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="22.5" cy="22.5" r="22.5" fill="#26C296" />
+                <path
+                    d="M26.5 13.25H28.75C29.3467 13.25 29.919 13.4871 30.341 13.909C30.7629 14.331 31 14.9033 31 15.5V31.25C31 31.8467 30.7629 32.419 30.341 32.841C29.919 33.2629 29.3467 33.5 28.75 33.5H15.25C14.6533 33.5 14.081 33.2629 13.659 32.841C13.2371 32.419 13 31.8467 13 31.25V15.5C13 14.9033 13.2371 14.331 13.659 13.909C14.081 13.4871 14.6533 13.25 15.25 13.25H17.5"
+                    stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                <path
+                    d="M25.375 11H18.625C18.0037 11 17.5 11.5037 17.5 12.125V14.375C17.5 14.9963 18.0037 15.5 18.625 15.5H25.375C25.9963 15.5 26.5 14.9963 26.5 14.375V12.125C26.5 11.5037 25.9963 11 25.375 11Z"
+                    stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+            Task Progress
+        </div>
+        <div class="custom_dash_card">
+            <div class="custom_dash_card_body task_progress_body">
+                <div class="activity_list">
+                    <div class="activity_card_container" *ngFor="let task of prePlacementWorkFlow; let i = index;">
+                        <div *ngIf="task.status == 'declined'" class="declined-icon">
+                            <svg width="2" height="10" viewBox="0 0 2 10" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path
+                                    d="M0.328609 6.348L0.160609 0.599999H1.80461L1.62461 6.348H0.328609ZM1.01261 9.084C0.724609 9.084 0.488609 8.996 0.304609 8.82C0.128609 8.644 0.0406094 8.432 0.0406094 8.184C0.0406094 7.928 0.128609 7.712 0.304609 7.536C0.488609 7.36 0.724609 7.272 1.01261 7.272C1.28461 7.272 1.50861 7.36 1.68461 7.536C1.86861 7.712 1.96061 7.928 1.96061 8.184C1.96061 8.432 1.86861 8.644 1.68461 8.82C1.50861 8.996 1.28461 9.084 1.01261 9.084Z"
+                                    fill="white" />
+                            </svg>
+
+                        </div>
+                        <div class="status_bar"
+                            [ngClass]="task.task_status === 'lock' ? 'step_progress pending' : (task.task_status === 'pending' ? 'step_progress' : '')">
+
+                            <span *ngIf="task.task_status === 'completed'" class="bar">
+                                <svg width="19" height="14" viewBox="0 0 19 14" fill="none"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M18 1L6.3125 13L1 7.54545" stroke="white" stroke-width="2"
+                                        stroke-linecap="round" stroke-linejoin="round" />
+                                </svg>
+
+                            </span>
+                            <span *ngIf="task.task_status === 'pending'" class="bar">
+                                <svg width="25" height="25" viewBox="0 0 25 25" fill="none"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M12.5 2.08203V6.2487" stroke="white" stroke-width="2"
+                                        stroke-linecap="round" stroke-linejoin="round" />
+                                    <path d="M12.5 18.75V22.9167" stroke="white" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round" />
+                                    <path d="M5.14062 5.13477L8.08854 8.08268" stroke="white" stroke-width="2"
+                                        stroke-linecap="round" stroke-linejoin="round" />
+                                    <path d="M16.9219 16.918L19.8698 19.8659" stroke="white" stroke-width="2"
+                                        stroke-linecap="round" stroke-linejoin="round" />
+                                    <path d="M2.08594 12.5H6.2526" stroke="white" stroke-width="2"
+                                        stroke-linecap="round" stroke-linejoin="round" />
+                                    <path d="M18.75 12.5H22.9167" stroke="white" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round" />
+                                    <path d="M5.14062 19.8639L8.08854 16.916" stroke="white" stroke-width="2"
+                                        stroke-linecap="round" stroke-linejoin="round" />
+                                    <path d="M16.9219 8.08464L19.8698 5.13672" stroke="white" stroke-width="2"
+                                        stroke-linecap="round" stroke-linejoin="round" />
+                                </svg>
+
+                            </span>
+                            <span *ngIf="task.task_status === 'lock'" class="bar">
+                                <svg width="17" height="17" viewBox="0 0 17 17" fill="none"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path
+                                        d="M13.4583 7.79297H3.54167C2.75926 7.79297 2.125 8.42723 2.125 9.20964V14.168C2.125 14.9504 2.75926 15.5846 3.54167 15.5846H13.4583C14.2407 15.5846 14.875 14.9504 14.875 14.168V9.20964C14.875 8.42723 14.2407 7.79297 13.4583 7.79297Z"
+                                        stroke="#9A9A9A" stroke-linecap="round" stroke-linejoin="round" />
+                                    <path
+                                        d="M4.95801 7.79297V4.95964C4.95801 4.02033 5.33115 3.11949 5.99534 2.4553C6.65953 1.79111 7.56037 1.41797 8.49967 1.41797C9.43898 1.41797 10.3398 1.79111 11.004 2.4553C11.6682 3.11949 12.0413 4.02033 12.0413 4.95964V7.79297"
+                                        stroke="#9A9A9A" stroke-linecap="round" stroke-linejoin="round" />
+                                    <circle cx="8.5" cy="10.5" r="1.5" fill="#9A9A9A" />
+                                    <rect x="8" y="11" width="1" height="3" fill="#9A9A9A" />
+                                </svg>
+
+                            </span>
+                        </div>
+                        <div class="activity_card">
+                            <div class="activity_card_header">
+                                <div class="left ">
+                                    <div class="content"><span>{{i+1}}</span>
+                                        <p>{{task.name}}
+
+                                            &nbsp;&nbsp;<span *ngIf="task.deadline" class="deadline">
+                                                Deadline: {{task.deadline}}
+                                            </span>
+                                        </p>
+                                    </div>
+                                </div>
+                                <!-- <div class="right mr-4"
+                                    *ngIf="task.additional_criteria !='661ad55d356417e51f1fc69a' && task.additional_criteria !='661ad55d356417e51f1fc6a3' && task.additional_criteria !='67efb319cf92f3bd62b3b326' && task.additional_criteria !='67f8a8c752eced2e2cd8acd6'">
+                                    <div>Staff Status: <span>{{(task.staff_status)}}</span></div>
+                                </div> -->
+                                <div class="right">
+                                    <div class="d-inline-flex align-items-center">
+                                        <span *ngIf="task.task_status=='lock'" style="color: #9A9A9A;">Lock</span>
+
+                                        <span *ngIf="task.task_status!='lock' && (task.submission_timestamp || task.student_submitted_at) &&  task.task_display_status =='In Progress'" class="timestamp-form">
+                                             {{task.student_submitted_at? (task.student_submitted_at | date:'dd/MM/yy, hh:mm a'):(task.submission_timestamp | date:'dd/MM/yy, hh:mm a')}}
+                                        </span>
+                                        <!--  <span *ngIf="task?.task_status !== 'lock'" [ngClass]="{
+                                                'orange': task?.task_display_status === 'pending' || task?.task_display_status === 'In Progress',
+                                                'primary': task?.task_display_status === 'Awaiting Approval',
+                                                'success': (task?.task_display_status === 'Completed' || task?.task_status === 'Completed')
+                                            }">
+                                        {{ task?.task_display_status ||  task?.task_status }}
+                                        </span> -->
+
+
+                                        <span *ngIf="task?.task_status !== 'lock'" [ngClass]="{
+                                                'orange': task?.task_display_status === 'pending' || task?.task_display_status === 'In Progress',
+                                                'primary': task?.task_display_status === 'Awaiting Approval',
+                                                'success': (task?.task_display_status === 'Completed' || task?.task_status === 'Completed')
+                                            }">
+                                        {{ task?.task_display_status ||  task?.task_status }}
+                                        </span>
+
+
+                                        <!-- <span *ngIf="task.task_status!='lock'"
+                                            [ngClass]="{'orange': task.student_status === 'pending' || taskStatus(task.student_status, task) =='In Progress'}">{{taskStatus(task.student_status, task)}}</span> -->
+
+                                        <button (click)="collapsToggle(task)"
+                                            [ngClass]="task.showCollapes ? 'show' : ''" mat-icon-button><svg width="18"
+                                                height="8" viewBox="0 0 18 8" fill="none"
+                                                xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M1 1L9 7L17 1" stroke="#2B2A35" stroke-width="2"
+                                                    stroke-linecap="round" stroke-linejoin="round" />
+                                            </svg>
+                                        </button>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="activity_card_body" *ngIf="task.showCollapes">
+                                <div *ngIf="task.completion_criteria === 'Submit a Form'">
+                                    <p [innerHTML]="task.description"></p>
+
+                                    <div *ngIf="task.status == 'declined'" class="declined-open-div">
+                                        <h2>This submission was declined by a staff member</h2>
+                                        <p>You are required to review the submission and send it again &nbsp;&nbsp;
+                                            <span data-toggle="modal" data-target="#declinedModel"
+                                                (click)="selectTask=task;"> <svg width="17" height="17"
+                                                    viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <path
+                                                        d="M14.875 8.14585C14.8774 9.08076 14.659 10.003 14.2375 10.8375C13.7377 11.8375 12.9694 12.6786 12.0186 13.2666C11.0678 13.8546 9.97209 14.1663 8.85417 14.1667C7.91926 14.1691 6.997 13.9507 6.1625 13.5292L2.125 14.875L3.47083 10.8375C3.04933 10.003 2.8309 9.08076 2.83333 8.14585C2.83377 7.02793 3.14543 5.93221 3.73343 4.98141C4.32142 4.03061 5.16251 3.2623 6.1625 2.76252C6.997 2.34101 7.91926 2.12258 8.85417 2.12502H9.20833C10.6847 2.20647 12.0792 2.82964 13.1248 3.87521C14.1704 4.92078 14.7935 6.31527 14.875 7.79169V8.14585Z"
+                                                        stroke="#2B2A35" stroke-linecap="round"
+                                                        stroke-linejoin="round" />
+                                                </svg>
+
+                                                <span>View comment</span></span>
+                                        </p>
+                                    </div>
+                                    <div class="text-center">
+                                        <button
+                                            *ngIf="task.task_status === 'completed' && task.student_status === 'completed'"
+                                            mat-button class="theme_btn btn_primary"
+                                            (click)="goToStudentForm(task)">View
+                                            Submission</button>
+
+                                        <button
+                                            *ngIf="task.task_status !== 'completed' && task.student_status === 'completed'"
+                                            mat-button disabled class="theme_btn btn_primary"
+                                            (click)="goToStudentForm(task)">View
+                                            Submission</button>
+
+
+                                        <button *ngIf="task.task_status === 'pending' && task.status == 'declined'"
+                                            mat-button class="theme_btn btn_primary"
+                                            (click)="goToStudentForm(task)">Update the
+                                            Form</button>
+
+                                        <button
+                                            *ngIf="task.task_status === 'pending' && task.status != 'declined' && task.student_status !== 'completed'"
+                                            mat-button class="theme_btn btn_primary"
+                                            (click)="goToStudentForm(task)">Start the
+                                            Form</button>
+                                        <button *ngIf="task.task_status === 'lock'" mat-button
+                                            class="theme_btn btn_primary" disabled>
+                                            Start the
+                                            Form</button>
+                                    </div>
+                                </div>
+                                <div *ngIf="task.completion_criteria === 'Watch Video'"
+                                    class="d-flex flex-column justify-content-center align-items-center">
+
+                                    <div class="mb-2" [ngClass]="{'border-discription': task.description}">
+                                        <p class="m-1" [innerHTML]="task.description"></p>
+                                    </div>
+
+                                    <div *ngIf="task.status == 'declined'" class="declined-open-div">
+                                        <h2>This submission was declined by a staff member</h2>
+                                        <p>You are required to review the submission and send it again &nbsp;&nbsp;
+                                            <span data-toggle="modal" data-target="#declinedModel"
+                                                (click)="selectTask=task;"> <svg width="17" height="17"
+                                                    viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <path
+                                                        d="M14.875 8.14585C14.8774 9.08076 14.659 10.003 14.2375 10.8375C13.7377 11.8375 12.9694 12.6786 12.0186 13.2666C11.0678 13.8546 9.97209 14.1663 8.85417 14.1667C7.91926 14.1691 6.997 13.9507 6.1625 13.5292L2.125 14.875L3.47083 10.8375C3.04933 10.003 2.8309 9.08076 2.83333 8.14585C2.83377 7.02793 3.14543 5.93221 3.73343 4.98141C4.32142 4.03061 5.16251 3.2623 6.1625 2.76252C6.997 2.34101 7.91926 2.12258 8.85417 2.12502H9.20833C10.6847 2.20647 12.0792 2.82964 13.1248 3.87521C14.1704 4.92078 14.7935 6.31527 14.875 7.79169V8.14585Z"
+                                                        stroke="#2B2A35" stroke-linecap="round"
+                                                        stroke-linejoin="round" />
+                                                </svg>
+
+                                                <span>View comment</span></span>
+                                        </p>
+                                    </div>
+
+                                    <!-- <div class="video-div" *ngIf="task.safeVideoUrl">
+
+                                        <iframe [src]="task.safeVideoUrl" title="{{task.name}}" frameborder="0"
+                                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                            referrerpolicy="strict-origin-when-cross-origin" allowfullscreen
+                                            class="video-iframe"></iframe>
+                                    </div> -->
+
+                                    <div class="text-center">
+
+
+                                         <!-- <button *ngIf="task.task_status === 'completed' || task.student_status === 'completed'"
+                                            mat-button class="theme_btn btn_primary acknowledge-btn"
+                                             (click)="goToStudentVideo(task)">Watch Video</button>
+                                        <button *ngIf="task.task_status === 'pending' && task.status == 'declined'"
+                                            mat-button class="theme_btn btn_primary"
+                                            (click)="goToStudentVideo(task)">Watch Video</button>
+
+                                        <button
+                                            *ngIf="task.task_status === 'pending' && task.status != 'declined' && task.student_status != 'completed'"
+                                            mat-button class="theme_btn btn_primary"
+                                            (click)="goToStudentVideo(task)">Watch Video</button> -->
+
+                                        <button  mat-button
+                                            class="theme_btn btn_primary"  (click)="goToStudentVideo(task)">Watch Video</button>
+
+                                        <!-- (click)="goToStudentForm(task)" -->
+
+                                        <!-- <button
+                                            *ngIf="task.task_status === 'completed' || task.student_status === 'completed'"
+                                            mat-button class="theme_btn btn_primary acknowledge-btn"
+                                            disabled>Acknowledge</button>
+                                        <button *ngIf="task.task_status === 'pending' && task.status == 'declined'"
+                                            mat-button class="theme_btn btn_primary"
+                                            (click)="submitWorkflowVideo(task)">Update the
+                                            Acknowledge</button>
+
+                                        <button
+                                            *ngIf="task.task_status === 'pending' && task.status != 'declined' && task.student_status != 'completed'"
+                                            mat-button class="theme_btn btn_primary"
+                                            (click)="submitWorkflowVideo(task)">Acknowledge</button>
+
+                                        <button *ngIf="task.task_status === 'lock'" mat-button
+                                            class="theme_btn btn_primary" disabled>Acknowledge</button> -->
+                                    </div>
+                                </div>
+
+                                <div *ngIf="task.completion_criteria === 'Submit Video (Upload URL)'"
+                                    class="d-flex flex-column justify-content-center align-items-center">
+
+                                    <!-- [ngClass]="{'border-discription': task.description}" -->
+                                    <div class="mb-2">
+                                        <p class="m-1" [innerHTML]="task.description"></p>
+                                    </div>
+
+                                    <div *ngIf="task.status == 'declined'" class="declined-open-div">
+                                        <h2>This submission was declined by a staff member</h2>
+                                        <p>You are required to review the submission and send it again &nbsp;&nbsp;
+                                            <span data-toggle="modal" data-target="#declinedModel"
+                                                (click)="selectTask=task;"> <svg width="17" height="17"
+                                                    viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <path
+                                                        d="M14.875 8.14585C14.8774 9.08076 14.659 10.003 14.2375 10.8375C13.7377 11.8375 12.9694 12.6786 12.0186 13.2666C11.0678 13.8546 9.97209 14.1663 8.85417 14.1667C7.91926 14.1691 6.997 13.9507 6.1625 13.5292L2.125 14.875L3.47083 10.8375C3.04933 10.003 2.8309 9.08076 2.83333 8.14585C2.83377 7.02793 3.14543 5.93221 3.73343 4.98141C4.32142 4.03061 5.16251 3.2623 6.1625 2.76252C6.997 2.34101 7.91926 2.12258 8.85417 2.12502H9.20833C10.6847 2.20647 12.0792 2.82964 13.1248 3.87521C14.1704 4.92078 14.7935 6.31527 14.875 7.79169V8.14585Z"
+                                                        stroke="#2B2A35" stroke-linecap="round"
+                                                        stroke-linejoin="round" />
+                                                </svg>
+
+                                                <span>View comment</span></span>
+                                        </p>
+                                    </div>
+
+                                    <!-- <div class="video-div" *ngIf="task.video_url"> 
+        
+                                        <iframe   [src]="videoUrl(task.video_url)"
+                                        title="{{task.name}}"
+                                        frameborder="0"
+                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                        referrerpolicy="strict-origin-when-cross-origin"
+                                        allowfullscreen
+                                        class="video-iframe"></iframe>
+                                    </div> -->
+
+                                    <div class="row video_url_task" *ngIf="task.student_status!='completed'">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label>Video Url</label>
+                                                <input type="text" class="form-control" name="video_url"
+                                                    placeholder="e.g. https://youtube.com/watch?v=abc123"
+                                                    [(ngModel)]="task.video_url" [ngModelOptions]="{ standalone: true }"
+                                                    appYoutubeVimeoUrl required #videoUrlModel="ngModel" />
+                                                <div *ngIf="videoUrlModel.invalid && videoUrlModel.touched"
+                                                    class="text-danger">
+                                                    Please enter a valid YouTube or Vimeo URL.
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row video_submit"
+                                        *ngIf="task.student_status=='completed' && task.task_status !== 'completed'">
+                                        <p>
+                                            Your assessment has been submitted and is awaiting approval.
+                                        </p>
+                                    </div>
+                                    <div class="row video_submit_success"
+                                        *ngIf="task.student_status=='completed' && task.task_status === 'completed'">
+                                        <p>
+                                            Your submission has been reviewed and marked complete!
+                                        </p>
+                                    </div>
+
+
+
+
+                                    <div class="text-center" *ngIf="task.student_status!='completed'">
+                                        <button
+                                            *ngIf="task.task_status === 'completed' || task.student_status === 'completed'"
+                                            mat-button class="theme_btn btn_primary acknowledge-btn" disabled>Submit
+                                            Video</button>
+
+                                        <button *ngIf="task.task_status === 'pending' && task.status == 'declined'"
+                                            mat-button class="theme_btn btn_primary"
+                                            [disabled]="!isYoutubeOrVimeoUrl(task?.video_url)"
+                                            (click)="submitUploadVideo(task)">Resubmit Video</button>
+
+                                        {{videoUrlModel}}
+                                        <button
+                                            *ngIf="task.task_status === 'pending' && task.status != 'declined' && task.student_status != 'completed'"
+                                            mat-button class="theme_btn btn_primary"
+                                            [disabled]="!isYoutubeOrVimeoUrl(task?.video_url)"
+                                            (click)="submitUploadVideo(task)">Submit Video</button>
+
+                                        <button *ngIf="task.task_status === 'lock'" mat-button
+                                            class="theme_btn btn_primary" disabled>Submit Video</button>
+                                    </div>
+                                </div>
+
+                                <div *ngIf="task.completion_criteria === 'Staff Attaches Documents for Student Review'"
+                                    class="d-flex flex-column justify-content-center align-items-center">
+
+                                    <div class="mb-2" [ngClass]="{'border-discription': task.description}">
+                                        <p class="m-1" [innerHTML]="task.description"></p>
+                                    </div>
+
+                                    <div *ngIf="task.status == 'declined'" class="declined-open-div">
+                                        <h2>This submission was declined by a staff member</h2>
+                                        <p>You are required to review the submission and send it again &nbsp;&nbsp;
+                                            <span data-toggle="modal" data-target="#declinedModel"
+                                                (click)="selectTask=task;"> <svg width="17" height="17"
+                                                    viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <path
+                                                        d="M14.875 8.14585C14.8774 9.08076 14.659 10.003 14.2375 10.8375C13.7377 11.8375 12.9694 12.6786 12.0186 13.2666C11.0678 13.8546 9.97209 14.1663 8.85417 14.1667C7.91926 14.1691 6.997 13.9507 6.1625 13.5292L2.125 14.875L3.47083 10.8375C3.04933 10.003 2.8309 9.08076 2.83333 8.14585C2.83377 7.02793 3.14543 5.93221 3.73343 4.98141C4.32142 4.03061 5.16251 3.2623 6.1625 2.76252C6.997 2.34101 7.91926 2.12258 8.85417 2.12502H9.20833C10.6847 2.20647 12.0792 2.82964 13.1248 3.87521C14.1704 4.92078 14.7935 6.31527 14.875 7.79169V8.14585Z"
+                                                        stroke="#2B2A35" stroke-linecap="round"
+                                                        stroke-linejoin="round" />
+                                                </svg>
+
+                                                <span>View comment</span></span>
+                                        </p>
+                                    </div>
+
+                                    <div class="doc-div" *ngIf="task.documents">
+                                        <div *ngIf="task.documents.length== 0" class="not-found">
+                                            <div class="alert_body">
+                                                <div class="content">
+                                                    <h4><svg class="mr-2" width="25" height="21" viewBox="0 0 25 21"
+                                                            fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                            <path
+                                                                d="M12.1179 20.4607C8.66545 20.4607 5.21343 20.4612 1.76098 20.4603C0.887795 20.4599 0.209356 19.9203 0.0341242 19.0757C-0.0617653 18.6134 0.0502472 18.1883 0.297184 17.7873C0.975623 16.6845 1.646 15.5771 2.31935 14.4708C5.05644 9.97505 7.79481 5.4801 10.5272 0.981346C10.7941 0.541485 11.1276 0.201765 11.6355 0.0644406C12.3937 -0.140913 13.1426 0.151483 13.5702 0.842332C14.2555 1.94896 14.9267 3.06445 15.6039 4.17657C18.3668 8.7142 21.1298 13.2518 23.8932 17.7895C24.5602 18.8851 24.0196 20.1882 22.7905 20.4354C22.6606 20.4616 22.524 20.4599 22.3904 20.4599C18.9659 20.4612 15.5419 20.4607 12.1179 20.4607ZM10.6257 6.77306C10.6482 7.02701 10.6808 7.36208 10.7071 7.69758C10.7682 8.48054 10.823 9.26434 10.8866 10.0473C10.9651 11.0115 11.055 11.9753 11.1306 12.94C11.1692 13.4348 11.5472 13.7703 12.0933 13.7703C12.6313 13.7703 13.028 13.4255 13.0598 12.9404C13.0861 12.5344 13.1213 12.1291 13.1553 11.7239C13.2202 10.9482 13.2881 10.1732 13.353 9.39744C13.4222 8.57307 13.4735 7.74659 13.5609 6.92391C13.6538 6.05053 13.0679 5.33221 12.1803 5.27348C11.3364 5.21728 10.6185 5.87179 10.6257 6.77306ZM12.1056 15.1828C11.4929 15.1435 10.744 15.6425 10.7207 16.5349C10.7012 17.2769 11.3508 17.9031 12.0958 17.9027C12.7615 17.9023 13.4553 17.3999 13.4688 16.5341C13.4807 15.7917 12.8472 15.1845 12.1056 15.1828Z"
+                                                                fill="#F47761" />
+                                                        </svg>
+
+                                                        No Document Found!</h4>
+                                                    <!-- <p>Our system is processing your withdrawal request and your ongoing placement is temporarily locked. Upon
+                                                        confirmation with all involved parties, your current placement will be deleted.
+                                                        If you've made an unintentional decision, please contact your supervisor as soon as possible.</p> -->
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="files_list mt-3" *ngIf="task.documents.length > 0">
+                                            <li *ngFor="let file of task.documents; let i = index;">
+                                                <div class="file_card">
+                                                    <div class="content">
+                                                        <div class="svg-width d-flex justify-content-center align-items-center"
+                                                            style="width: 60px;height:48px;padding-right: 8px;"
+                                                            [innerHTML]="getSafeSvg(file?.name)"></div>
+                                                        <p>{{file.name}}</p>
+                                                    </div>
+                                                    <div class="btn_group">
+
+
+
+                                                        <button (click)="viewFile(i, file)" mat-icon-button>
+                                                            <svg width="35" height="36" viewBox="0 0 35 36" fill="none"
+                                                                xmlns="http://www.w3.org/2000/svg">
+                                                                <circle cx="17.5" cy="17.9297" r="17.5"
+                                                                    fill="#F8F8F8" />
+                                                                <path
+                                                                    d="M9.29565 18.1929C9.1361 17.9898 9.00404 17.8119 8.90095 17.6683C8.99761 17.5269 9.1211 17.3527 9.27053 17.1543C9.69179 16.5948 10.3145 15.849 11.1183 15.1051C12.7353 13.6083 15.0165 12.1797 17.8214 12.1797C20.6263 12.1797 22.9076 13.6083 24.5246 15.1051C25.3283 15.849 25.9511 16.5948 26.3723 17.1543C26.5218 17.3527 26.6452 17.5269 26.7419 17.6683C26.6388 17.8119 26.5068 17.9898 26.3472 18.1929C25.9058 18.7547 25.2587 19.5032 24.4375 20.2497C22.7807 21.7558 20.4992 23.1797 17.8214 23.1797C15.1437 23.1797 12.8621 21.7558 11.2054 20.2497C10.3842 19.5032 9.73706 18.7547 9.29565 18.1929Z"
+                                                                    stroke="#2B2A35" stroke-width="1.5" />
+                                                                <circle cx="17.8214" cy="17.6808" r="2.82143"
+                                                                    stroke="#2B2A35" stroke-width="1.5" />
+                                                            </svg>
+                                                        </button>
+
+                                                        <!-- <button (click)="downloadFile(i)" mat-icon-button>
+                                                        <svg width="35" height="35" viewBox="0 0 35 35" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                            <circle cx="17.5" cy="17.5" r="17.5" fill="#F8F8F8"/>
+                                                            <path fill-rule="evenodd" clip-rule="evenodd" d="M24.7923 20.4141V23.3307C24.7923 24.1361 24.1394 24.7891 23.334 24.7891H11.6673C10.8619 24.7891 10.209 24.1361 10.209 23.3307V20.4141H11.6673V23.3307H23.334V20.4141H24.7923Z" fill="#2B2A35"/>
+                                                            <path fill-rule="evenodd" clip-rule="evenodd" d="M18.2295 17.9258L20.6305 15.5248L21.6617 16.556L17.5003 20.7174L13.3389 16.556L14.3701 15.5248L16.7711 17.9258V10.207H18.2295V17.9258Z" fill="#2B2A35"/>
+                                                            </svg>
+                                                            
+                                                            
+                                                    </button> -->
+                                                    </div>
+                                                </div>
+                                            </li>
+                                        </div>
+                                    </div>
+
+                                    <div class="text-center">
+                                        <button
+                                            *ngIf="task.task_status === 'completed' || task.student_status === 'completed'"
+                                            mat-button class="theme_btn btn_primary acknowledge-btn"
+                                            disabled>Acknowledge</button>
+                                        <!-- (click)="submitWorkflowDocReview(task)" -->
+                                        <button *ngIf="task.task_status === 'pending' && task.status == 'declined'"
+                                            mat-button class="theme_btn btn_primary"
+                                            (click)="submitWorkflowDocReview(task)">Update the
+                                            Acknowledge</button>
+
+                                        <button
+                                            *ngIf="task.task_status === 'pending' && task.status != 'declined' && task.student_status != 'completed'"
+                                            mat-button class="theme_btn btn_primary"
+                                            (click)="submitWorkflowDocReview(task)">Acknowledge</button>
+
+                                        <button *ngIf="task.task_status === 'lock'" mat-button
+                                            class="theme_btn btn_primary" disabled>Acknowledge</button>
+                                    </div>
+                                </div>
+
+                                <div
+                                    *ngIf="task.completion_criteria === 'Get Document Approval' || task.completion_criteria === 'Student Uploads Document'">
+                                    <p class="text-center" [innerHTML]="task.description"></p>
+
+                                    <div *ngIf="task.status == 'declined'" class="declined-open-div">
+                                        <h2>This submission was declined by a staff member</h2>
+                                        <p>You are required to review the submission and send it again &nbsp;&nbsp;
+                                            <span data-toggle="modal" data-target="#declinedModel"
+                                                (click)="selectTask=task;"> <svg width="17" height="17"
+                                                    viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <path
+                                                        d="M14.875 8.14585C14.8774 9.08076 14.659 10.003 14.2375 10.8375C13.7377 11.8375 12.9694 12.6786 12.0186 13.2666C11.0678 13.8546 9.97209 14.1663 8.85417 14.1667C7.91926 14.1691 6.997 13.9507 6.1625 13.5292L2.125 14.875L3.47083 10.8375C3.04933 10.003 2.8309 9.08076 2.83333 8.14585C2.83377 7.02793 3.14543 5.93221 3.73343 4.98141C4.32142 4.03061 5.16251 3.2623 6.1625 2.76252C6.997 2.34101 7.91926 2.12258 8.85417 2.12502H9.20833C10.6847 2.20647 12.0792 2.82964 13.1248 3.87521C14.1704 4.92078 14.7935 6.31527 14.875 7.79169V8.14585Z"
+                                                        stroke="#2B2A35" stroke-linecap="round"
+                                                        stroke-linejoin="round" />
+                                                </svg>
+
+                                                <span>View comment</span></span>
+                                        </p>
+                                    </div>
+
+                                    <!-- task.task_status !== 'completed' || -->
+                                    <div *ngIf="task.student_status != 'completed' && task.status != 'declined'"
+                                        class="file_upload" matRipple>
+                                        <p><strong>Drag file here or <span>browse</span> </strong><br>
+                                            Accepted file types: Adobe PDF (.pdf). <br>
+                                            5MB file size limit.
+                                        </p>
+                                        <label class="file_upload_label" for="image"></label>
+                                        <input name="img" type="file" id="image" accept=".doc, .docx, .pdf"
+                                            (change)="uploadFile($event, task)">
+                                    </div>
+                                    <div *ngIf="task.status == 'declined'" class="file_upload" matRipple>
+                                        <p><strong>Drag file here or <span>browse</span> </strong><br>
+                                            Accepted file types: Adobe PDF (.pdf). <br>
+                                            5MB file size limit.
+                                        </p>
+                                        <label class="file_upload_label" for="image"></label>
+                                        <input name="img" type="file" id="image" accept=".doc, .docx, .pdf"
+                                            (change)="uploadFile($event, task)">
+                                    </div>
+                                    <!-- <p *ngIf="task?.file">{{task.file.name}}</p> -->
+
+
+                                    <div class="files_list mt-3" *ngIf="task?.file"
+                                        style="max-width: 550px; margin: auto;">
+                                        <li>
+                                            <div class="file_card">
+                                                <div class="content">
+                                                    <div class="svg-width d-flex justify-content-center align-items-center"
+                                                        style="width: 60px;height:48px;padding-right: 8px;"
+                                                        [innerHTML]="getSafeSvg(task.file.name)"></div>
+                                                    <p>{{task.file.name}}</p>
+                                                </div>
+                                                <div class="btn_group">
+
+                                                    <button (click)="viewFile(0, task.file)" mat-icon-button>
+                                                        <svg width="35" height="36" viewBox="0 0 35 36" fill="none"
+                                                            xmlns="http://www.w3.org/2000/svg">
+                                                            <circle cx="17.5" cy="17.9297" r="17.5" fill="#F8F8F8" />
+                                                            <path
+                                                                d="M9.29565 18.1929C9.1361 17.9898 9.00404 17.8119 8.90095 17.6683C8.99761 17.5269 9.1211 17.3527 9.27053 17.1543C9.69179 16.5948 10.3145 15.849 11.1183 15.1051C12.7353 13.6083 15.0165 12.1797 17.8214 12.1797C20.6263 12.1797 22.9076 13.6083 24.5246 15.1051C25.3283 15.849 25.9511 16.5948 26.3723 17.1543C26.5218 17.3527 26.6452 17.5269 26.7419 17.6683C26.6388 17.8119 26.5068 17.9898 26.3472 18.1929C25.9058 18.7547 25.2587 19.5032 24.4375 20.2497C22.7807 21.7558 20.4992 23.1797 17.8214 23.1797C15.1437 23.1797 12.8621 21.7558 11.2054 20.2497C10.3842 19.5032 9.73706 18.7547 9.29565 18.1929Z"
+                                                                stroke="#2B2A35" stroke-width="1.5" />
+                                                            <circle cx="17.8214" cy="17.6808" r="2.82143"
+                                                                stroke="#2B2A35" stroke-width="1.5" />
+                                                        </svg>
+                                                    </button>
+
+                                                    <!-- <button (click)="downloadFile(i)" mat-icon-button>
+                                                    <svg width="35" height="35" viewBox="0 0 35 35" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                        <circle cx="17.5" cy="17.5" r="17.5" fill="#F8F8F8"/>
+                                                        <path fill-rule="evenodd" clip-rule="evenodd" d="M24.7923 20.4141V23.3307C24.7923 24.1361 24.1394 24.7891 23.334 24.7891H11.6673C10.8619 24.7891 10.209 24.1361 10.209 23.3307V20.4141H11.6673V23.3307H23.334V20.4141H24.7923Z" fill="#2B2A35"/>
+                                                        <path fill-rule="evenodd" clip-rule="evenodd" d="M18.2295 17.9258L20.6305 15.5248L21.6617 16.556L17.5003 20.7174L13.3389 16.556L14.3701 15.5248L16.7711 17.9258V10.207H18.2295V17.9258Z" fill="#2B2A35"/>
+                                                        </svg>
+                                                        
+                                                        
+                                                </button> -->
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </div>
+
+                                    <div class="text-center">
+                                        <button
+                                            *ngIf="task.task_status === 'completed' || task.student_status === 'completed'"
+                                            mat-button class="theme_btn btn_primary"
+                                            (click)="getSubmittedTask(task)">View
+                                            Submission</button>
+
+                                        <button *ngIf="task.task_status === 'lock'" mat-button
+                                            class="theme_btn btn_primary" disabled>Submit</button>
+                                        <button *ngIf="task.task_status === 'pending' && task.status == 'declined'"
+                                            mat-button class="theme_btn btn_primary" [disabled]="!task.file?.name"
+                                            (click)="submitWorkflowttachment(task)">Update</button>
+
+                                        <button *ngIf="task.task_status === 'pending' && task.status !== 'declined'"
+                                            mat-button class="theme_btn btn_primary" [disabled]="!task.file?.name"
+                                            (click)="submitWorkflowttachment(task)">Submit</button>
+                                    </div>
+                                </div>
+                                <div *ngIf="task.completion_criteria === 'Attend Appointment'">
+                                    <p class="mb-1" [innerHTML]="task.description"></p>
+                                    <div *ngIf="task.status == 'declined'" class="declined-open-div">
+                                        <h2>This submission was declined by a staff member</h2>
+                                        <p>You are required to review the submission and send it again &nbsp;&nbsp;
+                                            <span data-toggle="modal" data-target="#declinedModel"
+                                                (click)="selectTask=task;"> <svg width="17" height="17"
+                                                    viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <path
+                                                        d="M14.875 8.14585C14.8774 9.08076 14.659 10.003 14.2375 10.8375C13.7377 11.8375 12.9694 12.6786 12.0186 13.2666C11.0678 13.8546 9.97209 14.1663 8.85417 14.1667C7.91926 14.1691 6.997 13.9507 6.1625 13.5292L2.125 14.875L3.47083 10.8375C3.04933 10.003 2.8309 9.08076 2.83333 8.14585C2.83377 7.02793 3.14543 5.93221 3.73343 4.98141C4.32142 4.03061 5.16251 3.2623 6.1625 2.76252C6.997 2.34101 7.91926 2.12258 8.85417 2.12502H9.20833C10.6847 2.20647 12.0792 2.82964 13.1248 3.87521C14.1704 4.92078 14.7935 6.31527 14.875 7.79169V8.14585Z"
+                                                        stroke="#2B2A35" stroke-linecap="round"
+                                                        stroke-linejoin="round" />
+                                                </svg>
+
+                                                <span>View comment</span></span>
+                                        </p>
+                                    </div>
+                                    <div class="text-center">
+                                        <button *ngIf="task.task_status === 'pending'" mat-button
+                                            class="theme_btn btn_primary" (click)="attend(task)">I have Attended the
+                                            Appointment</button>
+
+                                        <button *ngIf="task.task_status === 'completed'" mat-button
+                                            class="theme_btn btn_primary" (click)="openwindow(task)">I have Attended the
+                                            Appointment</button>
+
+                                        <button *ngIf="task.task_status === 'lock'" mat-button class="theme_btn btn_primary" disabled>I have Attended the Appointment</button>
+                                    </div>
+                                </div>
+
+                                 <div *ngIf="task.completion_criteria === 'Attend Event'">
+                                    <p class="mb-1" [innerHTML]="task.description"></p>
+                                    <div *ngIf="task.status == 'declined'" class="declined-open-div">
+                                        <h2>This submission was declined by a staff member</h2>
+                                        <p>You are required to review the submission and send it again &nbsp;&nbsp;
+                                            <span data-toggle="modal" data-target="#declinedModel"
+                                                (click)="selectTask=task;"> <svg width="17" height="17"
+                                                    viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <path
+                                                        d="M14.875 8.14585C14.8774 9.08076 14.659 10.003 14.2375 10.8375C13.7377 11.8375 12.9694 12.6786 12.0186 13.2666C11.0678 13.8546 9.97209 14.1663 8.85417 14.1667C7.91926 14.1691 6.997 13.9507 6.1625 13.5292L2.125 14.875L3.47083 10.8375C3.04933 10.003 2.8309 9.08076 2.83333 8.14585C2.83377 7.02793 3.14543 5.93221 3.73343 4.98141C4.32142 4.03061 5.16251 3.2623 6.1625 2.76252C6.997 2.34101 7.91926 2.12258 8.85417 2.12502H9.20833C10.6847 2.20647 12.0792 2.82964 13.1248 3.87521C14.1704 4.92078 14.7935 6.31527 14.875 7.79169V8.14585Z"
+                                                        stroke="#2B2A35" stroke-linecap="round"
+                                                        stroke-linejoin="round" />
+                                                </svg>
+
+                                                <span>View comment</span></span>
+                                        </p>
+                                    </div>
+                                    <div class="text-center">
+                                        <button *ngIf="task.task_status === 'pending'" mat-button
+                                            class="theme_btn btn_primary" (click)="attendEvent(task)">Attend Event</button>
+
+                                        <button *ngIf="task.task_status === 'completed'" mat-button
+                                            class="theme_btn btn_primary" (click)="openwindowEvent(task)">Attend Event</button>
+
+                                        <button *ngIf="task.task_status === 'lock'" mat-button class="theme_btn btn_primary" disabled>Attend Event</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="d-flex count_show_top">
+                            <span class="span-babge" [matTooltip]="getMessage(task)" matTooltipPosition="above"
+                                matTooltipClass="custom-tooltip"> {{task.completed_step_count ||
+                                0}}/{{task.total_step_count || 0}}</span>
+                        </div>
+                    </div>
+                    <!-- <div class="activity_card_container">
+                        <div class="status_bar ">
+                            <span class="bar">
+                                <svg width="19" height="14" viewBox="0 0 19 14" fill="none"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M18 1L6.3125 13L1 7.54545" stroke="white" stroke-width="2"
+                                        stroke-linecap="round" stroke-linejoin="round" />
+                                </svg>
+
+                            </span>
+                        </div>
+                        <div class="activity_card">
+                            <div class="activity_card_header">
+                                <div class="left ">
+                                    <div class="content"><span>02</span>
+                                        <p>Book & Attend the Pre Placement Interview (PPI)</p>
+                                    </div>
+                                </div>
+                                <div class="right">
+                                    <div class="d-inline-flex align-items-center"><span>Locked</span>
+                                        <button (click)="collapsToggle(2)" [ngClass]="showCollapes == 2 ? 'show' : ''"
+                                            mat-icon-button><svg width="18" height="8" viewBox="0 0 18 8" fill="none"
+                                                xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M1 1L9 7L17 1" stroke="#2B2A35" stroke-width="2"
+                                                    stroke-linecap="round" stroke-linejoin="round" />
+                                            </svg>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="activity_card_body" *ngIf="showCollapes == 2">
+                                <div>
+                                    <p class="mb-1">Please attend the event on 24 January, 12 pm AEDT.</p>
+                                    <ol>
+                                        <li>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+                                            tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+                                            quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+                                            consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+                                            cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat
+                                            non proident, sunt in culpa qui officia deserunt mollit anim id est
+                                            laborum.Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+                                            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
+                                            veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
+                                            commodo consequat.</li>
+                                    </ol>
+                                    <div class="text-center">
+                                        <button mat-button class="theme_btn btn_primary">I have Attended the
+                                            Appointment</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="activity_card_container">
+                        <div class="status_bar step_progress">
+                            <span class="bar">
+                                <svg width="25" height="25" viewBox="0 0 25 25" fill="none"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M12.5 2.08203V6.2487" stroke="white" stroke-width="2"
+                                        stroke-linecap="round" stroke-linejoin="round" />
+                                    <path d="M12.5 18.75V22.9167" stroke="white" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round" />
+                                    <path d="M5.14062 5.13477L8.08854 8.08268" stroke="white" stroke-width="2"
+                                        stroke-linecap="round" stroke-linejoin="round" />
+                                    <path d="M16.9219 16.918L19.8698 19.8659" stroke="white" stroke-width="2"
+                                        stroke-linecap="round" stroke-linejoin="round" />
+                                    <path d="M2.08594 12.5H6.2526" stroke="white" stroke-width="2"
+                                        stroke-linecap="round" stroke-linejoin="round" />
+                                    <path d="M18.75 12.5H22.9167" stroke="white" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round" />
+                                    <path d="M5.14062 19.8639L8.08854 16.916" stroke="white" stroke-width="2"
+                                        stroke-linecap="round" stroke-linejoin="round" />
+                                    <path d="M16.9219 8.08464L19.8698 5.13672" stroke="white" stroke-width="2"
+                                        stroke-linecap="round" stroke-linejoin="round" />
+                                </svg>
+
+
+                            </span>
+                        </div>
+                        <div class="activity_card">
+                            <div class="activity_card_header">
+                                <div class="left ">
+                                    <div class="content"><span>03</span>
+                                        <p>Submit Resume</p>
+                                    </div>
+                                </div>
+                                <div class="right">
+                                    <div class="d-inline-flex align-items-center"><span>Locked</span>
+                                        <button (click)="collapsToggle(3)" [ngClass]="showCollapes == 3 ? 'show' : ''"
+                                            mat-icon-button><svg width="18" height="8" viewBox="0 0 18 8" fill="none"
+                                                xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M1 1L9 7L17 1" stroke="#2B2A35" stroke-width="2"
+                                                    stroke-linecap="round" stroke-linejoin="round" />
+                                            </svg>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="activity_card_body" *ngIf="showCollapes == 3">
+                                <div>
+                                    <p class="text-center">Please upload your Resume in PDF format. Additionally, a
+                                        staff member will review and verify this document.</p>
+                                    <div class="file_upload" matRipple>
+                                        <p><strong>Drag file here or <span>browse</span> </strong><br>
+                                            Accepted file types: Adobe PDF (.pdf). <br>
+                                            5MB file size limit.
+                                        </p>
+                                        <label class="file_upload_label" for="image"></label>
+                                        <input name="img" type="file" id="image" accept=".doc, .docx, .pdf">
+                                    </div>
+                                    <div class="text-center">
+                                        <button mat-button class="theme_btn btn_primary">Submit</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="activity_card_container">
+                        <div class="status_bar step_progress pending">
+                            <span class="bar">
+                                <svg width="17" height="17" viewBox="0 0 17 17" fill="none"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path
+                                        d="M13.4583 7.79297H3.54167C2.75926 7.79297 2.125 8.42723 2.125 9.20964V14.168C2.125 14.9504 2.75926 15.5846 3.54167 15.5846H13.4583C14.2407 15.5846 14.875 14.9504 14.875 14.168V9.20964C14.875 8.42723 14.2407 7.79297 13.4583 7.79297Z"
+                                        stroke="#9A9A9A" stroke-linecap="round" stroke-linejoin="round" />
+                                    <path
+                                        d="M4.95801 7.79297V4.95964C4.95801 4.02033 5.33115 3.11949 5.99534 2.4553C6.65953 1.79111 7.56037 1.41797 8.49967 1.41797C9.43898 1.41797 10.3398 1.79111 11.004 2.4553C11.6682 3.11949 12.0413 4.02033 12.0413 4.95964V7.79297"
+                                        stroke="#9A9A9A" stroke-linecap="round" stroke-linejoin="round" />
+                                    <circle cx="8.5" cy="10.5" r="1.5" fill="#9A9A9A" />
+                                    <rect x="8" y="11" width="1" height="3" fill="#9A9A9A" />
+                                </svg>
+
+                            </span>
+                        </div>
+                        <div class="activity_card">
+                            <div class="activity_card_header">
+                                <div class="left ">
+                                    <div class="content"><span>04</span>
+                                        <p>Review & Sign off Training Plan Form (TPF)</p>
+                                    </div>
+                                </div>
+                                <div class="right">
+                                    <div class="d-inline-flex align-items-center"><span>
+                                            Locked
+                                        </span>
+                                        <button (click)="collapsToggle(4)" [ngClass]="showCollapes == 4 ? 'show' : ''"
+                                            mat-icon-button><svg width="18" height="8" viewBox="0 0 18 8" fill="none"
+                                                xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M1 1L9 7L17 1" stroke="#2B2A35" stroke-width="2"
+                                                    stroke-linecap="round" stroke-linejoin="round" />
+                                            </svg>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="activity_card_body" *ngIf="showCollapes == 4">
+                                <div>
+                                    <p>This is a form description based on what the staff member has set up. To complete
+                                        this task, the student must click the following CTA button to take them to a new
+                                        tab with the actual form. Once that form is submitted, this task will be marked
+                                        as complete.</p>
+                                    <div class="text-center">
+                                        <button mat-button class="theme_btn btn_primary" disabled>Start the
+                                            Form</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div> -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade bsModal ch_modal delete_filter_modal" id="declinedModel" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" style="max-width: 700px;" role="document">
+        <div class="modal-content">
+            <div class="modal-header text-center justify-content-center">
+                <h2 class="modal-title" id="exampleModalLabel">{{selectTask?.name}}
+                </h2>
+            </div>
+            <div class="modal-body pt-3">
+                <div class="row">
+                    <div class="col-md-12 text-left">
+                        <h2>
+                            Staff Comment
+                        </h2>
+                        <div class="declined-open-model">
+                            <p>
+                                {{selectTask?.comment}}
+                            </p>
+                            <p>
+                                -{{selectTask?.declined_by_name || 'staff name'}}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer justify-content-center">
+                    <button mat-button class="theme_btn btn_primary" (click)="selectTask={};"
+                        data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

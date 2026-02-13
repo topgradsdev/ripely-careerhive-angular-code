@@ -1,0 +1,82 @@
+
+<section class="view-employer-sec view-payment-sec">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="card">
+					<div class="card-header">
+						<strong>Report Details</strong>
+					</div>
+					<div class="card-body">
+						<div class="edit-wrapper">
+							<div class="row">
+								<div class="col-lg-6 col-sm-12">
+								 	<div class="form-group pymnt_dtls">
+								 		<label>Reported By:</label>
+								 		<span>{{Detail?.employer_detail?.first_name}} {{Detail?.employer_detail?.last_name}}</span>
+								 	</div>
+								</div>
+								<div class="col-lg-6 col-sm-12">
+								 	<div class="form-group pymnt_dtls">
+								 		<label>To:</label>
+								 		<span>{{Detail?.graduate_detail?.first_name}} {{Detail?.graduate_detail?.last_name}}</span>
+								 	</div>
+								</div>
+								<div class="col-lg-6 col-sm-12">
+									<div class="form-group pymnt_dtls">
+										<label>Job Name:</label>
+										<span>{{Detail?.job_post_detail?.job_title}}</span>
+									</div>
+							   </div>
+							   <div class="col-lg-6 col-sm-12">
+									<div class="form-group pymnt_dtls">
+										<label>Reported Date:</label>
+										<span>{{Detail?.createdAt | date:'dd/MM/yyyy'}}</span>
+									</div>
+							   </div>
+								<div class="col-lg-6 col-sm-12">
+								 	<div class="form-group pymnt_dtls">
+								 		<label>Job Application Date:</label>
+								 		<span>{{Detail?.job_application_detail?.createdAt | date:'dd/MM/yyyy'}}</span>
+								 	</div>
+								</div>
+								<div class="col-lg-6 col-sm-12">
+								 	<div class="form-group pymnt_dtls">
+								 		<label>Job Post Date:</label>
+								 		<span>{{Detail?.job_post_detail?.createdAt | date:'dd/MM/yyyy'}}</span>
+								 	</div>
+								</div>
+								<div class="col-lg-6 col-sm-12">
+									<div class="form-group pymnt_dtls">
+										<label>Short Reason:</label>
+										<span>{{Detail?.reasons.name}}</span>
+									</div>
+							   </div>
+							   <div class="col-lg-6 col-sm-12">
+									<div class="form-group pymnt_dtls">
+										<label>Long Reason:</label>
+										<span>{{Detail?.description}}</span>
+									</div>
+						        </div>
+								
+								<!-- <div class="col-lg-8 col-sm-12">
+								 	<div class="form-group">
+								 		<label>Short Reason</label>
+								 		<textarea class="form-control" rows="4"></textarea>
+								 	</div>
+								</div> -->
+								
+							</div>
+							<div class="edit-btns text-right mt-4">
+								<!-- <span><a routerLink="/" class="btn btn-primary mr-4">Send</a></span> -->
+		                        <span><a (click)="navigate()" class="btn btn-primary">Back</a></span>
+		                    </div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</div>
+
+	</div>
+</section>

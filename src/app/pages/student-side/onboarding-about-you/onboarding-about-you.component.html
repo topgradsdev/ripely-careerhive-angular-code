@@ -1,0 +1,549 @@
+<section>
+    <div class="custom_container">
+        <div class="main_card_onboarding">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="onboarding_title text-center">
+                        <h2>Get started by creating your WIL Profile <br>
+                            in two easy steps!</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="onboarding_stepper vacancy_create_stepper custom_steps_med job_creatn_stepper">
+                <mat-horizontal-stepper ngClass="{{ 'last-edited-step-' + stepper.selectedIndex }}" [linear]="false"
+                    labelPosition="bottom" #stepper>
+                    <mat-step>
+                        <ng-template matStepLabel>About You</ng-template>
+                        <div class="form_fildls employJob_fields">
+                            <h4 class="sub_title_onboarding">Contact</h4>
+                            <form [formGroup]="aboutForm">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>First name <span class="required">*</span></label>
+
+                                            <input type="text" class="form-control" formControlName="first_name">
+                                            <div *ngIf="aboutForm.get('first_name') && (aboutForm.get('first_name')?.touched || aboutForm.get('first_name')?.dirty) && aboutForm.get('first_name')?.invalid && aboutForm.get('first_name')?.errors?.required"
+                                                class="invalid-feedback">
+                                                Please select first name
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Last Name <span class="required">*</span></label>
+
+                                            <input type="text" class="form-control" formControlName="last_name">
+                                            <div *ngIf="aboutForm.get('last_name') && (aboutForm.get('last_name')?.touched || aboutForm.get('last_name')?.dirty) && aboutForm.get('last_name')?.invalid && aboutForm.get('last_name')?.errors?.required"
+                                                class="invalid-feedback">
+                                                Please select last name
+                                            </div>
+                                        </div>
+                                    </div>
+                                       <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Preferred Name </label>
+
+                                            <input type="text" class="form-control" formControlName="preferred_name">
+                                            <div *ngIf="aboutForm.get('preferred_name') && (aboutForm.get('preferred_name')?.touched || aboutForm.get('preferred_name')?.dirty) && aboutForm.get('preferred_name')?.invalid && aboutForm.get('preferred_name')?.errors?.required"
+                                                class="invalid-feedback">
+                                                Please select Preferred Name
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Pronouns <span class="required">*</span></label>
+                                            <ng-select class="select_ng_custom" [searchable]="false" [multiple]="false"
+                                                bindLabel="name" bindValue="id" [clearable]="false"
+                                                formControlName="pronouns">
+                                             <ng-option value="she_her">She/Her</ng-option>
+                                            <ng-option value="she_they">She/They</ng-option>
+                                            <ng-option value="he_him">He/Him</ng-option>
+                                            <ng-option value="he_they">He/They</ng-option>
+                                            <ng-option value="they_them">They/Them</ng-option>
+                                            <ng-option value="other">Other</ng-option>
+                                            </ng-select>
+                                            <div *ngIf="aboutForm.get('pronouns') && (aboutForm.get('pronouns')?.touched || aboutForm.get('pronouns')?.dirty) && aboutForm.get('pronouns')?.invalid && aboutForm.get('pronouns')?.errors?.required"
+                                                class="invalid-feedback">
+                                                Please select pronouns
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row col-12 p-0 ml-0 mr-0 form-group">
+                                    <label for="last_name" class="p-0">Phone Number <span class="required">*</span></label>
+                                    <div class="phone_number p-0">
+                                        <input type="tel" formControlName="phone" class="form-control"
+                                            placeholder="0 400 000 000" maxlength="13" minlength="10"
+                                            (input)="addSpacesInNumber()">
+                                    </div>
+                                    <!-- <div
+                                        *ngIf="aboutForm.get('phone') && (aboutForm.get('phone')?.touched || aboutForm.get('phone')?.dirty) && aboutForm.get('phone')?.invalid && aboutForm.get('phone')?.errors?.required"
+                                        class="invalid-feedback">
+                                        Please enter phone number
+                                    </div>
+                                    <div
+                                        *ngIf="(aboutForm.get('phone')?.touched || aboutForm.get('phone')?.dirty) && aboutForm.get('phone')?.invalid && aboutForm.get('phone')?.errors?.minlength"
+                                        class="invalid-feedback">
+                                        please enter correct phone number
+                                    </div>
+                                    <div
+                                        *ngIf="(aboutForm.get('phone')?.touched || aboutForm.get('phone')?.dirty) && aboutForm.get('phone')?.errors?.pattern && !aboutForm.get('phone')?.errors?.minlength"
+                                        class="invalid-feedback">
+                                        please enter valid number
+                                    </div> -->
+
+                                    <!-- <div
+                                        *ngIf="aboutForm.get('phone')?.touched && aboutForm.get('phone')?.invalid"
+                                        class="invalid-feedback"
+                                    >
+                                        <ng-container *ngIf="aboutForm.get('phone')?.errors?.required">
+                                        Please enter the phone number.
+                                        </ng-container>
+                                        <ng-container *ngIf="aboutForm.get('phone')?.errors?.minlength">
+                                        Phone number is too short.
+                                        </ng-container>
+                                        <ng-container *ngIf="aboutForm.get('phone')?.errors?.maxlength">
+                                        Phone number is too long.
+                                        </ng-container>
+                                    </div> -->
+                                    <div *ngIf="aboutForm.controls.phone.errors?.required && aboutForm.controls.phone.touched"
+                                        class="invalid-feedback">
+                                        Phone number is required.
+                                    </div>
+
+                                    <div *ngIf="aboutForm.controls.phone.errors?.length && aboutForm.controls.phone.touched"
+                                        class="invalid-feedback">
+                                        Please enter valid number
+                                        <!-- Phone number must be between 10 and 15 digits. -->
+                                    </div>
+
+                                    <div *ngIf="aboutForm.controls.phone.errors?.pattern && aboutForm.controls.phone.touched"
+                                        class="invalid-feedback">
+                                        Phone number cannot contain repeating digits.
+                                    </div>
+                                    <div *ngIf="aboutForm.controls.phone.errors?.specialChar && aboutForm.controls.phone.touched"
+                                        class="invalid-feedback">
+                                        Phone number cannot contain special characters.
+                                    </div>
+                                    <!-- <div *ngIf="aboutForm.get('phone')?.touched && aboutForm.get('phone')?.invalid" class="invalid-feedback">
+                                        <ng-container *ngIf="aboutForm.get('phone')?.errors?.required">Please enter the phone number.</ng-container>
+                                        <ng-container *ngIf="aboutForm.get('phone')?.errors?.minlength">Phone number is too short.</ng-container>
+                                        <ng-container *ngIf="aboutForm.get('phone')?.errors?.maxlength">Phone number is too long.</ng-container>
+                                      </div> -->
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="exampleInputEmail1">University Email <span
+                                                    class="required">*</span></label>
+                                            <input type="email" formControlName="email" class="form-control"
+                                                id="exampleInputEmail1" aria-describedby="emailHelp"
+                                                placeholder="name@domain.com">
+                                            <div *ngIf="(aboutForm.get('email')?.touched || aboutForm.get('email')?.dirty) && aboutForm.get('email')?.invalid && aboutForm.get('email')?.errors?.required"
+                                                class="invalid-feedback">
+                                                Please enter email address
+                                            </div>
+                                            <div *ngIf="(aboutForm.get('email')?.touched || aboutForm.get('email')?.dirty) && aboutForm.get('email')?.invalid && aboutForm.get('email')?.errors?.email"
+                                                class="invalid-feedback">
+                                                Please enter valid email address
+                                            </div>
+                                            <div *ngIf="(aboutForm.get('email')?.touched || aboutForm.get('email')?.dirty) && aboutForm.get('email')?.invalid && aboutForm.get('email')?.errors?.pattern && !aboutForm.get('email')?.errors?.email"
+                                                class="invalid-feedback">
+                                                Please enter valid email address
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="exampleInputEmail1">Personal Email</label>
+                                            <input type="email" formControlName="permanent_email" class="form-control"
+                                                id="exampleInputEmail1" aria-describedby="emailHelp"
+                                                placeholder="name@domain.com">
+                                            <!-- <div
+                                                *ngIf="(aboutForm.get('secondaryEmail')?.touched || aboutForm.get('secondaryEmail')?.dirty) && aboutForm.get('secondaryEmail')?.invalid && aboutForm.get('secondaryEmail')?.errors?.email"
+                                                class="invalid-feedback">
+                                                Please enter valid email address
+                                            </div>
+                                            <div
+                                                *ngIf="(aboutForm.get('secondaryEmail')?.touched || aboutForm.get('secondaryEmail')?.dirty) && aboutForm.get('secondaryEmail')?.invalid && aboutForm.get('secondaryEmail')?.errors?.pattern && !aboutForm.get('secondaryEmail')?.errors?.email"
+                                                class="invalid-feedback">
+                                                Please enter valid email address
+                                            </div> -->
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label>Address Line 1 <span class="required">*</span></label>
+                                            <!-- <input type="text" formControlName="addressLine1" class="form-control" oninput="this.value = !this.value.trim() ? this.value.trim() : this.value"> -->
+
+                                            <!-- ngx-google-places-autocomplete [options]='googlePlaceOptions'
+                                                #placesRef="ngx-places" -->
+                                            <input type="text" formControlName="addressLine1" class="form-control"
+                                                id="exampleInputEmail1" autocomplete="none" aria-describedby="emailHelp"
+                                                placeholder="enter address"
+                                                oninput="this.value = !this.value.trim() ? this.value.trim() : this.value"
+                                                googlePlace (onAddressChange)="handleAddressChange($event)">
+                                            <div *ngIf="aboutForm.get('addressLine1') && (aboutForm.get('addressLine1')?.touched || aboutForm.get('addressLine1')?.dirty) && aboutForm.get('addressLine1')?.invalid && aboutForm.get('addressLine1')?.errors?.required"
+                                                class="invalid-feedback">
+                                                Please enter address
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Suburb <span class="required">*</span></label>
+
+                                            <input type="text" class="form-control" formControlName="suburb">
+                                            <div *ngIf="aboutForm.get('suburb') && (aboutForm.get('suburb')?.touched || aboutForm.get('suburb')?.dirty) && aboutForm.get('suburb')?.invalid && aboutForm.get('suburb')?.errors?.required"
+                                                class="invalid-feedback">
+                                                Please select suburb
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>State <span class="required">*</span></label>
+                                            <ng-select class="select_ng_custom" [searchable]="false" [multiple]="false"
+                                                bindLabel="name" bindValue="id" [clearable]="false"
+                                                formControlName="state">
+                                                <ng-option value="ACT">ACT</ng-option>
+                                                <ng-option value="NSW">NSW</ng-option>
+                                                <ng-option value="NT">NT</ng-option>
+                                                <ng-option value="QLD">QLD</ng-option>
+                                                <ng-option value="SA">SA</ng-option>
+                                                <ng-option value="TAS">TAS</ng-option>
+                                                <ng-option value="VIC">VIC</ng-option>
+                                                <ng-option value="WA">WA</ng-option>
+                                            </ng-select>
+                                            <div *ngIf="aboutForm.get('state') && (aboutForm.get('state')?.touched || aboutForm.get('state')?.dirty) && aboutForm.get('state')?.invalid && aboutForm.get('state')?.errors?.required"
+                                                class="invalid-feedback">
+                                                Please select state
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Post Code <span class="required">*</span></label>
+                                            <!-- <ng-select class="select_ng_custom" [searchable]="false" [multiple]="false"
+                                                bindLabel="name" bindValue="id" [clearable]="false" formControlName="postCode">
+                                                <ng-option value="3000">
+                                                    3000
+                                                </ng-option>
+                                            </ng-select> -->
+                                            <input type="number" (wheel)="$event.preventDefault()"
+                                                (keydown.arrowup)="$event.preventDefault()"
+                                                (keydown.arrowdown)="$event.preventDefault()" class="form-control"
+                                                formControlName="postCode">
+                                            <div *ngIf="aboutForm.get('postCode') && (aboutForm.get('postCode')?.touched || aboutForm.get('postCode')?.dirty) && aboutForm.get('postCode')?.invalid && aboutForm.get('postCode')?.errors?.required"
+                                                class="invalid-feedback">
+                                                Please enter post code
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Country <span class="required">*</span></label>
+                                            <ng-select class="select_ng_custom" [searchable]="false" [multiple]="false"
+                                                bindLabel="name" bindValue="id" [clearable]="false"
+                                                formControlName="country">
+                                                <ng-option value="Australia">
+                                                    Australia
+                                                </ng-option>
+                                            </ng-select>
+                                            <div *ngIf="aboutForm.get('country') && (aboutForm.get('country')?.touched || aboutForm.get('country')?.dirty) && aboutForm.get('country')?.invalid && aboutForm.get('country')?.errors?.required"
+                                                class="invalid-feedback">
+                                                Please select country
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <h4 class="sub_title_onboarding">Preferences</h4>
+                                <p style="color: #545465;font-size: 12px;">For placement, choose at least three
+                                    available days, and for employment, select your work days.</p>
+                                <div class="form-group">
+                                    <label>Available Days</label>
+                                    <ul class="avl_days"
+                                        [style.pointerEvents]="aboutForm.get('flexibleSchedule')?.value ? 'none' : ''">
+                                        <li [ngClass]="day.selected ? 'active' : ''" *ngFor="let day of days"
+                                            (click)="day.selected = !day.selected;">
+                                            <span matRipple>{{day.name}}</span>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="form-group">
+                                    <p class="check_text"><mat-checkbox class="employment_check lg_checkbox"
+                                            formControlName="flexibleSchedule"
+                                            (change)="checkFlexibleSchedule($event)"></mat-checkbox> I am flexible with
+                                        my schedule
+                                    </p>
+                                </div>
+                                <div class="form-group">
+                                    <label>Travel Preference
+                                        <span matTooltipClass="info_primary_my_task text-black"
+                                            matTooltipPosition="above"
+                                            matTooltip="Career Hive will consider your preference, but it may not always be possible to match it based on the vacancy availability.">
+                                            &nbsp;
+                                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                                xmlns="http://www.w3.org/2000/svg">
+                                                <path
+                                                    d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z"
+                                                    stroke="#464BA8" stroke-width="1.5" stroke-linecap="round"
+                                                    stroke-linejoin="round" />
+                                                <path d="M12 16V12" stroke="#464BA8" stroke-width="1.5"
+                                                    stroke-linecap="round" stroke-linejoin="round" />
+                                                <path d="M12 8H12.0113" stroke="#464BA8" stroke-width="1.5"
+                                                    stroke-linecap="round" stroke-linejoin="round" />
+                                            </svg>
+
+                                        </span> </label>
+                                    <div class="slider_with_value"><mat-slider [(ngModel)]="travelPreference"
+                                            [ngModelOptions]="{standalone: true}"
+                                            (input)="onSliderChange(itemHeight.value)" min="0" max="100" step="1"
+                                            class="mat_slider">
+                                            <input matSliderThumb #itemHeight [value]="travelPreference">
+                                        </mat-slider>
+                                        <div class="value_inter_input">
+                                            <input type="text" readonly [(ngModel)]="travelPreference"
+                                                [ngModelOptions]="{standalone: true}">
+                                            <span> km</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                            <div class="tabs_buttons d-flex justify-content-end align-items-center">
+                                <!-- <button class="theme_btn btn_outline_primary" mat-button role="button">Cancel</button> -->
+                                <button class="theme_btn btn_primary" mat-button
+                                    (click)="nextStep(stepper)">Next</button>
+                            </div>
+                        </div>
+                    </mat-step>
+                    <mat-step>
+                        <ng-template matStepLabel>Internship Preference</ng-template>
+                        <div class="form_fildls job_form_preference employJob_fields">
+                            <div [formGroup]="jobPreferenceForm">
+                                <ng-container formArrayName="jobPreferences">
+                                    <ng-container
+                                        *ngFor="let preferenceArr of jobPreferenceArray.controls; let i = index"
+                                        [formGroupName]="i">
+                                        <div class="job_preference_card">
+                                            <h4 class="sub_title_onboarding">Internship Preference {{i + 1}}*</h4>
+                                            <button class="remove_btn" *ngIf="i > 1" mat-icon-button
+                                                (click)="removeJobPreference(i)"><svg width="18" height="20"
+                                                    viewBox="0 0 18 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <path
+                                                        d="M8.75439 19.5851C7.13824 19.5851 5.52175 19.5734 3.9056 19.5889C2.56515 19.6015 1.37724 18.4399 1.37891 16.9989C1.38258 13.6593 1.37991 10.3193 1.38024 6.97971C1.38024 6.49973 1.67964 6.1563 2.10421 6.14669C2.53778 6.13674 2.86288 6.49046 2.86388 6.98554C2.86622 8.37847 2.86489 9.77141 2.86489 11.1643C2.86489 13.1055 2.86422 15.0464 2.86589 16.9876C2.86622 17.4583 3.12557 17.835 3.54946 18.0034C3.66595 18.0498 3.78611 18.0621 3.90861 18.0621C7.14091 18.0621 10.3735 18.0642 13.6058 18.0604C14.2143 18.0597 14.6476 17.5989 14.6479 16.969C14.6496 13.6521 14.6492 10.3351 14.6479 7.01813C14.6479 6.71381 14.7287 6.45238 14.9853 6.27878C15.488 5.93844 16.1195 6.29319 16.1616 6.93613C16.1639 6.9701 16.1632 7.00475 16.1632 7.03872C16.1632 10.3444 16.1656 13.6497 16.1619 16.9553C16.1606 18.2072 15.3432 19.2537 14.1649 19.5329C14.002 19.5714 13.8372 19.5861 13.6696 19.5861C12.0314 19.5844 10.3929 19.5851 8.75439 19.5851Z"
+                                                        fill="#C4C4C4" />
+                                                    <path
+                                                        d="M8.76004 4.61144C6.11585 4.61144 3.472 4.61109 0.827813 4.61247C0.615531 4.61247 0.419604 4.57164 0.256053 4.4224C0.0184031 4.20557 -0.0607022 3.88409 0.0477755 3.58115C0.153917 3.28438 0.418936 3.08882 0.742033 3.08641C1.37521 3.08161 2.00838 3.0847 2.64156 3.0847C3.55811 3.0847 4.47467 3.0847 5.39122 3.0847C5.61585 3.0847 5.61685 3.08436 5.61619 2.84625C5.61518 2.41877 5.6035 1.99231 5.74569 1.57752C6.06245 0.654611 6.9306 0.00651866 7.8812 0.00205852C8.45897 -0.000686175 9.03674 -0.000686175 9.61417 0.00205852C10.8552 0.0082341 11.8685 1.05534 11.8702 2.33094C11.8705 2.52512 11.8779 2.71965 11.8678 2.91316C11.8605 3.05382 11.9166 3.08744 12.0431 3.08676C12.9539 3.08264 13.8652 3.0847 14.776 3.0847C15.4259 3.0847 16.0758 3.08367 16.7256 3.08504C17.1806 3.08607 17.52 3.41406 17.5197 3.84841C17.5194 4.2831 17.1812 4.61109 16.7246 4.61144C14.0704 4.61178 11.4152 4.61144 8.76004 4.61144ZM8.76738 3.11661C9.2617 3.11661 9.75603 3.11386 10.2504 3.11866C10.3688 3.11969 10.4236 3.08744 10.4182 2.95536C10.4102 2.75019 10.4196 2.54434 10.4149 2.33883C10.4056 1.92095 10.0795 1.56722 9.67592 1.56036C9.07078 1.55007 8.46498 1.55076 7.85984 1.56036C7.46565 1.56654 7.14756 1.90173 7.13254 2.30761C7.12453 2.5186 7.13487 2.73029 7.12686 2.94129C7.12186 3.07475 7.16959 3.12107 7.30076 3.11935C7.78974 3.11283 8.27839 3.11661 8.76738 3.11661Z"
+                                                        fill="#C4C4C4" />
+                                                    <path
+                                                        d="M5.30947 14.283C5.30447 14.0933 5.39759 13.9084 5.5548 13.7471C6.2317 13.0544 6.90326 12.3566 7.5845 11.6683C7.69264 11.5592 7.6843 11.5057 7.58183 11.4018C6.89024 10.7002 6.20266 9.99408 5.51909 9.28423C5.12823 8.87836 5.24305 8.22787 5.74505 8.02716C6.05013 7.90536 6.33284 7.96815 6.57049 8.21311C7.24872 8.91232 7.93163 9.60673 8.60519 10.3111C8.72235 10.4336 8.7831 10.4394 8.90359 10.3132C9.58016 9.60433 10.2674 8.90581 10.9496 8.20282C11.1626 7.98324 11.4199 7.92286 11.7003 8.00383C11.9877 8.08651 12.1566 8.29923 12.213 8.5984C12.2664 8.8811 12.1616 9.11132 11.9697 9.30859C11.2941 10.0023 10.6215 10.6995 9.94097 11.3884C9.83015 11.5006 9.81614 11.5589 9.9353 11.68C10.6072 12.3614 11.2714 13.051 11.934 13.742C12.2908 14.1142 12.2631 14.6453 11.8802 14.9366C11.5675 15.1747 11.218 15.1414 10.9196 14.8364C10.3288 14.2329 9.74104 13.626 9.15192 13.0208C9.08516 12.9522 9.01908 12.8829 8.95165 12.8153C8.72001 12.5837 8.78743 12.5823 8.55245 12.8211C7.90459 13.4792 7.26074 14.141 6.61254 14.7987C6.28544 15.1308 5.96401 15.1816 5.64192 14.9592C5.42363 14.8086 5.30947 14.5983 5.30947 14.283Z"
+                                                        fill="#C4C4C4" />
+                                                </svg>
+                                            </button>
+                                            <!-- <div class="form-group">
+                                                <div class="d-flex justify-content-between align-items-center">
+                                                    <label>What is the area of expertise?</label>
+                                                </div>
+                                                <input type="text" class="form-control" placeholder="Type your Area"
+                                                    formControlName="expertise"
+                                                    oninput="this.value = !this.value.trim() ? this.value.trim() : this.value">
+                                                <div
+                                                    *ngIf="preferenceArr.get('expertise') && (preferenceArr.get('expertise')?.touched || preferenceArr.get('expertise')?.dirty) && preferenceArr.get('expertise')?.invalid && preferenceArr.get('expertise')?.errors?.required"
+                                                    class="invalid-feedback">
+                                                    Please enter area of expertise
+                                                </div>
+                                            </div> -->
+                                            <div class="form-group">
+                                                <label>What kind of intership title are you looking for?</label>
+                                                <!-- <input type="text" class="form-control"
+                                                    placeholder="Type your Job Title" formControlName="jobTitle"
+                                                    oninput="this.value = !this.value.trim() ? this.value.trim() : this.value"> -->
+
+                                                <!-- <mat-select class="form-control" placeholder="Select an Job Title" formControlName="jobTitle">
+                                                        <mat-option *ngFor="let item of jobTitles" [value]="item?.code+' - '+item?.name">
+                                                          {{item?.code}} - {{item?.name}}
+                                                        </mat-option>
+                                                      </mat-select> -->
+
+
+                                                <!-- <mat-select class="form-control" placeholder="Select a Vacancy Title" formControlName="jobTitle">
+                                                        <mat-option>
+                                                          <ngx-mat-select-search  [formControl]="searchControl" placeholderLabel="Search" noEntriesFoundLabel="not found" ></ngx-mat-select-search>
+                                                        </mat-option>
+                                                      
+                  
+                                                        <mat-option *ngFor="let item of filteredOptions" [value]="item?.code+' - '+item?.name">
+                                                          {{item?.code}} - {{item?.name}}
+                                                        </mat-option>
+                                                    </mat-select> -->
+
+                                                <mat-form-field class="form-control p-0" appearance="fill">
+                                                    <mat-select class="form-control" style="padding: 15px 13px;"
+                                                        placeholder="Select a Vacancy Title" formControlName="jobTitle">
+                                                        <!-- add multiple if needed -->
+
+                                                        <!-- Search box -->
+                                                        <ngx-mat-select-search [formControl]="searchControl"
+                                                            placeholderLabel="Search" noEntriesFoundLabel="Not found">
+                                                        </ngx-mat-select-search>
+
+                                                        <!-- Options -->
+                                                        <mat-option *ngFor="let item of filteredOptions"
+                                                            [value]="item?.code + ' - ' + item?.name">
+                                                            {{ item?.code }} - {{ item?.name }}
+                                                        </mat-option>
+
+                                                    </mat-select>
+                                                </mat-form-field>
+
+                                                <div *ngIf="preferenceArr.get('jobTitle') && (preferenceArr.get('jobTitle')?.touched || preferenceArr.get('jobTitle')?.dirty) && preferenceArr.get('jobTitle')?.invalid && preferenceArr.get('jobTitle')?.errors?.required"
+                                                    class="invalid-feedback">
+                                                    Please enter Vacancy title
+                                                </div>
+                                            </div>
+                                            <div class="form-group label_span mb-0">
+                                                <label class="d-flex justify-content-between align-items-center">Please
+                                                    enter
+                                                    your skills for this vacancy
+                                                    <span>({{preferenceArr.get('selectedSkills')?.value?.length}}/10
+                                                        skills added)</span></label>
+                                                <ng-container>
+                                                    <div class="search_with_skills_container">
+                                                        <div class="input_container">
+                                                            <ng-select name="anyName" [items]="jobSkills"
+                                                                (keyup)="getJobSkills($event)"
+                                                                placeholder="Search & Add Skills" bindLabel="name"
+                                                                [searchable]="true" [maxSelectedItems]="5"
+                                                                [multiple]="false" formControlName="skills"
+                                                                (change)="onChangeAnalyst($event, i)">
+                                                            </ng-select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="custom_chip_list1">
+                                                        <span class="custom_chip"
+                                                            *ngFor="let skills of preferenceArr.get('selectedSkills')?.value; let skillIndex = index">
+                                                            <span>{{skills?.name}}</span>
+                                                            <svg (click)="removeJobSkills(skillIndex, i)"
+                                                                class="close_icon_chip" width="17" height="17"
+                                                                viewBox="0 0 17 17" fill="none"
+                                                                xmlns="http://www.w3.org/2000/svg">
+                                                                <path d="M12.75 4.25L4.25 12.75" stroke="currentColor"
+                                                                    stroke-linecap="round" stroke-linejoin="round" />
+                                                                <path d="M4.25 4.25L12.75 12.75" stroke="currentColor"
+                                                                    stroke-linecap="round" stroke-linejoin="round" />
+                                                            </svg>
+
+                                                        </span>
+                                                    </div>
+                                                </ng-container>
+                                            </div>
+                                        </div>
+                                        <div class="add_another"
+                                            *ngIf="jobPreferenceArray.controls.length-1 === i && jobPreferenceArray.controls.length < 3">
+                                            <button mat-icon-button (click)="addJobPreference()">
+                                                <svg width="31" height="31" viewBox="0 0 31 31" fill="none"
+                                                    xmlns="http://www.w3.org/2000/svg">
+                                                    <path
+                                                        d="M15.5007 28.4163C22.6343 28.4163 28.4173 22.6334 28.4173 15.4997C28.4173 8.366 22.6343 2.58301 15.5007 2.58301C8.36697 2.58301 2.58398 8.366 2.58398 15.4997C2.58398 22.6334 8.36697 28.4163 15.5007 28.4163Z"
+                                                        stroke="#464BA8" stroke-linecap="round"
+                                                        stroke-linejoin="round" />
+                                                    <path d="M15.5 10.333V20.6663" stroke="#464BA8"
+                                                        stroke-linecap="round" stroke-linejoin="round" />
+                                                    <path d="M10.334 15.5H20.6673" stroke="#464BA8"
+                                                        stroke-linecap="round" stroke-linejoin="round" />
+                                                </svg>
+                                            </button>
+                                            <p>Add another Internship Preference <br>
+                                                <span>(80% of users work in more than 1 industry e.g Customer Service,
+                                                    Hospitality)</span>
+                                            </p>
+                                        </div>
+                                    </ng-container>
+                                </ng-container>
+
+                            </div>
+                            <div [formGroup]="industryForm">
+
+                                <div class="job_preference_card">
+                                    <h4 class="sub_title_onboarding">Industry Preferences</h4>
+                                    <div class="form-group">
+                                        <label>(Optional) Are there any industries you wish to avoid working in?</label>
+
+
+
+
+                                        <mat-form-field appearance="fill" class="form-control p-0">
+                                            <mat-select class="form-control" style="padding: 15px 13px;"
+                                                placeholder="Select Industry" formControlName="industry" multiple>
+
+                                                <!-- Search box -->
+                                                <ngx-mat-select-search [formControl]="searchIndustryControl"
+                                                    placeholderLabel="Search" noEntriesFoundLabel="Not found">
+                                                </ngx-mat-select-search>
+
+                                                <!-- Options -->
+                                                <mat-option *ngFor="let item of filteredOptions1" [value]="item?._id">
+                                                    {{ item?.name }}
+                                                </mat-option>
+
+                                            </mat-select>
+                                        </mat-form-field>
+
+                                        <!-- Chips shown below the select -->
+
+                                        <div class="custom_chip_list1">
+                                            <span class="custom_chip"
+                                                *ngFor="let skills of industryForm.get('industry')?.value; let skillIndex = index">
+                                                <span>{{ getName(skills) }}</span>
+                                                <svg (click)="removeIndustry(skills)" class="close_icon_chip" width="17"
+                                                    height="17" viewBox="0 0 17 17" fill="none"
+                                                    xmlns="http://www.w3.org/2000/svg">
+                                                    <path d="M12.75 4.25L4.25 12.75" stroke="currentColor"
+                                                        stroke-linecap="round" stroke-linejoin="round" />
+                                                    <path d="M4.25 4.25L12.75 12.75" stroke="currentColor"
+                                                        stroke-linecap="round" stroke-linejoin="round" />
+                                                </svg>
+
+                                            </span>
+                                        </div>
+
+
+
+
+
+                                        <!-- <mat-select class="form-control" placeholder="Select Industry" formControlName="industry" multiple>
+                                                        <mat-option>
+                                                          <ngx-mat-select-search  [formControl]="searchControl" placeholderLabel="Search" noEntriesFoundLabel="not found" ></ngx-mat-select-search>
+                                                        </mat-option>
+                                                            <mat-option *ngFor="let item of industrylist" [value]="item?._id">
+                                                            {{item?.name}}
+                                                            </mat-option>
+                                                    </mat-select> -->
+                                        <!-- <div
+                                                    *ngIf="industryForm.get('industry') && (industryForm.get('industry')?.touched || industryForm.get('industry')?.dirty) && industryForm.get('industry')?.invalid && industryForm.get('industry')?.errors?.required"
+                                                    class="invalid-feedback">
+                                                    Please enter Vacancy title
+                                                </div> -->
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="tabs_buttons d-flex justify-content-between align-items-center">
+                                <button class="theme_btn btn_outline_primary" mat-button
+                                    matStepperPrevious>Back</button>
+                                <button class="theme_btn btn_primary" [disabled]="jobPreferenceForm.invalid" mat-button
+                                    (click)="submitStudentProfile()">Submit</button>
+                            </div>
+                        </div>
+
+
+                    </mat-step>
+                    <ng-template matStepperIcon="edit" let-index="index" id="review"> {{ index + 1 }} </ng-template>
+                </mat-horizontal-stepper>
+            </div>
+        </div>
+    </div>
+</section>

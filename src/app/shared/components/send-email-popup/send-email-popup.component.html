@@ -1,0 +1,434 @@
+<div class="modal fade bsModal ch_modal" [id]="modalId" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document" style="max-width: 750px;">
+        <div class="modal-content">
+            <div class="modal-header">
+                 <h2 *ngIf="titleChange" class="modal-title" id="exampleModalLabel">{{title}}</h2>
+                <h2 *ngIf="!titleChange" class="modal-title" id="exampleModalLabel">Send Email</h2>
+            </div>
+            <form [formGroup]="emailForm">
+                <div class="modal-body pt-3"  #scrollContainer style="max-height: calc(100vh - 300px);overflow: auto;">
+                    <div class="row">
+                        <div class="col-md-5">
+                            <div class="form-group">
+                                <label>Select Category</label>
+                                <ng-select [searchable]="false" [multiple]="false" bindLabel="category_title" bindValue="_id"
+                                    [clearable]="false" placeholder="Choose a Category" (change)="selectCategory($event)" formControlName="category_id">
+                                    <ng-option *ngFor="let category of categories" [value]="category._id">{{category.category_title}}</ng-option>
+                                </ng-select>
+                                <div *ngIf="(emailForm.controls.category_id.touched || emailForm.controls.category_id.dirty) && emailForm.controls.category_id.invalid && emailForm.controls.category_id?.errors?.required  " class="invalid">
+                                    Please select category
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-7">
+                            <div class="form-group">
+                                <label>Select a Template</label>
+                                <ng-select [searchable]="false" [multiple]="false" bindLabel="template_name" bindValue="_id"
+                                    [clearable]="false" placeholder="Choose a Template" (change)="selectTemplate($event)" formControlName="template_id">
+                                    <ng-option *ngFor="let template of emailTemplateList" [value]="template._id">{{template.template_name}}</ng-option>
+                                </ng-select>
+                                <div *ngIf="(emailForm.controls.template_id.touched || emailForm.controls.template_id.dirty) && emailForm.controls.template_id.invalid && emailForm.controls.template_id?.errors?.required  " class="invalid">
+                                    Please select template
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label>Sending to</label>
+                                <div class="form-control sendingTo">
+                                    
+                                    <div class="email_sendTo" *ngFor="let student of students">
+
+                                        <div class="profile" *ngIf="emailType != 'remindEmployer'">
+                                            <img *ngIf="student?.image" [src]="student?.image" alt="avatars">
+                                            <span *ngIf="(!student?.image && emailType === 'student') || emailType === 'my_task' || emailType === 'users'"class="text-uppercase">
+                                                
+                                                {{ student?.first_name ? student?.first_name[0] : student?.FirstName ? student?.FirstName[0]:'' }} 
+                                                {{student?.last_name ? student?.last_name[0] : student?.LastName?student?.LastName[0]:'' }}
+                                            </span>
+                                            <img *ngIf="emailType === 'company' && student?.company_logo" [src]="student?.company_logo" alt="avatars">
+                                            <span *ngIf="!student?.image && (emailType === 'company' || emailType === 'vacancy')"class="text-uppercase">
+                                                {{ student?.company_name[0] }}
+                                            </span>
+
+                                            <span *ngIf="emailType === 'placement_company'"class="text-uppercase">
+                                                {{ student?.companyDetails?.company_name[0] }}
+                                            </span>
+                                        </div>
+                                        <div class="profile" *ngIf="emailType === 'remindEmployer'">
+                                            <span>{{ student?.contact_01_first_name }} {{ student?.contact_01_last_name }}</span>
+                                        </div>
+                                        <div class="d-inline-block" *ngIf="emailType != 'remindEmployer'">
+                                            <h5 *ngIf="emailType === 'student' || emailType === 'my_task' || emailType === 'users'">
+                                                {{ student?.first_name ? student?.first_name[0] : student?.FirstName? student?.FirstName[0]:''}} {{student?.last_name ? student?.last_name[0] : student?.LastName?student?.LastName[0]:''}}
+                                            </h5>
+                                            <h5 *ngIf="emailType === 'company' || emailType === 'vacancy'">
+                                                {{ student?.company_name}}
+                                            </h5>
+                                            <h5 *ngIf="emailType === 'placement_company'">
+                                                {{ student?.companyDetails?.company_name}}
+                                            </h5>
+                                        </div>
+                                        <div class="d-inline-block" *ngIf="emailType === 'remindEmployer'">
+                                            <h5> {{ student?.contact_01_first_name}} </h5>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="email">Email Subject</label>
+                                <input type="email" name="" id="title" placeholder="Subject" class="form-control" formControlName="subject">
+                                <div *ngIf="(emailForm.controls.subject.touched || emailForm.controls.subject.dirty) && emailForm.controls.subject.invalid && emailForm.controls.subject?.errors?.required  " class="invalid">
+                                    Please enter subject
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- <div class="right_bar">
+                            <div class="email_create_container row_gap" droppable [dropScope]="emailTemplateItemsType"
+                                [dragHintClass]="'drag-hint'" (onDrop)="onEmailTemplateElementDrop($event)">
+                                <div cdkDropList (cdkDropListDropped)="sortEmailTemplateElement($event)"
+                                    [cdkDropListData]="droppedEmailTemplateItems">
+                                    <ng-template #dynamic></ng-template>
+                                </div>
+                                <div class="drop_container" *ngIf="droppedEmailTemplateItems.length === 0">
+                                    <span>Drag & drop a section here</span>
+                                </div>
+                            </div>
+                        </div> -->
+<!-- 
+                        <ng-template #dynamic></ng-template>
+                        <div *ngIf="selectedTemplate?.widgets" style="padding: 0 15px;">
+                            <div [cdkDropListData]="droppedEmailTemplateItems"></div>
+                        </div> -->
+
+                        <div #dynamicContainer *ngIf="selectedTemplate?.widgets" style="padding: 0 15px;">
+
+                            <!-- <div [cdkDropListData]="droppedEmailTemplateItems">
+                                <ng-template #dynamic></ng-template>
+                            </div> -->
+                            <div *ngFor="let email of selectedTemplate.widgets.values; let i = index;">
+                                
+                                <ng-container *ngIf="email?.data?.id === 'image'">
+                                    <img class=" mt-3"  *ngIf="email?.data?.elementData?.image" style="object-fit: cover;"
+                                [style.height]="email?.data?.elementData?.height + 'px'"
+                                [style.width]="email?.data?.elementData?.width + 'px'"
+                                style="max-width:100%"
+                                [style.opacity]="email?.data?.elementData?.transparency + '%'"
+                                [src]="email?.data?.elementData?.image" alt="banner">
+                                </ng-container>
+
+                                <ng-container class=" mt-3" *ngIf="email?.data?.id === 'logo'">
+                                    <img class=" mt-3"  style="object-fit: contain;"
+                                    style="max-width:100%"
+                                    [style.height]="email?.data?.elementData?.height + 'px'"
+                                    [style.width]="email?.data?.elementData?.width + 'px'"
+                                    [style.opacity]="email?.data?.elementData?.transparency + '%'"
+                                    [src]="email?.data?.elementData?.logo ? email?.data?.elementData?.logo : domain+'assets/img/logo-ch-1.svg'"
+                                    alt="logo">
+                                </ng-container>
+
+
+
+                                <ng-container *ngIf="email?.data?.id === 'attachment'">
+                                    <div class="divider_container_inner attachment mt-3">
+                                        <div  class="form-group">
+                                           <div class="p-3">
+                                            <h3 class="mail-header-title"> Email Attachments</h3>
+                                             <ul class="files_list p-0 mt-3" *ngIf="email?.data?.elementData?.attachments.length > 0">
+                                                 <li style="list-style: none;" *ngFor="let file of email?.data?.elementData?.attachments; let i = index;">
+                                                     <div class="file_card w-100 d-flex justify-content-between">
+                                                         <div class="content w-100 d-flex align-items-center">
+                                                             <svg width="25" height="32" viewBox="0 0 25 32" fill="none"
+                                                                 xmlns="http://www.w3.org/2000/svg">
+                                                                 <path
+                                                                     d="M21.1761 5.17688C20.8764 4.88148 20.5691 4.58109 20.2671 4.27585C19.9625 3.97307 19.663 3.66538 19.3682 3.36506C17.2671 1.21606 16.0158 0 14.7104 0H4.94144C2.2349 0 0.0293812 2.20931 0.0293812 4.92326V24.6657C0.0293812 25.3182 0.55831 25.8471 1.21078 25.8471C1.86324 25.8471 2.39217 25.3182 2.39217 24.6657V4.90854C2.39217 3.54972 3.49247 2.44691 4.8482 2.44691L13.8446 2.44195C14.7191 2.44195 14.7191 3.75896 14.7191 4.85069V8.60098C14.7104 9.84532 14.7104 9.8318 15.9471 9.8318H19.6312C20.8555 9.8318 22.0872 9.83795 22.0872 11.0626V27.0767C22.0872 28.4356 20.9869 29.5384 19.6312 29.5384H4.8482C3.49247 29.5384 2.39217 28.4356 2.39217 27.0767V24.3343C2.39217 23.6737 1.85667 23.1382 1.19609 23.1382C0.535506 23.1382 0 23.6737 0 24.3343V27.0767C0 29.7907 2.20429 32 4.91206 32H19.6213C22.329 32 24.5333 29.7907 24.5333 27.0767V9.84532C24.5333 8.5382 23.3202 7.2828 21.1761 5.17688Z"
+                                                                     fill="#9A9A9A" />
+                                                             </svg>
+                                                             <ng-component style="display: block !important;">
+                                                                <p class="m-0 pl-3">{{file.name}}</p>
+                                                                <p class="file-size">{{getFileSize(file.size)}}</p>
+                                                             </ng-component>
+                                                             
+                                                         </div>
+                                                         <div class="btn_group">
+                                                             <button  mat-icon-button>
+                                                                <svg width="36" height="35" viewBox="0 0 36 35" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                                    <circle cx="18" cy="17.5" r="17.5" fill="#F8F8F8"/>
+                                                                    <g clip-path="url(#clip0_34289_206089)">
+                                                                    <path d="M6.5 18C6.5 18 10.5 10 17.5 10C24.5 10 28.5 18 28.5 18C28.5 18 24.5 26 17.5 26C10.5 26 6.5 18 6.5 18Z" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                                                    <path d="M17.5 21C19.1569 21 20.5 19.6569 20.5 18C20.5 16.3431 19.1569 15 17.5 15C15.8431 15 14.5 16.3431 14.5 18C14.5 19.6569 15.8431 21 17.5 21Z" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                                                    </g>
+                                                                    <defs>
+                                                                    <clipPath id="clip0_34289_206089">
+                                                                    <rect width="24" height="24" fill="white" transform="translate(5.5 6)"/>
+                                                                    </clipPath>
+                                                                    </defs>
+                                                                    </svg>
+                                                                    
+                                                             </button>
+                                                         </div>
+                                                     </div>
+                                                 </li>
+                                             </ul>
+                                            </div>
+                                         </div>
+                                    </div>
+                                </ng-container>
+
+                                <ng-container *ngIf="email?.data?.id === 'button'" class="button_container">
+                                    <div class="button_container_inner mt-3">
+                              
+                                        <a target="_blank"
+                                        [href]="email?.data?.elementData?.link?.document ? email?.data?.elementData?.link?.document : email?.data?.elementData?.link?.url"
+                                        style="
+              border-radius: 20px;
+              display: inline-block;
+              width: 190.56px;
+              padding: 10px 0px;
+              font-size: 14px;
+              border: 0;
+              text-decoration: none;
+            " [style.background]="email?.data?.elementData?.editButton?.fill"
+                                        [style.opacity]="email?.data?.elementData?.editButton?.transparency + '%'"
+                                        [style.width]="email?.data?.elementData?.editButton?.width + 'px'"
+                                        [style.borderBottomLeftRadius]="email?.data?.elementData?.editButton?.borderRadius?.bottomLeft + 'px !important'"
+                                        [style.borderBottomRightRadius]="email?.data?.elementData?.editButton?.borderRadius?.bottomRight + 'px !important'"
+                                        [style.borderTopLeftRadius]="email?.data?.elementData?.editButton?.borderRadius?.topLeft + 'px !important'"
+                                        [style.borderTopRightRadius]="email?.data?.elementData?.editButton?.borderRadius?.topRight + 'px !important'"
+                                        [style.fontWeight]="email?.data?.elementData?.editButton?.bold ? 'bold' : ''"
+                                        [style.textDecoration]="email?.data?.elementData?.editButton?.underline ? 'underline' : ''"
+                                        [style.fontStyle]="email?.data?.elementData?.editButton?.italic ? 'italic' : ''"
+                                        [style.fontSize]="email?.data?.elementData?.editButton?.fontSize + 'px'"
+                                        [style.color]="email?.data?.elementData?.editButton?.color + '!important'"
+                                        [style.textAlign]="email?.data?.elementData?.editButton?.textAlign"
+                                        [style.fontFamily]="email?.data?.elementData?.editButton?.fontFamily">{{email?.data?.elementData?.editButton?.label?email?.data?.elementData?.editButton?.label:email?.data?.name}}</a>
+                                    </div>
+                                </ng-container>
+
+                                <ng-container class="mt-3" *ngIf="email?.data?.id === 'divider'">
+                                    <hr class=" mt-3"  [style.opacity]="email?.data?.elementData?.transparency + '%'"
+                                    [style.borderTop]="email?.data?.elementData?.width + 'px ' + email?.data?.elementData?.style + ' ' + email?.data?.elementData?.color">
+                                </ng-container>
+
+                                <ng-container *ngIf="email?.data?.id === 'social_link'">
+                                    <div class="socialLinks mt-3"
+                                                [ngClass]="email?.data?.elementData?.socialBar?.direction === 'vertical' ? 'social_links_vertical' : ''"
+                                                [style.gap]="email?.data?.elementData?.socialBar?.spacing + 'px'">
+                                                <ng-container *ngIf="!email?.data?.elementData?.manageLinks">
+                                                    <img [src]="domain+'assets/img/insta.svg'" alt="logo">
+                                                    <img [src]="domain+'assets/img/whatsapp.svg'" alt="logo">
+                                                    <img [src]="domain+'assets/img/fb.svg'" alt="logo">
+                                                    <img [src]="domain+'assets/img/linkedin.svg'" alt="logo">
+                                                    <img [src]="domain+'assets/img/youtube.svg'" alt="logo">
+                                                </ng-container>
+                                                <ng-container
+                                                    *ngFor="let logo of email?.data?.elementData?.manageLinks?.logos">
+                                                    <div
+                                                        class="d-inline-flex justify-content-center align-items-center flex-column">
+                                                        <a *ngIf="logo.link" [href]="logo.link"><img [src]="logo.logo"
+                                                                alt="logo.name"></a>
+                                                        <img
+                                                            [style.height]="email?.data?.elementData?.socialBar?.iconSize + 'px'"
+                                                            *ngIf="!logo.link" [src]="logo.logo" alt="logo.name">
+                                                        <span class="d-inline-block mt-1"
+                                                            *ngIf="email?.data?.elementData?.socialBar?.showText"
+                                                            [style.fontSize]="email?.data?.elementData?.socialBar?.textSize  + 'px'">{{logo.name}}</span>
+                                                    </div>
+                                                </ng-container>
+                                            </div>
+                                </ng-container>
+                                
+                                <ng-container class=" mt-3" *ngIf="email?.data?.id === 'text'">
+                                    <quill-editor 
+                                        (onEditorCreated)="onEditorCreated($event)" 
+                                        [modules]="modules"
+                                        (onSelectionChanged)="onSelectionChanged($event)"
+                                        (onContentChanged)="onContentChanged($event, email)"
+                                        [style.fontSize]="email?.data?.elementData?.size + 'px'" 
+                                        [style.color]="email?.data?.elementData?.color"
+                                        [style.textAlign]="email?.data?.elementData?.textAlign" 
+                                        [style.fontFamily]="email?.data?.elementData?.fontFamily"
+                                        [style.fontWeight]="email?.data?.elementData?.bold ? 'bold' : ''"
+                                        [style.textDecoration]="email?.data?.elementData?.underline ? 'underline' : ''"
+                                        [style.fontStyle]="email?.data?.elementData?.italic ? 'italic' : ''"
+                                        name 
+                                        placeholder="Enter text here"
+                                        class="form-control p-0 mt-3"
+                                        [(ngModel)]="email?.data?.elementData.value"
+                                        formControlName="text">
+                                    </quill-editor>
+                                </ng-container>
+                        
+                            </div>
+                        </div>
+                        
+<!-- 
+                        <div class="col-md-12" *ngIf="selectedTemplate?.type === 'html' && emailForm.controls?.template_id?.value">
+                            <div class="form-group">
+                                <a class="preview_email_link" (click)="openEmailPreviewModal()">Preview Email</a>
+                            </div>
+                        </div>
+ -->
+
+                        
+                        <!-- <div class="col-md-12">
+                            <div class="form-group">
+                                <label>Message</label>
+                              <editor apiKey="zcwi1f81304uers1lcszh0iq2lbhcaxl5cj6ez0v89wr25z3" class="ch_editor" [init]="editorConfig" formControlName="message"></editor>
+                                <quill-editor [modules]="modules" formControlName="message"></quill-editor>
+                                <div *ngIf="(emailForm.controls.message.touched || emailForm.controls.message.dirty) && emailForm.controls.message.invalid && emailForm.controls.message?.errors?.required  " class="invalid">
+                                    Please enter message
+                                </div>
+                            </div>
+                        </div> -->
+                    </div>
+
+                </div>
+                <div class="modal-footer justify-content-center">
+                    <button mat-button type="button" class="theme_btn btn_outline_primary"
+                        data-dismiss="modal" #closeSendEmailModal (click)="cancelEmail();onCancel();">Cancel</button>
+                    <button mat-button data-dismiss="modal" data-target="#sendDone"
+                        class="theme_btn btn_primary" [disabled]="emailForm.invalid" (click)="checkmail()">Send</button>
+                        <!-- (click)="sendEmail();onSend();" -->
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div bsModal #placeholderModel="bs-modal" id="placeholderModel"
+    class="modal bsModal ch_modal fade multi_preview" tabindex="-1" role="dialog"
+    aria-labelledby="placeholderModel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-xl" style="max-width:600px" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title text_primary" id="exampleModalLabel">Insert Placeholder token</h2>
+                <button mat-icon-button class="close" aria-label="Close" (click)="placeholderModel.hide()">
+                    <mat-icon>close</mat-icon>
+                </button>
+            </div>
+            <div class="modal-body" style="max-height: 60vh; overflow: auto;">
+                <div class="form-group">
+                    <label>Select a Category</label>
+                    <ng-select [searchable]="false" [multiple]="false" bindLabel="name" [(ngModel)]="selectedType" (change)="getKey()" bindValue="_id" [clearable]="false"
+                        placeholder="Choose a Category">
+                        <ng-option value="Student">Student</ng-option>
+                        <ng-option value="Employer">Employer</ng-option>
+                    </ng-select>
+                </div>
+                <hr />
+                <div class="vacancy_search_container">
+                    <div class="form-group mb-0 position-relative rounded_search">
+                    
+                        <input type="text" #searchpInput [placeholder]=" selectedType ?  'Search '+selectedType:'Search Student'" (keyup)="applyFilter($event)" [(ngModel)]="selectedKey" class="form-control">
+                    
+                        <button (click)="search()" mat-button class="theme_btn btn_primary"><svg width="20" height="20" viewBox="0 0 20 20"
+                                fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd" clip-rule="evenodd"
+                                    d="M8 16C3.58172 16 0 12.4183 0 8C0 3.58172 3.58172 0 8 0C12.4183 0 16 3.58172 16 8C16 9.84871 15.3729 11.551 14.3199 12.9056L19.7071 18.2929L18.2929 19.7071L12.9056 14.3199C11.551 15.3729 9.84871 16 8 16ZM14 8C14 11.3137 11.3137 14 8 14C4.68629 14 2 11.3137 2 8C2 4.68629 4.68629 2 8 2C11.3137 2 14 4.68629 14 8Z"
+                                    fill="currentColor"></path>
+                            </svg></button>
+                    </div>
+                </div>
+
+                <div class="row mt-3">
+                    <ng-container *ngIf="selectedType">
+                        <div class="col-12" *ngFor="let item of filteredplaceholderList; let i = index">
+                            <p class="m-0 p-3" [ngClass]="selectedItem==item.title ? 'selected-item' : ''" (click)="selectedItem=item.title">
+                                {{selectedType}} : {{item.title}}
+                            </p>
+                        </div>
+                    </ng-container>
+                </div>
+            </div>
+            <div class="modal-footer justify-content-end">
+                <button mat-button type="button" class="theme_btn btn_outline_primary mr-4" (click)="placeholderModel.hide()">Cancel</button>
+                <button mat-button class="theme_btn btn_primary" [disabled]="!selectedType || !selectedItem" (click)="chooseValue()">Insert</button>
+            </div>
+        </div>
+    </div>
+    </div>
+
+</div>
+<div bsModal #emailPreviewModal1="bs-modal" class="modal fade ch_modal email_preview_popup" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" mat-icon-button id="closeModal" class="close"  (click)="closeEmailPreviewModal()"
+                    aria-label="Close">
+                    <mat-icon>close</mat-icon>
+                </button>
+                <h2 class="modal-title">Preview Email Template</h2>
+            </div>
+            <div class="modal-body">
+               <div class="email_temp_container">
+                <div class="p-3"><div class="email_priview_crate_task form-group" [innerHtml]="selectedTemplate?.widget"></div></div>
+                <!-- <app-email-preview-html></app-email-preview-html> -->
+                <!-- [innerHtml]="widget" -->
+               </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade bsModal ch_modal done_modal_popup" id="sendDone" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+            </div>
+            <div class="modal-body text-center">
+                <h2>Email has been sent</h2>
+            </div>
+            <div class="modal-footer justify-content-center">
+                <button mat-button class="theme_btn btn_primary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+                      
+<div bsModal #emailPlaceholder="bs-modal" class="modal fade ch_modal email_preview_popup" tabindex="-1" role="dialog"
+    aria-labelledby="emailPlaceholder" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <!-- <div class="modal-header">
+                <button type="button" mat-icon-button id="closeModal" class="close"  (click)="closeEmailPreviewModal()"
+                    aria-label="Close">
+                    <mat-icon>close</mat-icon>
+                </button>
+            </div> -->
+            <div class="modal-body" style="padding: 65px 0 0 0;">
+                <div class="row">
+                    <div class="col-md-12 mb-5 d-flex justify-content-center">
+                        <svg width="126" height="101" viewBox="0 0 126 101" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <g clip-path="url(#clip0_3146_81803)">
+                            <path d="M95.371 100.108L11.656 100.137C7.45041 100.138 3.68314 97.9494 1.57906 94.2816C0.526894 92.4475 0.000693685 90.4355 6.85071e-07 88.4231C-0.000692315 86.4109 0.52438 84.3983 1.57504 82.5637L43.4059 5.86235C45.5077 2.19284 49.2735 0.0014655 53.4791 7.34727e-07C57.6848 -0.00146403 61.452 2.18729 63.5564 5.85533L105.445 82.537C106.495 84.3663 107.02 86.3759 107.02 88.3871C107.02 90.3982 106.495 92.4106 105.444 94.2454C103.342 97.9147 99.5766 100.106 95.371 100.108ZM1.0523 88.4217C1.05217 90.2534 10.2898 86.3064 11.2468 87.9748C13.1611 91.3116 7.82944 99.0807 11.6557 99.0794C11.6557 99.0794 102.623 97.0551 104.534 93.717C105.49 92.0479 105.968 90.2168 105.967 88.3862C105.967 86.5555 105.488 84.725 104.531 83.0566L62.6416 6.3749C60.7327 3.04761 57.3057 1.05626 53.4795 1.05759C49.655 1.05893 1.05245 86.5897 1.0523 88.4217Z" fill="#3F3D56"/>
+                            <path d="M77.9031 78.2042C99.0694 78.2042 116.228 60.9214 116.228 39.6021C116.228 18.2827 99.0694 1 77.9031 1C56.7368 1 39.5781 18.2827 39.5781 39.6021C39.5781 60.9214 56.7368 78.2042 77.9031 78.2042Z" fill="#464BA8"/>
+                            <path d="M76.3835 53.0815L69.5859 23.488L74.9271 22.3555L80.5508 52.198L76.3835 53.0815ZM81.0564 64.2961C80.0781 64.5035 79.191 64.3645 78.3948 63.8791C77.6296 63.3462 77.1488 62.6099 76.9525 61.6702C76.7561 60.7305 76.9055 59.8811 77.4006 59.1219C77.9267 58.3152 78.6789 57.8082 79.6572 57.6008C80.5963 57.4017 81.4484 57.5685 82.2136 58.1014C83.0098 58.5868 83.506 59.2994 83.7024 60.2391C83.8988 61.1788 83.7339 62.052 83.2078 62.8586C82.7127 63.6178 81.9955 64.097 81.0564 64.2961Z" fill="white"/>
+                            </g>
+                            <defs>
+                            <clipPath id="clip0_3146_81803">
+                            <rect width="126" height="101" fill="white"/>
+                            </clipPath>
+                            </defs>
+                            </svg>
+                    </div>
+                    <div class="col-md-12 text-center">
+                        <h2 class="modal-title" style="font-size: 24px; font-weight: 500;">You have selected an email with placeholders that may <br /> not work for the recipient. Proceed anyway?
+                        </h2>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer justify-content-center">
+                <button mat-button type="button" class="theme_btn btn_outline_primary mr-4" data-dismiss="modal"  [attr.data-target]="'#' + modalId"  (click)="emailPlaceholder.hide()">No</button>
+                <button mat-button type="button" class="theme_btn btn_primary" (click)="sendEmail()">Yes</button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,990 @@
+<section *ngIf="!isAddNewIndustryPartners" class="main_container_place">
+    <div class="card_header" [ngStyle]="{'background-image': 'url('+ imageURL +')'}">
+        <div class="card_container">
+
+
+               <div class="student_card total" >
+                    <div class="content">
+                        <p>Companies</p>
+                        <h4>{{overAllCount?.companies}}</h4>
+                    </div>
+                    <div class="">
+                        <svg width="54" height="54" viewBox="0 0 54 54" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="27" cy="27" r="27" fill="#65DAB9" />
+                            <path
+                                d="M37.666 20.3335H16.3327C14.8599 20.3335 13.666 21.5274 13.666 23.0002V36.3335C13.666 37.8063 14.8599 39.0002 16.3327 39.0002H37.666C39.1388 39.0002 40.3327 37.8063 40.3327 36.3335V23.0002C40.3327 21.5274 39.1388 20.3335 37.666 20.3335Z"
+                                stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+                            <path
+                                d="M32.3327 39V17.6667C32.3327 16.9594 32.0517 16.2811 31.5516 15.781C31.0515 15.281 30.3733 15 29.666 15H24.3327C23.6254 15 22.9472 15.281 22.4471 15.781C21.947 16.2811 21.666 16.9594 21.666 17.6667V39"
+                                stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                    </div>
+                    <div class="action">
+                        <button mat-button class="theme_btn btn_primary">View Companies</button>
+                    </div>
+                </div>
+
+
+            <div class="header_card">
+                <div class="content">
+                    <p>Total Vacancies</p>
+                    <h4>{{overAllCount?.total_vacancies}}</h4>
+                </div>
+
+                <svg width="54" height="54" viewBox="0 0 54 54" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="27" cy="27" r="27" fill="#F2C94C"/>
+                    <path d="M32.333 16.3335H34.9997C35.7069 16.3335 36.3852 16.6144 36.8853 17.1145C37.3854 17.6146 37.6663 18.2929 37.6663 19.0002V37.6668C37.6663 38.3741 37.3854 39.0524 36.8853 39.5524C36.3852 40.0525 35.7069 40.3335 34.9997 40.3335H18.9997C18.2924 40.3335 17.6142 40.0525 17.1141 39.5524C16.614 39.0524 16.333 38.3741 16.333 37.6668V19.0002C16.333 18.2929 16.614 17.6146 17.1141 17.1145C17.6142 16.6144 18.2924 16.3335 18.9997 16.3335H21.6663" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M31.0003 13.6665H23.0003C22.2639 13.6665 21.667 14.2635 21.667 14.9998V17.6665C21.667 18.4029 22.2639 18.9998 23.0003 18.9998H31.0003C31.7367 18.9998 32.3337 18.4029 32.3337 17.6665V14.9998C32.3337 14.2635 31.7367 13.6665 31.0003 13.6665Z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    
+
+            </div>
+
+                  <div class="student_card total" >
+                    <div class="content">
+                        <p>Missing Allocations</p>
+                        <h4>{{overAllCount?.pending_placement}}</h4>
+                    </div>
+                    <div class="">
+                      <svg width="54" height="54" viewBox="0 0 54 54" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="27" cy="27" r="27" fill="#202C76"/>
+                        <path d="M17.667 27H36.3337" stroke="white" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M27 17.668L36.3333 27.0013L27 36.3346" stroke="white" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+
+                    </div>
+                    <div class="action">
+                        <button mat-button class="theme_btn btn_primary">View Vacancies</button>
+                    </div>
+                </div>
+
+            
+            <div class="header_card">
+                <div class="content">
+                    <p>Placed</p>
+                    <h4>{{overAllCount?.placed}}</h4>
+                </div>
+
+                <svg width="54" height="54" viewBox="0 0 54 54" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="27" cy="27" r="27" fill="#F47761" />
+                    <path d="M37.6666 19L22.9999 33.6667L16.3333 27" stroke="white" stroke-width="4"
+                        stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+
+            </div>
+            <!-- <button mat-button class="theme_btn btn_white ml-auto" (click)="addNewIndustryPartners()">
+
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 5V19" stroke="#464BA8" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round" />
+                    <path d="M5 12H19" stroke="#464BA8" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round" />
+                </svg>
+
+                Add New</button> -->
+            <button *ngxPermissionsOnly="['WIL_Write']" (click)="exportPartnerData('excel')" mat-button class="theme_btn btn_white">
+                Download (.xls)</button>
+        </div>
+    </div>
+    <div class="row sub_header">
+        <!-- Begin:: Email and Download(xlsx) -->
+        <div class="col-md-7 action_btns_header" [style.visibility]="isCheck ? 'visible' : 'hidden'">
+            <button mat-button class="theme_btn theme_link_btn" data-toggle="modal"
+                data-target="#sendEmailIndustryPartner">
+                <svg class="mr-2" xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 25 25"
+                    fill="none">
+                    <path
+                        d="M4.5 4.5H20.5C21.6 4.5 22.5 5.4 22.5 6.5V18.5C22.5 19.6 21.6 20.5 20.5 20.5H4.5C3.4 20.5 2.5 19.6 2.5 18.5V6.5C2.5 5.4 3.4 4.5 4.5 4.5Z"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                    <path d="M22.5 6.5L12.5 13.5L2.5 6.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round" />
+                </svg> Email
+            </button>
+            <!-- <button mat-button class="theme_btn theme_link_btn" data-toggle="modal"
+                data-target="#sendEmailIndustryPartner">
+                <svg class="mr-2" width="25" height="25" viewBox="0 0 25 25" fill="none"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path
+                        d="M20.5 7.5H4.5C3.39543 7.5 2.5 8.39543 2.5 9.5V19.5C2.5 20.6046 3.39543 21.5 4.5 21.5H20.5C21.6046 21.5 22.5 20.6046 22.5 19.5V9.5C22.5 8.39543 21.6046 7.5 20.5 7.5Z"
+                        stroke="#464BA8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                    <path
+                        d="M16.5 21.5V5.5C16.5 4.96957 16.2893 4.46086 15.9142 4.08579C15.5391 3.71071 15.0304 3.5 14.5 3.5H10.5C9.96957 3.5 9.46086 3.71071 9.08579 4.08579C8.71071 4.46086 8.5 4.96957 8.5 5.5V21.5"
+                        stroke="#464BA8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+                Request Opportunity
+            </button>
+            <button mat-button class="theme_btn theme_link_btn" data-toggle="modal" data-target="#moveToPlacement">
+                <svg class="mr-2" width="24" height="25" viewBox="0 0 24 25" fill="none"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path d="M5 12.5H19" stroke="#464BA8" stroke-width="1.5" stroke-linecap="round"
+                        stroke-linejoin="round" />
+                    <path d="M12 5.5L19 12.5L12 19.5" stroke="#464BA8" stroke-width="1.5" stroke-linecap="round"
+                        stroke-linejoin="round" />
+                </svg>
+                Move to Placements
+            </button> -->
+        </div>
+        <div class="col-md-5 text-right searchbar-end">
+            <div class="d-inline-flex align-items-center">
+                <div class="search-container">
+                    <svg class="icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20"
+                        fill="none">
+                        <path
+                            d="M9.16667 15.8333C12.8486 15.8333 15.8333 12.8486 15.8333 9.16667C15.8333 5.48477 12.8486 2.5 9.16667 2.5C5.48477 2.5 2.5 5.48477 2.5 9.16667C2.5 12.8486 5.48477 15.8333 9.16667 15.8333Z"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                        <path d="M17.5 17.5L13.875 13.875" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                            stroke-linejoin="round" />
+                    </svg>
+                    <input type="text" class="form-control" [(ngModel)]="searchCriteria.keywords" placeholder="Search Keywords" (ngModelChange)="cleardata(); onChangeSearchKeyword()">
+                </div>
+                <button mat-button class="theme_btn btn_primary ml-4" data-toggle="modal" data-target="#filterIP">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="23" viewBox="0 0 24 23" fill="none">
+                        <path d="M22 3.10669H2L10 11.9629V18.0854L14 19.9578V11.9629L22 3.10669Z" stroke="white"
+                            stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                    Filters
+                </button>
+                <!-- <button mat-icon-button [matMenuTriggerFor]="menu" class="td-btn">
+                    <svg width="4" height="18" viewBox="0 0 4 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="M2 1C1.73478 1 1.48043 1.10536 1.29289 1.29289C1.10536 1.48043 1 1.73478 1 2C1 2.26522 1.10536 2.51957 1.29289 2.70711C1.48043 2.89464 1.73478 3 2 3C2.26522 3 2.51957 2.89464 2.70711 2.70711C2.89464 2.51957 3 2.26522 3 2C3 1.73478 2.89464 1.48043 2.70711 1.29289C2.51957 1.10536 2.26522 1 2 1ZM2 8C1.73478 8 1.48043 8.10536 1.29289 8.29289C1.10536 8.48043 1 8.73478 1 9C1 9.26522 1.10536 9.51957 1.29289 9.70711C1.48043 9.89464 1.73478 10 2 10C2.26522 10 2.51957 9.89464 2.70711 9.70711C2.89464 9.51957 3 9.26522 3 9C3 8.73478 2.89464 8.48043 2.70711 8.29289C2.51957 8.10536 2.26522 8 2 8ZM2 15C1.73478 15 1.48043 15.1054 1.29289 15.2929C1.10536 15.4804 0.999999 15.7348 0.999999 16C0.999999 16.2652 1.10536 16.5196 1.29289 16.7071C1.48043 16.8946 1.73478 17 2 17C2.26522 17 2.51957 16.8946 2.70711 16.7071C2.89464 16.5196 3 16.2652 3 16C3 15.7348 2.89464 15.4804 2.70711 15.2929C2.51957 15.1054 2.26522 15 2 15Z"
+                            stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                </button> -->
+                <mat-menu #menu="matMenu" class="td-menu custome_theme_menu">
+                    <a mat-menu-item data-toggle="modal" data-target="#displayColumnsIP">
+                        <span>Display Columns</span>
+                    </a>
+                    <a mat-menu-item (click)="addNewIndustryPartners()">
+                        <span>Import Data</span>
+                    </a>
+                    <a mat-menu-item (click)="exportPartnerData('excel')">
+                        <span>Download as XLSX</span>
+                    </a>
+
+                </mat-menu>
+            </div>
+        </div>
+    </div>
+    <div class="table-responsive sticky-table" infiniteScroll
+[infiniteScrollDistance]="2"
+[infiniteScrollThrottle]="150"
+(scrolled)="onScrollDown()"
+[scrollWindow]="false">
+        <table mat-table [dataSource]="industryPartnersList" matSort  #industryTbSort="matSort" class="ch_table">
+            <!-- Checkbox Column -->
+            <ng-container matColumnDef="checkbox" sticky>
+                <th mat-header-cell *matHeaderCellDef>
+                    <mat-checkbox *ngxPermissionsOnly="['WIL_Write']" class="example-margin" [(ngModel)]="selectAllCmp" (change)="selectAllCompany()"></mat-checkbox>
+                </th>
+                <td mat-cell *matCellDef="let element">
+                    <mat-checkbox *ngxPermissionsOnly="['WIL_Write']" class="example-margin" [(ngModel)]="element.selected" (change)="selectCompany()"></mat-checkbox>
+                </td>
+            </ng-container>
+            <!-- Company Name Column -->
+            <ng-container matColumnDef="company_name" sticky>
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Company Name </th>
+                <td mat-cell *matCellDef="let row">
+                    <div class="mod_groups">
+                        <div class="avatar">
+                            <img *ngIf="row?.company_logo" [src]="row?.company_logo" alt="woolworths">
+                            <div class="profile" *ngIf="!row?.company_logo">
+                                <span style="color: #fff">{{ row?.company_name ? row?.company_name?.split(' ')[0][0] : '' }} {{row?.company_name ? row?.company_name?.split(' ')[0][1] : '' }}</span>    
+                            </div>
+                        </div>
+                        <span (click)="goToCompanyProfile(row)" matTooltip="{{row.company_name}}"    matTooltipPosition="above"  matTooltipClass="custom-tooltip-project-add">{{ row.company_name.length > 15 ? (row.company_name | slice:0:15) + '...' : row.company_name }}
+</span>
+                    </div>
+                    <!-- <div class="profile">
+                       <img src="../../../../assets/img/woolworths.svg" alt="logo">
+                    </div>  -->
+                </td>
+            </ng-container>
+               <ng-container matColumnDef="company_id">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Company ID </th>
+                <td mat-cell *matCellDef="let row">
+                    {{row.company_code}}
+                </td>
+            </ng-container>
+            <!-- Location Column -->
+            <ng-container matColumnDef="location">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Location </th>
+                <td mat-cell *matCellDef="let row">
+                    {{row.location}}
+                </td>
+            </ng-container>
+            <!-- ABN/ACN Column -->
+            <ng-container matColumnDef="abn_acn">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> ABN/ACN </th>
+                <td mat-cell *matCellDef="let row"> {{row.abn_acn}} </td>
+            </ng-container>
+            <!-- No. of Employees Column -->
+            <ng-container matColumnDef="no_of_employees">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> No. of Employees </th>
+                <td mat-cell *matCellDef="let row"> {{row.no_of_employees}} </td>
+            </ng-container>
+           
+            <!-- Vacancies Group column -->
+            <!-- <ng-container matColumnDef="vacancies">
+                <th mat-header-cell *matHeaderCellDef> Vacancies </th>
+                <td mat-cell *matCellDef="let row">
+                    <input type="number" (wheel)="$event.preventDefault()"  (keydown.arrowup)="$event.preventDefault()"  (keydown.arrowdown)="$event.preventDefault()"  class="input_small_number_table" [(ngModel)]="row.vacancies">
+                </td>
+            </ng-container> -->
+            <!-- Students Placed Column -->
+            <ng-container matColumnDef="student_placed">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Students Allocated </th>
+                <td mat-cell *matCellDef="let row" class="position-relative">
+                    <div class="d-flex align-items-center">
+                          {{row?.allocated_students ? row.allocated_students.length : 0}} 
+                            <button style="margin-top: -2px;" mat-icon-button data-toggle="modal" (click)="studentlist = row"
+                                data-target="#viewStudentList" [disabled]="row.allocated_students.length === 0"><svg width="20" height="20" viewBox="0 0 20 20" fill="none"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <circle cx="10" cy="10" r="10" fill="#F8F8F8" />
+                                    <path
+                                        d="M5 9.58333C5 9.58333 6.81818 6.25 10 6.25C13.1818 6.25 15 9.58333 15 9.58333C15 9.58333 13.1818 12.9167 10 12.9167C6.81818 12.9167 5 9.58333 5 9.58333Z"
+                                        stroke="black" stroke-linecap="round" stroke-linejoin="round" />
+                                    <path
+                                        d="M9.9984 10.8359C10.7515 10.8359 11.362 10.2763 11.362 9.58594C11.362 8.89558 10.7515 8.33594 9.9984 8.33594C9.24529 8.33594 8.63477 8.89558 8.63477 9.58594C8.63477 10.2763 9.24529 10.8359 9.9984 10.8359Z"
+                                        stroke="black" stroke-linecap="round" stroke-linejoin="round" />
+                                </svg>
+                            </button> 
+                    </div>
+                   
+                </td>
+            </ng-container>
+            <!-- Placement Groups Column -->
+            <ng-container matColumnDef="placement_groups">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Placement Groups </th>
+                <td mat-cell *matCellDef="let row" class="position-relative"> 
+                    <div class="d-flex align-items-center">
+                    {{row.placementGroupCount}} &nbsp; {{row.placement_groups}}
+                    <button style="margin-top: -2px;" mat-icon-button data-toggle="modal" (click)="getCompanyPlacementGroup(row)"
+                        data-target="#viewPlacement" [disabled]="row.placementGroupCount === 0"><svg width="20" height="20" viewBox="0 0 20 20" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="10" cy="10" r="10" fill="#F8F8F8" />
+                            <path
+                                d="M5 9.58333C5 9.58333 6.81818 6.25 10 6.25C13.1818 6.25 15 9.58333 15 9.58333C15 9.58333 13.1818 12.9167 10 12.9167C6.81818 12.9167 5 9.58333 5 9.58333Z"
+                                stroke="black" stroke-linecap="round" stroke-linejoin="round" />
+                            <path
+                                d="M9.9984 10.8359C10.7515 10.8359 11.362 10.2763 11.362 9.58594C11.362 8.89558 10.7515 8.33594 9.9984 8.33594C9.24529 8.33594 8.63477 8.89558 8.63477 9.58594C8.63477 10.2763 9.24529 10.8359 9.9984 10.8359Z"
+                                stroke="black" stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                    </button> </div></td>
+            </ng-container>
+
+            <!-- Placement Groups Column -->
+            <ng-container matColumnDef="contact">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Contacts </th>
+                <td mat-cell *matCellDef="let row" class="position-relative"> 
+                    <div class="d-flex align-items-center">
+                    {{row.preferred_contact_count}}
+                    <button style="margin-top: -2px;" mat-icon-button data-toggle="modal" (click)="getCompanyPreferredContact(row)"
+                            data-target="#viewPreferredContact" [disabled]="row.preferred_contact_count === 0"><svg width="20"
+                                height="20" viewBox="0 0 20 20" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <circle cx="10" cy="10" r="10" fill="#F8F8F8" />
+                                <path
+                                    d="M5 9.58333C5 9.58333 6.81818 6.25 10 6.25C13.1818 6.25 15 9.58333 15 9.58333C15 9.58333 13.1818 12.9167 10 12.9167C6.81818 12.9167 5 9.58333 5 9.58333Z"
+                                    stroke="black" stroke-linecap="round" stroke-linejoin="round" />
+                                <path
+                                    d="M9.9984 10.8359C10.7515 10.8359 11.362 10.2763 11.362 9.58594C11.362 8.89558 10.7515 8.33594 9.9984 8.33594C9.24529 8.33594 8.63477 8.89558 8.63477 9.58594C8.63477 10.2763 9.24529 10.8359 9.9984 10.8359Z"
+                                    stroke="black" stroke-linecap="round" stroke-linejoin="round" />
+                            </svg>
+                        </button> </div></td>
+            </ng-container>
+
+
+             <!-- Placement Groups Column -->
+            <ng-container matColumnDef="vacancies">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Vacancies </th>
+                <td mat-cell *matCellDef="let row" class="position-relative">
+                     <div class="d-flex align-items-center"> {{row.vacancy_count}}
+                          <button style="margin-top: -2px;" mat-icon-button data-toggle="modal" (click)="getCompanyVacancies(row)"
+                                data-target="#viewCompanyVacancy" [disabled]="row.vacancyCount === 0"><svg width="20"
+                                        height="20" viewBox="0 0 20 20" fill="none"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <circle cx="10" cy="10" r="10" fill="#F8F8F8" />
+                                        <path
+                                            d="M5 9.58333C5 9.58333 6.81818 6.25 10 6.25C13.1818 6.25 15 9.58333 15 9.58333C15 9.58333 13.1818 12.9167 10 12.9167C6.81818 12.9167 5 9.58333 5 9.58333Z"
+                                            stroke="black" stroke-linecap="round" stroke-linejoin="round" />
+                                        <path
+                                            d="M9.9984 10.8359C10.7515 10.8359 11.362 10.2763 11.362 9.58594C11.362 8.89558 10.7515 8.33594 9.9984 8.33594C9.24529 8.33594 8.63477 8.89558 8.63477 9.58594C8.63477 10.2763 9.24529 10.8359 9.9984 10.8359Z"
+                                            stroke="black" stroke-linecap="round" stroke-linejoin="round" />
+                                    </svg>
+                                </button></div></td>
+            </ng-container>
+
+            <!-- <ng-container matColumnDef="contact_01_name">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Contact 1 Name </th>
+                <td mat-cell *matCellDef="let row"> {{row.contact_01_first_name}} {{row.contact_01_last_name}} </td>
+            </ng-container>
+            <ng-container matColumnDef="contact_01_title">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Contact 1 Title </th>
+                <td mat-cell *matCellDef="let row"> {{row.contact_01_title}} </td>
+            </ng-container>
+            <ng-container matColumnDef="contact_01_primary_email">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Contact 1 Email </th>
+                <td mat-cell *matCellDef="let row"> {{row.contact_01_primary_email}} </td>
+            </ng-container>
+            <ng-container matColumnDef="contact_01_primary_phone">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Contact 1 Phone </th>
+                <td mat-cell *matCellDef="let row"> {{row.contact_01_primary_phone}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="contact_02_name">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Contact 2 Name </th>
+                <td mat-cell *matCellDef="let row"> {{row.contact_02_first_name}} {{row.contact_02_last_name}} </td>
+            </ng-container>
+            <ng-container matColumnDef="contact_02_title">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Contact 2 Title </th>
+                <td mat-cell *matCellDef="let row"> {{row.contact_02_title}} </td>
+            </ng-container>
+            <ng-container matColumnDef="contact_02_primary_email">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Contact 2 Email </th>
+                <td mat-cell *matCellDef="let row"> {{row.contact_02_primary_email}} </td>
+            </ng-container>
+            <ng-container matColumnDef="contact_02_primary_phone">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Contact 2 Phone </th>
+                <td mat-cell *matCellDef="let row"> {{row.contact_02_primary_phone}} </td>
+            </ng-container> -->
+           
+            <!-- Action column -->
+            <ng-container matColumnDef="actions" stickyEnd>
+                <th mat-header-cell *matHeaderCellDef> Actions </th>
+                <td mat-cell *matCellDef="let row">
+                    <button *ngxPermissionsOnly="['WIL_Write']" mat-icon-button [matMenuTriggerFor]="menu" class="td-btn">
+                        <mat-icon>more_horizantal</mat-icon>
+                    </button>
+                    <mat-menu #menu="matMenu" class="td-menu">
+                        <a mat-menu-item data-toggle="modal" data-target="#sendEmailIndustryPartner" (click)="row.selected = true; selectCompany()">
+                            <span>Email</span>
+                        </a>
+                        <!-- <a mat-menu-item>
+                            <span>Download (.xls)</span>
+                        </a> -->
+                        <!-- <a mat-menu-item data-toggle="modal" data-target="#sendEmailIndustryPartner" (click)="row.selected = true; selectCompany()">
+                            <span>Request Opportunity</span>
+                        </a> -->
+                        <!-- data-toggle="modal" data-target="#movedToPlacement"  -->
+                        <a mat-menu-item (click)="gotoProfile(row)">
+                            <span>View Company Profile</span>
+                        </a>
+                       <a mat-menu-item
+                        (click)="
+                            company = row;
+                            callModel(row);
+                        ">
+                            <span class="danger">Remove Employer</span>
+                        </a>
+                    </mat-menu>
+                </td>
+            </ng-container>
+            <tr mat-header-row *matHeaderRowDef="displayedColumns;sticky: true"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+    </div>
+    <!-- <app-paginator [paginationObj]="paginationObj" (pagination)="getPaginationData($event)"></app-paginator> -->
+
+</section>
+<ng-container *ngIf="isAddNewIndustryPartners">
+    <app-industry-partner-import-via-excel [placementGroupId]="id" (industryPartnerUpdates)="getNewIndustryPartners($event)"></app-industry-partner-import-via-excel>
+</ng-container>
+<app-display-columns-popup modalId="displayColumnsIP"></app-display-columns-popup>
+<!-- Email popup -->
+<app-send-email-company-popup [type]="'employer'" modalId="sendEmailIndustryPartner" [students]="selectedRecords" [emailType]="'company'"></app-send-email-company-popup>
+
+<div class="modal fade bsModal ch_modal done_modal_popup" id="moveToPlacement" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+            </div>
+            <div class="modal-body text-center">
+                <h2 class="mb-4">Are you sure you want to move these <br>
+                    companies to Placements?</h2>
+                <div *ngFor="let company of selectedRecords" class="mod_groups">
+                    <div class="avatar" *ngIf="company?.company_logo" >
+                        <img [src]="company?.company_logo" alt="{{company.company_name}}">
+                    </div>
+                    <div class="avatar empty" *ngIf="!company?.company_logo" >
+                        <img  src="../../../../assets/img/company-logo-placeholder.svg" alt="empty">
+                    </div>
+                    <!-- <div *ngIf="!company.company_logo" class="profile">
+                        <span style="color: #fff">{{ company.company_name.split(' ')[0][0] }} {{company.company_name.split(' ')[0][1] }}</span>    
+                    </div> -->
+                    <span>{{company.company_name}}</span>
+                </div>
+                
+            </div>
+            <div class="modal-footer justify-content-center">
+                <button mat-button class="theme_btn btn_outline_primary mr-3" data-dismiss="modal">No</button>
+                <button mat-button class="theme_btn btn_primary" (click)="updateCompaniesStatus()" data-dismiss="modal">Yes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade bsModal ch_modal done_modal_popup" id="movedToPlacement" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+            </div>
+            <div class="modal-body text-center">
+                <h2>You have moved this company to Placements</h2>
+                <p>Candidates can now be placed into this company in the placements section.</p>
+                <div class="mod_groups">
+                    <div class="avatar">
+                        <img *ngIf="selectedRecords[0]?.company_logo" [src]="selectedRecords[0]?.company_logo" alt="selectedRecords[0].company_name">
+                        <!-- <div class="profile" *ngIf="!selectedRecords[0]?.company_logo">
+                            <span style="color: #fff">{{ selectedRecords[0]?.company_name.split(' ')[0][0]}} {{ selectedRecords[0]?.company_logo?.split(' ')[0][1] }}</span>    
+                        </div> -->
+                    </div>
+                    <div class="avatar empty" *ngIf="!selectedRecords[0]?.company_logo">
+                        <img  src="../../../../assets/img/company-logo-placeholder.svg" alt="empty">
+                    </div>
+                    <span>{{selectedRecords[0]?.company_name}}</span>
+                </div>
+            </div>
+            <div class="modal-footer justify-content-center">
+                <button mat-button class="theme_btn btn_primary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Filter Modal -->
+
+<div class="modal fade bsModal ch_modal filter_modals" id="filterIP" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header d-flex justify-content-between">
+                <button mat-icon-button class="close" data-dismiss="modal" aria-label="Close">
+                    <mat-icon>close</mat-icon>
+                </button>
+                <h2 class="modal-title">Filters</h2>
+                <button mat-button class="theme_btn btn_primary"  data-dismiss="modal" (click)="cleardata(); filterCompanies()">Apply Filter</button>
+            </div>
+            <div class="modal-body pt-3 pb-5">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h3 class="filter_title">Parameters</h3>
+                    </div>
+                    <div class="col-md-5">
+                        <div class="filter_sidebar">
+                            <ul class="fix_hight" >
+                                <li *ngFor="let filter of filters" (click)="applyFilter(filter)"
+                                    [ngClass]="{'active': activeFilter?.name === filter.name}">
+                                    <div class="check_box">
+                                        <mat-checkbox [(ngModel)]="filter.selected"></mat-checkbox>
+                                        <span class="check_box_label">{{filter.label}}</span>
+                                    </div>
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M9 18L15 12L9 6" stroke="currentColor" stroke-width="2"
+                                            stroke-linecap="round" stroke-linejoin="round" />
+                                    </svg>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-md-7">
+                        <div class="right_container">
+                            <ng-container *ngIf="activeFilter?.name === 'placementGroups'">
+                                <h4 class="title">Placement Group</h4>
+                                <div class="form-group">
+                                    <ng-select name="anyName"
+                                        placeholder="Select Placement Groups" bindLabel="name"
+                                        [multiple]="true" [(ngModel)]="activeFilter.value">
+                                        <ng-option *ngFor="let placementGroup of companyFilters?.placementGroups" [value]="placementGroup._id">{{placementGroup.title}}</ng-option>
+                                    </ng-select>
+                                    <!-- <div class="custom_chip_list">
+                                        <span class="custom_chip">
+                                            <span>UI/UX Group</span>
+                                            <svg class="close_icon_chip" xmlns="http://www.w3.org/2000/svg" width="14"
+                                                height="14" viewBox="0 0 14 14" fill="none">
+                                                <path fill-rule="evenodd" clip-rule="evenodd"
+                                                    d="M7 8.73459L1.73459 14L0 12.2654L5.26541 7L0 1.73459L1.73459 0L7 5.26541L12.2654 0L14 1.73459L8.73459 7L14 12.2654L12.2654 14L7 8.73459Z"
+                                                    fill="currentColor" />
+                                            </svg>
+                                        </span>
+                                    </div> -->
+                                </div>
+                            </ng-container>
+                            <ng-container *ngIf="activeFilter?.name === 'student_placed'">
+                                <h4 class="title">Currently Placed</h4>
+                                <div class="form-group">
+                                    <ng-select [searchable]="false" [multiple]="true" bindLabel="name" bindValue="name"
+                                        [clearable]="false" placeholder="Select Status" [(ngModel)]="activeFilter.value">
+                                        <ng-option *ngFor="let currently_placed of companyFilters?.currently_placed" [value]="currently_placed">{{currently_placed}}</ng-option>
+                                    </ng-select>
+                                    <!-- <div class="custom_chip_list">
+                                        <span class="custom_chip">
+                                            <span>ghadfgsd</span>
+                                            <svg class="close_icon_chip" xmlns="http://www.w3.org/2000/svg" width="14"
+                                                height="14" viewBox="0 0 14 14" fill="none">
+                                                <path fill-rule="evenodd" clip-rule="evenodd"
+                                                    d="M7 8.73459L1.73459 14L0 12.2654L5.26541 7L0 1.73459L1.73459 0L7 5.26541L12.2654 0L14 1.73459L8.73459 7L14 12.2654L12.2654 14L7 8.73459Z"
+                                                    fill="currentColor" />
+                                            </svg>
+                                        </span>
+                                    </div> -->
+                                </div>
+                            </ng-container>
+                            <ng-container *ngIf="activeFilter?.name === 'post_code'">
+                                <h4 class="title">Location(Post Code)</h4>
+                                <div class="form-group">
+                                    <ng-select class="mb-2" [searchable]="true" [multiple]="true" bindLabel="name"
+                                    bindValue="id" [clearable]="false" placeholder="Select" [(ngModel)]="activeFilter.value">
+                                    <ng-option *ngFor="let post_code of companyFilters?.post_code" [value]="post_code">{{post_code}}</ng-option>
+                                </ng-select>
+                                <!-- <input type="text" placeholder="Add Suburb" class="form-control">
+                                <div class="custom_chip_list">
+                                    <span class="custom_chip">
+                                        <span>Melbourne</span>
+                                        <svg class="close_icon_chip" xmlns="http://www.w3.org/2000/svg" width="14"
+                                            height="14" viewBox="0 0 14 14" fill="none">
+                                            <path fill-rule="evenodd" clip-rule="evenodd"
+                                                d="M7 8.73459L1.73459 14L0 12.2654L5.26541 7L0 1.73459L1.73459 0L7 5.26541L12.2654 0L14 1.73459L8.73459 7L14 12.2654L12.2654 14L7 8.73459Z"
+                                                fill="currentColor" />
+                                        </svg>
+                                    </span>
+                                </div>     -->
+                                </div>
+                            </ng-container>
+                            <ng-container *ngIf="activeFilter?.name === 'no_of_employees'">
+                                <h4 class="title">No of Employees</h4>
+                                <div class="form-group">
+                                    <ng-select class="mb-2" [searchable]="true" [multiple]="true" bindLabel="name"
+                                    bindValue="id" [clearable]="false" placeholder="Select Employee Count" [(ngModel)]="activeFilter.value">
+                                    <ng-option *ngFor="let no_of_employees of companyFilters?.no_of_employees" [value]="no_of_employees">{{no_of_employees}}</ng-option>
+                                </ng-select>
+                                <!-- <div class="custom_chip_list">
+                                    <span class="custom_chip">
+                                        <span>1-10</span>
+                                        <svg class="close_icon_chip" xmlns="http://www.w3.org/2000/svg" width="14"
+                                            height="14" viewBox="0 0 14 14" fill="none">
+                                            <path fill-rule="evenodd" clip-rule="evenodd"
+                                                d="M7 8.73459L1.73459 14L0 12.2654L5.26541 7L0 1.73459L1.73459 0L7 5.26541L12.2654 0L14 1.73459L8.73459 7L14 12.2654L12.2654 14L7 8.73459Z"
+                                                fill="currentColor" />
+                                        </svg>
+                                    </span>
+                                </div>     -->
+                                </div>
+                            </ng-container>
+                            <ng-container *ngIf="activeFilter?.name === 'lead_source'">
+                                <h4 class="title">Lead Source</h4>
+                                <div class="form-group">
+                                    <ng-select class="mb-2" [searchable]="true" [multiple]="true" bindLabel="name"
+                                    bindValue="id" [clearable]="false" placeholder="Select Lead Source" [(ngModel)]="activeFilter.value">
+                                    <ng-option *ngFor="let lead_source of companyFilters?.lead_source" [value]="lead_source">{{lead_source}}</ng-option>
+                                </ng-select>
+                                <!-- <div class="custom_chip_list">
+                                    <span class="custom_chip">
+                                        <span>Self Sourced</span>
+                                        <svg class="close_icon_chip" xmlns="http://www.w3.org/2000/svg" width="14"
+                                            height="14" viewBox="0 0 14 14" fill="none">
+                                            <path fill-rule="evenodd" clip-rule="evenodd"
+                                                d="M7 8.73459L1.73459 14L0 12.2654L5.26541 7L0 1.73459L1.73459 0L7 5.26541L12.2654 0L14 1.73459L8.73459 7L14 12.2654L12.2654 14L7 8.73459Z"
+                                                fill="currentColor" />
+                                        </svg>
+                                    </span>
+                                </div>     -->
+                                </div>
+                            </ng-container>
+                            <ng-container *ngIf="activeFilter?.name === 'conversion_status'">
+                                <h4 class="title">Conversion Status</h4>
+                                <div class="form-group">
+                                    <ng-select class="mb-2" [searchable]="true" [multiple]="true" bindLabel="name"
+                                    bindValue="id" [clearable]="false" placeholder="Select Conversion Status" [(ngModel)]="activeFilter.value">
+                                    <ng-option *ngFor="let conversion_status of companyFilters?.conversion_status" [value]="conversion_status">{{conversion_status}}</ng-option>
+                                </ng-select>
+                                <!-- <div class="custom_chip_list">
+                                    <span class="custom_chip">
+                                        <span>Converted</span>
+                                        <svg class="close_icon_chip" xmlns="http://www.w3.org/2000/svg" width="14"
+                                            height="14" viewBox="0 0 14 14" fill="none">
+                                            <path fill-rule="evenodd" clip-rule="evenodd"
+                                                d="M7 8.73459L1.73459 14L0 12.2654L5.26541 7L0 1.73459L1.73459 0L7 5.26541L12.2654 0L14 1.73459L8.73459 7L14 12.2654L12.2654 14L7 8.73459Z"
+                                                fill="currentColor" />
+                                        </svg>
+                                    </span>
+                                </div>     -->
+                                </div>
+                            </ng-container>
+                            <ng-container *ngIf="activeFilter?.name === 'site_status'">
+                                <h4 class="title">Site Status</h4>
+                                <div class="form-group">
+                                    <ng-select class="mb-2" [searchable]="true" [multiple]="true" bindLabel="name"
+                                    bindValue="id" [clearable]="false" placeholder="Select Site Status" [(ngModel)]="activeFilter.value">
+                                    <ng-option *ngFor="let site_status of companyFilters?.site_status" [value]="site_status">{{site_status}}</ng-option>
+                                </ng-select>
+                                <!-- <div class="custom_chip_list">
+                                    <span class="custom_chip">
+                                        <span>Inactive</span>
+                                        <svg class="close_icon_chip" xmlns="http://www.w3.org/2000/svg" width="14"
+                                            height="14" viewBox="0 0 14 14" fill="none">
+                                            <path fill-rule="evenodd" clip-rule="evenodd"
+                                                d="M7 8.73459L1.73459 14L0 12.2654L5.26541 7L0 1.73459L1.73459 0L7 5.26541L12.2654 0L14 1.73459L8.73459 7L14 12.2654L12.2654 14L7 8.73459Z"
+                                                fill="currentColor" />
+                                        </svg>
+                                    </span>
+                                </div>     -->
+                                </div>
+                            </ng-container>
+                            <ng-container *ngIf="activeFilter?.name === 'whs_check'">
+                                <h4 class="title">WHS Check</h4>
+                                <div class="form-group">
+                                    <ng-select class="mb-2" [searchable]="true" [multiple]="true" bindLabel="name"
+                                    bindValue="id" [clearable]="false" placeholder="Select Status" [(ngModel)]="activeFilter.value">
+                                    <ng-option *ngFor="let whs_check of companyFilters?.whs_check" [value]="whs_check">{{whs_check}}</ng-option>
+                                </ng-select>
+                                <!-- <div class="custom_chip_list">
+                                    <span class="custom_chip">
+                                        <span>Yes</span>
+                                        <svg class="close_icon_chip" xmlns="http://www.w3.org/2000/svg" width="14"
+                                            height="14" viewBox="0 0 14 14" fill="none">
+                                            <path fill-rule="evenodd" clip-rule="evenodd"
+                                                d="M7 8.73459L1.73459 14L0 12.2654L5.26541 7L0 1.73459L1.73459 0L7 5.26541L12.2654 0L14 1.73459L8.73459 7L14 12.2654L12.2654 14L7 8.73459Z"
+                                                fill="currentColor" />
+                                        </svg>
+                                    </span>
+                                </div>     -->
+                                </div>
+                            </ng-container>
+                            <ng-container *ngIf="activeFilter?.name === 'company_concent_to_use_logo'">
+                                <h4 class="title">Site Consent to Use Logo</h4>
+                                <div class="form-group">
+                                    <ng-select class="mb-2" [searchable]="true" [multiple]="true" bindLabel="name"
+                                    bindValue="id" [clearable]="false" placeholder="Select Status" [(ngModel)]="activeFilter.value">
+                                    <ng-option *ngFor="let company_concent_to_use_logo of companyFilters?.company_concent_to_use_logo" [value]="company_concent_to_use_logo">{{company_concent_to_use_logo}}</ng-option>
+                                </ng-select>
+                                <!-- <div class="custom_chip_list">
+                                    <span class="custom_chip">
+                                        <span>Yes</span>
+                                        <svg class="close_icon_chip" xmlns="http://www.w3.org/2000/svg" width="14"
+                                            height="14" viewBox="0 0 14 14" fill="none">
+                                            <path fill-rule="evenodd" clip-rule="evenodd"
+                                                d="M7 8.73459L1.73459 14L0 12.2654L5.26541 7L0 1.73459L1.73459 0L7 5.26541L12.2654 0L14 1.73459L8.73459 7L14 12.2654L12.2654 14L7 8.73459Z"
+                                                fill="currentColor" />
+                                        </svg>
+                                    </span>
+                                </div>     -->
+                                </div>
+                            </ng-container>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade bsModal ch_modal view_all_contact_popup" id="viewPlacement" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title primary" id="exampleModalLabel">View {{company?.company_name}} Placement Groups</h2>
+                <button type="button" mat-icon-button id="closeModal" class="close" data-dismiss="modal"
+                    aria-label="Close">
+                    <mat-icon>close</mat-icon>
+                </button>
+            </div>
+            <form>
+                <div class="modal-body pt-3">
+                    <div class="table-responsive manage_table_scroll position-relative" >
+                        <table mat-table [dataSource]="companyPlacementGroup" matSort class="ch_table">
+                            <!-- Placement Group Column -->
+                            <ng-container matColumnDef="placement_group">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header>Placement Group </th>
+                                <td mat-cell *matCellDef="let row">{{row.title}}
+                                </td>
+                            </ng-container>
+                            <!-- Code Column -->
+                            <ng-container matColumnDef="code">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header> Code </th>
+                                <td mat-cell *matCellDef="let row"> {{row.code}} </td>
+                            </ng-container>
+                            <!-- start date Column -->
+                            <ng-container matColumnDef="start_date">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header>Start date </th>
+                                <td mat-cell *matCellDef="let row">{{row.start_date}}
+                                </td>
+                            </ng-container>
+                            <!-- end  date Column -->
+                            <ng-container matColumnDef="end_date">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header>End date </th>
+                                <td mat-cell *matCellDef="let row">{{row.end_date || 'N/A'}}
+                                </td>
+                            </ng-container>
+                            <!-- Status Column -->
+                            <ng-container matColumnDef="status">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header>Status </th>
+                                <td mat-cell *matCellDef="let row">
+                                    {{row.is_publish ?  'Published' : 'Unpublished'}}
+                                </td>
+                            </ng-container>
+                            <tr mat-header-row *matHeaderRowDef="displayedCompanyPlacementColumns"></tr>
+                            <tr mat-row *matRowDef="let row; columns: displayedCompanyPlacementColumns;"></tr>
+                        </table>
+                    </div>
+                </div>
+                <div class="modal-footer justify-content-center">
+                    <button mat-button data-dismiss="modal" class="theme_btn btn_primary">Close</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade bsModal ch_modal view_all_contact_popup" id="viewCompanyVacancy" tabindex="-1" role="dialog"
+    aria-labelledby="viewCompanyVacancy" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title primary" id="exampleModalLabel">{{company?.company_name}}'s Vacancies</h2>
+                <button type="button" mat-icon-button id="closeModal" class="close" data-dismiss="modal"
+                    aria-label="Close">
+                    <mat-icon>close</mat-icon>
+                </button>
+            </div>
+            <form>
+                <div class="modal-body pt-3">
+                    <div class="table-responsive manage_table_scroll position-relative" >
+                        <table mat-table [dataSource]="companyVacancies" matSort class="ch_table">
+                            <!-- Placement Group Column -->
+                            <ng-container matColumnDef="no">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header>No. </th>
+                              <td mat-cell *matCellDef="let row; let i = index">{{ i + 1 }}</td>
+                            </ng-container>
+                            <!-- Code Column -->
+                            <ng-container matColumnDef="name">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
+                                <td mat-cell *matCellDef="let row"> {{row.job_title}} </td>
+                            </ng-container>
+                            <!-- start date Column -->
+                            <ng-container matColumnDef="vacancy_type">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header>Vacancy Type </th>
+                                <td mat-cell *matCellDef="let row">{{row.type}}
+                                </td>
+                            </ng-container>
+                            <!-- end  date Column -->
+                            <ng-container matColumnDef="allocated">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header>Allocated </th>
+                                <td mat-cell *matCellDef="let row">{{row.allocated_count}}
+                                </td>
+                            </ng-container>
+                            <!-- Status Column -->
+                            <ng-container matColumnDef="placed">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header>Placed </th>
+                                <td mat-cell *matCellDef="let row">
+                                    {{row.placed_count}}
+                                </td>
+                            </ng-container>
+                            <tr mat-header-row *matHeaderRowDef="displayedCompanyVacanciesColumns"></tr>
+                            <tr mat-row *matRowDef="let row; columns: displayedCompanyVacanciesColumns;"></tr>
+                        </table>
+                    </div>
+                </div>
+                <div class="modal-footer justify-content-center">
+                    <button mat-button data-dismiss="modal" class="theme_btn btn_primary">Close</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<div class="modal fade bsModal ch_modal view_all_contact_popup" id="viewPreferredContact" tabindex="-1" role="dialog"
+    aria-labelledby="viewPreferredContact" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title primary" id="exampleModalLabel">View {{company?.company_name}}  Contacts</h2>
+                <button type="button" mat-icon-button id="closeModal" class="close" data-dismiss="modal"
+                    aria-label="Close">
+                    <mat-icon>close</mat-icon>
+                </button>
+            </div>
+            <form>
+                <div class="modal-body pt-3">
+                    <div class="table-responsive manage_table_scroll position-relative" >
+                        <table mat-table [dataSource]="companyPreferredContact" matSort class="ch_table">
+                            <!-- Placement Group Column -->
+                            <ng-container matColumnDef="contact_name">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header>Contact Name </th>
+                                <td mat-cell *matCellDef="let row">{{row.first_name}} {{row.last_name}}
+                                </td>
+                            </ng-container>
+                            <!-- Code Column -->
+                            <ng-container matColumnDef="department">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header> Department </th>
+                                <td mat-cell *matCellDef="let row">{{row.department_name}} </td>
+                            </ng-container>
+                            <!-- start date Column -->
+                            <ng-container matColumnDef="title">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header>Title </th>
+                                <td mat-cell *matCellDef="let row">{{row.role}}
+                                </td>
+                            </ng-container>
+                            <!-- end  date Column -->
+                            <ng-container matColumnDef="primary_email">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header>Primary Email </th>
+                                <td mat-cell *matCellDef="let row">{{row.primary_email}}
+                                </td>
+                            </ng-container>
+                            <!-- Status Column -->
+                            <ng-container matColumnDef="primary_phone">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header>Primary Phone </th>
+                                <td mat-cell *matCellDef="let row">
+                                    {{row.primary_phone}}
+                                </td>
+                            </ng-container>
+                            <tr mat-header-row *matHeaderRowDef="displayedCompanyPreferredColumns"></tr>
+                            <tr mat-row *matRowDef="let row; columns: displayedCompanyPreferredColumns;"></tr>
+                        </table>
+                    </div>
+                </div>
+                <div class="modal-footer justify-content-center">
+                    <button mat-button data-dismiss="modal" class="theme_btn btn_primary">Close</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade bsModal ch_modal view_all_contact_popup" id="viewStudentList" tabindex="-1" role="dialog"
+    aria-labelledby="viewPreferredContact" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title primary" id="exampleModalLabel">View {{studentlist?.company_name}} Allocations</h2>
+                <button type="button" mat-icon-button id="closeModal" class="close" data-dismiss="modal"
+                    aria-label="Close">
+                    <mat-icon>close</mat-icon>
+                </button>
+            </div>
+            <form>
+                <div class="modal-body pt-3">
+                    <div class="table-responsive manage_table_scroll position-relative" >
+                        <table mat-table [dataSource]="studentlist?.allocated_students" matSort class="ch_table">
+                            <!-- Placement Group Column -->
+                            <ng-container matColumnDef="Student_Name">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header>Student Name </th>
+                                <td mat-cell *matCellDef="let row">{{row.first_name}} {{row.last_name}}
+                                </td>
+                            </ng-container>
+                            <!-- Code Column -->
+                            <ng-container matColumnDef="Student_ID">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header> Student ID </th>
+                                <td mat-cell *matCellDef="let row">{{row.student_code}} </td>
+                            </ng-container>
+                            <!-- start date Column -->
+                            <ng-container matColumnDef="Interview_Status">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header>Interview Status </th>
+                                <td mat-cell *matCellDef="let row">{{row.interview_status}}
+                                </td>
+                            </ng-container>
+                            <!-- end  date Column -->
+                            <ng-container matColumnDef="Status">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header>Status </th>
+                                <td mat-cell *matCellDef="let row">{{row.status}}
+                                </td>
+                            </ng-container>
+                           
+                            <tr mat-header-row *matHeaderRowDef="displayedStudentColumns"></tr>
+                            <tr mat-row *matRowDef="let row; columns: displayedStudentColumns;"></tr>
+                        </table>
+                    </div>
+                </div>
+                <div class="modal-footer justify-content-center">
+                    <button mat-button data-dismiss="modal" class="theme_btn btn_primary">Close</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+<div bsModal #removeConfirm="bs-modal"  class="modal fade bsModal ch_modal done_modal_popup" id="reminderToStaffDone" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" style="max-width: 600px;" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+            </div>
+            <div class="modal-body text-center">
+                <svg  class="mb-3" width="112" height="112" viewBox="0 0 112 112" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="56" cy="56" r="56" fill="#26C296"/>
+                    <path d="M65.3332 49L52.4998 61.8333L46.6665 56" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    
+                <h2>Are you sure you want to remove {{company?.company_name}}?</h2> 
+                <p class="modal-p">Other vacancies from the same company will not be affected.</p>
+            </div>
+            <div class="modal-footer justify-content-center" style="padding: 26px 0 50px 0;">
+                <button mat-button class="theme_btn btn_outline_primary" (click)="removeConfirm.hide();company=null">No</button>
+                 <button mat-button class="theme_btn btn_primary" (click)="removeVacancy()">Yes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div bsModal #removeNot="bs-modal"  class="modal fade bsModal ch_modal done_modal_popup" id="reminderToStaffDone" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" style="max-width: 600px;" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+            </div>
+            <div class="modal-body text-center">
+                <svg width="126" height="101" viewBox="0 0 126 101" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <g clip-path="url(#clip0_7639_21898)">
+                <path d="M95.371 100.166L11.656 100.196C7.45041 100.197 3.68314 98.008 1.57906 94.3402C0.526894 92.5061 0.000693685 90.4941 6.85071e-07 88.4817C-0.000692315 86.4695 0.52438 84.4569 1.57504 82.6223L43.4059 5.92095C45.5077 2.25144 49.2735 0.0600592 53.4791 0.0585945C57.6848 0.0571297 61.452 2.24588 63.5564 5.91393L105.445 82.5956C106.495 84.4249 107.02 86.4345 107.02 88.4457C107.02 90.4568 106.495 92.4692 105.444 94.304C103.342 97.9733 99.5766 100.165 95.371 100.166ZM1.0523 88.4803C1.05217 90.312 10.2898 86.365 11.2468 88.0334C13.1611 91.3702 7.82944 99.1393 11.6557 99.138C11.6557 99.138 102.623 97.1137 104.534 93.7756C105.49 92.1065 105.968 90.2754 105.967 88.4447C105.967 86.6141 105.488 84.7836 104.531 83.1152L62.6416 6.43349C60.7327 3.1062 57.3057 1.11485 53.4795 1.11619C49.655 1.11752 1.05245 86.6483 1.0523 88.4803Z" fill="#3F3D56"/>
+                <path d="M77.9031 83.2511C99.0694 83.2511 116.228 65.9683 116.228 44.649C116.228 23.3296 99.0694 6.04688 77.9031 6.04688C56.7368 6.04688 39.5781 23.3296 39.5781 44.649C39.5781 65.9683 56.7368 83.2511 77.9031 83.2511Z" fill="#464BA8"/>
+                <path d="M76.3835 53.0796L69.5859 23.486L74.9271 22.3536L80.5508 52.196L76.3835 53.0796ZM81.0564 64.2942C80.0781 64.5016 79.191 64.3626 78.3948 63.8771C77.6296 63.3443 77.1488 62.608 76.9525 61.6683C76.7561 60.7286 76.9055 59.8791 77.4006 59.1199C77.9267 58.3133 78.6789 57.8062 79.6572 57.5988C80.5963 57.3997 81.4484 57.5666 82.2136 58.0995C83.0098 58.5849 83.506 59.2975 83.7024 60.2372C83.8988 61.1769 83.7339 62.05 83.2078 62.8567C82.7127 63.6159 81.9955 64.0951 81.0564 64.2942Z" fill="white"/>
+                </g>
+                <defs>
+                <clipPath id="clip0_7639_21898">
+                <rect width="126" height="101" fill="white"/>
+                </clipPath>
+                </defs>
+                </svg>
+
+                    
+                <h2>You cannot remove these vacancies as some still have allocated students.</h2> 
+                <p class="modal-p">Please remove the students prior to removing vacancies.</p>
+            </div>
+            <div class="modal-footer justify-content-center" style="padding: 26px 0 50px 0;">
+                <button mat-button class="theme_btn btn_primary" (click)="removeNot.hide();company=null">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div bsModal #removeDone="bs-modal"  class="modal fade bsModal ch_modal done_modal_popup" id="reminderToStaffDone" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" style="max-width: 600px;" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+            </div>
+            <div class="modal-body text-center">
+                <svg width="112" height="112" viewBox="0 0 112 112" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="56" cy="56" r="56" fill="#26C296"/>
+                    <path d="M65.3332 49L52.4998 61.8333L46.6665 56" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+
+                    
+                <h2>Successfully removed {{company?.company_name}}</h2> 
+            </div>
+            <div class="modal-footer justify-content-center" style="padding: 26px 0 50px 0;">
+                <button mat-button class="theme_btn btn_primary" (click)="removeDone.hide();company=null">Close</button>
+            </div>
+        </div>
+    </div>
+</div>

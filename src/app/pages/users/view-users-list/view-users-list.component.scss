@@ -1,0 +1,30 @@
+td {
+    .mod_groups {
+        padding: 2px 10px 2px 0px;
+        border-radius: 53px;
+        gap: 8px;
+        display: inline-flex;
+        align-items: center;
+
+        a {
+            font-family: var(--font-primary);
+            font-size: 12px;
+            font-weight: 400;
+            line-height: 16px;
+            letter-spacing: 0em;
+            text-align: left;
+            color: var(--main-black-color);
+            cursor: pointer;
+            &:hover {
+                color: var(--primary-color-first);
+                text-decoration: underline;
+            }
+        }
+    }
+}
+th.left_padding_td{
+    padding-left: 52px !important;
+}
+td.left_padding_td{
+    padding-left: 47px !important;
+}

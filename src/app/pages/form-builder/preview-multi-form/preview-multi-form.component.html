@@ -1,0 +1,183 @@
+<div class="intern_stepper" *ngIf="multiStepFormPreviewData && multiStepFormPreviewData.length>0">
+    <mat-horizontal-stepper labelPosition="bottom" #multiStepFormStepper>
+        <mat-step *ngFor="let steps of multiStepFormPreviewData">
+            <ng-template matStepLabel>{{steps.name}}</ng-template>
+            <div class="preview_form_card">
+                <div class="form_title">{{steps.name}}</div>
+                <div class="row main_container">
+                    <div [ngClass]="field?.instance?.data?.isElementWidthFull ? 'col-md-12' : 'col-md-6'"
+                        *ngFor="let field of steps.component">
+
+
+                    
+                      
+                        <div class="form-group" *ngIf="field?.instance?.data?.name === 'Description Text'">
+
+                        
+                            <input type="hidden" *ngIf="field?.instance?.data?.fieldType === 'textEditor'" type="text" class="form-control" [(ngModel)]="field.instance.data.elementData.value">
+                            <p [innerHtml]="field.instance.data.elementData.title">
+                            </p>
+                        </div>
+
+
+                        <div class="form-group" *ngIf="field.instance.data.name !== 'Description Text'">
+                            <label>{{field.instance.data.name}} <span
+                                    *ngIf="field.instance.data.elementData?.required">(Required)</span>
+                                    <br/><small class="description-opacity">{{field.instance.data.elementData?.description}}</small></label>
+                            <input *ngIf="field.instance.data.id === 'single'" type="text" class="form-control"
+                                [(ngModel)]="field.instance.data.elementData.value">
+                            <textarea *ngIf="field.instance.data.id === 'multi'" class="form-control mb-0" cols="30"
+                                rows="2" [(ngModel)]="field.instance.data.elementData.value"></textarea>
+                            <input *ngIf="field.instance.data.id === 'number'" type="number" (wheel)="$event.preventDefault()"  (keydown.arrowup)="$event.preventDefault()"  (keydown.arrowdown)="$event.preventDefault()"  class="form-control"
+                                [(ngModel)]="field.instance.data.elementData.value">
+                            <div *ngIf="field.instance.data.id === 'time'" class="custom_datepicker_container">
+                                <input class="form-control" placeholder="hh:mm" matInput
+                                    [ngxTimepicker]="toggleTimepicker"
+                                    [format]="field.instance.data?.elementData?.display" [disableClick]="true" readonly
+                                    [(ngModel)]="field.instance.data.elementData.value">
+                                <ngx-material-timepicker-toggle class="time_picker_toggle" [for]="toggleTimepicker">
+                                    <svg ngxMaterialTimepickerToggleIcon width="17" height="9" viewBox="0 0 17 9"
+                                        fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M1 1L8.5 8L16 0.999997" stroke="#2B2A35" stroke-width="2"
+                                            stroke-linecap="round" stroke-linejoin="round" />
+                                    </svg>
+                                </ngx-material-timepicker-toggle>
+                                <ngx-material-timepicker #toggleTimepicker></ngx-material-timepicker>
+                            </div>
+                            <mat-radio-group *ngIf="field.instance.data.id === 'yes_no'" class="radio_group"
+                                [(ngModel)]="field.instance.data.elementData.value"
+                                [ngClass]="field.instance.data.elementData?.display === 'horizontal' ? 'radio_horizontal' : ''">
+                                <mat-radio-button [value]="true">Yes</mat-radio-button>
+                                <mat-radio-button [value]="false">No</mat-radio-button>
+                            </mat-radio-group>
+                            <mat-radio-group *ngIf=" field.instance.data.id === 'radio'" class="radio_group"
+                                [(ngModel)]="field.instance.data.elementData.value"
+                                [ngClass]="field.instance.data.elementData?.display === 'horizontal' ? 'radio_horizontal' : ''">
+                                <mat-radio-button [value]="list.item"
+                                    *ngFor="let list of field.instance.data.elementData.items">{{list.item}}</mat-radio-button>
+                            </mat-radio-group>
+                            <ng-select *ngIf="field.instance.data.id === 'dropdown'"
+                                [(ngModel)]="field.instance.data.elementData.value" [searchable]="false"
+                                [multiple]="false" bindLabel="item" [items]="field.instance.data.elementData.items"
+                                bindValue="item" [clearable]="false" placeholder="Select"
+                                [(ngModel)]="field.instance.data.elementData.value">
+                                <ng-option *ngFor="let list of field.instance.data.elementData.items"
+                                    [value]="list">{{list}}</ng-option>
+                            </ng-select>
+                            <ul *ngIf="field.instance.data.id === 'likert'" [ngClass]="field.instance.data.elementData?.display === 'vertical' ? '' : 'likert'">
+                                <li *ngFor="let item of field.instance.data.elementData.items">
+                                    <mat-radio-button [value]="item.item"></mat-radio-button>
+                                    <label class="label_title">{{item.item}}</label>
+                                </li>
+                            </ul>
+                            <ul *ngIf="field.instance.data.id === 'chips'" class="chipsList">
+                                <li *ngFor="let list of field.instance.data.elementData.items">
+                                    <span>{{list.item}}</span>
+                                </li>
+                            </ul>
+
+                            <div *ngIf="field.instance.data.id === 'image'">
+                                <img [src]="field.instance.data?.elementData?.value"
+                                    [height]="field.instance.data?.elementData?.height"
+                                    [width]="field.instance.data?.elementData?.width"
+                                    [style.opacity]="(+ (field.instance.data?.elementData?.transparency ?? 100)) / 100"/>
+                            </div>
+
+                            
+                            <div *ngIf="field.instance.data.id === 'attachment'"
+                                class="file_upload">
+                                <p>Accepted file types: <span
+                                        *ngFor="let extention of field.instance.data?.elementData?.extenstions">{{extention}},
+                                    </span>. <br>
+                                    {{field.instance.data?.elementData?.size}}MB file size limit.</p>
+                            </div>
+                            <div *ngIf="field.instance.data.id === 'date'" class="form-group custom_datepicker">
+                                <div class="custom_datepicker_container">
+                                    <input placeholder="dd/mm/yyyy" class="form-control" matInput
+                                        [matDatepicker]="projectStartPicker"
+                                        [(ngModel)]="field.instance.data.elementData.value">
+                                    <mat-datepicker-toggle matSuffix [for]="projectStartPicker">
+
+                                        <svg matDatepickerToggleIcon width="17" height="9" viewBox="0 0 17 9"
+                                            fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M1 1L8.5 8L16 0.999997" stroke="#2B2A35" stroke-width="2"
+                                                stroke-linecap="round" stroke-linejoin="round" />
+                                        </svg>
+                                    </mat-datepicker-toggle>
+                                    <mat-datepicker #projectStartPicker></mat-datepicker>
+                                </div>
+                            </div>
+                            <div *ngIf="field.instance.data.id === 'checkbox'" class="checkbox_group "
+                                [ngClass]="field.instance.data.elementData?.display === 'horizontal' ? 'checkbox_horizontal' : ''">
+                                <ul class="pl-0 checkbox-size">
+                                    <li *ngFor="let item of field.instance.data.elementData.items">
+                                        <mat-checkbox [(ngModel)]="item.selected">
+                                            {{item.item}}
+                                        </mat-checkbox>
+                                    </li>
+                                </ul>
+                            </div>
+                            <ng-container *ngIf="field.instance.data.id === 'signature'">
+                                <div class="form-group mb-0" *ngFor="let item of field.instance.data.elementData?.items; let i = index">
+                                    <div class="sign_from">
+                                        <label>{{item.item}} Signature:</label>
+                                        <canvas id="sPad{{i}}" class="form-control cavas_field" height="90" style="touch-action: none; border: 1px solid #f4f4f4;"></canvas>
+                                    </div>
+                                    <div class="sign_from">
+                                        <label>Name:</label>
+                                        <input type="text" placeholder="" class="form-control" [(ngModel)]="item.name">
+                                    </div>
+                                    <div class="sign_from">
+                                        <label>Date:</label>
+                                        <input type="text" placeholder="" class="form-control" [(ngModel)]="item.date">
+                                    </div>
+                                   </div>
+                                </ng-container>
+                                <ng-container *ngIf="field.instance.data.id === 'downloadable'">
+                                    <ul class="files_list">
+                                        <li *ngFor="let attachment of field.instance.data.elementData?.value">
+                                            <div class="file_card">
+                                                <div class="content">
+                                                   <div class="svg-width d-flex justify-content-center align-items-center" style="width: 48px;height:48px; padding-right: 8px;"[innerHTML]="getSafeSvg(attachment?.name)"></div>
+                                                    <p>{{attachment.name}}</p>
+                                                    <div class="btn_group">
+                                                        <button mat-icon-button (click)="viewPDF(attachment?.url)">
+                                                            <svg width="35" height="35" viewBox="0 0 35 35" fill="none"
+                                                                xmlns="http://www.w3.org/2000/svg">
+                                                                <circle cx="17.5" cy="17.5" r="17.5" fill="#F8F8F8" />
+                                                                <path
+                                                                    d="M9.29565 17.7632C9.1361 17.5601 9.00404 17.3822 8.90095 17.2387C8.99761 17.0973 9.1211 16.923 9.27053 16.7246C9.69179 16.1651 10.3145 15.4194 11.1183 14.6754C12.7353 13.1787 15.0165 11.75 17.8214 11.75C20.6263 11.75 22.9076 13.1787 24.5246 14.6754C25.3283 15.4194 25.9511 16.1651 26.3723 16.7246C26.5218 16.923 26.6452 17.0973 26.7419 17.2387C26.6388 17.3822 26.5068 17.5601 26.3472 17.7632C25.9058 18.325 25.2587 19.0735 24.4375 19.82C22.7807 21.3262 20.4992 22.75 17.8214 22.75C15.1437 22.75 12.8621 21.3262 11.2054 19.82C10.3842 19.0735 9.73706 18.325 9.29565 17.7632Z"
+                                                                    stroke="#2B2A35" stroke-width="1.5" />
+                                                                <circle cx="17.8214" cy="17.2511" r="2.82143" stroke="#2B2A35"
+                                                                    stroke-width="1.5" />
+                                                            </svg>
+                                                        </button>
+                                                        <button style="pointer-events: auto;" mat-icon-button (click)="downloadPDF(attachment?.url, attachment?.name)">
+                                                            <svg width="35" height="35" viewBox="0 0 35 35" fill="none"
+                                                                xmlns="http://www.w3.org/2000/svg">
+                                                                <circle cx="17.5" cy="17.5" r="17.5" fill="#F8F8F8" />
+                                                                <path fill-rule="evenodd" clip-rule="evenodd"
+                                                                    d="M24.7923 20.4141V23.3307C24.7923 24.1361 24.1394 24.7891 23.334 24.7891H11.6673C10.8619 24.7891 10.209 24.1361 10.209 23.3307V20.4141H11.6673V23.3307H23.334V20.4141H24.7923Z"
+                                                                    fill="#2B2A35" />
+                                                                <path fill-rule="evenodd" clip-rule="evenodd"
+                                                                    d="M18.2295 17.9258L20.6305 15.5248L21.6617 16.556L17.5003 20.7174L13.3389 16.556L14.3701 15.5248L16.7711 17.9258V10.207H18.2295V17.9258Z"
+                                                                    fill="#2B2A35" />
+                                                            </svg>
+            
+            
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </ng-container>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="step_footer">
+            </div>
+        </mat-step>
+    </mat-horizontal-stepper>
+</div>

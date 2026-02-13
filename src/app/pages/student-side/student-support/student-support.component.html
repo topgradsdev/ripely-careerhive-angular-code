@@ -1,0 +1,307 @@
+<section>
+    <div class="main_banner_support">
+        <div class="left">
+            <mat-horizontal-stepper #stepper>
+                <mat-step>
+                    <div class="content">
+                        <h1>Hello, {{userDetail?.first_name}}!</h1>
+                        <h4>Sorry to hear you are having trouble with your current placement. <br />
+                            Please let us help you through this form.</h4>
+                        <form [formGroup]="userForm" (ngSubmit)="onNextStep(stepper)">
+                            <!-- Name Input -->
+                            <div class="form-group">
+                                <input type="text" class="form-control" placeholder="Name" formControlName="fullName">
+                                <div *ngIf="userForm.get('fullName')?.invalid && userForm.get('fullName')?.touched"
+                                    class="error">
+                                    Name is required (Min 3 characters).
+                                </div>
+                            </div>
+
+                            <!-- Email Input -->
+                            <div class="form-group">
+                                <input type="text" class="form-control" placeholder="Email" formControlName="email">
+                                <div *ngIf="userForm.get('email')?.invalid && userForm.get('email')?.touched"
+                                    class="error">
+                                    Please enter a valid email address.
+                                </div>
+                            </div>
+
+                            <br />
+                            <!-- Buttons -->
+                            <button mat-button class="theme_btn btn_primary" (ngSubmit)="onNextStep(stepper)"
+                                [disabled]="userForm.invalid">
+                                Help me out!
+                            </button>
+                            &nbsp;&nbsp;&nbsp;
+                            <span style="width: auto;
+                                    background: transparent;
+                                    color: #575757 !important;
+                                    font-size: 14px;">
+                                You can also press Enter
+                            </span>
+                        </form>
+                    </div>
+                </mat-step>
+                <mat-step>
+                    <div class="content">
+                        <h2>First, what issue are you currently facing?*</h2>
+                        <div class="form-group enquiry_subject">
+                            <!-- <input type="text" [(ngModel)]="enquiry_subject" placeholder="Type your enquiry subject here..." class="form-control "> -->
+                            <ng-select class="select_ng_custom" [(ngModel)]="issue_type" [searchable]="false"
+                                [multiple]="false" (change)="getPlcnmtVcncyStdnt()" bindLabel="name" bindValue="id" placeholder="Select issue type">
+                                <ng-option value="Placement Issue">
+                                    Placement Issue
+                                </ng-option>
+                                <ng-option value="Technical Issue">
+                                    Technical Issue
+                                </ng-option>
+                            </ng-select>
+                        </div>
+                        <button [disabled]="!issue_type" mat-button class="theme_btn btn_primary" matStepperNext>Next
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path d="M5 12H19" stroke="white" stroke-width="1.5" stroke-linecap="round"
+                                    stroke-linejoin="round" />
+                                <path d="M12 5L19 12L12 19" stroke="white" stroke-width="1.5" stroke-linecap="round"
+                                    stroke-linejoin="round" />
+                            </svg>
+                        </button>
+                    </div>
+                    <button matStepperPrevious class="back_step"><svg width="20" height="20" viewBox="0 0 20 20"
+                            fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M15.833 10L4.16634 10" stroke="#464BA8" stroke-width="1.5" stroke-linecap="round"
+                                stroke-linejoin="round" />
+                            <path d="M10 15.833L4.16667 9.99967L10 4.16634" stroke="#464BA8" stroke-width="1.5"
+                                stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                        Back
+                    </button>
+                </mat-step>
+
+                <mat-step *ngIf="issue_type == 'Placement Issue'">
+                    <div class="content">
+                        <h2>Next, tell us more about your placement issue.*</h2>
+                        <div class="form-group enquiry_subject">
+                            <!-- <input type="text" [(ngModel)]="enquiry_subject" placeholder="Type your enquiry subject here..." class="form-control "> -->
+                            <!-- <ng-select class="select_ng_custom" [(ngModel)]="placement_id" [searchable]="false"
+                                [multiple]="false" bindLabel="name" bindValue="id" placeholder="Select the placement">
+                                <ng-option value="Placement Issue">
+                                    Placement Issue
+                                </ng-option>
+                                <ng-option value="Technical Issue">
+                                    Technical Issue
+                                </ng-option>
+                            </ng-select> -->
+
+                            <ng-select class="select_ng_custom"
+                                [(ngModel)]="selectedPlacement"
+                                [items]="vacncyList"
+                                bindValue="vacancy_id"
+                                [searchable]="false"
+                                [multiple]="false"
+                                (change)="onPlacementChange($event)"
+                                placeholder="Select the placement">
+
+                        <!-- Custom option template -->
+                        <ng-template ng-option-tmp let-item="item">
+                            <div class="d-flex justify-content-between align-items-center w-100">
+                            
+                                <span class="text-primary drop-title">{{ item.job_title }}</span>
+                                <span class="drop-title-sub">{{ item.supervisor_name }}</span>
+                            </div>
+                        </ng-template>
+
+                        <!-- Custom label when selected -->
+                        <ng-template ng-label-tmp let-item="item">
+                            {{ item.job_title }}
+                        </ng-template>
+                        </ng-select>
+
+                        </div>
+
+                        <div class="form-group enquiry_subject">
+                            <!-- <input type="text" [(ngModel)]="enquiry_subject" placeholder="Type your enquiry subject here..." class="form-control "> -->
+                            <ng-select class="select_ng_custom" [(ngModel)]="placement_issue_type" [searchable]="false"
+                                [multiple]="false" bindLabel="name" bindValue="id"
+                                placeholder="Select placement issue type">
+                                <ng-option value="General Issue">
+                                    General Issue
+                                </ng-option>
+                                <ng-option value="Workplace Incident">
+                                    Workplace Incident
+                                </ng-option>
+                            </ng-select>
+                        </div>
+                        <button [disabled]="!selectedPlacement || !placement_issue_type" mat-button
+                            class="theme_btn btn_primary" matStepperNext>Next <svg width="24" height="24"
+                                viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M5 12H19" stroke="white" stroke-width="1.5" stroke-linecap="round"
+                                    stroke-linejoin="round" />
+                                <path d="M12 5L19 12L12 19" stroke="white" stroke-width="1.5" stroke-linecap="round"
+                                    stroke-linejoin="round" />
+                            </svg>
+                        </button>
+                    </div>
+                    <button matStepperPrevious class="back_step"><svg width="20" height="20" viewBox="0 0 20 20"
+                            fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M15.833 10L4.16634 10" stroke="#464BA8" stroke-width="1.5" stroke-linecap="round"
+                                stroke-linejoin="round" />
+                            <path d="M10 15.833L4.16667 9.99967L10 4.16634" stroke="#464BA8" stroke-width="1.5"
+                                stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                        Back
+                    </button>
+                </mat-step>
+                <ng-container *ngIf="placement_issue_type === 'Workplace Incident'">
+                    <mat-step>
+                        <div class="content">
+                            <h3 class="process-heading">We’re sorry to hear that you’ve experienced an incident during your placement. Please
+                                share the details with us by completing this form so we can provide the right support.
+                            </h3>
+                            <!-- <p>We have received your enquiry. Our team will get back to you as soon as possible.</p> -->
+                            <button mat-button class="theme_btn btn_primary" (click)="gotoReportIncident()">Proceed <span>
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M5 12H19" stroke="white" stroke-width="1.5" stroke-linecap="round"
+                                            stroke-linejoin="round" />
+                                        <path d="M12 5L19 12L12 19" stroke="white" stroke-width="1.5"
+                                            stroke-linecap="round" stroke-linejoin="round" />
+                                    </svg>
+
+                                </span>
+                            </button>
+                        </div>
+                    </mat-step>
+                </ng-container>
+                <ng-container *ngIf="issue_type == 'Technical Issue' || placement_issue_type == 'General Issue'">
+                    <mat-step>
+                        <div class="content">
+                            <h2>Next, tell us more about this issue.*</h2>
+                            <div class="form-group enquiry_subject">
+                                <input type="text" [(ngModel)]="enquiry_subject"
+                                    placeholder="Type your enquiry subject here..." class="form-control ">
+                            </div>
+                            <div class="form-group enquiry_detail">
+                                <textarea rows="5" [(ngModel)]="enquiry_detail"
+                                    placeholder="Type your issue in detail here..." class="form-control"></textarea>
+                            </div>
+                            <div class="form-group enquiry_detail">
+                                <ng-select class="select_ng_custom" [(ngModel)]="dropdown" [searchable]="false"
+                                    [multiple]="false" bindLabel="name" bindValue="id"
+                                    placeholder="What is the priority of this issue?">
+                                    <ng-option value="Highest">
+                                        Highest
+                                    </ng-option>
+                                    <ng-option value="High">
+                                        High
+                                    </ng-option>
+                                    <ng-option value="Medium">
+                                        Medium
+                                    </ng-option>
+                                    <ng-option value="Low">
+                                        Low
+                                    </ng-option>
+                                    <ng-option value="Lowest">
+                                        Lowest
+                                    </ng-option>
+                                </ng-select>
+                            </div>
+                            <div class="form-group enquiry_detail">
+                                <mat-checkbox [(ngModel)]="enquiry_checked" class="td-check">
+                                    Flag this issue to require immediate attention
+                                </mat-checkbox>
+                            </div>
+                            <button [disabled]="!enquiry_detail.trim() || !dropdown" mat-button
+                                class="theme_btn btn_primary" matStepperNext>Next <svg width="24" height="24"
+                                    viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M5 12H19" stroke="white" stroke-width="1.5" stroke-linecap="round"
+                                        stroke-linejoin="round" />
+                                    <path d="M12 5L19 12L12 19" stroke="white" stroke-width="1.5" stroke-linecap="round"
+                                        stroke-linejoin="round" />
+                                </svg>
+                            </button>
+                        </div>
+                        <button matStepperPrevious class="back_step"><svg width="20" height="20" viewBox="0 0 20 20"
+                                fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M15.833 10L4.16634 10" stroke="#464BA8" stroke-width="1.5"
+                                    stroke-linecap="round" stroke-linejoin="round" />
+                                <path d="M10 15.833L4.16667 9.99967L10 4.16634" stroke="#464BA8" stroke-width="1.5"
+                                    stroke-linecap="round" stroke-linejoin="round" />
+                            </svg>
+                            Back
+                        </button>
+                    </mat-step>
+                    <mat-step>
+                        <div class="content">
+                            <h2>Lastly, do you have any supporting attachments? <br> It’ll help us identify the issue
+                                faster!</h2>
+                            <div class="form-group enquiry_file_upload">
+                                <div class="file_upload ">
+                                    <p><strong>Drag file here or <span>browse</span> </strong><br>
+                                        Files allowed: .jpg, .png, .pdf. Maximum 2 MB</p>
+                                    <label class="file_upload_label" for="image"></label>
+                                    <input name="img" type="file" id="image" multiple accept=".jpg, .png, .pdf"
+                                        (change)="getFile($event)">
+                                </div>
+                                <ul class="files_list mt-3" *ngIf="media.length > 0">
+                                    <li *ngFor="let file of media; let i = index;">
+                                        <div class="file_card">
+                                            <div class="content">
+                                                <div class="svg-width d-flex justify-content-center align-items-center"
+                                                    style="width: 60px;height:48px;padding-right: 8px;"
+                                                    [innerHTML]="getSafeSvg(file?.name)"></div>
+                                                <p>{{file.name}}</p>
+                                            </div>
+                                            <div class="btn_group">
+                                                <button (click)="removeFile(i)" mat-icon-button>
+                                                    <svg width="35" height="35" viewBox="0 0 35 35" fill="none"
+                                                        xmlns="http://www.w3.org/2000/svg">
+                                                        <circle cx="17.5" cy="17.5" r="17.5" fill="#F8F8F8" />
+                                                        <path fill-rule="evenodd" clip-rule="evenodd"
+                                                            d="M15.0952 9H19.4588C20.2621 9 20.9134 9.65122 20.9134 10.4545V11.1817H23.0909C23.8942 11.1817 24.5455 11.8329 24.5455 12.6362V14.0908C24.5455 14.8941 23.8942 15.5453 23.0909 15.5453H23.0318L22.3628 23.5454C22.3628 24.3488 21.7116 25 20.9083 25H13.6356C12.8322 25 12.181 24.3488 12.1835 23.6058L11.5118 15.5453H11.4545C10.6512 15.5453 10 14.8941 10 14.0908V12.6362C10 11.8329 10.6512 11.1817 11.4545 11.1817H13.6406V10.4545C13.6406 9.65122 14.2918 9 15.0952 9ZM13.6406 12.6364V12.6358H11.4531V14.0904H23.0895V12.6358H20.9134V12.6364H13.6406ZM21.57 15.5453H12.9688L13.6331 23.545H20.9059L20.9084 23.4846L21.57 15.5453ZM19.4574 10.4541V11.1814H15.0938V10.4541H19.4574Z"
+                                                            fill="#2B2A35" />
+                                                    </svg>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                                <!-- <span *ngIf="fileName">{{fileName}}</span> -->
+                            </div>
+                            <button (click)="submitEmployerEnquiry()" mat-button class="theme_btn btn_primary"
+                                matStepperNext>Next <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M5 12H19" stroke="white" stroke-width="1.5" stroke-linecap="round"
+                                        stroke-linejoin="round" />
+                                    <path d="M12 5L19 12L12 19" stroke="white" stroke-width="1.5" stroke-linecap="round"
+                                        stroke-linejoin="round" />
+                                </svg>
+                            </button>
+                        </div>
+                        <button matStepperPrevious class="back_step"><svg width="20" height="20" viewBox="0 0 20 20"
+                                fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M15.833 10L4.16634 10" stroke="#464BA8" stroke-width="1.5"
+                                    stroke-linecap="round" stroke-linejoin="round" />
+                                <path d="M10 15.833L4.16667 9.99967L10 4.16634" stroke="#464BA8" stroke-width="1.5"
+                                    stroke-linecap="round" stroke-linejoin="round" />
+                            </svg>
+                            Back
+                        </button>
+                    </mat-step>
+                    <mat-step>
+                        <div class="content">
+                            <h3>Thank you!</h3>
+                            <p>We have received your enquiry. Our team will get back to you as soon as possible.</p>
+                            <button mat-button class="theme_btn btn_primary" (click)="stepper.reset()">Enquire Again
+                            </button>
+                        </div>
+                    </mat-step>
+                </ng-container>
+
+            </mat-horizontal-stepper>
+        </div>
+        <div class="right">
+            <div class="img_content"></div>
+        </div>
+    </div>
+</section>

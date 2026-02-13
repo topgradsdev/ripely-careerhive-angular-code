@@ -1,0 +1,972 @@
+<section class="analytics" [formGroup]="analyticsProcessForm">
+    <div class="page_header">
+        <a routerLink="/admin/analytics/analytics-companies" class="back_Link"> <svg xmlns="http://www.w3.org/2000/svg"
+                width="24" height="24" viewBox="0 0 24 24" fill="none">
+                <path d="M19 12H5" stroke="#464BA8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                <path d="M12 19L5 12L12 5" stroke="#464BA8" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round" />
+            </svg> Back to Company Analytics</a>
+        <div class="page_header_container">
+            <div>
+                <h4 *ngIf="!selectedTable?.isEdit">Create New Process</h4>
+                <h4 *ngIf="selectedTable?.isEdit">{{analyticsProcessForm.get('process_name')?.value}}</h4>
+            </div>
+        </div>
+    </div>
+    <div class="filtering_container" *ngIf="selectedTable?.isEdit && !edit_filter">
+        <div class="row align-items-center">
+            <div class="col-md-5">
+                <div class="form-group">
+                    <label>Edit Filter - <span>{{selectedFilters?.length}} Selected Filters</span> </label>
+                </div>
+            </div>
+            <div class="col-md-7 text-right searchbar-end">
+                <button mat-icon-button (click)="editFilter()">
+                    <svg width="35" height="35" viewBox="0 0 35 35" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="17.5" cy="17.5" r="17.5" fill="#F8F8F8" />
+                        <path fill-rule="evenodd" clip-rule="evenodd"
+                            d="M20.7352 10.208C21.2127 10.208 21.6703 10.3986 22.0045 10.7355L24.2656 12.9966C24.6023 13.3332 24.7914 13.7898 24.7914 14.2659C24.7914 14.742 24.6023 15.1985 24.2656 15.5352L16.0104 23.7878C15.501 24.3753 14.7791 24.7363 13.952 24.793H10.208V24.0639L10.2104 20.9904C10.2725 20.2215 10.63 19.5066 11.1752 19.0261L19.4651 10.7364C19.8012 10.3982 20.2584 10.208 20.7352 10.208ZM13.9005 23.3365C14.29 23.3089 14.6526 23.1277 14.9438 22.7946L20.4577 17.2807L17.7201 14.543L12.1739 20.0879C11.8785 20.3492 11.6957 20.7147 11.6663 21.0491V23.3352L13.9005 23.3365ZM18.7514 13.512L21.4889 16.2495L23.2344 14.504C23.2976 14.4408 23.333 14.3552 23.333 14.2659C23.333 14.1766 23.2976 14.0909 23.2344 14.0278L20.9713 11.7647C20.9089 11.7017 20.8239 11.6663 20.7352 11.6663C20.6466 11.6663 20.5616 11.7017 20.4992 11.7647L18.7514 13.512Z"
+                            fill="#2B2A35" />
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="row" *ngIf="!selectedTable?.isEdit">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label>Process Name <span class="required">*</span></label>
+                <input type="text" class="form-control" placeholder="New Process" formControlName="process_name">
+                <div *ngIf="analyticsProcessForm.get('process_name') && ( analyticsProcessForm.get('process_name')?.touched || analyticsProcessForm.get('process_name')?.dirty ) && analyticsProcessForm.get('process_name')?.invalid && analyticsProcessForm.get('process_name')?.errors?.required"
+                    class="invalid-feedback">
+                    *Please input a process name
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="anlytc_card" *ngIf="!selectedTable?.isEdit || (selectedTable?.isEdit && edit_filter)">
+        <div class="anlytc_card_header">
+            <div>
+                <h3>Interactive Company Filtering Analysis</h3>
+                <p>Narrow down company profiles using a variety of filters to refine and tailor your analysis based on
+                    specific attributes.</p>
+            </div>
+        </div>
+        <div class="anlytc_card_body">
+            <div class="edit_filtering_container">
+                <div class="d-flex">
+                    <div class="col-left flex-grow-1 mr-3">
+                        <div class="form-group">
+                            <label>New Filter: </label>
+                            <ng-select class="select_ng_custom" [searchable]="true" [multiple]="false" bindLabel="label"
+                                bindValue="_id" [clearable]="false" placeholder="Select an attributes"
+                                [(ngModel)]="analyticsSelectedFilter" [ngModelOptions]="{standalone: true}"
+                                (change)="onSelectFilter($event)">
+                                <ng-option *ngFor="let filter of allDropdownFilters"
+                                    [value]="filter._id">{{filter?.field_details?.label}}</ng-option>
+                            </ng-select>
+                            <!-- <ng-container *ngIf="analyticsFilter">
+                                <button class="theme_btn md-theme_btn btn_primary" mat-button>Contains</button>
+                            </ng-container> -->
+                            <ng-container *ngIf="analyticsFilter?.field_details?.input_type === 'dropdown-show_all'">
+                                <button class="theme_btn md-theme_btn btn_primary contains_btn"
+                                    mat-button>Contains</button>
+                                <div class="view_form_data_header">Show All</div>
+                            </ng-container>
+                            <ng-container *ngIf="analyticsFilter?.field_details?.input_type === 'date-range'">
+                                <button class="theme_btn md-theme_btn btn_primary contains_btn" mat-button>From</button>
+                                <div class="edit_date_range_container">
+                                    <input placeholder="Select a Date" class="form-control" [matDatepicker]="fromDate"
+                                        [(ngModel)]="dateRange.start" [ngModelOptions]="{standalone: true}"
+                                        [max]="maxDate" (dateChange)="onDateRangeStart($event)">
+                                    <mat-datepicker-toggle matSuffix [for]="fromDate">
+                                        <svg matDatepickerToggleIcon width="15" height="9" viewBox="0 0 15 9"
+                                            fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M1 1L7.5 7.5L14 1" stroke="#2B2A35" stroke-width="2"
+                                                stroke-linecap="round" stroke-linejoin="round" />
+                                        </svg>
+                                    </mat-datepicker-toggle>
+                                    <mat-datepicker #fromDate></mat-datepicker>
+                                </div>
+                                <!-- To Date -->
+                                <button class="theme_btn md-theme_btn btn_primary contains_btn to"
+                                    mat-button>To</button>
+                                <div class="edit_date_range_container">
+                                    <input placeholder="Select a Date" class="form-control" [matDatepicker]="endDate"
+                                        [(ngModel)]="dateRange.end" [ngModelOptions]="{standalone: true}"
+                                        [min]="minDate" (dateChange)="onDateRangeEnd($event)">
+                                    <mat-datepicker-toggle matSuffix [for]="endDate">
+                                        <svg matDatepickerToggleIcon width="15" height="9" viewBox="0 0 15 9"
+                                            fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M1 1L7.5 7.5L14 1" stroke="#2B2A35" stroke-width="2"
+                                                stroke-linecap="round" stroke-linejoin="round" />
+                                        </svg>
+                                    </mat-datepicker-toggle>
+                                    <mat-datepicker #endDate></mat-datepicker>
+                                </div>
+                            </ng-container>
+                            <ng-container *ngIf="analyticsFilter?.field_details?.input_type === 'dropdown-search'">
+                                <button class="theme_btn md-theme_btn btn_primary contains_btn"
+                                    mat-button>Contains</button>
+                                <ng-select class="select_ng_custom" [searchable]="true" [multiple]="true"
+                                    bindLabel="name" bindValue="id" [clearable]="false" placeholder="Select Location"
+                                    [(ngModel)]="filter.values" [ngModelOptions]="{standalone: true}">
+                                    <ng-option value="Melbourne">Melbourne</ng-option>
+                                    <ng-option value="VIC">VIC</ng-option>
+                                </ng-select>
+                            </ng-container>
+                            <ng-container *ngIf="analyticsFilter?.field_details?.input_type === 'dropdown-mini'">
+                                <button class="theme_btn md-theme_btn btn_primary contains_btn"
+                                    mat-button>Contains</button>
+                                <ng-select class="select_ng_custom" [searchable]="true" [multiple]="true"
+                                    bindLabel="name" bindValue="id" [clearable]="false" placeholder="Select Options"
+                                    [(ngModel)]="filter.values" [ngModelOptions]="{standalone: true}">
+                                    <ng-option [value]="option"
+                                        *ngFor="let option of analyticsFilter?.field_details?.options">{{option}}</ng-option>
+                                </ng-select>
+                            </ng-container>
+                        </div>
+                    </div>
+                    <div class="col-right text-right">
+                        <button [disabled]="!analyticsFilter" (click)="addFilters()" mat-button
+                            class="bs_btn with_icon_text success"><svg width="20" height="16" viewBox="0 0 20 16"
+                                fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M19 1L6.625 15L1 8.63636" stroke="white" stroke-width="2"
+                                    stroke-linecap="round" stroke-linejoin="round" />
+                            </svg>
+                            Add Filter</button>
+                    </div>
+                </div>
+            </div>
+            <div class="selected_filter_list_container">
+                <h4>Selected Filters: <span *ngIf="selectedFilters.length === 0">None</span><span
+                        *ngIf="selectedFilters.length > 0">{{selectedFilters.length}}</span></h4>
+                <div class="selected_filter_list">
+                    <div class="selected_filter_card empty" *ngIf="selectedFilters.length === 0">
+                        <p>No filters currently added. Get started by selecting an attribute above!</p>
+                    </div>
+                    <div class="selected_filter_card" *ngFor="let filter of selectedFilters; let i = index;">
+                        <span class="sr">{{i + 1}}</span>
+                        <div class="forms">
+                            <label class="forms_label">Filter: {{filter.label}}</label>
+                            <ng-container *ngIf="filter.isEdit">
+                                <ng-container *ngIf="selectedFilters[selectedFilterIndex]?.input_type === 'date-range'">
+                                    <span class="chip">From</span>
+                                    <div class="edit_date_range_container">
+                                        <input placeholder="Start Date" class="form-control" [matDatepicker]="fromDate"
+                                            [(ngModel)]="selectedFilters[selectedFilterIndex].values.start"
+                                            [ngModelOptions]="{standalone: true}" [max]="maxDate"
+                                            (dateChange)="onDateRangeStart($event)">
+                                        <mat-datepicker-toggle matSuffix [for]="fromDate">
+                                            <svg matDatepickerToggleIcon width="15" height="9" viewBox="0 0 15 9"
+                                                fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M1 1L7.5 7.5L14 1" stroke="#2B2A35" stroke-width="2"
+                                                    stroke-linecap="round" stroke-linejoin="round" />
+                                            </svg>
+                                        </mat-datepicker-toggle>
+                                        <mat-datepicker #fromDate></mat-datepicker>
+                                    </div>
+                                    <!-- To Date -->
+                                    <span class="chip">To</span>
+                                    <div class="edit_date_range_container">
+                                        <input placeholder="End Date" class="form-control" [matDatepicker]="endDate"
+                                            [(ngModel)]="selectedFilters[selectedFilterIndex].values.end"
+                                            [ngModelOptions]="{standalone: true}" [min]="minDate"
+                                            (dateChange)="onDateRangeEnd($event)">
+                                        <mat-datepicker-toggle matSuffix [for]="endDate">
+                                            <svg matDatepickerToggleIcon width="15" height="9" viewBox="0 0 15 9"
+                                            fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M1 1L7.5 7.5L14 1" stroke="#2B2A35" stroke-width="2"
+                                                stroke-linecap="round" stroke-linejoin="round" />
+                                        </svg>
+                                        </mat-datepicker-toggle>
+                                        <mat-datepicker #endDate></mat-datepicker>
+                                    </div>
+                                </ng-container>
+                                <ng-container *ngIf="selectedFilters[selectedFilterIndex]?.input_type === 'dropdown-search'">
+                                    <span class="chip">contains</span>
+                                    <ng-select class="select_ng_custom edit_select_ng_custom" [searchable]="true" [multiple]="true"
+                                        bindLabel="name" bindValue="id" [clearable]="false"
+                                        placeholder="Select Location"
+                                        [(ngModel)]="selectedFilters[selectedFilterIndex].values"
+                                        [ngModelOptions]="{standalone: true}">
+                                        <ng-option value="Melbourne">Melbourne</ng-option>
+                                        <ng-option value="VIC">VIC</ng-option>
+                                    </ng-select>
+                                </ng-container>
+                                <ng-container
+                                    *ngIf="selectedFilters[selectedFilterIndex]?.input_type === 'dropdown-mini'">
+                                    <span class="chip">contains</span>
+                                    <ng-select class="select_ng_custom edit_select_ng_custom" [searchable]="true" [multiple]="true"
+                                        bindLabel="name" bindValue="id" [clearable]="false" placeholder="Select Options"
+                                        [(ngModel)]="selectedFilters[selectedFilterIndex].values"
+                                        [ngModelOptions]="{standalone: true}">
+                                        <ng-option [value]="option"
+                                            *ngFor="let option of selectedFilters[selectedFilterIndex]?.options">{{option}}</ng-option>
+                                    </ng-select>
+                                </ng-container>
+
+                            </ng-container>
+
+                            <!-- <div class="edit_view_form_data" *ngIf="editLocation">
+                                <div class="view_form_data">
+                                    <span class="chip_select">
+                                        Show All
+                                        <svg width="10" height="10" viewBox="0 0 10 10" fill="none"
+                                            xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M1 1L8.75038 8.75038" stroke="#9A9A9A" stroke-width="1.5" />
+                                            <path d="M9 1L1.24962 8.75038" stroke="#9A9A9A" stroke-width="1.5" />
+                                        </svg>
+                                    </span>
+                                    <svg class="down_icon" (click)="addLocation = !addLocation"
+                                        [ngStyle]="{'transform': addLocation ? 'rotate(180deg)' : 'rotate(360deg)'}"
+                                        width="19" height="19" viewBox="0 0 19 19" fill="none"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M4.75 7.125L9.5 11.875L14.25 7.125" stroke="#2B2A35" stroke-width="2"
+                                            stroke-linecap="round" stroke-linejoin="round" />
+                                    </svg>
+                                    <div *ngIf="addLocation" class="edit_view_form_data_dropdown">
+                                        <div class="search_header">
+                                            <input type="text" placeholder="Search" class="form-control">
+                                        </div>
+                                        <div class="doropdown_body pt-0">
+                                            <mat-checkbox class="check_box"><span>Show All</span></mat-checkbox>
+                                            <h5>Suggested</h5> -->
+                            <!-- <span class="chip_select">
+                                                Melbourne
+                                                <svg width="12" height="12" viewBox="0 0 12 12" fill="none"
+                                                    xmlns="http://www.w3.org/2000/svg">
+                                                    <path d="M5.48047 0.431641V11.3923" stroke="#9A9A9A"
+                                                        stroke-width="1.5" />
+                                                    <path d="M11.1377 6.08838L0.177006 6.08838" stroke="#9A9A9A"
+                                                        stroke-width="1.5" />
+                                                </svg>
+                                            </span> -->
+                            <!-- <p>Start Typing to get a suggestion!</p>
+                                        </div>
+                                    </div> -->
+                            <!-- [matMenuTriggerFor]="filterSelect" -->
+                            <!-- </div>
+                            </div> -->
+                            <!-- <div class="view_form_data" *ngIf="!editLocation">Show All</div> -->
+                            <ng-container *ngIf="!filter.isEdit">
+                            <ng-container *ngIf="filter.input_type !== 'date-range'">
+                                <span class="chip">contains</span>
+                                <div class="view_form_data">
+                                    <span *ngIf="filter.input_type !== 'date-range'">{{filter.values}}</span>
+                                </div>
+                            </ng-container>
+                            <ng-container *ngIf="filter.input_type === 'date-range'">
+                                <span class="chip">From</span>
+                                <div class="view_form_data">
+                                    <span *ngIf="filter.input_type === 'date-range'">{{filter.values.start | date: 'MM-dd-yyyy'}}</span>
+                                </div>
+                                <span class="chip">To</span>
+                                <div class="view_form_data">
+                                    <span *ngIf="filter.input_type === 'date-range'">{{filter.values.end | date: 'MM-dd-yyyy'}}</span>
+                                </div>
+                            </ng-container>
+                            </ng-container>
+                            <!-- <div class="view_form_data" *ngIf="!filter.isEdit">
+                                <span *ngIf="filter.input_type !== 'date-range'">{{filter.values}}</span>
+                                <span *ngIf="filter.input_type === 'date-range'">{{filter.values.start | date:
+                                    'MM-dd-yyyy'}} to {{filter.values.end | date: 'MM-dd-yyyy'}}</span>
+                            </div> -->
+                            <ng-container *ngIf="!filter.isEdit">
+                                <button *ngIf="filter.input_type !== 'dropdown-show_all'" class="icon_button"
+                                    mat-icon-button (click)="editSelectedFilter(i)">
+                                    <svg width="28" height="28" viewBox="0 0 28 28" fill="none"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <circle cx="14" cy="14" r="14" fill="#F8F8F8" />
+                                        <path fill-rule="evenodd" clip-rule="evenodd"
+                                            d="M16.5898 8.16895C16.9717 8.16895 17.3378 8.32144 17.6052 8.59094L19.4141 10.3998C19.6834 10.6691 19.8347 11.0344 19.8347 11.4152C19.8347 11.7961 19.6834 12.1614 19.4141 12.4307L12.8098 19.0328C12.4024 19.5028 11.8248 19.7916 11.1632 19.837H8.16797V19.2536L8.16986 16.7949C8.21956 16.1798 8.50552 15.6078 8.94176 15.2234L15.5736 8.59165C15.8425 8.3211 16.2083 8.16895 16.5898 8.16895ZM11.1233 18.6718C11.4349 18.6498 11.725 18.5047 11.9579 18.2383L16.3684 13.8278L14.1783 11.6377L9.742 16.073C9.50566 16.282 9.35945 16.5744 9.33594 16.8419V18.6707L11.1233 18.6718ZM15.0034 10.8128L17.1934 13.0029L18.5904 11.6058C18.6409 11.5553 18.6693 11.4868 18.6693 11.4153C18.6693 11.3439 18.6409 11.2754 18.5904 11.2248L16.7799 9.41436C16.73 9.36401 16.662 9.33569 16.5911 9.33569C16.5201 9.33569 16.4521 9.36401 16.4022 9.41436L15.0034 10.8128Z"
+                                            fill="#545465" />
+                                    </svg>
+                                </button>
+                                <button class="icon_button" mat-icon-button data-toggle="modal"
+                                    data-target="#deleteFilter" (click)="selectedFilterIndex = i">
+                                    <svg width="28" height="28" viewBox="0 0 28 28" fill="none"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <circle cx="14" cy="14" r="14" fill="#F8F8F8" />
+                                        <path fill-rule="evenodd" clip-rule="evenodd"
+                                            d="M12.0724 7.19995H15.5633C16.206 7.19995 16.727 7.72093 16.727 8.36359V8.94526H18.4727C19.1154 8.94526 19.6364 9.46624 19.6364 10.1089V11.2725C19.6364 11.9152 19.1154 12.4362 18.4727 12.4362H18.4261L17.8909 18.8362C17.8909 19.4789 17.3699 19.9999 16.7272 19.9999H10.909C10.2664 19.9999 9.74541 19.4789 9.74742 18.8846L9.21005 12.4362H9.16364C8.52098 12.4362 8 11.9152 8 11.2725V10.1089C8 9.46624 8.52098 8.94526 9.16364 8.94526H10.9088V8.36359C10.9088 7.72093 11.4298 7.19995 12.0724 7.19995ZM10.9088 10.109V10.1085H9.16348V11.2722H18.4726V10.1085H16.727V10.109H10.9088ZM17.2582 12.4362H10.3772L10.9087 18.8361H16.7269L16.7289 18.7878L17.2582 12.4362ZM15.5638 8.36304V8.94486H12.0729V8.36304H15.5638Z"
+                                            fill="#545465" />
+                                    </svg>
+                                </button>
+                            </ng-container>
+                            <ng-container *ngIf="filter.isEdit">
+                                <button class="icon_button" mat-icon-button (click)="addFilters(true)">
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M20 6L9 17L4 12" stroke="#26C296" stroke-width="2"
+                                            stroke-linecap="round" stroke-linejoin="round" />
+                                    </svg>
+                                </button>
+                                <button class="icon_button" mat-icon-button (click)="filter.isEdit = !filter.isEdit;">
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M18 6L6 18" stroke="#F47761" stroke-width="2" stroke-linecap="round"
+                                            stroke-linejoin="round" />
+                                        <path d="M6 6L18 18" stroke="#F47761" stroke-width="2" stroke-linecap="round"
+                                            stroke-linejoin="round" />
+                                    </svg>
+                                </button>
+                            </ng-container>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <button *ngIf="selectedTable?.isEdit" (click)="previewAnalyticFilter(true)" mat-button
+                        class="theme_btn btn_primary mt-3">Update filters</button>
+                </div>
+                <div class="col-md-6">
+                    <div class="show_more_links">
+                        <a (click)="clearAllFilters()"><span>Clear All Filters</span></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <hr *ngIf="selectedTable?.isEdit" class="divider_dash">
+    <div *ngIf="isPreviewFilter || selectedTable?.isEdit" class="anlytc_card">
+        <div class="anlytc_card_header">
+            <h3>{{companiesList?.data?.length}} Total Companies</h3>
+        </div>
+        <div class="anlytc_card_body">
+            <div class="row sub_header">
+                <!-- Begin:: Email and Download(xlsx) -->
+                <div class="col-md-7 action_btns_header" [style.visibility]="isCheck ? 'visible' : 'hidden'">
+                    <button mat-button class="theme_btn theme_link_btn" data-toggle="modal"
+                        data-target="#sendEmailCompanies">
+                        <svg class="mr-2" xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 25 25"
+                            fill="none">
+                            <path
+                                d="M4.5 4.5H20.5C21.6 4.5 22.5 5.4 22.5 6.5V18.5C22.5 19.6 21.6 20.5 20.5 20.5H4.5C3.4 20.5 2.5 19.6 2.5 18.5V6.5C2.5 5.4 3.4 4.5 4.5 4.5Z"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                            <path d="M22.5 6.5L12.5 13.5L2.5 6.5" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round" />
+                        </svg> Email
+                    </button>
+                    <button mat-button class="theme_btn theme_link_btn" (click)="exportPartnerData('csv')">
+                        <svg class="mr-2" xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 25 25"
+                            fill="none">
+                            <path
+                                d="M21.5 15.5V19.5C21.5 20.0304 21.2893 20.5391 20.9142 20.9142C20.5391 21.2893 20.0304 21.5 19.5 21.5H5.5C4.96957 21.5 4.46086 21.2893 4.08579 20.9142C3.71071 20.5391 3.5 20.0304 3.5 19.5V15.5"
+                                stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+                                stroke-linejoin="round" />
+                            <path d="M7.5 10.5L12.5 15.5L17.5 10.5" stroke="currentColor" stroke-width="1.5"
+                                stroke-linecap="round" stroke-linejoin="round" />
+                            <path d="M12.5 15.5L12.5 3.5" stroke="currentColor" stroke-width="1.5"
+                                stroke-linecap="round" stroke-linejoin="round" />
+                        </svg> Download (.csv)
+                    </button>
+                </div>
+                <div class="col-md-5 text-right searchbar-end">
+                    <div class="d-inline-flex align-items-center">
+                        <div class="search-container">
+                            <svg class="icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                                viewBox="0 0 20 20" fill="none">
+                                <path
+                                    d="M9.16667 15.8333C12.8486 15.8333 15.8333 12.8486 15.8333 9.16667C15.8333 5.48477 12.8486 2.5 9.16667 2.5C5.48477 2.5 2.5 5.48477 2.5 9.16667C2.5 12.8486 5.48477 15.8333 9.16667 15.8333Z"
+                                    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" />
+                                <path d="M17.5 17.5L13.875 13.875" stroke="currentColor" stroke-width="2"
+                                    stroke-linecap="round" stroke-linejoin="round" />
+                            </svg>
+                            <input type="text" class="form-control" [(ngModel)]="searchCriteria.keywords"
+                                [ngModelOptions]="{standalone: true}" placeholder="Search Keywords"
+                                (ngModelChange)="onChangeSearchKeyword()">
+                        </div>
+                        <!-- <button mat-icon-button [matMenuTriggerFor]="menu" class="td-btn">
+                            <svg width="4" height="18" viewBox="0 0 4 18" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path
+                                    d="M2 1C1.73478 1 1.48043 1.10536 1.29289 1.29289C1.10536 1.48043 1 1.73478 1 2C1 2.26522 1.10536 2.51957 1.29289 2.70711C1.48043 2.89464 1.73478 3 2 3C2.26522 3 2.51957 2.89464 2.70711 2.70711C2.89464 2.51957 3 2.26522 3 2C3 1.73478 2.89464 1.48043 2.70711 1.29289C2.51957 1.10536 2.26522 1 2 1ZM2 8C1.73478 8 1.48043 8.10536 1.29289 8.29289C1.10536 8.48043 1 8.73478 1 9C1 9.26522 1.10536 9.51957 1.29289 9.70711C1.48043 9.89464 1.73478 10 2 10C2.26522 10 2.51957 9.89464 2.70711 9.70711C2.89464 9.51957 3 9.26522 3 9C3 8.73478 2.89464 8.48043 2.70711 8.29289C2.51957 8.10536 2.26522 8 2 8ZM2 15C1.73478 15 1.48043 15.1054 1.29289 15.2929C1.10536 15.4804 0.999999 15.7348 0.999999 16C0.999999 16.2652 1.10536 16.5196 1.29289 16.7071C1.48043 16.8946 1.73478 17 2 17C2.26522 17 2.51957 16.8946 2.70711 16.7071C2.89464 16.5196 3 16.2652 3 16C3 15.7348 2.89464 15.4804 2.70711 15.2929C2.51957 15.1054 2.26522 15 2 15Z"
+                                    stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                            </svg>
+                        </button> -->
+                        <!-- <mat-menu #menu="matMenu" class="td-menu custome_theme_menu">
+                            <a mat-menu-item>
+                                <span>Download as PDF</span>
+                            </a>
+                            <a mat-menu-item>
+                                <span>Download as XLSX</span>
+                            </a>
+
+                        </mat-menu> -->
+                    </div>
+                </div>
+            </div>
+             <!--  -->
+            <div class="table-responsive filter_view_list">
+                <table mat-table [dataSource]="companiesList" matSort #companiesTbSort="matSort" class="ch_table">
+                    <!-- Checkbox Column -->
+                    <ng-container matColumnDef="checkbox" sticky>
+                        <th mat-header-cell *matHeaderCellDef>
+                            <mat-checkbox class="example-margin" [(ngModel)]="selectAllComp"
+                                [ngModelOptions]="{standalone: true}" (change)="selectAllCompany()"></mat-checkbox>
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                            <mat-checkbox class="example-margin" [(ngModel)]="element.selected"
+                                [ngModelOptions]="{standalone: true}" (change)="selectCompany()"></mat-checkbox>
+                        </td>
+                    </ng-container>
+                    <!-- Company Name Column -->
+                    <ng-container matColumnDef="company_name" sticky>
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header>Company Name </th>
+                        <td mat-cell *matCellDef="let row">
+                            <div class="mod_groups">
+                                <div class="avatar">
+                                    <img *ngIf="row?.company_logo" [src]="row?.company_logo" alt="woolworths">
+                                    <div class="profile" *ngIf="!row?.company_logo">
+                                        <span style="color: #fff">{{ row?.company_name ? row?.company_name?.split('
+                                            ')[0][0] : '' }} {{row?.company_name ? row?.company_name?.split(' ')[0][1] :
+                                            '' }}</span>
+                                    </div>
+                                </div>
+                                <span (click)="goToCompanyProfile(row)">{{row.company_name}}</span>
+                            </div>
+                            <!-- <div class="profile">
+                       <img src="../../../../assets/img/woolworths.svg" alt="logo">
+                    </div>  -->
+                        </td>
+                    </ng-container>
+                    <!-- Company Code Column -->
+                    <ng-container matColumnDef="company_code">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header>Company Code </th>
+                        <td mat-cell *matCellDef="let row">
+                            {{row.company_code}}
+                        </td>
+                    </ng-container>
+                    <!-- Location Column -->
+                    <ng-container matColumnDef="location">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header>Location </th>
+                        <td mat-cell *matCellDef="let row">
+                            {{row.location}}
+                        </td>
+                    </ng-container>
+                    <!-- ABN/ACN Column -->
+                    <ng-container matColumnDef="abn_acn">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> ABN/ACN </th>
+                        <td mat-cell *matCellDef="let row"> {{row.abn_acn}} </td>
+                    </ng-container>
+                    <!-- No. of Employees Column -->
+                    <ng-container matColumnDef="no_of_employees">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> No. of Employees </th>
+                        <td mat-cell *matCellDef="let row"> {{row.no_of_employees}} </td>
+                    </ng-container>
+
+                    <!-- Vacancies Group column -->
+                    <!-- <ng-container matColumnDef="vacancies">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Vacancies </th>
+                <td mat-cell *matCellDef="let row">
+                    <input type="number" (wheel)="$event.preventDefault()"  (keydown.arrowup)="$event.preventDefault()"  (keydown.arrowdown)="$event.preventDefault()"  value="20" class="input_small_number_table">
+                </td>
+            </ng-container> -->
+                    <!-- Company Phone Column -->
+                    <ng-container matColumnDef="company_phone">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header>Company Phone </th>
+                        <td mat-cell *matCellDef="let row">
+                            {{row.company_phone}}
+                        </td>
+                    </ng-container>
+                    <!-- Site Status column -->
+                    <ng-container matColumnDef="site_status">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Site Status </th>
+                        <td mat-cell *matCellDef="let row">
+                            <mat-select class="custom_dorp_select default" [(ngModel)]="row.site_status"
+                                [ngModelOptions]="{standalone: true}">
+                                <mat-option value="Select">Select</mat-option>
+                                <mat-option value="Active">Active</mat-option>
+                                <mat-option value="Inactive">Inactive</mat-option>
+                            </mat-select>
+                        </td>
+                    </ng-container>
+                    <!-- Web AddressColumn -->
+                    <ng-container matColumnDef="web_address">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header>Web Address </th>
+                        <td mat-cell *matCellDef="let row">
+                            {{row.web_address}}
+                        </td>
+                    </ng-container>
+                    <!-- Lead Source column -->
+                    <ng-container matColumnDef="lead_source">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header>Lead Source </th>
+                        <td mat-cell *matCellDef="let row">
+                            <mat-select class="custom_dorp_select default" [(ngModel)]="row.lead_source"
+                                [ngModelOptions]="{standalone: true}">
+                                <mat-option value="Select">Select</mat-option>
+                                <!-- <mat-option value="Self Sourced">Self Sourced</mat-option>
+                                <mat-option value="Employment">Employment</mat-option>
+                                <mat-option value="BNI">BNI</mat-option>
+                                <mat-option value="Website">Website</mat-option>
+                                <mat-option value="Own Network">Own Network</mat-option>
+                                <mat-option value="Host Network">Host Network</mat-option>
+                                <mat-option value="Cold Calling">Cold Calling</mat-option> -->
+                                 <mat-option value="Own Employment">Own Employment</mat-option>
+                            <mat-option value="Provider Placed">Provider Placed</mat-option>
+                            </mat-select>
+                        </td>
+                    </ng-container>
+                    <!-- Conversion Status column -->
+                    <ng-container matColumnDef="conversion_status">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Conversion Status </th>
+                        <td mat-cell *matCellDef="let row">
+                            <mat-select class="custom_dorp_select default" [(ngModel)]="row.conversion_status"
+                                [ngModelOptions]="{standalone: true}">
+                                <mat-option value="Select">Select</mat-option>
+                                <mat-option value="Converted">Converted</mat-option>
+                                <mat-option value="In Progress">In Progress</mat-option>
+                                <mat-option value="Dormant">Dormant</mat-option>
+                                <mat-option value="Dead Lead">Dead Lead</mat-option>
+                            </mat-select>
+                        </td>
+                    </ng-container>
+                    <!-- Created By Column -->
+                    <ng-container matColumnDef="created_by">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header>Created By </th>
+                        <td mat-cell *matCellDef="let row">{{row.created_by}}
+                            <!-- <button mat-icon-button data-toggle="modal"
+                        data-target="#changeOwner">
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="8" cy="8" r="8" fill="#F8F8F8" />
+                            <path fill-rule="evenodd" clip-rule="evenodd"
+                                d="M9.47847 4.66666C9.69671 4.66666 9.90592 4.7538 10.0587 4.9078L11.0924 5.94143C11.2462 6.09532 11.3327 6.30405 11.3327 6.52168C11.3327 6.73932 11.2462 6.94804 11.0924 7.10194L7.31852 10.8746C7.08569 11.1432 6.75565 11.3082 6.37755 11.3341H4.66602V11.0008L4.6671 9.59576C4.6955 9.24427 4.8589 8.91743 5.10818 8.6978L8.89781 4.9082C9.05148 4.7536 9.26047 4.66666 9.47847 4.66666ZM6.35401 10.6683C6.53208 10.6557 6.69784 10.5728 6.83095 10.4205L9.35158 7.8999L8.10012 6.64839L5.56472 9.18319C5.42967 9.30263 5.34612 9.46973 5.33268 9.6226V10.6676L6.35401 10.6683ZM8.57158 6.17704L9.82299 7.42849L10.6209 6.63053C10.6498 6.60166 10.666 6.56251 10.666 6.52168C10.666 6.48086 10.6498 6.4417 10.6209 6.41284L9.58639 5.37828C9.55785 5.34951 9.51899 5.33332 9.47847 5.33332C9.43794 5.33332 9.39909 5.34951 9.37054 5.37828L8.57158 6.17704Z"
+                                fill="#2B2A35" />
+                        </svg></button> -->
+                        </td>
+                    </ng-container>
+                    <!--  Date Created Column -->
+                    <ng-container matColumnDef="date_created">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Date Created</th>
+                        <td mat-cell *matCellDef="let row">
+                            {{row.date_created}}
+                        </td>
+                    </ng-container>
+                    <!-- Last Updated  By Column -->
+                    <ng-container matColumnDef="last_updated_by">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header>Last Updated By</th>
+                        <td mat-cell *matCellDef="let row">{{row.last_updated_by}}
+
+                        </td>
+                    </ng-container>
+                    <!-- Last Updated Column -->
+                    <ng-container matColumnDef="last_updated">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header>Last Updated</th>
+                        <td mat-cell *matCellDef="let row">{{row.last_updated}}
+
+                        </td>
+                    </ng-container>
+                    <!-- LAST HCAAF date Column -->
+                    <ng-container matColumnDef="last_hcaaf_update">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header>Last HCAAF Date</th>
+                        <td mat-cell *matCellDef="let row">{{row.last_hcaaf_update}}
+
+                        </td>
+                    </ng-container>
+                    <!-- HCAAF Expiry Column -->
+                    <ng-container matColumnDef="hcaaf_expiry">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header>HCAAF Expiry</th>
+                        <td mat-cell *matCellDef="let row">{{row.hcaaf_expiry}}
+
+                        </td>
+                    </ng-container>
+                    <!-- Students Placed Column -->
+                    <ng-container matColumnDef="student_placed">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Students Placed </th>
+                        <td mat-cell *matCellDef="let row"> {{row.student_placed}} </td>
+                    </ng-container>
+                    <!-- Placement Groups Column -->
+                    <ng-container matColumnDef="placement_groups">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Placement Groups </th>
+                        <td mat-cell *matCellDef="let row"> {{row.placement_groups}}
+                            <button mat-icon-button data-toggle="modal" (click)="getCompanyPlacementGroup(row)"
+                                data-target="#viewPlacement"><svg width="20" height="20" viewBox="0 0 20 20" fill="none"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <circle cx="10" cy="10" r="10" fill="#F8F8F8" />
+                                    <path
+                                        d="M5 9.58333C5 9.58333 6.81818 6.25 10 6.25C13.1818 6.25 15 9.58333 15 9.58333C15 9.58333 13.1818 12.9167 10 12.9167C6.81818 12.9167 5 9.58333 5 9.58333Z"
+                                        stroke="black" stroke-linecap="round" stroke-linejoin="round" />
+                                    <path
+                                        d="M9.9984 10.8359C10.7515 10.8359 11.362 10.2763 11.362 9.58594C11.362 8.89558 10.7515 8.33594 9.9984 8.33594C9.24529 8.33594 8.63477 8.89558 8.63477 9.58594C8.63477 10.2763 9.24529 10.8359 9.9984 10.8359Z"
+                                        stroke="black" stroke-linecap="round" stroke-linejoin="round" />
+                                </svg>
+                            </button>
+                        </td>
+                    </ng-container>
+                    <!-- Contact 1 Name Column -->
+                    <ng-container matColumnDef="contact_01_first_name">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Contact 1 First Name </th>
+                        <td mat-cell *matCellDef="let row"> {{row.contact_01_first_name}} </td>
+                    </ng-container>
+                    <!-- Contact 1 Last Name Column -->
+                    <ng-container matColumnDef="contact_01_last_name">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Contact 1 Last Name </th>
+                        <td mat-cell *matCellDef="let row"> {{row.contact_01_last_name}} </td>
+                    </ng-container>
+                    <!-- Contact 1 Title Column -->
+                    <ng-container matColumnDef="contact_01_title">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Contact 1 Title </th>
+                        <td mat-cell *matCellDef="let row">{{row.contact_01_title}} </td>
+                    </ng-container>
+                    <!-- Contact 1  Primary Email Column -->
+                    <ng-container matColumnDef="contact_01_primary_email">
+                        <th mat-header-cell *matHeaderCellDef> Contact 1 Primary Email </th>
+                        <td mat-cell *matCellDef="let row">{{row.contact_01_primary_email}} </td>
+                    </ng-container>
+                    <!-- Contact 1  Secondary Email Column -->
+                    <ng-container matColumnDef="contact_01_secondary_email">
+                        <th mat-header-cell *matHeaderCellDef> Contact 1 Secondary Email </th>
+                        <td mat-cell *matCellDef="let row">{{row.contact_01_secondary_email}} </td>
+                    </ng-container>
+                    <!-- Contact 1  Primary  Phone Column -->
+                    <ng-container matColumnDef="contact_01_primary_phone">
+                        <th mat-header-cell *matHeaderCellDef> Contact 1 Primary Phone </th>
+                        <td mat-cell *matCellDef="let row">{{row.contact_01_primary_phone}} </td>
+                    </ng-container>
+                    <!-- Contact 1  Secondary  Phone Column -->
+                    <ng-container matColumnDef="contact_01_secondary_phone">
+                        <th mat-header-cell *matHeaderCellDef> Contact 1 Secondary Phone </th>
+                        <td mat-cell *matCellDef="let row">{{row.contact_01_secondary_phone}} </td>
+                    </ng-container>
+                    <!-- contact 1 created By Column -->
+                    <ng-container matColumnDef="contact_01_created_by">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header>Contact 1 Created By </th>
+                        <td mat-cell *matCellDef="let row">{{row.contact_01_created_by}}
+
+                        </td>
+                    </ng-container>
+                    <!-- contact 1 Created Date Column -->
+                    <ng-container matColumnDef="contact_01_created_date">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header>Contact 1 Created Date </th>
+                        <td mat-cell *matCellDef="let row">
+                            {{row.contact_01_created_date}}
+                        </td>
+                    </ng-container>
+                    <!-- Contact 1  Updated  By Column -->
+                    <ng-container matColumnDef="contact_01_updated_by">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header>Contact 1 Updated By</th>
+                        <td mat-cell *matCellDef="let row">{{row.contact_01_updated_by}}
+
+                        </td>
+                    </ng-container>
+                    <!-- Contact 1 Last Updated Column -->
+                    <ng-container matColumnDef="contact_01_last_updated">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header>Last Updated By</th>
+                        <td mat-cell *matCellDef="let row">{{row.contact_01_last_updated}}
+
+                        </td>
+                    </ng-container>
+                    <!-- Contact 2 Name Column -->
+                    <ng-container matColumnDef="contact_02_first_name">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Contact 2 First Name </th>
+                        <td mat-cell *matCellDef="let row"> {{row.contact_02_first_name}} </td>
+                    </ng-container>
+                    <!-- Contact 2 Last Name Column -->
+                    <ng-container matColumnDef="contact_02_last_name">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Contact 2 Last Name </th>
+                        <td mat-cell *matCellDef="let row"> {{row.contact_02_last_name}} </td>
+                    </ng-container>
+                    <!-- Contact 2 Title Column -->
+                    <ng-container matColumnDef="contact_02_title">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Contact 2 Title </th>
+                        <td mat-cell *matCellDef="let row">{{row.contact_02_title}} </td>
+                    </ng-container>
+                    <!-- Contact 2  Primary Email Column -->
+                    <ng-container matColumnDef="contact_02_primary_email">
+                        <th mat-header-cell *matHeaderCellDef> Contact 2 Primary Email </th>
+                        <td mat-cell *matCellDef="let row">{{row.contact_02_primary_email}} </td>
+                    </ng-container>
+                    <!-- Contact 2  Secondary Email Column -->
+                    <ng-container matColumnDef="contact_02_secondary_email">
+                        <th mat-header-cell *matHeaderCellDef> Contact 2 Secondary Email </th>
+                        <td mat-cell *matCellDef="let row">{{row.contact_02_secondary_email}} </td>
+                    </ng-container>
+                    <!-- Contact 2  Primary  Phone Column -->
+                    <ng-container matColumnDef="contact_02_primary_phone">
+                        <th mat-header-cell *matHeaderCellDef> Contact 2 Primary Phone </th>
+                        <td mat-cell *matCellDef="let row">{{row.contact_02_primary_phone}} </td>
+                    </ng-container>
+                    <!-- Contact 2  Secondary  Phone Column -->
+                    <ng-container matColumnDef="contact_02_secondary_phone">
+                        <th mat-header-cell *matHeaderCellDef> Contact 2 Secondary Phone </th>
+                        <td mat-cell *matCellDef="let row">{{row.contact_02_secondary_phone}} </td>
+                    </ng-container>
+                    <!-- contact 2 created By Column -->
+                    <ng-container matColumnDef="contact_02_created_by">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header>Contact 2 Created By </th>
+                        <td mat-cell *matCellDef="let row">{{row.contact_02_created_by}}
+
+                        </td>
+                    </ng-container>
+                    <!-- contact 2 Created Date Column -->
+                    <ng-container matColumnDef="contact_02_created_date">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header>Contact 2 Created Date </th>
+                        <td mat-cell *matCellDef="let row">
+                            {{row.contact_02_created_date}}
+                        </td>
+                    </ng-container>
+                    <!-- Contact 2  Updated  By Column -->
+                    <ng-container matColumnDef="contact_02_updated_by">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header>Contact 2 Updated By</th>
+                        <td mat-cell *matCellDef="let row">{{row.contact_02_updated_by}}
+
+                        </td>
+                    </ng-container>
+                    <!-- Contact 2 Last Updated Column -->
+                    <ng-container matColumnDef="contact_02_last_updated">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header>Last Updated By</th>
+                        <td mat-cell *matCellDef="let row">{{row.contact_02_last_updated}}
+
+                        </td>
+                    </ng-container>
+                    <!-- Contact 3 Name Column -->
+                    <ng-container matColumnDef="contact_03_first_name">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Contact 3 First Name </th>
+                        <td mat-cell *matCellDef="let row"> {{row.contact_03_first_name}} </td>
+                    </ng-container>
+                    <!-- Contact 3 Last Name Column -->
+                    <ng-container matColumnDef="contact_03_last_name">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Contact 3 Last Name </th>
+                        <td mat-cell *matCellDef="let row"> {{row.contact_03_last_name}} </td>
+                    </ng-container>
+                    <!-- Contact 3 Title Column -->
+                    <ng-container matColumnDef="contact_03_title">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Contact 3 Title </th>
+                        <td mat-cell *matCellDef="let row">{{row.contact_03_title}} </td>
+                    </ng-container>
+                    <!-- Contact 3  Primary Email Column -->
+                    <ng-container matColumnDef="contact_03_primary_email">
+                        <th mat-header-cell *matHeaderCellDef> Contact 3 Primary Email </th>
+                        <td mat-cell *matCellDef="let row">{{row.contact_03_primary_email}} </td>
+                    </ng-container>
+                    <!-- Contact 3  Secondary Email Column -->
+                    <ng-container matColumnDef="contact_03_secondary_email">
+                        <th mat-header-cell *matHeaderCellDef> Contact 3 Secondary Email </th>
+                        <td mat-cell *matCellDef="let row">{{row.contact_03_secondary_email}} </td>
+                    </ng-container>
+                    <!-- Contact 3  Primary  Phone Column -->
+                    <ng-container matColumnDef="contact_03_primary_phone">
+                        <th mat-header-cell *matHeaderCellDef> Contact 3 Primary Phone </th>
+                        <td mat-cell *matCellDef="let row">{{row.contact_03_primary_phone}} </td>
+                    </ng-container>
+                    <!-- Contact 3  Secondary  Phone Column -->
+                    <ng-container matColumnDef="contact_03_secondary_phone">
+                        <th mat-header-cell *matHeaderCellDef> Contact 3 Secondary Phone </th>
+                        <td mat-cell *matCellDef="let row">{{row.contact_03_secondary_phone}} </td>
+                    </ng-container>
+                    <!-- contact 3 created By Column -->
+                    <ng-container matColumnDef="contact_03_created_by">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header>Contact 3 Created By </th>
+                        <td mat-cell *matCellDef="let row">{{row.contact_03_created_by}}
+
+                        </td>
+                    </ng-container>
+                    <!-- contact 3 Created Date Column -->
+                    <ng-container matColumnDef="contact_03_created_date">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header>Contact 3 Created Date </th>
+                        <td mat-cell *matCellDef="let row">
+                            {{row.contact_03_created_date}}
+                        </td>
+                    </ng-container>
+                    <!-- Contact 3  Updated  By Column -->
+                    <ng-container matColumnDef="contact_03_updated_by">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header>Contact 3 Updated By</th>
+                        <td mat-cell *matCellDef="let row">{{row.contact_03_updated_by}}
+
+                        </td>
+                    </ng-container>
+                    <!-- Contact 3 Last Updated Column -->
+                    <ng-container matColumnDef="contact_03_last_updated">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header>Last Updated By</th>
+                        <td mat-cell *matCellDef="let row">{{row.contact_03_last_updated}}
+
+                        </td>
+                    </ng-container>
+                    <!-- WHS Check column -->
+                    <ng-container matColumnDef="whs_check">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> WHS Check </th>
+                        <td mat-cell *matCellDef="let row">
+                            <mat-select class="custom_dorp_select default" [(ngModel)]="row.whs_check"
+                                [ngModelOptions]="{standalone: true}">
+                                <mat-option value="Select" disabled>Select</mat-option>
+                                <mat-option value="YES">Yes</mat-option>
+                                <mat-option value="No">No</mat-option>
+                            </mat-select>
+                        </td>
+                    </ng-container>
+                    <!-- Site Consent to use Logo column -->
+                    <ng-container matColumnDef="company_concent_to_use_logo">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Site Consent to use Logo </th>
+                        <td mat-cell *matCellDef="let row">
+                            <mat-select class="custom_dorp_select default" [(ngModel)]="row.company_concent_to_use_logo"
+                                [ngModelOptions]="{standalone: true}">
+                                <mat-option value="Select">Select</mat-option>
+                                <mat-option value="YES">Yes</mat-option>
+                                <mat-option value="No">No</mat-option>
+                            </mat-select>
+                        </td>
+                    </ng-container>
+                    <!-- Action column -->
+                    <ng-container matColumnDef="actions" stickyEnd>
+                        <th mat-header-cell *matHeaderCellDef> Actions </th>
+                        <td mat-cell *matCellDef="let row">
+                            <button mat-icon-button [matMenuTriggerFor]="menu" class="td-btn">
+                                <mat-icon>more_horizantal</mat-icon>
+                            </button>
+                            <mat-menu #menu="matMenu" class="td-menu">
+                                <a mat-menu-item data-toggle="modal" data-target="#sendEmailCompanies"
+                                    (click)="row.selected = true;selectCompany()">
+                                    <span>Email</span>
+                                </a>
+                            </mat-menu>
+                        </td>
+                    </ng-container>
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                </table>
+            </div>
+            <app-paginator></app-paginator>
+        </div>
+    </div>
+    <div class="row pt-4 create_filter_footer_btns">
+        <div class="col-md-6" *ngIf="!selectedTable?.isEdit && !isPreviewFilter">
+            <button (click)="previewAnalyticFilter(false)" mat-button class="theme_btn btn_primary mr-4"><svg
+                    class="mr-1" width="26" height="16" viewBox="0 0 26 16" fill="none"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <g clip-path="url(#clip0_1_4562)">
+                        <path
+                            d="M1.71049 8.61941C1.51299 8.37634 1.34741 8.16154 1.21534 7.98461C1.33889 7.81088 1.49333 7.60114 1.67769 7.36437C2.23421 6.64964 3.05735 5.69635 4.12007 4.7451C6.25653 2.83275 9.2782 1 13 1C16.7218 1 19.7435 2.83275 21.8799 4.7451C22.9426 5.69635 23.7658 6.64964 24.3223 7.36437C24.5067 7.60114 24.6611 7.81088 24.7847 7.98461C24.6526 8.16154 24.487 8.37634 24.2895 8.61941C23.7062 9.3373 22.8507 10.2942 21.7647 11.249C19.5757 13.1734 16.5535 15 13 15C9.44653 15 6.42433 13.1734 4.23526 11.249C3.14927 10.2942 2.29378 9.3373 1.71049 8.61941Z"
+                            stroke="currentColor" stroke-width="2" />
+                        <circle cx="13" cy="8" r="4" stroke="currentColor" stroke-width="2" />
+                    </g>
+                    <defs>
+                        <clipPath id="clip0_1_4562">
+                            <rect width="26" height="16" fill="currentColor" />
+                        </clipPath>
+                    </defs>
+                </svg>
+
+                Preview</button>
+            <button mat-button class="theme_btn btn_outline_danger" (click)="cancel()">
+                Cancel
+            </button>
+        </div>
+        <div class="col-md-12" *ngIf="isPreviewFilter && !selectedTable?.isEdit">
+            <button (click)="previewAnalyticFilter(true)" mat-button class="theme_btn btn_primary">Create</button>
+        </div>
+    </div>
+</section>
+<div class="modal fade bsModal ch_modal delete_filter_modal" id="deleteFilter" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header text-center justify-content-center">
+                <h2 class="modal-title" id="exampleModalLabel">Are you sure you want to delete the following filter?
+                </h2>
+            </div>
+            <div class="modal-body pt-3">
+                <div class="row">
+                    <div class="col-md-12 text-center">
+                        <h3>{{selectedFilters[selectedFilterIndex]?.label}}</h3>
+                    </div>
+                </div>
+                <div class="modal-footer justify-content-around">
+                    <button mat-button class="theme_btn btn_primary" data-dismiss="modal">No</button>
+                    <button mat-button type="button" class="theme_btn btn_outline_primary" data-dismiss="modal"
+                        (click)="deleteFilter()">Yes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<app-send-email-popup modalId="sendEmailCompanies" [students]="selectedRecords"
+    [emailType]="'company'" [type]="'employer'"></app-send-email-popup>
+<div class="modal fade bsModal ch_modal view_all_contact_popup" id="viewPlacement" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title primary" id="exampleModalLabel">View Woolworth's Placement Groups</h2>
+                <button type="button" mat-icon-button id="closeModal" class="close" data-dismiss="modal"
+                    aria-label="Close">
+                    <mat-icon>close</mat-icon>
+                </button>
+            </div>
+            <!-- <form> -->
+            <div class="modal-body pt-3">
+                 <!--  -->
+                <div class="table-responsive manage_table_scroll position-relative">
+                    <table mat-table [dataSource]="placementLists" matSort class="ch_table">
+                        <!-- Placement Group Column -->
+                        <ng-container matColumnDef="placement_group">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header>Placement Group </th>
+                            <td mat-cell *matCellDef="let row">Test
+                            </td>
+                        </ng-container>
+                        <!-- Code Column -->
+                        <ng-container matColumnDef="code">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Code </th>
+                            <td mat-cell *matCellDef="let row"> J2024PY </td>
+                        </ng-container>
+                        <!-- start date Column -->
+                        <ng-container matColumnDef="start_date">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header>Start date </th>
+                            <td mat-cell *matCellDef="let row">24/06/24>
+                            </td>
+                        </ng-container>
+                        <!-- end  date Column -->
+                        <ng-container matColumnDef="end_date">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header>End date </th>
+                            <td mat-cell *matCellDef="let row">24/06/24>
+                            </td>
+                        </ng-container>
+                        <!-- Status Column -->
+                        <ng-container matColumnDef="status">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header>Status </th>
+                            <td mat-cell *matCellDef="let row">
+                                Published
+                            </td>
+                        </ng-container>
+                        <tr mat-header-row *matHeaderRowDef="displayedPlacementColumns"></tr>
+                        <tr mat-row *matRowDef="let row; columns: displayedPlacementColumns;"></tr>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer justify-content-center">
+                <button mat-button data-dismiss="modal" class="theme_btn btn_primary">Close</button>
+            </div>
+            <!-- </form> -->
+        </div>
+    </div>
+</div>
+<div class="modal fade bsModal ch_modal delete_filter_modal" id="clearFilter" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header text-center justify-content-center">
+                <h2 class="modal-title" id="exampleModalLabel">Are you sure you want to clear all filter?
+                </h2>
+                <button mat-icon-button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <mat-icon>close</mat-icon>
+                </button>
+            </div>
+            <div class="modal-body pt-3">
+                <div class="row">
+                    <div class="col-md-12 text-center">
+                        <p>You will have to create a new set of filters again to see tailored data.</p>
+                    </div>
+                </div>
+                <div class="modal-footer justify-content-around">
+                    <button mat-button class="theme_btn btn_primary" data-dismiss="modal">No</button>
+                    <button mat-button type="button" class="theme_btn btn_outline_primary"
+                        data-dismiss="modal">Yes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

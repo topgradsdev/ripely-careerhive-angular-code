@@ -1,0 +1,63 @@
+.articles_sec {
+    // background: linear-gradient(180deg, rgba(22, 105, 77, 0) 0%, rgba(39, 81, 143, 0) 0.01%, rgba(57, 50, 102, 0.08) 100%), url('assets/img/article_detail_bg.png');
+    border-radius: 10px;
+    height: 231px;
+    position: relative;
+    background-color: #fff;
+    img{
+        height: 231px;
+        width: 100%;
+        object-fit: cover;
+        border-radius: 10px;
+    }
+}
+.resource_hdng_container h2 {
+    font-weight: 400;
+    font-size: 29px;
+    line-height: 52px;
+    font-family: var(--font-primary);
+    color: var(--main-black-color);
+    margin-bottom: 22px;
+    padding-left: 10px;
+    margin-top: 8px;
+}
+
+.resource_hdng_container {
+    margin-bottom: 150px;
+}
+.resource_sub_hdngs {
+    margin-bottom: 35px;
+    small {
+        font-size: 13px;
+        line-height: 18px;
+        color: #9A9A9A;
+        margin-left: 7px;
+    }
+    .user_circle_name {
+        margin-right: 12px;
+    }
+}
+span.user_circle_name {
+    display: inline-block;
+    width: 45px;
+    height: 45px;
+    line-height: 45px;
+    background: #464BA8;
+    text-align: center;
+    color: #fff;
+    font-size: 18px;
+    border-radius: 100%;
+    margin-right: -25px;
+    position: relative;
+}
+.arcle_author {
+    font-size: 16px;
+    line-height: 140%;
+    color: #545465;
+}
+.reosurce_posted_info {
+    font-family: var(--font-primary);
+    font-size: 14px;
+    line-height: 20px;
+    color: #545465;
+}

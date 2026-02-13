@@ -1,0 +1,209 @@
+<!-- <section class="main_section">
+    <mat-tab-group animationDuration="0ms" class="mat_tab_bordred web_placements_tab">
+        <mat-tab>
+            <ng-template mat-tab-label>
+                Pre Placement
+            </ng-template>
+            <app-pre-placement-tab></app-pre-placement-tab>
+        </mat-tab>
+        <mat-tab>
+            <ng-template mat-tab-label>
+                Ongoing
+            </ng-template>
+            <app-ongoing-tab></app-ongoing-tab>
+        </mat-tab>
+        <mat-tab>
+            <ng-template mat-tab-label>
+                Post-Placement
+            </ng-template>
+        </mat-tab>
+        <mat-tab>
+            <ng-template mat-tab-label>
+                Completed
+            </ng-template>
+        </mat-tab>
+    </mat-tab-group>
+</section> -->
+<section class="main_section">
+    <!-- <nav class="web_placements_tab_bs">
+        <div class="custom_container">
+            <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                <a matRipple class="nav-item nav-link"
+                    [ngClass]="selectedTab === 'nav-pre-placement-tab' ? 'active' : ''" id="nav-pre-placement-tab"
+                    data-toggle="tab"
+                    href="#nav-pre-placement" role="tab" aria-controls="nav-pre-placement" aria-selected="true"
+                    (click)="goToTab('nav-pre-placement-tab')">Pre
+                    Placement</a>
+                <a matRipple class="nav-item nav-link" [ngClass]="selectedTab === 'nav-ongoing-tab' ? 'active' : ''"
+                    id="nav-ongoing-tab" data-toggle="tab" href="#nav-ongoing"
+                    role="tab" aria-controls="nav-ongoing" aria-selected="false"
+                    (click)="goToTab('nav-ongoing-tab')">Ongoing</a>
+                <a matRipple class="nav-item nav-link"
+                    [ngClass]="selectedTab === 'nav-post-placement-tab' ? 'active' : ''" id="nav-post-placement-tab"
+                    data-toggle="tab"
+                    href="#nav-post-placement" role="tab" aria-controls="nav-post-placement"
+                    (click)="goToTab('nav-post-placement-tab')"
+                    aria-selected="false">Post-Placement</a>
+                <a matRipple class="nav-item nav-link" [ngClass]="selectedTab === 'nav-completed-tab' ? 'active' : ''"
+                    id="nav-completed-tab" data-toggle="tab" href="#nav-completed"
+                    role="tab" aria-controls="nav-completed" aria-selected="false"
+                    (click)="goToTab('nav-completed-tab')">Completed</a>
+            </div>
+        </div>
+    </nav>
+    <div class="tab-content border-0" id="nav-tabContent">
+        <div class="tab-pane fade" [ngClass]="selectedTab === 'nav-pre-placement-tab' ? 'show active' : ''"
+            id="nav-pre-placement" role="tabpanel"
+            aria-labelledby="nav-pre-placement-tab">
+            <div class="custom_container">
+                <app-pre-placement-tab [studentProfile]="studentProfile"
+                    (tabEvent)="getTabEvent($event)"></app-pre-placement-tab>
+            </div>
+        </div>
+        <div class="tab-pane fade" [ngClass]="selectedTab === 'nav-ongoing-tab' ? 'show active' : ''" id="nav-ongoing"
+            role="tabpanel" aria-labelledby="nav-ongoing-tab">
+            <div class="custom_container">
+                <app-ongoing-tab [studentProfile]="studentProfile"></app-ongoing-tab>
+            </div>
+        </div>
+        <div class="tab-pane fade" [ngClass]="selectedTab === 'nav-post-placement-tab' ? 'show active' : ''"
+            id="nav-post-placement" role="tabpanel" aria-labelledby="nav-post-placement-tab">
+            <div class="custom_container">
+                <app-post-placement-tab></app-post-placement-tab>
+            </div>
+        </div>
+        <div class="tab-pane fade" [ngClass]="selectedTab === 'nav-completed-tab' ? 'show active' : ''"
+            id="nav-completed" role="tabpanel" aria-labelledby="nav-completed-tab">
+            <div class="custom_container">
+                <app-completed-tab [studentProfile]="studentProfile"></app-completed-tab>
+            </div>
+        </div>
+    </div> -->
+
+    <div class="web_placements_tab_bs p-0">
+        <div class="custom_container">
+            <div class="nav nav-tabs pt-4 pb-4" id="nav-tab" role="tablist">
+                <!-- Pre-Placement Tab -->
+                <a matRipple 
+                    style="padding: 5px 0px;"
+                    class="nav-item nav-link" 
+                    [ngClass]="selectedTab === 'nav-pre-placement-tab' ? 'active' : ''" 
+                    id="nav-pre-placement-tab" 
+                    data-toggle="tab" 
+                    href="#nav-pre-placement" 
+                    role="tab" 
+                    aria-controls="nav-pre-placement" 
+                    [class.active]="activeTab === 'pre-placement'" 
+                    (click)="setActiveTab('pre-placement'); goToTab('nav-pre-placement-tab')" 
+                    aria-selected="true">
+                    Pre Placement
+                </a>
+
+
+                
+                <!-- Ongoing Tab -->
+                <a matRipple 
+                    style="padding: 5px 10px 0px 20px;"
+                    class="nav-item nav-link" 
+                    [ngClass]="selectedTab === 'nav-ongoing-tab' ? 'active' : ''" 
+                    id="nav-ongoing-tab" 
+                    data-toggle="tab" 
+                    href="#nav-ongoing" 
+                    role="tab" 
+                    aria-controls="nav-ongoing" 
+                    [class.active]="activeTab === 'ongoing'" 
+                    (click)="setActiveTab('ongoing'); goToTab('nav-ongoing-tab')" 
+                    aria-selected="false">
+                    Ongoing/Post-Placement
+                </a>
+
+                <!-- Post-Placement Tab -->
+                <!-- <a matRipple 
+                    style="padding: 5px 0px;"
+                    class="nav-item nav-link" 
+                    [ngClass]="selectedTab === 'nav-post-placement-tab' ? 'active' : ''" 
+                    id="nav-post-placement-tab" 
+                    data-toggle="tab" 
+                    href="#nav-post-placement" 
+                    role="tab" 
+                    aria-controls="nav-post-placement" 
+                    [class.active]="activeTab === 'post-placement'" 
+                    (click)="setActiveTab('post-placement'); goToTab('nav-post-placement-tab')" 
+                    aria-selected="false">
+                    Post-Placement
+                </a> -->
+
+                <!-- Completed Tab -->
+                <a matRipple 
+                    style="padding: 5px 0px;    min-width: 135px;"
+                    class="nav-item nav-link" 
+                    [ngClass]="selectedTab === 'nav-completed-tab' ? 'active' : ''" 
+                    id="nav-completed-tab" 
+                    data-toggle="tab" 
+                    href="#nav-completed" 
+                    role="tab" 
+                    aria-controls="nav-completed" 
+                    [class.active]="activeTab === 'completed'" 
+                    (click)="setActiveTab('completed'); goToTab('nav-completed-tab')" 
+                    aria-selected="false">
+                    Completed
+                </a>
+            </div>
+        </div>
+      
+        <div class="tab-content border-0" id="nav-tabContent">
+          <!-- Pre-Placement Tab Content -->
+          <div *ngIf="activeTab === 'pre-placement' || loadedTabs.has('pre-placement')" 
+               class="tab-pane fade" 
+               [class.show]="activeTab === 'pre-placement'" 
+               [class.active]="activeTab === 'pre-placement'">
+               <div class="custom_container">
+                    <app-pre-placement-tab 
+                    *ngIf="activeTab === 'pre-placement'" 
+                    [studentProfile]="studentProfile" 
+                    (tabEvent)="getTabEvent($event)">
+                    </app-pre-placement-tab>
+                </div>
+          </div>
+      
+          <!-- Ongoing Tab Content -->
+          <div *ngIf="activeTab === 'ongoing' || loadedTabs.has('ongoing')" 
+               class="tab-pane fade" 
+               [class.show]="activeTab === 'ongoing'" 
+               [class.active]="activeTab === 'ongoing'">
+               <div class="custom_container">
+                    <app-ongoing-tab 
+                    *ngIf="activeTab === 'ongoing'" 
+                    [studentProfile]="studentProfile">
+                    </app-ongoing-tab>
+                </div>
+          </div>
+      
+          <!-- Post-Placement Tab Content -->
+          <div *ngIf="activeTab === 'post-placement' || loadedTabs.has('post-placement')" 
+               class="tab-pane fade" 
+               [class.show]="activeTab === 'post-placement'" 
+               [class.active]="activeTab === 'post-placement'">
+                <div class="custom_container">
+                    <app-post-placement-tab 
+                    *ngIf="activeTab === 'post-placement'"  [studentProfile]="studentProfile">
+                    </app-post-placement-tab>
+                </div>
+          </div>
+      
+          <!-- Completed Tab Content -->
+          <div *ngIf="activeTab === 'completed' || loadedTabs.has('completed')" 
+               class="tab-pane fade" 
+               [class.show]="activeTab === 'completed'" 
+               [class.active]="activeTab === 'completed'">
+                <div class="custom_container">
+                    <app-completed-tab 
+                    *ngIf="activeTab === 'completed'" 
+                    [studentProfile]="studentProfile">
+                    </app-completed-tab>
+                </div>
+          </div>
+        </div>
+      </div>
+      
+</section>

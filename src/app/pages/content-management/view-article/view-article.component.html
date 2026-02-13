@@ -1,0 +1,47 @@
+<section class="view-applicant-sec">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="view-applct-wrpr">
+					<div class="edit_profil jobApply_modal">
+						<div class="job-content card">
+							<div class="grad_resource_article position-relative pb-0">
+								<div class="resource_info-cntnt">
+									<div class="articles_sec">
+										<img src="{{articledetail?.media}}" class="img-fluid grad_artcl">
+									</div>
+								</div>
+							</div>
+						  	<div class="resource_hdng_container">
+								<h2>{{articledetail?.article_title | titlecase}}</h2>
+								<div class="resource_sub_hdngs">
+									<div class="mb-3">
+										<span class="user_circle_name">MG.</span>
+										<span class="arcle_author">{{articledetail?.posted_by | titlecase}}</span>
+										<small> Posted {{articledetail?.createdAt | date:"dd/MM/yyyy"}}</small>
+									</div>
+									<p class="reosurce_posted_info" [innerHTML]="articledetail?.posted_description"></p>
+								</div>
+								<div class="resource_inner_content">
+									<p class="highlighted_info" [innerHTML]="articledetail?.posted_description">
+									</p>
+									<p class="reosurce_posted_info" [innerHTML]="articledetail?.article_description">
+										
+									</p>
+									<!-- <p class="reosurce_posted_info">
+										Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fermentum enim, fermentum, phasellus cras tempus, lacus. Dui pellentesque dui praesent platea. Magna velit, lorem enim, amet volutpat cursus neque. Posuere elit lobortis tempus vivamus praesent at ac tortor. 
+										Eros a nisi, hendrerit mauris tincidunt. Aliquet adipiscing ultricies tellus, volutpat quis. Risus facilisis interdum viverra felis, odio scelerisque. Scelerisque tortor pulvinar pulvinar fermentum mi et urna, quis. Viverra amet, in bibendum elementum elit venenatis, tristique sit. Pharetra tristique eget sed maecenas enim auctor odio sed elementum. In adipiscing viverra senectus et quis non. Adipiscing et non morbi quisque risus eu vulputate egestas id. Fringilla scelerisque augue nisl diam arcu lectus. Cras tristique nam diam, ullamcorper nisi. Molestie neque amet, ac porta aenean nunc quam felis nulla. Non, placerat in commodo in sem habitant.
+									</p> -->
+								</div>
+							</div>
+							<div class="edit-btns d-flex justify-content-end mt-4">
+								<button class="btn btn-primary" (click)="back()">Back</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+

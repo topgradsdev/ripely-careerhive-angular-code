@@ -1,0 +1,166 @@
+<div class="page_header">
+	<div class="back_btn">
+		<a (click)="cancel()"><mat-icon>arrow_back</mat-icon> <span>Employer</span></a>
+	</div>
+	<div class="page_header_container">
+		<div>
+			<h4>Employer Details</h4>
+		</div>
+		<div>
+			
+		</div>
+	</div>
+  </div>
+
+<section class="edit-employer-sec">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="custom_card custom_card_form">
+					<div class="card_title">
+						<h4>Edit Employer Details</h4>
+					</div>
+					<div class="card-body">
+						<div class="edit-wrapper">
+							<form [formGroup]="EditEmployerform">
+								<div class="text-center edit-profile">
+									<span class="user_dp position-relative">
+										<!-- <img src="image?image:'assets/img/dummy.png'" class="img-fluid">
+										<mat-icon class="material-icons-outlined dp-icon">edit</mat-icon>
+										<input type="file" name="" class="dp-input" formControlName="image"> -->
+										<img [src]="imageFile ? imageFile :'assets/img/dummy.png'" class="img-fluid">
+										<mat-icon class="material-icons-outlined dp-icon">edit</mat-icon>
+										<input type="file" name="" class="dp-input" accept="image/*"
+											(change)="changeImage($event)">
+									</span>
+								</div>
+								<div class="edit-form mt-4">
+
+									<div class="edit-form-fields">
+										<div class="row justify-content-center">
+											<div class="col-md-8">
+												<div class="row">
+													<div class="col-md-6">
+														<div class="form-group form-floating">
+															<input type="text" name="" class="form-control"
+																formControlName="first_name" placeholder="first name">
+																<label>First Name</label>
+																<div *ngIf="(EditEmployerform.controls.first_name.touched || EditEmployerform.controls.first_name.dirty) && EditEmployerform.controls.first_name.invalid && EditEmployerform.controls.first_name?.errors?.required  "
+															class="invalid">
+															*Please enter first name
+														</div>
+														<div *ngIf="(EditEmployerform.controls.first_name.touched || EditEmployerform.controls.first_name.dirty)  && EditEmployerform.controls.first_name?.errors?.maxlength  "
+															class="invalid">
+															*Maximum Length should be 50 characters
+														</div>
+														</div>
+														
+													</div>
+													<div class="col-md-6">
+														<div class="form-group form-floating">
+															
+															<input type="text" placeholder="last name" name="" class="form-control"
+																formControlName="last_name">
+																<label>Last Name</label>
+																<div *ngIf="(EditEmployerform.controls.last_name.touched || EditEmployerform.controls.last_name.dirty) && EditEmployerform.controls.last_name.invalid && EditEmployerform.controls.last_name?.errors?.required  "
+															class="invalid">
+															*Please enter last name
+														</div>
+														<div *ngIf="(EditEmployerform.controls.last_name.touched || EditEmployerform.controls.last_name.dirty)  && EditEmployerform.controls.last_name?.errors?.maxlength  "
+															class="invalid">
+															*Maximum Length should be 50 characters
+														</div>
+														</div>
+														
+													</div>
+												</div>
+												<div class="row">
+													<div class="col-md-6">
+														<div class="form-group form-floating">
+															<input type="text" placeholder="Email" name="" class="form-control"
+																formControlName="email">
+																<label>Work Email Address</label>
+																<div *ngIf="(EditEmployerform.controls.email.touched || EditEmployerform.controls.email.dirty) && EditEmployerform.controls.email.invalid && EditEmployerform.controls.email?.errors?.required  "
+															class="invalid">
+															*Please enter email
+														</div>
+														<div *ngIf="(EditEmployerform.controls.email.touched || EditEmployerform.controls.email.dirty)  && EditEmployerform.controls.email?.errors?.pattern  "
+															class="invalid">
+															*Please enter valid email
+														</div>
+														</div>
+														
+													</div>
+													<div class="col-md-6">
+														<div class="form-group form-floating">
+															<input type="text" placeholder="company name" name="" class="form-control"
+																formControlName="company_name" [readonly]="true">
+																<label>Company Name</label>
+														</div>
+													</div>
+												</div> 
+												<div class="row">
+
+													<!-- 26-july-2022-(Bugs remove the job title) -->
+													<!-- <div class="col-md-6">
+														<div class="form-group">
+															<label>Job Title</label>
+															<select class="form-control" formControlName="job_title">
+																<option>Employer</option>
+																<option>Graduate</option>
+															</select>
+														</div>
+													</div> -->
+
+													<div class="col-md-6">
+														<div class="form-group form-floating only-view">
+															<input type="text" name="" placeholder="Date" class="form-control"
+																value="{{EditEmployerform.value.creation_date | date:'dd/MM/yyyy'}} ({{EditEmployerform.value.creation_date | date:'shortTime'}})"
+																formControlName="creation_date">
+																<label>Creation Date (Time)</label>
+															<!-- <mat-form-field appearance="fill">
+																<mat-label>Choose a date</mat-label>
+																<input matInput [matDatepicker]="picker">
+																<mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+																<mat-datepicker #picker></mat-datepicker>
+																</mat-form-field> -->
+														</div>
+													</div>
+												</div>
+												<div class="row">
+													<!-- <div class="col-md-6">
+															<div class="form-group">
+																<label>Password</label>
+																<input type="text" name="" class="form-control" value="abc123@" formControlName="password">
+															</div>
+														</div> -->
+													<div class="col-md-6">
+														<div class="form-group form-floating">
+															<select class="form-control" formControlName="status">
+																<option value="active">Active</option>
+																<option value="inactive">Inactive</option>
+															</select>
+															<label>Status</label>
+
+														</div>
+													</div>
+												</div>
+												<div class="edit-btns d-flex justify-content-end">
+													<button mat-button class="theme_link_btn_c mr-3" (click)="cancel()">Cancel</button>
+													<button mat-button class="theme_btn btn_primary"
+														(click)="edituser()">Save</button>
+													
+												</div>
+											</div>
+										</div>
+									</div>
+
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>

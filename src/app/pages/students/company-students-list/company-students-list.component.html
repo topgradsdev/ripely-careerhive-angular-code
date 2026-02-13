@@ -1,0 +1,460 @@
+<div class="page_header">
+    <a (click)="goBack()" class="back_Link"> <svg xmlns="http://www.w3.org/2000/svg" width="24"
+            height="24" viewBox="0 0 24 24" fill="none">
+            <path d="M19 12H5" stroke="#464BA8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M12 19L5 12L12 5" stroke="#464BA8" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round" />
+        </svg> Back </a>
+
+    <div class=" page_header_container">
+        <div>
+            <h4>{{employerProfile.company_name || ''}}</h4>
+        </div>
+    </div>
+</div>
+<section>
+    <div class="row sub_header">
+        <div class="col-md-6">
+            <div class="btn_tab vacancies_tab">
+                <button mat-button class="theme_btn btn_primary" (click)="btnTabs(1)"
+                    [ngClass]="selectedIndex === 1 ? 'active' :'inactive'">ONGOING</button>
+                <button mat-button class="theme_btn btn_primary" (click)="btnTabs(2)"
+                    [ngClass]="selectedIndex === 2 ? 'active' :'inactive'">TOTAL</button>
+            </div>
+        </div>
+    </div>
+    <ng-container>
+        <ng-container *ngIf="!isAddNewStudent">
+            <div class="row sub_header">
+
+                <!--  -->
+                <div class="col-md-8 action_btns_header" [style.visibility]="isCheck ? 'visible' : 'hidden'">
+                    <button mat-button class="theme_btn theme_link_btn" data-toggle="modal" data-target="#sendEmail">
+                        <svg class="mr-2" xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 25 25"
+                            fill="none">
+                            <path
+                                d="M4.5 4.5H20.5C21.6 4.5 22.5 5.4 22.5 6.5V18.5C22.5 19.6 21.6 20.5 20.5 20.5H4.5C3.4 20.5 2.5 19.6 2.5 18.5V6.5C2.5 5.4 3.4 4.5 4.5 4.5Z"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                            <path d="M22.5 6.5L12.5 13.5L2.5 6.5" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round" />
+                        </svg> Email
+                    </button>
+                    <button mat-button class="theme_btn theme_link_btn" (click)="exportStudentData1('excel')">
+                        <svg width="25" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M21.5 15.5V19.5C21.5 20.0304 21.2893 20.5391 20.9142 20.9142C20.5391 21.2893 20.0304 21.5 19.5 21.5H5.5C4.96957 21.5 4.46086 21.2893 4.08579 20.9142C3.71071 20.5391 3.5 20.0304 3.5 19.5V15.5"
+                                stroke="#464BA8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                            <path d="M7.5 10.5L12.5 15.5L17.5 10.5" stroke="#464BA8" stroke-width="1.5"
+                                stroke-linecap="round" stroke-linejoin="round" />
+                            <path d="M12.5 15.5L12.5 3.5" stroke="#464BA8" stroke-width="1.5" stroke-linecap="round"
+                                stroke-linejoin="round" />
+                        </svg>
+                        Download (.xlsx)
+                    </button>
+                  
+                </div>
+                <div class="col-md-4 text-right searchbar-end">
+                    <div class="d-inline-flex align-items-center">
+                        <div class="search-container">
+                            <svg class="icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20"
+                                fill="none">
+                                <path
+                                    d="M9.16667 15.8333C12.8486 15.8333 15.8333 12.8486 15.8333 9.16667C15.8333 5.48477 12.8486 2.5 9.16667 2.5C5.48477 2.5 2.5 5.48477 2.5 9.16667C2.5 12.8486 5.48477 15.8333 9.16667 15.8333Z"
+                                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                <path d="M17.5 17.5L13.875 13.875" stroke="currentColor" stroke-width="2"
+                                    stroke-linecap="round" stroke-linejoin="round" />
+                            </svg>
+                            <input type="text" class="form-control" placeholder="Search Keywords"
+                                [(ngModel)]="searchCriteria.keywords" (ngModelChange)="onChangeSearchKeyword()">
+                        </div>
+                        <button mat-button class="theme_btn btn_primary ml-4" data-toggle="modal" data-target="#filter">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="23" viewBox="0 0 24 23" fill="none">
+                                <path d="M22 3.10669H2L10 11.9629V18.0854L14 19.9578V11.9629L22 3.10669Z" stroke="white"
+                                    stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                            </svg>
+                            Filters
+                        </button>
+                        <mat-menu #menu="matMenu" class="td-menu custome_theme_menu">
+                            <a mat-menu-item data-toggle="modal" data-target="#displayColumns">
+                                <span>Display Columns</span>
+                            </a>
+                            <a mat-menu-item (click)="isAddNewStudent = true;">
+                                <span>Import Data</span>
+                            </a>
+                            <a mat-menu-item (click)="exportStudentData('excel')">
+                                <span>Download as XLSX</span>
+                            </a>
+
+                        </mat-menu>
+
+                    </div>
+
+                    <div *ngIf="filterApply" class="text-right mt-2">
+
+                        <label class="text_primary">{{filterList.length}} Parameters Selected
+                            <span  matTooltipClass="info_primary_my_task text-black"  matTooltipPosition="above" matTooltip={{getTitle()}}>
+                                &nbsp;
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke="#464BA8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <path d="M12 16V12" stroke="#464BA8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <path d="M12 8H12.0113" stroke="#464BA8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                    
+                            </span> </label>
+                    </div>
+                </div>
+
+                
+            </div>
+            <div class="table-responsive">
+                <table mat-table [dataSource]="eligibleStudentList" matSort #studentTbSort="matSort" class="ch_table">
+                    <!-- Checkbox Column -->
+                    <ng-container matColumnDef="checkbox" sticky>
+                        <th class="sticky_first_check_sort" mat-header-cell *matHeaderCellDef>
+                            <mat-checkbox *ngxPermissionsOnly="['Students_Write']" class="example-margin" [(ngModel)]="selectAllStdnt"
+                                (change)="selectAllStudent()"></mat-checkbox>
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                            <mat-checkbox *ngxPermissionsOnly="['Students_Write']" class="example-margin" [(ngModel)]="element.selected"
+                                (change)="selectStudent(element)"></mat-checkbox>
+                        </td>
+                    </ng-container>
+                 
+                    <!-- Name Column -->
+                    <ng-container matColumnDef="name">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Student Name </th>
+                        <td mat-cell *matCellDef="let row">
+                            <div class="d-flex align-items-center">
+                                <div class="profile">
+                                <img *ngIf="row.student_image" [src]="row.student_image" alt="avatars">
+                                <span class="text-uppercase">
+                                {{ row?.student_first_name ? row.student_first_name[0] : '' }}
+                                 {{ row?.student_last_name ? row.student_last_name[0] : '' }}
+                                </span>
+                            </div> 
+                            <a class="td_link"  (click)="gotoProfile(row)">{{row.student_first_name}} {{row.student_last_name}}</a>
+                            </div>
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="email">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Student Email </th>
+                        <td mat-cell *matCellDef="let row">
+                            <span>{{row && row?.student_email}}</span>
+                        </td>
+                    </ng-container>
+                    <!-- Major Column -->
+                    <!-- As discssed hiding Major column -->
+                    <ng-container matColumnDef="departments">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header>Department</th>
+                        <td mat-cell *matCellDef="let row">{{row.department_name}}</td>
+                    </ng-container>
+                    <!-- Assigned Column -->
+                    <!-- <ng-container matColumnDef="assignedTo">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Assigned To </th>
+                        <td mat-cell *matCellDef="let row" >
+                          <div class="d-flex align-items-center" *ngIf="row.assigned_staff_name">
+                                <div class="profile">
+                                    <img *ngIf="row.assigned_staff_image" [src]="row.assigned_staff_image" alt="avatars">
+                                    <span  *ngIf="!row.assigned_staff_image" class="text-uppercase">
+                                    {{ row?.assigned_staff_first_name ? row.assigned_staff_first_name[0] : '' }}
+                                    </span>
+                                </div> 
+                                <a>{{row.assigned_staff_first_name}}</a>
+                                <br />
+                                <p class="p-tab-by"> By {{row.assigned_by_staff_first_name}} {{row.assigned_by_staff_last_name}}</p>
+                            </div>
+                            <ng-container *ngIf="!row.assigned_staff_first_name">
+                                <p class="p-tab">No Staff Assigned</p>
+                            </ng-container>
+                        </td>
+                    </ng-container> -->
+                  
+                    <!-- internship Start Date Column -->
+                    <ng-container matColumnDef="internshipStartDate">
+                        <th mat-header-cell *matHeaderCellDef>Start Date</th>
+                        <td mat-cell *matCellDef="let row">{{row.internship_start_date}} 
+                        </td>
+                    </ng-container>
+                    <!-- Internship End Date Column -->
+                    <ng-container matColumnDef="internshipEndDate">
+                        <th mat-header-cell *matHeaderCellDef>End Date</th>
+                        <td mat-cell *matCellDef="let row">{{row.internship_end_date}}</td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="supervisor">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Supervisor </th>
+                        <!-- <td mat-cell *matCellDef="let row">
+
+                            <div class="profile">
+                                <img *ngIf="row.image && row.image.url" [src]="row.image.url" alt="avatars">
+                                <span class="text-uppercase">
+                                {{ getSuperviser(row.supervisor_contact_person) ? getSuperviser(row.supervisor_contact_person)[0] : '' }}
+                                </span>
+                            </div> 
+                            <a>{{getSuperviser(row.supervisor_contact_person)}}</a>
+                            <br />
+                            <p class="p-tag-small">{{row.supervisor_email}}</p>
+                        </td> -->
+
+                        <td mat-cell *matCellDef="let row" >
+                            <div class="d-flex align-items-center" *ngIf="row.supervisor_email">
+                                <div class="profile">
+                                    <img *ngIf="row.company_image" [src]="row.company_image" alt="avatars">
+                                    <span *ngIf="!row.company_image"  class="text-uppercase">
+                                       
+                                      {{ row.supervisor_name ? row.supervisor_name[0] : '' }}
+                                     <!-- {{ row?.last_name ? row.last_name[0] : '' }} -->
+                                    </span>
+                                </div> 
+                                <a class="td_link"> {{row.supervisor_name}}</a>
+                             
+                            </div>
+                               <p class="p-tag-small">{{row.supervisor_email}}</p>
+                            <ng-container *ngIf="!row.supervisor_email">
+                                <p class="p-tab">No Supervisor</p>
+                            </ng-container>
+                        </td>
+
+                    </ng-container>
+                 
+                    <!-- Action column -->
+                    <ng-container matColumnDef="actions" stickyEnd>
+                        <th mat-header-cell *matHeaderCellDef> Actions </th>
+
+                        
+                        <td mat-cell *matCellDef="let row">
+                            <button mat-icon-button [matMenuTriggerFor]="menu" class="td-btn">
+                                <mat-icon>more_horizantal</mat-icon>
+                            </button>
+                            <mat-menu #menu="matMenu" class="td-menu">
+                                <a mat-menu-item (click)="gotoProfile(row)">
+                                    <span>View Profile</span>
+                                </a>
+
+                                <a *ngxPermissionsOnly="['Students_Write']" mat-menu-item data-toggle="modal" data-target="#sendEmail" (click)="row.selected=true;selectStudent(row);">
+                                    <span>Email</span>
+                                </a>
+                            </mat-menu>
+                        </td>
+                    </ng-container>
+                    <tr mat-header-row *matHeaderRowDef="displayColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayColumns;"></tr>
+                </table>
+            </div>
+            <app-paginator [paginationObj]="paginationObj" (pagination)="getPaginationData($event)"></app-paginator>
+
+            <h4 *ngIf="status" class="result-found" style="color:#464BA8">
+                {{(studentList.length>0)?filterCount:0}} Results Found! 
+                &nbsp;&nbsp;<button mat-button class="theme_btn btn_outline_primary" (click)="callApi('');">
+                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M15 5L5 15" stroke="#464BA8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M5 5L15 15" stroke="#464BA8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    &nbsp;&nbsp;  
+                        Reset Filter
+                </button>
+            </h4>
+
+
+            <h4 *ngIf="filterApply" class="result-found" style="color:#464BA8">
+                {{filterCount}} Results Found! 
+                &nbsp;&nbsp;<button mat-button class="theme_btn btn_outline_primary" (click)="callApi(''); filterApply=[]; filterApply = false">
+                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M15 5L5 15" stroke="#464BA8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M5 5L15 15" stroke="#464BA8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    &nbsp;&nbsp;  
+                        Reset Filter
+                </button>
+            </h4>
+        </ng-container>
+        <ng-container *ngIf="isAddNewStudent">
+            <app-student-import-via-excel [placementGroupId]="id"
+                (studentUpdates)="getNewStudents($event)"></app-student-import-via-excel>
+        </ng-container>
+    </ng-container>
+
+</section>
+<!-- Filter popup -->
+<div class="modal fade bsModal ch_modal filter_modals" id="filter" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header d-flex justify-content-between">
+                <button mat-icon-button  #closeFilterModal  class="close" data-dismiss="modal" aria-label="Close">
+                    <mat-icon>close</mat-icon>
+                </button>
+                <h2 class="modal-title">Filters</h2>
+                <button mat-button class="theme_btn btn_primary" (click)="getEligibleStudents()">Apply
+                    Filter</button>
+            </div>
+            <div class="modal-body pt-3 pb-5">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h3 class="filter_title">Parameters</h3>
+                    </div>
+                    <div class="col-md-5">
+                        <div class="filter_sidebar">
+                            <ul class="fix_hight">
+                                <li *ngFor="let filter of filters" [ngClass]="{'active': activeFilter === filter.field}"
+                                    class="active" (click)="applyFilter(filter)">
+                                    <div class="check_box">
+                                        <mat-checkbox [checked]="filter.selected"  [(ngModel)]="filter.selected" (change)="onCheckboxChange($event, filter)"></mat-checkbox>
+                                        <span class="check_box_label">{{filter.name}}</span>
+                                    </div>
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M9 18L15 12L9 6" stroke="currentColor" stroke-width="2"
+                                            stroke-linecap="round" stroke-linejoin="round" />
+                                    </svg>
+                                </li>
+
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-md-7">
+                        <div class="right_container">
+                   
+                            <ng-container *ngIf="activeFilter === 'assigned'">
+                                <h4 class="title">Select Staff Member</h4>
+                                <div class="form-group">
+                                    <ng-select [searchable]="true" [multiple]="true" bindLabel="name" bindValue="id"
+                                        [clearable]="false" placeholder="Select Staff Member"
+                                        [(ngModel)]="filterParameters.assigned">
+                                        <ng-option *ngFor="let priority of studentFilters?.assigned_staff"
+                                            [value]="priority._id">{{priority.first_name}} {{priority.last_name}}</ng-option>
+                                    </ng-select>
+                                </div>
+                            </ng-container>
+<!-- 
+                            <ng-container *ngIf="activeFilter === 'supervisor'">
+                                <h4 class="title">Select Supervisor</h4>
+                                <div class="form-group">
+                                    <ng-select [searchable]="true" [multiple]="true" bindLabel="name" bindValue="id"
+                                        [clearable]="false" placeholder="Select Supervisor"
+                                        [(ngModel)]="filterParameters.supervisor">
+                                        <ng-option *ngFor="let priority of studentFilters?.supervisor"
+                                            [value]="priority">{{priority.first_name}} {{priority.last_name}}</ng-option>
+                                    </ng-select>
+                                </div>
+                            </ng-container> -->
+                           
+
+
+                            <ng-container *ngIf="activeFilter === 'internship_start_date'">
+                                <h4 class="title">Start date</h4>
+                                <div class="date_group file_upload_date">
+                                    <div class="form-group mb-0 custom_datepicker">
+                                        <div class="custom_datepicker_container">
+                                            <input [(ngModel)]="filterParameters.internship_start_sdate"
+                                                placeholder="Select Starting Date" class="form-control"
+                                                [matDatepicker]="startDatePicker">
+                                            <mat-datepicker-toggle matSuffix [for]="startDatePicker">
+                                                <svg matDatepickerToggleIcon width="18" height="18" viewBox="0 0 18 18"
+                                                    fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <path
+                                                        d="M14.25 3H3.75C2.92157 3 2.25 3.67157 2.25 4.5V15C2.25 15.8284 2.92157 16.5 3.75 16.5H14.25C15.0784 16.5 15.75 15.8284 15.75 15V4.5C15.75 3.67157 15.0784 3 14.25 3Z"
+                                                        stroke="#2B2A35" stroke-width="1.5" stroke-linecap="round"
+                                                        stroke-linejoin="round" />
+                                                    <path d="M12 1.5V4.5" stroke="#2B2A35" stroke-width="1.5"
+                                                        stroke-linecap="round" stroke-linejoin="round" />
+                                                    <path d="M6 1.5V4.5" stroke="#2B2A35" stroke-width="1.5"
+                                                        stroke-linecap="round" stroke-linejoin="round" />
+                                                    <path d="M2.25 7.5H15.75" stroke="#2B2A35" stroke-width="1.5"
+                                                        stroke-linecap="round" stroke-linejoin="round" />
+                                                </svg>
+                                            </mat-datepicker-toggle>
+                                            <mat-datepicker #startDatePicker></mat-datepicker>
+                                        </div>
+                                    </div>
+                                    <span class="to">to</span>
+                                    <div class="form-group custom_datepicker">
+                                        <div class="custom_datepicker_container">
+                                            <input [(ngModel)]="filterParameters.internship_start_edate"
+                                                placeholder="Select End Date" class="form-control"
+                                                [matDatepicker]="endDatePicker">
+                                            <mat-datepicker-toggle matSuffix [for]="endDatePicker">
+                                                <svg matDatepickerToggleIcon width="18" height="18" viewBox="0 0 18 18"
+                                                    fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <path
+                                                        d="M14.25 3H3.75C2.92157 3 2.25 3.67157 2.25 4.5V15C2.25 15.8284 2.92157 16.5 3.75 16.5H14.25C15.0784 16.5 15.75 15.8284 15.75 15V4.5C15.75 3.67157 15.0784 3 14.25 3Z"
+                                                        stroke="#2B2A35" stroke-width="1.5" stroke-linecap="round"
+                                                        stroke-linejoin="round" />
+                                                    <path d="M12 1.5V4.5" stroke="#2B2A35" stroke-width="1.5"
+                                                        stroke-linecap="round" stroke-linejoin="round" />
+                                                    <path d="M6 1.5V4.5" stroke="#2B2A35" stroke-width="1.5"
+                                                        stroke-linecap="round" stroke-linejoin="round" />
+                                                    <path d="M2.25 7.5H15.75" stroke="#2B2A35" stroke-width="1.5"
+                                                        stroke-linecap="round" stroke-linejoin="round" />
+                                                </svg>
+                                            </mat-datepicker-toggle>
+                                            <mat-datepicker #endDatePicker></mat-datepicker>
+                                        </div>
+                                    </div>
+                                </div>
+                            </ng-container> 
+
+
+                            <ng-container *ngIf="activeFilter === 'internship_end_date'">
+                                <h4 class="title"> End date</h4>
+                                <div class="date_group file_upload_date">
+                                    <div class="form-group mb-0 custom_datepicker">
+                                        <div class="custom_datepicker_container">
+                                            <input [(ngModel)]="filterParameters.internship_end_sdate"
+                                                placeholder="Select Starting Date" class="form-control"
+                                                [matDatepicker]="startDatePicker">
+                                            <mat-datepicker-toggle matSuffix [for]="startDatePicker">
+                                                <svg matDatepickerToggleIcon width="18" height="18" viewBox="0 0 18 18"
+                                                    fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <path
+                                                        d="M14.25 3H3.75C2.92157 3 2.25 3.67157 2.25 4.5V15C2.25 15.8284 2.92157 16.5 3.75 16.5H14.25C15.0784 16.5 15.75 15.8284 15.75 15V4.5C15.75 3.67157 15.0784 3 14.25 3Z"
+                                                        stroke="#2B2A35" stroke-width="1.5" stroke-linecap="round"
+                                                        stroke-linejoin="round" />
+                                                    <path d="M12 1.5V4.5" stroke="#2B2A35" stroke-width="1.5"
+                                                        stroke-linecap="round" stroke-linejoin="round" />
+                                                    <path d="M6 1.5V4.5" stroke="#2B2A35" stroke-width="1.5"
+                                                        stroke-linecap="round" stroke-linejoin="round" />
+                                                    <path d="M2.25 7.5H15.75" stroke="#2B2A35" stroke-width="1.5"
+                                                        stroke-linecap="round" stroke-linejoin="round" />
+                                                </svg>
+                                            </mat-datepicker-toggle>
+                                            <mat-datepicker #startDatePicker></mat-datepicker>
+                                        </div>
+                                    </div>
+                                    <span class="to">to</span>
+                                    <div class="form-group custom_datepicker">
+                                        <div class="custom_datepicker_container">
+                                            <input [(ngModel)]="filterParameters.internship_end_edate"
+                                                placeholder="Select End Date" class="form-control"
+                                                [matDatepicker]="endDatePicker">
+                                            <mat-datepicker-toggle matSuffix [for]="endDatePicker">
+                                                <svg matDatepickerToggleIcon width="18" height="18" viewBox="0 0 18 18"
+                                                    fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <path
+                                                        d="M14.25 3H3.75C2.92157 3 2.25 3.67157 2.25 4.5V15C2.25 15.8284 2.92157 16.5 3.75 16.5H14.25C15.0784 16.5 15.75 15.8284 15.75 15V4.5C15.75 3.67157 15.0784 3 14.25 3Z"
+                                                        stroke="#2B2A35" stroke-width="1.5" stroke-linecap="round"
+                                                        stroke-linejoin="round" />
+                                                    <path d="M12 1.5V4.5" stroke="#2B2A35" stroke-width="1.5"
+                                                        stroke-linecap="round" stroke-linejoin="round" />
+                                                    <path d="M6 1.5V4.5" stroke="#2B2A35" stroke-width="1.5"
+                                                        stroke-linecap="round" stroke-linejoin="round" />
+                                                    <path d="M2.25 7.5H15.75" stroke="#2B2A35" stroke-width="1.5"
+                                                        stroke-linecap="round" stroke-linejoin="round" />
+                                                </svg>
+                                            </mat-datepicker-toggle>
+                                            <mat-datepicker #endDatePicker></mat-datepicker>
+                                        </div>
+                                    </div>
+                                </div>
+                            </ng-container> 
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Email popup -->
+<app-send-email-popup modalId="sendEmail" [type]="'student'"  [students]="selectedRecords" [emailType]="'student'" (cancel)="handleCancel()" (send)="handleSend()"></app-send-email-popup>

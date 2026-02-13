@@ -1,0 +1,482 @@
+<section class="employer-header-sec">
+    <div class="container">
+        <form [formGroup]="headerSection">
+            <div class="row">
+                <div class="col-md-12">
+
+                    
+                    <div class="card">
+                        <div class="manage-home-header">
+                            <div class="card-header d-flex justify-content-between">
+                                <strong>Graduate Verification Header Section</strong>
+                                <div class="slide-cs">
+                                    <span class="mr-2">Visibility </span>
+                                    <mat-slide-toggle formControlName="is_visible"
+                                        (change)="fun($event)"></mat-slide-toggle>
+                                </div>
+                            </div>
+                            <div class="card-body">
+
+                                <div class="home-mng-form">
+                                    <div class="form-group">
+                                        <label>Title</label>
+                                        <input type="text" name="" class="form-control"
+                                            value="Get Verified. Get Hired Faster." formControlName="heading">
+                                    </div>
+                                    <div *ngIf="(headerSection.controls.heading.touched || headerSection.controls.heading.dirty) && headerSection.controls.heading.invalid && headerSection.controls.heading?.errors?.required  "
+                                        class="invalid">
+                                        *Please enter heading
+                                    </div>
+                                    <div *ngIf="(headerSection.controls.heading.touched || headerSection.controls.heading.dirty) && headerSection.controls.heading.invalid && headerSection.controls.heading?.errors?.maxlength  "
+                                        class="invalid">
+                                        **Maximum Length should be 50 characters
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Sub-Heading</label>
+                                        <input type="text" name="" class="form-control"
+                                            value="When you become a TopGrads Verified graduate, employers are more likely to contact you!"
+                                            formControlName="subheading">
+                                    </div>
+                                    <div *ngIf="(headerSection.controls.subheading.touched || headerSection.controls.subheading.dirty) && headerSection.controls.subheading.invalid && headerSection.controls.subheading?.errors?.required  "
+                                        class="invalid">
+                                        *Please enter sub heading
+                                    </div>
+                                    <div *ngIf="(headerSection.controls.subheading.touched || headerSection.controls.subheading.dirty) && headerSection.controls.subheading.invalid && headerSection.controls.subheading?.errors?.maxlength  "
+                                        class="invalid">
+                                        **Maximum Length should be 200 characters
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Banner Image</label>
+                                        <div class="slider-video-cntnt">
+                                            <div class="prev-upld-img">
+                                                <img [src]="HeadingImage1?HeadingImage1:'assets/img/student1.png'"
+                                                    class="img-fluid">
+                                                <div class="upload-imag text-center">
+                                                    <button class="btn-primary btn  mt-3 position-relative">
+                                                        <input type="file" name="" class="img-input-upld"
+                                                            (change)="setHeadingImage($event)">
+                                                        Upload Image
+                                                    </button>
+                                                </div>
+                                                <div *ngIf="headerSection.controls['Image']?.errors?.required "
+                                                    class="invalid">
+                                                    *Please select image
+                                                </div>
+                                                <div *ngIf="headerSection.controls.county?.errors?.required  "
+                                                    class="invalid">
+                                                    *Only images are allowed
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="edit-btns d-flex justify-content-end">
+                                        <button class="btn btn-primary mr-4"
+                                            (click)="postcontent('header')">Save</button>
+                                        <!-- <button class="btn btn-primary">Back</button> -->
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</section>
+
+<section class="Endorsed-steps-sec">
+    <div class="container">
+        <form [formGroup]="WhyVerifiedSection">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="manage-home-header">
+                            <div class="card-header d-flex justify-content-between">
+                                <strong>Why get Verified?</strong>
+                                <div class="slide-cs">
+                                    <span class="mr-2">Visibility </span>
+                                    <mat-slide-toggle formControlName="is_visible"
+                                        (change)="fun1($event)"></mat-slide-toggle>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div class="home-mng-form">
+                                    <ng-container formArrayName="verificatonArray"
+                                        *ngFor="let alias of WhyVerifiedSection.controls['verificatonArray'].controls; let i=index">
+                                        <ng-container [formGroupName]="i">
+                                            <div class="endrose-step">
+                                                <div class="form-group">
+                                                    <label>{{i+1}}: Icon</label>
+                                                    <div class="slider-video-cntnt">
+                                                        <div class="prev-upld-img icons">
+                                                            <img [src]="verificatonArray.controls[i].controls['image'].value ? verificatonArray.controls[i].controls['image'].value:'assets/img/access_time.svg'"
+                                                                class="img-fluid">
+                                                            <div class="upload-imag text-center">
+                                                                <button class="btn-primary btn  mt-3 position-relative">
+                                                                    <input type="file" name="" class="img-input-upld"
+                                                                        (change)="onVerificationChangeImage($event,i)">
+                                                                    Upload Image
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                        <div *ngIf="verificatonArray.controls[i].controls['image']?.errors?.required "
+                                                            class="invalid">
+                                                            *Please select image
+                                                        </div>
+                                                        <div *ngIf="verificatonArray.controls[i].controls['image'].county?.errors?.required"
+                                                            class="invalid">
+                                                            *Only images are allowed
+                                                        </div>
+                                                    </div>
+
+                                                    <label>Heading</label>
+                                                    <input type="text" name="" class="form-control"
+                                                        value="Get hired 3x faster" formControlName="heading">
+                                                    <div *ngIf="verificatonArray.controls[i].controls['heading'].errors?.required  "
+                                                        class="invalid">
+                                                        *Please enter heading
+                                                    </div>
+                                                    <div *ngIf="verificatonArray.controls[i].controls['heading'].errors?.maxlength  "
+                                                        class="invalid">
+                                                        *Maximum Length should be 50 characters
+                                                    </div>
+
+                                                    <label>Description</label>
+                                                    <textarea name="" rows="3" class="form-control" value=""
+                                                        formControlName="description">Verified Profiles stand out! Get Verified and get viewed by more Employers & Recruiters!</textarea>
+                                                    <div *ngIf="verificatonArray.controls[i].controls['description'].errors?.required "
+                                                        class="invalid">
+                                                        *Please enter description
+                                                    </div>
+                                                    <div *ngIf="verificatonArray.controls[i].controls['description'].errors?.maxlength  "
+                                                        class="invalid">
+                                                        *Maximum Length should be 500 characters
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </ng-container>
+                                    </ng-container>
+                                    <div class="edit-btns d-flex justify-content-end">
+                                        <button class="btn btn-primary mr-4"
+                                            (click)="postcontent('icons')">Save</button>
+                                        <!-- <button class="btn btn-primary">Back</button> -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</section>
+
+
+<section class="whychose-sec">
+    <div class="container">
+        <form [formGroup]="getverifiedSection">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="manage-home-header">
+                            <div class="card-header d-flex justify-content-between">
+                                <strong>How do I get Verified?</strong>
+                                <div class="slide-cs">
+                                    <span class="mr-2">Visibility </span>
+                                    <mat-slide-toggle formControlName="is_visible"
+                                        (change)="fun2($event)"></mat-slide-toggle>
+                                </div>
+                            </div>
+                            <div class="card-body">
+
+                                <div class="home-mng-form">
+                                    <div class="form-group">
+                                        <label>Heading</label>
+                                        <input type="text" name="" class="form-control" value="How do I get Verified?"
+                                            formControlName="heading">
+                                    </div>
+                                    <div *ngIf="(getverifiedSection.controls.heading.touched || getverifiedSection.controls.heading.dirty) && getverifiedSection.controls.heading.invalid && getverifiedSection.controls.heading?.errors?.required  "
+                                        class="invalid">
+                                        *Please enter heading
+                                    </div>
+                                    <div *ngIf="(getverifiedSection.controls.heading.touched || getverifiedSection.controls.heading.dirty) && getverifiedSection.controls.heading.invalid && getverifiedSection.controls.heading?.errors?.maxlength  "
+                                        class="invalid">
+                                        **Maximum Length should be 50 characters
+                                    </div>
+                                    <div class="edit-btns d-flex justify-content-end">
+                                        <button class="btn btn-primary mr-4"
+                                            (click)="postcontent('howVerified')">Save</button>
+
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</section>
+
+<section class="whychose-sec">
+    <div class="container">
+        <form [formGroup]="stepSection">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="manage-home-header">
+                            <div class="card-header d-flex justify-content-between">
+                                <strong>Steps</strong>
+
+                            </div>
+                            <div class="card-body">
+                                <ng-container formArrayName="stepsArray"
+                                    *ngFor="let alias of stepSection.controls['stepsArray'].controls; let i=index">
+                                    <ng-container [formGroupName]="i">
+
+                                        <div class="home-mng-form mb-3">
+                                            <div class="form-group">
+                                                <div class="d-flex justify-content-between align-items-center pb-3">
+                                                    <label><span class="font-weight-bold pr-1">Step {{i+1}}:
+                                                        </span>Heading</label>
+                                                    <div class="slide-cs">
+                                                        <span class="mr-2">Visibility </span>
+                                                        <mat-slide-toggle formControlName="is_visible"
+                                                            (change)="fun3($event)"></mat-slide-toggle>
+                                                    </div>
+                                                </div>
+                                                <input type="text" name="" class="form-control" value="Step 2"
+                                                    formControlName="heading">
+                                                <input type="hidden" name="" class="form-control" value="Step 2"
+                                                    formControlName="endoresement_primary_id">
+                                            </div>
+                                            <div *ngIf="stepsArray.controls[i].controls['heading'].errors?.required  "
+                                                class="invalid">
+                                                *Please enter heading
+                                            </div>
+                                            <div *ngIf="stepsArray.controls[i].controls['heading'].errors?.maxlength  "
+                                                class="invalid">
+                                                *Maximum Length should be 50 characters
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Description</label>
+                                                <textarea name="" rows="3" class="form-control" value=""
+                                                    formControlName="description">Upload your National Police Check.</textarea>
+                                            </div>
+                                            <div *ngIf="stepsArray.controls[i].controls['description'].errors?.required "
+                                                class="invalid">
+                                                *Please enter description
+                                            </div>
+                                            <div *ngIf="stepsArray.controls[i].controls['description'].errors?.maxlength  "
+                                                class="invalid">
+                                                *Maximum Length should be 500 characters
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Section Image</label>
+                                                <div class="slider-video-cntnt">
+                                                    <div class="prev-upld-img">
+                                                        <img [src]="stepsArray.controls[i].controls['image'].value ? stepsArray.controls[i].controls['image'].value:'assets/img/step2.svg'"
+                                                            class="img-fluid">
+                                                        <div class="upload-imag text-center">
+                                                            <button class="btn-primary btn  mt-3 position-relative">
+                                                                <input type="file" name="" class="img-input-upld"
+                                                                    (change)="onStepsChangeImage($event,i)">
+                                                                Upload Image
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                    <div *ngIf="stepsArray.controls[i].controls['image']?.errors?.required "
+                                                        class="invalid">
+                                                        *Please select image
+                                                    </div>
+                                                    <div *ngIf="stepsArray.controls[i].controls['image'].county?.errors?.required"
+                                                        class="invalid">
+                                                        *Only images are allowed
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="edit-btns d-flex justify-content-end">
+                                                <button class="btn btn-primary mr-4"
+                                                    (click)="poststepsArray(stepsArray.controls[i].controls['endoresement_primary_id'].value)">Save</button>
+                                                <!-- <button class="btn btn-primary">Back</button> -->
+                                            </div>
+                                        </div>
+                                        <hr />
+                                    </ng-container>
+                                </ng-container>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</section>
+
+
+<section class="opportunities-sec">
+    <div class="container">
+        <form [formGroup]="verificationSection">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="manage-home-header">
+                            <div class="card-header d-flex justify-content-between">
+                                <strong>Want to get Verified?</strong>
+                                <div class="slide-cs">
+                                    <span class="mr-2">Visibility </span>
+                                    <mat-slide-toggle formControlName="is_visible"
+                                        (change)="fun4($event)"></mat-slide-toggle>
+                                </div>
+                            </div>
+                            <div class="card-body">
+
+                                <div class="home-mng-form">
+                                    <div class="form-group">
+                                        <label>Heading</label>
+                                        <input type="text" name="" class="form-control" value="Want to get Verified?"
+                                            formControlName="heading">
+                                    </div>
+                                    <div *ngIf="(verificationSection.controls.heading.touched || verificationSection.controls.heading.dirty) && verificationSection.controls.heading.invalid && verificationSection.controls.heading?.errors?.required  "
+                                        class="invalid">
+                                        *Please enter heading
+                                    </div>
+                                    <div *ngIf="(verificationSection.controls.heading.touched || verificationSection.controls.heading.dirty) && verificationSection.controls.heading.invalid && verificationSection.controls.heading?.errors?.maxlength  "
+                                        class="invalid">
+                                        **Maximum Length should be 50 characters
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Description</label>
+                                        <quill-editor [modules]="modules" formControlName="description"></quill-editor>
+                                        <!-- <editor apiKey="zcwi1f81304uers1lcszh0iq2lbhcaxl5cj6ez0v89wr25z3" formControlName="description"></editor> -->
+                                    </div>
+                                    <div *ngIf="(verificationSection.controls.description.touched || verificationSection.controls.description.dirty) && verificationSection.controls.description.invalid && verificationSection.controls.description?.errors?.required  "
+                                        class="invalid">
+                                        *Please enter description
+                                    </div>
+                                    <div *ngIf="(verificationSection.controls.description.touched || verificationSection.controls.description.dirty) && verificationSection.controls.description.invalid && verificationSection.controls.description?.errors?.maxlength  "
+                                        class="invalid">
+                                        **Maximum Length should be 500 characters
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Price</label>
+                                        <input type="text" name="" class="form-control" value="$195"
+                                            formControlName="price">
+                                    </div>
+                                    <div *ngIf="(verificationSection.controls.price.touched || verificationSection.controls.price.dirty) && verificationSection.controls.price.invalid && verificationSection.controls.price?.errors?.required  "
+                                        class="invalid">
+                                        *Please enter price
+                                    </div>
+                                    <div *ngIf="(verificationSection.controls.price.touched || verificationSection.controls.price.dirty) && verificationSection.controls.price.invalid && verificationSection.controls.price?.errors?.pattern  "
+                                        class="invalid">
+                                        *Please enter valid price
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Section Image</label>
+                                        <div class="slider-video-cntnt">
+                                            <div class="prev-upld-img">
+                                                <img [src]="HeadingImage2?HeadingImage2:'assets/img/vrfd_img.png'"
+                                                    class="img-fluid">
+                                                <div class="upload-imag text-center">
+                                                    <button class="btn-primary btn  mt-3 position-relative">
+                                                        <input type="file" name="" class="img-input-upld"
+                                                            (change)="setHeadingImage1($event)">
+                                                        Upload Image
+                                                    </button>
+                                                </div>
+                                                <div *ngIf="verificationSection.controls['Image']?.errors?.required "
+                                                    class="invalid">
+                                                    *Please select image
+                                                </div>
+                                                <div *ngIf="verificationSection.controls.county?.errors?.required  "
+                                                    class="invalid">
+                                                    *Only images are allowed
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="edit-btns d-flex justify-content-end">
+                                        <button class="btn btn-primary mr-4"
+                                            (click)="postcontent('getverified')">Save</button>
+                                        <!-- <button class="btn btn-primary">Back</button> -->
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</section>
+
+<section class="opportunities-sec">
+    <div class="container">
+        <form [formGroup]="FAQSection">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="manage-home-header">
+                            <div class="card-header d-flex justify-content-between">
+                                <strong>Frequently Asked Questions</strong>
+                                <div class="slide-cs">
+                                    <span class="mr-2">Visibility </span>
+                                    <mat-slide-toggle formControlName="is_visible"
+                                        (change)="fun5($event)"></mat-slide-toggle>
+                                </div>
+                            </div>
+                            <div class="card-body">
+
+                                <div class="home-mng-form">
+                                    <ng-container formArrayName="FaqArray"
+                                        *ngFor="let alias of FAQSection.controls['FaqArray'].controls; let i=index">
+                                        <ng-container [formGroupName]="i">
+                                            <div class="form-group">
+                                                <label>Question {{i+1}}</label>
+                                                <input type="text" name="" class="form-control"
+                                                    value="Is verification guaranteed?" formControlName="question">
+                                                <div *ngIf="FaqArray.controls[i].controls['question'].errors?.required  "
+                                                    class="invalid">
+                                                    *Please enter question
+                                                </div>
+                                                <div *ngIf="FaqArray.controls[i].controls['question'].errors?.maxlength  "
+                                                    class="invalid">
+                                                    *Maximum Length should be 100 characters
+                                                </div>
+
+                                                <label>Answer</label>
+                                                <textarea name="" rows="3" class="form-control"
+                                                    value="Is verification guaranteed?"
+                                                    formControlName="answer">Is verification guaranteed?</textarea>
+                                                <div *ngIf="FaqArray.controls[i].controls['answer'].errors?.required  "
+                                                    class="invalid">
+                                                    *Please enter answer
+                                                </div>
+                                                <div *ngIf="FaqArray.controls[i].controls['answer'].errors?.maxlength  "
+                                                    class="invalid">
+                                                    *Maximum Length should be 500 characters
+                                                </div>
+
+                                            </div>
+                                        </ng-container>
+                                    </ng-container>
+
+
+                                    <div class="edit-btns d-flex justify-content-end">
+                                        <button class="btn btn-primary mr-4" (click)="postcontent('faq')">Save</button>
+
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</section>

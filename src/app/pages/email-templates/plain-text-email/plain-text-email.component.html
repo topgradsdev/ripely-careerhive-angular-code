@@ -1,0 +1,236 @@
+<div class="page_header">
+    <a routerLink="/admin/email-templates" class="back_Link"> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+            viewBox="0 0 24 24" fill="none">
+            <path d="M19 12H5" stroke="#464BA8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M12 19L5 12L12 5" stroke="#464BA8" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round" />
+        </svg> Back to Email Template List </a>
+    <div class=" page_header_container align-items-baseline">
+        <div class="page_heading">
+            <!-- <ng-container>
+                <div class="form-group mb-0">
+                    <input type="text" value="New Email Template" class="form-control">
+                </div>
+                <div>
+                    <button mat-icon-button>
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M20 6L9 17L4 12" stroke="#26C296" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" />
+                        </svg>
+                    </button>
+                    <button mat-icon-button>
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M18 6L6 18" stroke="#F47761" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" />
+                            <path d="M6 6L18 18" stroke="#F47761" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" />
+                        </svg>
+                    </button>
+                </div>
+            </ng-container> -->
+            <h4 *ngIf="!isEditFormName">{{formName}}</h4>
+            <div *ngIf="isEditFormName" class="element_main">
+                <input type="text" class="form-control" [(ngModel)]="formName" (blur)="isEditFormName = !isEditFormName">
+               </div>
+            <svg  *ngxPermissionsOnly="['Email_Templates_Write']" (click)="isEditFormName = !isEditFormName" width="35" height="35" viewBox="0 0 35 35" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="17.5" cy="17.5" r="17.5" fill="#F8F8F8" />
+                <path fill-rule="evenodd" clip-rule="evenodd"
+                    d="M20.7343 10.2083C21.2117 10.2083 21.6693 10.3989 22.0036 10.7357L24.2646 12.9968C24.6013 13.3335 24.7904 13.79 24.7904 14.2661C24.7904 14.7422 24.6013 15.1988 24.2646 15.5354L16.0094 23.7881C15.5001 24.3756 14.7781 24.7366 13.951 24.7933H10.207V24.0641L10.2094 20.9907C10.2715 20.2218 10.629 19.5068 11.1743 19.0264L19.4641 10.7366C19.8002 10.3984 20.2574 10.2083 20.7343 10.2083ZM13.8995 23.3368C14.2891 23.3092 14.6517 23.1279 14.9428 22.7949L20.4567 17.281L17.7191 14.5433L12.1729 20.0882C11.8775 20.3494 11.6948 20.715 11.6654 21.0494V23.3354L13.8995 23.3368ZM18.7505 13.5122L21.4879 16.2498L23.2334 14.5042C23.2966 14.4411 23.3321 14.3554 23.3321 14.2661C23.3321 14.1768 23.2966 14.0912 23.2334 14.028L20.9704 11.7649C20.9079 11.702 20.8229 11.6666 20.7343 11.6666C20.6456 11.6666 20.5606 11.702 20.4982 11.7649L18.7505 13.5122Z"
+                    fill="#2B2A35" />
+            </svg>
+
+        </div>
+        <div class="btn_group_header">
+            <button mat-button class="theme_btn btn_outline_primary" data-toggle="modal"
+                data-target="#preview_plain_email">
+                <svg class="mr-2" width="26" height="16" viewBox="0 0 26 16" fill="none"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <g clip-path="url(#clip0_10961_35632)">
+                        <path
+                            d="M1.71049 8.61941C1.51299 8.37634 1.34741 8.16154 1.21534 7.98461C1.33889 7.81088 1.49333 7.60114 1.67769 7.36437C2.23421 6.64964 3.05735 5.69635 4.12007 4.7451C6.25653 2.83275 9.2782 1 13 1C16.7218 1 19.7435 2.83275 21.8799 4.7451C22.9426 5.69635 23.7658 6.64964 24.3223 7.36437C24.5067 7.60114 24.6611 7.81088 24.7847 7.98461C24.6526 8.16154 24.487 8.37634 24.2895 8.61941C23.7062 9.3373 22.8507 10.2942 21.7647 11.249C19.5757 13.1734 16.5535 15 13 15C9.44653 15 6.42433 13.1734 4.23526 11.249C3.14927 10.2942 2.29378 9.3373 1.71049 8.61941Z"
+                            stroke="#464BA8" stroke-width="2" />
+                        <circle cx="13" cy="8" r="4" stroke="#464BA8" stroke-width="2" />
+                    </g>
+                    <defs>
+                        <clipPath id="clip0_10961_35632">
+                            <rect width="26" height="16" fill="white" />
+                        </clipPath>
+                    </defs>
+                </svg>
+                Preview</button>
+            <!-- <button mat-button class="theme_btn btn_primary" (click)="saveEmailTemplate()">
+                <svg class="mr-2" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path
+                        d="M19 21H5C4.46957 21 3.96086 20.7893 3.58579 20.4142C3.21071 20.0391 3 19.5304 3 19V5C3 4.46957 3.21071 3.96086 3.58579 3.58579C3.96086 3.21071 4.46957 3 5 3H16L21 8V19C21 19.5304 20.7893 20.0391 20.4142 20.4142C20.0391 20.7893 19.5304 21 19 21Z"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                    <path d="M17 21V13H7V21" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round" />
+                    <path d="M7 3V8H15" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round" />
+                </svg>
+                Save</button> -->
+        </div>
+    </div>
+</div>
+
+<section>
+    <div [formGroup]="emailTemplateForm">
+    <div class="email_form_card">
+        <div class="form_title">
+            Information
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Email Subject *</label>
+                    <input type="text" placeholder="Subject" class="form-control" formControlName="subject">
+                    <div *ngIf="(emailTemplateForm.controls.subject.touched || emailTemplateForm.controls.subject.dirty) && emailTemplateForm.controls.subject.invalid && emailTemplateForm.controls.subject?.errors?.required  " class="invalid">
+                        Please enter subject
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Category * </label>
+                    <ng-select [searchable]="false" [multiple]="false" bindLabel="category_title" bindValue="_id"
+                    [clearable]="false" placeholder="Select a Category" formControlName="category">
+                    <ng-option value="" disabled>Select Category</ng-option>
+                    <ng-option *ngFor="let cat of categories" [value]=cat._id>{{cat.category_title}}</ng-option>
+                </ng-select>
+                    <div *ngIf="(emailTemplateForm.controls.category.touched || emailTemplateForm.controls.category.dirty) && emailTemplateForm.controls.category.invalid && emailTemplateForm.controls.category?.errors?.required  " class="invalid">
+                        Please select category
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="email_form_card">
+        <div class="form_title">
+            Message
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <!-- <button id="placeholder-token-btn" mat-icon-button (click)="openEmailTagPlaceholderModal()">
+                        <svg width="31" height="16" viewBox="0 0 31 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M4.25375 15.976C3.66442 15.976 3.18775 15.8113 2.82375 15.482C2.45975 15.1613 2.27775 14.676 2.27775 14.026C2.27775 13.7313 2.29942 13.467 2.34275 13.233C2.39475 12.9903 2.44242 12.7433 2.48575 12.492C2.53775 12.2407 2.56375 11.946 2.56375 11.608C2.56375 11.296 2.47275 11.0057 2.29075 10.737C2.10875 10.4597 1.75342 10.2647 1.22475 10.152V9.268C1.75342 9.15533 2.10875 8.96467 2.29075 8.696C2.47275 8.42733 2.56375 8.13267 2.56375 7.812C2.56375 7.48267 2.53775 7.19233 2.48575 6.941C2.44242 6.68967 2.39475 6.447 2.34275 6.213C2.29942 5.97033 2.27775 5.70167 2.27775 5.407C2.27775 4.74833 2.45975 4.25867 2.82375 3.938C3.18775 3.61733 3.66442 3.457 4.25375 3.457H4.94275V4.393H4.44875C4.08475 4.393 3.80742 4.47967 3.61675 4.653C3.43475 4.81767 3.34375 5.09933 3.34375 5.498C3.34375 5.74933 3.36542 5.992 3.40875 6.226C3.45208 6.45133 3.49542 6.694 3.53875 6.954C3.59075 7.20533 3.61675 7.50433 3.61675 7.851C3.61675 8.31033 3.49975 8.70467 3.26575 9.034C3.04042 9.36333 2.67642 9.58433 2.17375 9.697V9.723C2.67642 9.84433 3.04042 10.0697 3.26575 10.399C3.49975 10.7283 3.61675 11.1227 3.61675 11.582C3.61675 11.92 3.59075 12.219 3.53875 12.479C3.49542 12.7303 3.45208 12.973 3.40875 13.207C3.36542 13.4323 3.34375 13.675 3.34375 13.935C3.34375 14.325 3.43475 14.6067 3.61675 14.78C3.80742 14.9533 4.08475 15.04 4.44875 15.04H4.94275V15.976H4.25375ZM7.82621 15.976C7.23688 15.976 6.76021 15.8113 6.39621 15.482C6.03221 15.1613 5.85021 14.676 5.85021 14.026C5.85021 13.7313 5.87188 13.467 5.91521 13.233C5.96721 12.9903 6.01488 12.7433 6.05821 12.492C6.11021 12.2407 6.13621 11.946 6.13621 11.608C6.13621 11.296 6.04521 11.0057 5.86321 10.737C5.68121 10.4597 5.32588 10.2647 4.79721 10.152V9.268C5.32588 9.15533 5.68121 8.96467 5.86321 8.696C6.04521 8.42733 6.13621 8.13267 6.13621 7.812C6.13621 7.48267 6.11021 7.19233 6.05821 6.941C6.01488 6.68967 5.96721 6.447 5.91521 6.213C5.87188 5.97033 5.85021 5.70167 5.85021 5.407C5.85021 4.74833 6.03221 4.25867 6.39621 3.938C6.76021 3.61733 7.23688 3.457 7.82621 3.457H8.51521V4.393H8.02121C7.65721 4.393 7.37988 4.47967 7.18921 4.653C7.00721 4.81767 6.91621 5.09933 6.91621 5.498C6.91621 5.74933 6.93788 5.992 6.98121 6.226C7.02454 6.45133 7.06788 6.694 7.11121 6.954C7.16321 7.20533 7.18921 7.50433 7.18921 7.851C7.18921 8.31033 7.07221 8.70467 6.83821 9.034C6.61288 9.36333 6.24888 9.58433 5.74621 9.697V9.723C6.24888 9.84433 6.61288 10.0697 6.83821 10.399C7.07221 10.7283 7.18921 11.1227 7.18921 11.582C7.18921 11.92 7.16321 12.219 7.11121 12.479C7.06788 12.7303 7.02454 12.973 6.98121 13.207C6.93788 13.4323 6.91621 13.675 6.91621 13.935C6.91621 14.325 7.00721 14.6067 7.18921 14.78C7.37988 14.9533 7.65721 15.04 8.02121 15.04H8.51521V15.976H7.82621ZM21.3285 15.976V15.04H21.8225C22.1779 15.04 22.4509 14.9533 22.6415 14.78C22.8322 14.6067 22.9275 14.325 22.9275 13.935C22.9275 13.675 22.9059 13.4323 22.8625 13.207C22.8192 12.973 22.7715 12.7303 22.7195 12.479C22.6762 12.219 22.6545 11.92 22.6545 11.582C22.6545 11.1227 22.7672 10.7283 22.9925 10.399C23.2179 10.0697 23.5862 9.84433 24.0975 9.723V9.697C23.5862 9.58433 23.2179 9.36333 22.9925 9.034C22.7672 8.70467 22.6545 8.31033 22.6545 7.851C22.6545 7.50433 22.6762 7.20533 22.7195 6.954C22.7715 6.694 22.8192 6.45133 22.8625 6.226C22.9059 5.992 22.9275 5.74933 22.9275 5.498C22.9275 5.09933 22.8322 4.81767 22.6415 4.653C22.4509 4.47967 22.1779 4.393 21.8225 4.393H21.3285V3.457H22.0175C22.6069 3.457 23.0792 3.61733 23.4345 3.938C23.7985 4.25867 23.9805 4.74833 23.9805 5.407C23.9805 5.70167 23.9589 5.97033 23.9155 6.213C23.8722 6.447 23.8245 6.68967 23.7725 6.941C23.7292 7.19233 23.7075 7.48267 23.7075 7.812C23.7075 8.13267 23.7985 8.42733 23.9805 8.696C24.1625 8.96467 24.5179 9.15533 25.0465 9.268V10.152C24.5179 10.2647 24.1625 10.4597 23.9805 10.737C23.7985 11.0057 23.7075 11.296 23.7075 11.608C23.7075 11.946 23.7292 12.2407 23.7725 12.492C23.8245 12.7433 23.8722 12.9903 23.9155 13.233C23.9589 13.467 23.9805 13.7313 23.9805 14.026C23.9805 14.676 23.7985 15.1613 23.4345 15.482C23.0792 15.8113 22.6069 15.976 22.0175 15.976H21.3285ZM24.901 15.976V15.04H25.395C25.7503 15.04 26.0233 14.9533 26.214 14.78C26.4047 14.6067 26.5 14.325 26.5 13.935C26.5 13.675 26.4783 13.4323 26.435 13.207C26.3917 12.973 26.344 12.7303 26.292 12.479C26.2487 12.219 26.227 11.92 26.227 11.582C26.227 11.1227 26.3397 10.7283 26.565 10.399C26.7903 10.0697 27.1587 9.84433 27.67 9.723V9.697C27.1587 9.58433 26.7903 9.36333 26.565 9.034C26.3397 8.70467 26.227 8.31033 26.227 7.851C26.227 7.50433 26.2487 7.20533 26.292 6.954C26.344 6.694 26.3917 6.45133 26.435 6.226C26.4783 5.992 26.5 5.74933 26.5 5.498C26.5 5.09933 26.4047 4.81767 26.214 4.653C26.0233 4.47967 25.7503 4.393 25.395 4.393H24.901V3.457H25.59C26.1793 3.457 26.6517 3.61733 27.007 3.938C27.371 4.25867 27.553 4.74833 27.553 5.407C27.553 5.70167 27.5313 5.97033 27.488 6.213C27.4447 6.447 27.397 6.68967 27.345 6.941C27.3017 7.19233 27.28 7.48267 27.28 7.812C27.28 8.13267 27.371 8.42733 27.553 8.696C27.735 8.96467 28.0903 9.15533 28.619 9.268V10.152C28.0903 10.2647 27.735 10.4597 27.553 10.737C27.371 11.0057 27.28 11.296 27.28 11.608C27.28 11.946 27.3017 12.2407 27.345 12.492C27.397 12.7433 27.4447 12.9903 27.488 13.233C27.5313 13.467 27.553 13.7313 27.553 14.026C27.553 14.676 27.371 15.1613 27.007 15.482C26.6517 15.8113 26.1793 15.976 25.59 15.976H24.901Z"
+                                fill="#2B2A35" />
+                            <path
+                                d="M12.3678 11.065C12.1511 11.065 11.9691 10.9957 11.8218 10.857C11.6831 10.7097 11.6138 10.532 11.6138 10.324C11.6138 10.116 11.6831 9.94267 11.8218 9.804C11.9691 9.65667 12.1511 9.583 12.3678 9.583C12.5758 9.583 12.7491 9.65667 12.8878 9.804C13.0351 9.94267 13.1088 10.116 13.1088 10.324C13.1088 10.532 13.0351 10.7097 12.8878 10.857C12.7491 10.9957 12.5758 11.065 12.3678 11.065ZM14.9068 11.065C14.6901 11.065 14.5081 10.9957 14.3608 10.857C14.2221 10.7097 14.1528 10.532 14.1528 10.324C14.1528 10.116 14.2221 9.94267 14.3608 9.804C14.5081 9.65667 14.6901 9.583 14.9068 9.583C15.1148 9.583 15.2881 9.65667 15.4268 9.804C15.5741 9.94267 15.6478 10.116 15.6478 10.324C15.6478 10.532 15.5741 10.7097 15.4268 10.857C15.2881 10.9957 15.1148 11.065 14.9068 11.065ZM17.4459 11.065C17.2292 11.065 17.0472 10.9957 16.8999 10.857C16.7612 10.7097 16.6919 10.532 16.6919 10.324C16.6919 10.116 16.7612 9.94267 16.8999 9.804C17.0472 9.65667 17.2292 9.583 17.4459 9.583C17.6539 9.583 17.8272 9.65667 17.9659 9.804C18.1132 9.94267 18.1869 10.116 18.1869 10.324C18.1869 10.532 18.1132 10.7097 17.9659 10.857C17.8272 10.9957 17.6539 11.065 17.4459 11.065Z"
+                                fill="#2B2A35" />
+                        </svg>
+                    </button> -->
+                    <quill-editor [modules]="modules" formControlName="message"></quill-editor>
+                    <!-- <editor apiKey="zcwi1f81304uers1lcszh0iq2lbhcaxl5cj6ez0v89wr25z3" class="ch_editor" [init]="editorConfig" formControlName="message"></editor> -->
+                    <div *ngIf="(emailTemplateForm.controls.message.touched || emailTemplateForm.controls.message.dirty) && emailTemplateForm.controls.message.invalid && emailTemplateForm.controls.message?.errors?.required  " class="invalid">
+                        Please enter message
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+</section>
+
+<div bsModal #emailTagPlaceholder="bs-modal" class="modal bsModal ch_modal fade placeholder_modal" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title" id="exampleModalLabel">Insert Placeholder token</h2>
+                <button mat-icon-button class="close" aria-label="Close" (click)="closeEmailTagPlaceholderModal()">
+                    <mat-icon>close</mat-icon>
+                </button>
+            </div>
+            <div class="modal-body pt-3 inset_shadow_field">
+                <div class="form-group">
+                    <label>Type</label>
+                    <ng-select [searchable]="false" [multiple]="false" bindLabel="item" bindValue="item"
+                        [clearable]="false" placeholder="Please select">
+                        <ng-option value="1">Student</ng-option>
+                    </ng-select>
+                </div>
+                <hr>
+                <div class="search_container_comman">
+                    <input type="text" placeholder="Search Tokensp" class="form-control">
+                    <button mat-button class="theme_btn btn_primary">
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" clip-rule="evenodd"
+                                d="M8.11887 16.2377C3.63494 16.2377 0 12.6028 0 8.11886C0 3.63494 3.63494 0 8.11887 0C12.6028 0 16.2377 3.63494 16.2377 8.11886C16.2377 9.99479 15.6015 11.7221 14.5331 13.0968L20.0009 18.5647L18.5657 20L13.0979 14.5322C11.723 15.6012 9.9953 16.2377 8.11887 16.2377ZM14.2096 8.11893C14.2096 11.4819 11.4833 14.2081 8.1204 14.2081C4.75746 14.2081 2.03125 11.4819 2.03125 8.11893C2.03125 4.75599 4.75746 2.02979 8.1204 2.02979C11.4833 2.02979 14.2096 4.75599 14.2096 8.11893Z"
+                                fill="white" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            <div class="modal-footer justify-content-end">
+                <button mat-button (click)="closeEmailTagPlaceholderModal()" class="theme_btn btn_secondary">Cancel</button>
+                <button mat-button class="theme_btn btn_primary">Insert</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal bsModal ch_modal fade preview_plain_email" id="preview_plain_email" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" mat-icon-button id="closeModal" class="close" data-dismiss="modal"
+                    aria-label="Close">
+                    <mat-icon>close</mat-icon>
+                </button>
+            </div>
+            <div class="modal-body" id="html_template">
+                <h2 class="modal-title">{{formName}}</h2>
+                <div class="email_form_card">
+                    <div class="form_title">
+                        Information
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Email Subject</label>
+                                <p>{{emailTemplateForm?.value?.subject}}</p>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Category </label>
+                                <p>{{getCategoryName(emailTemplateForm?.value?.category)}}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="email_form_card">
+                    <div class="form_title">
+                        Message
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <p [innerHTML]="emailTemplateForm?.value?.message">
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div *ngxPermissionsOnly="['Email_Templates_Write']" class="modal-footer justify-content-end py-2">
+                    <button mat-button class="theme_btn btn_primary" data-dismiss="modal" (click)="saveEmailTemplate()">
+                        <svg class="mr-2" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M19 21H5C4.46957 21 3.96086 20.7893 3.58579 20.4142C3.21071 20.0391 3 19.5304 3 19V5C3 4.46957 3.21071 3.96086 3.58579 3.58579C3.96086 3.21071 4.46957 3 5 3H16L21 8V19C21 19.5304 20.7893 20.0391 20.4142 20.4142C20.0391 20.7893 19.5304 21 19 21Z"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                            <path d="M17 21V13H7V21" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" />
+                            <path d="M7 3V8H15" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" />
+                        </svg>
+                        Save</button>
+                </div>
+            </div>
+        </div>
+    </div>

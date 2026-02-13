@@ -1,0 +1,199 @@
+.div_table {
+    position: relative;
+
+    .div_thead {
+        border-radius: 40px;
+        color: rgb(var(--primary-color));
+        font-family: var(--font-secondary);
+        font-weight: 500;
+        background-color: #F6F6FB;
+        line-height: 1;
+        letter-spacing: 0.5px;
+        text-transform: uppercase;
+        padding: 21px 16px 21px 51px;
+        margin-bottom: 38px;
+    }
+
+    .div_tbody {
+        .div_trowCard {
+            border: 1px solid rgba(255, 255, 255, 1);
+            box-shadow: 2px 2px 4px 0px rgba(0, 0, 0, 0.25);
+            padding: 16px 15px 16px 39px;
+            border-left: 12px solid #ECEDFF;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 500;
+            line-height: 21px;
+            color: #000;
+            margin-bottom: 38px;
+
+            .group_badge {
+                font-size: 14px;
+                font-weight: 400;
+                line-height: 19.6px;
+                color: var(--main-black-color);
+                padding: 2px 10px;
+                border-radius: 20px;
+                display: inline-block;
+                background-color: #ECEDFF;
+                margin-right: 12px;
+            }
+        }
+    }
+}
+
+.link_btn_badge {
+    color: #F47761 !important;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 21px;
+    cursor: pointer;
+
+    span {
+        background-color: #F47761;
+        color: #fff;
+        border-radius: 20px;
+        height: 24px;
+        width: 24px;
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
+        margin-right: 6px;
+
+    }
+}
+
+
+.color_picker_container {
+    display: flex;
+
+    .color_pick {
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+        width: 87px;
+        height: 94px;
+        background-color: transparent;
+        border: none;
+        cursor: pointer;
+        border-radius: 10px;
+        padding: 0px;
+    }
+
+    .color_pick::-webkit-color-swatch {
+        border-radius: 10px;
+        border: 1px solid rgba(87, 87, 87, 0.5)
+    }
+
+    .color_pick::-moz-color-swatch {
+        border-radius: 10px;
+        border: 1px solid rgba(87, 87, 87, 0.5)
+    }
+
+    small {
+        font-size: 12px;
+        font-weight: 400;
+        line-height: 12px;
+        color: var(--header-footer-form-heading-color);
+
+    }
+
+    .color_picker {
+        width: 86px;
+        height: 86px;
+        position: relative;
+        overflow: hidden;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 10px;
+        margin-bottom: 8px;
+
+        label {
+            position: absolute;
+            top: 4px;
+            right: 5px;
+            z-index: 1;
+            cursor: pointer;
+            background-color: #ffffffab;
+            border-radius: 5px;
+        }
+    }
+
+    .statick_colors {
+        max-width: 276px;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        margin-left: 12px;
+        align-self: flex-start;
+
+        span {
+            width: 36px;
+            height: 36px;
+            border-radius: 5px;
+            display: inline-block;
+            cursor: pointer;
+        }
+    }
+}
+
+.permission_table {
+    .user_profiles {
+        transform: scale(0.7);
+
+        .more_profile {
+            transform: scale(1.3);
+            display: inline-block;
+        }
+    }
+
+    .flagged_profile {
+        transform: scale(0.7);
+    }
+
+    .dates {
+        color: #000;
+    }
+}
+
+.info {
+    display: inline-flex;
+    padding: 14px 27px 14px 27px;
+    align-items: center;
+    gap: 14px;
+    border-radius: 20px;
+    background: var(--TG-Light-Blue, #ECEDFF);
+    box-shadow: 2px 2px 4px 0px rgba(0, 0, 0, 0.10);
+    color: var(--TG-Main-Black, #2B2A35);
+    font-family: var(font-primary);
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 19.2px;
+    margin-bottom: 40px;
+}
+
+.active_deactive_modal {
+    h4{
+        max-width: 591px;
+        margin: 0 auto 30px auto;
+    }
+    
+    h5 {
+        font-family: var(--font-primary);
+        color: var(--main-black-color);
+        font-size: 20px;
+        font-weight: 500;
+        line-height: 26.04px;
+        text-align: center;
+
+    }
+}
+.form-group {
+    .eye_icon {
+        position: absolute;
+        right: 20px;
+        top: 46px;
+        cursor: pointer;
+    }
+}

@@ -1,0 +1,317 @@
+<!-- 
+
+<section class="login_initial" role="region" aria-labelledby="login-heading">
+  <div class="container">
+    <div class="login_initial_card">
+      <div class="row align-items-center">
+        <div class="col-md-12">
+          <div class="d-flex justify-content-between mb-4">
+            <img src="../../../assets/img/institude-logo.svg" width="251px" class="img-fluid" alt="Institute logo">
+            <img src="../../../assets/img/career_hive_logo1.svg" width="248px" class="img-fluid" alt="Career Hive logo">
+          </div>
+        </div>
+        <div [formGroup]="loginform" class="col-md-6">
+          <h1 id="login-heading">Admin Log in</h1>
+          <div *ngIf="!admin_form">
+            <div class="form-group">
+              <label for="campus-select">Select Campus</label>
+              <ng-select id="campus-select" class="select_ng_custom" [searchable]="false" [multiple]="false" 
+                  bindLabel="name" bindValue="id" [clearable]="false" aria-required="true"
+                  placeholder="Select a Campus" formControlName="campus">
+                <ng-option [value]="'Parramatta Campus'">Parramatta Campus</ng-option>
+              </ng-select>
+            </div>
+            <div class="submt-btn">
+              <button mat-button [disabled]="!loginform.get('campus')?.value" (click)="onNextBack()" 
+                      class="theme_btn btn_primary w-100" aria-label="Next step">Next</button>
+              <p class="text-center submit_btn_auth mt-3">
+                <a routerLink="/login-initial">Back to Portal</a>
+              </p>
+            </div>
+          </div>
+          <div *ngIf="admin_form">
+            <div class="form-group">
+              <label for="exampleInputEmail1">Email Address</label>
+              <input type="text" id="exampleInputEmail1" class="form-control" placeholder="Username" 
+                     autocomplete="username" required aria-required="true"
+                     [formControl]="loginform.controls['uname']" aria-describedby="emailHelpBlock">
+              <div id="emailHelpBlock" class="invalid-feedback"
+                *ngIf="(loginform.controls.uname?.touched || loginform.controls.uname?.dirty) && loginform.controls.uname?.invalid && loginform.controls.uname.errors?.required">
+                *Please enter username
+              </div>
+              <div class="invalid-feedback"
+                *ngIf="(loginform.controls.uname?.touched || loginform.controls.uname?.dirty) && loginform.controls.uname?.invalid && loginform.controls.uname.errors?.email">
+                *Please enter a valid Username
+              </div>
+            </div>
+            <div class="form-group position-relative">
+              <label for="exampleInputPassword1">Password</label>
+              <input [type]="pass" id="exampleInputPassword1" formControlName="password" class="form-control" 
+                     placeholder="Password" autocomplete="current-password" required aria-required="true" 
+                     [formControl]="loginform.controls['pwd']" aria-describedby="passwordHelpBlock">
+          
+              <span class="eye_icon" *ngIf="pass == 'text'" (click)="onEyeClick('pass', 'password')" role="button" tabindex="0" aria-label="Hide password">
+                <svg width="20" height="13" viewBox="0 0 20 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path
+                    d="M1.29565 6.7632C1.1361 6.56013 1.00404 6.38224 0.900947 6.23866C0.997612 6.09726 1.1211 5.92302 1.27053 5.72458C1.69179 5.16511 2.31455 4.41936 3.11828 3.6754C4.7353 2.17866 7.01653 0.75 9.82143 0.75C12.6263 0.75 14.9076 2.17866 16.5246 3.6754C17.3283 4.41936 17.9511 5.16511 18.3723 5.72458C18.5218 5.92302 18.6452 6.09726 18.7419 6.23866C18.6388 6.38224 18.5068 6.56013 18.3472 6.7632C17.9058 7.32498 17.2587 8.07347 16.4375 8.82004C14.7807 10.3262 12.4992 11.75 9.82143 11.75C7.14368 11.75 4.86212 10.3262 3.2054 8.82004C2.38417 8.07347 1.73706 7.32498 1.29565 6.7632Z"
+                    stroke="#545465" stroke-width="1.5" />
+                  <circle cx="9.82143" cy="6.24965" r="2.82143" stroke="#545465" stroke-width="1.5" />
+                </svg>
+              </span>
+    <span *ngIf="pass == 'password'" class="eye_icon pswrd_hide" (click)="onEyeClick('pass', 'text')" role="button" tabindex="0" aria-label="Show password">
+                <svg width="20" height="16" viewBox="0 0 20 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path
+                    d="M1.30849 8.89459C1.14302 8.68399 1.00656 8.49996 0.900682 8.35228C0.999999 8.20676 1.12767 8.0264 1.28274 7.82046C1.71202 7.25034 2.34663 6.49038 3.16572 5.73222C4.81343 4.20707 7.1393 2.75 10 2.75C12.8607 2.75 15.1866 4.20707 16.8343 5.73222C17.6534 6.49038 18.288 7.25034 18.7173 7.82046C18.8723 8.0264 19 8.20676 19.0993 8.35228C18.9934 8.49996 18.857 8.68399 18.6915 8.89459C18.2417 9.46703 17.5824 10.2297 16.7455 10.9905C15.0575 12.525 12.7313 13.9773 10 13.9773C7.26867 13.9773 4.94248 12.525 3.2545 10.9905C2.41765 10.2297 1.75826 9.46703 1.30849 8.89459Z"
+                    stroke="#545465" stroke-width="1.5" />
+                  <circle cx="10.0001" cy="8.36293" r="2.88636" stroke="#545465" stroke-width="1.5" />
+                  <rect x="2.1875" y="1.44922" width="1.52727" height="20.3636" transform="rotate(-45 2.1875 1.44922)" fill="#545465" />
+                </svg>
+              </span>
+
+              <div id="passwordHelpBlock" class="invalid-feedback"
+                *ngIf="(loginform.controls.pwd?.touched || loginform.controls.pwd?.dirty) && loginform.controls.pwd?.invalid && loginform.controls.pwd.errors?.required">
+                *Please enter password
+              </div>
+            </div>
+            <div class="row check_box_link">
+              <div class="col-md-6 col-6">
+                <mat-checkbox [(ngModel)]="checked" [ngModelOptions]="{standalone: true}" class="example-margin"
+                              aria-label="Remember me" aria-checked="{{checked}}">Remember me</mat-checkbox>
+              </div>
+              <div class="col-md-6 col-6 text-right">
+                <a style="cursor: pointer;" (click)="forgotPassword()" aria-label="Forgot password?">Forgot password?</a>
+              </div>
+            </div>
+            <div class="submt-btn submit_btn_auth">
+              <button mat-button [disabled]="!loginform.valid" (click)="logincredentials()" 
+                      class="theme_btn btn_primary w-100" aria-label="Log in">Log in</button>
+              <p class="text-center submit_btn_auth mt-3">
+                <a routerLink="/login-initial">Back to Portal</a>
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <img src="../../../../assets/img/graduate_login_img.png" width="420px" class="img-fluid" alt="Authentication Image">
+        </div>
+      </div>
+    </div>
+  </div>
+</section> -->
+
+
+<section class>
+  <div class="login-navbar">
+    <div class="row m-0">
+      <div class="col-md-12 d-flex justify-content-between align-items-center mb-4">
+        <img src="../../../assets/img/career_hive_logo1.svg" class="img-fluid top-logo">
+        <div class="pr-4" *ngIf="!isEmail">
+          <p>
+           Return to
+            <span>
+              <a class="link" routerLink="/student-login">
+                Student Login
+              </a>
+            </span>
+            or as an
+            <span>
+              <a class="link" routerLink="/employer-login">
+                Employer Login
+              </a>
+            </span>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="login_initial pt-5">
+    <div class="container">
+      <div class="">
+        <div class="row align-items-center">
+          <!-- <div class="col-md-12">
+        <div class="d-flex justify-content-between mb-4">
+          <img src="../../../../assets/img/careerHive/engineers-australia-logo.svg" class="img-fluid" alt="institude">
+                      <img src="../../../assets/img/career_hive_logo1.svg" width="248px" class="img-fluid" alt="career_hive_logo">
+                  </div>
+      </div> -->
+
+          <div class="col-md-6">
+            <img src="../../../../assets/img/Admin.png" class="img-fluid" alt="employer">
+          </div>
+          <!-- <div class="col-md-6  d-flex flex-column"> -->
+            
+          <form [formGroup]="loginform" class="col-md-6  d-flex flex-column">
+            <!-- <img src="../../../assets/img/eca.png" width="180px" class="img-fluid mb-2" alt="logo" /> -->
+            <h1 *ngIf="!isEmail" class="title">Admin Login</h1>
+            <h1 *ngIf="isEmail">Welcome {{userDetails.first_name | titlecase}}</h1>
+            <div >
+              <!-- <div class="form-group" *ngIf="!isEmail" > -->
+                <!-- <label>Select Campus</label> -->
+                <!-- <ng-select class="select_ng_custom" [searchable]="false" [multiple]="false"
+                  bindLabel="name" bindValue="id" [clearable]="false"
+                  placeholder="Select a Campus" formControlName="campus">
+                  <ng-option [value]="'Parramatta Campus'">
+                    Parramatta Campus
+                  </ng-option>
+                  <ng-option [value]="' Melbourne Campus'">
+                  Melbourne Campus
+                  </ng-option>
+                </ng-select>
+              </div> -->
+              <!-- <div class="submt-btn">
+                <button mat-button [disabled]="!loginform.get('campus')?.value" (click)="onNextBack()"
+                  class="theme_btn btn_primary w-100">Next</button>
+                <p class="text-center submit_btn_auth mt-3"><a routerLink="/login-initial">Back to Portal</a></p>
+              </div> -->
+            </div>
+            <div>
+              <div class="form-group" *ngIf="!isEmail" > 
+            <ng-select
+              class="select_ng_custom input-radius border-100"
+              [searchable]="false"
+              [multiple]="false"
+              [clearable]="false"
+              [fixedPlaceholder]="false"
+              placeholder="Select a Campus"
+              formControlName="campus"
+              [ngStyle]="{ 'border-radius': '50px' }">
+              <ng-option [value]="'Parramatta Campus'">Parramatta Campus</ng-option>
+              <!-- <ng-option [value]="'Sydney Campus'">Sydney Campus</ng-option> -->
+            </ng-select>
+              </div>
+              <!-- <div class="form-group" *ngIf="!isEmail">
+              <ng-select
+                class="select_ng_custom input-radius"
+                [items]="campusOptions"
+                bindLabel="name"
+                bindValue="id"
+                [searchable]="false"
+                [multiple]="false"
+                [clearable]="false"
+                placeholder="Select a Campus"
+                formControlName="campus"
+                [ngStyle]="{ 'border-radius': '50px' }"
+              >
+              </ng-select>
+            </div> -->
+              <div class="form-group" *ngIf="!isEmail" >
+                <!-- <label for="exampleInputEmail1">Email Address</label> -->
+                <input type="text" class="form-control input-radius" placeholder="Email Address" autocomplete="username" required
+                  [formControl]="loginform.controls['uname']">
+                <div
+                  *ngIf="(loginform.controls.uname?.touched || loginform.controls.uname?.dirty) && loginform.controls.uname?.invalid && loginform.controls.uname.errors?.required"
+                  class="invalid-feedback">
+                  *Please enter username
+                </div>
+                <div
+                  *ngIf="(loginform.controls.uname?.touched || loginform.controls.uname?.dirty) && loginform.controls.uname?.invalid && loginform.controls.uname.errors?.email"
+                  class="invalid-feedback">
+                  *Please enter valid Username
+                </div>
+              </div>
+
+              <div class="form-group position-relative" *ngIf="isEmail">
+                <!-- <label for="exampleInputPassword1">Password</label> -->
+                <input [type]="pass" formControlName="pwd" class="form-control input-radius" placeholder="Password"
+                  autocomplete="current-password"
+                  required autofocus>
+                <span class="eye_icon" *ngIf="pass == 'text'" (click)="onEyeClick('pass', 'password')">
+                  <svg width="20" height="13" viewBox="0 0 20 13" fill="none"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path
+                      d="M1.29565 6.7632C1.1361 6.56013 1.00404 6.38224 0.900947 6.23866C0.997612 6.09726 1.1211 5.92302 1.27053 5.72458C1.69179 5.16511 2.31455 4.41936 3.11828 3.6754C4.7353 2.17866 7.01653 0.75 9.82143 0.75C12.6263 0.75 14.9076 2.17866 16.5246 3.6754C17.3283 4.41936 17.9511 5.16511 18.3723 5.72458C18.5218 5.92302 18.6452 6.09726 18.7419 6.23866C18.6388 6.38224 18.5068 6.56013 18.3472 6.7632C17.9058 7.32498 17.2587 8.07347 16.4375 8.82004C14.7807 10.3262 12.4992 11.75 9.82143 11.75C7.14368 11.75 4.86212 10.3262 3.2054 8.82004C2.38417 8.07347 1.73706 7.32498 1.29565 6.7632Z"
+                      stroke="#545465" stroke-width="1.5" />
+                    <circle cx="9.82143" cy="6.24965" r="2.82143" stroke="#545465"
+                      stroke-width="1.5" />
+                  </svg>
+                </span>
+                <span *ngIf="pass == 'password'" class="eye_icon pswrd_hide"
+                  (click)="onEyeClick('pass', 'text')">
+                  <svg width="20" height="16" viewBox="0 0 20 16" fill="none"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path
+                      d="M1.30849 8.89459C1.14302 8.68399 1.00656 8.49996 0.900682 8.35228C0.999999 8.20676 1.12767 8.0264 1.28274 7.82046C1.71202 7.25034 2.34663 6.49038 3.16572 5.73222C4.81343 4.20707 7.1393 2.75 10 2.75C12.8607 2.75 15.1866 4.20707 16.8343 5.73222C17.6534 6.49038 18.288 7.25034 18.7173 7.82046C18.8723 8.0264 19 8.20676 19.0993 8.35228C18.9934 8.49996 18.857 8.68399 18.6915 8.89459C18.2417 9.46703 17.5824 10.2297 16.7455 10.9905C15.0575 12.525 12.7313 13.9773 10 13.9773C7.26867 13.9773 4.94248 12.525 3.2545 10.9905C2.41765 10.2297 1.75826 9.46703 1.30849 8.89459Z"
+                      stroke="#545465" stroke-width="1.5" />
+                    <circle cx="10.0001" cy="8.36293" r="2.88636" stroke="#545465"
+                      stroke-width="1.5" />
+                    <rect x="2.1875" y="1.44922" width="1.52727" height="20.3636"
+                      transform="rotate(-45 2.1875 1.44922)" fill="#545465" />
+                  </svg>
+                </span>
+                <div
+                  *ngIf="(loginform.get('pwd')?.touched || loginform.get('pwd')?.dirty) && loginform.get('pwd')?.invalid && loginform.get('pwd').errors?.required"
+                  class="invalid-feedback">
+                  *Please enter password
+                </div>
+              </div>
+              <!-- <div class="form-group position-relative">
+                <input [type]="pass" formControlName="password" class="form-control" placeholder="Password"
+                  autocomplete="current-password" required>
+                <span class="eye_icon" *ngIf="pass == 'text'" (click)="onEyeClick('pass', 'password')">
+                  <svg width="20" height="13" viewBox="0 0 20 13" fill="none"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path
+                      d="M1.29565 6.7632C1.1361 6.56013 1.00404 6.38224 0.900947 6.23866C0.997612 6.09726 1.1211 5.92302 1.27053 5.72458C1.69179 5.16511 2.31455 4.41936 3.11828 3.6754C4.7353 2.17866 7.01653 0.75 9.82143 0.75C12.6263 0.75 14.9076 2.17866 16.5246 3.6754C17.3283 4.41936 17.9511 5.16511 18.3723 5.72458C18.5218 5.92302 18.6452 6.09726 18.7419 6.23866C18.6388 6.38224 18.5068 6.56013 18.3472 6.7632C17.9058 7.32498 17.2587 8.07347 16.4375 8.82004C14.7807 10.3262 12.4992 11.75 9.82143 11.75C7.14368 11.75 4.86212 10.3262 3.2054 8.82004C2.38417 8.07347 1.73706 7.32498 1.29565 6.7632Z"
+                      stroke="#545465" stroke-width="1.5" />
+                    <circle cx="9.82143" cy="6.24965" r="2.82143" stroke="#545465"
+                      stroke-width="1.5" />
+                  </svg>
+                </span>
+                <span *ngIf="pass == 'password'" class="eye_icon pswrd_hide"
+                  (click)="onEyeClick('pass', 'text')">
+                  <svg width="20" height="16" viewBox="0 0 20 16" fill="none"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path
+                      d="M1.30849 8.89459C1.14302 8.68399 1.00656 8.49996 0.900682 8.35228C0.999999 8.20676 1.12767 8.0264 1.28274 7.82046C1.71202 7.25034 2.34663 6.49038 3.16572 5.73222C4.81343 4.20707 7.1393 2.75 10 2.75C12.8607 2.75 15.1866 4.20707 16.8343 5.73222C17.6534 6.49038 18.288 7.25034 18.7173 7.82046C18.8723 8.0264 19 8.20676 19.0993 8.35228C18.9934 8.49996 18.857 8.68399 18.6915 8.89459C18.2417 9.46703 17.5824 10.2297 16.7455 10.9905C15.0575 12.525 12.7313 13.9773 10 13.9773C7.26867 13.9773 4.94248 12.525 3.2545 10.9905C2.41765 10.2297 1.75826 9.46703 1.30849 8.89459Z"
+                      stroke="#545465" stroke-width="1.5" />
+                    <circle cx="10.0001" cy="8.36293" r="2.88636" stroke="#545465"
+                      stroke-width="1.5" />
+                    <rect x="2.1875" y="1.44922" width="1.52727" height="20.3636"
+                      transform="rotate(-45 2.1875 1.44922)" fill="#545465" />
+                  </svg>
+                </span>
+                <div
+                  *ngIf="(loginform.controls.pwd?.touched || loginform.controls.pwd?.dirty) && loginform.controls.pwd?.invalid && loginform.controls.pwd.errors?.required"
+                  class="invalid-feedback">
+                  *Please enter password
+                </div>
+              </div> -->
+              <!-- <div class="row check_box_link">
+                <div class="col-md-6 col-6">
+                  <mat-checkbox [(ngModel)]="checked" [ngModelOptions]="{standalone: true}" class="example-margin">
+                    Remember me</mat-checkbox>
+                </div>
+                <div class="col-md-6 col-6 text-right">
+                  <a style="cursor: pointer;" (click)="forgotPassword()">Forgot password?</a>
+                </div>
+              </div> -->
+              <div class="submt-btn submit_btn_auth">
+                <!-- <button >Log in</button> -->
+
+
+                  <button *ngIf="isEmail" [disabled]="!loginform.get('pwd').valid"
+                  (click)="logincredentials()" mat-button
+                  class="theme_btn btn_primary w-100">Sign In</button>
+
+                  <button *ngIf="!isEmail" [disabled]="!loginform.get('uname').valid"
+                  mat-button
+                  class="theme_btn btn_primary w-100" (click)="getEmailDetail()">Next</button>
+
+
+<!-- 
+                <p class="text-center submit_btn_auth mt-3">Return to <a routerLink="/student-login">Student
+                    Login</a></p> -->
+                <!-- <p class="text-center mt-3"><a (click)="onNextBack()">Back</a></p> -->
+              </div>
+            </div>
+            <div *ngIf="isEmail" class="col-md-12 col-12 text-center  submt-btn submit_btn_auth mt-4">
+              <p class="mt-0">Forgot your password? <a style="cursor: pointer;font-weight: 500;" class="link" (click)="forgotPassword()">Reset here</a></p>
+            </div>
+          </form>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>

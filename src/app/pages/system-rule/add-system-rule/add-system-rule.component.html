@@ -1,0 +1,392 @@
+<div class="page_header">
+
+    <div class=" page_header_container mb-3">
+        <h2 *ngIf="!taskId">Systems & Rules</h2>
+        <h2 *ngIf="taskId">Edit Task</h2>
+    </div>
+
+
+    <a [routerLink]="['/admin/system-rule']" class="back_Link"> 
+        <svg xmlns="http://www.w3.org/2000/svg" width="24"
+            height="24" viewBox="0 0 24 24" fill="none">
+            <path d="M19 12H5" stroke="#464BA8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M12 19L5 12L12 5" stroke="#464BA8" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round" />
+        </svg> 
+        Back to Systems & Rules
+    </a>
+
+    <!-- <a  *ngIf="Projecttype!='project'" [routerLink]="['/admin/wil/placement-groups', placementId]" [state]="{type: 'view'}"
+    [queryParams]="{redirectTo: 'worfkflow'}" class="back_Link"> <svg xmlns="http://www.w3.org/2000/svg" width="24"
+        height="24" viewBox="0 0 24 24" fill="none">
+        <path d="M19 12H5" stroke="#464BA8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+        <path d="M12 19L5 12L12 5" stroke="#464BA8" stroke-width="2" stroke-linecap="round"
+            stroke-linejoin="round" />
+    </svg> Back to Workflow</a>
+  -->
+</div>
+
+<section>
+    <form [formGroup]="createTask">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="cards">
+                    <div class="card_body">
+                        <div class="form_heading">
+                            <h5>{{ruleId?'Update':'Create'}} Rule</h5>
+                        </div>
+                        <div class="bold_lable_form">
+                            <!-- Name -->
+                            <div class="row form-group">
+                                <div class="col-md-3">
+                                    <label class="label_title">Name</label>
+                                </div>
+                                <div class="col-md-9">
+                                    <input formControlName="name" type="text" placeholder="Name of Task"
+                                        class="form-control">
+                                    <div
+                                        *ngIf="(createTask.get('name')?.touched || createTask.get('name')?.dirty) && createTask.get('name')?.invalid && createTask.get('name')?.errors?.required"
+                                        class="invalid-feedback">Please enter task name.</div>
+                                </div>
+                            </div>
+                            <!-- Completion Criteria -->
+                            <div class="row form-group">
+                                <div class="col-md-3"><label class="label_title">User Type</label></div>
+                                <div class="col-md-9">
+                                    <!-- change)="onChangeCompletionCriteria($event)" -->
+                                    <ng-select formControlName="user_type" [searchable]="false"
+                                        [multiple]="false" bindLabel="name" bindValue="id" [clearable]="false"
+                                        placeholder="Select the User Type">
+                                        <ng-option value="Students">Student</ng-option> 
+                                         <ng-option  value="Companies">Company</ng-option> 
+                                        <!-- <ng-option *ngFor="let criteria of completionCriteriaList"
+                                            value="{{criteria.completion_criteria}}">{{criteria.completion_criteria}}</ng-option> -->
+                                    </ng-select>
+                                    <div
+                                        *ngIf="(createTask.get('user_type')?.touched || createTask.get('user_type')?.dirty) && createTask.get('user_type')?.invalid && createTask.get('user_type')?.errors?.required"
+                                        class="invalid-feedback">Please select User Type.</div>
+                                </div>
+                            </div>
+
+                            <ng-container *ngIf="createTask.get('user_type')?.value">
+                                      <!-- Unlock Task On -->
+                              <div class="row form-group">
+                                    <div class="col-md-3">
+                                        <label class="label_title">Condition to Trigger</label>
+                                    </div>
+                                    <div class="col-md-9" >
+                                        <ng-select 
+                                        formControlName="condition_to_trigger" 
+                                        [searchable]="false"
+                                        [multiple]="false"
+                                        [clearable]="false"
+                                        placeholder="Select Condition to Trigger"
+                                        bindLabel="name" 
+                                        bindValue="name"> <!-- or "id" if you want id -->
+                                        
+                                        <ng-container *ngIf="createTask.get('user_type').value=='Students'">
+                                            <ng-option *ngFor="let unlockTaskOn of conditionToTrigger" 
+                                                    [value]="unlockTaskOn">
+                                            {{unlockTaskOn.name}}
+                                            </ng-option>
+                                        </ng-container>
+
+                                        <ng-container *ngIf="createTask.get('user_type').value=='Companies'">
+                                            <ng-option *ngFor="let unlockTaskOn of conditionToTriggerE" 
+                                                    [value]="unlockTaskOn">
+                                            {{unlockTaskOn.name}}
+                                            </ng-option>
+                                        </ng-container>
+
+                                        </ng-select>
+                                    </div>
+                                </div>
+
+                                <div class="row form-group"
+                                *ngIf="(createTask.get('condition_to_trigger').value)" >
+                                    <div class="col-md-3"><label class="label_title">Set Period</label></div>
+                                    <div class="col-md-5">
+                                        <div class="days_container">
+                                            <input type="number" (wheel)="$event.preventDefault()"  (keydown.arrowup)="$event.preventDefault()"  (keydown.arrowdown)="$event.preventDefault()"  class="form-control" placeholder="e.g 5"
+                                                formControlName="set_days">
+                                            <!-- <label class="label_title">Days</label> -->
+
+                                             <ng-select formControlName="set_days_type" style="max-width:120px" [searchable]="false"
+                                            [multiple]="false" bindLabel="name" bindValue="id" [clearable]="false"
+                                            placeholder="Select Condition to Trigger">
+                                                <ng-option value="month">Month</ng-option>
+                                                <ng-option value="years">Years</ng-option>
+                                            </ng-select>
+                                        </div>
+                                        
+                                    </div>
+                                </div>
+                                <div class="row form-group">
+                                    <div class="col-md-3"><label class="label_title">Action on Trigger</label></div>
+                                    <div class="col-md-9">
+                                        <ng-select formControlName="action_on_trigger" [searchable]="false"
+                                            [multiple]="false" bindLabel="name" bindValue="id" [clearable]="false"
+                                            placeholder="Purge selected Data">
+                                            <ng-option *ngFor="let unlockTaskOn of actionOnTrigger"
+                                                value="{{unlockTaskOn.name}}">{{unlockTaskOn.name}}</ng-option>
+                                        </ng-select>
+                                    </div>
+                                </div>
+                                <div class="row form-group">
+                                    <div class="col-md-3"><label class="label_title">Select Affected Data</label></div>
+                                    <div class="col-md-9">
+                                        <ng-select formControlName="affected_data" [searchable]="false"
+                                            [multiple]="true" bindLabel="name" bindValue="id" [clearable]="false"
+                                            placeholder="Select Data Types">
+                                            <ng-option *ngFor="let unlockTaskOn of affectedData"
+                                                value="{{unlockTaskOn.name}}">{{unlockTaskOn.name}}</ng-option>
+                                        </ng-select>
+                                    </div>
+                                </div>
+                                <div class="row form-group">
+                                    <div class="col-md-3"><label class="label_title">Additional Criteria</label></div>
+                                    <div class="col-md-9">
+                                        <ng-select formControlName="additional_criteria" [searchable]="false"
+                                            [multiple]="false" bindLabel="name" bindValue="id" [clearable]="false"
+                                            placeholder="Select Additional Criteria">
+                                            <ng-option *ngFor="let unlockTaskOn of additionalCriteria"
+                                                value="{{unlockTaskOn.name}}">{{unlockTaskOn.name}}</ng-option>
+                                        </ng-select>
+                                    </div>
+                                </div>
+                            </ng-container>
+
+
+                            
+                        </div>
+                    </div>
+                </div>
+                <div class="cards_footer">
+                    <button mat-button type="button" class="theme_btn btn_outline_primary"
+                        (click)="onCancelCreateTask()">Clear</button>
+                    <button mat-button class="theme_btn btn_primary" (click)="onCreateTask()">{{buttonText}}</button>
+                </div>
+            </div>
+
+               <div class="col-md-6">
+                <div class="cards">
+                    <div class="card_body">
+                        <div class="form_heading">
+                            <h5>Notification</h5>
+                        </div>
+                        <div class="bold_lable_form">
+                            <!-- Name -->
+                            <div class="row form-group">
+                                <div class="col-md-3">
+                                    <label class="label_title">Preview Data Before Purging?</label>
+                                </div>
+                                <div class="col-md-9">
+                                    <!-- <input formControlName="preview_data_before_purging" type="text" placeholder="Name of Task"
+                                        class="form-control"> -->
+                                        <mat-radio-group class="no-label-margin" formControlName="preview_data_before_purging"
+                                            aria-label="Select an option">
+                                            <mat-radio-button class="mr-4" [value]="'no'" [checked]="true">No</mat-radio-button>
+                                            <mat-radio-button [value]="'yes'">Yes</mat-radio-button>
+                                        </mat-radio-group>
+                                    <div
+                                        *ngIf="(createTask.get('preview_data_before_purging')?.touched || createTask.get('preview_data_before_purging')?.dirty) && createTask.get('preview_data_before_purging')?.invalid && createTask.get('preview_data_before_purging')?.errors?.required"
+                                        class="invalid-feedback">Please enter Preview Data Before Purging.</div>
+                                </div>
+                            </div>
+
+                            <ng-container *ngIf="createTask.get('preview_data_before_purging')?.value=='yes'">
+                                <div class="row form-group">
+                                    <div class="col-md-3"><label class="label_title">Weeks to Preview Before Purge</label></div>
+                                    <div class="col-md-9">
+                                        <div class="days_container">
+                                            <input type="number" (wheel)="$event.preventDefault()"  (keydown.arrowup)="$event.preventDefault()"  (keydown.arrowdown)="$event.preventDefault()"  class="form-control" placeholder="e.g 5"
+                                                formControlName="preview_set_days">
+
+                                             <ng-select formControlName="preview_set_days_type" style="max-width:100%" [searchable]="false"
+                                            [multiple]="false" bindLabel="name" bindValue="id" [clearable]="false"
+                                            placeholder="Select Condition to Trigger">
+                                                <ng-option value="week">Week</ng-option>
+                                                <ng-option value="month">Month</ng-option>
+                                                <ng-option value="years">Years</ng-option>
+                                            </ng-select>
+                                            <p> Before Purging</p>
+                                        </div>
+                                        
+                                    </div>
+                                    <!-- <div class="col-md-4 d-flex align-items-center">
+                                        Before Purging
+                                    </div> -->
+                                </div>
+                            </ng-container>
+                            <!-- Completion Criteria -->
+                            <div class="row form-group">
+                                <div class="col-md-3"><label class="label_title">Notify other staff members?</label></div>
+                                <div class="col-md-9">
+
+                                     <mat-radio-group class="no-label-margin" formControlName="notify_other_staff_members"
+                                            aria-label="Select an option">
+                                        <mat-radio-button class="mr-4" [value]="'no'" [checked]="true">No</mat-radio-button>
+                                        <mat-radio-button [value]="'yes'">Yes</mat-radio-button>
+                                    </mat-radio-group>
+                                    <div
+                                        *ngIf="(createTask.get('notify_other_staff_members')?.touched || createTask.get('notify_other_staff_members')?.dirty) && createTask.get('notify_other_staff_members')?.invalid && createTask.get('notify_other_staff_members')?.errors?.required"
+                                        class="invalid-feedback">Please select User Type.</div>
+                                </div>
+                            </div>
+
+                            <ng-container *ngIf="createTask.get('notify_other_staff_members')?.value=='yes'">
+
+                            <div class="row form-group">
+                                <div class="col-3 pr-0">
+                                    <label class="label_title">Select Users</label>
+                                </div>
+                                <div class="col-9">
+                                    <div>
+                                        <ng-select formControlName="staff_id" [searchable]="true" [multiple]="true"
+                                            bindLabel="name" bindValue="id" [clearable]="false"
+                                            placeholder="Select Users"
+                                          >
+                                            <ng-container *ngFor="let staffMember of staffMembers">
+                                                <ng-option value="{{staffMember._id}}">{{staffMember.first_name}}
+                                                    {{staffMember.last_name}}</ng-option>
+                                            </ng-container>
+                                        </ng-select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row form-group">
+                                <div class="col-md-3"><label class="label_title">Select Email Category</label></div>
+                                <div class="col-md-9">
+
+                                      <ng-select formControlName="category" placeholder="Select Email Category"
+                                        [searchable]="false" [multiple]="false" bindLabel="name" bindValue="id"
+                                        [clearable]="false" (change)="selectCategory($event)">
+                                        <ng-container *ngFor="let category of categories">
+                                            <ng-option [value]="category._id">{{category.category_title}}</ng-option>
+                                        </ng-container>
+                                    </ng-select>
+                                    <div
+                                        *ngIf="(createTask.get('category')?.touched || createTask.get('category')?.dirty) && createTask.get('category')?.invalid && createTask.get('category')?.errors?.required"
+                                        class="invalid-feedback">Please select Category.</div>
+                                </div>
+                            </div>
+
+                            <div class="row form-group">
+                                <div class="col-md-3"><label class="label_title">Select Email Template</label></div>
+                                <div class="col-md-9">
+                                    <ng-select formControlName="template" placeholder="Select Email Template"
+                                        [searchable]="false" [multiple]="false" bindLabel="name" bindValue="id"
+                                        [clearable]="false" (change)="selectTemplate($event)">
+                                        <ng-container>
+                                            <ng-option *ngFor="let template of emailTemplateList"
+                                                [value]="template._id">{{template.template_name}}</ng-option>
+                                        </ng-container>
+                                    </ng-select>
+                                    <div
+                                        *ngIf="(createTask.get('template')?.touched || createTask.get('template')?.dirty) && createTask.get('template')?.invalid && createTask.get('template')?.errors?.required"
+                                        class="invalid-feedback">Please select template.</div>
+                                </div>
+                            </div>
+
+                            </ng-container>
+                        </div>
+                    </div>
+                </div>
+            </div>
+         
+        </div>
+    </form>
+</section>
+<div class="modal fade bsModal ch_modal archived_placement_group_modal" id="cancelCreateTask" tabindex="-1"
+    role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header pt-4 text-center justify-content-center">
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <img src="../../../../assets/img/undraw_warning.svg" alt="undraw_warning">
+                    </div>
+                    <div class="col-md-12 text-center">
+                        <h2 class="modal-title">Are you sure you want to stop Creating a Task?</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer justify-content-center">
+                <button mat-button type="button" class="theme_btn btn_outline_primary mr-3"
+                    data-dismiss="modal">Cancel</button>
+                <button mat-button type="button" class="theme_btn btn_primary" data-dismiss="modal">Exit</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade bsModal ch_modal archived_vacancies_modal" id="featureNotAvilable" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header pt-4 text-center justify-content-center">
+                <button type="button" mat-icon-button id="closeModal" class="close" data-dismiss="modal"
+                    aria-label="Close">
+                    <mat-icon>close</mat-icon>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <img src="../../../../assets/img/undraw_warning.svg" alt="undraw_warning">
+                    </div>
+                    <div class="col-md-12 text-center">
+                        <h2 class="modal-title">This feature is not available for your account</h2>
+                        <p>Please contact an Admin for more information about this feature</p>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer justify-content-center">
+                <button mat-button class="theme_btn btn_primary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade bsModal ch_modal email_preview_popup" id="emailPreviewModal" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" mat-icon-button id="closeModal" class="close" data-dismiss="modal"
+                    aria-label="Close">
+                    <mat-icon>close</mat-icon>
+                </button>
+                <h2 class="modal-title">Preview Email Template</h2>
+            </div>
+            <div class="modal-body">
+                <div class="email_temp_container">
+                    <div class="p-3"><div class="email_priview_crate_task form-group" [innerHtml]="widget"></div></div>
+                    <!-- <app-email-preview-html></app-email-preview-html> -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade bsModal ch_modal email_preview_popup" id="emailPreviewModalFollowupEmail" tabindex="-1"
+    role="dialog"
+    aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" mat-icon-button id="closeModal" class="close" data-dismiss="modal"
+                    aria-label="Close">
+                    <mat-icon>close</mat-icon>
+                </button>
+                <h2 class="modal-title">Preview Email Template</h2>
+            </div>
+            <div class="modal-body">
+                <div class="email_temp_container">
+                    <div class="p-3"><div class="email_priview_crate_task form-group"
+                            [innerHtml]="followupEmailWidget"></div></div>
+                    <!-- <app-email-preview-html></app-email-preview-html> -->
+                </div>
+            </div>
+        </div>
+    </div>

@@ -1,0 +1,108 @@
+.main_track_card{
+    box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.25);
+    border-radius: 10px;
+}
+
+.task_steps_card {
+    // box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.25);
+    // border-radius: 10px;
+
+    // &:not(:last-child) {
+    //     margin-bottom: 45px;
+    // }
+
+    .task_steps_card_header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 38px 47px 26px;
+
+        h3 {
+            font-family: var(--font-third);
+            font-size: 24px;
+            font-weight: 700;
+            line-height: 28px;
+
+            letter-spacing: 0em;
+            text-align: left;
+            color: var(--primary-color-first);
+            margin-bottom: 0px;
+
+        }
+    }
+
+    .step_task_card_body {
+        padding: 0px 47px 28px;
+
+        .step_task_card {
+            box-shadow: 2px 2px 10px 0px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(154, 154, 154, 0.2);
+            border-radius: 10px;
+            border-left: 12px solid var(--primary-color-first);
+
+            .track_card_header {
+                padding: 18px 40px;
+                p {
+                    font-family: var(--font-primary);
+                    font-size: 18px;
+                    font-weight: 500;
+                    line-height: 23px;
+                    letter-spacing: 0em;
+                    text-align: left;
+                    color: var(--main-black-color);
+                    margin-bottom: 0px;
+                }
+                .toggle_btn_track{
+                    &.show{
+                        transform: rotate(180deg);
+                    }
+                }
+            }
+            .track_card_body{
+                padding: 0px 40px 28px;
+                .tab_table_header{
+                    padding: 50px 0px 35px 0px;
+                }
+                .mat_label_count{
+                    background: rgba(236, 237, 255, 1);
+                    font-family: var(--font-primary);
+                    font-size: 12px;
+                    font-weight: 700;
+                    line-height: 12px;
+                    letter-spacing: 0em;
+                    text-align: center;
+                    color: var(--primary-color-first);
+                    padding: 2.5px 12px;
+                    margin-left: 10px;
+                    border-radius: 10px;
+                    box-shadow: 1px 1px 7px -2px rgba(0, 0, 0, 0.3);
+
+                
+                    
+                }
+            }
+
+            &:not(:last-child) {
+                margin-bottom: 15px;
+            }
+
+            .content {
+                padding: 8px;
+                position: relative;
+                flex-grow: 1;
+
+                p {
+                    font-family: var(--font-primary);
+                    font-size: 12px;
+                    font-weight: 400;
+                    line-height: 16px;
+                    letter-spacing: 0em;
+                    text-align: left;
+                    color: var(--main-black-color);
+                    margin-bottom: 0px;
+
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,38 @@
+.employ_list_card{
+    overflow: hidden;
+    margin-top: 24px;
+}
+.article_img{
+    height: 80px;
+    width: 80px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+.delete_articles_modal {
+    .modal-body {
+        h3 {
+            font-family: var(--font-primary);
+            font-size: 24px;
+            font-weight: 400;
+            line-height: 31px;
+            letter-spacing: 0em;
+            text-align: center;
+            color: var(--primary-color-first);
+            margin-bottom: 0px;
+
+        }
+
+        p {
+            font-family: var(--font-primary);
+            font-size: 16px;
+            font-weight: 400;
+            line-height: 19px;
+            letter-spacing: 0em;
+            text-align: center;
+            color: #000;
+            margin-bottom: 0px;
+            max-width: 475px;
+            margin: 0 auto;
+        }
+    }
+}

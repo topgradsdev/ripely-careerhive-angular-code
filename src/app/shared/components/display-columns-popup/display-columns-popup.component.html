@@ -1,0 +1,45 @@
+<div class="modal fade bsModal ch_modal filter_modals" [id]="modalId" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header d-flex justify-content-between">
+                <button mat-icon-button class="close" data-dismiss="modal" aria-label="Close">
+                    <mat-icon>close</mat-icon>
+                </button>
+                <h2 class="modal-title">Display Columns</h2>
+                <button mat-button class="theme_btn btn_primary"  data-dismiss="modal" (click)="applyShowHideColumnFilter()">Save Changes</button>
+            </div>
+            <div class="modal-body pt-3 pb-5">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="filter_sidebar display_columns">
+                            <ul>
+                                <li>
+                                    <mat-checkbox>First Name</mat-checkbox>
+                                </li>
+                                <li>
+                                    <mat-checkbox>Last Name</mat-checkbox>
+                                </li>
+                                <li>
+                                    <mat-checkbox>Major</mat-checkbox>
+                                </li>
+                                <li>
+                                    <mat-checkbox>Assigned To</mat-checkbox>
+                                </li>
+                                <li>
+                                    <mat-checkbox>Priority</mat-checkbox>
+                                </li>
+                                <li>
+                                    <mat-checkbox>Status</mat-checkbox>
+                                </li>
+                                <li>
+                                    <mat-checkbox>Placement Type</mat-checkbox>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

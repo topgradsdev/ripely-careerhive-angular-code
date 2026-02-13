@@ -1,0 +1,55 @@
+{
+  "extends": "../tsconfig.json",
+  "compileOnSave": false,
+  "compilerOptions": {
+    "outDir": "../out-tsc/app",
+    "baseUrl": "./",
+    "importHelpers": true,
+    "sourceMap": true,
+    "declaration": false,
+    "moduleResolution": "node",
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+
+    // Relaxed TypeScript settings to avoid common build-time errors
+    "strict": false,
+    "strictNullChecks": false,
+    "noImplicitAny": false,
+    "suppressImplicitAnyIndexErrors": true,
+    "noPropertyAccessFromIndexSignature": false,
+    "skipLibCheck": true,
+    "strictPropertyInitialization": false,
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,   // also helpful
+
+    "module": "es2020",
+    "target": "es2015",
+
+    "types": [],
+    "typeRoots": ["node_modules/@types"],
+
+    "lib": ["esnext", "dom"],
+
+    "paths": {
+      "@angular/*": ["../node_modules/@angular/*"]
+    }
+  },
+  "angularCompilerOptions": {
+    "enableIvy": true,
+    "importHelpers": true,
+    "allowJs": true
+  },
+  "files": [
+    "main.ts",
+    "polyfills.ts"
+  ],
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.d.ts"
+  ],
+  "exclude": [
+    "src/**/*.spec.ts",
+    "src/test.ts",
+    "src/environments/environment.prod.ts"
+  ]
+}

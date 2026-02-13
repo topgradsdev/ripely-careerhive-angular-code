@@ -1,0 +1,313 @@
+<!-- <section class="login_initial" role="region" aria-labelledby="login-section">
+  <div class="container">
+    <div class="login_initial_card" aria-live="polite">
+      <div class="row align-items-center">
+        <div class="col-md-12">
+          <div class="d-flex justify-content-between mb-4">
+            <img src="../../../assets/img/institude-logo.svg" width="251px" class="img-fluid"
+              alt="Institude Logo">
+            <img src="../../../assets/img/career_hive_logo1.svg" width="248px" class="img-fluid"
+              alt="Career Hive Logo">
+          </div>
+        </div>
+        <div class="col-md-6">
+          <h1 id="login-section">Student Log in</h1>
+          <form [formGroup]="loginform" aria-label="Student Login Form">
+            <div class="form-group">
+              <label for="username">Email Address</label>
+              <input type="text" id="username" class="form-control" placeholder="Username" autocomplete="username" required
+                formControlName="uname" aria-required="true">
+              <div
+                *ngIf="(loginform.get('uname')?.touched || loginform.get('uname')?.dirty) && loginform.get('uname')?.invalid && loginform.get('uname')?.errors?.required"
+                class="invalid-feedback" aria-live="assertive">
+                *Please enter username
+              </div>
+              <div
+                *ngIf="(loginform.get('uname')?.touched || loginform.get('uname')?.dirty) && loginform.get('uname')?.invalid && loginform.get('uname')?.errors?.email"
+                class="invalid-feedback" aria-live="assertive">
+                *Please enter valid Username
+              </div>
+            </div>
+            <div class="form-group position-relative">
+              <label for="password">Password</label>
+              <input [type]="pass" id="password" formControlName="pwd" class="form-control" placeholder="Password"
+                autocomplete="current-password" required aria-required="true">
+              <span class="eye_icon" *ngIf="pass == 'text'" (click)="onEyeClick('pass', 'password')" tabindex="0"
+                role="button" aria-label="Hide password">
+                <svg width="20" height="13" viewBox="0 0 20 13" fill="none"
+                  xmlns="http://www.w3.org/2000/svg">
+                  <path
+                    d="M1.29565 6.7632C1.1361 6.56013 1.00404 6.38224 0.900947 6.23866C0.997612 6.09726 1.1211 5.92302 1.27053 5.72458C1.69179 5.16511 2.31455 4.41936 3.11828 3.6754C4.7353 2.17866 7.01653 0.75 9.82143 0.75C12.6263 0.75 14.9076 2.17866 16.5246 3.6754C17.3283 4.41936 17.9511 5.16511 18.3723 5.72458C18.5218 5.92302 18.6452 6.09726 18.7419 6.23866C18.6388 6.38224 18.5068 6.56013 18.3472 6.7632C17.9058 7.32498 17.2587 8.07347 16.4375 8.82004C14.7807 10.3262 12.4992 11.75 9.82143 11.75C7.14368 11.75 4.86212 10.3262 3.2054 8.82004C2.38417 8.07347 1.73706 7.32498 1.29565 6.7632Z"
+                    stroke="#545465" stroke-width="1.5" />
+                  <circle cx="9.82143" cy="6.24965" r="2.82143" stroke="#545465"
+                    stroke-width="1.5" />
+                </svg>
+              </span>
+              <span *ngIf="pass == 'password'" class="eye_icon pswrd_hide"
+                (click)="onEyeClick('pass', 'text')" tabindex="0" role="button" aria-label="Show password">
+                <svg width="20" height="16" viewBox="0 0 20 16" fill="none"
+                  xmlns="http://www.w3.org/2000/svg">
+                  <path
+                    d="M1.30849 8.89459C1.14302 8.68399 1.00656 8.49996 0.900682 8.35228C0.999999 8.20676 1.12767 8.0264 1.28274 7.82046C1.71202 7.25034 2.34663 6.49038 3.16572 5.73222C4.81343 4.20707 7.1393 2.75 10 2.75C12.8607 2.75 15.1866 4.20707 16.8343 5.73222C17.6534 6.49038 18.288 7.25034 18.7173 7.82046C18.8723 8.0264 19 8.20676 19.0993 8.35228C18.9934 8.49996 18.857 8.68399 18.6915 8.89459C18.2417 9.46703 17.5824 10.2297 16.7455 10.9905C15.0575 12.525 12.7313 13.9773 10 13.9773C7.26867 13.9773 4.94248 12.525 3.2545 10.9905C2.41765 10.2297 1.75826 9.46703 1.30849 8.89459Z"
+                    stroke="#545465" stroke-width="1.5" />
+                  <circle cx="10.0001" cy="8.36293" r="2.88636" stroke="#545465"
+                    stroke-width="1.5" />
+                  <rect x="2.1875" y="1.44922" width="1.52727" height="20.3636"
+                    transform="rotate(-45 2.1875 1.44922)" fill="#545465" />
+                </svg>
+              </span>
+              <div
+                *ngIf="(loginform.get('pwd')?.touched || loginform.get('pwd')?.dirty) && loginform.get('pwd')?.invalid && loginform.get('pwd').errors?.required"
+                class="invalid-feedback" aria-live="assertive">
+                *Please enter password
+              </div>
+            </div>
+            <div class="row check_box_link">
+              <div class="col-md-6 col-6">
+                <mat-checkbox [(ngModel)]="checked" [ngModelOptions]="{standalone: true}" class="example-margin">
+                  Remember me
+                </mat-checkbox>
+              </div>
+              <div class="col-md-6 col-6 text-right">
+                <a style="cursor: pointer;" (click)="forgotPassword()" aria-label="Forgot Password">Forgot password?</a>
+              </div>
+            </div>
+            <div class="submt-btn submit_btn_auth">
+              <button [disabled]="loginform.invalid"
+                mat-button
+                class="theme_btn btn_primary w-100" (click)="logincredentials()" aria-label="Log in">
+                Log in
+              </button>
+              <p class="text-center mt-3"><a routerLink="/login-initial" aria-label="Back to Portal">Back to Portal</a></p>
+            </div>
+          </form>
+        </div>
+        <div class="col-md-6">
+          <img src="../../../assets/img/graduate_login_img.png" class="img-fluid" alt="Graduate Login">
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<div class="modal fade ch_modal agreement_box" id="agreement_box" role="dialog" aria-labelledby="agreement-header" aria-modal="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header flex-column align-items-center" id="agreement-header">
+        <h2 class="modal-title">Acceptance of Terms & Conditions</h2>
+      </div>
+      <div class="modal-body">
+        <p class="text-center">In order to proceed, please accept the Terms and Conditions.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="closeAgreement()">Close</button>
+        <button type="button" class="btn btn-primary" (click)="acceptTerms()">Accept</button>
+      </div>
+    </div>
+  </div>
+</div> -->
+
+<section class="">
+  <div class="login-navbar">
+    <div class="row m-0">
+      <div class="col-md-12 d-flex justify-content-between align-items-center mb-4">
+          <img  src="../../../assets/img/career_hive_logo1.svg" class="img-fluid top-logo" alt="institude">
+          <div class="pr-4" *ngIf="!isEmail">
+            <p>
+              Login as an 
+              <span>
+                <a class="link" routerLink="/employer-login">
+                  Employer
+                </a>
+              </span>
+              or as an 
+              <span>
+                <a class="link"  routerLink="/login">
+                  Admin
+                </a>
+              </span>
+            </p>
+          </div>
+      </div>
+    </div>
+  </div>
+  <div class="login_initial pt-5">
+    <div class="container">
+      <div class="">
+        <div class="row align-items-center">
+          <div class="col-md-6">
+            <img src="../../../assets/img/Student.png" class="img-fluid" alt="employer">
+          </div>
+          <!-- align-items-start justify-content-start -->
+          <div class="col-md-6 d-flex flex-column ">
+            <!-- <h1 class="mb-3"  *ngIf="!isEmail" >
+              Welcome to  
+              <span>
+                <img src="../../../assets/img/eca.png" width="180px" class="img-fluid" alt="logo" />
+              </span>
+            </h1> -->
+            <!-- <img src="../../../assets/img/eca.png" width="180px" class="img-fluid mb-2" alt="logo" /> -->
+            <h3 class="title" *ngIf="!isEmail" >Student Login</h3>
+           
+            <form class="form-width" [formGroup]="loginform">
+              <h2 class="mb-3 align-self-start"  *ngIf="isEmail" >Welcome {{userDetails.first_name  | titlecase}}</h2>
+              <div class="form-group" *ngIf="!isEmail">
+                <!-- <label for="exampleInputEmail1">Email Address</label> -->
+                <input type="text" class="form-control input-radius" placeholder="Email Address" autocomplete="username" required
+                  formControlName="uname">
+                <div
+                  *ngIf="(loginform.get('uname')?.touched || loginform.get('uname')?.dirty) && loginform.get('uname')?.invalid && loginform.get('uname')?.errors?.required"
+                  class="invalid-feedback">
+                  *Please enter username
+                </div>
+                <div
+                  *ngIf="(loginform.get('uname')?.touched || loginform.get('uname')?.dirty) && loginform.get('uname')?.invalid && loginform.get('uname')?.errors?.email"
+                  class="invalid-feedback">
+                  *Please enter valid Username
+                </div>
+              </div>
+              <div class="form-group position-relative" *ngIf="isEmail">
+                <!-- <label for="exampleInputPassword1">Password</label> -->
+                <input [type]="pass" formControlName="pwd" class="form-control input-radius" placeholder="Password"
+                  autocomplete="current-password"
+                  required autofocus>
+                <span class="eye_icon" *ngIf="pass == 'text'" (click)="onEyeClick('pass', 'password')">
+                  <svg width="20" height="13" viewBox="0 0 20 13" fill="none"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path
+                      d="M1.29565 6.7632C1.1361 6.56013 1.00404 6.38224 0.900947 6.23866C0.997612 6.09726 1.1211 5.92302 1.27053 5.72458C1.69179 5.16511 2.31455 4.41936 3.11828 3.6754C4.7353 2.17866 7.01653 0.75 9.82143 0.75C12.6263 0.75 14.9076 2.17866 16.5246 3.6754C17.3283 4.41936 17.9511 5.16511 18.3723 5.72458C18.5218 5.92302 18.6452 6.09726 18.7419 6.23866C18.6388 6.38224 18.5068 6.56013 18.3472 6.7632C17.9058 7.32498 17.2587 8.07347 16.4375 8.82004C14.7807 10.3262 12.4992 11.75 9.82143 11.75C7.14368 11.75 4.86212 10.3262 3.2054 8.82004C2.38417 8.07347 1.73706 7.32498 1.29565 6.7632Z"
+                      stroke="#545465" stroke-width="1.5" />
+                    <circle cx="9.82143" cy="6.24965" r="2.82143" stroke="#545465"
+                      stroke-width="1.5" />
+                  </svg>
+                </span>
+                <span *ngIf="pass == 'password'" class="eye_icon pswrd_hide"
+                  (click)="onEyeClick('pass', 'text')">
+                  <svg width="20" height="16" viewBox="0 0 20 16" fill="none"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path
+                      d="M1.30849 8.89459C1.14302 8.68399 1.00656 8.49996 0.900682 8.35228C0.999999 8.20676 1.12767 8.0264 1.28274 7.82046C1.71202 7.25034 2.34663 6.49038 3.16572 5.73222C4.81343 4.20707 7.1393 2.75 10 2.75C12.8607 2.75 15.1866 4.20707 16.8343 5.73222C17.6534 6.49038 18.288 7.25034 18.7173 7.82046C18.8723 8.0264 19 8.20676 19.0993 8.35228C18.9934 8.49996 18.857 8.68399 18.6915 8.89459C18.2417 9.46703 17.5824 10.2297 16.7455 10.9905C15.0575 12.525 12.7313 13.9773 10 13.9773C7.26867 13.9773 4.94248 12.525 3.2545 10.9905C2.41765 10.2297 1.75826 9.46703 1.30849 8.89459Z"
+                      stroke="#545465" stroke-width="1.5" />
+                    <circle cx="10.0001" cy="8.36293" r="2.88636" stroke="#545465"
+                      stroke-width="1.5" />
+                    <rect x="2.1875" y="1.44922" width="1.52727" height="20.3636"
+                      transform="rotate(-45 2.1875 1.44922)" fill="#545465" />
+                  </svg>
+                </span>
+                <div
+                  *ngIf="(loginform.get('pwd')?.touched || loginform.get('pwd')?.dirty) && loginform.get('pwd')?.invalid && loginform.get('pwd').errors?.required"
+                  class="invalid-feedback">
+                  *Please enter password
+                </div>
+              </div>
+              <div class="row check_box_link">
+                <!-- <div class="col-md-6 col-6"> -->
+                  <!-- <mat-checkbox [(ngModel)]="checked" [ngModelOptions]="{standalone: true}" class="example-margin">
+                    Remember me</mat-checkbox> -->
+                <!-- </div> -->
+                <!-- <div *ngIf="!isEmail" class="col-md-12 col-12 text-center">
+                  <span>Forgot your password? <a style="cursor: pointer;" (click)="forgotPassword()">Forgot password?</a></span>
+                </div> -->
+              </div>
+              <div class="submt-btn submit_btn_auth" >
+                <button *ngIf="isEmail" [disabled]="loginform.invalid"
+                  mat-button
+                  class="theme_btn btn_primary w-100" (click)="logincredentials()">Sign In</button>
+
+
+                
+                  <button *ngIf="!isEmail" [disabled]="!loginform.get('uname').valid"
+                  mat-button
+                  class="theme_btn btn_primary w-100" (click)="getEmailDetail()">Next</button>
+
+
+                  <!-- <button 
+                  mat-button
+                  class="theme_btn btn_primary w-100 mt-4" (click)="loginWithRedirect()">Login via Okta</button> -->
+
+                  <button 
+                  mat-button
+                  class="theme_btn btn_primary w-100 mt-4" (click)="loginSSo()">Login with Monash SSO</button>
+
+
+
+                <!-- <p class="text-center mt-3"><a routerLink="/login-initial">Back to Portal</a></p> -->
+              </div>
+
+              <div *ngIf="isEmail" class="col-md-12 col-12 text-center  submt-btn submit_btn_auth mt-4">
+                <p class="mt-0">Forgot your password? <a style="cursor: pointer;font-weight: 500;" class="link" (click)="forgotPassword()">Reset here</a></p>
+              </div>
+            </form>
+          </div>
+          
+        </div>
+      </div>
+  
+    </div>
+  </div>
+</section>
+
+<div class="modal fade ch_modal agreement_box" id="agreement_box">
+  <div class="modal-dialog  modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header flex-column align-items-center">
+        <h2 class="modal-title" id="exampleModalLabel">Acceptance of Terms & Conditions</h2>
+      </div>
+      <div class="modal-body text-center">
+        <p class="p_text">Please read the following terms and conditions carefully before you access or use this site.
+          <br>
+          By continuing to use the site and proceeding to create a user account, you agree to be bound by these terms
+          and conditions. </p>
+        <p class="accept_text"><mat-checkbox></mat-checkbox> I hereby agree to the <a target="_blank"
+            routerLink="//student-terms-and-conditions">Terms & Conditions</a> while using the Career Hive software.</p>
+      </div>
+      <div class="modal-footer justify-content-center">
+        <button class="theme_btn btn_primary" (click)="logincredentials()" mat-button data-dismiss="modal">I accept the
+          above Terms & Conditions</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<div bsModal #alertLogin="bs-modal" class="modal fade bsModal ch_modal archived_vacancies_modal" id="alertLogin" tabindex="-1" role="dialog"
+    aria-labelledby="alertLogin" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header pt-4 text-center justify-content-center">
+                <!-- <h2>Please set a description to flag this account.</h2> -->
+                <button type="button" mat-icon-button id="closeModal" class="close" data-dismiss="modal" (click)="alertLogin.hide()"
+                    aria-label="Close">
+                    <mat-icon>close</mat-icon>
+                </button>
+            </div>
+            <div class="modal-body d-flex align-items-center gap-3 flex-column">
+                <svg width="126" height="101" viewBox="0 0 126 101" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <g clip-path="url(#clip0_7031_247861)">
+                <path d="M95.371 100.165L11.656 100.194C7.45041 100.195 3.68314 98.0063 1.57906 94.3385C0.526894 92.5044 0.000693685 90.4924 6.85071e-07 88.48C-0.000692315 86.4678 0.52438 84.4552 1.57504 82.6206L43.4059 5.91924C45.5077 2.24973 49.2735 0.0583503 53.4791 0.0568855C57.6848 0.0554207 61.452 2.24417 63.5564 5.91222L105.445 82.5939C106.495 84.4232 107.02 86.4328 107.02 88.444C107.02 90.4551 106.495 92.4674 105.444 94.3023C103.342 97.9716 99.5766 100.163 95.371 100.165ZM1.0523 88.4786C1.05217 90.3102 10.2898 86.3633 11.2468 88.0317C13.1611 91.3685 7.82944 99.1376 11.6557 99.1362C11.6557 99.1362 102.623 97.112 104.534 93.7738C105.49 92.1048 105.968 90.2737 105.967 88.443C105.967 86.6124 105.488 84.7819 104.531 83.1135L62.6416 6.43178C60.7327 3.10449 57.3057 1.11314 53.4795 1.11448C49.655 1.11581 1.05245 86.6466 1.0523 88.4786Z" fill="#3F3D56"/>
+                <path d="M77.9031 83.2491C99.0694 83.2491 116.228 65.9664 116.228 44.647C116.228 23.3277 99.0694 6.04492 77.9031 6.04492C56.7368 6.04492 39.5781 23.3277 39.5781 44.647C39.5781 65.9664 56.7368 83.2491 77.9031 83.2491Z" fill="#464BA8"/>
+                <path d="M76.4827 53.0605L69.6851 23.4669L75.0264 22.3345L80.6501 52.1769L76.4827 53.0605ZM81.0383 64.3C80.1383 64.4908 79.2902 64.3435 78.4941 63.858C77.7289 63.3252 77.2522 62.6085 77.064 61.7079C76.8758 60.8074 77.0293 59.9775 77.5244 59.2183C78.0587 58.4508 78.7759 57.9716 79.6759 57.7808C80.5759 57.59 81.4044 57.7414 82.1614 58.2352C82.9184 58.7289 83.391 59.426 83.5792 60.3266C83.7674 61.2271 83.618 62.0766 83.131 62.8749C82.6359 63.6341 81.9383 64.1091 81.0383 64.3Z" fill="white"/>
+                </g>
+                <defs>
+                <clipPath id="clip0_7031_247861">
+                <rect width="126" height="101" fill="white"/>
+                </clipPath>
+                </defs>
+                </svg>
+
+                <h2 class="modal-heading text-center mb-2">
+                   Active Impersonation Session Detected
+                </h2>
+
+                <p class="modal-p-content  text-center mb-0">A staff member is currently logged in on behalf of this student. The<br /> student cannot access their account until the impersonation session has<br /> ended.</p>
+            </div>
+            <div class="modal-footer justify-content-center">
+                <!-- <button mat-button type="button" class="theme_btn btn_outline_primary mr-4"
+                    data-dismiss="modal">No</button> -->
+                <button mat-button class="theme_btn btn_primary" data-dismiss="modal"  (click)="alertLogin.hide()">Close</button>
+            </div>
+        </div>
+    </div>
+</div>

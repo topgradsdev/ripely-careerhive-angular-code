@@ -1,0 +1,6 @@
+::ng-deep .mat-stepper-label-position-bottom .mat-horizontal-stepper-header::before {
+    top: calc(calc((var(--mat-stepper-header-height) - 12px) / 2) + 24px) !important;
+}
+::ng-deep .mat-stepper-label-position-bottom .mat-horizontal-stepper-header::after{
+     top: calc(calc((var(--mat-stepper-header-height) - 12px) / 2) + 24px) !important;
+}

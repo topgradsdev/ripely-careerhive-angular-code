@@ -1,0 +1,111 @@
+<section class="login_initial">
+    <div class="container">
+        <div class="login_initial_card">
+            <div class="row align-items-center">
+                <div class="col-md-12">
+                    <div class="onboarding_title">
+                        <div class="text-center">
+                        <h1>Welcome to CareerHive! <br>
+                            Get started by creating your account</h1>
+                            </div>
+                        <form [formGroup]="adminOnboarding">
+                            <div class="edit_profile pt-3">
+                                <div class="text-center">
+                                <figure class="profile_container_edit">
+                                    <img *ngIf="adminOnboarding.get('image')?.value"
+                                        [src]="adminOnboarding.get('image')?.value" alt="avtar">
+                                    <span *ngIf="!adminOnboarding.get('image')?.value" class="onboarding-profile-letter">{{
+                                        adminOnboarding.get('first_name')?.value[0] }}
+                                        {{adminOnboarding.get('last_name')?.value[0]
+                                        }}</span>
+                                    <label matRipple for="profile">
+                                        <svg width="40" height="40" viewBox="0 0 40 40" fill="none"
+                                            xmlns="http://www.w3.org/2000/svg">
+                                            <circle cx="20" cy="20" r="20" fill="#F8F8F8" />
+                                            <path fill-rule="evenodd" clip-rule="evenodd"
+                                                d="M23.6952 11.6665C24.2408 11.6665 24.7638 11.8844 25.1458 12.2694L27.7299 14.8534C28.1146 15.2382 28.3308 15.76 28.3308 16.3041C28.3308 16.8482 28.1146 17.37 27.7299 17.7547L18.2953 27.1863C17.7132 27.8577 16.8881 28.2703 15.9429 28.3351H11.6641V27.5018L11.6668 23.9893C11.7378 23.1105 12.1463 22.2934 12.7695 21.7444L22.2436 12.2704C22.6277 11.8839 23.1502 11.6665 23.6952 11.6665ZM15.884 26.6705C16.3292 26.639 16.7436 26.4318 17.0764 26.0512L23.378 19.7496L20.2493 16.6208L13.9108 22.9578C13.5732 23.2564 13.3643 23.6742 13.3307 24.0564V26.669L15.884 26.6705ZM21.428 15.4425L24.5565 18.5711L26.5514 16.5762C26.6236 16.504 26.6641 16.4061 26.6641 16.3041C26.6641 16.202 26.6236 16.1041 26.5514 16.032L23.965 13.4456C23.8936 13.3736 23.7965 13.3332 23.6952 13.3332C23.5939 13.3332 23.4967 13.3736 23.4254 13.4456L21.428 15.4425Z"
+                                                fill="#545465" />
+                                        </svg>
+
+                                        <input type="file" id="profile" accept="image/*" (change)="getFile($event)">
+                                    </label>
+                                </figure>
+                            </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>First Name<span class="required">*</span></label>
+                                            <input type="text" class="form-control" formControlName="first_name" placeholder="Robert">
+                                            <div *ngIf="adminOnboarding.get('first_name') && (adminOnboarding.get('first_name')?.touched || adminOnboarding.get('first_name')?.dirty) && adminOnboarding.get('first_name')?.invalid && adminOnboarding.get('first_name')?.errors?.required"
+                                                class="invalid-feedback">
+                                                Please enter first name
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Last Name<span class="required">*</span></label>
+                                            <input type="text" class="form-control" formControlName="last_name" placeholder="Smith">
+                                            <div *ngIf="adminOnboarding.get('last_name') && (adminOnboarding.get('last_name')?.touched || adminOnboarding.get('last_name')?.dirty) && adminOnboarding.get('last_name')?.invalid && adminOnboarding.get('last_name')?.errors?.required"
+                                                class="invalid-feedback">
+                                                Please enter last name
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label for="last_name">Phone Number <span class="required">*</span></label>
+                                            <div class="phone_number">
+                                                <input type="tel" formControlName="phone" class="form-control"
+                                                    placeholder="0 400 000 000" maxlength="13" minlength="12"
+                                                    (input)="addSpacesInNumber()">
+                                            </div>
+                                            <div *ngIf="adminOnboarding.get('phone') && (adminOnboarding.get('phone')?.touched || adminOnboarding.get('phone')?.dirty) && adminOnboarding.get('phone')?.invalid && adminOnboarding.get('phone')?.errors?.required"
+                                                class="invalid-feedback">
+                                                Please enter phone number
+                                            </div>
+                                            <div *ngIf="(adminOnboarding.get('phone')?.touched || adminOnboarding.get('phone')?.dirty) && adminOnboarding.get('phone')?.invalid && adminOnboarding.get('phone')?.errors?.minlength"
+                                                class="invalid-feedback">
+                                                please enter correct phone number
+                                            </div>
+                                            <div *ngIf="(adminOnboarding.get('phone')?.touched || adminOnboarding.get('phone')?.dirty) && adminOnboarding.get('phone')?.errors?.pattern && !adminOnboarding.get('phone')?.errors?.minlength"
+                                                class="invalid-feedback">
+                                                please enter valid number
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label for="exampleInputEmail1">Work Email <span
+                                                    class="required">*</span></label>
+                                            <input type="email" formControlName="email" class="form-control"
+                                                id="exampleInputEmail1" aria-describedby="emailHelp"
+                                                placeholder="name@domain.com" readonly>
+                                            <div *ngIf="(adminOnboarding.get('email')?.touched || adminOnboarding.get('email')?.dirty) && adminOnboarding.get('email')?.invalid && adminOnboarding.get('email')?.errors?.required"
+                                                class="invalid-feedback">
+                                                Please enter email address
+                                            </div>
+                                            <div *ngIf="(adminOnboarding.get('email')?.touched || adminOnboarding.get('email')?.dirty) && adminOnboarding.get('email')?.invalid && adminOnboarding.get('email')?.errors?.email"
+                                                class="invalid-feedback">
+                                                Please enter valid email address
+                                            </div>
+                                            <div *ngIf="(adminOnboarding.get('email')?.touched || adminOnboarding.get('email')?.dirty) && adminOnboarding.get('email')?.invalid && adminOnboarding.get('email')?.errors?.pattern && !adminOnboarding.get('email')?.errors?.email"
+                                                class="invalid-feedback">
+                                                Please enter valid email address
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="justify-content-start">
+                                <button type="button" [disabled]="adminOnboarding.invalid" class=" theme_btn btn_primary mr-4 btn btn-block" (click)="createAccount()">Create
+                                    Account</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>

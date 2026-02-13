@@ -1,0 +1,50 @@
+<section class="add_hdng sec">
+	<div class="container">
+	    <div class="row">
+	      <div class="col-md-12">
+	      	<div class="card">
+	      		<div class="manage-home-header">
+	      			<div class="card-header">
+	      				<strong>Edit Heading</strong>
+	      			</div>
+	      			<div class="card-body">
+	      				<form [formGroup]="editheadingform">
+		      				<div class="home-mng-form">
+		      					<!-- <div class="form-group">
+									<label>Category</label>
+									<select class="form-control">
+						                <option>General</option>
+						                <option>My Account</option>
+						                <option>Jobs</option>
+						                <option>Permissions & Privacy</option>
+						            </select>
+								</div> -->
+		      					<div class="form-group">
+									<label>Title</label>
+									<input type="text" name="" class="form-control" placeholder="Enter Title" formControlName="title">
+								</div>
+								<div *ngIf="(editheadingform.controls.title?.touched || editheadingform.controls.title?.dirty) && editheadingform.controls.title?.invalid && editheadingform.controls.title.errors?.required" class="invalid">
+									*Please enter title
+							    </div>
+								<div class="form-group">
+									<label>Description</label>
+									<quill-editor [modules]="modules" formControlName="description"></quill-editor>
+									<!-- <editor apiKey="zcwi1f81304uers1lcszh0iq2lbhcaxl5cj6ez0v89wr25z3" formControlName="description"></editor> -->
+								</div>
+								<div *ngIf="(editheadingform.controls.description?.touched || editheadingform.controls.description?.dirty) && editheadingform.controls.description?.invalid && editheadingform.controls.description.errors?.required" class="invalid">
+									*Please enter description
+							    </div>
+								<div class="edit-btns d-flex justify-content-end">
+									<button class="btn btn-primary mr-4" (click)="editheading()">Save</button>
+									<button class="btn btn-primary" (click)="navigate()">Back</button>
+								</div>
+		      				</div>
+		      			</form>
+	      			</div>
+		      	</div>
+	      	</div>
+	      </div>
+	  	</div>
+	</div>
+</section>
+

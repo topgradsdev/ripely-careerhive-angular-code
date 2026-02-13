@@ -1,0 +1,46 @@
+<div class="modal fade bsModal ch_modal" [id]="modalId" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" style="max-width: 900px;" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button mat-icon-button class="close" aria-label="Close" data-dismiss="modal">
+                    <mat-icon>close</mat-icon>
+                </button>
+
+                <button mat-button class="theme_btn btn_success" (click)="generatePDFForm()">Download</button>
+            </div>
+                <div class="modal-body pt-2 pb-5" id="donwloadFormHtmlEmail">
+                    <div class="row">
+                        <div class="col-12 col-12-border mb-3">
+                            <h3>Information</h3>
+
+                            <div class="row mb-0">
+                                <div class="col-3"><h3>Email Subject</h3></div>
+                                <div class="col-9"><p>{{ data?.subject }}</p></div>
+                            </div>
+                            <div class="row mb-0">
+                                <div class="col-3"><h3>Sent To</h3></div>
+                                <div class="col-9"><p>{{data?.companyImage}} {{ data?.emails }}</p></div>
+                            </div>
+                            <div class="row mb-0">
+                                <div class="col-3"><h3>Date Sent</h3></div>
+                                <div class="col-9">  <p>{{ data?.createdAt | date:'dd/MM/yyyy hh:mm a' }}</p></div>
+                            </div>
+                            <div class="row mb-0">
+                                <div class="col-3"><h3>Category</h3></div>
+                                <div class="col-9"><p>{{ data?.email_type }}</p></div>
+                            </div>
+
+
+                           
+                        </div>
+
+                        <div class="col-12 col-12-border p-3">
+                            <h3>Email Body</h3>
+                            <p class="html" [innerHtml]="sanitizedEmailBody"> </p>
+                        </div>
+                    </div>
+                </div>
+        </div>
+    </div>
+</div>

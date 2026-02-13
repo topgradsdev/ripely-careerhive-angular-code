@@ -1,0 +1,1947 @@
+<section *ngIf="!isAddNewStudent" class="main_container_place">
+    <div class="card_header" [ngStyle]="{'background-image': 'url('+ imageURL +')'}">
+       <div class="d-flex align-items-center justify-content-between">
+         <div class="card_container">
+            <!-- (click)="callApiFilter('')" -->
+            <div *ngIf="!isArchive"  class="student_card">
+                <div class="content">
+                    <p>Eligible Students</p>
+                    <h4>{{overAllCount.eligibleStudent}}</h4>
+                </div>
+                <div class="">
+                    <svg width="54" height="54" viewBox="0 0 54 54" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="27" cy="27" r="27" fill="#65DAB9" />
+                        <g clip-path="url(#clip0_14064_85084)">
+                            <path
+                                d="M40.2274 22.882L28.0238 19.0322C27.3588 18.8224 26.6413 18.8224 25.9767 19.0322L13.7727 22.882C12.7428 23.2068 12.7428 24.6052 13.7727 24.93L15.9002 25.6011C15.4334 26.1937 15.1464 26.9165 15.118 27.708C14.6967 27.9559 14.4 28.4034 14.4 28.9375C14.4 29.4217 14.6485 29.8292 15.0064 30.0897L13.8895 35.2504C13.7923 35.6991 14.1248 36.125 14.5724 36.125H17.0272C17.4752 36.125 17.8077 35.6991 17.7106 35.2504L16.5937 30.0897C16.9515 29.8292 17.2 29.4217 17.2 28.9375C17.2 28.4177 16.917 27.9829 16.5149 27.7304C16.5482 27.0557 16.8842 26.4592 17.4201 26.0809L25.9763 28.7803C26.3727 28.9051 27.133 29.061 28.0233 28.7803L40.2274 24.9305C41.2577 24.6052 41.2577 23.2073 40.2274 22.882ZM28.4346 30.1544C27.1864 30.5479 26.1228 30.3305 25.565 30.1544L19.2204 28.1532L18.6 33.25C18.6 34.838 22.3608 36.125 27 36.125C31.6393 36.125 35.4 34.838 35.4 33.25L34.7797 28.1527L28.4346 30.1544Z"
+                                fill="white" />
+                        </g>
+                        <defs>
+                            <clippath id="clip0_14064_85084">
+                                <rect width="28" height="23" fill="white" transform="translate(13 16)" />
+                            </clippath>
+                        </defs>
+                    </svg>
+
+                </div>
+                <!-- <div class="action">
+                    <button (click)="callApiFilter('Pending Approvals')" mat-button class="theme_btn btn_primary">View Students</button>
+                </div> -->
+            </div>
+
+            <div *ngIf="isArchive"  class="student_card" (click)="callApiFilter('')">
+                <div class="content">
+                    <p>Archived Students</p>
+                    <h4>{{overAllCount.eligibleStudent}}</h4>
+                </div>
+                <div class="">
+                    <svg width="54" height="54" viewBox="0 0 54 54" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="27" cy="27" r="27" fill="#65DAB9" />
+                        <g clip-path="url(#clip0_14064_85084)">
+                            <path
+                                d="M40.2274 22.882L28.0238 19.0322C27.3588 18.8224 26.6413 18.8224 25.9767 19.0322L13.7727 22.882C12.7428 23.2068 12.7428 24.6052 13.7727 24.93L15.9002 25.6011C15.4334 26.1937 15.1464 26.9165 15.118 27.708C14.6967 27.9559 14.4 28.4034 14.4 28.9375C14.4 29.4217 14.6485 29.8292 15.0064 30.0897L13.8895 35.2504C13.7923 35.6991 14.1248 36.125 14.5724 36.125H17.0272C17.4752 36.125 17.8077 35.6991 17.7106 35.2504L16.5937 30.0897C16.9515 29.8292 17.2 29.4217 17.2 28.9375C17.2 28.4177 16.917 27.9829 16.5149 27.7304C16.5482 27.0557 16.8842 26.4592 17.4201 26.0809L25.9763 28.7803C26.3727 28.9051 27.133 29.061 28.0233 28.7803L40.2274 24.9305C41.2577 24.6052 41.2577 23.2073 40.2274 22.882ZM28.4346 30.1544C27.1864 30.5479 26.1228 30.3305 25.565 30.1544L19.2204 28.1532L18.6 33.25C18.6 34.838 22.3608 36.125 27 36.125C31.6393 36.125 35.4 34.838 35.4 33.25L34.7797 28.1527L28.4346 30.1544Z"
+                                fill="white" />
+                        </g>
+                        <defs>
+                            <clippath id="clip0_14064_85084">
+                                <rect width="28" height="23" fill="white" transform="translate(13 16)" />
+                            </clippath>
+                        </defs>
+                    </svg>
+                </div>
+                <!-- <div class="action">
+                    <button (click)="callApiFilter('Pending Approvals')" mat-button class="theme_btn btn_primary">View Students</button>
+                </div> -->
+            </div>
+
+            <div *ngIf="!isArchive"  class="student_card total">
+                <div class="content">
+                    <p>Pending Approvals</p>
+                    <h4>{{overAllCount.pendingApproval}}</h4>
+                </div>
+                <div class="">
+                    <svg width="54" height="54" viewBox="0 0 54 54" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="27" cy="27" r="27" fill="#F2C94C" />
+                        <path
+                            d="M39 31V36.3333C39 37.0406 38.719 37.7189 38.219 38.219C37.7189 38.719 37.0406 39 36.3333 39H17.6667C16.9594 39 16.2811 38.719 15.781 38.219C15.281 37.7189 15 37.0406 15 36.3333V31"
+                            stroke="white" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
+                        <path d="M33.6663 21.6667L26.9997 15L20.333 21.6667" stroke="white" stroke-width="4"
+                            stroke-linecap="round" stroke-linejoin="round" />
+                        <path d="M27 15V31" stroke="white" stroke-width="4" stroke-linecap="round"
+                            stroke-linejoin="round" />
+                    </svg>
+                </div>
+                <div class="action">
+                    <button (click)="callApiFilter('is_pending_approvals')" mat-button class="theme_btn btn_primary">View Students</button>
+                </div>
+            </div>
+
+            <div class="student_card total">
+                <div class="content">
+                    <p>Pending Placements</p>
+                    <h4>{{overAllCount.pendingPlacement}}</h4>
+                </div>
+                <div class="">
+                    <svg width="54" height="54" viewBox="0 0 54 54" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="27" cy="27" r="27" fill="#202C76" />
+                        <path d="M17.6667 27H36.3334" stroke="white" stroke-width="4" stroke-linecap="round"
+                            stroke-linejoin="round" />
+                        <path d="M27 17.6666L36.3333 27L27 36.3333" stroke="white" stroke-width="4" stroke-linecap="round"
+                            stroke-linejoin="round" />
+                    </svg>
+                </div>
+                <div class="action">
+                    <button (click)="callApiFilter('is_pending_placement')" mat-button class="theme_btn btn_primary">View Students</button>
+                </div>
+            </div>
+
+            <div class="student_card total">
+                <div class="content">
+                    <p>Placed</p>
+                    <h4>{{overAllCount.placed}}</h4>
+                </div>
+                <div class="">
+                    <svg width="54" height="54" viewBox="0 0 54 54" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="27" cy="27" r="27" fill="#F47761" />
+                        <path d="M37.6666 19L22.9999 33.6667L16.3333 27" stroke="white" stroke-width="4"
+                            stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                </div>
+                <div class="action">
+                    <button (click)="callApiFilter('is_placed_students')" mat-button class="theme_btn btn_primary">View Students</button>
+                </div>
+            </div>
+
+           
+<!--            
+            <button mat-button class="theme_btn btn_white" *ngIf="!isArchive" (click)="callApi()">
+                View Archived Students
+            </button>
+            <button mat-button class="theme_btn btn_white" *ngIf="isArchive" (click)="callApi()">
+                View Active Student
+            </button>
+            <button *ngxPermissionsOnly="['WIL_Write']" mat-button class="theme_btn btn_white"
+                (click)="exportStudentData('excel')">
+                Download (.xls)</button> -->
+
+
+        </div>
+
+            <button  mat-icon-button [matMenuTriggerFor]="header_menu"  class="td-btn text-white">
+                <mat-icon>more_horizantal</mat-icon>
+            </button>
+
+             <mat-menu #header_menu="matMenu" class="td-menu custome_theme_menu">
+                <a *ngIf="!isArchive" (click)="callApi()" mat-menu-item>
+                    <span>View Archived Students</span>
+                </a>
+                <a *ngIf="isArchive" (click)="callApi()" mat-menu-item>
+                    <span>View Active Student</span>
+                </a>
+                <a  *ngxPermissionsOnly="['WIL_Write']" (click)="exportStudentData('excel')" mat-menu-item>
+                    <span>Download (.xls)</span>
+                </a>
+            </mat-menu>
+       </div>
+    </div>
+    <div class="row sub_header">
+        <!-- Begin:: Email and Download(xlsx) -->
+        <div class="col-md-7 action_btns_header">
+            <ng-container *ngIf="showButtonHeaders">
+                <button (click)="selectStudent()" mat-button class="theme_btn theme_link_btn" data-toggle="modal"
+                    data-target="#sendEmailEligible">
+                    <svg class="mr-2" xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 25 25"
+                        fill="none">
+                        <path
+                            d="M4.5 4.5H20.5C21.6 4.5 22.5 5.4 22.5 6.5V18.5C22.5 19.6 21.6 20.5 20.5 20.5H4.5C3.4 20.5 2.5 19.6 2.5 18.5V6.5C2.5 5.4 3.4 4.5 4.5 4.5Z"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                        <path d="M22.5 6.5L12.5 13.5L2.5 6.5" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round" />
+                    </svg> Email
+                </button>
+                <!-- <button mat-button class="theme_btn theme_link_btn">
+                    <svg width="25" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M21.5 15.5V19.5C21.5 20.0304 21.2893 20.5391 20.9142 20.9142C20.5391 21.2893 20.0304 21.5 19.5 21.5H5.5C4.96957 21.5 4.46086 21.2893 4.08579 20.9142C3.71071 20.5391 3.5 20.0304 3.5 19.5V15.5" stroke="#464BA8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M17.5 8.5L12.5 3.5L7.5 8.5" stroke="#464BA8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M12.5 3.5V15.5" stroke="#464BA8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                        Submit Application
+                </button> -->
+                <button *ngIf="!isArchive" (click)="selectStudent()" data-target="#assignToStaff" data-toggle="modal" mat-button
+                    class="theme_btn theme_link_btn">
+                    <svg width="25" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="M20.5 21.5V19.5C20.5 18.4391 20.0786 17.4217 19.3284 16.6716C18.5783 15.9214 17.5609 15.5 16.5 15.5H8.5C7.43913 15.5 6.42172 15.9214 5.67157 16.6716C4.92143 17.4217 4.5 18.4391 4.5 19.5V21.5"
+                            stroke="#464BA8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                        <path
+                            d="M12.5 11.5C14.7091 11.5 16.5 9.70914 16.5 7.5C16.5 5.29086 14.7091 3.5 12.5 3.5C10.2909 3.5 8.5 5.29086 8.5 7.5C8.5 9.70914 10.2909 11.5 12.5 11.5Z"
+                            stroke="#464BA8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                    Assign to Staff
+                </button>
+                <!-- <button mat-button class="theme_btn theme_link_btn">
+                    <svg width="25" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M20.5 21.5V19.5C20.5 18.4391 20.0786 17.4217 19.3284 16.6716C18.5783 15.9214 17.5609 15.5 16.5 15.5H8.5C7.43913 15.5 6.42172 15.9214 5.67157 16.6716C4.92143 17.4217 4.5 18.4391 4.5 19.5V21.5" stroke="#464BA8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M12.5 11.5C14.7091 11.5 16.5 9.70914 16.5 7.5C16.5 5.29086 14.7091 3.5 12.5 3.5C10.2909 3.5 8.5 5.29086 8.5 7.5C8.5 9.70914 10.2909 11.5 12.5 11.5Z" stroke="#464BA8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                         Assign to Partners
+                </button> -->
+                <button *ngIf="!isArchive" (click)="selectStudent()" data-target="#assignToPlacementType" data-toggle="modal" mat-button
+                    class="theme_btn theme_link_btn">
+                    <svg width="25" height="23" viewBox="0 0 25 23" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M22.5 3.07448H2.5L10.5 11.9306V18.0532L14.5 19.9255V11.9306L22.5 3.07448Z"
+                            stroke="#464BA8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                    Assign/Update Placement Type
+                </button>
+
+                <button mat-button data-toggle="modal" data-target="#removeStudent"
+                    class="theme_btn ml-2 theme_link_btn theme_link_btn_danger">
+                    <svg width="24" height="25" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M18 6.5L6 18.5" stroke="#F47761" stroke-width="2" stroke-linecap="round"
+                            stroke-linejoin="round" />
+                        <path d="M6 6.5L18 18.5" stroke="#F47761" stroke-width="2" stroke-linecap="round"
+                            stroke-linejoin="round" />
+                    </svg>
+                    Remove
+                </button>
+            </ng-container>
+        </div>
+        <div class="col-md-5 text-right searchbar-end">
+            <div class="d-inline-flex align-items-center">
+                <div class="search-container">
+                    <svg class="icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20"
+                        fill="none">
+                        <path
+                            d="M9.16667 15.8333C12.8486 15.8333 15.8333 12.8486 15.8333 9.16667C15.8333 5.48477 12.8486 2.5 9.16667 2.5C5.48477 2.5 2.5 5.48477 2.5 9.16667C2.5 12.8486 5.48477 15.8333 9.16667 15.8333Z"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                        <path d="M17.5 17.5L13.875 13.875" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                            stroke-linejoin="round" />
+                    </svg>
+                    <input type="text" class="form-control" [(ngModel)]="searchCriteria.keywords"
+                        placeholder="Search Keywords" (ngModelChange)="cleardata();onChangeSearchKeyword()">
+                </div>
+                <button mat-button class="theme_btn btn_primary ml-4" data-toggle="modal" data-target="#filter">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="23" viewBox="0 0 24 23" fill="none">
+                        <path d="M22 3.10669H2L10 11.9629V18.0854L14 19.9578V11.9629L22 3.10669Z" stroke="white"
+                            stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                    Filters
+                </button>
+                <!-- <button mat-icon-button [matMenuTriggerFor]="menu" class="td-btn">
+                    <svg width="4" height="18" viewBox="0 0 4 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="M2 1C1.73478 1 1.48043 1.10536 1.29289 1.29289C1.10536 1.48043 1 1.73478 1 2C1 2.26522 1.10536 2.51957 1.29289 2.70711C1.48043 2.89464 1.73478 3 2 3C2.26522 3 2.51957 2.89464 2.70711 2.70711C2.89464 2.51957 3 2.26522 3 2C3 1.73478 2.89464 1.48043 2.70711 1.29289C2.51957 1.10536 2.26522 1 2 1ZM2 8C1.73478 8 1.48043 8.10536 1.29289 8.29289C1.10536 8.48043 1 8.73478 1 9C1 9.26522 1.10536 9.51957 1.29289 9.70711C1.48043 9.89464 1.73478 10 2 10C2.26522 10 2.51957 9.89464 2.70711 9.70711C2.89464 9.51957 3 9.26522 3 9C3 8.73478 2.89464 8.48043 2.70711 8.29289C2.51957 8.10536 2.26522 8 2 8ZM2 15C1.73478 15 1.48043 15.1054 1.29289 15.2929C1.10536 15.4804 0.999999 15.7348 0.999999 16C0.999999 16.2652 1.10536 16.5196 1.29289 16.7071C1.48043 16.8946 1.73478 17 2 17C2.26522 17 2.51957 16.8946 2.70711 16.7071C2.89464 16.5196 3 16.2652 3 16C3 15.7348 2.89464 15.4804 2.70711 15.2929C2.51957 15.1054 2.26522 15 2 15Z"
+                            stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                </button> -->
+                <mat-menu #menu="matMenu" class="td-menu custome_theme_menu">
+                    <a mat-menu-item data-toggle="modal" data-target="#displayColumns">
+                        <span>Display Columns</span>
+                    </a>
+                    <a mat-menu-item (click)="isAddNewStudent = true;">
+                        <span>Import Data</span>
+                    </a>
+                    <!-- <a mat-menu-item (click)="exportStudentData('pdf')">
+                        <span>Download as PDF</span>
+                    </a> -->
+                    <a mat-menu-item (click)="exportStudentData('excel')">
+                        <span>Download as XLSX</span>
+                    </a>
+                </mat-menu>
+            </div>
+        </div>
+    </div>
+    <div class="table-responsive sticky-table"  infiniteScroll
+[infiniteScrollDistance]="2"
+[infiniteScrollThrottle]="150"
+(scrolled)="onScrollDown()"
+[scrollWindow]="false">
+        <table mat-table [dataSource]="eligibleStudentList" matSort class="ch_table">
+            <!-- Checkbox Column -->
+            <ng-container matColumnDef="checkbox" sticky>
+                <th mat-header-cell *matHeaderCellDef>
+                    <mat-checkbox *ngxPermissionsOnly="['WIL_Write']" class="example-margin"
+                        [(ngModel)]="selectAllStdnt" (change)="selectAllStudent()"></mat-checkbox>
+                </th>
+                <td mat-cell *matCellDef="let element">
+                    <mat-checkbox *ngxPermissionsOnly="['WIL_Write']" class="example-margin"
+                        [(ngModel)]="element.selected"
+                        (change)="onCheckEligibleStudent($event);selectStudent()"></mat-checkbox>
+                </td>
+            </ng-container>
+            <!-- Student ID -->
+            <ng-container matColumnDef="student_id" sticky>
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Student Id </th>
+                <td mat-cell *matCellDef="let row"> {{row.student_id}} </td>
+            </ng-container>
+            <!-- Name Column -->
+            <ng-container matColumnDef="student_name" sticky>
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Student Name </th>
+                <td mat-cell *matCellDef="let row">
+                    <!-- <div class="profile">
+                        <span>nk</span>
+                    </div> -->
+                    <a class="td_link" (click)="viewProfile(row)">{{row.full_name}}</a>
+                </td>
+            </ng-container>
+            <!-- Last Name Column -->
+            <ng-container matColumnDef="interview_status">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Interview Status </th>
+                <td mat-cell *matCellDef="let row">
+                    {{row.interview_status}}
+                </td>
+            </ng-container>
+            <!-- Major Column -->
+            <!-- As discussed hiding this column -->
+            <!-- <ng-container matColumnDef="major">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Major </th>
+                <td mat-cell *matCellDef="let row"> {{row.major}} </td>
+            </ng-container> -->
+
+            
+           
+
+
+
+            <!-- Priority Column -->
+            <ng-container matColumnDef="priority">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Priority</th>
+                <td mat-cell *matCellDef="let row">
+                    <div>
+                        <mat-select class="priority" [class]="getPriorityClassNames(row.priority)"
+                            [(ngModel)]="row.priority" (ngModelChange)="onPriorityUpdate($event, row)">
+                            <mat-option value="Low">Low</mat-option>
+                            <mat-option value="Medium">Medium</mat-option>
+                            <mat-option value="High">High</mat-option>
+                        </mat-select>
+                    </div>
+                </td>
+            </ng-container>
+            <!-- status column -->
+            <ng-container matColumnDef="assignedTo">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Assigned To </th>
+                <td mat-cell *matCellDef="let row" >
+                    <!-- <div class="d-flex align-items-center" *ngIf="row.assigned_to">
+                        <div class="profile m-0">
+                            <img *ngIf="row.assigned_staff_image" [src]="row.assigned_staff_image" alt="avatars">
+                            <span  *ngIf="!row.assigned_staff_image" class="text-uppercase">
+                                 {{utils.extractCharacter(row.assigned_to, 0)}}
+                            </span>
+                        </div> 
+                        <div>
+                            <a>{{row.assigned_to}}</a>
+                            <p class="p-tab-by p-0" *ngIf="row.assigned_staff_by_name">By {{ row.assigned_staff_by_name }}</p>   
+                        </div>
+                       
+                    </div>
+                    <ng-container *ngIf="!row.assigned_to">
+                        <p class="p-tab">No Staff Assigned</p>
+                    </ng-container> -->
+
+                    <div class="d-flex align-items-center" *ngIf="row.assigned_to && row.assigned_to!='No Staff Assign'">
+                        <div class="profile m-0">
+                            <img *ngIf="row.assigned_staff_image" [src]="row.assigned_staff_image" alt="avatars">
+                            <span  *ngIf="!row.assigned_staff_image" class="text-uppercase">
+                                {{row.assigned_to?utils.extractCharacter(row.assigned_to, 0):''}}
+                            </span>
+                        </div> 
+                        <a>{{row.assigned_to}}</a>
+                    </div>
+                    <p class="p-tab-by" *ngIf="row.assigned_staff_by_name && row.assigned_to!='No Staff Assign'">By {{ row.assigned_staff_by_name }}</p>
+                    <ng-container *ngIf="!row.assigned_to || row.assigned_to=='No Staff Assign'">
+                        <p class="p-tab">No Staff Assigned</p>
+                    </ng-container>
+                </td>
+            </ng-container>
+            
+              <!-- status column -->
+            <ng-container matColumnDef="allocatedTo">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Allocated To </th>
+                <td mat-cell *matCellDef="let row" style="text-align: center;"  class="position-relative">
+                    <!-- <mat-select [class]="getClassNames(row.status)" [(ngModel)]="row.status"
+                        (selectionChange)="changeStudentStatus(row)">
+                        <mat-option [value]="'Placed'">Placed</mat-option>
+                        <mat-option [value]="'In Progress'">In Progress</mat-option>
+                        <mat-option [value]="'Conditional Approval'">Conditional Approval</mat-option>
+                        <mat-option [value]="'Deferred'">Deferred</mat-option>
+                        <mat-option [value]="'Inactive'">Inactive</mat-option>
+                    </mat-select> -->
+                    <span *ngIf="row?.getVacancyCount==0">
+                        None
+                    </span>
+                    <!-- <span [style.cursor]="row?.getVacancyCount > 0 ? 'pointer' : ''"
+                        [ngStyle]="{'pointer-events': row?.getVacancyCount > 0 ? '' : 'none'}"
+                        (click)="getVacancyStudent(row)" data-toggle="modal" data-target="#studentVacancyModal">{{row &&
+                        row?.getVacancyCount}}</span> -->
+
+                        <div class="d-flex align-items-center" *ngIf="row?.getVacancyCount > 0">
+                             <span
+                                class="text-hover"
+                                [style.cursor]="row?.getVacancyCount > 0 ? 'pointer' : 'default'"
+                                [ngStyle]="{ 'pointer-events': row?.getVacancyCount > 0 ? 'auto' : 'none' }"
+                                (click)="getVacancyStudent(row)"
+                                data-toggle="modal"
+                                data-target="#studentVacancyModal"
+                            >
+                                {{ row?.getVacancyCount }}
+                                <!-- {{ row?.getVacancyCount === 1 ? 'Vacancy' : 'Vacancies' }} -->
+                            </span>
+                            <button style="margin-top: -2px;" *ngIf="row.getVacancyCount" mat-icon-button data-toggle="modal" (click)="getVacancyStudent(row)"
+                                data-target="#studentVacancyModal" [disabled]="row.getVacancyCount === 0"><svg width="20"
+                                        height="20" viewBox="0 0 20 20" fill="none"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <circle cx="10" cy="10" r="10" fill="#F8F8F8" />
+                                        <path
+                                            d="M5 9.58333C5 9.58333 6.81818 6.25 10 6.25C13.1818 6.25 15 9.58333 15 9.58333C15 9.58333 13.1818 12.9167 10 12.9167C6.81818 12.9167 5 9.58333 5 9.58333Z"
+                                            stroke="black" stroke-linecap="round" stroke-linejoin="round" />
+                                        <path
+                                            d="M9.9984 10.8359C10.7515 10.8359 11.362 10.2763 11.362 9.58594C11.362 8.89558 10.7515 8.33594 9.9984 8.33594C9.24529 8.33594 8.63477 8.89558 8.63477 9.58594C8.63477 10.2763 9.24529 10.8359 9.9984 10.8359Z"
+                                            stroke="black" stroke-linecap="round" stroke-linejoin="round" />
+                                    </svg>
+                                </button>
+                            </div>
+                   
+                </td>
+            </ng-container>
+            
+            <!-- Placement Group column -->
+            <ng-container matColumnDef="placement_type">
+                <th mat-header-cell *matHeaderCellDef> Placement Type </th>
+                <td mat-cell *matCellDef="let row">
+                    {{row.placementType}}
+                </td>
+            </ng-container>
+
+
+            <!-- Placement Group column -->
+            <ng-container matColumnDef="Placement"  >
+                <th mat-header-cell *matHeaderCellDef> Placement </th>
+                <td mat-cell *matCellDef="let row" class="position-relative">
+                    <div class="d-flex align-items-center">
+                        {{ row.placement_project_count || 'N/A' }}
+                        <button style="margin-top: -2px;" *ngIf="row.placement_project_count" mat-icon-button data-toggle="modal" (click)="getStudentPG(row)"
+                        data-target="#viewStudentPG" [disabled]="row.placement_project_count === 0"><svg width="20"
+                                height="20" viewBox="0 0 20 20" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <circle cx="10" cy="10" r="10" fill="#F8F8F8" />
+                                <path
+                                    d="M5 9.58333C5 9.58333 6.81818 6.25 10 6.25C13.1818 6.25 15 9.58333 15 9.58333C15 9.58333 13.1818 12.9167 10 12.9167C6.81818 12.9167 5 9.58333 5 9.58333Z"
+                                    stroke="black" stroke-linecap="round" stroke-linejoin="round" />
+                                <path
+                                    d="M9.9984 10.8359C10.7515 10.8359 11.362 10.2763 11.362 9.58594C11.362 8.89558 10.7515 8.33594 9.9984 8.33594C9.24529 8.33594 8.63477 8.89558 8.63477 9.58594C8.63477 10.2763 9.24529 10.8359 9.9984 10.8359Z"
+                                    stroke="black" stroke-linecap="round" stroke-linejoin="round" />
+                            </svg>
+                        </button>
+                    </div>
+                </td>
+            </ng-container>
+
+
+            <!-- Placement Group column -->
+            <ng-container matColumnDef="Supervisor">
+                <th mat-header-cell *matHeaderCellDef> Supervisor</th>
+                <td mat-cell *matCellDef="let row">
+                   {{ row.placed_allocation_data?.[0]?.supervisor || 'N/A' }}
+                </td>
+            </ng-container>
+
+
+
+            <!-- Placement Group column -->
+            <ng-container matColumnDef="internship_start_date">
+                <th mat-header-cell *matHeaderCellDef> Internship Start Date </th>
+                <td mat-cell *matCellDef="let row">
+                    {{row.internship_start_date}}
+                </td>
+            </ng-container>
+
+
+            <!-- Placement Group column -->
+            <ng-container matColumnDef="internship_end_date">
+                <th mat-header-cell *matHeaderCellDef> Internship End Date </th>
+                <td mat-cell *matCellDef="let row">
+                    {{row.internship_end_date}}
+                </td>
+            </ng-container>
+
+            
+            <!-- Action column -->
+            <ng-container matColumnDef="actions" stickyEnd>
+                <th mat-header-cell *matHeaderCellDef> Actions </th>
+                <td mat-cell *matCellDef="let row">
+                    <button *ngxPermissionsOnly="['WIL_Write']" mat-icon-button [matMenuTriggerFor]="menu"
+                        class="td-btn">
+                        <mat-icon>more_horizantal</mat-icon>
+                    </button>
+                    <svg *ngIf="row?.locked" width="18" height="18" viewBox="0 0 18 18" fill="none"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="M13.623 8.24609H4.87305C4.18269 8.24609 3.62305 8.91767 3.62305 9.74609V14.9961C3.62305 15.8245 4.18269 16.4961 4.87305 16.4961H13.623C14.3134 16.4961 14.873 15.8245 14.873 14.9961V9.74609C14.873 8.91767 14.3134 8.24609 13.623 8.24609Z"
+                            fill="#FFD569" stroke="black" stroke-width="2" stroke-linecap="round"
+                            stroke-linejoin="round" />
+                        <path
+                            d="M5.25 8.25V5.25C5.25 4.25544 5.64509 3.30161 6.34835 2.59835C7.05161 1.89509 8.00544 1.5 9 1.5C9.99456 1.5 10.9484 1.89509 11.6517 2.59835C12.3549 3.30161 12.75 4.25544 12.75 5.25V8.25"
+                            stroke="black" stroke-width="2" stroke-linecap="round"
+                            stroke-linejoin="round" />
+                    </svg>
+                    <mat-menu #menu="matMenu" class="td-menu custome_theme_menu">
+                        <a (click)="row.selected = true;selectStudent(row)" mat-menu-item data-toggle="modal"
+                            data-target="#sendEmailEligible">
+                            <span>Email</span>
+                        </a>
+                        <a *ngIf="!isArchive" mat-menu-item data-toggle="modal" data-target="#assignToStaff"
+                            (click)="row.selected = true;selectStudent(row)">
+                            <span>Assign to Staff</span>
+                        </a>
+                        <!-- <a mat-menu-item data-toggle="modal" data-target="#assignToPartner" (click)="selectStudent(row)">
+                            <span>Assign to Partner</span>
+                        </a> -->
+                        <a *ngIf="!isArchive" mat-menu-item data-toggle="modal" data-target="#assignToPlacementType"
+                            (click)="row.selected = true;selectStudent1(row);selectStudent(row); setPlaacemntType(row)">
+                            <span>Assign/Update Placement Type</span>
+                        </a>
+
+                     
+
+
+                        <!-- <a mat-menu-item data-toggle="modal" data-target="#submitApplication" (click)="row.selected = true;selectStudent(row)">
+                            <span>Submit Application</span>
+                        </a> -->
+                        <!-- <a *ngIf="row.locked && !isArchive" mat-menu-item data-toggle="modal" data-target="#unLockCandidate"
+                            (click)="row.selected = true;selectStudent(row)">
+                            <span>Unlock Candidate</span>
+                        </a>
+
+                        <a *ngIf="!row.locked && !isArchive" mat-menu-item data-toggle="modal" data-target="#lockCandidate"
+                            (click)="row.selected = true;selectStudent(row)">
+                            <span *ngIf="!row.locked">Lock Candidate</span>
+                        </a> -->
+
+                        <!-- *ngIf="!placementGroupDetails?.is_publish" -->
+                        <a *ngIf="row?.status!='Placed'" mat-menu-item data-toggle="modal" data-target="#removeStudent" class="danger" (click)="row.selected = true;selectStudent1(row);selectStudent(row);">
+                            <span>Remove</span>
+                        </a>
+
+                        <a *ngIf="row.placementType && row?.status=='Placed'" mat-menu-item data-toggle="modal" data-target="#alertRemoveStudent" class="danger" (click)="row.selected = true;selectStudent1(row);selectStudent(row);">
+                            <span>Remove</span>
+                        </a>
+
+                        <a *ngIf="row.placementType && !row.is_terminated && !isArchive" mat-menu-item data-toggle="modal" data-target="#terminatePLacement"
+                            (click)="row.selected = true;selectStudent(row); comment=null;">
+                            <span style="color: red;">Terminate Placement</span>
+                        </a>
+                    </mat-menu>
+                </td>
+            </ng-container>
+            <tr mat-header-row *matHeaderRowDef="displayedColumns;sticky: true"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+    </div>
+    <!-- <app-paginator [paginationObj]="paginationObj" (pagination)="getPaginationData($event)"></app-paginator> -->
+
+    <h4 *ngIf="status" class="result-found" style="color:#464BA8">
+        {{(eligibleStudentList.length>0)?filterCount:0}} Results Found! 
+        &nbsp;&nbsp;<button mat-button class="theme_btn btn_outline_primary" (click)="callApiFilter('')">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M15 5L5 15" stroke="#464BA8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M5 5L15 15" stroke="#464BA8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            &nbsp;&nbsp;  
+                Reset Filter
+        </button>
+    </h4>
+
+</section>
+<ng-container *ngIf="isAddNewStudent">
+    <app-student-import-via-excel [placementGroupId]="id"
+        (studentUpdates)="getNewStudents($event)"></app-student-import-via-excel>
+</ng-container>
+<app-display-columns-popup modalId="displayColumns"></app-display-columns-popup>
+<!-- Email popup -->
+<app-send-email-popup [type]="'student'" modalId="sendEmailEligible" [students]="selectedRecords"
+    [emailType]="'student'"></app-send-email-popup>
+
+    <!-- Remove student popup -->
+<div class="modal fade bsModal ch_modal" id="removeStudent" tabindex="-1" role="dialog"
+aria-labelledby="removeStudent" aria-hidden="true">
+<div class="modal-dialog modal-dialog-centered" role="document" style="max-width:640px">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2 class="modal-title center text-center" id="removeStudent">Are you sure you want to remove this student from the Placement Group?</h2>
+            <button mat-icon-button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <mat-icon>close</mat-icon>
+            </button>
+        </div>
+        <form>
+            <div class="modal-body pt-3">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-control sendingTo" style="border: none;
+                        box-shadow: none;
+                        text-align: center;
+                        display: block;">
+                            <div class="email_sendTo" *ngFor="let student of selectedStudent">
+                                <div class="profile">
+                                    <img *ngIf="student?.image" [src]="student?.image" alt="avatars">
+                                    <span *ngIf="!student?.image" class="text-uppercase">{{
+                                        student?.first_name[0] }} {{student?.last_name[0] }}</span>
+                                </div>
+                                <div class="d-inline-block">
+                                    <h5>{{ student?.first_name}} {{student?.last_name}}</h5>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="modal-footer justify-content-between" style="padding: 30px 50px;">
+                <button mat-button type="button" class="theme_btn btn_outline_primary"
+                    data-dismiss="modal">No</button>
+                <button mat-button type="submit" data-dismiss="modal" class="theme_btn btn_primary" (click)="removeStudent()">Yes</button>
+            </div>
+        </form>
+    </div>
+</div>
+</div>
+
+
+    <!-- Remove student popup -->
+<div class="modal fade bsModal ch_modal" id="alertRemoveStudent" tabindex="-1" role="dialog"
+aria-labelledby="alertRemoveStudent" aria-hidden="true">
+<div class="modal-dialog modal-dialog-centered" role="document" style="max-width:640px">
+    <div class="modal-content">
+        <div class="modal-header">
+            <!-- <h2 class="modal-title center text-center" id="alertRemoveStudent">Are you sure you want to remove this student from the Placement Group?</h2> -->
+            <button mat-icon-button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <mat-icon>close</mat-icon>
+            </button>
+        </div>
+        <form>
+            <div class="modal-body pt-3 d-flex justify-content-center align-items-center gap-3 flex-column">
+                <svg width="126" height="101" viewBox="0 0 126 101" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <g clip-path="url(#clip0_5640_64766)">
+                    <path d="M95.371 100.165L11.656 100.194C7.45041 100.195 3.68314 98.0062 1.57906 94.3384C0.526894 92.5042 0.000693685 90.4923 6.85071e-07 88.4798C-0.000692315 86.4677 0.52438 84.4551 1.57504 82.6205L43.4059 5.91911C45.5077 2.2496 49.2735 0.0582282 53.4791 0.0567634C57.6848 0.0552987 61.452 2.24405 63.5564 5.91209L105.445 82.5938C106.495 84.4231 107.02 86.4327 107.02 88.4438C107.02 90.455 106.495 92.4673 105.444 94.3022C103.342 97.9715 99.5766 100.163 95.371 100.165ZM1.0523 88.4784C1.05217 90.3101 10.2898 86.3631 11.2468 88.0316C13.1611 91.3684 7.82944 99.1375 11.6557 99.1361C11.6557 99.1361 102.623 97.1119 104.534 93.7737C105.49 92.1046 105.968 90.2736 105.967 88.4429C105.967 86.6123 105.488 84.7818 104.531 83.1134L62.6416 6.43166C60.7327 3.10437 57.3057 1.11302 53.4795 1.11436C49.655 1.11569 1.05245 86.6465 1.0523 88.4784Z" fill="#3F3D56"/>
+                    <path d="M77.9031 83.2491C99.0694 83.2491 116.228 65.9664 116.228 44.647C116.228 23.3277 99.0694 6.04492 77.9031 6.04492C56.7368 6.04492 39.5781 23.3277 39.5781 44.647C39.5781 65.9664 56.7368 83.2491 77.9031 83.2491Z" fill="#464BA8"/>
+                    <path d="M76.4827 53.0605L69.6851 23.4669L75.0264 22.3345L80.6501 52.1769L76.4827 53.0605ZM81.0383 64.3C80.1383 64.4908 79.2902 64.3435 78.4941 63.858C77.7289 63.3252 77.2522 62.6085 77.064 61.7079C76.8758 60.8074 77.0293 59.9775 77.5244 59.2183C78.0587 58.4508 78.7759 57.9716 79.6759 57.7808C80.5759 57.59 81.4044 57.7414 82.1614 58.2352C82.9184 58.7289 83.391 59.426 83.5792 60.3266C83.7674 61.2271 83.618 62.0766 83.131 62.8749C82.6359 63.6341 81.9383 64.1091 81.0383 64.3Z" fill="white"/>
+                    </g>
+                    <defs>
+                    <clipPath id="clip0_5640_64766">
+                    <rect width="126" height="101" fill="white"/>
+                    </clipPath>
+                    </defs>
+                </svg>
+                <br />
+                <h2 class="title-modal">
+                    {{ currentStudent?.first_name}} {{currentStudent?.last_name}} still has an ongoing placement.
+                </h2>
+                <p class="des-modal">
+                    You must terminate their placement before removing them from the <br /> Placement Group.
+                </p>
+
+            </div>
+            <div class="modal-footer justify-content-center" style="padding: 30px 50px;">
+                <button mat-button type="button" class="theme_btn btn_primary"
+                    data-dismiss="modal">Close</button>
+                <!-- <button mat-button type="submit" data-dismiss="modal" class="theme_btn btn_primary" (click)="removeStudent()">Yes</button> -->
+            </div>
+        </form>
+    </div>
+</div>
+</div>
+
+<!-- Assign to Staff popup -->
+<div class="modal fade bsModal ch_modal" id="assignToStaff" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title " id="exampleModalLabel">Assign to Staff</h2>
+                <button mat-icon-button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <mat-icon>close</mat-icon>
+                </button>
+            </div>
+            <form [formGroup]="staffForm">
+                <div class="modal-body pt-3">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label>Selected Candidate</label>
+                                <div class="form-control sendingTo">
+                                    <div class="email_sendTo" *ngFor="let student of selectedStudent">
+                                        <div class="profile">
+                                            <img *ngIf="student?.image" [src]="student?.image" alt="avatars">
+                                            <span *ngIf="!student?.image" class="text-uppercase">{{
+                                                student?.first_name[0] }} {{student?.last_name[0] }}</span>
+                                        </div>
+                                        <div class="d-inline-block">
+                                            <h5>{{ student?.first_name}} {{student?.last_name}}</h5>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label>Select Staff</label>
+                                <ng-select class="select_ng_custom" [searchable]="true" [multiple]="false"
+                                    bindLabel="name" bindValue="staff_id" [clearable]="false" placeholder="Search"
+                                    formControlName="staff_id">
+                                    <ng-option [value]="staff._id" *ngFor="let staff of staffList">
+                                        <p class="mb-0 justify-content-between d-flex">{{staff.first_name}}
+                                            {{staff.last_name}} <span>{{staff.designation}}</span></p>
+                                    </ng-option>
+                                </ng-select>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label>Description</label>
+                                <textarea placeholder="Inform the staff member what they must do with the candidate"
+                                    formControlName="description"
+                                    class="form-control" name id cols="30" rows="5"></textarea>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="modal-footer justify-content-between">
+                    <button mat-button type="button" class="theme_btn btn_outline_primary"
+                        data-dismiss="modal">Cancel</button>
+                    <button mat-button type="submit" data-dismiss="modal" data-toggle="modal"
+                        data-target="#assignToStaffDone" class="theme_btn btn_primary" (click)="assignToStaff()"
+                        [disabled]="staffForm.invalid">Assign</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<div class="modal fade bsModal ch_modal done_modal_popup" id="assignToStaffDone" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+            </div>
+            <div class="modal-body text-center">
+                <h2><span *ngFor="let student of selectedStudent">{{ student?.first_name}} {{student?.last_name}}</span>
+                    has been assigned to <br>
+                    {{getStaffName(staffForm?.value?.staff_id)}}</h2>
+            </div>
+            <div class="modal-footer justify-content-center">
+                <button mat-button class="theme_btn btn_primary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Assign to Partner -->
+<div class="modal fade bsModal ch_modal" id="assignToPartner" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title " id="exampleModalLabel">Send to Placement Partners
+                    <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="M13.9997 25.6667C20.443 25.6667 25.6663 20.4434 25.6663 14C25.6663 7.55672 20.443 2.33337 13.9997 2.33337C7.55635 2.33337 2.33301 7.55672 2.33301 14C2.33301 20.4434 7.55635 25.6667 13.9997 25.6667Z"
+                            stroke="#464BA8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                        <path d="M14 18.6667V14" stroke="#464BA8" stroke-width="1.5" stroke-linecap="round"
+                            stroke-linejoin="round" />
+                        <path d="M14 9.33337H14.0132" stroke="#464BA8" stroke-width="1.5" stroke-linecap="round"
+                            stroke-linejoin="round" />
+                    </svg>
+                </h2>
+                <button mat-icon-button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <mat-icon>close</mat-icon>
+                </button>
+            </div>
+            <form>
+                <div class="modal-body pt-3">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label>Selected Candidate</label>
+                                <div class="form-control sendingTo">
+                                    <div class="email_sendTo" *ngFor="let student of selectedStudent">
+                                        <div class="profile">
+                                            <img *ngIf="student?.image" [src]="student?.image" alt="avatars">
+                                            <span *ngIf="!student?.image" class="text-uppercase">{{
+                                                student?.first_name[0] }} {{student?.last_name[0] }}</span>
+                                        </div>
+                                        <div class="d-inline-block">
+                                            <h5>{{ student?.first_name}} {{student?.last_name}}</h5>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label>Search Partners</label>
+                                <ng-select class="select_ng_custom row_select" [searchable]="true" [multiple]="false"
+                                    bindLabel="name" bindValue="id" [clearable]="false" placeholder="Select a Partner">
+                                    <ng-option value="Bob Harrison">
+                                        <div class="mb-0 row">
+                                            <div class="col-md-6">
+                                                <p class="mb-0">Career Success Australia</p>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <p class="mb-0"><span>Melbourne</span></p>
+                                            </div>
+                                            <div class="col-md-3 text-right">
+                                                <p class="mb-0"><span>Partner ID: 1513</span></p>
+                                            </div>
+                                        </div>
+                                    </ng-option>
+                                </ng-select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer justify-content-between">
+                    <button mat-button type="button" class="theme_btn btn_outline_primary"
+                        data-dismiss="modal">Cancel</button>
+                    <button mat-button type="submit" data-dismiss="modal" data-toggle="modal"
+                        data-target="#assignToPartnerDone" class="theme_btn btn_primary">Send Application</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<div class="modal fade bsModal ch_modal done_modal_popup" id="assignToPartnerDone" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+            </div>
+            <div class="modal-body text-center">
+                <h2>Nathan Jones has been assigned to <br>
+                    Career Success Australia </h2>
+            </div>
+            <div class="modal-footer justify-content-center">
+                <button mat-button class="theme_btn btn_primary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Assign to Workflow -->
+<div class="modal fade bsModal ch_modal" id="assignToPlacementType" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title " id="exampleModalLabel">Assign Placement Type</h2>
+                <button mat-icon-button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)=" currentStudent={}">
+                    <mat-icon>close</mat-icon>
+                </button>
+            </div>
+            <form [formGroup]="placementTypeForm">
+                <div class="modal-body pt-3">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label>Selected Candidate</label>
+                                <div class="form-control sendingTo border-0 shadow-none pl-0">
+                                    <div class="email_sendTo" *ngFor="let student of selectedStudent">
+                                        <div class="profile">
+                                            <img *ngIf="student?.image" [src]="student?.image" alt="avatars">
+                                            <span *ngIf="!student?.image" class="text-uppercase">{{
+                                                student?.first_name[0] }} {{student?.last_name[0] }}</span>
+                                        </div>
+                                        <div class="d-inline-block">
+                                            <h5>{{ student?.first_name}} {{student?.last_name}}</h5>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label>Placement Type</label>
+                                <!-- <ng-select class="select_ng_custom" [searchable]="false" [multiple]="false"
+                                    bindLabel="name" bindValue="id" [clearable]="false"
+                                    placeholder="Select a Placement Type" formControlName="placementType">
+                                    <ng-option [value]="placement.name" *ngFor="let placement of placementTypes">
+                                        {{placement.name}}
+                                    </ng-option>
+                                </ng-select> -->
+                                <ng-select class="select_ng_custom" [searchable]="false" [multiple]="false"
+                                    bindLabel="type"
+                                    bindValue="workflow_type_id" [clearable]="false"
+                                    placeholder="Please select one placement type"
+                                    formControlName="placement_type_id" (change)="selectPlacementType($event)">
+                                    <ng-option [value]="''" disabled selected>Please select one placement
+                                        type</ng-option>
+                                    <ng-option *ngFor="let pType of placementTypes"
+                                        [value]="pType.workflow_type_id">{{pType.type}}</ng-option>
+                                </ng-select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer justify-content-around">
+                    <button mat-button type="button" class="theme_btn btn_outline_primary"
+                        data-dismiss="modal" (click)=" currentStudent={}">Cancel</button>
+                        <!--   -->
+                    <button *ngIf="!setupHide" mat-button type="submit" data-dismiss="modal" data-toggle="modal"
+                        data-target="#assignToPlacementTypeDone" class="theme_btn btn_primary"
+                        [disabled]="placementTypeForm.invalid" (click)="assignPlacementType()">Assign</button>
+
+                    <button *ngIf="setupHide" mat-button type="submit" data-dismiss="modal" data-toggle="modal"
+                        data-target="#assignToPlacementTypeNext" class="theme_btn btn_primary"
+                        [disabled]="placementTypeForm.invalid" >Next</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<!-- Assign to Workflow -->
+<div class="modal fade bsModal ch_modal" id="assignToPlacementTypeNext" tabindex="-1" role="dialog"
+    aria-labelledby="assignToPlacementTypeNext" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header justify-content-center">
+                <h2 class="modal-title" id="exampleModalLabel">This student has previously been assigned {{(selectedStudent && selectedStudent[0]) ? selectedStudent[0]?.placementType:''}}
+
+                </h2>
+                <button mat-icon-button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <mat-icon>close</mat-icon>
+                </button>
+            </div>
+                <div class="modal-body pt-3">
+                    <div class="row">
+                        <div class="col-md-12 d-flex justify-content-center">
+                            <div class="form-group">
+                                <label>Selected Candidate</label>
+                                <div class="form-control sendingTo border-0 shadow-none pl-0">
+                                    <div class="email_sendTo" *ngFor="let student of selectedStudent">
+                                        <div class="profile">
+                                            <img *ngIf="student?.image" [src]="student?.image" alt="avatars">
+                                            <span *ngIf="!student?.image" class="text-uppercase">
+                                                {{ student?.first_name[0] }} {{ student?.last_name[0] }}
+                                            </span>
+                                        </div>
+                                        <div class="d-inline-block">
+                                            <h5>{{ student?.first_name}} {{ student?.last_name}}</h5>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12 mb-3 d-flex justify-content-center">
+                            Please select where they should begin their progress.
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label>Student Progress</label>
+                                <ng-select class="select_ng_custom" 
+                                    [searchable]="false" 
+                                    [multiple]="false"
+                                    bindLabel="type"
+                                    bindValue="workflow_type_id" 
+                                    [clearable]="false"
+                                    placeholder="Please select one Student Progress"
+                                    [(ngModel)]="student_progress">
+                                    <ng-option [value]="'continue'">Continue their previous progress</ng-option>
+                                    <ng-option [value]="'beginning'">Start over from the beginning</ng-option>
+                                </ng-select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer justify-content-around">
+                    <button mat-button type="button" class="theme_btn btn_outline_primary" data-dismiss="modal">Cancel</button>
+            
+                    <!-- Button is disabled until student_progress is selected -->
+                    <button mat-button 
+                        data-dismiss="modal" 
+                        data-toggle="modal"
+                        data-target="#assignToPlacementTypeDone" 
+                        class="theme_btn btn_primary"
+                        [disabled]="!student_progress" 
+                        (click)="assignPlacementType()">
+                        Confirm
+                    </button>
+                </div>
+            
+        </div>
+    </div>
+</div>
+
+<div class="modal fade bsModal ch_modal done_modal_popup" id="assignToPlacementTypeDone" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+            </div>
+            <div class="modal-body text-center">
+                <h2><span *ngFor="let student of selectedStudent">{{ student?.first_name}}
+                        {{student?.last_name}}’</span> Workflow has been updated </h2>
+            </div>
+            <div class="modal-footer justify-content-center">
+                <button mat-button class="theme_btn btn_primary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Submit Apllication -->
+
+<div class="modal fade bsModal ch_modal" id="submitApplication" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title " id="exampleModalLabel">Submit Application
+
+                </h2>
+                <button mat-icon-button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <mat-icon>close</mat-icon>
+                </button>
+            </div>
+            <form>
+                <div class="modal-body pt-3">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label>Selected Candidate</label>
+                                <div class="form-control sendingTo">
+                                    <div class="email_sendTo">
+                                        <div class="profile">
+                                            <img src="../../../../assets/img/avatars/2.jpg" alt="avatars">
+                                        </div>
+                                        <div class="d-inline-block">
+                                            <h5>Nathan Jones</h5>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label>Search Vacancies</label>
+                                <ng-select class="select_ng_custom row_select" [searchable]="false" [multiple]="true"
+                                    bindLabel="name" bindValue="id" [clearable]="false" placeholder="Search">
+                                    <ng-option value="Bob Harrison">
+                                        <div class="mb-0 row">
+                                            <div class="col-md-6">
+                                                <p class="mb-0">UI Designer</p>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <p class="mb-0"><span>Job ID: 12345</span></p>
+                                            </div>
+                                            <div class="col-md-3 text-right">
+                                                <p class="mb-0"><span>Adobe, Melbourne</span></p>
+                                            </div>
+                                        </div>
+                                    </ng-option>
+                                </ng-select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer justify-content-around">
+                    <button mat-button type="button" class="theme_btn btn_outline_primary"
+                        data-dismiss="modal">Cancel</button>
+                    <button mat-button type="submit" data-dismiss="modal" data-toggle="modal"
+                        data-target="#submitApplicationDone" class="theme_btn btn_primary">Send Application</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<div class="modal fade bsModal ch_modal done_modal_popup" id="submitApplicationDone" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+            </div>
+            <div class="modal-body text-center">
+                <h2>Vacancies have been sent to the candidate.</h2>
+            </div>
+            <div class="modal-footer justify-content-center">
+                <button mat-button class="theme_btn btn_primary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Lock Candidate Popup -->
+<div class="modal fade bsModal ch_modal" id="lockCandidate" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-body lockCandidate_modal text-center ">
+                <h3>This candidate is now locked.</h3>
+                <p>This means they cannot be referred to other companies.</p>
+                <div class="user_profiles d-inline-flex align-items-center justify-content-center">
+                    <div class="profile">
+                        <img *ngIf="selectedRecords[0]?.image" [src]="selectedRecords[0]?.image" alt="avatars">
+                        <!-- <span>nk</span> -->
+                    </div>
+                    <span class="d-inline-block ml-2" *ngIf="selectedRecords.length > 0">
+                        {{selectedRecords[0].first_name}} {{selectedRecords[0].last_name}}
+                    </span>
+                </div>
+                <h3 class="mb-0">Do you want to confirm this as a placement?</h3>
+            </div>
+            <div class="modal-footer justify-content-center">
+                <button #closeLockCandidateModal mat-button type="button" class="theme_btn btn_outline_primary"
+                    data-dismiss="modal">No</button>
+                <button mat-button type="submit" class="theme_btn btn_primary"
+                    (click)="onLockStudent(true)">Yes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- UnLock Candidate Popup -->
+<div class="modal fade bsModal ch_modal" id="unLockCandidate" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-body lockCandidate_modal text-center ">
+                <h3>Are you sure you want to unlock this candidate?</h3>
+                <p>This means they can once again be referred to employers.</p>
+                <div class="user_profiles d-inline-flex align-items-center justify-content-center">
+                    <div class="profile">
+                        <img *ngIf="selectedRecords[0]?.image" [src]="selectedRecords[0]?.image" alt="avatars">
+                        <!-- <span>nk</span> -->
+                    </div>
+                    <span class="d-inline-block ml-2" *ngIf="selectedRecords.length > 0">
+                        {{selectedRecords[0].first_name}} {{selectedRecords[0].last_name}}
+                    </span>
+                </div>
+            </div>
+            <div class="modal-footer justify-content-center">
+                <button #closeUnLockCandidateModal mat-button type="button" class="theme_btn btn_outline_primary"
+                    data-dismiss="modal">No</button>
+                <button mat-button type="submit" class="theme_btn btn_primary"
+                    (click)="onLockStudent(false)">Yes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade bsModal ch_modal new_form_select_modal" id="newStudent" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title" id="exampleModalLabel">Add Student</h2>
+                <button type="button" mat-icon-button id="closeModal" class="close" data-dismiss="modal"
+                    aria-label="Close">
+                    <mat-icon>close</mat-icon>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form_card">
+                            <figure>
+                                <img src="../../../../assets/img/student-search-database.svg" alt="search">
+                            </figure>
+                            <div class="content">
+                                <h5>Search Database</h5>
+                                <p>Browse through the database to search for students based on the selected criteria.
+                                </p>
+                                <button mat-button class="theme_btn btn_primary" routerLink="/"
+                                    data-dismiss="modal">Select</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form_card">
+                            <figure>
+                                <img src="../../../../assets/img/student-excel.svg" alt="excel">
+                            </figure>
+                            <div class="content">
+                                <h5>Import via Excel</h5>
+                                <p>Use a pre-determined list of columns to
+                                    import students by uploading via excel.</p>
+                                <button mat-button class="theme_btn btn_primary" routerLink="/"
+                                    data-dismiss="modal">Select</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form_card">
+                            <figure>
+                                <img src="../../../../assets/img/student-manual-add.svg" alt="multi">
+                            </figure>
+                            <div class="content">
+                                <h5>Manually Add</h5>
+                                <p>Add students directly by filling in a pre-determined table.</p>
+                                <button mat-button class="theme_btn btn_primary" routerLink="/"
+                                    data-dismiss="modal">Select</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade bsModal ch_modal filter_modals" id="filter" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header d-flex justify-content-between">
+                <button mat-icon-button class="close" data-dismiss="modal" aria-label="Close">
+                    <mat-icon>close</mat-icon>
+                </button>
+                <h2 class="modal-title">Filters</h2>
+                <button mat-button class="theme_btn btn_primary" data-dismiss="modal" (click)=" this.cleardata();onApplyFilter()">Apply
+                    Filter</button>
+            </div>
+            <div class="modal-body pt-3 pb-5">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h3 class="filter_title">Parameters</h3>
+                    </div>
+                    <div class="col-md-5">
+                        <div class="filter_sidebar">
+                            <ul class="fix_hight" >
+                                <li *ngFor="let filter of filters" [ngClass]="{'active': activeFilter === filter.field}"
+                                    class="active"
+                                    (click)="applyFilter(filter)">
+                                    <div class="check_box">
+                                        <mat-checkbox
+                                            [checked]="filter.selected" [(ngModel)]="filter.selected" (change)="onCheckboxChange($event, filter)"></mat-checkbox>
+                                        <span class="check_box_label">{{filter.name}}</span>
+                                    </div>
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M9 18L15 12L9 6" stroke="currentColor" stroke-width="2"
+                                            stroke-linecap="round" stroke-linejoin="round" />
+                                    </svg>
+                                </li>
+
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-md-7">
+                        <div class="right_container">
+                            <ng-container *ngIf="activeFilter === 'placementGroups'">
+                                <h4 class="title">Placement Group</h4>
+                                <div class="form-group">
+                                    <ng-select [searchable]="false" [multiple]="true" bindLabel="title" bindValue="_id"
+                                        [clearable]="false" placeholder="Select Placement Groups"
+                                        [(ngModel)]="filterParameters.placementGroups">
+                                        <ng-option *ngFor="let placementGroups of studentFilters?.placementGroups"
+                                            [value]="placementGroups._id">{{placementGroups.title}}</ng-option>
+                                    </ng-select>
+                                    <!-- <div class="custom_chip_list">
+                                        <span class="custom_chip">
+                                            <span>UI/UX Group</span>
+                                            <svg class="close_icon_chip" xmlns="http://www.w3.org/2000/svg" width="14"
+                                                height="14" viewBox="0 0 14 14" fill="none">
+                                                <path fill-rule="evenodd" clip-rule="evenodd"
+                                                    d="M7 8.73459L1.73459 14L0 12.2654L5.26541 7L0 1.73459L1.73459 0L7 5.26541L12.2654 0L14 1.73459L8.73459 7L14 12.2654L12.2654 14L7 8.73459Z"
+                                                    fill="currentColor" />
+                                            </svg>
+                                        </span>
+                                    </div> -->
+                                </div>
+                            </ng-container>
+                            <ng-container *ngIf="activeFilter === 'major'">
+                                <h4 class="title">Major</h4>
+                                <div class="form-group">
+                                    <!-- <input type="text" class="form-control" placeholder="Add Major"
+                                        (keydown.enter)="onSelectMajor($event)"> -->
+                                    <ng-select [searchable]="false" [multiple]="true" bindLabel="name" bindValue="id"
+                                        [clearable]="false"
+                                        placeholder="Select Major" [(ngModel)]="filterParameters.major">
+                                        <ng-option *ngFor="let major of studentFilters?.major"
+                                            [value]="major">{{major}}</ng-option>
+                                    </ng-select>
+                                    <!-- <div class="custom_chip_list">
+                                        <span class="custom_chip"
+                                            *ngFor="let major of filterParameters.major; let i = index">
+                                            <span>{{major}}</span>
+                                            <svg (click)="removeFilterItem(i, 'major')" class="close_icon_chip"
+                                                xmlns="http://www.w3.org/2000/svg" width="14" height="14"
+                                                viewBox="0 0 14 14" fill="none">
+                                                <path fill-rule="evenodd" clip-rule="evenodd"
+                                                    d="M7 8.73459L1.73459 14L0 12.2654L5.26541 7L0 1.73459L1.73459 0L7 5.26541L12.2654 0L14 1.73459L8.73459 7L14 12.2654L12.2654 14L7 8.73459Z"
+                                                    fill="currentColor" />
+                                            </svg>
+                                        </span>
+                                    </div> -->
+                                </div>
+                            </ng-container>
+
+
+                            <ng-container *ngIf="activeFilter === 'forms'">
+                                <h4 class="title">Forms</h4>
+                                <div class="form-group">
+                                    <ng-select
+                                        [searchable]="false"
+                                        [multiple]="false"
+                                        bindLabel="name"
+                                        bindValue="_id"
+                                        [clearable]="false"
+                                        placeholder="Select a form"
+                                        [(ngModel)]="filterParameters.form_id"
+                                        (ngModelChange)="onFormChange($event)">
+
+                                        <ng-option *ngFor="let major of formOptions" [value]="major.task_id">
+                                            {{ major.name }}
+                                        </ng-option>
+                                    </ng-select>
+
+                                </div>
+                                 <div class="form-group" *ngIf="filterParameters.form_id">
+                                    <ng-select [searchable]="false" [multiple]="false" bindLabel="name" bindValue="id"
+                                        [clearable]="false"
+                                        placeholder="Select a field" [(ngModel)]="filterParameters.form_field_name">
+                                        <ng-option *ngFor="let major of fieldName"
+                                            [value]="major.value">{{major.page?major.page+' - ':''}} {{major.field}}</ng-option>
+                                    </ng-select>
+                                </div>
+                                
+                                  <div class="date_group file_upload_date flex-row" *ngIf="filterParameters.form_field_name">
+                                    <div class="form-group mb-0 custom_datepicker w-100">
+                                        <div class="custom_datepicker_container">
+                                            <input
+                                                type="number"
+                                                placeholder="Select Minimum Value"
+                                                class="form-control"
+                                                [(ngModel)]="filterParameters.form_score_min"/>
+                                        </div>
+                                    </div>
+                                    <span class="to " style="width: 90px;">to</span>
+                                    <div class="form-group custom_datepicker  w-100">
+                                        <div class="custom_datepicker_container">
+                                           <input
+                                                type="number"
+                                                placeholder="Select Maximum Value"
+                                                class="form-control"
+                                                [(ngModel)]="filterParameters.form_score_max"/>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </ng-container>
+
+
+                            <ng-container *ngIf="activeFilter === 'priority'">
+                                <h4 class="title">Select Priority</h4>
+                                <div class="form-group">
+                                    <ng-select [searchable]="false" [multiple]="true" bindLabel="name" bindValue="id"
+                                        [clearable]="false" placeholder="Select Priority"
+                                        [(ngModel)]="filterParameters.priority">
+                                        <ng-option *ngFor="let priority of studentFilters?.priority"
+                                            [value]="priority">{{priority}}</ng-option>
+                                    </ng-select>
+                                    <!-- <div class="custom_chip_list">
+                                        <span class="custom_chip"
+                                            *ngFor="let priority of filterParameters.priority; let i = index">
+                                            <span>{{priority}}</span>
+                                            <svg (click)="removeFilterItem(i, 'priority')" class="close_icon_chip"
+                                                xmlns="http://www.w3.org/2000/svg" width="14" height="14"
+                                                viewBox="0 0 14 14" fill="none">
+                                                <path fill-rule="evenodd" clip-rule="evenodd"
+                                                    d="M7 8.73459L1.73459 14L0 12.2654L5.26541 7L0 1.73459L1.73459 0L7 5.26541L12.2654 0L14 1.73459L8.73459 7L14 12.2654L12.2654 14L7 8.73459Z"
+                                                    fill="currentColor" />
+                                            </svg>
+                                        </span>
+                                    </div> -->
+                                </div>
+                            </ng-container>
+                            <ng-container *ngIf="activeFilter === 'status'">
+                                <h4 class="title">Select Status</h4>
+                                <div class="form-group">
+                                    <ng-select [searchable]="false" [multiple]="true" bindLabel="name" bindValue="id"
+                                        [clearable]="false" placeholder="Select Status"
+                                        [(ngModel)]="filterParameters.status">
+                                        <ng-option *ngFor="let status of studentFilters?.status"
+                                            [value]="status">{{status}}</ng-option>
+                                    </ng-select>
+                                    <!-- <div class="custom_chip_list">
+                                        <span class="custom_chip"
+                                            *ngFor="let status of filterParameters.status; let i = index">
+                                            <span>{{status}}</span>
+                                            <svg (click)="removeFilterItem(i, 'status')" class="close_icon_chip"
+                                                xmlns="http://www.w3.org/2000/svg" width="14" height="14"
+                                                viewBox="0 0 14 14" fill="none">
+                                                <path fill-rule="evenodd" clip-rule="evenodd"
+                                                    d="M7 8.73459L1.73459 14L0 12.2654L5.26541 7L0 1.73459L1.73459 0L7 5.26541L12.2654 0L14 1.73459L8.73459 7L14 12.2654L12.2654 14L7 8.73459Z"
+                                                    fill="currentColor" />
+                                            </svg>
+                                        </span>
+                                    </div> -->
+                                </div>
+                            </ng-container>
+                            <ng-container *ngIf="activeFilter === 'assinged'">
+                                <h4 class="title">Select Staff Member</h4>
+                                <div class="form-group">
+                                    <ng-select [searchable]="false" [multiple]="true" bindLabel="name" bindValue="id"
+                                        [clearable]="false" placeholder="Select a Staff Member">
+                                        <ng-option value="Adi Baskara">Adi Baskara</ng-option>
+
+                                    </ng-select>
+                                    <!-- <div class="custom_chip_list">
+                                        <span class="custom_chip">
+                                            <span>Adi Baskara</span>
+                                            <svg class="close_icon_chip" xmlns="http://www.w3.org/2000/svg" width="14"
+                                                height="14" viewBox="0 0 14 14" fill="none">
+                                                <path fill-rule="evenodd" clip-rule="evenodd"
+                                                    d="M7 8.73459L1.73459 14L0 12.2654L5.26541 7L0 1.73459L1.73459 0L7 5.26541L12.2654 0L14 1.73459L8.73459 7L14 12.2654L12.2654 14L7 8.73459Z"
+                                                    fill="currentColor" />
+                                            </svg>
+                                        </span>
+                                    </div> -->
+                                </div>
+                            </ng-container>
+                            <ng-container *ngIf="activeFilter === 'enrolment_date'">
+                                <h4 class="title">Date of Enrolment</h4>
+                                <div class="date_group file_upload_date">
+                                    <div class="form-group mb-0 custom_datepicker">
+                                        <div class="custom_datepicker_container">
+                                            <input formControlName="start_date" placeholder="Select Starting Date"
+                                                class="form-control" [matDatepicker]="taskStartPicker">
+                                            <mat-datepicker-toggle matSuffix [for]="taskStartPicker">
+                                                <svg matDatepickerToggleIcon width="18" height="18" viewBox="0 0 18 18"
+                                                    fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <path
+                                                        d="M14.25 3H3.75C2.92157 3 2.25 3.67157 2.25 4.5V15C2.25 15.8284 2.92157 16.5 3.75 16.5H14.25C15.0784 16.5 15.75 15.8284 15.75 15V4.5C15.75 3.67157 15.0784 3 14.25 3Z"
+                                                        stroke="#2B2A35" stroke-width="1.5" stroke-linecap="round"
+                                                        stroke-linejoin="round" />
+                                                    <path d="M12 1.5V4.5" stroke="#2B2A35" stroke-width="1.5"
+                                                        stroke-linecap="round" stroke-linejoin="round" />
+                                                    <path d="M6 1.5V4.5" stroke="#2B2A35" stroke-width="1.5"
+                                                        stroke-linecap="round" stroke-linejoin="round" />
+                                                    <path d="M2.25 7.5H15.75" stroke="#2B2A35" stroke-width="1.5"
+                                                        stroke-linecap="round" stroke-linejoin="round" />
+                                                </svg>
+                                            </mat-datepicker-toggle>
+                                            <mat-datepicker #taskStartPicker></mat-datepicker>
+                                        </div>
+                                    </div>
+                                    <span class="to">to</span>
+                                    <div class="form-group custom_datepicker">
+                                        <div class="custom_datepicker_container">
+                                            <input formControlName="End_date" placeholder="Select End Date"
+                                                class="form-control" [matDatepicker]="taskEndPicker">
+                                            <mat-datepicker-toggle matSuffix [for]="taskEndPicker">
+                                                <svg matDatepickerToggleIcon width="18" height="18" viewBox="0 0 18 18"
+                                                    fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <path
+                                                        d="M14.25 3H3.75C2.92157 3 2.25 3.67157 2.25 4.5V15C2.25 15.8284 2.92157 16.5 3.75 16.5H14.25C15.0784 16.5 15.75 15.8284 15.75 15V4.5C15.75 3.67157 15.0784 3 14.25 3Z"
+                                                        stroke="#2B2A35" stroke-width="1.5" stroke-linecap="round"
+                                                        stroke-linejoin="round" />
+                                                    <path d="M12 1.5V4.5" stroke="#2B2A35" stroke-width="1.5"
+                                                        stroke-linecap="round" stroke-linejoin="round" />
+                                                    <path d="M6 1.5V4.5" stroke="#2B2A35" stroke-width="1.5"
+                                                        stroke-linecap="round" stroke-linejoin="round" />
+                                                    <path d="M2.25 7.5H15.75" stroke="#2B2A35" stroke-width="1.5"
+                                                        stroke-linecap="round" stroke-linejoin="round" />
+                                                </svg>
+                                            </mat-datepicker-toggle>
+                                            <mat-datepicker #taskEndPicker></mat-datepicker>
+                                        </div>
+                                    </div>
+                                </div>
+                            </ng-container>
+                            <!-- <ng-container *ngIf="activeFilter === 'post_code'">
+                                <h4 class="title">Location</h4>
+                                <div class="form-group">
+                                    <ng-select class="mb-2" [searchable]="false" [multiple]="true" bindLabel="name"
+                                        bindValue="id" [clearable]="false" placeholder="Select" [(ngModel)]="filterParameters.post_code">
+                                        <ng-option *ngFor="let post_code of studentFilters?.post_code" [value]="post_code">{{post_code}}</ng-option>
+                                    </ng-select>
+                                </div>
+                            </ng-container> -->
+                            <ng-container *ngIf="activeFilter === 'approvals'">
+                                <h4 class="title">Approvals</h4>
+                                <div class="form-group">
+                                    <ng-select [searchable]="false" [multiple]="false" bindLabel="name" bindValue="id"
+                                        [clearable]="false" placeholder="No. of Pending File">
+                                        <ng-option value="0">0</ng-option>
+                                        <ng-option value="1-3">1-3</ng-option>
+                                        <ng-option value="4-7">4-7</ng-option>
+                                        <ng-option value="8+">8+</ng-option>
+                                    </ng-select>
+                                    <!-- <div class="custom_chip_list">
+                                        <span class="custom_chip">
+                                            <span>ghadfgsd</span>
+                                            <svg class="close_icon_chip" xmlns="http://www.w3.org/2000/svg" width="14"
+                                                height="14" viewBox="0 0 14 14" fill="none">
+                                                <path fill-rule="evenodd" clip-rule="evenodd"
+                                                    d="M7 8.73459L1.73459 14L0 12.2654L5.26541 7L0 1.73459L1.73459 0L7 5.26541L12.2654 0L14 1.73459L8.73459 7L14 12.2654L12.2654 14L7 8.73459Z"
+                                                    fill="currentColor" />
+                                            </svg>
+                                        </span>
+                                    </div> -->
+                                </div>
+                            </ng-container>
+                            <!-- <ng-container *ngIf="activeFilter === 'monthly_cohort'">
+                                <h4 class="title">Monthly Cohort</h4>
+                                <div class="date_group file_upload_date">
+                                    <div class="form-group mb-0 custom_datepicker">
+                                        <div class="custom_datepicker_container">
+                                            <input [(ngModel)]="filterParameters.monthly_cohort_sdate" placeholder="Select Starting Date"
+                                                class="form-control" [matDatepicker]="startDatePicker">
+                                            <mat-datepicker-toggle matSuffix [for]="startDatePicker">
+                                                <svg matDatepickerToggleIcon width="18" height="18" viewBox="0 0 18 18"
+                                                    fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <path
+                                                        d="M14.25 3H3.75C2.92157 3 2.25 3.67157 2.25 4.5V15C2.25 15.8284 2.92157 16.5 3.75 16.5H14.25C15.0784 16.5 15.75 15.8284 15.75 15V4.5C15.75 3.67157 15.0784 3 14.25 3Z"
+                                                        stroke="#2B2A35" stroke-width="1.5" stroke-linecap="round"
+                                                        stroke-linejoin="round" />
+                                                    <path d="M12 1.5V4.5" stroke="#2B2A35" stroke-width="1.5"
+                                                        stroke-linecap="round" stroke-linejoin="round" />
+                                                    <path d="M6 1.5V4.5" stroke="#2B2A35" stroke-width="1.5"
+                                                        stroke-linecap="round" stroke-linejoin="round" />
+                                                    <path d="M2.25 7.5H15.75" stroke="#2B2A35" stroke-width="1.5"
+                                                        stroke-linecap="round" stroke-linejoin="round" />
+                                                </svg>
+                                            </mat-datepicker-toggle>
+                                            <mat-datepicker #startDatePicker></mat-datepicker>
+                                        </div>
+                                    </div>
+                                    <span class="to">to</span>
+                                    <div class="form-group custom_datepicker">
+                                        <div class="custom_datepicker_container">
+                                            <input [(ngModel)]="filterParameters.monthly_cohort_edate" placeholder="Select End Date"
+                                                class="form-control" [matDatepicker]="endDatePicker">
+                                            <mat-datepicker-toggle matSuffix [for]="endDatePicker">
+                                                <svg matDatepickerToggleIcon width="18" height="18" viewBox="0 0 18 18"
+                                                    fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <path
+                                                        d="M14.25 3H3.75C2.92157 3 2.25 3.67157 2.25 4.5V15C2.25 15.8284 2.92157 16.5 3.75 16.5H14.25C15.0784 16.5 15.75 15.8284 15.75 15V4.5C15.75 3.67157 15.0784 3 14.25 3Z"
+                                                        stroke="#2B2A35" stroke-width="1.5" stroke-linecap="round"
+                                                        stroke-linejoin="round" />
+                                                    <path d="M12 1.5V4.5" stroke="#2B2A35" stroke-width="1.5"
+                                                        stroke-linecap="round" stroke-linejoin="round" />
+                                                    <path d="M6 1.5V4.5" stroke="#2B2A35" stroke-width="1.5"
+                                                        stroke-linecap="round" stroke-linejoin="round" />
+                                                    <path d="M2.25 7.5H15.75" stroke="#2B2A35" stroke-width="1.5"
+                                                        stroke-linecap="round" stroke-linejoin="round" />
+                                                </svg>
+                                            </mat-datepicker-toggle>
+                                            <mat-datepicker #endDatePicker></mat-datepicker>
+                                        </div>
+                                    </div>
+                                </div>
+                            </ng-container> -->
+                            <ng-container *ngIf="activeFilter === 'campus'">
+                                <h4 class="title">Campus</h4>
+                                <div class="form-group">
+                                    <ng-select [searchable]="false" [multiple]="true" bindLabel="name" bindValue="id"
+                                        [clearable]="false" placeholder="Select Campus">
+                                        <ng-option value="Parramata Campus">Parramata Campus</ng-option>
+
+                                    </ng-select>
+                                    <!-- <div class="custom_chip_list">
+                                        <span class="custom_chip">
+                                            <span>Adi Baskara</span>
+                                            <svg class="close_icon_chip" xmlns="http://www.w3.org/2000/svg" width="14"
+                                                height="14" viewBox="0 0 14 14" fill="none">
+                                                <path fill-rule="evenodd" clip-rule="evenodd"
+                                                    d="M7 8.73459L1.73459 14L0 12.2654L5.26541 7L0 1.73459L1.73459 0L7 5.26541L12.2654 0L14 1.73459L8.73459 7L14 12.2654L12.2654 14L7 8.73459Z"
+                                                    fill="currentColor" />
+                                            </svg>
+                                        </span>
+                                    </div> -->
+                                </div>
+                            </ng-container>
+
+                             <ng-container *ngIf="activeFilter === 'interview_score'">
+                                <h4 class="title">Interview Score</h4>
+                                <div class="date_group file_upload_date flex-column" >
+                                    <div class="form-group mb-0 custom_datepicker w-100">
+                                        <div class="custom_datepicker_container">
+                                            <input
+                                                type="text"
+                                                inputmode="decimal"
+                                                placeholder="Minimum Interview Score (1–5)"
+                                                class="form-control"
+                                                [(ngModel)]="filterParameters.interview_score_min"
+                                                (input)="onScoreInput($event, 'min')"
+                                                />
+                                            <!-- <input
+                                                type="number"
+                                                min="1"
+                                                max="5"
+                                                placeholder="Minimum Interview Score (1 of 5)"
+                                                class="form-control"
+                                                [(ngModel)]="filterParameters.interview_score_min" (keydown)="preventInvalidScore($event)"/> -->
+                                        </div>
+                                    </div>
+
+                                    <span class="to  w-100">to</span>
+                                    <div class="form-group custom_datepicker  w-100">
+                                        <div class="custom_datepicker_container">
+                                           <input
+                                                type="text"
+                                                inputmode="decimal"
+                                                placeholder="Maximum Interview Score (1–5)"
+                                                class="form-control"
+                                                [(ngModel)]="filterParameters.interview_score_max"
+                                                (input)="onScoreInput($event, 'max')"
+                                                />
+
+                                           <!-- <input
+                                                type="number"
+                                                min="1"
+                                                max="5"
+                                                placeholder="Maximum Interview Score (1 of 5)"
+                                                class="form-control"
+                                                [(ngModel)]="filterParameters.interview_score_max" (keydown)="preventInvalidScore($event)"/> -->
+
+                                        </div>
+                                    </div>
+                                      <small class="text-danger" *ngIf="scoreError">
+                                        Minimum score must be less than or equal to maximum score (1–5).
+                                    </small>
+                                </div>
+                            </ng-container>
+
+
+                             <ng-container *ngIf="activeFilter === 'written_assessment'">
+                                <h4 class="title">Written assessment</h4>
+                                <div class="date_group file_upload_date flex-column">
+                                    <div class="form-group mb-0 custom_datepicker w-100">
+                                        <div class="custom_datepicker_container">
+                                            <input placeholder="Minimum Written assessment" class="form-control"
+                                                [(ngModel)]="filterParameters.written_assessment_min">
+                                        </div>
+                                    </div>
+                                    <span class="to  w-100">to</span>
+                                    <div class="form-group custom_datepicker  w-100">
+                                        <div class="custom_datepicker_container">
+                                            <input placeholder="Maximum Written assessment" class="form-control"
+                                                [(ngModel)]="filterParameters.written_assessment_max">
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </ng-container>
+
+                            
+                            <!-- <ng-container *ngIf="activeFilter === 'resume_level'">
+                                <h4 class="title">Resume Level</h4>
+                                <div class="form-group">
+                                    <ng-select [searchable]="false" [multiple]="true" bindLabel="name" bindValue="id"
+                                        [clearable]="false" placeholder="Select Level" [(ngModel)]="filterParameters.resume_level">
+                                        <ng-option *ngFor="let resume_level of studentFilters?.resume_level" [value]="resume_level">{{resume_level}}</ng-option>
+                                    </ng-select>
+                                </div>
+                            </ng-container> -->
+                            <ng-container *ngIf="activeFilter === 'area'">
+                                <h4 class="title">Area</h4>
+                                <div class="form-group">
+                                    <ng-select [searchable]="false" [multiple]="true" bindLabel="name" bindValue="id"
+                                        [clearable]="false" placeholder="Select Area"
+                                        [(ngModel)]="filterParameters.area">
+                                        <ng-option *ngFor="let area of studentFilters?.area"
+                                            [value]="area">{{area}}</ng-option>
+                                    </ng-select>
+                                    <!-- <input type="text" placeholder="Search Area" class="form-control">
+                                    <div class="custom_chip_list">
+                                        <span class="custom_chip">
+                                            <span>Computer Engineering</span>
+                                            <svg class="close_icon_chip" xmlns="http://www.w3.org/2000/svg" width="14"
+                                                height="14" viewBox="0 0 14 14" fill="none">
+                                                <path fill-rule="evenodd" clip-rule="evenodd"
+                                                    d="M7 8.73459L1.73459 14L0 12.2654L5.26541 7L0 1.73459L1.73459 0L7 5.26541L12.2654 0L14 1.73459L8.73459 7L14 12.2654L12.2654 14L7 8.73459Z"
+                                                    fill="currentColor" />
+                                            </svg>
+                                        </span>
+                                    </div> -->
+                                </div>
+                            </ng-container>
+                            <ng-container *ngIf="activeFilter === 'skills'">
+                                <h4 class="title">Skills</h4>
+                                <div class="form-group">
+                                    <input type="text" placeholder="Search Skills" class="form-control">
+                                    <div class="custom_chip_list">
+                                        <span class="custom_chip">
+                                            <span>Adobe Photoshop</span>
+                                            <svg class="close_icon_chip" xmlns="http://www.w3.org/2000/svg" width="14"
+                                                height="14" viewBox="0 0 14 14" fill="none">
+                                                <path fill-rule="evenodd" clip-rule="evenodd"
+                                                    d="M7 8.73459L1.73459 14L0 12.2654L5.26541 7L0 1.73459L1.73459 0L7 5.26541L12.2654 0L14 1.73459L8.73459 7L14 12.2654L12.2654 14L7 8.73459Z"
+                                                    fill="currentColor" />
+                                            </svg>
+                                        </span>
+                                    </div>
+                                </div>
+                            </ng-container>
+                            <!-- <ng-container *ngIf="activeFilter === 'placement_doc_received'">
+                                <h4 class="title">Placement Document Status</h4>
+                                <div class="form-group">
+                                    <ng-select [searchable]="false" [multiple]="true" bindLabel="name" bindValue="id"
+                                        [clearable]="false" placeholder="Select Status" [(ngModel)]="filterParameters.placement_doc_received">
+                                        <ng-option *ngFor="let doc of studentFilters?.placement_doc_received" [value]="doc">{{doc}}</ng-option>
+                                    </ng-select>
+                                </div>
+                            </ng-container> -->
+                            <ng-container *ngIf="activeFilter === 'course_code'">
+                                <h4 class="title">Course Code</h4>
+                                <div class="form-group">
+                                    <ng-select [searchable]="false" [multiple]="true" bindLabel="name" bindValue="id"
+                                        [clearable]="false" placeholder="Select Course Code"
+                                        [(ngModel)]="filterParameters.course_code">
+                                        <ng-option *ngFor="let course_code of studentFilters?.course_code"
+                                            [value]="course_code">{{course_code}}</ng-option>
+                                    </ng-select>
+                                    <!-- <div class="custom_chip_list">
+                                        <span class="custom_chip">
+                                            <span>PYPIT</span>
+                                            <svg class="close_icon_chip" xmlns="http://www.w3.org/2000/svg" width="14"
+                                                height="14" viewBox="0 0 14 14" fill="none">
+                                                <path fill-rule="evenodd" clip-rule="evenodd"
+                                                    d="M7 8.73459L1.73459 14L0 12.2654L5.26541 7L0 1.73459L1.73459 0L7 5.26541L12.2654 0L14 1.73459L8.73459 7L14 12.2654L12.2654 14L7 8.73459Z"
+                                                    fill="currentColor" />
+                                            </svg>
+                                        </span>
+                                    </div> -->
+                                </div>
+                            </ng-container>
+                            <ng-container *ngIf="activeFilter === 'placementType'">
+                                <h4 class="title">Placement Type</h4>
+                                <div class="form-group">
+                                    <ng-select [searchable]="false" [multiple]="true" bindLabel="name" bindValue="id"
+                                        [clearable]="false" placeholder="Select Placement Type"
+                                        [(ngModel)]="filterParameters.placementType">
+                                        <ng-option *ngFor="let placementType of studentFilters?.placementType"
+                                            [value]="placementType">{{placementType}}</ng-option>
+                                    </ng-select>
+                                    <!-- <div class="custom_chip_list">
+                                        <span class="custom_chip">
+                                            <span>Provider Placed</span>
+                                            <svg class="close_icon_chip" xmlns="http://www.w3.org/2000/svg" width="14"
+                                                height="14" viewBox="0 0 14 14" fill="none">
+                                                <path fill-rule="evenodd" clip-rule="evenodd"
+                                                    d="M7 8.73459L1.73459 14L0 12.2654L5.26541 7L0 1.73459L1.73459 0L7 5.26541L12.2654 0L14 1.73459L8.73459 7L14 12.2654L12.2654 14L7 8.73459Z"
+                                                    fill="currentColor" />
+                                            </svg>
+                                        </span>
+                                    </div> -->
+                                </div>
+                            </ng-container>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade bsModal ch_modal view_all_contact_popup" id="studentVacancyModal" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>{{studentDetail?.first_name}}'s Allocations</h2>
+                <button type="button" mat-icon-button id="closeModal" class="close" data-dismiss="modal"
+                    aria-label="Close">
+                    <mat-icon>close</mat-icon>
+                </button>
+            </div>
+            <form>
+                <div class="modal-body pt-3">
+                    <div class="table-responsive manage_table_scroll position-relative" >
+                        <table mat-table [dataSource]="vacancyStudentDetail" matSort class="ch_table">
+                            <ng-container matColumnDef="company_name">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header>Company Name</th>
+                                <td mat-cell *matCellDef="let row">{{row.company_name}}
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="state">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header>State</th>
+                                <td mat-cell *matCellDef="let row">{{row.state}}
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="job_title">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header>Vacancy Name</th>
+                                <td mat-cell *matCellDef="let row">{{row.job_title}}
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="status">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header>Status</th>
+                                <td mat-cell *matCellDef="let row">
+                                    {{row.status}}
+                                </td>
+                            </ng-container>
+                            <tr mat-header-row *matHeaderRowDef="studentVacancyColumns"></tr>
+                            <tr mat-row *matRowDef="let row; columns: studentVacancyColumns;"></tr>
+                        </table>
+                    </div>
+                </div>
+                <div class="modal-footer justify-content-center">
+                    <button mat-button data-dismiss="modal" class="theme_btn btn_primary">Close</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade bsModal ch_modal" id="terminatePLacement" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content disapprove_modal">
+            <div class="modal-header justify-content-center">
+                <h2 class="modal-title text-center" id="exampleModalLabel">Are you sure you want to <br>
+                    terminate <span *ngFor="let student of selectedStudent">{{student?.first_name}}’s</span> Placement?
+                </h2>
+            </div>
+            <div class="st_groups pl-0" *ngFor="let student of selectedStudent">
+                <div class="avatar">
+                    <img *ngIf="student?.image" [src]="student?.image" alt="woolworths">
+                    <div class="profile" *ngIf="!student?.image">
+                        <span style="color: #fff">{{ student?.first_name ? student?.first_name[0]
+                            : '' }} {{student?.last_name ? student?.last_name[0] : '' }}</span>
+                    </div>
+                </div>
+                <span>{{student.first_name}} {{student.last_name}}</span>
+            </div>
+            <div class="modal-body pt-3">
+                <div class="row">
+                    <div class="col-md-12 text-center">
+                        <p>They will have all pending tasks removed. You must provide a comment for explaining this <br> 
+                            decision, and this comment will be visible to the student upon logging in.
+                        </p>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label>Your Comment*</label>
+                            <textarea class="form-control" cols="30" rows="6" [(ngModel)]="comment"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer justify-content-center">
+                <button mat-button class="theme_btn btn_outline_primary" data-dismiss="modal">Cancel</button>
+                <button mat-button class="theme_btn btn_danger" data-dismiss="modal" [disabled]="!comment"
+                    (click)="terminatePLacement()">Terminate</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade bsModal ch_modal" id="archiveDialog" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" mat-icon-button id="closeModal" class="close" data-dismiss="modal"
+                    aria-label="Close">
+                    <mat-icon>close</mat-icon>
+                </button>
+            </div>
+            <div class="modal-body pt-3 active_deactive_modal">
+                <h4>Are you sure you want to remove this student?</h4>
+                <!-- <p>Students will not be able to view & apply to this</p> -->
+            </div>
+            <div class="modal-footer justify-content-center">
+                    <button mat-button class="theme_btn btn_outline_primary mr-3" data-dismiss="modal">No</button>
+                    <button mat-button class="theme_btn btn_primary" data-dismiss="modal" data-toggle="modal"
+                    data-target="#archiveDialogConfirm" (click)="removeAll();">Yes</button>    
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- <div class="modal fade bsModal ch_modal done_modal_popup" id="archiveDialogConfirm" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+            </div>
+            <div class="modal-body text-center">
+                <h2>{{selectedJob?.job_title ? selectedJob?.job_title : 'Vacancies' }} has been archived.</h2>
+            </div>
+            <div class="modal-footer justify-content-center">
+                <button mat-button class="theme_btn btn_primary" (click)="resetCheckbox()" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div> -->
+
+<div class="modal fade bsModal ch_modal view_all_contact_popup" id="viewStudentPG" tabindex="-1" role="dialog"
+    aria-labelledby="viewStudentPG" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title primary" id="exampleModalLabel">View {{selectedStudents?.first_name}} {{selectedStudents?.last_name}}'s Placement Groups</h2> 
+                <button type="button" mat-icon-button id="closeModal" class="close" data-dismiss="modal"
+                    aria-label="Close">
+                    <mat-icon>close</mat-icon>
+                </button>
+            </div>
+            <form>
+                <div class="modal-body pt-3">
+                 <!--  -->
+                    <div class="table-responsive manage_table_scroll position-relative">
+                      <table mat-table [dataSource]="studentPGs" matSort class="ch_table">
+                            <!-- Placement Group Column -->
+                            <ng-container matColumnDef="code">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header>Code </th>
+                              <td mat-cell *matCellDef="let row">{{ row.code }}</td>
+                            </ng-container>
+                            <!-- Code Column -->
+                            <ng-container matColumnDef="title">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header> Title </th>
+                                <td mat-cell *matCellDef="let row"> 
+                                     <a *ngIf="row.category_id=='65a21e64fa6a8e4f5b252994'"  data-dismiss="modal" class="td_link" (click)="gotoPlacementProject(selectedStudents, row)">  {{row.title}}</a>
+
+                                      <a *ngIf="row.category_id!='65a21e64fa6a8e4f5b252994'" data-dismiss="modal" class="td_link"  (click)="gotoPlacement(selectedStudents, row)">  {{row.title}}</a>
+                                   </td>
+                            </ng-container>
+                            <!-- start date Column -->
+                            <ng-container matColumnDef="industry">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header>Industry </th>
+                                <td mat-cell *matCellDef="let row">{{row.industry}}
+                                </td>
+                            </ng-container>
+                            <!-- end  date Column -->
+                            <ng-container matColumnDef="category">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header>Category </th>
+                                <td mat-cell *matCellDef="let row">{{row.category_name}}
+                                </td>
+                            </ng-container>
+                            <!-- Status Column -->
+                            <ng-container matColumnDef="published">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header>Published On </th>
+                                <td mat-cell *matCellDef="let row">
+                                   {{row.publish_on | date: 'dd/MM/YY HH:mm:ss a'}}
+                                </td>
+                            </ng-container>
+
+                            <!-- Status Column -->
+                            <ng-container matColumnDef="student">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header>Students </th>
+                                <td mat-cell *matCellDef="let row">
+                                    {{row.student_count}}
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="placement_type">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header>Placement Type </th>
+                                <td mat-cell *matCellDef="let row">
+                                    {{row.placement_type}}
+                                </td>
+                            </ng-container>
+                            <tr mat-header-row *matHeaderRowDef="displayedStudentPGColumns"></tr>
+                            <tr mat-row *matRowDef="let row; columns: displayedStudentPGColumns;"></tr>
+                        </table>
+                    </div>
+                </div>
+                <div class="modal-footer justify-content-center">
+                    <button #closemodelPgList mat-button data-dismiss="modal" class="theme_btn btn_primary">Close</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

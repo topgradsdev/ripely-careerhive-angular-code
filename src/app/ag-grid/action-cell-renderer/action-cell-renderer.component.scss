@@ -1,0 +1,65 @@
+.action-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.btn {
+  border: none;
+  cursor: pointer;
+  font-size: 18px;
+  height: 36px;
+  width: 40px;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Approve */
+.approve {
+    opacity: 1;
+    border-width: 1px;
+    border-radius: 25px;
+    padding-top: 3px;
+height:30px;
+    padding-right: 22px;
+    padding-bottom: 3px;
+    padding-left: 22px;
+    background: #EDFFE6;
+border: 1px solid #4FA352
+}
+
+/* Reject */
+.reject {
+border-width: 1px;
+border-radius: 25px;
+padding-top: 3px;
+height:30px;
+padding-right: 22px;
+padding-bottom: 3px;
+padding-left: 22px;
+background: #F5CDCD;
+border: 1px solid #D73C3C
+}
+
+/* More (⋮) */
+.more {
+  background: transparent;
+  width: 28px;
+  height: 28px;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.more span {
+  width: 4px;
+  height: 4px;
+  background: #333;
+  border-radius: 50%;
+}
+
+button.mat-icon-button {
+  --mat-ripple-color: transparent !important; /* removes ripple color */
+  pointer-events: auto; /* keep click working */
+}

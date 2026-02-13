@@ -1,0 +1,1194 @@
+<section class="employer-header-sec">
+	<div class="container">
+		<form [formGroup]="section_form1">
+			<div class="row">
+				<div class="col-md-12">
+					<div class="card">
+						<div class="manage-home-header">
+							<div class="card-header d-flex justify-content-between">
+								<strong>Employer Header Section</strong>
+								<div class="slide-cs">
+									<span class="mr-2">Visibility </span>
+									<mat-slide-toggle formControlName="is_visible" (change)="fun($event)"></mat-slide-toggle>
+								</div>
+							</div>
+							<div class="card-body">
+
+								<div class="home-mng-form">
+
+									<div class="form-group">
+										<label>Title</label>
+										<quill-editor [modules]="modules" formControlName="title"></quill-editor>
+											<!-- <editor apiKey="zcwi1f81304uers1lcszh0iq2lbhcaxl5cj6ez0v89wr25z3" formControlName="title"></editor> -->
+										<!-- <label>Title</label> -->
+										<!-- <input class="form-control" rows="3" name=""
+											placeholder="Write your title here..." formControlName="title"> -->
+										<div *ngIf="(section_form1.controls.title?.touched || section_form1.controls.title?.dirty)
+									&& section_form1.controls.title?.invalid && section_form1.controls.title?.errors?.required" style="color:red">
+											*Please enter your title....
+										</div>
+									</div>
+									<div class="form-group">
+										<label>Banner Image</label>
+
+										<div class="slider-video-cntnt">
+											<div class="prev-upld-img">
+												<img [src]="HeadingImage1" class="img-fluid">
+												<div class="upload-imag text-center">
+													<button class="btn-primary btn  mt-3 position-relative">
+														<input type="file" name="" title="" class="img-input-upld"
+															(change)="setHeadingImage1($event)">
+														Upload Image
+													</button>
+												</div>
+												<div *ngIf="section_form1.controls.county?.errors?.required "
+													class="invalid">
+													*Only images are allowed
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="edit-btns d-flex justify-content-end">
+										<button class="btn btn-primary mr-4" mat-stroked-button (click)="openSnackBar()"
+											(click)="editEmpHowItWorks1(id)">Save</button>
+										<!-- <button class="btn btn-primary">Back</button> -->
+									</div>
+								</div>
+
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</form>
+	</div>
+</section>
+
+<section class="whychose-sec">
+	<div class="container">
+		<form [formGroup]="section_form2">
+			<div class="row">
+				<div class="col-md-12">
+					<div class="card">
+						<div class="manage-home-header">
+							<div class="card-header d-flex justify-content-between">
+								<strong>Why choose TopGrads</strong>
+								<div class="slide-cs">
+									<span class="mr-2">Visibility </span>
+									<mat-slide-toggle formControlName="is_visible" (change)="fun1($event)"></mat-slide-toggle>
+								</div>
+							</div>
+							<div class="card-body">
+
+								<div class="home-mng-form">
+									<div class="form-group">
+										<label>Heading</label>
+										<input class="form-control" rows="3" name="heading"
+											placeholder="Write your heading here..." formControlName="heading">
+										<div *ngIf="(section_form2?.controls.heading?.touched || section_form2?.controls.heading?.dirty)
+									&& section_form2?.controls.heading?.invalid && section_form2?.controls.heading?.errors?.required"
+											style="color:red">
+											*Please enter your heading....
+										</div>
+									</div>
+									<div class="form-group">
+										<label>Description</label>
+										<quill-editor [modules]="modules" formControlName="description"></quill-editor>
+										<!-- <editor apiKey="zcwi1f81304uers1lcszh0iq2lbhcaxl5cj6ez0v89wr25z3" formControlName="description"></editor> -->
+										<div *ngIf="(section_form2?.controls.description?.touched || section_form2?.controls.description?.dirty)
+									&& section_form2?.controls.description?.invalid && section_form2?.controls.description?.errors?.required"
+											style="color:red">
+											*Please enter your description....
+										</div>
+									</div>
+									<div class="form-group">
+										<label>Section Image</label>
+										<div class="slider-video-cntnt">
+											<div class="prev-upld-img">
+												<img [src]="HeadingImage2?HeadingImage2:'assets/img/whychose_emp.png'"
+													class="img-fluid">
+												<div class="upload-imag text-center">
+													<button class="btn-primary btn  mt-3 position-relative">
+														<input type="file" name="image" title="" class="img-input-upld"
+															(change)="setHeadingImage2($event)">
+														Upload Image
+													</button>
+												</div>
+												<div *ngIf="section_form2.controls.county?.errors?.required "
+													class="invalid">
+													*Only images are allowed
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="edit-btns d-flex justify-content-end">
+										<button class="btn btn-primary mr-4" mat-stroked-button (click)="openSnackBar()"
+											(click)="editEmpHowItWorks2(id)">Save</button>
+										<!-- <button class="btn btn-primary">Back</button> -->
+									</div>
+								</div>
+
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</form>
+	</div>
+</section>
+
+<section class="recruitmenteasy-sec">
+	<div class="container">
+		<form [formGroup]="section_form3">
+			<div class="row">
+				<div class="col-md-12">
+					<div class="card">
+						<div class="manage-home-header">
+							<div class="card-header d-flex justify-content-between">
+								<strong>We make recruitment easy</strong>
+								<div class="slide-cs">
+									<span class="mr-2">Visibility </span>
+									<mat-slide-toggle formControlName="is_visible" (change)="fun2($event)"></mat-slide-toggle>
+								</div>
+							</div>
+							<div class="card-body">
+
+								<div class="home-mng-form">
+									<div class="form-group">
+										<label>Heading</label>
+										<input class="form-control" rows="3" name="heading2"
+											placeholder="Write your heading here..." formControlName="heading2">
+										<div *ngIf="(section_form3.controls.heading2?.touched || section_form3.controls.heading2?.dirty)
+									&& section_form3.controls.heading2?.invalid && section_form3.controls.heading2?.errors?.required"
+											style="color:red">
+											*Please enter your heading....
+										</div>
+									</div>
+									<div class="edit-btns d-flex justify-content-end">
+										<button class="btn btn-primary mr-4" mat-stroked-button (click)="openSnackBar()"
+											(click)="editEmpHowItWorks3(id)">Save</button>
+										<!-- <button class="btn btn-primary">Back</button> -->
+									</div>
+								</div>
+
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</form>
+	</div>
+</section>
+
+<section class="createjob-sec">
+	<div class="container">
+		<form [formGroup]="section_form4">
+			<div class="row">
+				<div class="col-md-12">
+					<div class="card">
+						<div class="manage-home-header">
+							<div class="card-header d-flex justify-content-between">
+								<strong>Create Job in 4 steps</strong>
+								<div class="slide-cs">
+									<span class="mr-2">Visibility </span>
+									<mat-slide-toggle formControlName="is_visible" (change)="fun3($event)"></mat-slide-toggle>
+								</div>
+							</div>
+							<div class="card-body">
+
+								<div class="home-mng-form">
+									<div class="form-group">
+										<label>Section Image</label>
+										<div class="slider-video-cntnt">
+											<div class="prev-upld-img">
+												<img [src]="HeadingImage3?HeadingImage3:'assets/img/imag_tilt.png'"
+													class="img-fluid">
+												<div class="upload-imag text-center">
+													<button class="btn-primary btn  mt-3 position-relative">
+														<input type="file" name="" title="" class="img-input-upld"
+															(change)="setHeadingImage3($event)">
+														Upload Image
+													</button>
+												</div>
+												<div *ngIf="section_form4.controls.county?.errors?.required "
+													class="invalid">
+													*Only images are allowed
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="edit-btns d-flex justify-content-end">
+										<button class="btn btn-primary mr-4" mat-stroked-button (click)="openSnackBar()"
+											(click)="editEmpHowItWorks4(id)">Save</button>
+										<!-- <button class="btn btn-primary">Back</button> -->
+									</div>
+								</div>
+
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</form>
+	</div>
+</section>
+
+<section class="JobPosting-sec">
+	<div class="container">
+		<form [formGroup]="section_form5">
+			<div class="row">
+				<div class="col-md-12">
+					<div class="card">
+						<div class="manage-home-header">
+							<div class="card-header d-flex justify-content-between">
+								<strong>Fee-less Job Posting</strong>
+								<div class="slide-cs">
+									<span class="mr-2">Visibility </span>
+									<mat-slide-toggle formControlName="is_visible" (change)="fun4($event)"></mat-slide-toggle>
+								</div>
+							</div>
+							<div class="card-body">
+
+								<div class="home-mng-form">
+									<div class="form-group">
+										<label>Heading</label>
+										<input class="form-control" rows="3" name="heading3"
+											placeholder="Write your heading here..." formControlName="heading3">
+										<div *ngIf="(section_form5.controls.heading3?.touched || section_form5.controls.heading3?.dirty)
+									&& section_form5.controls.heading3?.invalid && section_form5.controls.heading3?.errors?.required"
+											style="color:red">
+											*Please enter your heading....
+										</div>
+									</div>
+									<div class="form-group">
+										<label>Description</label>
+										<quill-editor [modules]="modules" formControlName="description1"></quill-editor>
+										<!-- <editor apiKey="zcwi1f81304uers1lcszh0iq2lbhcaxl5cj6ez0v89wr25z3" formControlName="description1"></editor> -->
+										<div *ngIf="(section_form5.controls.description1?.touched || section_form5.controls.description1?.dirty)
+									&& section_form5.controls.description1?.invalid && section_form5.controls.description1?.errors?.required"
+											style="color:red">
+											*Please enter your description....
+										</div>
+									</div>
+									<div class="edit-btns d-flex justify-content-end">
+										<button class="btn btn-primary mr-4" mat-stroked-button (click)="openSnackBar()"
+											(click)="editEmpHowItWorks5(id)">Save</button>
+										<!-- <button class="btn btn-primary">Back</button> -->
+									</div>
+								</div>
+
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</form>
+	</div>
+</section>
+
+<section class="moreResume-sec">
+	<div class="container">
+		<form [formGroup]="section_form6">
+			<div class="row">
+				<div class="col-md-12">
+					<div class="card">
+						<div class="manage-home-header">
+							<div class="card-header d-flex justify-content-between">
+								<strong>More Than Just a Resume</strong>
+								<div class="slide-cs">
+									<span class="mr-2">Visibility </span>
+									<mat-slide-toggle formControlName="is_visible" (change)="fun5($event)"></mat-slide-toggle>
+								</div>
+							</div>
+							<div class="card-body">
+
+								<div class="home-mng-form">
+									<div class="form-group">
+										<label>Heading</label>
+										<input class="form-control" rows="3" name="heading"
+											placeholder="Write your heading here..." formControlName="heading4">
+										<div *ngIf="(section_form6.controls.heading4?.touched || section_form6.controls.heading4?.dirty)
+									&& section_form6.controls.heading4?.invalid && section_form6.controls.heading4?.errors?.required"
+											style="color:red">
+											*Please enter your heading....
+										</div>
+									</div>
+									<div class="form-group">
+										<label>Description</label>
+										<quill-editor [modules]="modules" formControlName="description2"></quill-editor>
+										<!-- <editor apiKey="zcwi1f81304uers1lcszh0iq2lbhcaxl5cj6ez0v89wr25z3" formControlName="description2"></editor> -->
+										<div *ngIf="(section_form6.controls.description2?.touched || section_form6.controls.description2?.dirty)
+									&& section_form6.controls.description2?.invalid && section_form6.controls.description2?.errors?.required"
+											style="color:red">
+											*Please enter your description....
+										</div>
+									</div>
+									<div class="edit-btns d-flex justify-content-end">
+										<button class="btn btn-primary mr-4" mat-stroked-button (click)="openSnackBar()"
+											(click)="editEmpHowItWorks6(id)">Save</button>
+										<!-- <button class="btn btn-primary">Back</button> -->
+									</div>
+								</div>
+
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</form>
+	</div>
+</section>
+
+<section class="gradSerach-sec">
+	<div class="container">
+		<form [formGroup]="section_form7">
+			<div class="row">
+				<div class="col-md-12">
+					<div class="card">
+						<div class="manage-home-header">
+							<div class="card-header d-flex justify-content-between">
+								<strong>Graduate Search</strong>
+								<div class="slide-cs">
+									<span class="mr-2">Visibility </span>
+									<mat-slide-toggle formControlName="is_visible" (change)="fun6($event)"></mat-slide-toggle>
+								</div>
+							</div>
+							<div class="card-body">
+
+								<div class="home-mng-form">
+									<div class="form-group">
+										<label>No. of Listings to be displayed</label>
+										<input class="form-control" rows="3" name="heading"
+											placeholder="Listing to be displayed here..." formControlName="listing">
+										<div *ngIf="(section_form7.controls.listing?.touched || section_form7.controls.listing?.dirty)
+									&& section_form7.controls.listing?.invalid && section_form7.controls.listing?.errors?.required"
+											style="color:red">
+											*Please listing to be displayed....
+										</div>
+									</div>
+									<div class="edit-btns d-flex justify-content-end">
+										<button class="btn btn-primary mr-4" mat-stroked-button (click)="openSnackBar()"
+											(click)="editEmpHowItWorks7(id)">Save</button>
+										<!-- <button class="btn btn-primary">Back</button> -->
+									</div>
+								</div>
+
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</form>
+	</div>
+</section>
+
+<section class="EasyShortlisting-sec">
+	<div class="container">
+		<form [formGroup]="section_form8">
+			<div class="row">
+				<div class="col-md-12">
+					<div class="card">
+						<div class="manage-home-header">
+							<div class="card-header d-flex justify-content-between">
+								<strong>Easy Shortlisting</strong>
+								<div class="slide-cs">
+									<span class="mr-2">Visibility </span>
+									<mat-slide-toggle formControlName="is_visible" (change)="fun7($event)"></mat-slide-toggle>
+								</div>
+							</div>
+							<div class="card-body">
+
+								<div class="home-mng-form">
+									<div class="form-group">
+										<label>Heading</label>
+										<input class="form-control" rows="3" name="heading"
+											placeholder="Write your heading here..." formControlName="heading5">
+										<div *ngIf="(section_form8.controls.heading5?.touched || section_form8.controls.heading5?.dirty)
+									&& section_form8.controls.heading5?.invalid && section_form8.controls.heading5?.errors?.required"
+											style="color:red">
+											*Please enter your heading....
+										</div>
+									</div>
+									<div class="form-group">
+										<label>Description</label>
+										<quill-editor [modules]="modules" formControlName="description3"></quill-editor>
+										<!-- <editor apiKey="zcwi1f81304uers1lcszh0iq2lbhcaxl5cj6ez0v89wr25z3" formControlName="description3"></editor> -->
+										<div *ngIf="(section_form8.controls.description3?.touched || section_form8.controls.description3?.dirty)
+									&& section_form8.controls.description3?.invalid && section_form8.controls.description3?.errors?.required"
+											style="color:red">
+											*Please enter your description....
+										</div>
+									</div>
+									<div class="edit-btns d-flex justify-content-end">
+										<button class="btn btn-primary mr-4" mat-stroked-button (click)="openSnackBar()"
+											(click)="editEmpHowItWorks8(id)">Save</button>
+										<!-- <button class="btn btn-primary">Back</button> -->
+									</div>
+								</div>
+
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</form>
+	</div>
+</section>
+
+<section class="recruitmenteasy-sec">
+	<div class="container">
+		<form [formGroup]="section_form9">
+			<div class="row">
+				<div class="col-md-12">
+					<div class="card">
+						<div class="manage-home-header">
+							<div class="card-header d-flex justify-content-between">
+								<strong>All the best grads in one place</strong>
+								<div class="slide-cs">
+									<span class="mr-2">Visibility </span>
+									<mat-slide-toggle formControlName="is_visible" (change)="fun8($event)"></mat-slide-toggle>
+								</div>
+							</div>
+							<div class="card-body">
+
+								<div class="home-mng-form">
+									<div class="form-group">
+										<label>Heading</label>
+										<input class="form-control" rows="3" name="heading"
+											placeholder="Write your heading here..." formControlName="heading6">
+										<div *ngIf="(section_form9.controls.heading6?.touched || section_form9.controls.heading6?.dirty)
+									&& section_form9.controls.heading6?.invalid && section_form9.controls.heading6?.errors?.required"
+											style="color:red">
+											*Please enter your heading....
+										</div>
+									</div>
+									<div class="edit-btns d-flex justify-content-end">
+										<button class="btn btn-primary mr-4" mat-stroked-button (click)="openSnackBar()"
+											(click)="editEmpHowItWorks9(id)">Save</button>
+										<!-- <button class="btn btn-primary">Back</button> -->
+									</div>
+								</div>
+
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</form>
+	</div>
+</section>
+
+<section class="UniqueMatch-sec">
+	<div class="container">
+		<form [formGroup]="section_form10">
+			<div class="row">
+				<div class="col-md-12">
+					<div class="card">
+						<div class="manage-home-header">
+							<div class="card-header d-flex justify-content-between">
+								<strong>Unique Match Percentage</strong>
+								<div class="slide-cs">
+									<span class="mr-2">Visibility </span>
+									<mat-slide-toggle formControlName="is_visible" (change)="fun9($event)"></mat-slide-toggle>
+								</div>
+							</div>
+							<div class="card-body">
+
+								<div class="home-mng-form">
+									<div class="form-group">
+										<label>Heading</label>
+										<input class="form-control" rows="3" name="heading"
+											placeholder="Write your heading here..." formControlName="heading7">
+										<div *ngIf="(section_form10.controls.heading7?.touched || section_form10.controls.heading7?.dirty)
+									&& section_form10.controls.heading7?.invalid && section_form10.controls.heading7?.errors?.required"
+											style="color:red">
+											*Please enter your heading....
+										</div>
+									</div>
+									<div class="form-group">
+										<label>Description</label>
+										<quill-editor [modules]="modules" formControlName="description4"></quill-editor>
+										<!-- <editor apiKey="zcwi1f81304uers1lcszh0iq2lbhcaxl5cj6ez0v89wr25z3" formControlName="description4"></editor> -->
+										<div *ngIf="(section_form10.controls.description4?.touched || section_form10.controls.description4?.dirty)
+									&& section_form10.controls.description4?.invalid && section_form10.controls.description4?.errors?.required"
+											style="color:red">
+											*Please enter your description....
+										</div>
+									</div>
+									<div class="edit-btns d-flex justify-content-end">
+										<button class="btn btn-primary mr-4" mat-stroked-button (click)="openSnackBar()"
+											(click)="editEmpHowItWorks10(id)">Save</button>
+										<!-- <button class="btn btn-primary">Back</button> -->
+									</div>
+								</div>
+
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</form>
+	</div>
+</section>
+
+<section class="matchHighlyt-sec">
+	<div class="container">
+		<form [formGroup]="section_form11">
+			<div class="row">
+				<div class="col-md-12">
+					<div class="card">
+						<div class="manage-home-header">
+							<div class="card-header d-flex justify-content-between">
+								<strong>Highlighted unique Match</strong>
+								<div class="slide-cs">
+									<span class="mr-2">Visibility </span>
+									<mat-slide-toggle formControlName="is_visible" (change)="fun10($event)"></mat-slide-toggle>
+								</div>
+							</div>
+							<div class="card-body">
+
+								<div class="home-mng-form">
+									<div class="form-group">
+										<label>Section Image</label>
+										<div class="slider-video-cntnt">
+											<div class="prev-upld-img">
+												<img [src]="HeadingImage4?HeadingImage4:'assets/img/special_endrosed.svg'"
+													class="img-fluid">
+												<div class="upload-imag text-center">
+													<button class="btn-primary btn  mt-3 position-relative">
+														<input type="file" name="" title="" class="img-input-upld"
+															(change)="setHeadingImage4($event)">
+														Upload Image
+													</button>
+												</div>
+												<div *ngIf="section_form11.controls.county?.errors?.required "
+													class="invalid">
+													*Only images are allowed
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="edit-btns d-flex justify-content-end">
+										<button class="btn btn-primary mr-4" mat-stroked-button (click)="openSnackBar()"
+											(click)="editEmpHowItWorks11(id)">Save</button>
+										<!-- <button class="btn btn-primary">Back</button> -->
+									</div>
+								</div>
+
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</form>
+	</div>
+</section>
+
+<section class="carddates-matched-sec">
+	<div class="container">
+		<form [formGroup]="section_form12">
+			<div class="row">
+				<div class="col-md-12">
+					<div class="card">
+						<div class="manage-home-header">
+							<div class="card-header d-flex justify-content-between">
+								<strong>Unique Matched Candidates</strong>
+								<div class="slide-cs">
+									<span class="mr-2">Visibility </span>
+									<mat-slide-toggle formControlName="is_visible" (change)="fun11($event)"></mat-slide-toggle>
+								</div>
+							</div>
+							<div class="card-body">
+
+								<div class="home-mng-form">
+									<div class="form-group">
+										<label>No. of Listings to be displayed</label>
+										<input class="form-control" rows="3" name="heading"
+											placeholder="listing to be displayed here..." formControlName="listing2">
+										<div *ngIf="(section_form12.controls.listing2?.touched || section_form12.controls.listing2?.dirty)
+									&& section_form12.controls.listing2?.invalid && section_form12.controls.listing2?.errors?.required"
+											style="color:red">
+											*Please listing to be displayed....
+										</div>
+									</div>
+									<div class="edit-btns d-flex justify-content-end">
+										<button class="btn btn-primary mr-4" mat-stroked-button (click)="openSnackBar()"
+											(click)="editEmpHowItWorks12(id)">Save</button>
+										<!-- <button class="btn btn-primary">Back</button> -->
+									</div>
+								</div>
+
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</form>
+	</div>
+</section>
+
+<section class="EndorsedCandidates-sec">
+	<div class="container">
+		<form [formGroup]="section_form13">
+			<div class="row">
+				<div class="col-md-12">
+					<div class="card">
+						<div class="manage-home-header">
+							<div class="card-header d-flex justify-content-between">
+								<strong>Endorsed Candidates</strong>
+								<div class="slide-cs">
+									<span class="mr-2">Visibility </span>
+									<mat-slide-toggle formControlName="is_visible" (change)="fun12($event)"></mat-slide-toggle>
+								</div>
+							</div>
+							<div class="card-body">
+
+								<div class="home-mng-form">
+									<div class="form-group">
+										<label>Heading</label>
+										<input class="form-control" rows="3" name="heading"
+											placeholder="Write your heading here..." formControlName="heading8">
+										<div *ngIf="(section_form13.controls.heading8?.touched || section_form13.controls.heading8?.dirty)
+									&& section_form13.controls.heading8?.invalid && section_form13.controls.heading8?.errors?.required"
+											style="color:red">
+											*Please enter your heading....
+										</div>
+									</div>
+									<div class="form-group">
+										<label>Description</label>
+										<quill-editor [modules]="modules" formControlName="description5"></quill-editor>
+										<!-- <editor apiKey="zcwi1f81304uers1lcszh0iq2lbhcaxl5cj6ez0v89wr25z3" formControlName="description5"></editor> -->
+										<div *ngIf="(section_form13.controls.description5?.touched || section_form13.controls.description5?.dirty)
+									&& section_form13.controls.description5?.invalid && section_form13.controls.description5?.errors?.required"
+											style="color:red">
+											*Please enter your description....
+										</div>
+									</div>
+									<div class="edit-btns d-flex justify-content-end">
+										<button class="btn btn-primary mr-4" mat-stroked-button (click)="openSnackBar()"
+											(click)="editEmpHowItWorks13(id)">Save</button>
+										<!-- <button class="btn btn-primary">Back</button> -->
+									</div>
+								</div>
+
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</form>
+	</div>
+</section>
+
+<section class="Endorsed-steps-sec">
+	<div class="container">
+		<form [formGroup]="section_form14">
+			<div class="row">
+				<div class="col-md-12">
+					<div class="card">
+						<div class="manage-home-header">
+							<div class="card-header d-flex justify-content-between">
+								<strong>Endrosement Steps</strong>
+								<div class="slide-cs">
+									<span class="mr-2">Visibility </span>
+									<mat-slide-toggle formControlName="is_visible" (change)="fun13($event)"></mat-slide-toggle>
+								</div>
+							</div>
+							<div class="card-body">
+
+								<div class="home-mng-form">
+									<div class="endrose-step">
+										<div class="form-group">
+											<ng-container formArrayName="emparray"
+												*ngFor="let alias of section_form14.controls['emparray'].controls; let i=index">
+												<ng-container [formGroupName]="i">
+													<label>step {{i+1}}: Icon</label>
+													<div class="slider-video-cntnt">
+														<div class="prev-upld-img icons">
+															<img [src]="emparray.controls[i].controls['image'].value ? emparray.controls[i].controls['image'].value:'assets/img/refernce.svg'" class="img-fluid">
+															<div class="upload-imag text-center">
+																<button class="btn-primary btn  mt-3 position-relative">
+																	<input type="file" name="" class="img-input-upld" (change)="empHeadingImg($event,i)">
+																Upload Image
+																</button>
+															</div>
+														</div>
+														<div *ngIf="emparray.controls[i].controls['image']?.errors?.required "
+															class="invalid">
+															*Please select image
+														</div>
+														<div *ngIf="emparray.controls[i].controls['image'].county?.errors?.required"
+															class="invalid">
+															*Only images are allowed
+														</div>
+													</div>
+												
+												
+													<label>Heading</label>
+													<input type="text" name="" class="form-control" value="Easily edited online" formControlName="heading">
+													<div *ngIf="emparray.controls[i].controls['heading'].errors?.required  "
+														class="invalid">
+														*Please enter heading
+													</div>
+													<div *ngIf="emparray.controls[i].controls['heading'].errors?.maxlength  "
+														class="invalid">
+														*Maximum Length should be 50 characters
+													</div>
+												
+													<label>Description</label>
+													<quill-editor [modules]="modules" formControlName="description"></quill-editor>
+													<!-- <editor apiKey="zcwi1f81304uers1lcszh0iq2lbhcaxl5cj6ez0v89wr25z3" formControlName="description"></editor> -->
+													<div *ngIf="emparray.controls[i].controls['description'].errors?.required "
+														class="invalid">
+														*Please enter description
+													</div>
+													<div *ngIf="emparray.controls[i].controls['description'].errors?.maxlength  "
+														class="invalid">
+														*Maximum Length should be 500 characters
+													</div>
+												</ng-container>
+											</ng-container>
+										</div>
+									</div>
+									
+									<div class="edit-btns d-flex justify-content-end">
+										<button class="btn btn-primary mr-4"(click)="openSnackBar()"
+										(click)="editEmployerHowItWorks()">Save</button>
+										<!-- <button class="btn btn-primary">Back</button> -->
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</form>
+	</div>
+</section>
+
+<section class="organise&progress-sec">
+	<div class="container">
+		<form [formGroup]="section_form15">
+			<div class="row">
+				<div class="col-md-12">
+					<div class="card">
+						<div class="manage-home-header">
+							<div class="card-header d-flex justify-content-between">
+								<strong>Organise and progress candidates your way</strong>
+								<div class="slide-cs">
+									<span class="mr-2">Visibility </span>
+									<mat-slide-toggle formControlName="is_visible" (change)="fun14($event)"></mat-slide-toggle>
+								</div>
+							</div>
+							<div class="card-body">
+
+								<div class="home-mng-form">
+									<div class="form-group">
+										<label>Heading</label>
+										<input class="form-control" rows="3" name="heading"
+											placeholder="Write your heading here..." formControlName="heading12">
+										<div *ngIf="(section_form15.controls.heading12?.touched || section_form15.controls.heading12?.dirty)
+									&& section_form15.controls.heading12?.invalid && section_form15.controls.heading12?.errors?.required"
+											style="color:red">
+											*Please enter your heading....
+										</div>
+									</div>
+									<div class="edit-btns d-flex justify-content-end">
+										<button class="btn btn-primary mr-4" mat-stroked-button (click)="openSnackBar()"
+											(click)="editEmpHowItWorks15(id)">Save</button>
+										<!-- <button class="btn btn-primary">Back</button> -->
+									</div>
+								</div>
+
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</form>
+	</div>
+</section>
+
+<section class="organise&progress-components">
+	<div class="container">
+		<form [formGroup]="section_form16" >
+			<div class="row">
+				<div class="col-md-12">
+					<div class="card">
+						<div class="card-header d-flex justify-content-between">
+							<strong>Employer Dashoboard Components</strong>
+							<div class="slide-cs">
+								<span class="mr-2">Visibility </span>
+								<mat-slide-toggle formControlName="is_visible" (change)="fun15($event)"></mat-slide-toggle>
+							</div>
+						</div>
+						<div class="card-body">
+							<div class="home-mng-form">
+								<div class="imag_upld_prvw mb-3">
+									<div class="row">
+										<!-- <div *ngFor="let item of Section16Images ;let i=index" 
+										 class="col-sm-2">
+											<span class="upld-img-holdr">
+												<mat-icon type="button" >highlight_off</mat-icon>
+												<img [src]="item">
+												 <img src="assets/img/refernce.svg">
+												<mat-icon type="button" (click)="onRemove1(item)">highlight_off</mat-icon>
+											</span>
+										</div> -->
+										<div class="col-sm-2 img_cols" *ngFor="let item of Section16Images ;let i=index"  >
+											<span class="upld-img-holdr">
+												<mat-icon type="button" >highlight_off</mat-icon>
+												<img [src]="item">
+												 <!-- <img src="assets/img/refernce.svg"> -->
+												<mat-icon type="button" (click)="onRemove1(item)">highlight_off</mat-icon>
+											</span>
+										</div>
+										<!-- <div class="col-sm-2 img_cols">
+											<span class="upld-img-holdr">
+											
+												<img src="assets/img/refernce.svg">
+												<mat-icon>highlight_off</mat-icon>	
+											</span>
+										</div> -->
+									
+										
+									</div>
+								</div>
+								<div class="form-group">
+									<div class="enable-organise">
+										<ngx-dropzone  class="custom-dropzone" ngx-dropzone [accept]="'image/*'" (change)="onSelect($event)" >
+											<ngx-dropzone-label>Drop your images here!</ngx-dropzone-label>
+											<ngx-dropzone-image-preview *ngFor="let f of files;let i=index" ngProjectAs="ngx-dropzone-preview" [file]="f"
+											 [removable]="true" (removed)="onRemove(f)"> 
+												<ngx-dropzone-label> </ngx-dropzone-label>
+											</ngx-dropzone-image-preview>
+										</ngx-dropzone>
+										
+									</div>
+								</div>
+								<div class="edit-btns d-flex justify-content-end">
+									<button class="btn btn-primary mr-4" mat-stroked-button (click)="openSnackBar()"
+										(click)="editEmpHowItWorks16()">Save</button>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</form>
+	</div>
+</section>
+
+<section class="PersonalisedDashboard-sec">
+	<div class="container">
+		<form [formGroup]="section_form17">
+			<div class="row">
+				<div class="col-md-12">
+					<div class="card">
+						<div class="manage-home-header">
+							<div class="card-header d-flex justify-content-between">
+								<strong>Your Personalised Dashboard</strong>
+								<div class="slide-cs">
+									<span class="mr-2">Visibility </span>
+									<mat-slide-toggle formControlName="is_visible" (change)="fun16($event)"></mat-slide-toggle>
+								</div>
+							</div>
+							<div class="card-body">
+
+								<div class="home-mng-form">
+									<div class="form-group">
+										<label>Heading</label>
+										<input class="form-control" rows="3" name="heading"
+											placeholder="Write your heading here..." formControlName="heading13">
+										<div *ngIf="(section_form17.controls.heading13?.touched || section_form17.controls.heading13?.dirty)
+									&& section_form17.controls.heading13?.invalid && section_form17.controls.heading13?.errors?.required"
+											style="color:red">
+											*Please enter your heading....
+										</div>
+									</div>
+									<div class="form-group">
+										<label>Description</label>
+										<quill-editor [modules]="modules" formControlName="description9"></quill-editor>
+										<!-- <editor apiKey="zcwi1f81304uers1lcszh0iq2lbhcaxl5cj6ez0v89wr25z3" formControlName="description9"></editor> -->
+										<div *ngIf="(section_form17.controls.description9?.touched || section_form17.controls.description9?.dirty)
+									&& section_form17.controls.description9?.invalid && section_form17.controls.description9?.errors?.required"
+											style="color:red">
+											*Please enter your description....
+										</div>
+									</div>
+									<div class="edit-btns d-flex justify-content-end">
+										<button class="btn btn-primary mr-4" mat-stroked-button (click)="openSnackBar()"
+											(click)="editEmpHowItWorks17(id)">Save</button>
+										<!-- <button class="btn btn-primary">Back</button> -->
+									</div>
+								</div>
+
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</form>
+	</div>
+</section>
+
+<section class="Scheduleinterviews-sec">
+	<div class="container">
+		<form [formGroup]="section_form18">
+			<div class="row">
+				<div class="col-md-12">
+					<div class="card">
+						<div class="manage-home-header">
+							<div class="card-header d-flex justify-content-between">
+								<strong>Schedule Interviews</strong>
+								<div class="slide-cs">
+									<span class="mr-2">Visibility </span>
+									<mat-slide-toggle formControlName="is_visible" (change)="fun17($event)"></mat-slide-toggle>
+								</div>
+							</div>
+							<div class="card-body">
+
+								<div class="home-mng-form">
+									<div class="form-group">
+										<label>Heading</label>
+										<input class="form-control" rows="3" name="heading"
+											placeholder="Write your heading here..." formControlName="heading14">
+										<div *ngIf="(section_form18.controls.heading14?.touched || section_form18.controls.heading14?.dirty)
+									&& section_form18.controls.heading14?.invalid && section_form18.controls.heading14?.errors?.required"
+											style="color:red">
+											*Please enter your heading....
+										</div>
+									</div>
+									<div class="form-group">
+										<label>Description</label>
+										<quill-editor [modules]="modules" formControlName="description10"></quill-editor>
+										<!-- <editor apiKey="zcwi1f81304uers1lcszh0iq2lbhcaxl5cj6ez0v89wr25z3" formControlName="description10"></editor> -->
+										<div *ngIf="(section_form18.controls.description10?.touched || section_form18.controls.description10?.dirty)
+									&& section_form18.controls.description10?.invalid && section_form18.controls.description10?.errors?.required"
+											style="color:red">
+											*Please enter your description....
+										</div>
+									</div>
+									<div class="edit-btns d-flex justify-content-end">
+										<button class="btn btn-primary mr-4" mat-stroked-button (click)="openSnackBar()"
+											(click)="editEmpHowItWorks18(id)">Save</button>
+										<!-- <button class="btn btn-primary">Back</button> -->
+									</div>
+								</div>
+
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</form>
+	</div>
+</section>
+
+<section class="newhire-sec">
+	<div class="container">
+		<form [formGroup]="section_form19">
+			<div class="row">
+				<div class="col-md-12">
+					<div class="card">
+						<div class="manage-newhire">
+							<div class="card-header d-flex justify-content-between">
+								<strong>New hire modal</strong>
+								<div class="slide-cs">
+									<span class="mr-2">Visibility </span>
+									<mat-slide-toggle formControlName="is_visible" (change)="fun18($event)"></mat-slide-toggle>
+								</div>
+							</div>
+							<div class="card-body">
+
+								<div class="home-mng-form">
+									<div class="form-group">
+										<label>Modal Image</label>
+										<div class="slider-video-cntnt">
+											<div class="prev-upld-img">
+												<img [src]="HeadingImage6"
+													class="img-fluid">
+												<div class="upload-imag text-center">
+													<button class="btn-primary btn  mt-3 position-relative">
+														<input type="file" name="" title="" class="img-input-upld"
+															(change)="setHeadingImage6($event)">
+														Upload Image
+													</button>
+												</div>
+												<div *ngIf="section_form19.controls.county?.errors?.required "
+													class="invalid">
+													*Only images are allowed
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="form-group">
+										<label>Title Message</label>
+										<input class="form-control" rows="3" name="heading"
+											placeholder="Write your Title Message here..." formControlName="titleMsg">
+										<div *ngIf="(section_form19.controls.titleMsg?.touched || section_form19.controls.titleMsg?.dirty)
+									&& section_form19.controls.titleMsg?.invalid && section_form19.controls.titleMsg?.errors?.required"
+											style="color:red">
+											*Please enter your Title Msg....
+										</div>
+									</div>
+									<div class="form-group">
+										<label>Message info</label>
+										<input class="form-control" rows="3" name="heading"
+											placeholder="Write your Message Info here..." formControlName="msgInfo">
+										<div *ngIf="(section_form19.controls.msgInfo?.touched || section_form19.controls.msgInfo?.dirty)
+									&& section_form19.controls.msgInfo?.invalid && section_form19.controls.msgInfo?.errors?.required"
+											style="color:red">
+											*Please enter your Msg Info....
+										</div>
+									</div>
+									<div class="edit-btns d-flex justify-content-end">
+										<button class="btn btn-primary mr-4" mat-stroked-button (click)="openSnackBar()"
+											(click)="editEmpHowItWorks19(id)">Save</button>
+										<!-- <button class="btn btn-primary">Back</button> -->
+									</div>
+								</div>
+
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</form>
+	</div>
+</section>
+
+<section class="Select&Offer-sec">
+	<div class="container">
+		<form [formGroup]="section_form20">
+			<div class="row">
+				<div class="col-md-12">
+					<div class="card">
+						<div class="manage-home-header">
+							<div class="card-header d-flex justify-content-between">
+								<strong>Select and Offer</strong>
+								<div class="slide-cs">
+									<span class="mr-2">Visibility </span>
+									<mat-slide-toggle formControlName="is_visible" (change)="fun19($event)"></mat-slide-toggle>
+								</div>
+							</div>
+							<div class="card-body">
+
+								<div class="home-mng-form">
+									<div class="form-group">
+										<label>Heading</label>
+										<input class="form-control" rows="3" name="heading"
+											placeholder="Write your heading here..." formControlName="heading15">
+										<div *ngIf="(section_form20.controls.heading15?.touched || section_form20.controls.heading15?.dirty)
+									&& section_form20.controls.heading15?.invalid && section_form20.controls.heading15?.errors?.required"
+											style="color:red">
+											*Please enter your heading....
+										</div>
+									</div>
+									<div class="form-group">
+										<label>Description</label>
+										<quill-editor [modules]="modules" formControlName="description11"></quill-editor>
+										<!-- <editor apiKey="zcwi1f81304uers1lcszh0iq2lbhcaxl5cj6ez0v89wr25z3" formControlName="description11"></editor> -->
+										<div *ngIf="(section_form20.controls.description11?.touched || section_form20.controls.description11?.dirty)
+									&& section_form20.controls.description11?.invalid && section_form20.controls.description11?.errors?.required"
+											style="color:red">
+											*Please enter your description....
+										</div>
+									</div>
+									<div class="edit-btns d-flex justify-content-end">
+										<button class="btn btn-primary mr-4" mat-stroked-button (click)="openSnackBar()"
+											(click)="editEmpHowItWorks20(id)">Save</button>
+										<!-- <button class="btn btn-primary">Back</button> -->
+									</div>
+								</div>
+
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</form>
+	</div>
+</section>
+
+<section class="employer-footer-sec">
+	<div class="container">
+		<form [formGroup]="section_form21">
+			<div class="row">
+				<div class="col-md-12">
+					<div class="card">
+						<div class="manage-home-header">
+							<div class="card-header d-flex justify-content-between">
+								<strong>Employer Footer</strong>
+								<div class="slide-cs">
+									<span class="mr-2">Visibility </span>
+									<mat-slide-toggle formControlName="is_visible" (change)="fun20($event)"></mat-slide-toggle>
+								</div>
+							</div>
+							<div class="card-body">
+
+								<div class="home-mng-form">
+									<div class="form-group">
+										<label>Title</label>
+										<input class="form-control" rows="3" name="heading"
+											placeholder="Write your title here..." formControlName="title111">
+										<div *ngIf="(section_form21.controls.title111?.touched || section_form21.controls.title111?.dirty)
+									&& section_form21.controls.title111?.invalid && section_form21.controls.title111?.errors?.required"
+											style="color:red">
+											*Please enter your title....
+										</div>
+									</div>
+									<div class="form-group">
+										<label>Sub-heading</label>
+										<input class="form-control" rows="3" name="heading"
+											placeholder="Write your Sub-heading here..." formControlName="S_heading">
+										<div *ngIf="(section_form21.controls.S_heading?.touched || section_form21.controls.S_heading?.dirty)
+									&& section_form21.controls.S_heading?.invalid && section_form21.controls.S_heading?.errors?.required"
+											style="color:red">
+											*Please enter your Sub-heading....
+										</div>
+									</div>
+									<div class="form-group">
+										<label>Description</label>
+										<quill-editor [modules]="modules" formControlName="description12"></quill-editor>
+										<!-- <editor apiKey="zcwi1f81304uers1lcszh0iq2lbhcaxl5cj6ez0v89wr25z3" formControlName="description12"></editor> -->
+										<div *ngIf="(section_form21.controls.description12?.touched || section_form21.controls.description12?.dirty)
+									&& section_form21.controls.description12?.invalid && section_form21.controls.description12?.errors?.required"
+											style="color:red">
+											*Please enter your description....
+										</div>
+									</div>
+									<div class="form-group">
+										<label>Footer Image</label>
+										<div class="slider-video-cntnt">
+											<div class="prev-upld-img">
+												<img [src]="HeadingImage7" class="img-fluid">
+												<div class="upload-imag text-center">
+													<button class="btn-primary btn  mt-3 position-relative">
+														<input type="file" name="" title="" class="img-input-upld"
+															(change)="setHeadingImage7($event)">
+														Upload Image
+													</button>
+												</div>
+												<div *ngIf="section_form21.controls.county?.errors?.required "
+													class="invalid">
+													*Only images are allowed
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="edit-btns d-flex justify-content-end">
+										<button class="btn btn-primary mr-4" mat-stroked-button (click)="openSnackBar()"
+											(click)="editEmpHowItWorks21(id)">Save</button>
+										<!-- <button class="btn btn-primary">Back</button> -->
+									</div>
+								</div>
+
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</form>
+	</div>
+</section>

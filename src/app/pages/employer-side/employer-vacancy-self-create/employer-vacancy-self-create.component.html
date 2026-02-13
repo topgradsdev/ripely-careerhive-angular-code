@@ -1,0 +1,1102 @@
+<section>
+
+  <div class="custom_container py-4">
+    <div class="main_card_vacancy_create" *ngIf="!successPage">
+      <div class="row">
+        <div class="col-sm-12">
+          <div class="vacancy_create_title text-center">
+            <h2 *ngIf="selectedVacancy">Edit your Vacancy</h2>
+            <h2 *ngIf="!selectedVacancy">Create your vacancy in just 4 easy steps!</h2>
+            <!-- <h2 *ngIf="heading">All done! Preview Your Job Post</h2> -->
+          </div>
+        </div>
+      </div>
+      <div class="vacancy_create_stepper custom_steps_med job_creatn_stepper">
+        <mat-horizontal-stepper ngClass="{{ 'last-edited-step-' + stepper.selectedIndex }}" [linear]="false"
+          labelPosition="bottom" #stepper>
+          <mat-step>
+            <ng-template matStepLabel>The Essentials</ng-template>
+            <div class="form_fildls employJob_fields mt-4">
+              <form [formGroup]="essentials">
+                <div class="form-group">
+                  <div class="company_name_container">
+                    <div class="company_name_input">
+                      <label>Company Name
+                        <!-- <sup
+                                        *ngIf="(essentials.get('companyName')?.touched || essentials.get('companyName')?.dirty) && essentials.get('companyName')?.invalid && essentials.get('companyName')?.errors?.required"
+                                        class="star_red">*</sup>
+                                      <span
+                                        *ngIf="(essentials.get('companyName')?.touched || essentials.get('companyName')?.dirty) && essentials.get('companyName')?.invalid && essentials.get('companyName')?.errors?.required"
+                                        class="err_msg">Please input company name. </span>
+                                        <span class="err_msg"
+                                        *ngIf="(essentials.get('companyName')?.touched || essentials.get('companyName')?.dirty) && essentials.get('companyName')?.invalid && essentials.get('companyName')?.errors?.maxlength">
+                                         Maximum 64 characters
+                                    </span> -->
+                      </label>
+                      <input class="form-control border-0  shadow-none" disabled formControlName="companyName" [readonly]="true" />
+
+
+                      <!-- <input type="text" formControlName="companyName"
+                                          (keyup)="setCompanyLogo('')"
+                                          (keyup)="getCompanyList($event)"
+                                          [matAutocomplete]="auto"
+                                          oninput="this.value = this.value.replace(/[^A-Za-z0-9-,.;'&/.() ]|^ /g,'')"
+                                          class="form-control" id="exampleInputEmail1"
+                                          aria-describedby="emailHelp">
+                                          <mat-autocomplete #auto="matAutocomplete">
+                                            <mat-option *ngFor="let company of companyList"
+                                              [value]="company.company_name"
+                                              (click)="setCompanyLogo(company.logo)">
+                                              <img class="example-option-img" aria-hidden
+                                                [src]="company.logo" height="25">
+                                              {{ company.company_name }}
+                                            </mat-option>
+                                          </mat-autocomplete> -->
+                    </div>
+                    <figure class="company_logo">
+                      <img
+                        [src]="essentials.controls['company_logo'].value ? essentials.controls['company_logo'].value : 'assets/img/company-logo-placeholder.svg'"
+                        class="img-fluid" alt="company logo">
+                    </figure>
+                  </div>
+                </div>
+
+                <!-- <div class="form-group jobTitleInput">
+                  <label>Job Title
+                    <sup
+                      *ngIf="(essentials.get('companyTitle')?.touched || essentials.get('companyTitle')?.dirty) && essentials.get('companyTitle')?.invalid && essentials.get('companyTitle')?.errors?.required"
+                      class="star_red">*</sup>
+                    <span
+                      *ngIf="(essentials.get('companyTitle')?.touched || essentials.get('companyTitle')?.dirty) && essentials.get('companyTitle')?.invalid && essentials.get('companyTitle')?.errors?.required"
+                      class="err_msg">Please input job title.</span>
+                    <span class="err_msg"
+                      *ngIf="(essentials.get('companyTitle')?.touched || essentials.get('companyTitle')?.dirty) && essentials.get('companyTitle')?.invalid && essentials.get('companyTitle')?.errors?.maxlength">
+                      *Maximum 64 characters
+                    </span>
+                  </label>
+                  <input type="text" class="form-control" placeholder="E.g  UI/UX Designer"
+                    formControlName="companyTitle">
+                </div> -->
+
+                <!-- <div class="form-group" *ngIf="employerProfile.is_headquarter">
+                  <mat-slide-toggle color="success" formControlName="subsidiary_vacancy" class="ios-toggle p-0">
+                    Post Vacancy for Subsidiary
+                  </mat-slide-toggle>
+                </div> -->
+
+                <div *ngIf="essentials.get('subsidiary_vacancy')?.value" class="form-group">
+                  <div class="col-12 p-0"><label class="label_title">Select Child Company <sup>*</sup></label></div>
+                  <div class="col-12 p-0">
+                    <!-- <input type="text" class="form-control title_input" placeholder="e.g Marriott Hotels"
+                                      formControlName="selectedCompany"> -->
+
+                <ng-select 
+                  [items]="childCompanyList"
+                  bindLabel="company_name"
+                  bindValue="_id"                     
+                  [clearable]="false"
+                  [searchable]="false"
+                   [readonly]="selectedVacancyId"
+                  placeholder="Search & Select a Company"
+                  formControlName="parent_company_id"
+                  class="custom-ng-select"
+                  (change)="onCompanyChange($event)">
+
+                          <ng-template ng-option-tmp let-item="item">
+                            <div class="dropdown-row">
+                              <div class="company-name">{{ item.company_name }}</div>
+                              <div class="company-id">Company ID: {{ item?.company_code }}</div>
+                              <div class="company-location">{{ item?.location }}</div>
+                            </div>
+                          </ng-template>
+                        </ng-select>
+
+                        <div
+                          *ngIf="essentials.get('parent_company_id')?.invalid && (essentials.get('parent_company_id')?.touched || essentials.get('pareparent_company_idnt_id')?.dirty)"
+                          class="invalid-feedback">
+                          Please Select Child Company
+                        </div>
+                      </div>
+                    </div>
+
+
+                <div class="form-group jobTitleInput">
+                  <label>Job Title
+                    <sup
+                      *ngIf="(essentials.get('companyTitle')?.touched || essentials.get('companyTitle')?.dirty) && essentials.get('companyTitle')?.invalid && essentials.get('companyTitle')?.errors?.required"
+                      class="star_red">*</sup>
+                    <span
+                      *ngIf="(essentials.get('companyTitle')?.touched || essentials.get('companyTitle')?.dirty) && essentials.get('companyTitle')?.invalid && essentials.get('companyTitle')?.errors?.required"
+                      class="err_msg">Please input job title.</span>
+                      <!-- <span class="err_msg"
+                              *ngIf="(essentials.get('companyTitle')?.touched || essentials.get('companyTitle')?.dirty) && essentials.get('companyTitle')?.invalid && essentials.get('companyTitle')?.errors?.maxlength">
+                              *Maximum 64 characters
+                          </span> -->
+                  </label>
+                  <!-- <input type="text" class="form-control" placeholder="E.g  UI/UX Designer" 
+                    
+                    formControlName="companyTitle"> -->
+
+                  <mat-select class="form-control" placeholder="Select an Job Title" formControlName="companyTitle">
+                  <!-- i18n-placeholderLabel -->
+                    <mat-option>
+                      <ngx-mat-select-search  [formControl]="searchControl" placeholderLabel="Search" noEntriesFoundLabel="not found" ></ngx-mat-select-search>
+                    </mat-option>
+                  
+
+                    <mat-option *ngFor="let item of filteredOptions" [value]="item?.code+' - '+item?.name">
+                      {{item?.code}} - {{item?.name}}
+                    </mat-option>
+                  </mat-select>
+                </div>
+
+                <div class="choose_locations mb-3">
+                  <label>Location
+                    <sup
+                      *ngIf="(essentials.get('location')?.touched || essentials.get('location')?.dirty) && essentials.get('location')?.invalid && essentials.get('location')?.errors?.required"
+                      class="star_red">*</sup>
+                    <span
+                      *ngIf="(essentials.get('location')?.touched || essentials.get('location')?.dirty) && essentials.get('location')?.invalid && essentials.get('location')?.errors?.required"
+                      class="err_msg">Please input job location.</span>
+                    <span
+                      *ngIf="(essentials.get('location')?.touched || essentials.get('location')?.dirty) && essentials.get('latitude')?.invalid && !essentials.get('location')?.errors?.required"
+                      class="err_msg">Please input valid job location.</span>
+                  </label>
+
+                    <!-- ngx-google-places-autocomplete [options]='googlePlaceOptions' #placesRef="ngx-places" -->
+                  <input type="text" formControlName="location" class="form-control" id="exampleInputEmail1"
+                    autocomplete="none" aria-describedby="emailHelp" placeholder="E.g Bundoora, VIC 3083"
+                    oninput="this.value = !this.value.trim() ? this.value.trim() : this.value"
+                    googlePlace
+                    (onAddressChange)="handleAddressChange($event)" (input)="clearLocation()">
+                  <input type="hidden" formControlName="latitude">
+                  <input type="hidden" formControlName="longitude">
+                </div>
+
+ <!-- *ngIf="essentials.get('companyTitle')?.valid" -->
+                <div class="form-group">
+                  <label>Industry
+                    <sup
+                      *ngIf="(essentials.get('industry')?.touched || essentials.get('industry')?.dirty) && essentials.get('industry')?.invalid && essentials.get('industry')?.errors?.required"
+                      class="star_red">*</sup>
+                    <span
+                      *ngIf="(essentials.get('industry')?.touched || essentials.get('industry')?.dirty) && essentials.get('industry')?.invalid && essentials.get('industry')?.errors?.required"
+                      class="err_msg">Please select industry.</span>
+                  </label>
+
+
+                  <mat-select (selectionChange)="selectIndustry($event)" class="form-control"
+                    placeholder="Select an Industry" formControlName="industry">
+                    <mat-option *ngFor="let item of industrylist" [value]="item?._id">
+                      {{item?.name}}
+                    </mat-option>
+                  </mat-select>
+                  <div class="sub_category_select "
+                    [ngClass]="[(essentials.get('sub_industry')?.touched || essentials.get('sub_industry')?.dirty) && essentials.get('sub_industry')?.invalid && essentials.get('sub_industry')?.errors?.required ? 'align-items-center mt-1' :'']">
+                    <div class="flex-grow-1">
+                      <label
+                        *ngIf="(essentials.get('sub_industry')?.touched || essentials.get('sub_industry')?.dirty) && essentials.get('sub_industry')?.invalid && essentials.get('sub_industry')?.errors?.required">
+                        <sup class="star_red">*</sup>
+                        <span class="err_msg">Please select sub-industry.</span>
+                      </label>
+                      <mat-select class="form-control" placeholder="Select a Sub-Industry"
+                        formControlName="sub_industry">
+                        <mat-option *ngFor="let item of subIndustryList" [value]="item?._id">
+                          {{item?.name}}
+                        </mat-option>
+                      </mat-select>
+                    </div>
+                  </div>
+
+                </div>
+                 <!-- *ngIf="essentials.get('companyTitle')?.valid" -->
+                <div class="skills_container form-group">
+                  <div class="skill_header row align-items-center">
+                    <div class="col-md-12">
+                      <label>Skills Required <span>(Click to select) {{selectedJobSkills.length}}/5 Skills</span>
+                      </label>
+                      <div class="search_container">
+                        <ng-select (keyup)="search4($event)" name="anyName" [items]="skills" [clearable]="false"
+                          placeholder="Search & Add Skills" bindLabel="name" [maxSelectedItems]="5" [multiple]="true"
+                          formControlName="skills" (change)="onChangeAnalyst($event)">
+                        </ng-select>
+                      </div>
+                    </div>
+                    <!-- <div class="col-md-4">
+                      <div class="search_container">
+                        <svg class="search_icon" width="11" height="11" viewBox="0 0 20 20" fill="none"
+                          xmlns="http://www.w3.org/2000/svg">
+                          <path fill-rule="evenodd" clip-rule="evenodd"
+                            d="M8 16C3.58172 16 0 12.4183 0 8C0 3.58172 3.58172 0 8 0C12.4183 0 16 3.58172 16 8C16 9.84871 15.3729 11.551 14.3199 12.9056L19.7071 18.2929L18.2929 19.7071L12.9056 14.3199C11.551 15.3729 9.84871 16 8 16ZM14 8C14 11.3137 11.3137 14 8 14C4.68629 14 2 11.3137 2 8C2 4.68629 4.68629 2 8 2C11.3137 2 14 4.68629 14 8Z"
+                            fill="#464BA8" />
+                        </svg>
+
+                        <div class="example-form skill_select_small" (keyup)="search4($event)">
+                          <ng-select  name="anyName" [items]="skills" [clearable]="false"
+                            placeholder="Search & Add Skills" bindLabel="name" [maxSelectedItems]="5" [multiple]="true"
+                            formControlName="skills" (change)="onChangeAnalyst($event)">
+                          </ng-select>
+                        </div>
+                      </div>
+                    </div> -->
+                  </div>
+                  <div class="skills_body" *ngIf="jobSkills.length > 0">
+                    <div class="custom_chip_list">
+                      <span class="custom_chip" (click)="selectJobSkill(item)"
+                        [ngClass]="isSelectedSkill(item) ? 'active_chip': ''" *ngFor="let item of jobSkills">
+                        <span> {{item.name}}</span>
+                      </span>
+                    </div>
+                  </div>
+
+                </div>
+            
+              </form>
+              <div class="tabs_buttons d-flex justify-content-between align-items-center">
+                <button class="theme_btn btn_outline_primary" mat-button>Back</button>
+                <button class="theme_btn btn_primary" mat-button
+                  [disabled]="this.essentials.invalid || selectedJobSkills.length < 3"
+                  (click)="fun(stepper)">Next</button>
+              </div>
+            </div>
+          </mat-step>
+          <mat-step>
+            <ng-template matStepLabel>Job Details</ng-template>
+            <div class="form_fildls employJob_fields mt-3">
+              <form [formGroup]="editorForm">
+                <div class="save_text">
+                  <label class="title_job">Job Description
+
+                  </label>
+                  <div class="custm_tab_job_container">
+
+                    <span [ngClass]="{'custm_tab_job': currentTabEmp == 'write_my_own'}"
+                      (click)="changeTab('write_my_own')">Write my own
+                    </span>
+                    <span [ngClass]="{'custm_tab_job': currentTabEmp == 'help_me_write'}"
+                      (click)="changeTab('help_me_write')">Help me write</span>
+                    <!-- <span [ngClass]="{'custm_tab_job': currentTabEmp == 'use'}" (click)="changeTab('use')">
+                      <div>Use AI
+                        <br><small>(3x Faster)</small>
+                      </div>
+                    </span> -->
+
+                  </div>
+                  <div *ngIf="currentTabEmp == 'write_my_own'" class="mb-4">
+                    <span>
+                      <sup
+                        *ngIf="(editorForm.get('write_my_own_description')?.touched || editorForm.get('write_my_own_description')?.dirty) && editorForm.get('write_my_own_description')?.invalid && editorForm.get('write_my_own_description')?.errors?.required && currentTabEmp == 'write_my_own'"
+                        class="star_red">*</sup>
+                      <span
+                        *ngIf="(editorForm.get('write_my_own_description')?.touched || editorForm.get('write_my_own_description')?.dirty) && editorForm.get('write_my_own_description')?.invalid && editorForm.get('write_my_own_description')?.errors?.required && currentTabEmp == 'write_my_own'"
+                        class="err_msg">Please include job description. </span>
+                      <sup
+                        *ngIf="(editorForm.get('write_my_own_description')?.touched || editorForm.get('write_my_own_description')?.dirty) && editorForm.get('write_my_own_description')?.invalid && editorForm.get('write_my_own_description')?.errors?.minlength && currentTabEmp == 'write_my_own'"
+                        class="star_red">*</sup>
+                      <span
+                        *ngIf="(editorForm.get('write_my_own_description')?.touched || editorForm.get('write_my_own_description')?.dirty) && editorForm.get('write_my_own_description')?.invalid && editorForm.get('write_my_own_description')?.errors?.minlength && currentTabEmp == 'write_my_own'"
+                        class="err_msg">Minimum 150 characters are required. </span>
+                        <quill-editor [modules]="modules" formControlName="write_my_own_description"></quill-editor>
+                      <!-- <editor  class="ch_editor" [apiKey]="tinyMCEApiKey" [init]="{
+                                                              height: 315,
+                                                              menubar: false,
+                                                              statusbar: true,
+                                                              placeholder: 'Start typing',
+                                                              plugins: [
+                                          'textcolor',
+                                                              'advlist autolink lists link image charmap print preview anchor',
+                                                              'searchreplace visualblocks code fullscreen',
+                                                              'insertdatetime media table paste code help wordcount'
+                                                              ],
+                                                              toolbar:
+                                                              'bold italic | \
+                                                              bullist | formatselect | link |',
+                                          contextmenu: false
+                                                          }" name="description"
+                        formControlName="write_my_own_description"
+                        oninput="this.value = !this.value.trim() ? this.value.trim() : this.value">
+                      </editor> -->
+                    </span>
+                  </div>
+
+                  <div class="main_editr_view mb-4" *ngIf="currentTabEmp == 'help_me_write'">
+                    <!-- <form [formGroup]=editorForm> -->
+                    <div class="editer_view">
+                      <div class="editer_info mt-1">
+                        <h5>About the Company
+                          <sup
+                            *ngIf="(editorForm.get('about')?.touched || editorForm.get('about')?.dirty) && editorForm.get('about')?.invalid && editorForm.get('about')?.errors?.required "
+                            class="star_red">*</sup>
+                          <span
+                            *ngIf="(editorForm.get('about')?.touched || editorForm.get('about')?.dirty) && editorForm.get('about')?.invalid && editorForm.get('about')?.errors?.required "
+                            class="err_msg">Please describe your company.</span>
+                          <span *ngIf="editorForm.get('about')?.touched && editorForm.get('about')?.errors?.minlength"
+                            class="err_msg">Minimum 50 characters are required.</span>
+                        </h5>
+                        <small>Introduce candidates to your company with a brief synopsis. Give a<br>quick
+                          overview
+                          of your values, goals, and culture.</small>
+                        <small class="clikLink" (click)="input_flds1('about')" *ngIf="!field1">+ Add About the
+                          Company
+                        </small>
+                        <quill-editor [modules]="modules" *ngIf="field1 == 'about'" formControlName="about"></quill-editor>
+                        <!-- <editor class="ch_editor" [apiKey]="tinyMCEApiKey" [init]="{
+                                                height: 200,
+                                                menubar: false,
+                                                statusbar: true,
+                                                placeholder: 'Start typing',
+                                                plugins: [
+                                                'advlist autolink lists link image charmap print preview anchor',
+                                                'searchreplace visualblocks code fullscreen',
+                                                'insertdatetime media table paste code help wordcount'
+                                                ],
+                                                toolbar:
+                                                'bold italic | \
+                                                bullist | formatselect | link |',
+                                                contextmenu: false
+                                              }" *ngIf="field1 == 'about'" formControlName="about">
+                        </editor> -->
+                      </div>
+                    </div>
+                    <div class="editer_view">
+                      <div class="editer_info">
+                        <h5>Job Roles/Responsibilities
+                          <sup
+                            *ngIf="(editorForm.get('job_resp')?.touched || editorForm.get('job_resp')?.dirty) && editorForm.get('job_resp')?.invalid && editorForm.get('job_resp')?.errors?.required"
+                            class="star_red">*</sup>
+                          <span
+                            *ngIf="(editorForm.get('job_resp')?.touched || editorForm.get('job_resp')?.dirty) && editorForm.get('job_resp')?.invalid && editorForm.get('job_resp')?.errors?.required"
+                            class="err_msg">Please describe the Job Roles/responsibilities.</span>
+                          <span
+                            *ngIf="editorForm.get('job_resp')?.touched && editorForm.get('job_resp')?.errors?.minlength"
+                            class="err_msg">Minimum 50 characters are required.</span>
+                        </h5>
+                        <small>Let your candidates know what they are expected to do as part of this<br>role.
+                          What
+                          range of tasks and activities they will they be completing?</small>
+                        <small class="clikLink" (click)="input_flds2('job_resp')" *ngIf="!field2">+ Add Job
+                          Responsibilities
+                        </small>
+                        <quill-editor [modules]="modules" *ngIf="field2 == 'job_resp'" formControlName="job_resp"></quill-editor>
+                        <!-- <editor class="ch_editor" [apiKey]="tinyMCEApiKey" [init]="{
+                                                height: 200,
+                                                menubar: false,
+                                                statusbar: true,
+                                                placeholder: 'Start typing',
+                                                plugins: [
+                                                'advlist autolink lists link image charmap print preview anchor',
+                                                'searchreplace visualblocks code fullscreen',
+                                                'insertdatetime media table paste code help wordcount'
+                                                ],
+                                                toolbar:
+                                                'bold italic | \
+                                                bullist | formatselect | link |',
+                                                contextmenu: false
+                                              }" *ngIf="field2 == 'job_resp'" formControlName="job_resp">
+                        </editor> -->
+                      </div>
+                    </div>
+                    <div class="editer_view qualfctn_exp">
+                      <div class="editer_info">
+                        <h5>Qualifications/Experience
+                          <sup
+                            *ngIf="(editorForm.get('qualfctn_exp')?.touched || editorForm.get('qualfctn_exp')?.dirty) && editorForm.get('qualfctn_exp')?.invalid && editorForm.get('qualfctn_exp')?.errors?.required"
+                            class="star_red">*</sup>
+                          <span
+                            *ngIf="(editorForm.get('qualfctn_exp')?.touched || editorForm.get('qualfctn_exp')?.dirty) && editorForm.get('qualfctn_exp')?.invalid && editorForm.get('qualfctn_exp')?.errors?.required"
+                            class="err_msg">Please include required qualifications/experience.</span>
+                          <span
+                            *ngIf="editorForm.get('qualfctn_exp')?.touched && editorForm.get('qualfctn_exp')?.errors?.minlength"
+                            class="err_msg">Minimum 50 characters are required.</span>
+                        </h5>
+
+                        <small>What level of qualification and/or experience would you like/expect
+                          your<br>candidate
+                          to have?</small>
+                        <small class="clikLink" (click)="input_flds3('qualfctn_exp')" *ngIf="!field3">+ Add
+                          Qualifications & Experience
+                        </small>   
+                        <quill-editor [modules]="modules" *ngIf="field3 == 'qualfctn_exp'" formControlName="qualfctn_exp"></quill-editor>
+                        <!-- <editor class="ch_editor" [apiKey]="tinyMCEApiKey" [init]="{
+                                              height: 200,
+                                              menubar: false,
+                                              statusbar: true,
+                                              placeholder: 'Start typing',
+                                              plugins: [
+                                              'advlist autolink lists link image charmap print preview anchor',
+                                              'searchreplace visualblocks code fullscreen',
+                                              'insertdatetime media table paste code help wordcount'
+                                              ],
+                                              toolbar:
+                                              'bold italic | \
+                                              bullist | formatselect | link |',
+                                              contextmenu: false
+                                            }" *ngIf="field3 == 'qualfctn_exp'" formControlName="qualfctn_exp">
+                        </editor> -->
+                      </div>
+                    </div>
+                    <!-- </form> -->
+                  </div>
+                  <!-- <div *ngIf="currentTabEmp == 'use'" class="mb-4">
+                    <div class="position-relative">
+                      <button class="link-btn generate-link" (click)="getJobDescription(true)"><img
+                          src="../../../../assets/img/refresh-ccw.svg" class="mr-1" alt="refresh"><span>Generate
+                          New</span></button>
+                      <editor class="ch_editor" [apiKey]="tinyMCEApiKey" [init]="{
+                                        height: 315,
+                                        menubar: false,
+                                        statusbar: true,
+                                        placeholder: 'Start typing',
+                                        plugins: [
+                                        'textcolor',
+                                        'advlist autolink lists link image charmap print preview anchor',
+                                        'searchreplace visualblocks code fullscreen',
+                                        'insertdatetime media table paste code help wordcount'
+                                        ],
+                                        toolbar:
+                                        'bold italic | \
+                                        bullist | formatselect | link |',
+                                        contextmenu: false
+                                      }" name="description" formControlName="use_ai_description"
+                        oninput="this.value = !this.value.trim() ? this.value.trim() : this.value">
+                      </editor>
+                    </div>
+                  </div> -->
+                </div>
+                <!-- <div class="form-group">
+                                    <label>Work Commitment
+                                      <sup
+                                        *ngIf="(editorForm.get('contractType')?.touched || editorForm.get('contractType')?.dirty) && editorForm.get('contractType')?.invalid && editorForm.get('contractType')?.errors?.required"
+                                        class="star_red">*</sup>
+                                      <span
+                                        *ngIf="(editorForm.get('contractType')?.touched || editorForm.get('contractType')?.dirty) && editorForm.get('contractType')?.invalid && editorForm.get('contractType')?.errors?.required"
+                                        class="err_msg">Please select contract type.</span>
+                                    </label>
+                                    <mat-radio-group class="vertically_radio_group" formControlName="contractType">
+                                      <mat-radio-button *ngFor="let item of contractType" [value]="item?.value">{{item?.name}}</mat-radio-button>
+                                    </mat-radio-group>    
+                                  </div> -->
+                <div class="form-group">
+                  <label>Number of Vacancies
+                    <sup
+                      *ngIf="(editorForm.get('no_of_vacancy')?.touched || editorForm.get('no_of_vacancy')?.dirty) && editorForm.get('no_of_vacancy')?.invalid && editorForm.get('no_of_vacancy')?.errors?.required"
+                      class="star_red">*</sup>
+                    <span
+                      *ngIf="(editorForm.get('no_of_vacancy')?.touched || editorForm.get('no_of_vacancy')?.dirty) && editorForm.get('no_of_vacancy')?.invalid && editorForm.get('no_of_vacancy')?.errors?.required"
+                      class="err_msg">Please enter number of vacancy. </span>
+
+                      <span
+                        class="err_msg"
+                        *ngIf="(editorForm.get('no_of_vacancy')?.touched || editorForm.get('no_of_vacancy')?.dirty) &&
+                              editorForm.get('no_of_vacancy')?.errors?.min"
+                      >
+                        Minimum vacancy must be 1.
+                      </span>
+                    <span class="err_msg"
+                      *ngIf="(editorForm.get('no_of_vacancy')?.touched || editorForm.get('no_of_vacancy')?.dirty) && editorForm.get('no_of_vacancy')?.invalid && editorForm.get('no_of_vacancy')?.errors?.max">
+                      Max vacancy is 99
+                    </span>
+                  </label>
+                  <input type="number" (wheel)="$event.preventDefault()"  (keydown.arrowup)="$event.preventDefault()"  (keydown.arrowdown)="$event.preventDefault()"  name="web_url" class="form-control" placeholder="Select vacancy slots (up to 99)"
+                    formControlName="no_of_vacancy">
+                </div>
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label>Work Commitment
+                        <sup
+                          *ngIf="(editorForm.get('contract_type')?.touched || editorForm.get('contract_type')?.dirty) && editorForm.get('contract_type')?.invalid && editorForm.get('contract_type')?.errors?.required"
+                          class="star_red">*</sup>
+                        <span
+                          *ngIf="(editorForm.get('contract_type')?.touched || editorForm.get('contract_type')?.dirty) && editorForm.get('contract_type')?.invalid && editorForm.get('contract_type')?.errors?.required"
+                          class="err_msg">Please select work commitment.</span>
+                      </label>
+                      <ng-select placeholder="Select a Commitment" class="select_ng_custom" [searchable]="false"
+                        [multiple]="false" bindLabel="name" bindValue="id" [clearable]="false"
+                        formControlName="contract_type">
+                         <ng-option [value]="'Full Time'">
+                            Full Time
+                          </ng-option>
+                          <ng-option [value]="'Part Time'">
+                            Part Time
+                          </ng-option>
+                          <ng-option [value]="'Flexible'">
+                            Flexible
+                          </ng-option>
+                      </ng-select>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label>Workplace Arrangement
+                        <sup
+                          *ngIf="(editorForm.get('work_type')?.touched || editorForm.get('work_type')?.dirty) && editorForm.get('work_type')?.invalid && editorForm.get('work_type')?.errors?.required"
+                          class="star_red">*</sup>
+                        <span
+                          *ngIf="(editorForm.get('work_type')?.touched || editorForm.get('work_type')?.dirty) && editorForm.get('work_type')?.invalid && editorForm.get('work_type')?.errors?.required"
+                          class="err_msg">Please select work arrangement.</span>
+                      </label>
+                      <ng-select placeholder="Select an Arrangement" class="select_ng_custom" [searchable]="false"
+                        [multiple]="false" bindLabel="name" bindValue="id" [clearable]="false"
+                        formControlName="work_type">
+                        <ng-option [value]="'Hybrid'">
+                          Hybrid
+                        </ng-option>
+                        <ng-option [value]="'Office'">
+                          Office
+                        </ng-option>
+                        <ng-option [value]="'WFH'">
+                          WFH
+                        </ng-option>
+                      </ng-select>
+                    </div>
+                  </div>
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <label>Licenses & Certifications Required</label>
+                      <div class="custom_chip_list1">
+                        <span class="custom_chip" [ngClass]="license.selected ? 'active' : ''"
+                          *ngFor="let license of licenseCertifications" (click)="selectLecense(license)">
+                          <span>{{license.name}}</span>
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="tabs_buttons d-flex justify-content-between align-items-center">
+                  <button class="theme_btn btn_outline_primary" mat-button matStepperPrevious>Back</button>
+                  <button class="theme_btn btn_primary" mat-button [disabled]="this.editorForm.invalid"
+                    (click)="fun2(stepper)">Next</button>
+                </div>
+              </form>
+            </div>
+          </mat-step>
+             <mat-step>
+            <ng-template matStepLabel>Routing</ng-template>
+            <div class="form_fildls employJob_fields mt-4">
+              <form [formGroup]="routeForm">
+
+                <div class="row form-group">
+                  <div class="col-12 mb-3">
+                    <p class="routing-detail">
+                      Use routing to direct incoming applications to specific departments or contacts within your
+                      organisation. You can also set a default supervisor to be automatically assigned once a student is
+                      confirmed for the placement.
+                    </p>
+                  </div>
+                  <div class="col-12 mb-3">
+                    <div class="col-12"><label class="label_title">Who will receive the Applications?
+                      <sup>*</sup></label></div>
+                      <div class="col-12">
+                        <ng-select
+                          [items]="contactList"
+                          bindLabel="fullName"
+                          bindValue="_id"
+                          [clearable]="false"
+                          [multiple]="true"
+                          [searchable]="true"
+                          placeholder="Search & Select Contact"
+                          formControlName="application_receiver"
+                          class="custom-ng-select">
+
+                          <!-- Custom option template -->
+                          <ng-template ng-option-tmp let-item="item">
+                            <div class="d-flex justify-content-between align-items-center">
+                              <div>
+                                <div class="fw-normal text-dark">{{ item.first_name }} {{ item.last_name }}</div>
+                                  <div class="role">{{ item.role }}</div>
+                              </div>
+                              <div class="dept-badge">
+                                {{ item.company_name }} – {{ item.department_name }}
+                              </div>
+                            </div>
+                          </ng-template>
+                        </ng-select>
+                      </div>
+                  </div>
+
+                  <div class="col-12 mb-3">
+                    <div class="col-12">
+                      <label class="label_title">Placement Supervisor (optional)</label>
+                      <br />
+                      <small>The supervisor will be responsible for the students’ workflows</small>
+                    </div>
+                    <div class="col-12">
+                     <ng-select
+                          [items]="companyContactList"
+                          bindLabel="fullName"
+                          bindValue="_id"
+                          [clearable]="true"
+                          [multiple]="false"
+                          [searchable]="true"
+                          placeholder="Search & Select Contact"
+                          formControlName="placement_supervisor"
+                          class="custom-ng-select">
+
+                          <!-- Custom option template -->
+                          <ng-template ng-option-tmp let-item="item">
+                            <div class="d-flex justify-content-between align-items-center">
+                              <div>
+                                <div class="fw-normal text-dark">{{ item.first_name }} {{ item.last_name }}</div>
+                              </div>
+                              <div class="dept-badge">
+                                {{ item.company_name }} – {{ item.department_name }}
+                              </div>
+                            </div>
+                          </ng-template>
+                        </ng-select>
+                    </div>
+                  </div>
+                </div>
+                <div class="tabs_buttons d-flex justify-content-between align-items-center">
+                  <button class="theme_btn btn_outline_primary" mat-button matStepperPrevious>Back</button>
+                  <button class="theme_btn btn_primary" matStepperNext mat-button [disabled]="this.routeForm.invalid"
+                    (click)="fun3(stepper)">Next</button>
+                </div>
+              </form>
+            </div>
+          </mat-step>
+          <mat-step>
+            <!-- & Finish -->
+            <ng-template matStepLabel>Review </ng-template>
+            <!-- <div class="preview_result">
+              <div class="preview_wrapper">
+                <div class="vacancy_title">
+                  <h1>{{ essentials?.value?.companyTitle }}</h1>
+                </div>
+                <div class="job_nam_prvw">
+                  <div class="row">
+                    <div class="col-sm-6">
+                      <div class="vacancy_location">
+                        <h5>{{ essentials?.value?.companyName }}</h5>
+                        <p>{{ essentials?.value?.location?.name }}</p>
+                      </div>
+                      <div class="vacancy_commitment">
+                        <p>Work Commitment:</p>
+                        <h5>{{editorForm?.value?.contract_type}}</h5>
+                      </div>
+                    </div>
+                    <div class="col-sm-6">
+                      <div class="prvw_jb_skills">
+                        <div class="typed_text">
+                          <h5>Key Skills:</h5>
+                          <span *ngFor="let i of skillsevent">{{i.name}}</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="aboutDescription_list">
+                  <h4>Description:</h4>
+                  <div class="description_content">
+                    <p class="aboutDescription_list" [innerHTML]="description">
+                  </div>
+                </div>
+                <div class="no_of_vacancy">
+                  <h5>Number of Vacancies:</h5>
+                  <p>{{editorForm?.value?.no_of_vacancy}}</p>
+                </div>
+              </div>
+              <div class="tabs_buttons d-flex justify-content-between align-items-center">
+                <button class="theme_btn btn_outline_primary" mat-button matStepperPrevious>Back &
+                  Edit</button>
+                <button class="theme_btn btn_primary" (click)="postVacancy()" mat-button><span
+                    *ngIf="selectedVacancy">Save</span><span *ngIf="!selectedVacancy">Post</span> Vacancy</button>
+              </div>
+            </div> -->
+
+             <div class="vacancy_preview">
+              <div class="preview_container">
+                <!-- align-items-center -->
+                <h1 class="job_title mb-4 m-0 review-h1">{{ essentials?.value?.companyTitle }}</h1>
+                <div class="d-flex justify-content-between">
+                  <div style="flex: 1;max-width: 50%;">
+                    <!-- {{editorForm.value | json}} -->
+                    <!-- Job Title & Company -->
+
+                    <div style="display: flex;gap: 15px;">
+                       <figure style="width:80px;height:80px;">
+                          <img [src]="(this.essentials?.value?.parent_company_id || this.essentials?.value?.company_id) && getImage() ? getImage() : 'assets/img/company-logo-placeholder.svg'" class="img-fluid" alt="company logo">
+                        </figure>
+                      <div style="display: flex;flex: 1;margin-right: 15px;flex-direction: column;">
+                         <h2 class="company_name m-0">{{this.essentials?.value?.parent_company_id ?getComapany(this.essentials?.value?.parent_company_id):this.essentials?.value?.companyName }}</h2>
+                        <p class="location">{{ essentials?.value?.location }}</p>
+                      </div>
+                    </div>
+                    
+                  
+
+                    <!-- Work Commitment & Workplace Arrangement -->
+                    <div class="job_details">
+                      <p class="m-0">Work Commitment:</p>
+                      <h2 class="company_name mb-2 m-0">
+                        <span *ngIf="editorForm.value.contract_type == 'any'">Any</span>
+                        <span *ngIf="editorForm.value.contract_type == 'part_time'">Part Time</span>
+                        <span *ngIf="editorForm.value.contract_type == 'full_time'">Full Time</span>
+                        <span *ngIf="editorForm.value.contract_type == 'casual'">Casual</span>
+                        <span *ngIf="editorForm.value.contract_type == 'temp_contract'">Temp/Contract</span>
+                        <span
+                          *ngIf="editorForm.value.contract_type == 'Full Time'">{{editorForm.value.contract_type}}</span>
+                        <span
+                          *ngIf="editorForm.value.contract_type == 'Part Time'">{{editorForm.value.contract_type}}</span>
+
+                        <span
+                          *ngIf="editorForm.value.contract_type == 'Flexible'">{{editorForm.value.contract_type}}</span>
+                      </h2>
+                      <p class="m-0">Workplace Arrangement:</p>
+                      <h2 class="company_name mb-2 m-0">{{editorForm.value?.work_type}}</h2>
+                    </div>
+
+                  </div>
+                  <!-- Skills Section -->
+                  <div class="skills_section m-0" style="flex: 1;max-width: 50%;flex-direction: column;gap: 20px;">
+                    <div>
+                      <h4 class="heading fw-post mb-1">Posted By</h4>
+                      <div class="mod_groups p-0">
+                                    <div class="avatar">
+                                       <img *ngIf="userDetail?.image && !selectedVacancy?.created_by_logo" [src]="userDetail.image" class="rounded-circle	" alt="avatar" />
+
+                                        <img *ngIf="selectedVacancy?.created_by_logo" [src]="selectedVacancy.created_by_logo" class="rounded-circle	" alt="company logo" />
+
+                                        <div class="profile" *ngIf="!selectedVacancy?.created_by_logo && !userDetail?.image">
+                                            <span style="color: #fff;display: flex
+                                            ;
+                                                justify-content: center;
+                                                margin-top: 8px;">
+                                                {{ 
+                                                  selectedVacancy?.created_by_name 
+                                                    ? selectedVacancy.created_by_name.split(' ')[0].charAt(0) + selectedVacancy.created_by_name.split(' ')[1]?.charAt(0) 
+                                                    : userDetail?.first_name?.charAt(0) + userDetail?.last_name?.charAt(0)
+                                                }}
+
+                                          <!-- {{selectedCompany?.created_by_name ?
+                                        selectedCompany?.created_by_name.split(' ')[0][0] : ''}}
+                                        {{selectedCompany?.created_by_name.split(' ')[1] ?
+                                        selectedCompany?.created_by_name.split(' ')[1][0] :userDetail?.first_name?.charAt(0) + userDetail?.last_name?.charAt(1)}} -->
+                                        
+                                      </span>    
+                                        </div>
+                                    </div>
+                                    <span style="font: size 16px;">{{selectedVacancy && selectedVacancy?.created_by_name ? selectedVacancy?.created_by_name:userDetail?.first_name+' ' +userDetail?.last_name}}</span>
+                    </div>
+                    <!-- <div class="mod_groups p-0">
+                      <div class="avatar" *ngIf="(selectedVacancy?.company_info && selectedVacancy?.company_info.length > 0) || selectedCompany">
+                          <img *ngIf="selectedVacancy?.company_info?.[0]?.created_by_logo; else defaultAvatar" 
+                                [src]="selectedVacancy?.company_info?.[0]?.created_by_logo" 
+                                alt="Company Logo">
+                  
+                          <ng-template #defaultAvatar>
+                              <div class="profile">
+                                  <span style="color: #fff; display: flex; justify-content: center; margin-top: 8px;">
+                                      {{ getInitials(selectedVacancy?.company_info?.[0]?.created_by || selectedCompany?.created_by) }}
+                                  </span>    
+                              </div>
+                          </ng-template>
+                      </div>
+                      
+                      <span>
+                          {{ (selectedVacancy?.company_info?.[0]?.created_by) || selectedCompany?.created_by || '' }}
+                      </span>
+                  </div> -->
+                  
+
+                    
+                    </div>
+                    <div class="skills_wrapper">
+                      <h5>Required Skills:</h5>
+                      <div class="skills_list">
+                        <span *ngFor="let i of skillsevent" class="skill_chip">{{ i.name }}</span>
+                      </div>
+                    </div>
+                    <div class="skills_wrapper" *ngIf="skillsevent1 && skillsevent1.length>0">
+                      <h5>Develop Skills:</h5>
+                      <div class="skills_list">
+                        <span *ngFor="let skill of skillsevent1" class="skill_chip">{{ skill.name }}</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Description Section -->
+                <div class="description_section">
+                  <h4 class="heading fw">Description:</h4>
+                  <div class="description_content">
+                    <p class="discription" [innerHTML]="description"></p>
+                  </div>
+                </div>
+
+                <!-- Number of Vacancies -->
+                <div class="vacancies_section">
+                  <h5 class="heading fw">Number of Vacancies:</h5>
+                  
+                  <p>{{ editorForm?.value?.no_limit?'No Limit' : editorForm?.value?.no_of_vacancy }}</p>
+                </div>
+
+                <!-- Certifications -->
+                <div class="certifications_section" *ngIf="editorForm?.value?.license_certification">
+                  <h5 class="heading fw">Licenses & Certifications required:</h5>
+                    <span class="certification_chip"
+                    *ngFor="let certification of editorForm?.value?.license_certification?.split(',')">{{certification}}</span>
+                
+                </div>
+
+                    <!-- Certifications -->
+                <div class="certifications_section" *ngIf="routeForm?.value?.application_receiver">
+                  <h5 class="heading fw">Application Routing Destinations</h5>
+                    <span class="certification_chip1">{{getSupervisorsCommaSeparated()}}</span>
+                
+                </div>
+
+                    <!-- Certifications -->
+                <div class="certifications_section" *ngIf="routeForm?.value?.placement_supervisor">
+                  <h5 class="heading fw">Default Supervisor</h5>
+                    <span class="certification_chip1">{{getSupervisor(routeForm?.value?.placement_supervisor)}}</span>
+                
+                </div>
+              </div>
+              <div class="tabs_buttons d-flex justify-content-between align-items-center">
+                <button class="theme_btn btn_outline_primary" mat-button matStepperPrevious>Back &
+                  Edit</button>
+                <button class="theme_btn btn_primary" (click)="postVacancy()" mat-button><span
+                    *ngIf="selectedVacancy">Save</span><span *ngIf="!selectedVacancy">Create</span></button>
+              </div>
+            </div>
+          </mat-step>
+          <ng-template matStepperIcon="edit" let-index="index" id="review"> {{ index + 1 }} </ng-template>
+
+        </mat-horizontal-stepper>
+      </div>
+    </div>
+    <div class="main_card_vacancy_create successPage" *ngIf="successPage">
+      <div class="row">
+        <div class="col-sm-12">
+          <div class="vacancy_create_title text-center">
+            <h2><span>Success!</span> Your job vacancy has been created!</h2>
+          </div>
+        </div>
+      </div>
+      <div class="vacancy_create_stepper">
+        <div class="form_fildls employJob_fields">
+          <div class="preview_result vacancy_preview mb-3 pb-5">
+              <div class="preview_container">
+                <!-- align-items-center -->
+                <h1 class="job_title mb-4 m-0 review-h1">{{ essentials?.value?.companyTitle }}</h1>
+                <div class="d-flex justify-content-between">
+                  <div style="flex: 1;max-width: 50%;">
+                    <!-- {{editorForm.value | json}} -->
+                    <!-- Job Title & Company -->
+
+                    <div style="display: flex;gap: 15px;">
+                     <figure style="width:80px;height:80px;">
+                        <img [src]="(this.essentials?.value?.parent_company_id || this.essentials?.value?.company_id) && getImage() ? getImage() : 'assets/img/company-logo-placeholder.svg'" class="img-fluid" alt="company logo">
+                      </figure>
+
+                      <div style="display: flex;flex: 1;margin-right: 15px;flex-direction: column;">
+                         <h2 class="company_name m-0">{{this.essentials?.value?.parent_company_id ?getComapany(this.essentials?.value?.parent_company_id):this.essentials?.value?.companyName }}</h2>
+                        <p class="location">{{ 
+  (essentials?.value?.location?.name 
+    ? essentials?.value?.location?.name 
+    : essentials?.value?.location) 
+}}</p>
+                      </div>
+                    </div>
+                    
+                  
+
+                    <!-- Work Commitment & Workplace Arrangement -->
+                    <div class="job_details">
+                      <p class="m-0">Work Commitment:</p>
+                      <h2 class="company_name mb-2 m-0">
+                        <span *ngIf="editorForm.value.contract_type == 'any'">Any</span>
+                        <span *ngIf="editorForm.value.contract_type == 'part_time'">Part Time</span>
+                        <span *ngIf="editorForm.value.contract_type == 'full_time'">Full Time</span>
+                        <span *ngIf="editorForm.value.contract_type == 'casual'">Casual</span>
+                        <span *ngIf="editorForm.value.contract_type == 'temp_contract'">Temp/Contract</span>
+                        <span
+                          *ngIf="editorForm.value.contract_type == 'Full Time'">{{editorForm.value.contract_type}}</span>
+                        <span
+                          *ngIf="editorForm.value.contract_type == 'Part Time'">{{editorForm.value.contract_type}}</span>
+
+                        <span
+                          *ngIf="editorForm.value.contract_type == 'Flexible'">{{editorForm.value.contract_type}}</span>
+                      </h2>
+                      <p class="m-0">Workplace Arrangement:</p>
+                      <h2 class="company_name mb-2 m-0">{{editorForm.value?.work_type}}</h2>
+                    </div>
+
+                  </div>
+                  <!-- Skills Section -->
+                  <div class="skills_section m-0" style="flex: 1;max-width: 50%;flex-direction: column;gap: 20px;">
+                    <div>
+                      <h4 class="heading fw-post mb-1">Posted By</h4>
+              <div class="mod_groups p-0">
+                                    <div class="avatar">
+                                       <img *ngIf="userDetail?.image && !selectedVacancy?.created_by_logo" [src]="userDetail.image" class="rounded-circle	" alt="avatar" />
+
+                                        <img *ngIf="selectedVacancy?.created_by_logo" [src]="selectedVacancy.created_by_logo" class="rounded-circle	" alt="company logo" />
+
+                                        <div class="profile" *ngIf="!selectedVacancy?.created_by_logo && !userDetail?.image">
+                                            <span style="color: #fff;display: flex
+                                            ;
+                                                justify-content: center;
+                                                margin-top: 8px;">
+                                                {{ 
+                                                  selectedVacancy?.created_by_name 
+                                                    ? selectedVacancy.created_by_name.split(' ')[0].charAt(0) + selectedVacancy.created_by_name.split(' ')[1]?.charAt(0) 
+                                                    : userDetail?.first_name?.charAt(0) + userDetail?.last_name?.charAt(0)
+                                                }}
+
+                                          <!-- {{selectedCompany?.created_by_name ?
+                                        selectedCompany?.created_by_name.split(' ')[0][0] : ''}}
+                                        {{selectedCompany?.created_by_name.split(' ')[1] ?
+                                        selectedCompany?.created_by_name.split(' ')[1][0] :userDetail?.first_name?.charAt(0) + userDetail?.last_name?.charAt(1)}} -->
+                                        
+                                      </span>    
+                                        </div>
+                                    </div>
+                                    <span style="font: size 16px;">{{selectedVacancy && selectedVacancy?.created_by_name ? selectedVacancy?.created_by_name:userDetail?.first_name+' ' +userDetail?.last_name}}</span>
+                    </div>
+                    <!-- <div class="mod_groups p-0">
+                      <div class="avatar" *ngIf="(selectedVacancy?.company_info && selectedVacancy?.company_info.length > 0) || selectedCompany">
+                          <img *ngIf="selectedVacancy?.company_info?.[0]?.created_by_logo; else defaultAvatar" 
+                                [src]="selectedVacancy?.company_info?.[0]?.created_by_logo" 
+                                alt="Company Logo">
+                  
+                          <ng-template #defaultAvatar>
+                              <div class="profile">
+                                  <span style="color: #fff; display: flex; justify-content: center; margin-top: 8px;">
+                                      {{ getInitials(selectedVacancy?.company_info?.[0]?.created_by || selectedCompany?.created_by) }}
+                                  </span>    
+                              </div>
+                          </ng-template>
+                      </div>
+                      
+                      <span>
+                          {{ (selectedVacancy?.company_info?.[0]?.created_by) || selectedCompany?.created_by || '' }}
+                      </span>
+                  </div> -->
+                  
+
+                    
+                    </div>
+                    <div class="skills_wrapper">
+                      <h5>Required Skills:</h5>
+                      <div class="skills_list">
+                        <span *ngFor="let i of skillsevent" class="skill_chip">{{ i.name }}</span>
+                      </div>
+                    </div>
+                    <div class="skills_wrapper" *ngIf="skillsevent1 && skillsevent1.length>0">
+                      <h5>Develop Skills:</h5>
+                      <div class="skills_list">
+                        <span *ngFor="let skill of skillsevent1" class="skill_chip">{{ skill.name }}</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Description Section -->
+                <div class="description_section">
+                  <h4 class="heading fw">Description:</h4>
+                  <div class="description_content">
+                    <p class="discription" [innerHTML]="description"></p>
+                  </div>
+                </div>
+
+                <!-- Number of Vacancies -->
+                <div class="vacancies_section">
+                  <h5 class="heading fw">Number of Vacancies:</h5>
+                  
+                  <p>{{ editorForm?.value?.no_limit?'No Limit' : editorForm?.value?.no_of_vacancy }}</p>
+                </div>
+
+                <!-- Certifications -->
+                <div class="certifications_section" *ngIf="editorForm?.value?.license_certification">
+                  <h5 class="heading fw">Licenses & Certifications required:</h5>
+                    <span class="certification_chip"
+                    *ngFor="let certification of editorForm?.value?.license_certification?.split(',')">{{certification}}</span>
+                
+                </div>
+
+                    <!-- Certifications -->
+                <div class="certifications_section" *ngIf="routeForm?.value?.application_receiver">
+                  <h5 class="heading fw">Application Routing Destinations</h5>
+                    <span class="certification_chip1">{{getSupervisorsCommaSeparated()}}</span>
+                
+                </div>
+
+                    <!-- Certifications -->
+                <div class="certifications_section" *ngIf="routeForm?.value?.placement_supervisor">
+                  <h5 class="heading fw">Default Supervisor</h5>
+                    <span class="certification_chip1">{{getSupervisor(routeForm?.value?.placement_supervisor)}}</span>
+                
+                </div>
+              </div>
+            <div class="tabs_buttons d-flex  pt-0 justify-content-center align-items-center">
+              <button class="theme_btn btn_primary" (click)="navigateToProjectTab()" mat-button>View my
+                Vacancies</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<div bsModal #successModel="bs-modal"  class="modal fade bsModal ch_modal archived_placement_group_modal" id="skip" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header pt-4 text-center justify-content-center">
+                <button type="button" mat-icon-button id="closeModal" class="close" data-dismiss="modal"
+                    aria-label="Close" (click)="successModel.hide()">
+                    <mat-icon>close</mat-icon>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12 text-center">
+                       <svg width="164" height="156" viewBox="0 0 164 156" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M38.4206 20.7096C38.2265 19.268 40.0263 8.83513 42.2363 11.8248C48.0856 19.3611 61.4736 16.9303 63.538 27.7979C64.1556 29.1685 63.1587 30.1621 62.0515 28.8092C55.1391 23.6061 38.3147 34.8329 38.4206 20.7096Z" fill="#26C296"/>
+                        <path d="M87.5845 0.283886C89.7063 1.41056 90.5356 3.06509 90.0283 5.50917C88.9343 10.801 86.614 15.4585 83.16 19.566C82.5601 20.2801 81.8146 21.1318 80.7471 20.4797C79.8119 19.9075 80.1472 18.9627 80.3765 18.0933C81.5764 13.5467 82.216 8.9025 82.7762 4.24055C82.7762 4.24055 83.0365 2.37755 84.104 1.10893C84.5054 0.634309 84.8936 0.408087 85.1009 0.306065C85.7273 0 86.2832 0 86.4199 0C86.9537 0.00887145 87.3639 0.172993 87.5845 0.283886Z" fill="#E60028"/>
+                        <path d="M69.1682 21.5095C66.7421 17.6194 66.795 17.4686 71.1047 15.8673C72.7192 15.2685 74.0117 14.9669 74.7528 15.5834C75.4718 16.1822 75.3174 17.4109 75.2116 18.5243C74.6117 24.8984 75.7409 27.2095 74.7484 27.5821C73.8 27.9458 71.9649 25.9985 69.1682 21.5095Z" fill="#F47761"/>
+                        <path d="M140.383 26.4139C139.262 28.3257 138.12 30.3794 136.867 32.3622C136.483 32.9699 135.972 32.3267 135.526 32.1581C134.847 31.9009 134.882 31.4529 135.178 30.9339C136.192 29.1463 137.22 27.3631 138.23 25.5711C138.535 25.0299 138.923 24.8037 139.465 25.2162C139.84 25.5001 140.497 25.5489 140.383 26.4139Z" fill="#464BA8"/>
+                        <path d="M118.385 15.3429C117.988 14.8061 117.503 14.2162 116.911 13.6262C116.554 13.2669 116.197 12.9476 115.857 12.6637C94.7054 -5.46512 85.5256 27.9536 92.0542 28.069C97.2595 20.2355 108.932 10.2107 118.385 15.3429Z" fill="#FF76AF"/>
+                        <path d="M106.047 15.5653C106.334 15.3568 106.744 15.0818 107.264 14.8112C108.87 13.9684 110.277 13.7954 111.636 13.6446C111.636 13.6446 114.159 13.3607 116.325 13.8886C116.612 13.9595 116.987 14.0749 117.388 14.3321C117.917 14.6737 118.231 15.0951 118.389 15.3479C119.426 16.7762 120.286 18.2888 120.63 20.0409C120.886 21.3406 120.52 22.2455 119.003 22.241C115.474 22.2277 112.002 21.7087 108.601 20.8039C108.169 20.6885 107.635 20.4978 107.185 20.0143C106.585 19.3711 106.439 18.4973 106.214 17.0246C106.113 16.3992 106.069 15.8935 106.047 15.5653Z" fill="#F25094"/>
+                        <path d="M27.3203 29L32.0183 33.8527" stroke="#2B2A35" stroke-miterlimit="10"/>
+                        <path d="M20 36.4219L26.4139 38.6176" stroke="#2B2A35" stroke-miterlimit="10"/>
+                        <path d="M33.7969 35.7734L36.1569 38.6167" stroke="#2B2A35" stroke-miterlimit="10"/>
+                        <path d="M28.3281 39.166L31.9189 40.2217" stroke="#2B2A35" stroke-miterlimit="10"/>
+                        <path d="M142.136 35.0293L137.195 39.536" stroke="#2B2A35" stroke-miterlimit="10"/>
+                        <path d="M135.099 41.1094L132.836 43.1631" stroke="#2B2A35" stroke-miterlimit="10"/>
+                        <path d="M144.609 45.1426L137.961 46.6995" stroke="#2B2A35" stroke-miterlimit="10"/>
+                        <path d="M135.461 47.1289L132.25 48.1003" stroke="#2B2A35" stroke-miterlimit="10"/>
+                        <path d="M15.5 55C17.433 55 19 53.433 19 51.5C19 49.567 17.433 48 15.5 48C13.567 48 12 49.567 12 51.5C12 53.433 13.567 55 15.5 55Z" fill="#464BA8"/>
+                        <path d="M31 71C32.6569 71 34 69.6569 34 68C34 66.3432 32.6569 65 31 65C29.3431 65 28 66.3432 28 68C28 69.6569 29.3431 71 31 71Z" fill="#E60028"/>
+                        <path d="M151.5 56C153.433 56 155 54.433 155 52.5C155 50.567 153.433 49 151.5 49C149.567 49 148 50.567 148 52.5C148 54.433 149.567 56 151.5 56Z" fill="#26C296"/>
+                        <path d="M133.5 73C134.881 73 136 71.8807 136 70.5C136 69.1193 134.881 68 133.5 68C132.119 68 131 69.1193 131 70.5C131 71.8807 132.119 73 133.5 73Z" fill="#F47761"/>
+                        <path d="M82.6094 122.834C105.253 122.834 123.609 104.136 123.609 81.0704C123.609 58.0049 105.253 39.3066 82.6094 39.3066C59.9657 39.3066 41.6094 58.0049 41.6094 81.0704C41.6094 104.136 59.9657 122.834 82.6094 122.834Z" fill="#464BA8" fill-opacity="0.3"/>
+                        <path d="M83.2218 115.465C102.148 115.465 117.49 100.067 117.49 81.0714C117.49 62.0763 102.148 46.6777 83.2218 46.6777C64.2957 46.6777 48.9531 62.0763 48.9531 81.0714C48.9531 100.067 64.2957 115.465 83.2218 115.465Z" fill="#464BA8"/>
+                        <path d="M65.8618 77.9047C66.9629 77.9238 68.0293 78.4123 68.9254 79.3133C71.6576 82.0671 74.3994 84.8146 77.1253 87.5747C77.3935 87.8444 77.5292 87.8698 77.8131 87.5811C85.2022 80.1319 92.6071 72.6953 99.9993 65.2493C100.813 64.4308 101.76 63.9454 102.918 63.8407C105.117 63.6377 107.253 65.335 107.549 67.5558C107.748 69.0405 107.325 70.3254 106.281 71.3756C97.7214 79.9891 89.1618 88.6026 80.5927 97.2066C78.8133 98.9928 76.1157 98.9833 74.3331 97.2003C70.4114 93.2663 66.4928 89.326 62.5806 85.3793C61.3312 84.1198 60.9747 82.2384 61.6467 80.6458C62.3566 78.9739 63.9278 77.9079 65.8618 77.9047Z" fill="white"/>
+                        </svg>
+
+
+                    </div>
+                    <div class="col-md-12 text-center">
+                        <h2 class="modal-title mb-3">Thank you for completing your registration!
+                        </h2>
+                        <p>
+                          Your company & Vacancy is now under review by our team. While your account is <br /> pending approval, you do not have complete access to the portal. You’ll be <br />notified as soon as access is granted.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer justify-content-center">
+                <!-- <button mat-button type="button" class="theme_btn btn_outline_primary mr-4" data-dismiss="modal"
+                     (click)="skipModel.hide()">Skip This Step</button> -->
+                <button mat-button type="button" class="theme_btn btn_primary" routerLink="/employer/dashboard" (click)="successModel.hide()">Proceed</button>
+            </div>
+        </div>
+    </div>
+</div>
+

@@ -1,0 +1,1125 @@
+<section class="employer-header-sec">
+	<div class="container">
+		<form [formGroup]="headerSection">
+			<div class="row">
+				
+				<div class="col-md-12">
+					<div class="card">
+						<div class="manage-home-header">
+							<div class="card-header d-flex justify-content-between">
+								<strong>Recruitment Solutions Header Section</strong>
+								<div class="slide-cs">
+									<span class="mr-2">Visibility </span>
+									<mat-slide-toggle formControlName="is_visible" (change)="fun($event)"></mat-slide-toggle>
+								</div>
+							</div>
+							<div class="card-body">
+									
+								<div class="home-mng-form">
+									<div class="form-group">
+										<label>Title</label>
+										<input type="text" name="" class="form-control" value="Don’t have time to recruit candidates? We can help!" formControlName="heading">
+									</div>
+									<div *ngIf="(headerSection.controls.heading.touched || headerSection.controls.heading.dirty) && headerSection.controls.heading.invalid && headerSection.controls.heading?.errors?.required  " class="invalid">
+										*Please enter heading
+									</div>
+									<div *ngIf="(headerSection.controls.heading.touched || headerSection.controls.heading.dirty) && headerSection.controls.heading.invalid && headerSection.controls.heading?.errors?.maxlength  " class="invalid">
+										**Maximum Length should be 200 characters
+									</div>
+									<div class="form-group">
+										<label>Sub-Heading</label>
+										<input type="text" name="" class="form-control" value="Save 10 hours a week sourcing and screening candidates. Let Top Graduates Recruitment help you today!" formControlName="subheading">
+									</div>
+									<div *ngIf="(headerSection.controls.subheading.touched || headerSection.controls.subheading.dirty) && headerSection.controls.subheading.invalid && headerSection.controls.subheading?.errors?.required  " class="invalid">
+										*Please enter sub heading
+									</div>
+									<div *ngIf="(headerSection.controls.subheading.touched || headerSection.controls.subheading.dirty) && headerSection.controls.subheading.invalid && headerSection.controls.subheading?.errors?.maxlength  " class="invalid">
+										**Maximum Length should be 200 characters
+									</div>
+									<div class="form-group">
+										<label>Banner Image</label>
+										<div class="slider-video-cntnt">
+											<div class="prev-upld-img">
+												<img [src]="HeadingImage?HeadingImage:'assets/img/rcrtmntimg.png'" class="img-fluid">
+												<div class="upload-imag text-center">
+													<button class="btn-primary btn  mt-3 position-relative">
+														<input type="file" title="" name="" class="img-input-upld" (change)="setHeadingImage($event)">
+													Upload Image
+													</button>
+												</div>
+												<div *ngIf="headerSection.controls['image']?.errors?.required "
+													class="invalid">
+													*Please select image
+												</div>
+												<div *ngIf="headerSection.controls.county?.errors?.required  " class="invalid">
+													*Only images are allowed
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="edit-btns d-flex justify-content-end">
+										<button class="btn btn-primary mr-4" (click)="postcontent('header')">Save</button>
+										<!-- <button class="btn btn-primary">Back</button> -->
+									</div>
+								</div>
+							
+							</div>
+						</div>
+					</div>
+				</div>
+				
+			</div>
+		</form>
+	</div>
+</section>
+
+<section class="work-for-sec">
+	<div class="container">
+		<form [formGroup]="whytopgraduatesSection">
+			<div class="row">
+				<div class="col-md-12">
+					<div class="card">
+						<div class="manage-home-header">
+							<div class="card-header d-flex justify-content-between">
+								<strong>Why choose TopGraduates</strong>
+								<div class="slide-cs">
+									<span class="mr-2">Visibility </span>
+									<mat-slide-toggle formControlName="is_visible" (change)="fun1($event)"></mat-slide-toggle>
+								</div>
+							</div>
+							<div class="card-body">
+									<div class="home-mng-form">
+										<div class="form-group">
+											<label>Heading</label>
+											<quill-editor [modules]="modules" formControlName="heading"></quill-editor>
+											<!-- <editor apiKey="zcwi1f81304uers1lcszh0iq2lbhcaxl5cj6ez0v89wr25z3" formControlName="heading"></editor> -->
+											<!-- <label>Heading</label>
+											<input type="text" name="" class="form-control" value="Why choose TopGraduates ?" formControlName="heading"> -->
+										</div>
+										<div *ngIf="(whytopgraduatesSection.controls.heading.touched || whytopgraduatesSection.controls.heading.dirty) && whytopgraduatesSection.controls.heading.invalid && whytopgraduatesSection.controls.heading?.errors?.required  " class="invalid">
+											*Please enter heading
+										</div>
+										<div *ngIf="(whytopgraduatesSection.controls.heading.touched || whytopgraduatesSection.controls.heading.dirty) && whytopgraduatesSection.controls.heading.invalid && whytopgraduatesSection.controls.heading?.errors?.maxlength  " class="invalid">
+											**Maximum Length should be 5000 characters
+										</div>
+										<div class="edit-btns d-flex justify-content-end">
+											<button class="btn btn-primary mr-4" (click)="postcontent('whygraduates')">Save</button>
+											<!-- <button class="btn btn-primary">Back</button> -->
+										</div>
+									</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</form>
+	</div>
+</section>
+
+<section class="whychose-sec">
+	<div class="container">
+		<form [formGroup]="agencySection">
+			<div class="row">
+				<div class="col-md-12">
+					<div class="card">
+						<div class="manage-home-header">
+							<div class="card-header d-flex justify-content-between">
+								<strong>Our Graduate Recruitment Agency</strong>
+								<div class="slide-cs">
+									<span class="mr-2">Visibility </span>
+									<mat-slide-toggle formControlName="is_visible" (change)="fun2($event)"></mat-slide-toggle>
+								</div>
+							</div>
+							<div class="card-body">
+								
+									<div class="home-mng-form">
+										<div class="form-group">
+											<label>Agency Image</label>
+											<div class="slider-video-cntnt">
+												<div class="prev-upld-img">
+													<img [src]="HeadingImage9?HeadingImage9:'assets/img/rcrtmntimg.png'" class="img-fluid">
+													<div class="upload-imag">
+														<button class="btn-primary btn  mt-3 position-relative">
+															<input type="file" title="" name="" class="img-input-upld" (change)="setHeadingImage9($event)">
+														Upload Image
+														</button>
+													</div>
+													<div *ngIf="agencySection.controls['image']?.errors?.required "
+														class="invalid">
+														*Please select image
+													</div>
+													<div *ngIf="agencySection.controls.county?.errors?.required  " class="invalid">
+														*Only images are allowed
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="form-group">
+											<label>Description</label>
+											<quill-editor [modules]="modules" formControlName="description"></quill-editor>
+											<!-- <editor apiKey="zcwi1f81304uers1lcszh0iq2lbhcaxl5cj6ez0v89wr25z3" formControlName="description"></editor> -->
+										</div>
+										<div *ngIf="(agencySection.controls.description.touched || agencySection.controls.description.dirty) && agencySection.controls.description.invalid && agencySection.controls.description?.errors?.required  " class="invalid">
+											*Please enter description
+										</div>
+										<div *ngIf="(agencySection.controls.description.touched || agencySection.controls.description.dirty) && agencySection.controls.description.invalid && agencySection.controls.description?.errors?.maxlength  " class="invalid">
+											**Maximum Length should be 5000 characters
+										</div>
+										<div class="edit-btns d-flex justify-content-end">
+											<button class="btn btn-primary mr-4" (click)="postcontent('agency')">Save</button>
+											<!-- <button class="btn btn-primary">Back</button> -->
+										</div>
+									</div>
+								
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</form>
+	</div>
+</section>
+
+<section class="Endorsed-steps-sec">
+	<div class="container">
+		<form [formGroup]="benefitsSection">
+			<div class="row">
+				<div class="col-md-12">
+					<div class="card">
+						<div class="manage-home-header">
+							<div class="card-header d-flex justify-content-between">
+								<strong>Benefits</strong>
+								<div class="slide-cs">
+									<span class="mr-2">Visibility </span>
+									<mat-slide-toggle formControlName="is_visible" (change)="fun3($event)"></mat-slide-toggle>
+								</div>
+							</div>
+							<div class="card-body">
+								
+									<div class="home-mng-form">
+										<div class="endrose-step">
+											<div class="form-group">
+												<ng-container formArrayName="benefitsArray"
+													*ngFor="let alias of benefitsSection.controls['benefitsArray'].controls; let i=index">
+													<ng-container [formGroupName]="i">
+														<label class="mt-4">{{i+1}}: Icon</label>
+														<div class="slider-video-cntnt">
+															<div class="prev-upld-img icons">
+																<img [src]="benefitsArray.controls[i].controls['image'].value ? benefitsArray.controls[i].controls['image'].value:'assets/img/access_time.svg'" class="img-fluid">
+																
+																<div class="upload-imag text-center">
+																	<button class="btn-primary btn  mt-3 position-relative">
+																		<input type="file" name="" class="img-input-upld" (change)="onBenefitChangeImage($event,i)">
+																	Upload Image
+																	</button>
+																</div>
+																<div *ngIf="benefitsArray.controls[i].controls['image']?.errors?.required "
+																	class="invalid">
+																	*Please select image
+																</div>
+															    <div *ngIf="benefitsArray.controls[i].controls['image'].county?.errors?.required"
+																	class="invalid">
+																	*Only images are allowed
+																</div>
+															</div>
+														</div>
+													
+														<label class="mt-3">Heading</label>
+														<input type="text" name="" class="form-control" value="Get hired 3x faster" formControlName="heading">
+													    <div *ngIf="benefitsArray.controls[i].controls['heading'].errors?.required  "
+															class="invalid">
+															*Please enter heading
+														</div>
+														<div *ngIf="benefitsArray.controls[i].controls['heading'].errors?.maxlength  "
+															class="invalid">
+															*Maximum Length should be 50 characters
+														</div>
+														<label class="mt-3">Description</label>
+														<quill-editor [modules]="modules" formControlName="description"></quill-editor>
+														<!-- <editor apiKey="zcwi1f81304uers1lcszh0iq2lbhcaxl5cj6ez0v89wr25z3" formControlName="description"></editor> -->
+														<div *ngIf="benefitsArray.controls[i].controls['description'].errors?.required "
+															class="invalid">
+															*Please enter description
+														</div>
+														<div *ngIf="benefitsArray.controls[i].controls['description'].errors?.maxlength  "
+															class="invalid">
+															*Maximum Length should be 5000 characters
+														</div>
+													</ng-container>
+												</ng-container>
+											</div>
+										</div>
+										<!-- <div class="endrose-step">
+											<div class="form-group">
+												<label>2: Icon</label>
+												<div class="slider-video-cntnt">
+													<div class="prev-upld-img icons">
+														<img src="assets/img/ondemand_video.svg" class="img-fluid">
+														<div class="upload-imag text-center">
+															<button class="btn-primary btn  mt-3 position-relative">
+																<input type="file" name="" class="img-input-upld">
+															Upload Image
+															</button>
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="form-group">
+												<label>Heading</label>
+												<input type="text" name="" class="form-control" value="Bonus Video Resume">
+											</div>
+											<div class="form-group">
+												<label>Description</label>
+												<editor></editor>
+											</div>
+										</div>
+										<div class="endrose-step">
+											<div class="form-group">
+												<label>3: Icon</label>
+												<div class="slider-video-cntnt">
+													<div class="prev-upld-img icons">
+														<img src="assets/img/assessment.svg" class="img-fluid">
+														<div class="upload-imag text-center">
+															<button class="btn-primary btn  mt-3 position-relative">
+																<input type="file" name="" class="img-input-upld">
+															Upload Image
+															</button>
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="form-group">
+												<label>Heading</label>
+												<input type="text" name="" class="form-control" value="Profile Booster">
+											</div>
+											<div class="form-group">
+												<label>Description</label>
+												<editor></editor>
+											</div>
+										</div>
+										<div class="endrose-step">
+											<div class="form-group">
+												<label>4: Icon</label>
+												<div class="slider-video-cntnt">
+													<div class="prev-upld-img icons">
+														<img src="assets/img/description.svg" class="img-fluid">
+														<div class="upload-imag text-center">
+															<button class="btn-primary btn  mt-3 position-relative">
+																<input type="file" name="" class="img-input-upld">
+															Upload Image
+															</button>
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="form-group">
+												<label>Heading</label>
+												<input type="text" name="" class="form-control" value="Resume & Cover Letter">
+											</div>
+											<div class="form-group">
+												<label>Description</label>
+												<editor></editor>
+											</div>
+										</div>
+										<div class="endrose-step">
+											<div class="form-group">
+												<label>5: Icon</label>
+												<div class="slider-video-cntnt">
+													<div class="prev-upld-img icons">
+														<img src="assets/img/link.svg" class="img-fluid">
+														<div class="upload-imag text-center">
+															<button class="btn-primary btn  mt-3 position-relative">
+																<input type="file" name="" class="img-input-upld">
+															Upload Image
+															</button>
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="form-group">
+												<label>Heading</label>
+												<input type="text" name="" class="form-control" value="LinkedIn Profile Booster">
+											</div>
+											<div class="form-group">
+												<label>Description</label>
+												<editor></editor>
+											</div>
+										</div> -->
+										<div class="edit-btns d-flex justify-content-end">
+											<button class="btn btn-primary mr-4" (click)="postcontent('benefits')" >Save</button>
+											<!-- <button class="btn btn-primary">Back</button> -->
+										</div>
+									</div>
+								
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</form>
+	</div>
+</section>
+
+<section class="whychose-sec">
+	<div class="container">
+		<form [formGroup]="essentialsSection">
+			<div class="row">
+				<div class="col-md-12">
+					<div class="card">
+						<div class="manage-home-header">
+							<div class="card-header d-flex justify-content-between">
+								<strong>We provide you with the essentials</strong>
+								<div class="slide-cs">
+									<span class="mr-2">Visibility </span>
+									<mat-slide-toggle formControlName="is_visible" (change)="fun4($event)"></mat-slide-toggle>
+								</div>
+							</div>
+							<div class="card-body">
+								
+									<div class="home-mng-form">
+										<div class="form-group">
+											<label>Description</label>
+											<quill-editor [modules]="modules" formControlName="description"></quill-editor>
+											<!-- <editor apiKey="zcwi1f81304uers1lcszh0iq2lbhcaxl5cj6ez0v89wr25z3" formControlName="description"></editor> -->
+										</div>
+										<div *ngIf="(essentialsSection.controls.description.touched || essentialsSection.controls.description.dirty) && essentialsSection.controls.description.invalid && essentialsSection.controls.description?.errors?.required  " class="invalid">
+											*Please enter description
+										</div>
+										<div *ngIf="(essentialsSection.controls.description.touched || essentialsSection.controls.description.dirty) && essentialsSection.controls.description.invalid && essentialsSection.controls.description?.errors?.maxlength  " class="invalid">
+											**Maximum Length should be 10000 characters
+										</div>
+										<div class="edit-btns d-flex justify-content-end">
+											<button class="btn btn-primary mr-4" (click)="postcontent('essentials')">Save</button>
+											<!-- <button class="btn btn-primary">Back</button> -->
+										</div>
+									</div>
+								
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</form>
+	</div>
+</section>
+
+<section class="whychose-sec">
+	<div class="container">
+		<form [formGroup]="recruitment1Section">
+			<div class="row">
+				<div class="col-md-12">
+					<div class="card">
+						<div class="manage-home-header">
+							<div class="card-header d-flex justify-content-between">
+								<strong>Recruitment Step 1</strong>
+								<div class="slide-cs">
+									<span class="mr-2">Visibility </span>
+									<mat-slide-toggle formControlName="is_visible" (change)="fun5($event)"></mat-slide-toggle>
+								</div>
+							</div>
+							<div class="card-body">
+								
+									<div class="home-mng-form">
+										<div class="form-group">
+											<label>Heading</label>
+											<input type="text" name="" class="form-control" value="Recruitment Consultation" formControlName="heading">
+										</div>
+										<div *ngIf="(recruitment1Section.controls.heading.touched || recruitment1Section.controls.heading.dirty) && recruitment1Section.controls.heading.invalid && recruitment1Section.controls.heading?.errors?.required  " class="invalid">
+											*Please enter heading
+										</div>
+										<div *ngIf="(recruitment1Section.controls.heading.touched || recruitment1Section.controls.heading.dirty) && recruitment1Section.controls.heading.invalid && recruitment1Section.controls.heading?.errors?.maxlength  " class="invalid">
+											**Maximum Length should be 50 characters
+										</div>
+										<div class="form-group">
+											<label>Description</label>
+											<quill-editor [modules]="modules" formControlName="description"></quill-editor>
+											<!-- <editor apiKey="zcwi1f81304uers1lcszh0iq2lbhcaxl5cj6ez0v89wr25z3" formControlName="description"></editor> -->
+										</div>
+										<div *ngIf="(recruitment1Section.controls.description.touched || recruitment1Section.controls.description.dirty) && recruitment1Section.controls.description.invalid && recruitment1Section.controls.description?.errors?.required  " class="invalid">
+											*Please enter description
+										</div>
+										<div *ngIf="(recruitment1Section.controls.description.touched || recruitment1Section.controls.description.dirty) && recruitment1Section.controls.description.invalid && recruitment1Section.controls.description?.errors?.maxlength  " class="invalid">
+											**Maximum Length should be 5000 characters
+										</div>
+										<div class="form-group">
+											<label>Section Image</label>
+											<div class="slider-video-cntnt">
+												<div class="prev-upld-img">
+													<img [src]="HeadingImage1?HeadingImage1:'assets/img/s1img.png'" class="img-fluid">
+													<div class="upload-imag text-center">
+														<button class="btn-primary btn  mt-3 position-relative">
+															<input type="file" title="" name="" class="img-input-upld" (change)="setHeadingImage1($event)">
+														Upload Image
+														</button>
+													</div>
+													<div *ngIf="recruitment1Section.controls['image']?.errors?.required "
+														class="invalid">
+														*Please select image
+													</div>
+													<div *ngIf="recruitment1Section.controls.county?.errors?.required  " class="invalid">
+														*Only images are allowed
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="edit-btns d-flex justify-content-end">
+											<button class="btn btn-primary mr-4" (click)="postcontent('recruitment1')">Save</button>
+											<!-- <button class="btn btn-primary">Back</button> -->
+										</div>
+									</div>
+								
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</form>
+	</div>
+</section>
+
+<section class="whychose-sec">
+	<div class="container">
+		<form [formGroup]="recruitment2Section">
+			<div class="row">
+				<div class="col-md-12">
+					<div class="card">
+						<div class="manage-home-header">
+							<div class="card-header d-flex justify-content-between">
+								<strong>Recruitment Step 2</strong>
+								<div class="slide-cs">
+									<span class="mr-2">Visibility </span>
+									<mat-slide-toggle formControlName="is_visible" (change)="fun6($event)"></mat-slide-toggle>
+								</div>
+							</div>
+							<div class="card-body">
+								
+									<div class="home-mng-form">
+										<div class="form-group">
+											<label>Heading</label>
+											<input type="text" name="" class="form-control" value="Talent sourcing" formControlName="heading">
+										</div>
+										<div *ngIf="(recruitment2Section.controls.heading.touched || recruitment2Section.controls.heading.dirty) && recruitment2Section.controls.heading.invalid && recruitment2Section.controls.heading?.errors?.required  " class="invalid">
+											*Please enter heading
+										</div>
+										<div *ngIf="(recruitment2Section.controls.heading.touched || recruitment2Section.controls.heading.dirty) && recruitment2Section.controls.heading.invalid && recruitment2Section.controls.heading?.errors?.maxlength  " class="invalid">
+											**Maximum Length should be 50 characters
+										</div>
+										<div class="form-group">
+											<label>Description</label>
+											<quill-editor [modules]="modules" formControlName="description"></quill-editor>
+											<!-- <editor apiKey="zcwi1f81304uers1lcszh0iq2lbhcaxl5cj6ez0v89wr25z3" formControlName="description"></editor> -->
+										</div>
+										<div *ngIf="(recruitment2Section.controls.description.touched || recruitment2Section.controls.description.dirty) && recruitment2Section.controls.description.invalid && recruitment2Section.controls.description?.errors?.required  " class="invalid">
+											*Please enter description
+										</div>
+										<div *ngIf="(recruitment2Section.controls.description.touched || recruitment2Section.controls.description.dirty) && recruitment2Section.controls.description.invalid && recruitment2Section.controls.description?.errors?.maxlength  " class="invalid">
+											*Maximum Length should be 5000 characters
+										</div>
+										<div class="form-group">
+											<label>Section Image</label>
+											<div class="slider-video-cntnt">
+												<div class="prev-upld-img">
+													<img [src]="HeadingImage2?HeadingImage2:'assets/img/s2img.png'" class="img-fluid">
+													<div class="upload-imag text-center">
+														<button class="btn-primary btn  mt-3 position-relative">
+															<input type="file" title="" name="" class="img-input-upld" (change)="setHeadingImage2($event)">
+														Upload Image
+														</button>
+													</div>
+													<div *ngIf="recruitment2Section.controls['image']?.errors?.required "
+														class="invalid">
+														*Please select image
+													</div>
+													<div *ngIf="recruitment2Section.controls.county?.errors?.required  " class="invalid">
+														*Only images are allowed
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="edit-btns d-flex justify-content-end">
+											<button class="btn btn-primary mr-4" (click)="postcontent('recruitment2')">Save</button>
+											<!-- <button class="btn btn-primary">Back</button> -->
+										</div>
+									</div>
+								
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</form>
+	</div>
+</section>
+
+<section class="whychose-sec">
+	<div class="container">
+		<form [formGroup]="recruitment3Section">
+			<div class="row">
+				<div class="col-md-12">
+					<div class="card">
+						<div class="manage-home-header">
+							<div class="card-header d-flex justify-content-between">
+								<strong>Recruitment Step 3</strong>
+								<div class="slide-cs">
+									<span class="mr-2">Visibility </span>
+									<mat-slide-toggle formControlName="is_visible" (change)="fun7($event)"></mat-slide-toggle>
+								</div>
+							</div>
+							<div class="card-body">
+								
+									<div class="home-mng-form">
+										<div class="form-group">
+											<label>Heading</label>
+											<input type="text" name="" class="form-control" value="Candidate screening" formControlName="heading">
+										</div>
+										<div *ngIf="(recruitment3Section.controls.heading.touched || recruitment3Section.controls.heading.dirty) && recruitment3Section.controls.heading.invalid && recruitment3Section.controls.heading?.errors?.required  " class="invalid">
+											*Please enter heading
+										</div>
+										<div *ngIf="(recruitment3Section.controls.heading.touched || recruitment3Section.controls.heading.dirty) && recruitment3Section.controls.heading.invalid && recruitment3Section.controls.heading?.errors?.maxlength  " class="invalid">
+											**Maximum Length should be 500 characters
+										</div>
+										<div class="form-group">
+											<label>Description</label>
+											<quill-editor [modules]="modules" formControlName="description"></quill-editor>
+											<!-- <editor apiKey="zcwi1f81304uers1lcszh0iq2lbhcaxl5cj6ez0v89wr25z3" formControlName="description"></editor> -->
+										</div>
+										<div *ngIf="(recruitment3Section.controls.description.touched || recruitment3Section.controls.description.dirty) && recruitment3Section.controls.description.invalid && recruitment3Section.controls.description?.errors?.required  " class="invalid">
+											*Please enter description
+										</div>
+										<div *ngIf="(recruitment3Section.controls.description.touched || recruitment3Section.controls.description.dirty) && recruitment3Section.controls.description.invalid && recruitment3Section.controls.description?.errors?.maxlength  " class="invalid">
+											*Maximum Length should be 5000 characters
+										</div>
+										<div class="form-group">
+											<label>Section Image</label>
+											<div class="slider-video-cntnt">
+												<div class="prev-upld-img">
+													<img [src]="HeadingImage3?HeadingImage3:'assets/img/s3img.png'" class="img-fluid">
+													<div class="upload-imag text-center">
+														<button class="btn-primary btn  mt-3 position-relative">
+															<input type="file" title="" name="" class="img-input-upld" (change)="setHeadingImage3($event)">
+														Upload Image
+														</button>
+													</div>
+													<div *ngIf="recruitment3Section.controls['image']?.errors?.required "
+														class="invalid">
+														*Please select image
+													</div>
+													<div *ngIf="recruitment3Section.controls.county?.errors?.required  " class="invalid">
+														*Only images are allowed
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="edit-btns d-flex justify-content-end">
+											<button class="btn btn-primary mr-4" (click)="postcontent('recruitment3')">Save</button>
+											<!-- <button class="btn btn-primary">Back</button> -->
+										</div>
+									</div>
+								
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</form>
+	</div>
+</section>
+
+<section class="whychose-sec">
+	<div class="container">
+		<form [formGroup]="recruitment4Section">
+			<div class="row">
+				<div class="col-md-12">
+					<div class="card">
+						<div class="manage-home-header">
+							<div class="card-header d-flex justify-content-between">
+								<strong>Recruitment Step 4</strong>
+								<div class="slide-cs">
+									<span class="mr-2">Visibility </span>
+									<mat-slide-toggle formControlName="is_visible" (change)="fun8($event)"></mat-slide-toggle>
+								</div>
+							</div>
+							<div class="card-body">
+								
+									<div class="home-mng-form">
+										<div class="form-group">
+											<label>Heading</label>
+											<input type="text" name="" class="form-control" value="In depth interviews" formControlName="heading">
+										</div>
+										<div *ngIf="(recruitment4Section.controls.heading.touched || recruitment4Section.controls.heading.dirty) && recruitment4Section.controls.heading.invalid && recruitment4Section.controls.heading?.errors?.required  " class="invalid">
+											*Please enter heading
+										</div>
+										<div *ngIf="(recruitment4Section.controls.heading.touched || recruitment4Section.controls.heading.dirty) && recruitment4Section.controls.heading.invalid && recruitment4Section.controls.heading?.errors?.maxlength  " class="invalid">
+											**Maximum Length should be 50 characters
+										</div>
+										<div class="form-group">
+											<label>Description</label>
+											<quill-editor [modules]="modules" formControlName="description"></quill-editor>
+											<!-- <editor apiKey="zcwi1f81304uers1lcszh0iq2lbhcaxl5cj6ez0v89wr25z3" formControlName="description"></editor> -->
+										</div>
+										<div *ngIf="(recruitment4Section.controls.description.touched || recruitment4Section.controls.description.dirty) && recruitment4Section.controls.description.invalid && recruitment4Section.controls.description?.errors?.required  " class="invalid">
+											*Please enter description
+										</div>
+										<div *ngIf="(recruitment4Section.controls.description.touched || recruitment4Section.controls.description.dirty) && recruitment4Section.controls.description.invalid && recruitment4Section.controls.description?.errors?.maxlength  " class="invalid">
+											*Maximum Length should be 5000 characters
+										</div>
+										<div class="form-group">
+											<label>Section Image</label>
+											<div class="slider-video-cntnt">
+												<div class="prev-upld-img">
+													<img [src]="HeadingImage4?HeadingImage4:'assets/img/s4img.png'" class="img-fluid">
+													<div class="upload-imag text-center">
+														<button class="btn-primary btn  mt-3 position-relative">
+															<input type="file" title="" name="" class="img-input-upld" (change)="setHeadingImage4($event)">
+														Upload Image
+														</button>
+													</div>
+													<div *ngIf="recruitment4Section.controls['image']?.errors?.required "
+														class="invalid">
+														*Please select image
+													</div>
+													<div *ngIf="recruitment4Section.controls.county?.errors?.required  " class="invalid">
+														*Only images are allowed
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="edit-btns d-flex justify-content-end">
+											<button class="btn btn-primary mr-4" (click)="postcontent('recruitment4')">Save</button>
+											<!-- <button class="btn btn-primary">Back</button> -->
+										</div>
+									</div>
+								
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</form>
+	</div>
+</section>
+
+<section class="whychose-sec">
+	<div class="container">
+		<form [formGroup]="recruitment5Section">
+			<div class="row">
+				<div class="col-md-12">
+					<div class="card">
+						<div class="manage-home-header">
+							<div class="card-header d-flex justify-content-between">
+								<strong>Recruitment Step 5</strong>
+								<div class="slide-cs">
+									<span class="mr-2">Visibility </span>
+									<mat-slide-toggle formControlName="is_visible" (change)="fun9($event)"></mat-slide-toggle>
+								</div>
+							</div>
+							<div class="card-body">
+								
+									<div class="home-mng-form">
+										<div class="form-group">
+											<label>Heading</label>
+											<input type="text" name="" class="form-control" value="Meet the best" formControlName="heading">
+										</div>
+										<div *ngIf="(recruitment5Section.controls.heading.touched || recruitment5Section.controls.heading.dirty) && recruitment5Section.controls.heading.invalid && recruitment5Section.controls.heading?.errors?.required  " class="invalid">
+											*Please enter heading
+										</div>
+										<div *ngIf="(recruitment5Section.controls.heading.touched || recruitment5Section.controls.heading.dirty) && recruitment5Section.controls.heading.invalid && recruitment5Section.controls.heading?.errors?.maxlength  " class="invalid">
+											**Maximum Length should be 50 characters
+										</div>
+										<div class="form-group">
+											<label>Description</label>
+											<quill-editor [modules]="modules" formControlName="description"></quill-editor>
+											<!-- <editor apiKey="zcwi1f81304uers1lcszh0iq2lbhcaxl5cj6ez0v89wr25z3" formControlName="description"></editor> -->
+										</div>
+										<div *ngIf="(recruitment5Section.controls.description.touched || recruitment5Section.controls.description.dirty) && recruitment5Section.controls.description.invalid && recruitment5Section.controls.description?.errors?.required  " class="invalid">
+											*Please enter description
+										</div>
+										<div *ngIf="(recruitment5Section.controls.description.touched || recruitment5Section.controls.description.dirty) && recruitment5Section.controls.description.invalid && recruitment5Section.controls.description?.errors?.maxlength  " class="invalid">
+											*Maximum Length should be 5000 characters
+										</div>
+										<div class="form-group">
+											<label>Section Image</label>
+											<div class="slider-video-cntnt">
+												<div class="prev-upld-img">
+													<img [src]="HeadingImage5?HeadingImage5:'assets/img/s5img.png'" class="img-fluid">
+													<div class="upload-imag text-center">
+														<button class="btn-primary btn  mt-3 position-relative">
+															<input type="file" title="" name="" class="img-input-upld" (change)="setHeadingImage5($event)">
+														Upload Image
+														</button>
+													</div>
+													<div *ngIf="recruitment5Section.controls['image']?.errors?.required "
+														class="invalid">
+														*Please select image
+													</div>
+													<div *ngIf="recruitment5Section.controls.county?.errors?.required  " class="invalid">
+														*Only images are allowed
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="edit-btns d-flex justify-content-end">
+											<button class="btn btn-primary mr-4" (click)="postcontent('recruitment5')">Save</button>
+											<!-- <button class="btn btn-primary">Back</button> -->
+										</div>
+									</div>
+								
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</form>
+	</div>
+</section>
+
+<section class="whychose-sec">
+	<div class="container">
+		<form [formGroup]="recruitment6Section">
+			<div class="row">
+				<div class="col-md-12">
+					<div class="card">
+						<div class="manage-home-header">
+							<div class="card-header d-flex justify-content-between">
+								<strong>Recruitment Step 6</strong>
+								<div class="slide-cs">
+									<span class="mr-2">Visibility </span>
+									<mat-slide-toggle formControlName="is_visible" (change)="fun10($event)"></mat-slide-toggle>
+								</div>
+							</div>
+							<div class="card-body">
+								
+									<div class="home-mng-form">
+										<div class="form-group">
+											<label>Heading</label>
+											<input type="text" name="" class="form-control" value="Verify & Select" formControlName="heading">
+										</div>
+										<div *ngIf="(recruitment6Section.controls.heading.touched || recruitment6Section.controls.heading.dirty) && recruitment6Section.controls.heading.invalid && recruitment6Section.controls.heading?.errors?.required  " class="invalid">
+											*Please enter heading
+										</div>
+										<div *ngIf="(recruitment6Section.controls.heading.touched || recruitment6Section.controls.heading.dirty) && recruitment6Section.controls.heading.invalid && recruitment6Section.controls.heading?.errors?.maxlength  " class="invalid">
+											**Maximum Length should be 50 characters
+										</div>
+										<div class="form-group">
+											<label>Description</label>
+											<quill-editor [modules]="modules" formControlName="description"></quill-editor>
+											<!-- <editor apiKey="zcwi1f81304uers1lcszh0iq2lbhcaxl5cj6ez0v89wr25z3" formControlName="description"></editor> -->
+										</div>
+										<div *ngIf="(recruitment6Section.controls.description.touched || recruitment6Section.controls.description.dirty) && recruitment6Section.controls.description.invalid && recruitment6Section.controls.description?.errors?.required  " class="invalid">
+											*Please enter description
+										</div>
+										<div *ngIf="(recruitment6Section.controls.description.touched || recruitment6Section.controls.description.dirty) && recruitment6Section.controls.description.invalid && recruitment6Section.controls.description?.errors?.maxlength  " class="invalid">
+											*Maximum Length should be 5000 characters
+										</div>
+										<div class="form-group">
+											<label>Section Image</label>
+											<div class="slider-video-cntnt">
+												<div class="prev-upld-img">
+													<img [src]="HeadingImage6?HeadingImage6:'assets/img/s6img.png'" class="img-fluid">
+													<div class="upload-imag text-center">
+														<button class="btn-primary btn  mt-3 position-relative">
+															<input type="file" name="" title="" class="img-input-upld" (change)="setHeadingImage6($event)">
+														Upload Image
+														</button>
+													</div>
+													<div *ngIf="recruitment6Section.controls['image']?.errors?.required "
+														class="invalid">
+														*Please select image
+													</div>
+													<div *ngIf="recruitment6Section.controls.county?.errors?.required  " class="invalid">
+														*Only images are allowed
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="edit-btns d-flex justify-content-end">
+											<button class="btn btn-primary mr-4" (click)="postcontent('recruitment6')">Save</button>
+											<!-- <button class="btn btn-primary">Back</button> -->
+										</div>
+									</div>
+								
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</form>
+	</div>
+</section>
+
+
+<section class="tstimnl-sec">
+	<div class="container">
+		<form [formGroup]="testimonialsSection">
+			<div class="row">
+				<div class="col-md-12">
+					<div class="card">
+						<div class="manage-home-header">
+							<div class="card-header d-flex justify-content-between">
+								<strong>Testimonials</strong>
+								<div class="slide-cs">
+									<span class="mr-2">Visibility </span>
+									<mat-slide-toggle formControlName="is_visible" (change)="fun11($event)"></mat-slide-toggle>
+								</div>
+							</div>
+							<div class="card-body">
+								
+									<div class="home-mng-form">
+										<div class="form-group">
+											<label>Testimonial 1: Image</label>
+											<div class="slider-video-cntnt">
+												<div class="prev-upld-img icons">
+													<img [src]="HeadingImage7?HeadingImage7:'assets/img/avatars/8.jpg'" class="img-fluid">
+													<div class="upload-imag text-center">
+														<button class="btn-primary btn  mt-3 position-relative">
+															<input type="file" title="" name="" class="img-input-upld" (change)="setHeadingImage7($event)">
+														Upload Image
+														</button>
+													</div>
+													<div *ngIf="testimonialsSection.controls['image1']?.errors?.required "
+														class="invalid">
+														*Please select image
+													</div>
+													<div *ngIf="testimonialsSection.controls.county?.errors?.required  " class="invalid">
+														*Only images are allowed
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="form-group">
+											<label>Name</label>
+											<input type="text" name="" class="form-control" value="James" formControlName="name1">
+										</div>
+										<div *ngIf="(testimonialsSection.controls.name1.touched || testimonialsSection.controls.name1.dirty) && testimonialsSection.controls.name1.invalid && testimonialsSection.controls.name1?.errors?.required  " class="invalid">
+											*Please enter name
+										</div>
+										<div *ngIf="(testimonialsSection.controls.name1.touched || testimonialsSection.controls.name1.dirty) && testimonialsSection.controls.name1.invalid && testimonialsSection.controls.name1?.errors?.maxlength  " class="invalid">
+											**Maximum Length should be 50 characters
+										</div>
+										<div class="form-group">
+											<label>Description</label>
+											<quill-editor [modules]="modules" formControlName="description1"></quill-editor>
+											<!-- <editor apiKey="zcwi1f81304uers1lcszh0iq2lbhcaxl5cj6ez0v89wr25z3" formControlName="description1"></editor> -->
+										</div>
+                                        <div *ngIf="(testimonialsSection.controls.description1.touched || testimonialsSection.controls.description1.dirty) && testimonialsSection.controls.description1.invalid && testimonialsSection.controls.description1?.errors?.required  " class="invalid">
+											*Please enter description
+										</div>
+										<div *ngIf="(testimonialsSection.controls.description1.touched || testimonialsSection.controls.description1.dirty) && testimonialsSection.controls.description1.invalid && testimonialsSection.controls.description1?.errors?.maxlength  " class="invalid">
+											**Maximum Length should be 5000 characters
+										</div>
+										<div class="form-group">
+											<label>Designation</label>
+											<input type="text" name="" class="form-control" value="" formControlName="designation1">
+										</div>
+										<div *ngIf="(testimonialsSection.controls.designation1.touched || testimonialsSection.controls.designation1.dirty) && testimonialsSection.controls.designation1.invalid && testimonialsSection.controls.designation1?.errors?.required  " class="invalid">
+											*Please enter designation
+										</div>
+										<div *ngIf="(testimonialsSection.controls.designation1.touched || testimonialsSection.controls.designation1.dirty) && testimonialsSection.controls.designation1.invalid && testimonialsSection.controls.designation1?.errors?.maxlength  " class="invalid">
+											**Maximum Length should be 50 characters
+										</div>
+										<div class="form-group">
+											<label>Testimonial 2: Image</label>
+											<div class="slider-video-cntnt">
+												<div class="prev-upld-img icons">
+													<img [src]="HeadingImage8?HeadingImage8:'assets/img/avatars/5.jpg'" class="img-fluid">
+													<div class="upload-imag text-center">
+														<button class="btn-primary btn  mt-3 position-relative">
+															<input type="file" title="" name="" class="img-input-upld" (change)="setHeadingImage8($event)">
+														Upload Image
+														</button>
+													</div>
+													<div *ngIf="testimonialsSection.controls['image2']?.errors?.required "
+														class="invalid">
+														*Please select image
+													</div>
+													<div *ngIf="testimonialsSection.controls.county1?.errors?.required  " class="invalid">
+														*Only images are allowed
+													</div>
+												</div>
+											</div>
+										</div>
+
+										<div class="form-group">
+											<label>Name</label>
+											<input type="text" name="" class="form-control" value="Andrea" formControlName="name2">
+										</div>
+										<div *ngIf="(testimonialsSection.controls.name2.touched || testimonialsSection.controls.name2.dirty) && testimonialsSection.controls.name2.invalid && testimonialsSection.controls.name2?.errors?.required  " class="invalid">
+											*Please enter name
+										</div>
+										<div *ngIf="(testimonialsSection.controls.name2.touched || testimonialsSection.controls.name2.dirty) && testimonialsSection.controls.name2.invalid && testimonialsSection.controls.name2?.errors?.maxlength  " class="invalid">
+											**Maximum Length should be 50 characters
+										</div>
+										<div class="form-group">
+											<label>Description</label>
+											<quill-editor [modules]="modules" formControlName="description2"></quill-editor>
+											<!-- <editor  apiKey="zcwi1f81304uers1lcszh0iq2lbhcaxl5cj6ez0v89wr25z3" formControlName="description2"></editor> -->
+										</div>
+										
+										<div *ngIf="(testimonialsSection.controls.description2.touched || testimonialsSection.controls.description2.dirty) && testimonialsSection.controls.description2.invalid && testimonialsSection.controls.description2?.errors?.required  " class="invalid">
+											*Please enter description
+										</div>
+										<div *ngIf="(testimonialsSection.controls.description2.touched || testimonialsSection.controls.description2.dirty) && testimonialsSection.controls.description2.invalid && testimonialsSection.controls.description2?.errors?.maxlength  " class="invalid">
+											**Maximum Length should be 5000 characters
+										</div>
+										<div class="form-group">
+											<label>Designation</label>
+											<input type="text" name="" class="form-control" value="" formControlName="designation2">
+										</div>
+										<div *ngIf="(testimonialsSection.controls.designation2.touched || testimonialsSection.controls.designation2.dirty) && testimonialsSection.controls.designation2.invalid && testimonialsSection.controls.designation2?.errors?.required  " class="invalid">
+											*Please enter designation
+										</div>
+										<div *ngIf="(testimonialsSection.controls.designation2.touched || testimonialsSection.controls.designation2.dirty) && testimonialsSection.controls.designation2.invalid && testimonialsSection.controls.designation2?.errors?.maxlength  " class="invalid">
+											**Maximum Length should be 50 characters
+										</div>
+										<div class="edit-btns d-flex justify-content-end">
+											<button class="btn btn-primary mr-4" (click)="postcontent('testimonials')">Save</button>
+											<!-- <button class="btn btn-primary">Back</button> -->
+										</div>
+									</div>
+								
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</form>
+	</div>
+</section>
+
+
+
+<section class="opportunities-sec">
+	<div class="container">
+		<form [formGroup]="storiesSection">
+			<div class="row">
+				<div class="col-md-12">
+					<div class="card">
+						<div class="manage-home-header">
+							<div class="card-header d-flex justify-content-between">
+								<strong>Our Success Stories</strong>
+								<div class="slide-cs">
+									<span class="mr-2">Visibility </span>
+									<mat-slide-toggle formControlName="is_visible" (change)="fun12($event)"></mat-slide-toggle>
+								</div>
+							</div>
+							<div class="card-body">
+								
+									<div class="home-mng-form">
+										<div class="form-group">
+											<label>Heading</label>
+											<quill-editor [modules]="modules" formControlName="heading"></quill-editor>
+											<!-- <editor apiKey="zcwi1f81304uers1lcszh0iq2lbhcaxl5cj6ez0v89wr25z3" formControlName="heading"></editor> -->
+											<!-- <label>Heading</label>
+											<input type="text" name="" class="form-control" value="Our Success Stories" formControlName="heading"> -->
+										</div>
+										<div *ngIf="(storiesSection.controls.heading.touched || storiesSection.controls.heading.dirty) && storiesSection.controls.heading.invalid && storiesSection.controls.heading?.errors?.required  " class="invalid">
+											*Please enter heading
+										</div>
+										<div *ngIf="(storiesSection.controls.heading.touched || storiesSection.controls.heading.dirty) && storiesSection.controls.heading.invalid && storiesSection.controls.heading?.errors?.maxlength  " class="invalid">
+											**Maximum Length should be 5000 characters
+										</div>
+										<div class="form-group">
+											<label>Description</label>
+											<quill-editor [modules]="modules" formControlName="description"></quill-editor>
+											<!-- <editor apiKey="zcwi1f81304uers1lcszh0iq2lbhcaxl5cj6ez0v89wr25z3" formControlName="description"></editor> -->
+										</div>
+										<div *ngIf="(storiesSection.controls.description.touched || storiesSection.controls.description.dirty) && storiesSection.controls.description.invalid && storiesSection.controls.description?.errors?.required  " class="invalid">
+											*Please enter description
+										</div>
+										<div *ngIf="(storiesSection.controls.description.touched || storiesSection.controls.description.dirty) && storiesSection.controls.description.invalid && storiesSection.controls.description?.errors?.maxlength  " class="invalid">
+											*Maximum Length should be 5000 characters
+										</div>
+										<div class="edit-btns d-flex justify-content-end">
+											<button class="btn btn-primary mr-4" (click)="postcontent('stories')">Save</button>
+											<!-- <button class="btn btn-primary">Back</button> -->
+										</div>
+									</div>
+								
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</form>
+	</div>
+</section>
+
+<section class="opportunities-sec">
+	<div class="container">
+		<form [formGroup]="knowmoreSection">
+			<div class="row">
+				<div class="col-md-12">
+					<div class="card">
+						<div class="manage-home-header">
+							<div class="card-header d-flex justify-content-between">
+								<strong>Want to know more?</strong>
+								<div class="slide-cs">
+									<span class="mr-2">Visibility </span>
+									<mat-slide-toggle formControlName="is_visible" (change)="fun13($event)"></mat-slide-toggle>
+								</div>
+							</div>
+							<div class="card-body">
+								
+								<div class="home-mng-form">
+									<div class="form-group">
+										<label>Heading</label>
+										<input type="text" name="" class="form-control" value="Want to know more?" formControlName="heading">
+									</div>
+									<div *ngIf="(knowmoreSection.controls.heading.touched || knowmoreSection.controls.heading.dirty) && knowmoreSection.controls.heading.invalid && knowmoreSection.controls.heading?.errors?.required  " class="invalid">
+										*Please enter heading
+									</div>
+									<div *ngIf="(knowmoreSection.controls.heading.touched || knowmoreSection.controls.heading.dirty) && knowmoreSection.controls.heading.invalid && knowmoreSection.controls.heading?.errors?.maxlength  " class="invalid">
+										*Maximum Length should be 50 characters
+									</div>
+									<div class="form-group">
+										<label>Description</label>
+										<quill-editor [modules]="modules" formControlName="description"></quill-editor>
+										<!-- <editor apiKey="zcwi1f81304uers1lcszh0iq2lbhcaxl5cj6ez0v89wr25z3" formControlName="description"></editor> -->
+									</div>
+									<div *ngIf="(knowmoreSection.controls.description.touched || knowmoreSection.controls.description.dirty) && knowmoreSection.controls.description.invalid && knowmoreSection.controls.description?.errors?.required  " class="invalid">
+										*Please enter description
+									</div>
+									<div *ngIf="(knowmoreSection.controls.description.touched || knowmoreSection.controls.description.dirty) && knowmoreSection.controls.description.invalid && knowmoreSection.controls.description?.errors?.maxlength  " class="invalid">
+										*Maximum Length should be 5000 characters
+									</div>
+									<div class="edit-btns d-flex justify-content-end">
+										<button class="btn btn-primary mr-4" (click)="postcontent('knowmore')">Save</button>
+										<!-- <button class="btn btn-primary">Back</button> -->
+									</div>
+								</div>
+								
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</form>
+	</div>
+</section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

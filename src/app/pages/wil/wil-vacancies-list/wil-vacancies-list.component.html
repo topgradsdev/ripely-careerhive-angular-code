@@ -1,0 +1,1660 @@
+<div class="page_header">
+    <div class=" page_header_container">
+        <div>
+            <h4>WIL Vacancies</h4>
+        </div>
+    </div>
+</div>
+<section>
+    <div class="row sub_header">
+        <div class="col-md-6">
+            <div class="btn_tab vacancies_tab">
+                <button mat-button class="theme_btn btn_primary" [disabled]="isloader" (click)="status='active';applyStatus=false;applyPending=false;archive=false;is_pending=false;btnTabs(1);"
+                    [ngClass]="selectedIndex === 1 ? 'active' :'inactive'">Internships</button>
+                <button mat-button class="theme_btn btn_primary" [disabled]="isloader" (click)="status='active';applyStatus=false;applyPending=false;archive=false;is_pending=false;btnTabs(2);"
+                    [ngClass]="selectedIndex === 2 ? 'active' :'inactive'">Projects</button>
+            </div>
+        </div>
+    </div>
+    <div class="row sub_header">
+        <div class="col-md-12">
+            <ng-container *ngIf="selectedIndex === 1">
+
+                <div class="card_header">
+                    <div class="card_container">
+                       
+                        <div class="div-flex-top">
+                            <!-- (click)="callApi('active')" -->
+                            <div class="student_card total">
+                                <div class="content">
+                                    <p>Internship Vacancies</p>
+                                    <h4>{{this.countObj.active_vacancy_count || 0}}</h4>
+                                </div>
+                                <div class="">
+                                    <svg width="54" height="54" viewBox="0 0 54 54" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <circle cx="27" cy="27" r="27" fill="#464BA8"/>
+                                        <path d="M37.668 20.334H16.3346C14.8619 20.334 13.668 21.5279 13.668 23.0007V36.334C13.668 37.8067 14.8619 39.0007 16.3346 39.0007H37.668C39.1407 39.0007 40.3346 37.8067 40.3346 36.334V23.0007C40.3346 21.5279 39.1407 20.334 37.668 20.334Z" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                                        <path d="M32.3346 39V17.6667C32.3346 16.9594 32.0537 16.2811 31.5536 15.781C31.0535 15.281 30.3752 15 29.668 15H24.3346C23.6274 15 22.9491 15.281 22.449 15.781C21.9489 16.2811 21.668 16.9594 21.668 17.6667V39" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                                        </svg>
+                                        
+                    
+                                </div>
+                                 <div class="action">
+                                    <button (click)="callApi('active');applyStatus=false;filterApply=[]; filterApply = false;" mat-button class="theme_btn btn_primary">View All Vacancies</button>
+                                </div>
+                            </div>
+            
+                            <div class="student_card total">
+                                <div class="content">
+                                    <p>Archived Internship Vacancies</p>
+                                    <h4>{{this.countObj.archived_vacancy_count || 0}}</h4>
+                                </div>
+                                <div class="">
+                                    <svg width="54" height="54" viewBox="0 0 54 54" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <circle cx="27" cy="27" r="27" fill="#F47761"/>
+                                        <path d="M27 17.666L27 36.3327" stroke="white" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+                                        <path d="M36.334 27L27.0007 36.3333L17.6673 27" stroke="white" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+                                        </svg>
+                                        
+                                </div>
+                                <div class="action">
+                                    <button (click)="callApi('inactive')" mat-button class="theme_btn btn_primary">View Vacancies</button>
+                                </div>
+                            </div>
+            
+                        </div>
+                     
+                        <div class="div-flex-top">
+                            <ng-container *ngIf="!applyStatus">
+                                <button *ngxPermissionsOnly="['WIL_Write']" mat-button class="theme_btn btn_white ml-auto" routerLink="/admin/wil/create-vacancy"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M12 5V19" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round" />
+                                    <path d="M5 12H19" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round" />
+                                </svg>
+                                Add New</button>
+                            </ng-container>
+                          
+    
+                            <button *ngxPermissionsOnly="['WIL_Write']" mat-button class="theme_btn btn_white ml-auto" (click)="exportStudentData('excel')">
+                                Download (.xls)
+                            </button>
+                        </div>
+                    </div>
+                </div>
+<!-- 
+                <ng-container  *ngIf="isSelectedActiveList">
+                    <button mat-button data-toggle="modal" data-target="#archiveDialog"
+                    class="theme_btn ml-2 theme_link_btn theme_link_btn_danger">
+                    <svg width="24" height="25" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M18 6.5L6 18.5" stroke="#F47761" stroke-width="2" stroke-linecap="round"
+                            stroke-linejoin="round" />
+                        <path d="M6 6.5L18 18.5" stroke="#F47761" stroke-width="2" stroke-linecap="round"
+                            stroke-linejoin="round" />
+                    </svg>
+                    Unpublish & Archive
+                </button>
+                </ng-container> -->
+
+                <!-- <div class="d-flex align-items-center">
+                    <button *ngxPermissionsOnly="['WIL_Write']" mat-button class="theme_btn btn_primary" routerLink="/admin/wil/create-vacancy"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12 5V19" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" />
+                            <path d="M5 12H19" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" />
+                        </svg>
+                        Add New</button>
+                    <ng-container *ngxPermissionsOnly="['WIL_Write']">
+                        <button *ngIf="isSelectedActiveList" mat-button data-toggle="modal" data-target="#archiveDialog"
+                        class="theme_btn ml-2 theme_link_btn theme_link_btn_danger">
+                        <svg width="24" height="25" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M18 6.5L6 18.5" stroke="#F47761" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" />
+                            <path d="M6 6.5L18 18.5" stroke="#F47761" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" />
+                        </svg>
+                        Unpublish & Archive
+                    </button>
+                    </ng-container>
+                </div> -->
+            </ng-container>
+            <ng-container *ngIf="selectedIndex === 2">
+
+                <div class="card_header">
+                    <div class="card_container">
+                       
+                        <div class="div-flex-top">
+                            <div class="student_card total"  *ngIf="!applyStatus && !applyPending">
+                                <div class="content">
+                                    <p>Project Vacancies</p>
+                                    <h4>{{this.countObj.active_vacancy_count || 0}}</h4>
+                                </div>
+                                <div class="">
+                                    <svg width="54" height="54" viewBox="0 0 54 54" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <circle cx="27" cy="27" r="27" fill="#464BA8"/>
+                                        <path d="M37.668 20.334H16.3346C14.8619 20.334 13.668 21.5279 13.668 23.0007V36.334C13.668 37.8067 14.8619 39.0007 16.3346 39.0007H37.668C39.1407 39.0007 40.3346 37.8067 40.3346 36.334V23.0007C40.3346 21.5279 39.1407 20.334 37.668 20.334Z" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                                        <path d="M32.3346 39V17.6667C32.3346 16.9594 32.0537 16.2811 31.5536 15.781C31.0535 15.281 30.3752 15 29.668 15H24.3346C23.6274 15 22.9491 15.281 22.449 15.781C21.9489 16.2811 21.668 16.9594 21.668 17.6667V39" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                                        </svg>
+                                        
+                    
+                                </div>
+                                <div class="action">
+                                    <button (click)="callApi('active');applyStatus=false;applyPending=false;filterApply=[]; filterApply = false;" mat-button class="theme_btn btn_primary">View All Projects</button>
+                                </div>
+                            </div>
+                            <div class="student_card total" *ngIf="!archive" >
+                                <div class="content">
+                                    <p>Pending Projects</p>
+                                    <h4>{{this.countObj.pending_vacancy_count || 0}}</h4>
+                                </div>
+                                <div class="">
+                                    <svg width="54" height="54" viewBox="0 0 54 54" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <circle cx="27" cy="27" r="27" fill="#F2C94C"/>
+                                        <path d="M32.332 16.334H34.9987C35.7059 16.334 36.3842 16.6149 36.8843 17.115C37.3844 17.6151 37.6654 18.2934 37.6654 19.0007V37.6673C37.6654 38.3746 37.3844 39.0528 36.8843 39.5529C36.3842 40.053 35.7059 40.334 34.9987 40.334H18.9987C18.2915 40.334 17.6132 40.053 17.1131 39.5529C16.613 39.0528 16.332 38.3746 16.332 37.6673V19.0007C16.332 18.2934 16.613 17.6151 17.1131 17.115C17.6132 16.6149 18.2915 16.334 18.9987 16.334H21.6654" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        <path d="M31.0013 13.666H23.0013C22.2649 13.666 21.668 14.263 21.668 14.9993V17.666C21.668 18.4024 22.2649 18.9993 23.0013 18.9993H31.0013C31.7377 18.9993 32.3346 18.4024 32.3346 17.666V14.9993C32.3346 14.263 31.7377 13.666 31.0013 13.666Z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        </svg>
+                                        
+                                </div>
+                                <div class="action">
+                                    <button (click)="callApi1('pending')" mat-button class="theme_btn btn_primary">View Projects</button>
+                                </div>
+                            </div>
+            
+                            <div class="student_card total" *ngIf="archive || !applyStatus">
+                                <div class="content">
+                                    <p>Archived Project Vacancies</p>
+                                    <h4>{{this.countObj.archived_vacancy_count || 0}}</h4>
+                                </div>
+                                <div class="">
+                                    <svg width="54" height="54" viewBox="0 0 54 54" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <circle cx="27" cy="27" r="27" fill="#F47761"/>
+                                        <path d="M27 17.666L27 36.3327" stroke="white" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+                                        <path d="M36.334 27L27.0007 36.3333L17.6673 27" stroke="white" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+                                        </svg>
+                                        
+                                </div>
+                                <div class="action">
+                                    <button (click)="callApi('inactive')" mat-button class="theme_btn btn_primary">View Vacancies</button>
+                                </div>
+                            </div>
+            
+                        </div>
+                     
+                        <div class="div-flex-top">
+                            <ng-container *ngIf="!applyStatus" >
+                                <button *ngxPermissionsOnly="['WIL_Write']" mat-button class="theme_btn btn_white ml-auto" routerLink="/admin/wil/create-project"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M12 5V19" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round" />
+                                    <path d="M5 12H19" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round" />
+                                </svg>
+                                Add New</button>
+                            </ng-container>
+                           
+    
+                            <button *ngxPermissionsOnly="['WIL_Write']" mat-button class="theme_btn btn_white ml-auto" (click)="exportStudentData('excel')">
+                                Download (.xls)
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+             
+
+                <!-- <ng-container *ngxPermissionsOnly="['WIL_Write']">
+                <button *ngIf="isSelectedArchivedList" mat-button class="theme_btn theme_link_btn" data-toggle="modal" data-target="#republishDialog">
+                    <svg class="mr-2" width="24" height="25" viewBox="0 0 24 25" fill="none"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="M21 15.5V19.5C21 20.0304 20.7893 20.5391 20.4142 20.9142C20.0391 21.2893 19.5304 21.5 19 21.5H5C4.46957 21.5 3.96086 21.2893 3.58579 20.9142C3.21071 20.5391 3 20.0304 3 19.5V15.5"
+                            stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                        <path d="M17 8.5L12 3.5L7 8.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+                            stroke-linejoin="round" />
+                        <path d="M12 3.5V15.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+                            stroke-linejoin="round" />
+                    </svg>
+                    Publish</button>
+                    </ng-container> -->
+            </ng-container>
+        </div>
+        <div class="col-md-12" *ngIf="selectedIndex === 1" style="display: flex ;align-items: center;">
+            <ng-container  *ngIf="isSelectedActiveList && !applyStatus">
+              
+
+               <button mat-button class="theme_btn theme_link_btn" data-toggle="modal"
+                data-target="#addPlacementGroup" (click)="getPlacementGroups('');addCompanyPlacement.show()">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 5V19" stroke="#464BA8" stroke-width="2" stroke-linecap="round"
+                            stroke-linejoin="round" />
+                        <path d="M5 12H19" stroke="#464BA8" stroke-width="2" stroke-linecap="round"
+                            stroke-linejoin="round" />
+                    </svg>
+                    Add to Placement Group
+                </button>
+
+                
+                <button mat-button data-toggle="modal" data-target="#archiveDialog"
+                class="theme_btn ml-2 theme_link_btn theme_link_btn_danger">
+                <svg width="24" height="25" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M18 6.5L6 18.5" stroke="#F47761" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round" />
+                    <path d="M6 6.5L18 18.5" stroke="#F47761" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round" />
+                </svg>
+                Unpublish & Archive
+            </button>
+            </ng-container>
+
+            <ng-container *ngxPermissionsOnly="['WIL_Write']">
+                <button *ngIf="isSelectedActiveList && applyStatus" mat-button class="theme_btn theme_link_btn" data-toggle="modal" data-target="#republishDialog">
+                    <svg class="mr-2" width="24" height="25" viewBox="0 0 24 25" fill="none"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="M21 15.5V19.5C21 20.0304 20.7893 20.5391 20.4142 20.9142C20.0391 21.2893 19.5304 21.5 19 21.5H5C4.46957 21.5 3.96086 21.2893 3.58579 20.9142C3.21071 20.5391 3 20.0304 3 19.5V15.5"
+                            stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                        <path d="M17 8.5L12 3.5L7 8.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+                            stroke-linejoin="round" />
+                        <path d="M12 3.5V15.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+                            stroke-linejoin="round" />
+                    </svg>
+                    Publish</button>
+                    </ng-container>
+
+
+            <div class="d-inline-flex align-items-center text-right" style="display: flex !important ;
+                float: right;
+                flex: 1;
+                justify-content: flex-end;">
+                <div class="search-container">
+                    <svg class="icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20"
+                        fill="none">
+                        <path
+                            d="M9.16667 15.8333C12.8486 15.8333 15.8333 12.8486 15.8333 9.16667C15.8333 5.48477 12.8486 2.5 9.16667 2.5C5.48477 2.5 2.5 5.48477 2.5 9.16667C2.5 12.8486 5.48477 15.8333 9.16667 15.8333Z"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                        <path d="M17.5 17.5L13.875 13.875" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                            stroke-linejoin="round" />
+                    </svg>
+                    <input type="text" class="form-control" placeholder="Search Keywords" [(ngModel)]="searchText" (input)="cleardata();searchVacancies()">
+                </div>
+                <button mat-button class="theme_btn btn_primary ml-4"  data-toggle="modal" data-target="#filterForm">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="23" viewBox="0 0 24 23" fill="none">
+                        <path d="M22 3.10669H2L10 11.9629V18.0854L14 19.9578V11.9629L22 3.10669Z" stroke="white"
+                            stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg> Filters</button>
+            </div>
+
+
+
+        </div>
+        <div *ngIf="filterApply && selectedIndex === 1" class="text-right mt-2 col-md-12">
+            <br />
+            <label class="text_primary">{{filterList.length}} Parameters Selected
+                <span  matTooltipClass="info_primary_my_task text-black"  matTooltipPosition="above" matTooltip={{getTitle()}}>
+                    &nbsp;
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke="#464BA8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M12 16V12" stroke="#464BA8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M12 8H12.0113" stroke="#464BA8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                        
+                </span> </label>
+        </div>
+        <div class="col-md-12" *ngIf="selectedIndex === 2 && !applyPending" style="display: flex ;align-items: center;">
+            <ng-container  *ngIf="isSelectedActiveList  && !applyStatus">
+                <button mat-button data-toggle="modal" data-target="#archiveDialog"
+                class="theme_btn ml-2 theme_link_btn theme_link_btn_danger">
+                <svg width="24" height="25" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M18 6.5L6 18.5" stroke="#F47761" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round" />
+                    <path d="M6 6.5L18 18.5" stroke="#F47761" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round" />
+                </svg>
+                Unpublish & Archive
+            </button>
+            </ng-container>
+
+            <ng-container *ngxPermissionsOnly="['WIL_Write']">
+                <button *ngIf="isSelectedActiveList && applyStatus" mat-button class="theme_btn theme_link_btn" data-toggle="modal" data-target="#republishDialog">
+                    <svg class="mr-2" width="24" height="25" viewBox="0 0 24 25" fill="none"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="M21 15.5V19.5C21 20.0304 20.7893 20.5391 20.4142 20.9142C20.0391 21.2893 19.5304 21.5 19 21.5H5C4.46957 21.5 3.96086 21.2893 3.58579 20.9142C3.21071 20.5391 3 20.0304 3 19.5V15.5"
+                            stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                        <path d="M17 8.5L12 3.5L7 8.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+                            stroke-linejoin="round" />
+                        <path d="M12 3.5V15.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+                            stroke-linejoin="round" />
+                    </svg>
+                    Publish
+                </button>
+            </ng-container>
+
+            <div class="d-inline-flex align-items-center text-right" style="display: flex !important ;
+            float: right;
+            flex: 1;
+            justify-content: flex-end;">
+                <div class="search-container">
+                    <svg class="icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20"
+                        fill="none">
+                        <path
+                            d="M9.16667 15.8333C12.8486 15.8333 15.8333 12.8486 15.8333 9.16667C15.8333 5.48477 12.8486 2.5 9.16667 2.5C5.48477 2.5 2.5 5.48477 2.5 9.16667C2.5 12.8486 5.48477 15.8333 9.16667 15.8333Z"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                        <path d="M17.5 17.5L13.875 13.875" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                            stroke-linejoin="round" />
+                    </svg>
+                    <input type="text" class="form-control" placeholder="Search Keywords" [(ngModel)]="searchText" (input)="cleardata();searchVacancies()">
+                </div>
+                <button mat-button class="theme_btn btn_primary ml-4"  data-toggle="modal" data-target="#filterForm">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="23" viewBox="0 0 24 23" fill="none">
+                        <path d="M22 3.10669H2L10 11.9629V18.0854L14 19.9578V11.9629L22 3.10669Z" stroke="white"
+                            stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg> Filters</button>
+            </div>  
+
+
+        </div>
+        <div class="col-md-12" *ngIf="selectedIndex === 2 && applyPending" style="display: flex ;align-items: center;">
+ 
+            <ng-container *ngxPermissionsOnly="['WIL_Write']">
+                <button *ngIf="isSelectedActiveList && applyStatus" mat-button class="theme_btn theme_link_btn"  data-toggle="modal" data-target="#ApproveProject" >
+                    <svg width="24" height="25" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M20 6.5L9 17.5L4 12.5" stroke="#464BA8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>                        
+                    Approve
+                </button>
+            </ng-container>
+
+        </div>
+        <div  *ngIf="filterApply && selectedIndex === 2" class="text-right mt-2 col-md-12">
+            <br />
+            <label class="text_primary">{{filterList.length}} Parameters Selected
+                <span  matTooltipClass="info_primary_my_task text-black"  matTooltipPosition="above" matTooltip={{getTitle()}}>
+                    &nbsp;
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke="#464BA8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M12 16V12" stroke="#464BA8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M12 8H12.0113" stroke="#464BA8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                        
+                </span> </label>
+        </div>
+    </div>
+    <ng-container *ngIf="selectedIndex === 1">
+        <div class="table-responsive sticky-table" infiniteScroll
+[infiniteScrollDistance]="2"
+[infiniteScrollThrottle]="150"
+(scrolled)="onScrollDown()"
+[scrollWindow]="false">
+            <table mat-table [dataSource]="activeList" #activeTbSort="matSort" matSort class="ch_table">
+
+                <!-- Checkbox Column -->
+                <ng-container matColumnDef="checkbox">
+                    <th mat-header-cell *matHeaderCellDef>
+                        <mat-checkbox *ngxPermissionsOnly="['WIL_Write']" class="example-margin" [(ngModel)]="selectAllComp"
+                            (change)="selectAllVacancy()"></mat-checkbox>
+                    </th>
+                    <td mat-cell *matCellDef="let row">
+                        <mat-checkbox *ngxPermissionsOnly="['WIL_Write']" class="example-margin" [(ngModel)]="row.selected" (change)="selectVacancy()"></mat-checkbox>
+                    </td>
+                </ng-container>
+
+                <!-- Job Title Column -->
+                <ng-container matColumnDef="job_title">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Vacancy Title </th>
+                    <td mat-cell *matCellDef="let row">
+                        <div class="mod_groups pl-0 text-hidden">
+                            <span (click)="job_details = row;viewVacancy()">{{row.job_title}}</span>
+                        </div>
+                    </td>
+                </ng-container>
+                <!-- ID Column -->
+                <ng-container matColumnDef="_id">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>
+                    <td mat-cell *matCellDef="let row"> {{row._id}} </td>
+                </ng-container>
+                <!-- Company Name Column -->
+                <ng-container matColumnDef="company_name">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Company Name </th>
+                    <td mat-cell *matCellDef="let row">
+                        <div class="mod_groups pl-0 text-hidden">
+                            <div class="avatar" *ngIf="row?.company_info && row?.company_info.length > 0">
+                                <img *ngIf="row?.company_info[0]?.company_logo" [src]="row?.company_info[0]?.company_logo" alt="woolworths" style="border-radius: 100%;">
+                                <div class="profile" *ngIf="!row?.company_info[0]?.company_logo">
+                                    <span style="color: #fff">{{ row?.company_info[0]?.company_name ? row?.company_info[0]?.company_name?.split(' ')[0][0] : '' }} {{row?.company_info[0]?.company_name ? row?.company_info[0]?.company_name?.split(' ')[0][1] : '' }}</span>    
+                                </div>
+                            </div>
+                            <span (click)="goToCompanyProfile(row)">{{row?.company_info && row?.company_info[0] && row?.company_info[0]?.company_name?row?.company_info[0]?.company_name:''}}</span>
+                        </div>
+                        <!-- <div class="profile">
+                       <img src="../../../../assets/img/woolworths.svg" alt="logo">
+                    </div>  -->
+                    </td>
+                </ng-container>
+                <!-- Location Column -->
+                <ng-container matColumnDef="location">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Location </th>
+                    <td mat-cell *matCellDef="let row">
+                        {{row?.job_location?.name}}
+                    </td>
+                </ng-container>
+                <!-- Vacancies Group column -->
+                <ng-container matColumnDef="no_of_vacancy">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Vacancies </th>
+                    <td mat-cell *matCellDef="let row">
+                        {{row.no_of_vacancy}}
+                    </td>
+                </ng-container>
+
+                <!-- Post Date Column -->
+                <ng-container matColumnDef="createdAt">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Post Date</th>
+                    <td mat-cell *matCellDef="let row">{{row.createdAt | date: 'dd/MM/YYYY'}}</td>
+                </ng-container>
+                <!-- Last Modified Column -->
+                <ng-container matColumnDef="updatedAt">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Last Modified </th>
+                    <td mat-cell *matCellDef="let row">
+                        <!-- <div class="d-flex align-items-center"> -->
+                            <!-- <div class="profile"> -->
+                                <!-- <img src="../../../../assets/img/avatars/1.jpg" alt="avatars"> -->
+                                <!-- <span>nk</span>
+                            </div> <span> -->
+                                {{row.updatedAt | date: 'dd/MM/YYYY'}} <br>
+                               {{ row.updatedAt | date: 'hh:mm a' }}
+                            <!-- </span>
+                        </div> -->
+
+                    </td>
+                </ng-container>
+                <!-- Action column -->
+                <ng-container matColumnDef="actions">
+                    <th mat-header-cell *matHeaderCellDef class="text-center"> Actions </th>
+                    <td mat-cell *matCellDef="let row" class="text-left position-relative">
+                        <!-- <button mat-button class="btn_primary theme_btn sm-theme_btn" (click)="job_details = row;viewVacancy();">View</button> -->
+                        <button *ngxPermissionsOnly="['WIL_Write']" mat-icon-button [matMenuTriggerFor]="menu" class="td-btn">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path
+                                    d="M4 12C4 12.2652 4.10536 12.5196 4.29289 12.7071C4.48043 12.8946 4.73478 13 5 13C5.26522 13 5.51957 12.8946 5.70711 12.7071C5.89464 12.5196 6 12.2652 6 12C6 11.7348 5.89464 11.4804 5.70711 11.2929C5.51957 11.1054 5.26522 11 5 11C4.73478 11 4.48043 11.1054 4.29289 11.2929C4.10536 11.4804 4 11.7348 4 12ZM11 12C11 12.2652 11.1054 12.5196 11.2929 12.7071C11.4804 12.8946 11.7348 13 12 13C12.2652 13 12.5196 12.8946 12.7071 12.7071C12.8946 12.5196 13 12.2652 13 12C13 11.7348 12.8946 11.4804 12.7071 11.2929C12.5196 11.1054 12.2652 11 12 11C11.7348 11 11.4804 11.1054 11.2929 11.2929C11.1054 11.4804 11 11.7348 11 12ZM18 12C18 12.2652 18.1054 12.5196 18.2929 12.7071C18.4804 12.8946 18.7348 13 19 13C19.2652 13 19.5196 12.8946 19.7071 12.7071C19.8946 12.5196 20 12.2652 20 12C20 11.7348 19.8946 11.4804 19.7071 11.2929C19.5196 11.1054 19.2652 11 19 11C18.7348 11 18.4804 11.1054 18.2929 11.2929C18.1054 11.4804 18 11.7348 18 12Z"
+                                    stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                            </svg>
+                        </button>
+                        <mat-menu #menu="matMenu" class="td-menu">
+                            <a mat-menu-item *ngIf="!applyStatus" (click)="job_details = row;viewVacancy();">
+                                <span>View Vacancy</span>
+                            </a>
+                            <a mat-menu-item data-toggle="modal" data-target="#sendEmailVacancies" (click)="getVacancyDetails(row)">
+                                <span>Email Employer</span>
+                            </a>
+                            <!-- <a mat-menu-item>
+                                <span>Allocate Students</span>
+                            </a> -->
+                            <a mat-menu-item *ngIf="!applyStatus"  (click)="job_details = row;editVacancy();">
+                                <span>Edit Vacancy</span>
+                            </a>
+                            
+                            <a mat-menu-item *ngIf="!applyStatus" class="danger" data-toggle="modal" data-target="#archiveDialog" (click)="job_details = row;selectedJob=row;">
+                                <span class="danger">Unpublish & Archive</span>
+                            </a>
+
+                            <a mat-menu-item *ngIf="applyStatus"  data-toggle="modal" data-target="#republishDialog" (click)="job_details = row;selectedJob=row;">
+                                <span>Publish</span>
+                            </a>
+
+                        </mat-menu>
+                    </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns;sticky: true"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+        </div>
+    </ng-container>
+    <ng-container *ngIf="selectedIndex === 2">
+        
+        <div class="table-responsive sticky-table" infiniteScroll
+[infiniteScrollDistance]="2"
+[infiniteScrollThrottle]="150"
+(scrolled)="onScrollDown()"
+[scrollWindow]="false">
+            <table mat-table [dataSource]="activeList" #activeTbSort="matSort" matSort class="ch_table">
+
+                <!-- Checkbox Column -->
+                <ng-container matColumnDef="checkbox">
+                    <th mat-header-cell *matHeaderCellDef>
+                        <mat-checkbox *ngxPermissionsOnly="['WIL_Write']" class="example-margin" [(ngModel)]="selectAllComp" (change)="selectAllProject()"></mat-checkbox>
+                    </th>
+                    <td mat-cell *matCellDef="let row">
+                        <mat-checkbox *ngxPermissionsOnly="['WIL_Write']" class="example-margin" [(ngModel)]="row.selected" (change)="selectVacancy()"></mat-checkbox>
+                    </td>
+                </ng-container>
+
+                <!-- Job Title Column -->
+                <ng-container matColumnDef="job_title">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Vacancy Title </th>
+                    <td mat-cell *matCellDef="let row"> 
+                        <div class="mod_groups pl-0 text-hidden">
+                            <span (click)="job_details = row;viewVacancy()">{{row.job_title}}</span>
+                        </div>
+                    </td>
+                    
+                </ng-container>
+                <!-- ID Column -->
+                <ng-container matColumnDef="_id">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>
+                    <td mat-cell *matCellDef="let row"> {{row._id}} </td>
+                </ng-container>
+
+                 <!-- ID Column -->
+                 <ng-container matColumnDef="status">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Status </th>
+                    <td mat-cell *matCellDef="let row"> {{row.project_status || ''}} </td>
+                </ng-container>
+                <!-- Company Name Column -->
+                <ng-container matColumnDef="company_name">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Company Name </th>
+                    <td mat-cell *matCellDef="let row">
+                        <div class="mod_groups pl-0 text-hidden">
+                            <div class="avatar" *ngIf="row?.company_info && row?.company_info.length > 0">
+                                <img *ngIf="row?.company_info[0]?.company_logo" [src]="row?.company_info[0]?.company_logo" alt="woolworths" style="border-radius: 100%;">
+                                <div class="profile" *ngIf="!row?.company_info[0]?.company_logo">
+                                    <span style="color: #fff">{{ row?.company_info[0]?.company_name ? row?.company_info[0]?.company_name?.split(' ')[0][0] : '' }} {{row?.company_info[0]?.company_name ? row?.company_info[0]?.company_name?.split(' ')[0][1] : '' }}</span>    
+                                </div>
+                            </div>
+                            <span (click)="goToCompanyProfile(row)">{{row?.company_info && row?.company_info[0] && row?.company_info[0]?.company_name?row?.company_info[0]?.company_name:''}}</span>
+                        </div>
+                        <!-- <div class="profile">
+                       <img src="../../../../assets/img/woolworths.svg" alt="logo">
+                    </div>  -->
+                    </td>
+                </ng-container>
+                <!-- Location Column -->
+                <ng-container matColumnDef="location">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Location </th>
+                    <td mat-cell *matCellDef="let row">
+                        {{row?.job_location?.name}}
+                    </td>
+                </ng-container>
+                <!-- Vacancies Group column -->
+                <ng-container matColumnDef="no_of_vacancy">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Vacancies </th>
+                    <td mat-cell *matCellDef="let row">
+                        {{row.no_limit?'No Limit':row.no_of_vacancy}}
+                    </td>
+                </ng-container>
+
+                <!-- Post Date Column -->
+                <ng-container matColumnDef="createdAt">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Post Date</th>
+                    <td mat-cell *matCellDef="let row">{{row.createdAt | date: 'dd/MM/YYYY'}}</td>
+                </ng-container>
+                <!-- Last Modified Column -->
+                <ng-container matColumnDef="updatedAt">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Last Modified </th>
+                    <td mat-cell *matCellDef="let row">
+                        <!-- <div class="d-flex align-items-center">
+                            <div class="profile">
+                                <span>nk</span>
+                            </div> 
+                            <span> -->
+                                {{row.updatedAt | date: 'dd/MM/YYYY'}} <br>
+                                {{ row.updatedAt | date: 'hh:mm a' }}
+                            <!-- </span>
+                        </div> -->
+
+                    </td>
+                </ng-container>
+                <!-- Action column -->
+                <ng-container matColumnDef="actions">
+                    <th mat-header-cell *matHeaderCellDef class="text-center"> Actions </th>
+                    <td mat-cell *matCellDef="let row" class="text-left position-relative">
+                        <!-- <button mat-button class="btn_primary theme_btn sm-theme_btn" (click)="job_details = row;viewVacancy();">View</button> -->
+
+                         <!-- {{applyPending}} -->
+                        <button *ngxPermissionsOnly="['WIL_Write']" mat-icon-button [matMenuTriggerFor]="applyPending ? pendinglinlist : menu" class="td-btn">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path
+                                    d="M4 12C4 12.2652 4.10536 12.5196 4.29289 12.7071C4.48043 12.8946 4.73478 13 5 13C5.26522 13 5.51957 12.8946 5.70711 12.7071C5.89464 12.5196 6 12.2652 6 12C6 11.7348 5.89464 11.4804 5.70711 11.2929C5.51957 11.1054 5.26522 11 5 11C4.73478 11 4.48043 11.1054 4.29289 11.2929C4.10536 11.4804 4 11.7348 4 12ZM11 12C11 12.2652 11.1054 12.5196 11.2929 12.7071C11.4804 12.8946 11.7348 13 12 13C12.2652 13 12.5196 12.8946 12.7071 12.7071C12.8946 12.5196 13 12.2652 13 12C13 11.7348 12.8946 11.4804 12.7071 11.2929C12.5196 11.1054 12.2652 11 12 11C11.7348 11 11.4804 11.1054 11.2929 11.2929C11.1054 11.4804 11 11.7348 11 12ZM18 12C18 12.2652 18.1054 12.5196 18.2929 12.7071C18.4804 12.8946 18.7348 13 19 13C19.2652 13 19.5196 12.8946 19.7071 12.7071C19.8946 12.5196 20 12.2652 20 12C20 11.7348 19.8946 11.4804 19.7071 11.2929C19.5196 11.1054 19.2652 11 19 11C18.7348 11 18.4804 11.1054 18.2929 11.2929C18.1054 11.4804 18 11.7348 18 12Z"
+                                    stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                            </svg>
+                        </button>
+                        <mat-menu #pendinglinlist="matMenu" class="td-menu">
+                            <a mat-menu-item data-toggle="modal" data-target="#sendEmailVacancies" (click)="getVacancyDetails(row)">
+                                <span>Email Employer</span>
+                            </a>
+                            <a mat-menu-item class="success_item" data-toggle="modal" data-target="#ApproveProject" (click)="job_details = row;selectedJob=row;">
+                                <span>Approve</span>
+                            </a>
+                            <a mat-menu-item  class="danger" data-toggle="modal" data-target="#disApproveProject" (click)="job_details = row;selectedJob=row;">
+                                <span>Disapprove</span>
+                            </a>
+                        </mat-menu>
+                        <mat-menu #menu="matMenu" class="td-menu">
+                            <a *ngIf="!applyStatus" mat-menu-item (click)="job_details = row;viewVacancy();">
+                                <span>View Project</span>
+                            </a>
+                            <a mat-menu-item  *ngIf="!applyStatus" data-toggle="modal" data-target="#sendEmailVacancies" (click)="getVacancyDetails(row)">
+                                <span>Email Employer</span>
+                            </a>
+                            <!-- <a mat-menu-item>
+                                <span>Allocate Students</span>
+                            </a> -->
+                            <!-- *ngIf="!applyStatus && row.is_editable"  -->
+                            <a mat-menu-item *ngIf="!applyStatus" (click)="job_details = row;editProject();">
+                                <span>Edit Project</span>
+                            </a>
+                            <!-- <a mat-menu-item  *ngIf="!applyStatus" (click)="job_details = row;"  data-toggle="modal"
+                            data-target="#addPlacementGroup">
+                                <span>Add to Placement Group</span>
+                            </a> -->
+                            <a mat-menu-item *ngIf="!applyStatus && row.is_editable" class="danger" data-toggle="modal" data-target="#archiveDialog" (click)="job_details = row;selectedJob=row;">
+                                <span>Unpublish & Archive</span>
+                            </a>
+                            <a mat-menu-item *ngIf="applyStatus"  data-toggle="modal" data-target="#republishDialog" (click)="job_details = row;selectedJob=row;">
+                                <span>Publish</span>
+                            </a>
+
+
+                        </mat-menu>
+                    </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedProjectColumns;sticky: true"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedProjectColumns;"></tr>
+            </table>
+        </div>
+    </ng-container>
+    <!-- <app-paginator [paginationObj]="paginationObj" (pagination)="getPaginationData($event)"></app-paginator> -->
+    <h4 *ngIf="filterApply" class="result-found" style="color:#464BA8">
+        {{filterCount}} Results Found! 
+        &nbsp;&nbsp;<button mat-button class="theme_btn btn_outline_primary" (click)="callApiFilter(''); filterApply=[]; selectAllComp=false; filterApply = false; ">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M15 5L5 15" stroke="#464BA8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M5 5L15 15" stroke="#464BA8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            &nbsp;&nbsp;  
+                Reset Filter
+        </button>
+    </h4>
+    <!-- applyPending =false; -->
+    <h4 *ngIf="!filterApply && applyStatus" class="result-found" style="color:#464BA8">
+        {{filterCount}} Results Found! 
+        &nbsp;&nbsp;<button mat-button class="theme_btn btn_outline_primary" (click)="status = 'active';callApi(''); selectAllComp=false;filterApply=[]; filterApply = false; applyPending =false;">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M15 5L5 15" stroke="#464BA8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M5 5L15 15" stroke="#464BA8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            &nbsp;&nbsp;  
+                Reset Filter
+        </button>
+    </h4>
+</section>
+
+<!-- New Vacancies popup -->
+<div class="modal fade bsModal ch_modal" id="addNewVacancies" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title" id="exampleModalLabel">Create Vacancy</h2>
+                <button type="button" mat-icon-button id="closeModal" class="close" data-dismiss="modal"
+                    aria-label="Close">
+                    <mat-icon>close</mat-icon>
+                </button>
+            </div>
+            <form>
+                <div class="modal-body pt-3">
+                    <div class="row">
+                        <div class="col-md-7">
+                            <div class="form-group">
+                                <label>Company</label>
+                                <input type="text" class="form-control" placeholder="Search for company">
+                            </div>
+                        </div>
+                        <div class="col-md-5">
+                            <div class="form-group">
+                                <label>Job Title</label>
+                                <input type="text" class="form-control" placeholder="Job Title">
+                            </div>
+                        </div>
+                        <div class="col-md-7">
+                            <div class="form-group">
+                                <label>Location</label>
+                                <input type="text" class="form-control" placeholder="Location">
+                            </div>
+                        </div>
+                        <div class="col-md-5">
+                            <div class="form-group">
+                                <label>Number of Vacancies (up to 99)</label>
+                                <input type="text" class="form-control" placeholder="Select vacancy slots">
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group label_span">
+                                <label class="d-flex justify-content-between align-items-center">Skills
+                                    <span>(1/10 skills added)</span></label>
+                                <ng-container>
+                                    <div class="search_with_skills_container">
+                                        <div class="input_container">
+                                            <input type="text" placeholder="Select Skills" class="form-control">
+                                        </div>
+                                        <!-- <div class="dropdown_options">
+                                            <div class="plus_suggestion">
+                                                <p>Suggested</p>
+                                                <div class="typed_text">
+                                                    <div>
+                                                        <span>Skill Name</span> <span>Skill Name</span> <span>Skill
+                                                            Name</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div> -->
+                                    </div>
+                                    <div class="custom_chip_list1">
+                                        <span class="custom_chip">
+                                            <span>Adobe Photoshop</span>
+                                            <svg class="close_icon_chip" width="17" height="17" viewBox="0 0 17 17"
+                                                fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M12.75 4.25L4.25 12.75" stroke="currentColor"
+                                                    stroke-linecap="round" stroke-linejoin="round" />
+                                                <path d="M4.25 4.25L12.75 12.75" stroke="currentColor"
+                                                    stroke-linecap="round" stroke-linejoin="round" />
+                                            </svg>
+
+                                        </span>
+                                    </div>
+                                </ng-container>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label>Working Days</label>
+                                <ul class="working_days">
+                                    <li>
+                                        <span>Mon</span>
+                                    </li>
+                                    <li>
+                                        <span class="active">Tue</span>
+                                    </li>
+                                    <li>
+                                        <span>Wed</span>
+                                    </li>
+                                    <li>
+                                        <span>Thu</span>
+                                    </li>
+                                    <li>
+                                        <span>Fri</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label>Description</label>
+                                <quill-editor [modules]="modules"></quill-editor>
+                                <!-- <editor class="ch_editor" apiKey="zcwi1f81304uers1lcszh0iq2lbhcaxl5cj6ez0v89wr25z3" [init]="{
+                  height: 200,
+                  menubar: false,
+                  statusbar: true,
+                  placeholder: 'Job Description',
+                  plugins: [
+    'textcolor',
+                  'advlist autolink lists link image charmap print preview anchor',
+                  'searchreplace visualblocks code fullscreen',
+                  'insertdatetime media table paste code help wordcount'
+                  ],
+                  toolbar:
+                  'bold italic | \
+                  bullist | formatselect |',
+    contextmenu: false
+              }"></editor> -->
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="modal-footer justify-content-center">
+                    <button mat-button type="button" class="theme_btn btn_outline_primary mr-3"
+                        data-dismiss="modal">Cancel</button>
+                    <button mat-button data-dismiss="modal" type="submit" class="theme_btn btn_primary">Create</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade bsModal ch_modal" id="archiveDialog" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" mat-icon-button id="closeModal" class="close" data-dismiss="modal"
+                    aria-label="Close">
+                    <mat-icon>close</mat-icon>
+                </button>
+            </div>
+            <div class="modal-body pt-3 active_deactive_modal">
+                <h4>Are you sure you want to archive this vacancy?</h4>
+                <p>Students will not be able to view & apply to this</p>
+            </div>
+            <div class="modal-footer justify-content-center">
+                    <button mat-button class="theme_btn btn_outline_primary mr-3" data-dismiss="modal">No</button>
+                    <button mat-button class="theme_btn btn_primary" data-dismiss="modal" data-toggle="modal"
+                    data-target="#archiveDialogConfirm" (click)="updateVacanciesStatus('inactive');">Yes</button>    
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade bsModal ch_modal done_modal_popup" id="archiveDialogConfirm" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+            </div>
+            <div class="modal-body text-center">
+                <h2>{{selectedJob?.job_title ? selectedJob?.job_title : 'Vacancies' }} has been archived.</h2>
+            </div>
+            <div class="modal-footer justify-content-center">
+                <button mat-button class="theme_btn btn_primary" (click)="resetCheckbox()" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade bsModal ch_modal done_modal_popup" id="republishDialog" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+            </div>
+            <div class="modal-body text-center">
+                <h2>Are you sure you want to publish this vacancy?</h2>
+            </div>
+            <div class="modal-footer justify-content-center">
+                <button mat-button class="theme_btn btn_outline_primary mr-3" data-dismiss="modal">No</button>
+                <button mat-button class="theme_btn btn_primary" data-dismiss="modal" data-toggle="modal"
+                    data-target="#republishDialogConfirm" (click)="updateVacanciesStatus('active');">Yes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade bsModal ch_modal done_modal_popup" id="republishDialogConfirm" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+            </div>
+            <div class="modal-body text-center">
+                <h2>{{selectedJob?.job_title ? selectedJob?.job_title : 'Vacancies'}} has been re-published.</h2>
+            </div>
+            <div class="modal-footer justify-content-center">
+                <button mat-button class="theme_btn btn_primary" (click)="resetCheckbox()" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade bsModal ch_modal" id="sendToEmployer" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title " id="exampleModalLabel">Send to Employer
+
+                </h2>
+                <button mat-icon-button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <mat-icon>close</mat-icon>
+                </button>
+            </div>
+            <form>
+                <div class="modal-body pt-3">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label class="select_candidate">Selected Candidate 
+                                    <!-- <span>Edit</span> -->
+                                </label>
+                                <div class="form-control sendingTo">
+                                    <div class="email_sendTo">
+                                        <div class="profile">
+                                            <img src="../../../../assets/img/avatars/2.jpg" alt="avatars">
+                                        </div>
+                                        <div class="d-inline-block">
+                                            <h5>Nathan Jones</h5>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label>Select Company</label>
+                                <ng-select class="select_ng_custom row_select" [searchable]="true" [multiple]="false"
+                                    bindLabel="name" bindValue="id" [clearable]="false" placeholder="Search">
+                                    <ng-option value="Bob Harrison">
+                                        <div class="mb-0 row">
+                                            <div class="col-md-6">
+                                                <p class="mb-0">Qantas</p>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <p class="mb-0"><span>Mascot, NSW</span></p>
+                                            </div>
+                                            <div class="col-md-3 text-right">
+                                                <p class="mb-0"><span>Company ID: 1513</span></p>
+                                            </div>
+                                        </div>
+                                    </ng-option>
+                                </ng-select>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label>Select Vacancies</label>
+                                <ng-select class="select_ng_custom row_select" [searchable]="true" [multiple]="false"
+                                    bindLabel="name" bindValue="id" [clearable]="false" placeholder="Search">
+                                    <ng-option value="Bob Harrison">
+                                        <div class="mb-0 row">
+                                            <div class="col-md-6">
+                                                <p class="mb-0">UI Designer</p>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <p class="mb-0"><span>Job ID: 12345</span></p>
+                                            </div>
+                                            <div class="col-md-3 text-right">
+                                                <p class="mb-0"><span>Adobe, Melbourne</span></p>
+                                            </div>
+                                        </div>
+                                    </ng-option>
+                                </ng-select>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label>Send to:</label>
+                                <ng-select class="select_ng_custom row_select" [searchable]="true" [multiple]="false"
+                                    bindLabel="name" bindValue="id" [clearable]="false" placeholder="Search">
+                                    <ng-option value="Bob Harrison">
+                                        <div class="mb-0 row">
+                                            <div class="col-md-6">
+                                                <p class="mb-0">Anthony Star</p>
+                                            </div>
+                                            <div class="col-md-6 text-right">
+                                                <p class="mb-0"><span>Job ID: 1513</span></p>
+                                            </div>
+                                        </div>
+                                    </ng-option>
+                                </ng-select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer justify-content-between">
+                    <button mat-button type="button" class="theme_btn btn_outline_primary"
+                        data-dismiss="modal">Cancel</button>
+                    <button mat-button type="submit" data-dismiss="modal" data-toggle="modal"
+                        data-target="#submitApplicationDone" class="theme_btn btn_primary">Send Application</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Email popup -->
+<app-send-email-company-popup modalId="sendEmailVacancies" [type]="'employer'"  [students]="selectedRecords" [emailType]="'vacancy'" (cancel)="handleCancel()" (send)="handleSend()"></app-send-email-company-popup>
+
+<!-- New Vacancies popup -->
+<div class="modal fade bsModal ch_modal" id="viewVacancies" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title" id="exampleModalLabel">View Vacancy</h2>
+                <button type="button" mat-icon-button id="closeModal" class="close" data-dismiss="modal"
+                    aria-label="Close">
+                    <mat-icon>close</mat-icon>
+                </button>
+            </div>
+            <form>
+                <div class="modal-body pt-3">
+                    <div class="row">
+                        <div class="col-md-7">
+                            <div class="form-group">
+                                <label>Company</label>
+                               <div>
+                                <div class="mod_groups">
+                                    <div class="avatar">
+                                        <img src="../../../../assets/img/woolworths.svg" alt="woolworths">
+                                    </div>
+                                    <span>Woolworths</span>
+                                </div>
+                               </div>
+                            </div>
+                        </div>
+                        <div class="col-md-5">
+                            <div class="form-group">
+                                <label>Job Title</label>
+                                <p>Ui Designer</p>
+                            </div>
+                        </div>
+                        <div class="col-md-7">
+                            <div class="form-group">
+                                <label>Location</label>
+                                <p>Melbourne, VIC 3000</p>
+                            </div>
+                        </div>
+                        <div class="col-md-5">
+                            <div class="form-group">
+                                <label>Number of Vacancies (up to 99)</label>
+                                <p>5</p>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group label_span">
+                                <label class="d-flex align-items-center">Skills
+                                    <span>(1/10 skills added)</span></label>
+                                    <div class="custom_chip_list1">
+                                        <span class="custom_chip">
+                                            <span>Adobe Photoshop</span>
+                                        </span>
+                                    </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label>Working Days</label>
+                                <ul class="working_days">
+                                    <li>
+                                        <span>Mon</span>
+                                    </li>
+                                    <li>
+                                        <span class="active">Tue</span>
+                                    </li>
+                                    <li>
+                                        <span>Wed</span>
+                                    </li>
+                                    <li>
+                                        <span>Thu</span>
+                                    </li>
+                                    <li>
+                                        <span>Fri</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label>Description</label>
+                                <p>Lorem ipsum</p>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="modal-footer justify-content-center">
+                    <button mat-button data-dismiss="modal" class="theme_btn btn_primary">Close</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- Filter Modal -->
+<div class="modal fade bsModal ch_modal filter_modals" id="filterForm" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header d-flex justify-content-between">
+                <button mat-icon-button  #closeFilterModal class="close" data-dismiss="modal" aria-label="Close">
+                    <mat-icon>close</mat-icon>
+                </button>
+                <h2 class="modal-title">Filters</h2>
+                <button mat-button class="theme_btn btn_primary" (click)="cleardata();filterVacancies()">Apply
+                    Filter</button>
+            </div>
+            <div class="modal-body pt-3 pb-5">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h3 class="filter_title">Parameters</h3>
+                    </div>
+                    <div class="col-md-5">
+                        <div class="filter_sidebar">
+                            <ul>
+                                <li *ngFor="let filter of filters" (click)="applyFilter(filter)"
+                                    [ngClass]="{'active': activeFilter?.name === filter.name}">
+                                    <div class="check_box">
+                                        <mat-checkbox [(ngModel)]="filter.selected" (change)="onCheckboxChange($event, filter)"></mat-checkbox>
+                                        <span class="check_box_label">{{filter.label}}</span>
+                                    </div>
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M9 18L15 12L9 6" stroke="currentColor" stroke-width="2"
+                                            stroke-linecap="round" stroke-linejoin="round" />
+                                    </svg>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-md-7">
+                        <div class="right_container">
+                            <ng-container *ngIf="activeFilter?.name === 'company_name'">
+                                <h4 class="title">Company Name</h4>
+                                <div class="form-group">
+                                    <ng-select [searchable]="true" [(ngModel)]="activeFilter.value" name="anyName"
+                                        placeholder="Select Company" bindLabel="name"
+                                        [multiple]="true">
+                                        <ng-option *ngFor="let company of vacancyFilters?.company_name" [value]="company._id">{{company.company_name}}</ng-option>
+                                    </ng-select>
+                                    <!-- <div class="custom_chip_list">
+                                        <span class="custom_chip">
+                                            <span>Marriott Hotels</span>
+                                            <svg class="close_icon_chip" xmlns="http://www.w3.org/2000/svg" width="14"
+                                                height="14" viewBox="0 0 14 14" fill="none">
+                                                <path fill-rule="evenodd" clip-rule="evenodd"
+                                                    d="M7 8.73459L1.73459 14L0 12.2654L5.26541 7L0 1.73459L1.73459 0L7 5.26541L12.2654 0L14 1.73459L8.73459 7L14 12.2654L12.2654 14L7 8.73459Z"
+                                                    fill="currentColor" />
+                                            </svg>
+                                        </span>
+                                    </div> -->
+                                </div>
+                            </ng-container>
+                            <ng-container *ngIf="activeFilter?.name === 'job_location'">
+                                <h4 class="title">Location</h4>
+                                <div class="form-group">
+                                    <ng-select class="mb-2" [searchable]="true" [multiple]="true" bindLabel="name"
+                                        bindValue="id" [clearable]="false" placeholder="Select" [(ngModel)]="activeFilter.value">
+                                        <ng-option *ngFor="let location of vacancyFilters?.job_location" [value]="location">{{location}}</ng-option>
+                                    </ng-select>
+                                </div>
+                            </ng-container>
+
+                             <ng-container *ngIf="activeFilter?.name === 'job_title'">
+                                <h4 class="title">Vacancy Title</h4>
+                                <div class="form-group">
+                                    <ng-select class="mb-2" [searchable]="true" [multiple]="true" bindLabel="name"
+                                        bindValue="id" [clearable]="false" placeholder="Select" [(ngModel)]="activeFilter.value">
+                                        <ng-option *ngFor="let location of vacancyFilters?.job_titles" [value]="location">{{location}}</ng-option>
+                                    </ng-select>
+                                </div>
+                            </ng-container>
+                            <ng-container *ngIf="activeFilter?.name === 'vacancy_range'">
+                                <h4 class="title">Select Vacancy range</h4>
+                                <div class="date_group file_upload_date">
+                                    <div class="form-group mb-0 custom_datepicker">
+                                        <div class="custom_datepicker_container">
+                                            <input placeholder="Minimum Vacancies"
+                                                class="form-control" [(ngModel)]="min_vacancies">
+                                        </div>
+                                    </div>
+                                    <span class="to">to</span>
+                                    <div class="form-group custom_datepicker">
+                                        <div class="custom_datepicker_container">
+                                            <input  placeholder="Maximum Vacancies"
+                                                class="form-control" [(ngModel)]="max_vacancies">
+                                          
+                                        </div>
+                                    </div>
+                                </div>
+                            </ng-container>
+                            <ng-container *ngIf="activeFilter?.name === 'POST_DATE'">
+                                <h4 class="title">Post Date</h4>
+                                <div class="date_group file_upload_date">
+                                    <div class="form-group mb-0 custom_datepicker">
+                                        <div class="custom_datepicker_container">
+                                            <input [(ngModel)]="post_sdate"
+                                                placeholder="Select Starting Date" class="form-control"
+                                                [matDatepicker]="startDatePicker">
+                                            <mat-datepicker-toggle matSuffix [for]="startDatePicker">
+                                                <svg matDatepickerToggleIcon width="18" height="18" viewBox="0 0 18 18"
+                                                    fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <path
+                                                        d="M14.25 3H3.75C2.92157 3 2.25 3.67157 2.25 4.5V15C2.25 15.8284 2.92157 16.5 3.75 16.5H14.25C15.0784 16.5 15.75 15.8284 15.75 15V4.5C15.75 3.67157 15.0784 3 14.25 3Z"
+                                                        stroke="#2B2A35" stroke-width="1.5" stroke-linecap="round"
+                                                        stroke-linejoin="round" />
+                                                    <path d="M12 1.5V4.5" stroke="#2B2A35" stroke-width="1.5"
+                                                        stroke-linecap="round" stroke-linejoin="round" />
+                                                    <path d="M6 1.5V4.5" stroke="#2B2A35" stroke-width="1.5"
+                                                        stroke-linecap="round" stroke-linejoin="round" />
+                                                    <path d="M2.25 7.5H15.75" stroke="#2B2A35" stroke-width="1.5"
+                                                        stroke-linecap="round" stroke-linejoin="round" />
+                                                </svg>
+                                            </mat-datepicker-toggle>
+                                            <mat-datepicker #startDatePicker></mat-datepicker>
+                                        </div>
+                                    </div>
+                                    <span class="to">to</span>
+                                    <div class="form-group custom_datepicker">
+                                        <div class="custom_datepicker_container">
+                                            <input [(ngModel)]="post_edate"
+                                                placeholder="Select End Date" class="form-control"
+                                                [matDatepicker]="endDatePicker">
+                                            <mat-datepicker-toggle matSuffix [for]="endDatePicker">
+                                                <svg matDatepickerToggleIcon width="18" height="18" viewBox="0 0 18 18"
+                                                    fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <path
+                                                        d="M14.25 3H3.75C2.92157 3 2.25 3.67157 2.25 4.5V15C2.25 15.8284 2.92157 16.5 3.75 16.5H14.25C15.0784 16.5 15.75 15.8284 15.75 15V4.5C15.75 3.67157 15.0784 3 14.25 3Z"
+                                                        stroke="#2B2A35" stroke-width="1.5" stroke-linecap="round"
+                                                        stroke-linejoin="round" />
+                                                    <path d="M12 1.5V4.5" stroke="#2B2A35" stroke-width="1.5"
+                                                        stroke-linecap="round" stroke-linejoin="round" />
+                                                    <path d="M6 1.5V4.5" stroke="#2B2A35" stroke-width="1.5"
+                                                        stroke-linecap="round" stroke-linejoin="round" />
+                                                    <path d="M2.25 7.5H15.75" stroke="#2B2A35" stroke-width="1.5"
+                                                        stroke-linecap="round" stroke-linejoin="round" />
+                                                </svg>
+                                            </mat-datepicker-toggle>
+                                            <mat-datepicker #endDatePicker></mat-datepicker>
+                                        </div>
+                                    </div>
+                                </div>
+                            </ng-container>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Add Placement Group Modal -->
+<!-- <div class="modal fade bsModal ch_modal" id="addPlacementGroup" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header" style="flex-direction: column;align-items: start;">
+                <h2 class="modal-title">Add Vacancies to Placement Group</h2>
+                <p style="color:#9A9A9A">Internship Vacancies can only be added to Internship Placements</p>
+                <button type="button" mat-icon-button id="closeModal" class="close" data-dismiss="modal"
+                    aria-label="Close">
+                    <mat-icon>close</mat-icon>
+                </button>
+            </div>
+            <div class="modal-body pt-3">
+                <div class="form-group mb-0">
+                    <ng-select   [searchable]="true"
+                    bindLabel="title"
+                    bindValue="_id"
+                    [clearable]="false"
+                    placeholder="Search Placement Group"
+                    [items]="placementGroups"
+                    (ngModelChange)="getPlacementGroups($event)"
+                    [(ngModel)]="placemenGroupIds">
+                        <ng-option *ngFor="let group of placementGroups" [value]="group._id">{{group.title}}</ng-option>
+                    </ng-select>
+                </div>
+            </div>
+            <div class="modal-footer justify-content-around">
+                <button mat-button type="button" class="theme_btn btn_outline_primary"
+                    data-dismiss="modal">Cancel</button>
+                <button mat-button type="submit" class="theme_btn btn_primary"  [disabled]="!placemenGroupIds || placemenGroupIds.length === 0"
+                    (click)="addToPlacementGroup()" data-dismiss="modal">Add</button>
+            </div>
+        </div>
+    </div>
+</div> -->
+
+
+<div bsModal #placementAdded="bs-modal" class="modal fade bsModal ch_modal done_modal_popup" id="PreferredContact"
+tabindex="-1" role="dialog"
+aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal-dialog modal-dialog-centered" style="max-width: 600px;" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" mat-icon-button id="closeModal" class="close"
+                (click)="placementAdded.hide();"
+                aria-label="Close">
+                <mat-icon>close</mat-icon>
+            </button>
+        </div>
+        <div class="modal-body text-center">
+            <div>
+                <svg width="126" height="101" viewBox="0 0 126 101" fill="none"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <g clip-path="url(#clip0_35899_185880)">
+                        <path
+                            d="M95.371 100.164L11.656 100.194C7.45041 100.195 3.68314 98.0061 1.57906 94.3383C0.526894 92.5041 0.000693685 90.4921 6.85071e-07 88.4797C-0.000692315 86.4676 0.52438 84.455 1.57504 82.6203L43.4059 5.91899C45.5077 2.24948 49.2735 0.0581061 53.4791 0.0566414C57.6848 0.0551766 61.452 2.24393 63.5564 5.91197L105.445 82.5937C106.495 84.4229 107.02 86.4326 107.02 88.4437C107.02 90.4548 106.495 92.4672 105.444 94.3021C103.342 97.9713 99.5766 100.163 95.371 100.164ZM1.0523 88.4783C1.05217 90.31 10.2898 86.363 11.2468 88.0314C13.1611 91.3683 7.82944 99.1373 11.6557 99.136C11.6557 99.136 102.623 97.1118 104.534 93.7736C105.49 92.1045 105.968 90.2734 105.967 88.4428C105.967 86.6122 105.488 84.7817 104.531 83.1133L62.6416 6.43154C60.7327 3.10425 57.3057 1.1129 53.4795 1.11423C49.655 1.11557 1.05245 86.6464 1.0523 88.4783Z"
+                            fill="#3F3D56" />
+                        <path
+                            d="M77.9031 83.2491C99.0694 83.2491 116.228 65.9664 116.228 44.647C116.228 23.3277 99.0694 6.04492 77.9031 6.04492C56.7368 6.04492 39.5781 23.3277 39.5781 44.647C39.5781 65.9664 56.7368 83.2491 77.9031 83.2491Z"
+                            fill="#464BA8" />
+                        <path
+                            d="M76.3835 53.0815L69.5859 23.488L74.9271 22.3555L80.5508 52.198L76.3835 53.0815ZM81.0564 64.2961C80.0781 64.5035 79.191 64.3645 78.3948 63.8791C77.6296 63.3462 77.1488 62.6099 76.9525 61.6702C76.7561 60.7305 76.9055 59.8811 77.4006 59.1219C77.9267 58.3152 78.6789 57.8082 79.6572 57.6008C80.5963 57.4017 81.4484 57.5685 82.2136 58.1014C83.0098 58.5868 83.506 59.2994 83.7024 60.2391C83.8988 61.1788 83.7339 62.052 83.2078 62.8586C82.7127 63.6178 81.9955 64.097 81.0564 64.2961Z"
+                            fill="white" />
+                    </g>
+                    <defs>
+                        <clippath id="clip0_35899_185880">
+                            <rect width="126" height="101" fill="white" />
+                        </clippath>
+                    </defs>
+                </svg>
+
+                <h2 class="mt-4">{{message}}</h2>
+            </div>
+        </div>
+        <div class="modal-footer justify-content-center" style="padding: 15px 50px 50px 50px;">
+            <button mat-button class="theme_btn btn_primary" (click)="placementAdded.hide();">Close</button>
+        </div>
+    </div>
+</div>
+</div>
+
+
+<div class="modal fade bsModal ch_modal" id="ApproveProject" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" mat-icon-button id="closeModal" class="close" data-dismiss="modal"
+                    aria-label="Close">
+                    <mat-icon>close</mat-icon>
+                </button>
+            </div>
+            <div class="modal-body pt-3 active_deactive_modal">
+                <h4>Are you sure you want to approve these projects?</h4>
+            </div>
+            <div class="modal-footer justify-content-between">
+                    <button mat-button class="theme_btn btn_outline_primary mr-3" data-dismiss="modal">No</button>
+                    <button mat-button class="theme_btn btn_primary" data-dismiss="modal" (click)="approveProject('approve');">Yes</button>    
+            </div>
+        </div>
+    </div>
+</div>
+
+<div bsModal #approveProjectSuccess="bs-modal" class="modal fade bsModal ch_modal done_modal_popup" id="PreferredContact"
+tabindex="-1" role="dialog"
+aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal-dialog modal-dialog-centered" style="max-width: 600px;" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" mat-icon-button id="closeModal" class="close"
+                (click)="approveProjectSuccess.hide();this.job_details={};successMessage=''"
+                aria-label="Close">
+                <mat-icon>close</mat-icon>
+            </button>
+        </div>
+        <div class="modal-body text-center">
+            <div>
+                <svg width="112" height="112" viewBox="0 0 112 112" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="56" cy="56" r="56" fill="#26C296"/>
+                    <path d="M65.3327 49L52.4993 61.8333L46.666 56" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                       
+
+                <h2 class="mt-4">{{successMessage}}</h2>
+            </div>
+        </div>
+        <div class="modal-footer justify-content-center" style="padding: 15px 50px 50px 50px;">
+            <button mat-button class="theme_btn btn_primary" (click)="approveProjectSuccess.hide();this.job_details={};successMessage=''">Close</button>
+        </div>
+    </div>
+</div>
+</div>
+
+
+<div class="modal fade bsModal ch_modal" id="disApproveProject" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document" style="max-width:660px">
+        <div class="modal-content disapprove_modal">
+            <div class="modal-header justify-content-center">
+                <h2 class="modal-title text-center" id="exampleModalLabel">Are you sure you want to disapprove<br />
+                    {{job_details?.job_title}} Project?
+                </h2>
+            </div>
+            <div class="modal-body pt-3">
+                <div class="row">
+                    <div class="col-md-12 text-center">
+                        <p>You must also provide a reasoning to disapprove this project. The primary contact will <br /> receive an email and be able to amend the project or create a new one for future review.
+                        </p>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label>Your Comment*</label>
+                            <textarea class="form-control" cols="30" rows="6" [(ngModel)]="comment"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer justify-content-between">
+                <button mat-button class="theme_btn btn_outline_primary" data-dismiss="modal">Nevermind</button>
+                <button mat-button class="theme_btn btn_primary" data-dismiss="modal" [disabled]="!comment"
+                    (click)="disApproveProject('disapprove');">Disapprove Project</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div bsModal #disApproveProjectSuccess="bs-modal" class="modal fade bsModal ch_modal done_modal_popup" id="PreferredContact"
+tabindex="-1" role="dialog"
+aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal-dialog modal-dialog-centered" style="max-width: 600px;" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" mat-icon-button id="closeModal" class="close"
+                (click)="disApproveProjectSuccess.hide();this.job_details={};successMessage=''"
+                aria-label="Close">
+                <mat-icon>close</mat-icon>
+            </button>
+        </div>
+        <div class="modal-body text-center">
+            <div>
+                <svg width="112" height="112" viewBox="0 0 112 112" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="56" cy="56" r="56" fill="#26C296"/>
+                    <path d="M65.3327 49L52.4993 61.8333L46.666 56" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                       
+
+                    <h2>
+                        {{job_details?.job_title}} Project  <br /> has been disapproved.
+                        <br /><br />
+                        An email has also been sent to {{job_details?.company_name}}.
+                    </h2>
+            </div>
+        </div>
+        <div class="modal-footer justify-content-center" style="padding: 15px 50px 50px 50px;">
+            <button mat-button class="theme_btn btn_primary" (click)="disApproveProjectSuccess.hide();this.job_details={};successMessage=''">Close</button>
+        </div>
+    </div>
+</div>
+</div>
+<!-- Add Placement Group Modal -->
+<div  bsModal #addCompanyPlacement="bs-modal"  class="modal fade bsModal ch_modal" id="addPlacementGroup" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document" style="max-width:700px">
+        <div class="modal-content">
+            <div class="modal-header"  style="flex-direction: column;align-items: start;">
+                <!-- <h2 class="modal-title">Add&nbsp;<b>{{selectedRecords.length}}</b>&nbsp; companies to Placement Group</h2> -->
+                <h2 class="modal-title">Add Vacancy to Placement Group</h2>
+                <p style="color:#9A9A9A">Internship Vacancies can only be added to Internship Placements</p>
+                <button type="button" mat-icon-button id="closeModal" class="close" data-dismiss="modal"
+                    aria-label="Close" (click)="addCompanyPlacement.hide(); resetForm();isSelectedActiveList=false;selectedActiveList=[];">
+                    <mat-icon>close</mat-icon>
+                </button>
+            </div>
+            <div class="modal-body pt-3">
+                <!-- {{selectedRecords | json}} -->
+                <!-- <div class="mod_groups avator-main"  *ngFor="let row of selectedRecords; let i =index;">
+                    <div class="avatar av-height">
+                        <img *ngIf="row?.company_logo" [src]="row?.company_logo" alt="woolworths">
+                        <div class="profile av-profile" *ngIf="!row?.company_logo">
+                            <span style="color: #fff">{{ row?.company_name ? row?.company_name?.split('
+                                ')[0][0] : '' }} {{row?.company_name ? row?.company_name?.split(' ')[0][1] :
+                                '' }}</span>
+                        </div>
+                    </div>
+                    <span >
+                        {{ row.company_name.length > 10 ? (row.company_name | slice:0:10) + '...' : row.company_name }}
+                    </span>
+                </div> -->
+
+                <div class="form-group mb-0">
+                    <!-- (ngModelChange)="onSelectionChange($event)" -->
+                    <ng-select [searchable]="true" bindLabel="title" bindValue="_id" [clearable]="false"
+                        placeholder="Search Placement Group" [multiple]="false" [items]="placementGroups"
+                        (keyup)="getPlacementGroups($event)" [(ngModel)]="placemenGroupIds" >
+                        <ng-template ng-option-tmp let-group="item">
+                            <div class="option-container">
+                              <div class="title">{{ group.title }}</div>
+                              <div class="category">{{ group.category_name }}</div>
+                            </div>
+                          </ng-template>
+                    </ng-select>
+
+                </div>
+
+
+                <!-- <div class="form-group mt-4" *ngIf="placemenGroupIds && placemenGroupIds.length > 0">
+                    <label>Vacancy</label>
+                    <ng-select 
+                        [searchable]="true" 
+                        bindLabel="job_title" 
+                        bindValue="_id" 
+                        [clearable]="false"
+                        placeholder="Select Vacancy" 
+                        [multiple]="type=='internship'? true: false" 
+                        [items]="vacncies"
+                        [(ngModel)]="placemenGroupVacnacyIds">
+                        
+                        <ng-template ng-option-tmp let-group="item" let-selected="selected">
+                            <div class="option-container" (click)="type=='internship'?$event.stopPropagation():''">
+                               <div style="display: flex;gap: 10px;align-items: center;width: 60%;">
+                                    <div *ngIf="type=='internship'" style="width:10%">
+                                        <input 
+                                        type="checkbox" 
+                                        [checked]="selectedGroups.has(group._id)" 
+                                        (change)="toggleSelection(group, $event)" 
+                                        class="custom-checkbox"/>
+                                    </div>
+                                    <div *ngIf="type=='internship'" class="option-content" style="width:90%">
+                                        <div class="title mb-1">{{ group.job_title }}</div>
+                                        <div class="category" style="color:#9A9A9A;text-align: left;">
+                                            Created on {{ group.createdAt | date : 'dd/MM/YYYY' }} by 
+                                            <span style="text-transform: capitalize;">
+                                                {{group.company_info && group.company_info[0] && group.company_info[0].company_name?group.company_info[0].company_name:''}}
+                                            </span></div>
+                                    </div>
+                                    
+                                    <div *ngIf="type!='internship'" class="option-content" style="width:100%"  (click)="toggleSelection1(group)" >
+                                        <div class="title mb-1">{{ group.job_title }}</div>
+                                        <div class="category" style="color:#9A9A9A;text-align: left;">
+                                            Created on {{ group.createdAt | date : 'dd/MM/YYYY' }} by 
+                                            <span style="text-transform: capitalize;">
+                                                {{group.created_by_name?group.created_by_name: group.company_info && group.company_info[0] && group.company_info[0].company_name?group.company_info[0].company_name:''}}
+                                            </span></div>
+                                    </div>
+                               </div>
+                              <span>
+                                <div class="mod_groups avator-main"  *ngFor="let row of group.company_info; let i =index;">
+                                    <div class="avatar av-height">
+                                        <img *ngIf="row?.company_logo" [src]="row?.company_logo" alt="woolworths">
+                                        <div class="profile av-profile" *ngIf="!row?.company_logo">
+                                            <span style="color: #fff">{{ row?.company_name ? row?.company_name?.split('
+                                                ')[0][0] : '' }} {{row?.company_name ? row?.company_name?.split(' ')[0][1] :
+                                                '' }}</span>
+                                        </div>
+                                    </div>
+                                   <span >
+                                        {{ row.company_name.length > 30 ? (row.company_name | slice:0:30) + '...' : row.company_name }}
+                                    </span>
+                                </div>
+                              </span>
+                            </div>
+                        </ng-template>
+                    </ng-select>
+                </div> -->
+                
+            </div>
+            <div class="modal-footer justify-content-around">
+                <button mat-button type="button" class="theme_btn btn_outline_primary"
+                    data-dismiss="modal"  (click)="resetForm();isSelectedActiveList=false;selectedActiveList=[];">Cancel</button>
+                <button mat-button type="submit" class="theme_btn btn_primary" (click)="checkExist()" [disabled]="placemenGroupIds.length === 0" data-dismiss="modal">Add</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div bsModal #successAssignPG="bs-modal"  class="modal fade bsModal ch_modal done_modal_popup" id="successAssignPG" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" style="max-width: 750px;" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button mat-icon-button type="button" class="close" (click)="successAssignPG.hide();placemenGroupIds=[];selectedActiveList=[];getAllActiveVacancies()">
+                    <mat-icon>close</mat-icon>
+                </button>
+            </div>
+            <div class="modal-body text-center">
+                <svg width="112" height="112" viewBox="0 0 112 112" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="56" cy="56" r="56" fill="#26C296"/>
+                    <path d="M65.3346 49L52.5013 61.8333L46.668 56" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    
+                    
+                <h2 class="mt-3" *ngIf="filterArray.length>1">
+                    <!-- Successfully added {{placemenGroupVacnacyIds.length}} vacancies to -->
+                   
+
+                   {{filterArray.length}} vacancies have been added to 
+ {{this.message?.title}} Group!
+
+                </h2> 
+
+                <h2 class="mt-3" *ngIf="filterArray.length==1">
+                    <!-- Successfully added {{this.placement?.vcancy?.job_title}} to 
+                    {{this.placement?.title}} -->
+
+                   {{ filterArray?.[0]?.job_title }} has been added to 
+  {{this.message?.title}} Group!
+                </h2> 
+            </div>
+            <div class="modal-footer justify-content-center">
+                <button mat-button class="theme_btn btn_primary" (click)="successAssignPG.hide();placemenGroupIds=[];selectedActiveList=[]; getAllActiveVacancies();">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div bsModal #successAssignPGExist="bs-modal"  class="modal fade bsModal ch_modal done_modal_popup" id="successAssignPGExist" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" style="max-width: 750px;" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button mat-icon-button type="button" class="close" (click)="successAssignPGExist.hide();placemenGroupIds=[];selectedActiveList=[];getAllActiveVacancies()">
+                    <mat-icon>close</mat-icon>
+                </button>
+            </div>
+            <div class="modal-body text-center">
+              <svg width="126" height="101" viewBox="0 0 126 101" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <g clip-path="url(#clip0_8630_74465)">
+                <path d="M95.371 100.166L11.656 100.196C7.45041 100.197 3.68314 98.008 1.57906 94.3402C0.526894 92.5061 0.000693685 90.4941 6.85071e-07 88.4817C-0.000692315 86.4695 0.52438 84.4569 1.57504 82.6223L43.4059 5.92095C45.5077 2.25144 49.2735 0.0600592 53.4791 0.0585945C57.6848 0.0571297 61.452 2.24588 63.5564 5.91393L105.445 82.5956C106.495 84.4249 107.02 86.4345 107.02 88.4457C107.02 90.4568 106.495 92.4692 105.444 94.304C103.342 97.9733 99.5766 100.165 95.371 100.166ZM1.0523 88.4803C1.05217 90.312 10.2898 86.365 11.2468 88.0334C13.1611 91.3702 7.82944 99.1393 11.6557 99.138C11.6557 99.138 102.623 97.1137 104.534 93.7756C105.49 92.1065 105.968 90.2754 105.967 88.4447C105.967 86.6141 105.488 84.7836 104.531 83.1152L62.6416 6.43349C60.7327 3.1062 57.3057 1.11485 53.4795 1.11619C49.655 1.11752 1.05245 86.6483 1.0523 88.4803Z" fill="#3F3D56"/>
+                <path d="M77.9031 83.2511C99.0694 83.2511 116.228 65.9683 116.228 44.649C116.228 23.3296 99.0694 6.04688 77.9031 6.04688C56.7368 6.04688 39.5781 23.3296 39.5781 44.649C39.5781 65.9683 56.7368 83.2511 77.9031 83.2511Z" fill="#464BA8"/>
+                <path d="M76.3835 53.0796L69.5859 23.486L74.9271 22.3536L80.5508 52.196L76.3835 53.0796ZM81.0564 64.2942C80.0781 64.5016 79.191 64.3626 78.3948 63.8771C77.6296 63.3443 77.1488 62.608 76.9525 61.6683C76.7561 60.7286 76.9055 59.8791 77.4006 59.1199C77.9267 58.3133 78.6789 57.8062 79.6572 57.5988C80.5963 57.3997 81.4484 57.5666 82.2136 58.0995C83.0098 58.5849 83.506 59.2975 83.7024 60.2372C83.8988 61.1769 83.7339 62.05 83.2078 62.8567C82.7127 63.6159 81.9955 64.0951 81.0564 64.2942Z" fill="white"/>
+                </g>
+                <defs>
+                <clipPath id="clip0_8630_74465">
+                <rect width="126" height="101" fill="white"/>
+                </clipPath>
+                </defs>
+                </svg>
+
+                <h2 class="mt-3">
+                    {{this.placement?.title}} already has the following project added: {{this.placement?.vacancy_title}}
+                </h2> 
+
+                <p  class="mt-3">
+                    Would you like to replace it with the selected project?
+                </p>
+            </div>
+            <div class="modal-footer justify-content-between">
+                <button mat-button type="button" class="theme_btn btn_outline_primary mr-4"
+                data-dismiss="modal" (click)="successAssignPGExist.hide();placemenGroupIds=[];selectedActiveList=[];getAllActiveVacancies()">No</button>
+
+                <button mat-button type="button" class="theme_btn btn_primary mr-4"
+                (click)="addToPlacementGroup()">Yes</button>
+            </div>
+        </div>
+    </div>
+</div>

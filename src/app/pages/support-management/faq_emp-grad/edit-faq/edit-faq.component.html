@@ -1,0 +1,53 @@
+<section class="home-header-sec">
+	<div class="container">
+	    <div class="row">
+	      <div class="col-md-12">
+	      	<div class="card">
+	      		<div class="manage-home-header">
+	      			<div class="card-header">
+	      				<strong>Employer Edit FAQ</strong>
+	      			</div>
+	      			<div class="card-body">
+	      				<form [formGroup]="inputTitle">
+		      				<div class="home-mng-form">
+		      					<div class="form-group">
+									<label>Category</label>
+									<select class="form-control" formControlName="category_id">
+										<option *ngFor="let row of faq" [value]="row._id">{{row?.name}}</option>
+						                <!-- <option>My Account</option>
+						                <option>Jobs</option>
+						                <option>Permissions & Privacy</option> -->
+						            </select>
+								</div>
+								<div class="form-group">
+									<label>Title</label>
+									<input type="text" name="" class="form-control" placeholder="Enter Title" formControlName="title" >
+									<div *ngIf="( inputTitle.controls.title?.dirty)
+									 && inputTitle.controls.title?.invalid && inputTitle.controls.title?.errors?.required" style="color:red" >
+									*Please enter title here....
+									</div>
+									
+								</div>
+								<div class="form-group">
+									<label>Description</label>
+									<textarea formControlName="description" class="form-control" ></textarea>
+								
+									<div *ngIf="(inputTitle.controls.description?.touched || inputTitle.controls.description?.dirty)
+									&& inputTitle.controls.description?.invalid && inputTitle.controls.description?.errors?.required" style="color:red" >
+									*Please enter description here....
+									</div>
+								</div>
+								<div class="edit-btns d-flex justify-content-end">
+									<button mat-stroked-button (click)="openSnackBar()"  class="btn btn-primary mr-4" (click)="addEditFaq(this.id)">Save</button>
+									<button  class="btn btn-primary"  routerLink='/employersFaq'>Back</button>
+								</div>
+		      				</div>
+		      			</form>
+	      			</div>
+		      	</div>
+	      	</div>
+	      </div>
+	  	</div>
+	</div>
+</section>
+

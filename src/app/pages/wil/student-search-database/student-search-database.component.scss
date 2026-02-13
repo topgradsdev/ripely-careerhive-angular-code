@@ -1,0 +1,87 @@
+.bold_lable_form {
+    .form-group {
+        margin-bottom: 39px;
+        align-items: baseline;
+
+        .label_title {
+            font-size: 14px;
+            font-weight: 600;
+            line-height: 16px;
+            letter-spacing: 0em;
+            color: #000000;
+            font-family: var(--font-third);
+
+        }
+    }
+}
+
+.search_database_btns {
+    display: flex;
+    align-items: center;
+    gap: 35px;
+
+    .theme_btn {
+        width: 171px;
+    }
+}
+.search_database_eligible_student{
+    .bold_lable_form{
+        padding-top: 60px;
+    }
+}
+.eleigible_student_card {
+    box-shadow: 2px 2px 4px 0px rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(229, 229, 229, 1);
+    border-radius: 10px;
+    padding: 12px 53px 15px 15px;
+    display: inline-flex;
+    align-items: center;
+
+    .content {
+        display: inline-flex;
+        align-items: center;
+        .icon_place {
+            height: 43px;
+            width: 43px;
+            border-radius: 50px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 13px;
+            color: #fff;
+            background-color: #202C76;
+        }
+        p {
+            font-family: Roboto;
+            font-size: 14px;
+            font-weight: 500;
+            line-height: 16px;
+            letter-spacing: 0em;
+            text-align: left;
+            color: #000000;
+            margin-bottom: 0px;
+        }
+    }
+
+    h2 {
+        font-family: Roboto;
+        font-size: 40px;
+        font-weight: 500;
+        line-height: 47px;
+        letter-spacing: 0em;
+        text-align: center;
+        color: #000000;
+        margin-bottom: 0px;
+        min-width: 100px;
+        text-align: center;
+        margin-left: 13px;
+
+    }
+
+}
+.search_database_results_container{
+    .search_database_btns{
+        justify-content: space-between;
+        padding-top: 49px;
+    }
+}

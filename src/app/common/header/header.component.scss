@@ -1,0 +1,105 @@
+.universal_header {
+    box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.25);
+    padding: 29px 22px 40px 22px;
+    position: sticky;
+    top: 0;
+    background-color: #fff;
+    z-index: 1;
+    .logo_top_header {
+        margin-bottom: 31px;
+
+        a {
+            h1 {
+                font-size: 32px;
+                font-weight: 700;
+                line-height: 42px;
+                letter-spacing: 0em;
+                text-align: center;
+                margin-bottom: 0px;
+                color: var(--main-black-color);
+
+            }
+        }
+    }
+
+    .navbar {
+
+        .navbar-nav {
+            .nav-item {
+                .nav-link {
+                    padding: 13px 0px;
+                }
+            }
+        }
+    }
+    .profile_btn_student {
+        margin-right: 20px;
+        border: 0px solid #fff !important;
+        display: inline-flex !important;
+        justify-content: center;
+        align-items: center;
+        width: 35px;
+        height: 35px;
+        cursor: pointer;
+        border-radius: 50px;
+        overflow: hidden;
+        background-color: var(--primary-color-first);
+        color: #fff;
+        margin-left: 12px !important;
+      
+        img {
+          width: 100%;
+        }
+      
+        span {
+          font-family: var(--font-primary);
+          font-size: 14px;
+          font-weight: 400;
+          line-height: 20px;
+          letter-spacing: 0em;
+          text-align: center;
+          text-transform: uppercase;
+      
+        }
+      
+        // .mat-button-wrapper {
+        //   display: inline-flex;
+        //   width: 32px;
+        //   height: 32px;
+        // }
+      }
+   
+}
+
+
+@media (min-width: 992px) {
+    .universal_header {
+        .navbar {
+            border-radius: 50px;
+            background-color: #f6f6fb;
+
+            .navbar-nav {
+                .nav-item {
+                    .nav-link {
+                        min-width: 160px;
+                        padding: 13px 0px;
+                        text-align: center;
+                        border-radius: 50px;
+                        transition: all ease-in-out 0.3s;
+                        color: var(--primary-color-first);
+                    }
+
+                    .nav-link.active {
+                        background-color: var(--primary-color-first);
+                        color: #fff;
+                    }
+                }
+            }
+        }
+    }
+}
+
+.dropdown-menu {
+    left: unset;
+    right: 0;
+}

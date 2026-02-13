@@ -1,0 +1,135 @@
+.btn_tab {
+    max-width: none !important;
+}
+
+.bs_tab_nav {
+    &.placement{
+        .nav-pills{
+            margin-bottom: 44px;
+        }
+    }
+    .nav-pills {
+        background-color: #F6F6FB;
+        border-radius: 40px;
+        flex-wrap: nowrap;
+        position: relative;
+        overflow: auto;
+
+        .nav-link {
+            color: var(--primary-color-first);
+            border-radius: 40px;
+            text-transform: uppercase;
+            font-family: Inter;
+            font-size: 14px;
+            font-weight: 500;
+            line-height: 18px;
+            letter-spacing: 0em;
+            text-align: center;
+            width: 200px;
+            padding: 20px 10px;
+            &.active {
+                background-color: var(--primary-color-first);
+                color: #fff;
+            }
+        }
+    }
+
+    .tab-content {
+        background-color: #fff;
+        border: 0px;
+        margin-top: 0px;
+
+        .tab-pane {
+            padding: 0px;
+        }
+    }
+}
+
+ 
+.student_card {
+    box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.25);
+    background: #fff;
+    padding: 22px 30px;
+    display: flex;
+    margin-bottom: 0px;
+    height: 100%;
+    flex-direction: row;
+    border-radius: 10px;
+    position: relative;
+    overflow: hidden;
+
+    &.total {
+        background-color: #fff;
+
+        .action {
+            position: absolute;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            grid-gap: 33px;
+            gap: 33px;
+            opacity: 0;
+            transition: all .3s ease-in-out;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 100%;
+        }
+
+        &:hover {
+            &>:not(.action) {
+                filter: blur(4px);
+            }
+
+            .action {
+                opacity: 1;
+
+                button {
+                    height: 36px;
+                }
+            }
+        }
+    }
+
+    .content {
+        width: calc(100% - 45px);
+        padding-right: 20px;
+
+        h4 {
+            font-family: var(--font-third);
+            font-size: 24px;
+            font-weight: 400;
+            line-height: 28px;
+            letter-spacing: 0em;
+            text-align: left;
+            color: #000000;
+            margin-bottom: 0px;
+
+        }
+        p {
+            font-family: var(--font-third);
+            font-size: 14px;
+            font-weight: 400;
+            line-height: 16px;
+            letter-spacing: 0em;
+            text-align: left;
+            color: #000000;
+            margin-bottom: 10px;
+        }
+
+
+        h1 {
+            font-family: var(--font-primary);
+            font-size: 26px;
+            font-weight: 500;
+            line-height: 34px;
+            letter-spacing: 0em;
+            text-align: left;
+            color: #000000;
+            margin-bottom: 0px;
+
+        }
+    }
+
+}

@@ -1,0 +1,12 @@
+<svg width="116" height="153" viewBox="0 0 116 153" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect x="2" y="2" width="111.925" height="148.927" rx="12" fill="#ECEDFF" stroke="#2B2A35" stroke-width="4"/>
+<path d="M67.7083 103.375H47.2917C45.6808 103.375 44.375 104.681 44.375 106.292V126.708C44.375 128.319 45.6808 129.625 47.2917 129.625H67.7083C69.3192 129.625 70.625 128.319 70.625 126.708V106.292C70.625 104.681 69.3192 103.375 67.7083 103.375Z" stroke="#464BA8" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M57.5 110.667V122.333" stroke="#464BA8" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M51.667 116.5H63.3337" stroke="#464BA8" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M4.00098 14C4.00098 8.47715 8.47813 4 14.001 4H101.926C107.448 4 111.926 8.47715 111.926 14V24.0431H4.00098V14Z" fill="#464BA8"/>
+<rect x="22.502" y="60" width="70.9218" height="3.08356" rx="1.54178" fill="#464BA8"/>
+<rect x="23" y="80" width="33" height="3" rx="1.5" fill="#464BA8"/>
+<rect x="60" y="80" width="33" height="3" rx="1.5" fill="#464BA8"/>
+<rect x="23" y="70" width="33" height="3" rx="1.5" fill="#464BA8"/>
+<rect x="60" y="70" width="33" height="3" rx="1.5" fill="#464BA8"/>
+</svg>

@@ -1,0 +1,222 @@
+.main_banner_support {
+    display: flex;
+    max-width: 1440px;
+    margin: 0 auto;
+    background-color: #FEFAF8;
+
+    .left {
+        flex-grow: 1;
+        padding: 50px 24px;
+        height: 100%;
+        min-height: 100vh;
+        overflow: auto;
+        display: flex;
+        align-items: center;
+        background-color: #FEFAF8;
+
+        button.back_step {
+            padding: unset;
+            outline: none;
+            border: 0px;
+            background-color: transparent;
+            font-family: var(--font-primary);
+            font-size: 14px;
+            font-weight: 400;
+            line-height: 18px;
+            letter-spacing: 0em;
+            text-align: left;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            cursor: pointer;
+            color: var(--primary-color-first);
+            margin-top: 50px;
+
+        }
+
+        .content {
+            max-width: 767px;
+            margin: 0 auto;
+
+            h1 {
+                font-family: var(--font-primary);
+                font-size: 32px;
+                font-weight: 500;
+                line-height: 42px;
+                letter-spacing: 0em;
+                text-align: left;
+                color: var(--main-black-color);
+                margin-bottom: 97px;
+                &.name{
+                    text-transform: capitalize;
+                }
+            }
+
+            h2 {
+                font-family: var(--font-primary);
+                font-size: 24px;
+                font-weight: 400;
+                line-height: 31px;
+                letter-spacing: 0em;
+                text-align: left;
+                color: var(--main-black-color);
+                margin-bottom: 44px;
+            }
+
+            h3 {
+                font-family: var(--font-primary);
+                font-size: 32px;
+                font-weight: 500;
+                line-height: 42px;
+                letter-spacing: 0em;
+                color: var(--primary-color-first);
+                margin-bottom: 40px;
+
+            }
+
+            p {
+                font-family: var(--font-primary);
+                font-size: 20px;
+                font-weight: 400;
+                line-height: 31px;
+                letter-spacing: 0em;
+                text-align: left;
+                color: var(--main-black-color);
+                margin-bottom: 66px;
+            }
+
+            button.theme_btn {
+                width: 176px;
+            }
+
+            .enquiry_file_upload,
+            .enquiry_detail,
+            .enquiry_subject {
+                margin-bottom: 44px;
+            }
+
+            .file_upload {
+                border: 1.5px dashed var(--primary-color-first);
+                background-color: #fff;
+                border-radius: 6px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                height: 90px;
+                width: 100%;
+                position: relative;
+                margin: 0 auto;
+
+                .file_upload_label {
+                    width: 100%;
+                    position: absolute;
+                    height: 100%;
+                    margin: 0px;
+                    cursor: pointer;
+                }
+
+                input {
+                    // visibility: hidden;
+                    opacity: 0;
+                    position: absolute;
+                    width: 100%;
+                    height: 100%;
+                    top: 0px;
+                    left: 0px;
+                }
+
+                p {
+                    font-family: var(--font-primary);
+                    font-size: 12px;
+                    font-weight: 400;
+                    line-height: 16.8px;
+                    letter-spacing: 0em;
+                    text-align: center;
+                    color: var(--header-footer-form-heading-color);
+                    margin-bottom: 0px;
+
+                    strong {
+                        font-size: 16px;
+                        font-weight: 400;
+                        color: var(--main-black-color);
+                    }
+
+                    span {
+                        color: var(--primary-color-first);
+                    }
+
+                }
+            }
+
+
+        }
+    }
+
+    .right {
+        width: 617px;
+
+        .img_content {
+            min-height: 100vh;
+            height: 100%;
+            width: 100%;
+            background-size: cover;
+            background-position: center;
+            background-image: url('../../../../assets/img/support-bg.png');
+        }
+    }
+}
+.files_list {
+    list-style: none;
+    margin: 0px;
+    padding: 0px;
+
+    li {
+        &:not(:last-child) {
+            margin-bottom: 20px;
+        }
+
+        .file_card {
+            display: flex;
+            align-items: center;
+
+            .content {
+                flex-grow: 1;
+                display: flex;
+                align-items: center;
+                margin-right: 15px;
+                width: calc(100% - 100px);
+
+                p {
+                    font-family: var(--font-primary);
+                    font-size: 16px;
+                    font-weight: 400;
+                    line-height: 21px;
+                    letter-spacing: 0em;
+                    text-align: left;
+                    color: var(--main-black-color);
+                    white-space: nowrap;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    margin-bottom: 0px;
+                    max-width: calc(100% - 44px);
+
+                    span {
+                        color: #9A9A9A;
+                        font-size: 14px;
+                        line-height: 18px;
+                    }
+                }
+
+                svg {
+                    margin-right: 12px;
+                }
+            }
+
+            .btn_group {
+                display: inline-flex;
+                align-items: center;
+                pointer-events: auto;
+            }
+        }
+    }
+}

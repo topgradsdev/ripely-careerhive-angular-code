@@ -1,0 +1,675 @@
+<div class="page_header">
+    <div class="page_header_container">
+        <div>
+            <h4>Placement Groups</h4>
+        </div>
+    </div>
+</div>
+<section>
+    <div class="row sub_header">
+        <!-- <div class="col-md-7 left">
+            <div class="btn_tab mr-4">
+                <button mat-button class="theme_btn btn_primary" (click)="btnTabs(placementGroupStatusEnum.ACTIVE)"
+                    [ngClass]="placementGroupStatus === placementGroupStatusEnum.ACTIVE ? 'active' :'inactive'">Active</button>
+                <button mat-button class="theme_btn btn_primary" (click)="btnTabs(placementGroupStatusEnum.ARCHIVED)"
+                    [ngClass]="placementGroupStatus === placementGroupStatusEnum.ARCHIVED ? 'active' :'inactive'">Archived</button>
+            </div>
+            <ng-container *ngIf="placementGroupStatus === placementGroupStatusEnum.ACTIVE">
+                <button *ngxPermissionsOnly="['WIL_Write']" mat-button class="theme_btn btn_primary" data-toggle="modal"
+                    data-target="#newPlacementGroup" (click)="createPlacementGroup.reset(); imageURL = '';">
+                    <mat-icon>add</mat-icon> Add New
+                </button>
+            </ng-container>
+        </div> -->
+
+        <!-- <div class="row sub_header"> -->
+            <div class="col-md-12">
+                <ng-container>
+    
+                    <div class="card_header">
+                        <div class="card_container">
+                           
+                            <div class="div-flex-top">
+                                <div class="student_card">
+                                    <div class="content">
+                                        <p>WIL Placements</p>
+                                        <h4>{{this.countObj.WIL_placements || 0}}</h4>
+                                    </div>
+                                    <div class="">
+                                        <svg width="54" height="54" viewBox="0 0 54 54" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <circle cx="27" cy="27" r="27" fill="#464BA8"/>
+                                            <path d="M37.667 20.334H16.3337C14.8609 20.334 13.667 21.5279 13.667 23.0007V36.334C13.667 37.8067 14.8609 39.0007 16.3337 39.0007H37.667C39.1397 39.0007 40.3337 37.8067 40.3337 36.334V23.0007C40.3337 21.5279 39.1397 20.334 37.667 20.334Z" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                                            <path d="M32.3337 39V17.6667C32.3337 16.9594 32.0527 16.2811 31.5526 15.781C31.0525 15.281 30.3742 15 29.667 15H24.3337C23.6264 15 22.9481 15.281 22.448 15.781C21.9479 16.2811 21.667 16.9594 21.667 17.6667V39" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                                            </svg>
+                                            
+                                    </div>
+                                </div>
+                                
+                                <div class="student_card">
+                                    <div class="content">
+                                        <p>Capstone Projects</p>
+                                        <h4>{{this.countObj.project_placements || 0}}</h4>
+                                    </div>
+                                    <div class="">
+                                        <svg width="54" height="54" viewBox="0 0 54 54" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <circle cx="27" cy="27" r="27" fill="#26C296"/>
+                                            <path d="M32.333 16.334H34.9997C35.7069 16.334 36.3852 16.6149 36.8853 17.115C37.3854 17.6151 37.6663 18.2934 37.6663 19.0007V37.6673C37.6663 38.3746 37.3854 39.0528 36.8853 39.5529C36.3852 40.053 35.7069 40.334 34.9997 40.334H18.9997C18.2924 40.334 17.6142 40.053 17.1141 39.5529C16.614 39.0528 16.333 38.3746 16.333 37.6673V19.0007C16.333 18.2934 16.614 17.6151 17.1141 17.115C17.6142 16.6149 18.2924 16.334 18.9997 16.334H21.6663" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                            <path d="M31.0003 13.666H23.0003C22.2639 13.666 21.667 14.263 21.667 14.9993V17.666C21.667 18.4024 22.2639 18.9993 23.0003 18.9993H31.0003C31.7367 18.9993 32.3337 18.4024 32.3337 17.666V14.9993C32.3337 14.263 31.7367 13.666 31.0003 13.666Z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                            </svg>
+                                            
+                        
+                                    </div>
+                                </div>
+                
+                                <div class="student_card total">
+                                    <div class="content">
+                                        <p>Archived Placements</p>
+                                        <h4>{{this.countObj.archive_placement_groups || 0}}</h4>
+                                    </div>
+                                    <div class="">
+                                        <svg width="54" height="54" viewBox="0 0 54 54" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <circle cx="27" cy="27" r="27" fill="#F47761"/>
+                                            <path d="M27 17.666L27 36.3327" stroke="white" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+                                            <path d="M36.333 27L26.9997 36.3333L17.6663 27" stroke="white" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+                                            </svg>
+                                            
+                                    </div>
+                                    <div class="action">
+                                        <button (click)="callApi({archive_placements:true});placementGroupStatus = placementGroupStatusEnum.ARCHIVED" mat-button class="theme_btn btn_primary">View Placement</button>
+                                    </div>
+                                </div>
+                
+
+                                <div class="student_card total">
+                                    <div class="content">
+                                        <p>Archived Projects</p>
+                                        <h4>{{this.countObj.archive_projects || 0}}</h4>
+                                    </div>
+                                    <div class="">
+                                        <svg width="54" height="54" viewBox="0 0 54 54" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <circle cx="27" cy="27" r="27" fill="#9747FF"/>
+                                            <path d="M27 17.666L27 36.3327" stroke="white" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+                                            <path d="M36.333 27L26.9997 36.3333L17.6663 27" stroke="white" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+                                            </svg>
+                                            
+                                    </div>
+                                    <div class="action">
+                                        <button (click)="callApi({archive_projects:true});placementGroupStatus = placementGroupStatusEnum.ARCHIVED" mat-button class="theme_btn btn_primary">View Projects</button>
+                                    </div>
+                                </div>
+                
+                            </div>
+                         
+                            <div class="div-flex-top">
+                                
+        
+                                <button *ngxPermissionsOnly="['WIL_Write']" mat-button class="theme_btn btn_white ml-auto" (click)="exportStudentData('excel')">
+                                    Download (.xls)
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </ng-container>
+            </div>
+        <!-- </div> -->
+        <div class="col-md-12 text-right">
+            <div class="d-flex align-items-center justify-content-between">
+                <!-- <button *ngxPermissionsOnly="['WIL_Write']" mat-button class="theme_btn btn_white ml-auto" routerLink="/admin/wil/create-vacancy"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 5V19" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round" />
+                    <path d="M5 12H19" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round" />
+                </svg>
+                Add New</button> -->
+
+                <ng-container *ngIf="placementGroupStatus === placementGroupStatusEnum.ACTIVE">
+                    <button *ngxPermissionsOnly="['WIL_Write']" mat-button class="theme_btn btn_primary" data-toggle="modal"
+                        data-target="#newPlacementGroup" (click)="createPlacementGroup.reset(); imageURL = '';">
+                        <mat-icon>add</mat-icon> Add New
+                    </button>
+                </ng-container>
+                <div class="search-container">
+                    <svg class="icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20"
+                        fill="none">
+                        <path
+                            d="M9.16667 15.8333C12.8486 15.8333 15.8333 12.8486 15.8333 9.16667C15.8333 5.48477 12.8486 2.5 9.16667 2.5C5.48477 2.5 2.5 5.48477 2.5 9.16667C2.5 12.8486 5.48477 15.8333 9.16667 15.8333Z"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                        <path d="M17.5 17.5L13.875 13.875" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                            stroke-linejoin="round" />
+                    </svg>
+                    <input type="text" class="form-control" [(ngModel)]="searchCriteria.keywords"
+                        placeholder="Search Keywords" (ngModelChange)="onChangeSearchKeyword()">
+                </div>
+            </div>
+        </div>
+    </div>
+    <ng-container>
+        <div class="table-responsive sticky-table" infiniteScroll
+[infiniteScrollDistance]="2"
+[infiniteScrollThrottle]="150"
+(scrolled)="onScrollDown()"
+[scrollWindow]="false">
+            <table mat-table [dataSource]="placementGroupList" matSort #placementGroupTbSort="matSort" class="ch_table">
+                <!-- Code Column -->
+                <ng-container matColumnDef="code">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Code </th>
+                    <td mat-cell *matCellDef="let row">
+                        {{row.code}}
+                    </td>
+                </ng-container>
+                <!-- Title Column -->
+                <ng-container matColumnDef="title">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Title </th>
+                    <td mat-cell *matCellDef="let row"
+                    [state]="{type: 'view'}">
+                    <a class="td_link"  [routerLink]="row.category_id != '65a21e64fa6a8e4f5b252994' ? ['/admin/wil/placement-groups', row._id] : ['/admin/wil/placement-groups/project', row._id]">{{row.title}}</a>
+                    </td>
+                </ng-container>
+                <!-- Industry Column -->
+                <ng-container matColumnDef="industry">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Industry </th>
+                    <td mat-cell *matCellDef="let row"> {{row.industry}} </td>
+                </ng-container>
+                <!-- Category Column -->
+                <ng-container matColumnDef="category_name">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Category </th>
+                    <td mat-cell *matCellDef="let row"> {{row.category_name}} </td>
+                </ng-container>
+                <!-- Last Modified Comment -->
+                <ng-container matColumnDef="updated_at">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Last Modified </th>
+                    <td mat-cell *matCellDef="let row"> {{row.updated_at | date: 'dd/MM/YYYY'}} </td>
+                </ng-container>
+                <!-- Published On for Active Table Column -->
+                <ng-container matColumnDef="publish_at">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Published On</th>
+                    <!-- <td mat-cell *matCellDef="let row"> 23/06/23 <br> 5:01 AM </td> -->
+                    <td mat-cell *matCellDef="let row"> {{row?.publish_on ? (row?.publish_on | date: 'dd/MM/yyyy HH:mm:ss a') : '-' }} </td>
+                </ng-container>
+                 <!-- Archived On for Archived Table Column -->
+                 <!-- <ng-container matColumnDef="archived_at">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Archived On</th>
+                    <td mat-cell *matCellDef="let row"> 23/06/23 <br> 5:01 AM </td>
+                </ng-container> -->
+                <!-- Published By Column For -->
+                <ng-container matColumnDef="publish_by">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Published By</th>
+                    <td mat-cell *matCellDef="let row">
+                        <div class="d-flex align-items-center" *ngIf="row.is_publish">
+                            <div class="profile mr-1">
+                                <span>{{ getInitials(row?.publish_by_name || row?.created_by) }}</span>
+                            </div> <span>{{row.publish_by_name?row.publish_by_name:row.created_by}}</span>
+                        </div>
+                       
+                    </td>
+                </ng-container>
+                <!-- Students Column -->
+                <ng-container matColumnDef="student_count">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Students </th>
+                    <td mat-cell *matCellDef="let row"> {{row.student_count}} </td>
+                </ng-container>
+                <!-- Staff Column for Archive table -->
+                <!-- <ng-container matColumnDef="staff">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Staff </th>
+                    <td mat-cell *matCellDef="let row">
+                        <ng-container *ngFor="let staff of row.staff">
+                            <div class="profile_group" *ngIf="staff.first_name && staff.last_name">
+                                <div class="profile">
+                                    <span>{{staff.first_name.charAt(0)}}{{staff.last_name.charAt(0)}}</span>
+                                </div>
+                                <div class="profile">
+                                    <img src="../../../../assets/img/avatars/8.jpg" alt="avatar">
+                                </div>
+                            </div>
+                        </ng-container>
+                    </td>
+                </ng-container> -->
+                <!-- Action column -->
+                <ng-container matColumnDef="actions" stickyEnd *ngIf="placementGroupStatus == placementGroupStatusEnum.ACTIVE">
+                    <th mat-header-cell *matHeaderCellDef> Actions </th>
+                    <td mat-cell *matCellDef="let row">
+                        <button mat-icon-button [matMenuTriggerFor]="menu" class="td-btn" (click)="onActionClick(row)">
+                            <mat-icon>more_horizantal</mat-icon>
+                        </button>
+
+                        <!-- [routerLink]="['/admin/wil/placement-groups', row._id]" -->
+                        <mat-menu #menu="matMenu" class="td-menu custome_theme_menu">
+                            <a mat-menu-item [routerLink]="row.category_id === '65a21e64fa6a8e4f5b252994' 
+                            ? ['/admin/wil/placement-groups/project', row._id] 
+                            : ['/admin/wil/placement-groups', row._id]"
+                                [state]="{type: 'view'}">
+                                <span>View</span>
+                            </a>
+                            <!-- <a mat-menu-item>
+                                <span>Duplicate</span>
+                            </a> -->
+                            <!-- <a mat-menu-item [routerLink]="['/admin/wil/placement-groups', row._id]"
+                                [state]="{type: 'edit'}">
+                                <span>Edit</span>
+                            </a> -->
+                            <a *ngxPermissionsOnly="['WIL_Write']" mat-menu-item class="danger" (click)="archiveGroup();">
+                                <span>Archive</span>
+                            </a>
+                        </mat-menu>
+                    </td>
+                </ng-container>
+
+                <ng-container matColumnDef="actions" *ngIf="placementGroupStatus == placementGroupStatusEnum.ARCHIVED">
+                    <th mat-header-cell *matHeaderCellDef> Actions </th>
+                    <td mat-cell *matCellDef="let row">
+                        <button *ngxPermissionsOnly="['WIL_Write']" mat-icon-button [matMenuTriggerFor]="menuArchived" class="td-btn">
+                            <mat-icon>more_horizantal</mat-icon>
+                        </button>
+                        <mat-menu #menuArchived="matMenu" class="td-menu custome_theme_menu">
+                            <a mat-menu-item data-toggle="modal" data-target="#activatePlacement" (click)="onActionClick(row)">
+                                <span>Activate</span>
+                            </a>
+                        </mat-menu>
+                    </td>
+                </ng-container>
+                <tr mat-header-row *matHeaderRowDef="displayedPlacementActiveColumns;sticky: true"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedPlacementActiveColumns;"></tr>
+                <!-- Row shown when there is no matching data. -->
+                <!-- <tr class="mat-row" *matNoDataRow><td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td></tr> -->
+            </table>
+        </div>
+    </ng-container>
+    <!-- <app-paginator [paginationObj]="paginationObj" (pagination)="getPaginationData($event)"></app-paginator> -->
+
+    <h4 *ngIf="applyfilter" class="result-found" style="color:#464BA8">
+        {{this.paginationObj.length}} Results Found! 
+        &nbsp;&nbsp;<button mat-button class="theme_btn btn_outline_primary" (click)="callApi(''); filterApply=[]; applyfilter = false;placementGroupStatus = placementGroupStatusEnum.ACTIVE; status = 'active'">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M15 5L5 15" stroke="#464BA8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M5 5L15 15" stroke="#464BA8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            &nbsp;&nbsp;  
+                Reset Filter
+        </button>
+    </h4>
+</section>
+<!-- Archive -->
+<div class="modal fade bsModal ch_modal password_modal" id="confirmPassword" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <form [formGroup]="confirmPassword">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" mat-icon-button id="closeModal" class="close" data-dismiss="modal"
+                        aria-label="Close">
+                        <mat-icon>close</mat-icon>
+                    </button>
+                </div>
+                <div class="modal-body pt-0 active_deactive_modal">
+                    <h4 class="mb-5">To instantly archive this Placement Group, <br> please type your password to confirm:
+                    </h4>
+                    <div class="form-group mb-0 position-relative">
+                        <label>Password</label>
+                        <input [type]="pass" class="form-control" [(ngModel)]="password" formControlName="password" [class.invalid_field]="checkInvalidFieldPassrordForm('password')">
+                        <span class="eye_icon" *ngIf="pass == 'text'" (click)="onEyeClick('pass', 'password')">
+                            <svg width="20" height="13" viewBox="0 0 20 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path
+                                    d="M1.29565 6.7632C1.1361 6.56013 1.00404 6.38224 0.900947 6.23866C0.997612 6.09726 1.1211 5.92302 1.27053 5.72458C1.69179 5.16511 2.31455 4.41936 3.11828 3.6754C4.7353 2.17866 7.01653 0.75 9.82143 0.75C12.6263 0.75 14.9076 2.17866 16.5246 3.6754C17.3283 4.41936 17.9511 5.16511 18.3723 5.72458C18.5218 5.92302 18.6452 6.09726 18.7419 6.23866C18.6388 6.38224 18.5068 6.56013 18.3472 6.7632C17.9058 7.32498 17.2587 8.07347 16.4375 8.82004C14.7807 10.3262 12.4992 11.75 9.82143 11.75C7.14368 11.75 4.86212 10.3262 3.2054 8.82004C2.38417 8.07347 1.73706 7.32498 1.29565 6.7632Z"
+                                    stroke="#545465" stroke-width="1.5" />
+                                <circle cx="9.82143" cy="6.24965" r="2.82143" stroke="#545465" stroke-width="1.5" />
+                            </svg>
+                        </span>
+                        <span *ngIf="pass == 'password'" class="eye_icon pswrd_hide" (click)="onEyeClick('pass', 'text')">
+                            <svg width="20" height="16" viewBox="0 0 20 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path
+                                    d="M1.30849 8.89459C1.14302 8.68399 1.00656 8.49996 0.900682 8.35228C0.999999 8.20676 1.12767 8.0264 1.28274 7.82046C1.71202 7.25034 2.34663 6.49038 3.16572 5.73222C4.81343 4.20707 7.1393 2.75 10 2.75C12.8607 2.75 15.1866 4.20707 16.8343 5.73222C17.6534 6.49038 18.288 7.25034 18.7173 7.82046C18.8723 8.0264 19 8.20676 19.0993 8.35228C18.9934 8.49996 18.857 8.68399 18.6915 8.89459C18.2417 9.46703 17.5824 10.2297 16.7455 10.9905C15.0575 12.525 12.7313 13.9773 10 13.9773C7.26867 13.9773 4.94248 12.525 3.2545 10.9905C2.41765 10.2297 1.75826 9.46703 1.30849 8.89459Z"
+                                    stroke="#545465" stroke-width="1.5" />
+                                <circle cx="10.0001" cy="8.36293" r="2.88636" stroke="#545465" stroke-width="1.5" />
+                                <rect x="2.1875" y="1.44922" width="1.52727" height="20.3636"
+                                    transform="rotate(-45 2.1875 1.44922)" fill="#545465" />
+                            </svg>
+                        </span>
+                        <span *ngIf="checkInvalidFieldPassrordForm('password')" class="error">This field is required.</span>
+                    </div>
+                </div>
+                <div class="modal-footer justify-content-around">
+                    <button #closeConfirmPasswordModal mat-button type="button" class="theme_btn btn_outline_primary" data-dismiss="modal">Cancel</button>
+                    <button mat-button type="submit" class="theme_btn btn_primary" data-dismiss="modal"
+                        (click)="archivePlacementGroup()">Confirm</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<div class="modal fade bsModal ch_modal placement_modal" id="newPlacementGroup" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <form [formGroup]="createPlacementGroup">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 class="modal-title" id="exampleModalLabel">Create Placement Group</h2>
+                    <button type="button" mat-icon-button id="closeModal" class="close" data-dismiss="modal"
+                        aria-label="Close">
+                        <mat-icon>close</mat-icon>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row  form-group">
+                        <div class="col-3">
+                            <label class="label_title">Background</label>
+                        </div>
+                        <div class="col-9">
+                            <figure class="background_img">
+                                <img [src]="imageURL" [alt]="" *ngIf="imageURL && imageURL !== ''">
+                                <img src="../../../../assets/img/blue_white_bg.png" *ngIf="!imageURL && imageURL === ''"
+                                    alt="img">
+                                <label for="files">
+                                    <svg width="28" height="29" viewBox="0 0 28 29" fill="none"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <circle cx="14" cy="14.5" r="14" fill="#F8F8F8" />
+                                        <path fill-rule="evenodd" clip-rule="evenodd"
+                                            d="M16.5885 8.66675C16.9704 8.66675 17.3365 8.81924 17.6039 9.08874L19.4128 10.8976C19.6821 11.1669 19.8334 11.5322 19.8334 11.913C19.8334 12.2939 19.6821 12.6592 19.4128 12.9285L12.8085 19.5306C12.4011 20.0006 11.8235 20.2894 11.1618 20.3348H8.16666V19.7514L8.16856 17.2927C8.21825 16.6776 8.50422 16.1056 8.94045 15.7212L15.5723 9.08945C15.8412 8.8189 16.207 8.66675 16.5885 8.66675ZM11.1207 19.1696C11.4323 19.1475 11.7224 19.0025 11.9553 18.736L16.3664 14.3249L14.1764 12.1348L9.73939 16.5707C9.50305 16.7797 9.35684 17.0721 9.33333 17.3396V19.1685L11.1207 19.1696ZM15.0014 11.3099L17.1914 13.5L18.5878 12.1035C18.6383 12.053 18.6667 11.9845 18.6667 11.913C18.6667 11.8416 18.6383 11.7731 18.5878 11.7226L16.7773 9.91208C16.7274 9.86173 16.6594 9.83341 16.5885 9.83341C16.5175 9.83341 16.4495 9.86173 16.3996 9.91208L15.0014 11.3099Z"
+                                            fill="#2B2A35" />
+                                    </svg>
+                                </label>
+                                <input class="invisible" type="file" id="files" accept="image/*"
+                                    (change)="showPreview($event)" />
+                            </figure>
+
+                        </div>
+                    </div>
+                    <div class="row form-group">
+                        <div class="col-3">
+                            <label class="label_title">Title</label>
+                        </div>
+                        <div class="col-9">
+                            <div>
+                                <input formControlName="title" type="text" name="" id="title" placeholder="Title"
+                                    class="form-control" [class.invalid_field]="checkFieldInvalid('title')">
+                                <span *ngIf="checkFieldInvalid('title')" class="error">This field is required.</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row form-group">
+                        <div class="col-3">
+                            <label class="label_title">Code</label>
+                        </div>
+                        <div class="col-9">
+                            <div>
+                                <input formControlName="code" type="text" name="" id="code" placeholder="e.g IIT2024"
+                                    class="form-control" [class.invalid_field]="checkFieldInvalid('code')" (input)="checkCode()">
+                                <span *ngIf="checkFieldInvalid('code')" class="error">This field is required.</span>
+                                <span *ngIf="codeExist" class="error">Placement Group with this code is already exist.</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row form-group">
+                        <div class="col-3">
+                            <label class="label_title">Description</label>
+                        </div>
+                        <div class="col-9">
+                            <div class="placement-group-editor">
+                                <quill-editor [modules]="modules" formControlName="description" [class.invalid_field]="checkFieldInvalid('description')"></quill-editor>
+                                <!-- <editor formControlName="description" class="ch_editor"
+                                    apiKey="zcwi1f81304uers1lcszh0iq2lbhcaxl5cj6ez0v89wr25z3" [init]="{
+                                height: 178,
+                                menubar: false,
+                                statusbar: true,
+                                placeholder: 'Description',
+                                plugins: [
+                                'textcolor',
+                                'advlist autolink lists link image charmap print preview anchor',
+                                'searchreplace visualblocks code fullscreen',
+                                'insertdatetime media table paste code help wordcount'
+                                ],
+                                toolbar:
+                                'bold italic | \
+                                bullist | formatselect | link |',
+                                contextmenu: false
+                                }" [class.invalid_field]="checkFieldInvalid('description')"></editor> -->
+                                <!-- <span *ngIf="checkFieldInvalid('description')" class="error">This field is
+                                    required.</span> -->
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row form-group">
+                        <div class="col-3">
+                            <label class="label_title">Category</label>
+                        </div>
+                        <div class="col-9">
+                            <div>
+                                <ng-select formControlName="category_id" [searchable]="false" [multiple]="false"
+                                    bindLabel="name" bindValue="id" [clearable]="false" placeholder="Category"
+                                    [class.invalid_field]="checkFieldInvalid('category_id')">
+                                    <ng-container *ngFor="let category of placementCategories">
+                                        <ng-option value="{{category._id}}">{{category.Category_name}}</ng-option>
+                                    </ng-container>
+                                </ng-select>
+                                <span *ngIf="checkFieldInvalid('category_id')" class="error">This field is required.</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row form-group">
+                        <div class="col-3">
+                            <label class="label_title">Industry</label>
+                        </div>
+                        <div class="col-9">
+                            <div>
+                                <ng-select formControlName="industry_id" [searchable]="false" [multiple]="false"
+                                    bindLabel="name" bindValue="id" [clearable]="false" placeholder="Industry"
+                                    [class.invalid_field]="checkFieldInvalid('industry_id')">
+                                    <ng-container *ngFor="let industry of placementIndustries">
+                                        <ng-option value="{{industry._id}}">{{industry.industry}}</ng-option>
+                                    </ng-container>
+                                </ng-select>
+                                <span *ngIf="checkFieldInvalid('industry_id')" class="error">This field is required.</span>
+                                <!-- <input formControlName="industry_id" type="text" id="industry_id" placeholder=""
+                                    class="form-control" [class.invalid_field]="checkFieldInvalid('industry')">
+                                <span *ngIf="checkFieldInvalid('industry')" class="error">This field is required.</span> -->
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row form-group">
+                        <div class="col-3 pr-0">
+                            <label class="label_title">Add Staff Members</label>
+                        </div>
+                        <div class="col-9">
+                            <div>
+                                <ng-select formControlName="staff_id" [searchable]="true" [multiple]="true"
+                                    bindLabel="name" bindValue="id" [clearable]="false"
+                                    placeholder="Select staff members"
+                                    [class.invalid_field]="checkFieldInvalid('_id')">
+                                    <ng-container *ngFor="let staffMember of staffMembers">
+                                        <ng-option value="{{staffMember._id}}">{{staffMember.first_name}}
+                                            {{staffMember.last_name}}</ng-option>
+                                    </ng-container>
+                                </ng-select>
+                                <span *ngIf="checkFieldInvalid('_id')" class="error">This field is
+                                    required.</span>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- <div class="row form-group">
+                        <div class="col-3">
+                            <label class="label_title">Date</label>
+                        </div>
+                        <div class="col-9 date_group">
+                            <div class="form-group custom_datepicker">
+                                <div class="custom_datepicker_container">
+                                    <input formControlName="start_date" placeholder="Start Date" class="form-control"
+                                        [matDatepicker]="projectStartPicker"
+                                        [class.invalid_field]="checkFieldInvalid('start_date')">
+                                    <mat-datepicker-toggle matSuffix [for]="projectStartPicker">
+                                        <svg matDatepickerToggleIcon width="18" height="18" viewBox="0 0 18 18"
+                                            fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path
+                                                d="M14.25 3H3.75C2.92157 3 2.25 3.67157 2.25 4.5V15C2.25 15.8284 2.92157 16.5 3.75 16.5H14.25C15.0784 16.5 15.75 15.8284 15.75 15V4.5C15.75 3.67157 15.0784 3 14.25 3Z"
+                                                stroke="#2B2A35" stroke-width="1.5" stroke-linecap="round"
+                                                stroke-linejoin="round" />
+                                            <path d="M12 1.5V4.5" stroke="#2B2A35" stroke-width="1.5"
+                                                stroke-linecap="round" stroke-linejoin="round" />
+                                            <path d="M6 1.5V4.5" stroke="#2B2A35" stroke-width="1.5"
+                                                stroke-linecap="round" stroke-linejoin="round" />
+                                            <path d="M2.25 7.5H15.75" stroke="#2B2A35" stroke-width="1.5"
+                                                stroke-linecap="round" stroke-linejoin="round" />
+                                        </svg>
+                                    </mat-datepicker-toggle>
+                                    <mat-datepicker #projectStartPicker></mat-datepicker>
+                                </div>
+                                <span *ngIf="checkFieldInvalid('start_date')" class="error">This field is
+                                    required.</span>
+                            </div>
+                            <div class="to">to</div>
+                            <div class="form-group custom_datepicker">
+                                <div class="custom_datepicker_container">
+                                    <input formControlName="end_date" placeholder="End Date" class="form-control"
+                                        [matDatepicker]="projectEndPicker"
+                                        [class.invalid_field]="checkFieldInvalid('end_date')">
+                                    <mat-datepicker-toggle matSuffix [for]="projectEndPicker">
+                                        <svg matDatepickerToggleIcon width="18" height="18" viewBox="0 0 18 18"
+                                            fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path
+                                                d="M14.25 3H3.75C2.92157 3 2.25 3.67157 2.25 4.5V15C2.25 15.8284 2.92157 16.5 3.75 16.5H14.25C15.0784 16.5 15.75 15.8284 15.75 15V4.5C15.75 3.67157 15.0784 3 14.25 3Z"
+                                                stroke="#2B2A35" stroke-width="1.5" stroke-linecap="round"
+                                                stroke-linejoin="round" />
+                                            <path d="M12 1.5V4.5" stroke="#2B2A35" stroke-width="1.5"
+                                                stroke-linecap="round" stroke-linejoin="round" />
+                                            <path d="M6 1.5V4.5" stroke="#2B2A35" stroke-width="1.5"
+                                                stroke-linecap="round" stroke-linejoin="round" />
+                                            <path d="M2.25 7.5H15.75" stroke="#2B2A35" stroke-width="1.5"
+                                                stroke-linecap="round" stroke-linejoin="round" />
+                                        </svg>
+                                    </mat-datepicker-toggle>
+                                    <mat-datepicker #projectEndPicker></mat-datepicker>
+                                </div>
+                                <span *ngIf="checkFieldInvalid('end_date')" class="error">This field is
+                                    required.</span>
+                            </div>
+                        </div>
+                    </div> -->
+                </div>
+                <div class="modal-footer justify-content-between">
+                    <button mat-button type="button" #closeCreatePlacemenGroupModal
+                        class="theme_btn btn_outline_primary" data-dismiss="modal" (click)="onCancel()">Cancel</button>
+                    <button mat-button type="submit" class="theme_btn btn_primary" data-toggle="modal"
+                         (click)="onSubmit()"  [disabled]="createPlacementGroup.invalid || codeExist">Create</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<div class="modal fade bsModal ch_modal done_modal_popup" #successPlacementGroupModal id="created" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+            </div>
+            <div class="modal-body text-center">
+                <svg width="112" height="112" viewBox="0 0 112 112" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="56" cy="56" r="56" fill="#26C296"/>
+                    <path d="M65.3327 49L52.4993 61.8333L46.666 56" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <h2 class="mt-3">Placement Group has been created</h2>
+            </div>
+            <div class="modal-footer justify-content-center">
+                <button mat-button type="button" class="theme_btn btn_primary" data-dismiss="modal" (click)="onCloseSuccessPlacementGroupModal()">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade bsModal ch_modal archived_placement_group_modal" id="archivedPlacement" tabindex="-1"
+    role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header pt-4 text-center justify-content-center">
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <img src="../../../../assets/img/undraw_warning.svg" alt="undraw_warning">
+                    </div>
+                    <div class="col-md-12 text-center">
+                        <h2 class="modal-title">You must unpublish the Placement Group before <br> you can archive it.
+                        </h2>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer justify-content-center">
+                <button mat-button type="button" class="theme_btn btn_primary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade bsModal ch_modal done_modal_popup" id="archived" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+            </div>
+            <div class="modal-body text-center">
+                <h2>{{selectedPlacementGroup?.title}} has been archived</h2>
+            </div>
+            <div class="modal-footer justify-content-center">
+                <button mat-button class="theme_btn btn_primary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade bsModal ch_modal archived_placement_group_modal" id="activatePlacement" tabindex="-1"
+    role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header pt-4 text-center justify-content-center">
+                <button type="button" mat-icon-button id="closeModal" class="close" data-dismiss="modal"
+                aria-label="Close">
+                <mat-icon>close</mat-icon>
+            </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12 text-center">
+                        <h2 class="modal-title">Would you like to reactivate the following <br> Placement Group?
+                            <br><br>
+                            {{selectedPlacementGroup?.title}}
+                        </h2>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer justify-content-around">
+                <button mat-button type="button" class="theme_btn btn_outline_primary" data-dismiss="modal">No</button>
+                <button mat-button type="button" class="theme_btn btn_outline_primary" data-toggle="modal" data-target="#reActivatedPlacement" data-dismiss="modal" (click)="activatePlacementGroup()">Yes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade bsModal ch_modal archived_placement_group_modal" id="reActivatedPlacement" tabindex="-1"
+    role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header pb-0 text-center justify-content-center">
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12 text-center">
+                        <h2 class="modal-title">{{selectedPlacementGroup?.title}} has been reactivated.
+                        </h2>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer justify-content-center">
+                <button mat-button type="button" class="theme_btn btn_primary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<a style="visibility:hidden" id="archivedPopup" data-toggle="modal" data-target="#archivedPlacement">
+    <span>Archive</span>
+</a>
+
+<a style="visibility:hidden" id="reActivatedPlacementPopup" data-toggle="modal" data-target="#reActivatedPlacement">
+</a>
+
+<a style="visibility:hidden" id="confirmPasswordPopup" data-toggle="modal" data-target="#confirmPassword">
+</a>
+<a style="visibility:hidden" id="archivedDonePopup" data-toggle="modal" data-target="#archived"></a>

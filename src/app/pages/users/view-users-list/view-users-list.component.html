@@ -1,0 +1,127 @@
+<div class="page_header">
+    <a routerLink="/admin/users/user-group" class="back_Link"> <svg xmlns="http://www.w3.org/2000/svg" width="24"
+            height="24" viewBox="0 0 24 24" fill="none">
+            <path d="M19 12H5" stroke="#464BA8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M12 19L5 12L12 5" stroke="#464BA8" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round" />
+        </svg> Back to User Groups</a>
+    <div class=" page_header_container">
+        <div>
+            <h4>View Users</h4>
+        </div>
+    </div>
+</div>
+<section>
+    <!-- <div class="row sub_header">
+        <div class="col-md-12 text-right">
+            <div class="d-inline-flex align-items-center">
+                <div class="search-container">
+                    <svg class="icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                      <path
+                        d="M9.16667 15.8333C12.8486 15.8333 15.8333 12.8486 15.8333 9.16667C15.8333 5.48477 12.8486 2.5 9.16667 2.5C5.48477 2.5 2.5 5.48477 2.5 9.16667C2.5 12.8486 5.48477 15.8333 9.16667 15.8333Z"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                      <path d="M17.5 17.5L13.875 13.875" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round" />
+                    </svg>
+                    <input type="text" class="form-control" placeholder="Search Keywords" [(ngModel)]="searchKeyword" (input)="searchUsers()">
+                  </div>
+                <button mat-button class="theme_btn btn_primary ml-4">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="23" viewBox="0 0 24 23" fill="none">
+              <path d="M22 3.10669H2L10 11.9629V18.0854L14 19.9578V11.9629L22 3.10669Z" stroke="white" stroke-width="1.5"
+                stroke-linecap="round" stroke-linejoin="round" />
+            </svg> Filters</button>
+            </div>
+        </div>
+    </div> -->
+
+    <ng-container>
+        <div class="table-responsive">
+            <table mat-table [dataSource]="userList" matSort #activeTbSort="matSort" class="ch_table">
+      
+              <!-- ID Column -->
+              <!-- <ng-container matColumnDef="id">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> S.No </th>
+                    <td mat-cell *matCellDef="let row ; let i=index"> {{i+1}} </td>
+                  </ng-container> -->
+      
+      
+              <!-- First Name Column -->
+              <ng-container matColumnDef="first_name">
+                <th class="left_padding_td" mat-header-cell *matHeaderCellDef mat-sort-header>First Name </th>
+                <td  class="left_padding_td" mat-cell *matCellDef="let row">
+                  <div class="mod_groups">
+                    <div class="avatar">
+                      <!-- <img src="../../../../assets/img/avatars/1.jpg" alt="progile"> -->
+                      <div class="profile">
+                        <img *ngIf="row?.image" [src]="row.image" alt="avatars">
+                        <span *ngIf="!row?.image" class="text-uppercase">{{
+                          row?.first_name?.length > 0 ? row?.first_name[0] : '' }} {{row?.last_name?.length > 0 ? row?.last_name[0] : '' 
+                          }}</span>
+                      </div>
+                      </div>
+                    <a (click)="goToUserDetail(row)">{{row.first_name}}</a>
+                  </div>
+                </td>
+              </ng-container>
+      
+              <!-- Last Name Column -->
+              <ng-container matColumnDef="last_name">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Last Name </th>
+                <td mat-cell *matCellDef="let row"> {{row.last_name}} </td>
+              </ng-container>
+      
+              <!-- Email Column -->
+              <ng-container matColumnDef="email">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Work Email</th>
+                <td mat-cell *matCellDef="let row"> {{row.email}} </td>
+              </ng-container>
+      
+              <ng-container matColumnDef="is_onboarding">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Onboarding</th>
+                <td mat-cell *matCellDef="let row"> {{row.is_onbording ? 'Completed' : 'Pending'}} </td>
+              </ng-container>
+      
+              <!-- Account Created Column -->
+              <ng-container matColumnDef="createdAt">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Account Created</th>
+                <td mat-cell *matCellDef="let row"> {{row.createdAt | date: 'dd/MM/yyyy HH:mm:ss a'}}</td>
+              </ng-container>
+      
+              <!-- Activity Column -->
+              <ng-container matColumnDef="activity">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Last Activity</th>
+                <td mat-cell *matCellDef="let row"> {{row.last_activity?.added_on | date: 'dd/MM/YYYY'}} - {{row.last_activity?.added_on | date: 'HH:mm a'}} <br>
+                  {{row.last_activity?.module}} </td>
+              </ng-container>
+      
+              <!-- Action column -->
+              <ng-container matColumnDef="actions">
+                <th mat-header-cell *matHeaderCellDef> Actions </th>
+                <td mat-cell *matCellDef="let row">
+                  <!-- <button mat-button routerLink="/users/user-profile" class="btn_primary theme_btn sm-theme_btn">View</button> -->
+                  <button mat-icon-button [matMenuTriggerFor]="menu" class="td-btn">
+                    <mat-icon>more_horizantal</mat-icon>
+                  </button>
+                  <mat-menu #menu="matMenu" class="td-menu">
+                    <a mat-menu-item (click)="goToUserDetail(row)">
+                      <span>View Profile</span>
+                    </a>
+                    <a *ngxPermissionsOnly="['Users_Write']" mat-menu-item data-toggle="modal" data-target="#sendEmail" (click)="selectedAdmin = [row]">
+                      <span>Send Email</span>
+                    </a>      
+                  </mat-menu>
+                </td>
+              </ng-container>
+      
+              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      
+              <!-- Row shown when there is no matching data. -->
+              <!-- <tr class="mat-row" *matNoDataRow>
+                    <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
+                  </tr> -->
+            </table>
+          </div>
+    </ng-container>
+</section>
+<app-send-email-popup [type]="'user'" modalId="sendEmail" [students]="selectedAdmin" [emailType]="'users'"></app-send-email-popup>

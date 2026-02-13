@@ -1,0 +1,965 @@
+<div class="page_header">
+  <a routerLink="/admin/wil/wil-companies-list" class="back_Link"> <svg xmlns="http://www.w3.org/2000/svg" width="24"
+      height="24" viewBox="0 0 24 24" fill="none">
+      <path d="M19 12H5" stroke="#464BA8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+      <path d="M12 19L5 12L12 5" stroke="#464BA8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    </svg> Back to Companies</a>
+
+</div>
+<section>
+  <div class="custom_container py-4">
+    <div class="main_card_vacancy_create">
+      <div class="row">
+        <div class="col-sm-12">
+          <div class="vacancy_create_title text-center">
+            <h2>Create a Company Profile</h2>
+            <!-- <h2 *ngIf="heading">All done! Preview Your Job Post</h2> -->
+          </div>
+        </div>
+      </div>
+      <div class="vacancy_create_stepper custom_steps_med job_creatn_stepper">
+        <!-- [selectedIndex]="1" -->
+        <mat-horizontal-stepper ngClass="{{ 'last-edited-step-' + stepper.selectedIndex }}" [linear]="false"
+          labelPosition="bottom" #stepper [selectedIndex]="0">
+          <mat-step>
+            <ng-template matStepLabel>Company Info</ng-template>
+            <div class="form_fildls employJob_fields mt-4">
+              <form [formGroup]="essentials">
+
+                <h2 class="link pl-3 primary">Basic Information</h2>
+                <div class="row form-group">
+             
+                  <div class="col-12 mb-3">
+                    <div class="col-12">
+                      <label class="label_title">ABN <sup>*</sup></label>
+                    </div>
+                    <div class="col-12">
+                      <input type="tel" class="form-control title_input" placeholder="e.g 51 824 753 556"
+                        formControlName="abn_acn" maxlength="14" minlength="11" (input)="addSpacesInABN()" (blur)="getBusinessName()">
+
+                      <div class="text-danger" *ngIf="essentials.get('abn_acn')?.hasError('abnAcnTaken')">
+                        ABN already exists
+                      </div>
+                      <div
+                        *ngIf="essentials.get('abn_acn') && (essentials.get('abn_acn')?.touched || essentials.get('abn_acn')?.dirty) && essentials.get('abn_acn')?.invalid && essentials.get('abn_acn')?.errors?.required"
+                        class="invalid-feedback">
+                        Please enter ABN number
+                      </div>
+                      <div
+                        *ngIf="(essentials.get('abn_acn')?.touched || essentials.get('abn_acn')?.dirty) && essentials.get('abn_acn')?.invalid && essentials.get('abn_acn')?.errors?.minlength"
+                        class="invalid-feedback">
+                        please enter correct ABN number
+                      </div>
+                      <div
+                        *ngIf="(essentials.get('abn_acn')?.touched || essentials.get('abn_acn')?.dirty) && essentials.get('abn_acn')?.errors?.pattern && !essentials.get('abn_acn')?.errors?.minlength"
+                        class="invalid-feedback">
+                        please enter valid number
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-12 mb-3">
+                    <div class="col-12"><label class="label_title">Company Name <sup>*</sup></label></div>
+                    <div class="col-12">
+                      <!-- <input type="text" class="form-control title_input" placeholder="e.g Marriott Hotels"
+                        formControlName="company_name"> -->
+                      <ng-select [items]="businessNameList" bindLabel="item" bindValue="item" [clearable]="false"
+                        [searchable]="true" placeholder="Search & Select a Company" formControlName="company_name"
+                        class="custom-ng-select">
+
+                        <ng-option *ngFor="let item of businessNameList" [value]="item">{{item}}</ng-option>
+                      </ng-select>
+                      <div
+                        *ngIf="essentials.get('company_name') && (essentials.get('company_name')?.touched || essentials.get('company_name')?.dirty) && essentials.get('company_name')?.invalid && essentials.get('company_name')?.errors?.required"
+                        class="invalid-feedback">
+                        Please enter company Name
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-12 mb-3 company-toogle" style="padding-left: 25px;">
+                    <mat-slide-toggle color="success" formControlName="is_child" class="ios-toggle">
+                      Do you want to assign this to a parent company?
+                      <span class="ml-1" matTooltipClass="custom-tooltip-project-add" matTooltipPosition="above" 
+                      matTooltip="Only parent companies/headquarters will be displayed here. If the company you’re looking for isn’t available, please set one as a parent company in the Company List.">
+                        <svg width="24" height="25" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 22.5C17.5228 22.5 22 18.0228 22 12.5C22 6.97715 17.5228 2.5 12 2.5C6.47715 2.5 2 6.97715 2 12.5C2 18.0228 6.47715 22.5 12 22.5Z" stroke="#464BA8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M12 16.5V12.5" stroke="#464BA8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M12 8.5H12.0113" stroke="#464BA8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+
+                      </span>
+                    </mat-slide-toggle>
+                  </div>
+
+                  <div *ngIf="essentials.get('is_child')?.value" class="col-12 mb-3">
+                    <div class="col-12"><label class="label_title">Select Headquarter Company <sup>*</sup></label></div>
+                    <div class="col-12">
+                      <!-- <input type="text" class="form-control title_input" placeholder="e.g Marriott Hotels"
+                        formControlName="selectedCompany"> -->
+
+                      <ng-select [items]="CompanyHQList" bindLabel="company_name" bindValue="_id" [clearable]="false"
+                        [searchable]="true" placeholder="Search & Select a Company" formControlName="parent_id"
+                        class="custom-ng-select">
+
+                        <ng-template ng-option-tmp let-item="item">
+                          <div class="dropdown-row">
+                            <div class="company-name">{{ item.company_name }}</div>
+                            <div class="company-id">Company ID: {{ item?.company_code }}</div>
+                            <div class="company-location">{{ item?.location }}</div>
+                          </div>
+                        </ng-template>
+                      </ng-select>
+
+                      <div
+                        *ngIf="essentials.get('parent_id')?.invalid && (essentials.get('parent_id')?.touched || essentials.get('parent_id')?.dirty)"
+                        class="invalid-feedback">
+                        Please enter Headquarter Company Name
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-6 mb-3">
+                    <div class="col-12"><label class="label_title">Address <sup>*</sup></label></div>
+                    <div class="col-12">
+                      <!-- <input type="text" class="form-control title_input" placeholder="e.g U123/123 Smith Street"
+                        formControlName="address"> -->
+
+                      <!-- ngx-google-places-autocomplete [options]='googlePlaceOptions' #placesRef="ngx-places" -->
+                      <input type="text" formControlName="address" class="form-control" id="exampleInputEmail1"
+                        autocomplete="none" aria-describedby="emailHelp" placeholder="e.g U123/123 Smith Street"
+                        oninput="this.value = !this.value.trim() ? this.value.trim() : this.value" googlePlace
+                        (onAddressChange)="handleAddressChange($event)">
+                      <div
+                        *ngIf="essentials.get('address') && (essentials.get('address')?.touched || essentials.get('address')?.dirty) && essentials.get('address')?.invalid && essentials.get('address')?.errors?.required"
+                        class="invalid-feedback">
+                        Please enter address
+                      </div>
+                    </div>
+                  </div>
+
+
+                  <!-- <div class="col-6 mb-3">
+                    <div class="col-12"><label class="label_title">Company Phone <sup>*</sup></label></div>
+                    <div class="col-12">
+                      <input type="number" (wheel)="$event.preventDefault()"  (keydown.arrowup)="$event.preventDefault()"  (keydown.arrowdown)="$event.preventDefault()"  class="form-control title_input" placeholder="e.g 123 456 789"
+                        formControlName="company_phone">
+
+                        <div
+                        *ngIf="essentials.get('company_phone') && (essentials.get('company_phone')?.touched || essentials.get('company_phone')?.dirty) && essentials.get('company_phone')?.invalid && essentials.get('company_phone')?.errors?.required"
+                        class="invalid-feedback">
+                        Please enter company phone
+                    </div>
+                    </div>
+                  </div> -->
+                  <div class="col-md-6 mb-3">
+                    <div class="form-group" style="padding: 0 15px;">
+                      <label>Company Phone <span class="required">*</span></label>
+                      <input type="tel" formControlName="company_phone" class="form-control" placeholder="0 400 000 000"
+                        maxlength="13" minlength="12" (input)="addSpacesInNumber()" />
+
+                      <!-- Validation Messages -->
+                      <!-- <div
+                        *ngIf="essentials.get('company_phone')?.touched && essentials.get('company_phone')?.invalid"
+                        class="invalid-feedback"
+                      >
+                        <ng-container *ngIf="essentials.get('company_phone')?.errors?.required">
+                          Please enter the phone number.
+                        </ng-container>
+                        <ng-container *ngIf="essentials.get('company_phone')?.errors?.minlength">
+                          Phone number is too short.
+                        </ng-container>
+                        <ng-container *ngIf="essentials.get('company_phone')?.errors?.maxlength">
+                          Phone number is too long.
+                        </ng-container>
+                      </div> -->
+                      <div *ngIf="essentials.get('company_phone')?.touched && essentials.get('company_phone')?.invalid"
+                        class="invalid-feedback d-block">
+                        <ng-container *ngIf="essentials.get('company_phone')?.errors?.required">
+                          Please enter the phone number.
+                        </ng-container>
+                        <ng-container *ngIf="essentials.get('company_phone')?.errors?.minlength">
+                          Phone number is too short. Must be at least 10 characters.
+                        </ng-container>
+                        <ng-container *ngIf="essentials.get('company_phone')?.errors?.maxlength">
+                          Phone number is too long. Must be at most 10 characters.
+                        </ng-container>
+                        <ng-container *ngIf="essentials.get('company_phone')?.errors?.pattern">
+                          Phone number must be exactly 10 digits.
+                        </ng-container>
+                      </div>
+                    </div>
+                  </div>
+
+
+                  <div class="col-6 mb-3">
+                    <div class="col-12"><label class="label_title">Suburb <sup>*</sup></label></div>
+                    <div class="col-12">
+                      <input type="text" class="form-control title_input" placeholder="e.g Melbourne"
+                        formControlName="suburb">
+
+                      <div
+                        *ngIf="essentials.get('suburb') && (essentials.get('suburb')?.touched || essentials.get('suburb')?.dirty) && essentials.get('suburb')?.invalid && essentials.get('suburb')?.errors?.required"
+                        class="invalid-feedback">
+                        Please enter suburb
+                      </div>
+                    </div>
+                  </div>
+
+
+
+
+                  <div class="col-6 mb-3">
+                    <div class="col-12"><label class="label_title">State</label></div>
+                    <div class="col-12">
+                      <!-- <input type="text"  class="form-control title_input"  placeholder="Company Name" formControlName="overview"> -->
+                      <ng-select [searchable]="false" [multiple]="false" bindLabel="name" bindValue="id"
+                        [clearable]="false" placeholder="Select State" formControlName="state">
+                        <ng-option value="ACT">ACT</ng-option>
+                        <ng-option value="NSW">NSW</ng-option>
+                        <ng-option value="NT">NT</ng-option>
+                        <ng-option value="QLD">QLD</ng-option>
+                        <ng-option value="SA">SA</ng-option>
+                        <ng-option value="TAS">TAS</ng-option>
+                        <ng-option value="VIC">VIC</ng-option>
+                        <ng-option value="WA">WA</ng-option>
+                      </ng-select>
+
+                      <div
+                        *ngIf="essentials.get('state') && (essentials.get('state')?.touched || essentials.get('state')?.dirty) && essentials.get('state')?.invalid && essentials.get('state')?.errors?.required"
+                        class="invalid-feedback">
+                        Please enter state
+                      </div>
+                    </div>
+                  </div>
+
+
+                  <div class="col-6">
+                    <div class="col-12"><label class="label_title">Postcode <sup>*</sup></label></div>
+                    <div class="col-12">
+                      <input type="number" (wheel)="$event.preventDefault()"  (keydown.arrowup)="$event.preventDefault()"  (keydown.arrowdown)="$event.preventDefault()"  class="form-control title_input" placeholder="e.g  3000"
+                        formControlName="postal_code">
+
+                      <div
+                        *ngIf="essentials.get('postal_code') && (essentials.get('postal_code')?.touched || essentials.get('postal_code')?.dirty) && essentials.get('postal_code')?.invalid && essentials.get('postal_code')?.errors?.required"
+                        class="invalid-feedback">
+                        Please enter postal code
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-6 mb-3">
+                    <div class="col-12"><label class="label_title">Country</label></div>
+                    <div class="col-12">
+                      <!-- <input type="text"  class="form-control title_input"  placeholder="Company Name" formControlName="overview"> -->
+
+                      <ng-select [searchable]="false" [multiple]="false" bindLabel="name" bindValue="id"
+                        [readonly]="true" [clearable]="false" placeholder="Select Country" formControlName="country">
+                        <ng-option value="Australia">Australia</ng-option>
+
+                      </ng-select>
+
+                      <div
+                        *ngIf="essentials.get('country') && (essentials.get('country')?.touched || essentials.get('country')?.dirty) && essentials.get('country')?.invalid && essentials.get('country')?.errors?.required"
+                        class="invalid-feedback">
+                        Please enter country
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-12 mb-3">
+                    <div class="col-12"><label class="label_title">Web Address <sup>*</sup></label></div>
+                    <div class="col-12">
+                      <input type="text" class="form-control title_input" placeholder="Web Address"
+                        formControlName="web_address">
+
+                      <div
+                        *ngIf="essentials.get('web_address') && (essentials.get('web_address')?.touched || essentials.get('web_address')?.dirty) && essentials.get('web_address')?.invalid && essentials.get('web_address')?.errors?.required"
+                        class="invalid-feedback">
+                        Please enter web address
+                      </div>
+
+                    </div>
+                  </div>
+
+                  <!-- <div class="col-12 mb-3">
+                    <div class="col-12"><label class="label_title">Industry <sup>*</sup></label></div>
+                    <div class="col-12">
+                      <ng-select class="select_ng_custom" [searchable]="false" [multiple]="false"
+                        bindLabel="name" bindValue="id" [clearable]="false"
+                        placeholder="e.g Accommodation & Hospitality"
+                        formControlName="industry_id">
+                        <ng-option *ngFor="let item of industryList" [value]="item?._id">
+                          {{item?.name}}
+                        </ng-option>
+                      </ng-select>
+
+                    </div>
+                  </div> -->
+
+
+                  <div class="col-12 mb-3">
+                    <div class="col-12"><label class="label_title">Industry <sup>*</sup></label></div>
+                    <div class="col-12">
+                      <ng-select class="select_ng_custom" [searchable]="false" [multiple]="false"
+                        (change)="selectIndustry($event)" bindLabel="name" bindValue="id" [clearable]="false"
+                        placeholder="e.g Accommodation & Hospitality" formControlName="industry_id">
+                        <ng-option *ngFor="let item of industryList" [value]="item?._id">
+                          {{item?.name}}
+                        </ng-option>
+                      </ng-select>
+
+                      <div
+                        *ngIf="essentials.get('industry_id') && (essentials.get('industry_id')?.touched || essentials.get('industry_id')?.dirty) && essentials.get('industry_id')?.invalid && essentials.get('industry_id')?.errors?.required"
+                        class="invalid-feedback">
+                        Please select industry
+                      </div>
+                    </div>
+                  </div>
+
+
+                  <!-- <div class="col-md-12  mb-3">
+                    <div class="form-group">
+                        <label>Industry <span class="required">*</span></label>
+                        <ng-select class="select_ng_custom" [searchable]="false" [multiple]="false"
+                            (change)="selectIndustry($event)"
+                            bindLabel="name" bindValue="id" [clearable]="false"
+                            placeholder="e.g Accommodation & Hospitality"
+                            formControlName="industry_id">
+                            <ng-option *ngFor="let item of industryList" [value]="item?._id">
+                                {{item?.name}}
+                            </ng-option>
+                        </ng-select>
+                        <div
+                            *ngIf="essentials.get('industry_id') && (essentials.get('industry_id')?.touched || essentials.get('industry_id')?.dirty) && essentials.get('industry_id')?.invalid && essentials.get('industry_id')?.errors?.required"
+                            class="invalid-feedback">
+                            Please select industry
+                        </div>
+                    </div>
+                </div> -->
+
+                  <div class="col-12 mb-3">
+                    <div class="col-12"><label class="label_title">Sub-Industry <sup>*</sup></label></div>
+                    <div class="col-12">
+                      <ng-select class="select_ng_custom" [searchable]="false" [multiple]="false" bindLabel="name"
+                        bindValue="id" [clearable]="false" placeholder="Select Sub-Industry"
+                        formControlName="sub_industry_id">
+                        <ng-option *ngFor="let item of subIndustryList" [value]="item?._id">
+                          {{item?.name}}
+                        </ng-option>
+                      </ng-select>
+
+                      <div
+                        *ngIf="essentials.get('sub_industry_id') && (essentials.get('sub_industry_id')?.touched || essentials.get('sub_industry_id')?.dirty) && essentials.get('sub_industry_id')?.invalid && essentials.get('sub_industry_id')?.errors?.required"
+                        class="invalid-feedback">
+                        Please select industry
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-12 mb-3">
+                    <div class="col-12"><label class="label_title">No. of Employees <sup>*</sup></label></div>
+                    <div class="col-12">
+                      <!-- <input type="text"  class="form-control title_input"  placeholder="Company Name" formControlName="overview"> -->
+                      <!-- <ng-select [items]="category" [searchable]="false" [multiple]="false"
+                                bindLabel="name" [clearable]="false"
+                                bindValue="name"
+                                placeholder="Select Type"
+                                formControlName="category"
+                                id="category" name="category">
+                        <ng-option *ngFor="let item of category" [value]="category.id">{{ category.name }}</ng-option> -->
+                      <ng-select placeholder="Select Range" class="select_ng_custom" [searchable]="false"
+                        [multiple]="false" bindLabel="name" bindValue="id" formControlName="no_of_employees"
+                        [clearable]="false">
+                        <ng-option value="1-10">
+                          1-10
+                        </ng-option>
+                        <ng-option value="11-50">
+                          11-50
+                        </ng-option>
+                        <ng-option value="51-200">
+                          51-200
+                        </ng-option>
+                        <ng-option value="201-500">
+                          201-500
+                        </ng-option>
+                        <ng-option value="501-1000">
+                          501-1000
+                        </ng-option>
+                        <ng-option value="1001-5000">
+                          1001-5000
+                        </ng-option>
+                        <ng-option value="5001-10,000">
+                          5001-10,000
+                        </ng-option>
+                        <ng-option value="10,001+">
+                          10,001+
+                        </ng-option>
+                      </ng-select>
+
+                      <div
+                        *ngIf="essentials.get('no_of_employees') && (essentials.get('no_of_employees')?.touched || essentials.get('no_of_employees')?.dirty) && essentials.get('no_of_employees')?.invalid && essentials.get('no_of_employees')?.errors?.required"
+                        class="invalid-feedback">
+                        Please enter no. of employees
+                      </div>
+                    </div>
+
+                  </div>
+
+                </div>
+
+              </form>
+              <div class="tabs_buttons d-flex justify-content-between align-items-center">
+                <button class="theme_btn btn_outline_primary" mat-button role="button"
+                  routerLink="/admin/wil/wil-companies-list">Cancel</button>
+                <button class="theme_btn btn_primary" mat-button [disabled]="this.essentials.invalid"
+                  (click)="fun(stepper)">Next</button>
+              </div>
+            </div>
+          </mat-step>
+          <mat-step>
+            <ng-template matStepLabel>Contact Info</ng-template>
+            <div class="form_fildls employJob_fields mt-3">
+              <div [formGroup]="contactForm">
+                <ng-container formArrayName="contacts">
+                  <ng-container *ngFor="let preferenceArr of contactlist.controls; let i = index" [formGroupName]="i">
+
+                    <div class="job_preference_card contact-form-main-div">
+                      <div class="contact-form-h-btn">
+                        <h4 class="sub_title_onboarding pl-3 primary">Contact Person {{i + 1}}</h4>
+                        <button class="remove_btn" *ngIf="i > 0" mat-icon-button (click)="removeJobPreference(i)"><svg
+                            width="18" height="20" viewBox="0 0 18 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path
+                              d="M8.75439 19.5851C7.13824 19.5851 5.52175 19.5734 3.9056 19.5889C2.56515 19.6015 1.37724 18.4399 1.37891 16.9989C1.38258 13.6593 1.37991 10.3193 1.38024 6.97971C1.38024 6.49973 1.67964 6.1563 2.10421 6.14669C2.53778 6.13674 2.86288 6.49046 2.86388 6.98554C2.86622 8.37847 2.86489 9.77141 2.86489 11.1643C2.86489 13.1055 2.86422 15.0464 2.86589 16.9876C2.86622 17.4583 3.12557 17.835 3.54946 18.0034C3.66595 18.0498 3.78611 18.0621 3.90861 18.0621C7.14091 18.0621 10.3735 18.0642 13.6058 18.0604C14.2143 18.0597 14.6476 17.5989 14.6479 16.969C14.6496 13.6521 14.6492 10.3351 14.6479 7.01813C14.6479 6.71381 14.7287 6.45238 14.9853 6.27878C15.488 5.93844 16.1195 6.29319 16.1616 6.93613C16.1639 6.9701 16.1632 7.00475 16.1632 7.03872C16.1632 10.3444 16.1656 13.6497 16.1619 16.9553C16.1606 18.2072 15.3432 19.2537 14.1649 19.5329C14.002 19.5714 13.8372 19.5861 13.6696 19.5861C12.0314 19.5844 10.3929 19.5851 8.75439 19.5851Z"
+                              fill="#C4C4C4" />
+                            <path
+                              d="M8.76004 4.61144C6.11585 4.61144 3.472 4.61109 0.827813 4.61247C0.615531 4.61247 0.419604 4.57164 0.256053 4.4224C0.0184031 4.20557 -0.0607022 3.88409 0.0477755 3.58115C0.153917 3.28438 0.418936 3.08882 0.742033 3.08641C1.37521 3.08161 2.00838 3.0847 2.64156 3.0847C3.55811 3.0847 4.47467 3.0847 5.39122 3.0847C5.61585 3.0847 5.61685 3.08436 5.61619 2.84625C5.61518 2.41877 5.6035 1.99231 5.74569 1.57752C6.06245 0.654611 6.9306 0.00651866 7.8812 0.00205852C8.45897 -0.000686175 9.03674 -0.000686175 9.61417 0.00205852C10.8552 0.0082341 11.8685 1.05534 11.8702 2.33094C11.8705 2.52512 11.8779 2.71965 11.8678 2.91316C11.8605 3.05382 11.9166 3.08744 12.0431 3.08676C12.9539 3.08264 13.8652 3.0847 14.776 3.0847C15.4259 3.0847 16.0758 3.08367 16.7256 3.08504C17.1806 3.08607 17.52 3.41406 17.5197 3.84841C17.5194 4.2831 17.1812 4.61109 16.7246 4.61144C14.0704 4.61178 11.4152 4.61144 8.76004 4.61144ZM8.76738 3.11661C9.2617 3.11661 9.75603 3.11386 10.2504 3.11866C10.3688 3.11969 10.4236 3.08744 10.4182 2.95536C10.4102 2.75019 10.4196 2.54434 10.4149 2.33883C10.4056 1.92095 10.0795 1.56722 9.67592 1.56036C9.07078 1.55007 8.46498 1.55076 7.85984 1.56036C7.46565 1.56654 7.14756 1.90173 7.13254 2.30761C7.12453 2.5186 7.13487 2.73029 7.12686 2.94129C7.12186 3.07475 7.16959 3.12107 7.30076 3.11935C7.78974 3.11283 8.27839 3.11661 8.76738 3.11661Z"
+                              fill="#C4C4C4" />
+                            <path
+                              d="M5.30947 14.283C5.30447 14.0933 5.39759 13.9084 5.5548 13.7471C6.2317 13.0544 6.90326 12.3566 7.5845 11.6683C7.69264 11.5592 7.6843 11.5057 7.58183 11.4018C6.89024 10.7002 6.20266 9.99408 5.51909 9.28423C5.12823 8.87836 5.24305 8.22787 5.74505 8.02716C6.05013 7.90536 6.33284 7.96815 6.57049 8.21311C7.24872 8.91232 7.93163 9.60673 8.60519 10.3111C8.72235 10.4336 8.7831 10.4394 8.90359 10.3132C9.58016 9.60433 10.2674 8.90581 10.9496 8.20282C11.1626 7.98324 11.4199 7.92286 11.7003 8.00383C11.9877 8.08651 12.1566 8.29923 12.213 8.5984C12.2664 8.8811 12.1616 9.11132 11.9697 9.30859C11.2941 10.0023 10.6215 10.6995 9.94097 11.3884C9.83015 11.5006 9.81614 11.5589 9.9353 11.68C10.6072 12.3614 11.2714 13.051 11.934 13.742C12.2908 14.1142 12.2631 14.6453 11.8802 14.9366C11.5675 15.1747 11.218 15.1414 10.9196 14.8364C10.3288 14.2329 9.74104 13.626 9.15192 13.0208C9.08516 12.9522 9.01908 12.8829 8.95165 12.8153C8.72001 12.5837 8.78743 12.5823 8.55245 12.8211C7.90459 13.4792 7.26074 14.141 6.61254 14.7987C6.28544 15.1308 5.96401 15.1816 5.64192 14.9592C5.42363 14.8086 5.30947 14.5983 5.30947 14.283Z"
+                              fill="#C4C4C4" />
+                          </svg>
+                        </button>
+
+                      </div>
+                      <div class="row form-group">
+                        <div class="col-6 mb-3">
+                          <div class="col-12"><label class="label_title">First Name <sup>*</sup></label></div>
+                          <div class="col-12">
+                            <input type="text" class="form-control title_input" placeholder="Michael"
+                              formControlName="first_name">
+                            <div
+                              *ngIf="preferenceArr.get('first_name') && (preferenceArr.get('first_name')?.touched || preferenceArr.get('first_name')?.dirty) && preferenceArr.get('first_name')?.invalid && preferenceArr.get('first_name')?.errors?.required"
+                              class="invalid-feedback">
+                              Please enter first name
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-6 mb-3">
+                          <div class="col-12"><label class="label_title">Last Name <sup>*</sup></label></div>
+                          <div class="col-12">
+                            <input type="text" class="form-control title_input" placeholder="Smith"
+                              formControlName="last_name">
+                            <div
+                              *ngIf="preferenceArr.get('last_name') && (preferenceArr.get('last_name')?.touched || preferenceArr.get('last_name')?.dirty) && preferenceArr.get('last_name')?.invalid && preferenceArr.get('last_name')?.errors?.required"
+                              class="invalid-feedback">
+                              Please enter last name
+                            </div>
+                          </div>
+                        </div>
+
+
+                        <div class="col-12 mb-3">
+                          <div class="col-12"><label class="label_title">Department</label></div>
+                          <div class="col-12">
+                            <ng-select class="select_ng_custom" [searchable]="false" [multiple]="false" bindLabel="name" (change)="onPreferredChange(i)"  bindValue="id" [clearable]="false" placeholder="Search & Select Department"
+                              formControlName="department_id">
+                              <ng-option *ngFor="let item of departmentList" [value]="item?._id">
+                                {{item?.name}}
+                              </ng-option>
+                            </ng-select>
+
+                            <div
+                              *ngIf="preferenceArr.get('department') && (preferenceArr.get('department')?.touched || preferenceArr.get('department')?.dirty) && preferenceArr.get('department')?.invalid && preferenceArr.get('department')?.errors?.required"
+                              class="invalid-feedback">
+                              Please enter Department
+                            </div>
+                          </div>
+                        </div>
+
+
+                        <div class="col-12 mb-3">
+                          <div class="col-12"><label class="label_title">Role <sup>*</sup></label></div>
+                          <div class="col-12">
+                            <input type="text" class="form-control" placeholder="e.g Business Analyst"
+                              formControlName="role">
+                            <div
+                              *ngIf="preferenceArr.get('role') && (preferenceArr.get('role')?.touched || preferenceArr.get('role')?.dirty) && preferenceArr.get('role')?.invalid && preferenceArr.get('role')?.errors?.required"
+                              class="invalid-feedback">
+                              Please enter role
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="col-6 mb-3">
+                          <div class="col-12"><label class="label_title">Primary Email <sup>*</sup></label></div>
+                          <div class="col-12">
+                            <input type="text" class="form-control title_input" placeholder="michael@email.com.au"
+                              formControlName="primary_email" (blur)="checkEmailExists(i)">
+
+                            <div class="text-danger" *ngIf="emailTakenIndex === i">
+                              Email already exists
+                            </div>
+                            <div
+                              *ngIf="(preferenceArr.get('primary_email')?.touched || preferenceArr.get('primary_email')?.dirty) && preferenceArr.get('primary_email')?.invalid && preferenceArr.get('primary_email')?.errors?.required"
+                              class="invalid-feedback">
+                              Please enter email address
+                            </div>
+                            <!-- <div
+                              *ngIf="(preferenceArr.get('primary_email')?.touched || preferenceArr.get('primary_email')?.dirty) && preferenceArr.get('primary_email')?.invalid && preferenceArr.get('primary_email')?.errors?.email"
+                              class="invalid-feedback">
+                              Please enter valid email address
+                            </div>
+                            <div
+                              *ngIf="(preferenceArr.get('primary_email')?.touched || preferenceArr.get('primary_email')?.dirty) && preferenceArr.get('primary_email')?.invalid && preferenceArr.get('primary_email')?.errors?.pattern && !preferenceArr.get('primary_email')?.errors?.email"
+                              class="invalid-feedback">
+                              Please enter valid email address
+                            </div> -->
+                          </div>
+                        </div>
+                        <div class="col-6 mb-3">
+                          <div class="col-12"><label class="label_title">Secondary Email </label></div>
+                          <div class="col-12">
+                            <input type="text" class="form-control title_input" placeholder="michael@email.com.au"
+                              formControlName="secondary_email">
+                            <div *ngIf="preferenceArr.get('secondary_email')?.touched 
+                                     && preferenceArr.get('secondary_email')?.value 
+                                     && preferenceArr.get('secondary_email')?.invalid" class="invalid-feedback">
+                              Please enter a valid email address.
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="col-6 mb-3">
+                          <div class="col-12"><label class="label_title">Primary Phone <sup>*</sup></label></div>
+                          <div class="col-12">
+
+                            <input type="tel" formControlName="primary_phone" class="form-control"
+                              placeholder="0 123 456 789" maxlength="13" minlength="12"
+                              (input)="addSpacesInNumber1(i, 'primary_phone')">
+                            <div
+                              *ngIf="preferenceArr.get('primary_phone')?.touched && preferenceArr.get('primary_phone')?.invalid"
+                              class="invalid-feedback">
+                              <ng-container *ngIf="preferenceArr.get('primary_phone')?.errors?.required">
+                                Please enter the phone number.
+                              </ng-container>
+                              <ng-container *ngIf="preferenceArr.get('primary_phone')?.errors?.minlength">
+                                Phone number is too short.
+                              </ng-container>
+                              <ng-container *ngIf="preferenceArr.get('primary_phone')?.errors?.maxlength">
+                                Phone number is too long.
+                              </ng-container>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="col-6 mb-3">
+                          <div class="col-12"><label class="label_title">Secondary Phone</label></div>
+                          <div class="col-12">
+                            <input type="tel" formControlName="secondary_phone" class="form-control"
+                              placeholder="0 123 456 789" maxlength="13" minlength="12"
+                              (input)="addSpacesInNumber1(i, 'secondary_phone')">
+
+                            <div
+                              *ngIf="preferenceArr.get('secondary_phone')?.value && preferenceArr.get('secondary_phone')?.invalid"
+                              class="invalid-feedback">
+
+                              <ng-container *ngIf="preferenceArr.get('secondary_phone')?.errors?.pattern">
+                                Please enter a valid phone number (e.g., 0 123 456 789).
+                              </ng-container>
+
+                              <ng-container *ngIf="preferenceArr.get('secondary_phone')?.errors?.minlength">
+                                Phone number is too short.
+                              </ng-container>
+
+                              <ng-container *ngIf="preferenceArr.get('secondary_phone')?.errors?.maxlength">
+                                Phone number is too long.
+                              </ng-container>
+
+                            </div>
+
+                          </div>
+                        </div>
+
+                        <div class="col-12 mb-3 pl-3 ml-3">
+                          <mat-checkbox class="form-control title_input pl-3" formControlName="preferred_contact"
+                            class="example-margin" (change)="onPreferredChange(i)" [disabled]="!contactlist.at(i).get('preferred_contact')?.value &&
+                                    getPreferredContactCount(contactlist.at(i).get('department_id')?.value) >= 2
+                                  ">
+                            <span>
+                              Set as Preferred Department Contact
+                            </span>
+                          </mat-checkbox>
+                          <div class="text-danger mt-1" *ngIf="!preferenceArr.get('preferred_contact')?.value &&
+                            getPreferredContactCount(preferenceArr.get('department_id')?.value) >= 2
+                          ">
+                            Max 2 preferred contacts allowed per department.
+                          </div>
+                        </div>
+
+                      </div>
+                      <div class="text-danger mt-2" *ngIf="!hasAtLeastOnePreferredContact() && hasTouchedPreferred()">
+                        Please set at least one preferred contact.
+                      </div>
+
+                    </div>
+                    <!-- && contactlist.controls.length < 3 -->
+                    <div class="add_another d-flex pt-3 align-items-center" *ngIf="contactlist.controls.length-1 === i "
+                      (click)="addJobPreference()">
+                      <button mat-icon-button>
+                        <svg width="31" height="31" viewBox="0 0 31 31" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <path
+                            d="M15.5007 28.4163C22.6343 28.4163 28.4173 22.6334 28.4173 15.4997C28.4173 8.366 22.6343 2.58301 15.5007 2.58301C8.36697 2.58301 2.58398 8.366 2.58398 15.4997C2.58398 22.6334 8.36697 28.4163 15.5007 28.4163Z"
+                            stroke="#464BA8" stroke-linecap="round" stroke-linejoin="round" />
+                          <path d="M15.5 10.333V20.6663" stroke="#464BA8" stroke-linecap="round"
+                            stroke-linejoin="round" />
+                          <path d="M10.334 15.5H20.6673" stroke="#464BA8" stroke-linecap="round"
+                            stroke-linejoin="round" />
+                        </svg>
+                      </button>
+                      <h2 class="m-0 add-btn-text">Add another contact
+                        <!-- <br>
+                        <span>(You can add a maximum of 3 contacts and set 1 preferred contact.)</span> -->
+                      </h2>
+                    </div>
+                  </ng-container>
+                </ng-container>
+              </div>
+
+
+
+              <div class="tabs_buttons d-flex justify-content-between align-items-center">
+                <button class="theme_btn btn_outline_primary" mat-button role="button" matStepperPrevious>Back</button>
+                <button class="theme_btn btn_primary" mat-button [disabled]="contactForm.invalid || !hasAtLeastOnePreferredContact()"
+                  (click)="fun2(stepper)">Next</button>
+              </div>
+
+            </div>
+          </mat-step>
+          <mat-step>
+            <ng-template matStepLabel>Additional Details</ng-template>
+            <div class="preview_result">
+              <form [formGroup]="additionalForm">
+                <div class="row form-group">
+                  <div class="col-12 mb-3">
+                    <div class="col-12"><label class="label_title">Source Of Lead <sup>*</sup></label></div>
+                    <div class="col-12">
+                      <ng-select [searchable]="false" [multiple]="false" bindLabel="name" bindValue="id"
+                        [clearable]="false" placeholder="Select" formControlName="source_of_lead" [appendTo]="'body'">
+                        <!-- <ng-option value="Self Sourced">Self Sourced</ng-option>
+                        <ng-option value="Employment Based">Employment Based</ng-option>
+                        <ng-option value="BNI">BNI</ng-option>
+                        <ng-option value="Website">Website</ng-option>
+                        <ng-option value="Own Network">Own Network</ng-option>
+                        <ng-option value="Host Network">Host Network</ng-option>
+                        <ng-option value="Cold Calling">Cold Calling</ng-option> -->
+                        <ng-option value="Own Employment">Own Employment</ng-option>
+                            <ng-option value="Provider Placed">Provider Placed</ng-option>
+                      </ng-select>
+                    </div>
+                  </div>
+
+                  <div class="col-12 mb-3">
+                    <div class="col-12"><label class="label_title">Conversion Status <sup>*</sup></label></div>
+                    <div class="col-12">
+                      <ng-select [searchable]="false" [multiple]="false" bindLabel="name" bindValue="id"
+                        [clearable]="false" placeholder="Select" formControlName="conversion_status"
+                        [appendTo]="'body'">
+                        <ng-option value="Converted">Converted</ng-option>
+                        <ng-option value="In Progress">In Progress</ng-option>
+                        <ng-option value="Dormant">Dormant</ng-option>
+                        <ng-option value="Dead Lead">Dead Lead</ng-option>
+
+                      </ng-select>
+                    </div>
+                  </div>
+                </div>
+
+              </form>
+              <div class="tabs_buttons d-flex justify-content-between align-items-center">
+                <button class="theme_btn btn_outline_primary" mat-button matStepperPrevious>Back</button>
+                <button class="theme_btn btn_primary" [disabled]="additionalForm.invalid" (click)="postVacancy()"
+                  mat-button>Submit</button>
+              </div>
+            </div>
+          </mat-step>
+          <ng-template matStepperIcon="edit" let-index="index" id="review"> {{ index + 1 }} </ng-template>
+
+        </mat-horizontal-stepper>
+      </div>
+    </div>
+    <div class="main_card_vacancy_create successPage" *ngIf="successPage">
+      <div class="row">
+        <div class="col-sm-12">
+          <div class="vacancy_create_title text-center">
+            <h2><span>Success!</span> Your job vacancy has been created!</h2>
+          </div>
+        </div>
+      </div>
+      <div class="vacancy_create_stepper">
+        <div class="form_fildls employJob_fields">
+          <div class="preview_result pb-5">
+            <div class="preview_wrapper">
+              <div class="vacancy_title">
+                <h1>{{ essentials.value.companyTitle }}</h1>
+              </div>
+              <div class="job_nam_prvw">
+                <div class="row">
+                  <div class="col-sm-6">
+                    <div class="vacancy_location">
+                      <h5>{{ essentials?.value?.companyName }}</h5>
+                      <p>{{ essentials?.value?.location?.name }}</p>
+                    </div>
+                    <div class="vacancy_commitment">
+                      <p>Work Commitment:</p>
+                      <h5>{{editorForm.value.contract_type}}</h5>
+                    </div>
+                  </div>
+                  <div class="col-sm-6">
+                    <div class="prvw_jb_skills">
+                      <div class="typed_text">
+                        <small>Key Skills:</small>
+                        <span *ngFor="let i of skillsevent">{{i.name}}</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="aboutDescription_list">
+                <h4>Description:</h4>
+                <div class="description_content">
+                  <p class="aboutDescription_list" [innerHTML]="description">
+                </div>
+              </div>
+              <div class="no_of_vacancy">
+                <h5>Number of Vacancies:</h5>
+                <p>{{editorForm?.value?.no_of_vacancy}}</p>
+              </div>
+            </div>
+            <div class="tabs_buttons d-flex  pt-0 justify-content-center align-items-center">
+              <button class="theme_btn btn_primary" routerLink="/admin/wil/wil-vacancies-list" mat-button>View my
+                Vacancies</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<div bsModal #PreferredContact="bs-modal" class="modal fade bsModal ch_modal done_modal_popup" id="PreferredContact"
+  tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" style="max-width: 600px;" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" mat-icon-button id="closeModal" class="close" (click)="PreferredContact.hide();"
+          aria-label="Close">
+          <mat-icon>close</mat-icon>
+        </button>
+      </div>
+      <div class="modal-body text-center">
+        <div>
+          <svg width="126" height="101" viewBox="0 0 126 101" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <g clip-path="url(#clip0_35899_185880)">
+              <path
+                d="M95.371 100.164L11.656 100.194C7.45041 100.195 3.68314 98.0061 1.57906 94.3383C0.526894 92.5041 0.000693685 90.4921 6.85071e-07 88.4797C-0.000692315 86.4676 0.52438 84.455 1.57504 82.6203L43.4059 5.91899C45.5077 2.24948 49.2735 0.0581061 53.4791 0.0566414C57.6848 0.0551766 61.452 2.24393 63.5564 5.91197L105.445 82.5937C106.495 84.4229 107.02 86.4326 107.02 88.4437C107.02 90.4548 106.495 92.4672 105.444 94.3021C103.342 97.9713 99.5766 100.163 95.371 100.164ZM1.0523 88.4783C1.05217 90.31 10.2898 86.363 11.2468 88.0314C13.1611 91.3683 7.82944 99.1373 11.6557 99.136C11.6557 99.136 102.623 97.1118 104.534 93.7736C105.49 92.1045 105.968 90.2734 105.967 88.4428C105.967 86.6122 105.488 84.7817 104.531 83.1133L62.6416 6.43154C60.7327 3.10425 57.3057 1.1129 53.4795 1.11423C49.655 1.11557 1.05245 86.6464 1.0523 88.4783Z"
+                fill="#3F3D56" />
+              <path
+                d="M77.9031 83.2491C99.0694 83.2491 116.228 65.9664 116.228 44.647C116.228 23.3277 99.0694 6.04492 77.9031 6.04492C56.7368 6.04492 39.5781 23.3277 39.5781 44.647C39.5781 65.9664 56.7368 83.2491 77.9031 83.2491Z"
+                fill="#464BA8" />
+              <path
+                d="M76.3835 53.0815L69.5859 23.488L74.9271 22.3555L80.5508 52.198L76.3835 53.0815ZM81.0564 64.2961C80.0781 64.5035 79.191 64.3645 78.3948 63.8791C77.6296 63.3462 77.1488 62.6099 76.9525 61.6702C76.7561 60.7305 76.9055 59.8811 77.4006 59.1219C77.9267 58.3152 78.6789 57.8082 79.6572 57.6008C80.5963 57.4017 81.4484 57.5685 82.2136 58.1014C83.0098 58.5868 83.506 59.2994 83.7024 60.2391C83.8988 61.1788 83.7339 62.052 83.2078 62.8586C82.7127 63.6178 81.9955 64.097 81.0564 64.2961Z"
+                fill="white" />
+            </g>
+            <defs>
+              <clippath id="clip0_35899_185880">
+                <rect width="126" height="101" fill="white" />
+              </clippath>
+            </defs>
+          </svg>
+
+          <h2 class="mt-4">{{message}}</h2>
+        </div>
+      </div>
+      <div class="modal-footer justify-content-center" style="padding: 15px 50px 50px 50px;">
+        <button mat-button class="theme_btn btn_primary" (click)="PreferredContact.hide();">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div bsModal #successCompanyModal="bs-modal" class="modal fade ch_modal  delete_articles_modal" id="successCompany"
+  tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" style="max-width: 600px;" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center justify-content-center">
+        <button mat-icon-button type="button" class="close" (click)="successCompanyModal.hide()">
+          <mat-icon>close</mat-icon>
+        </button>
+      </div>
+      <div class="modal-body pt-3">
+        <div class="row">
+          <div class="col-md-12 text-center">
+            <svg width="164" height="156" viewBox="0 0 164 156" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path
+                d="M38.4206 20.7096C38.2265 19.268 40.0263 8.83513 42.2363 11.8248C48.0856 19.3611 61.4736 16.9303 63.538 27.7979C64.1556 29.1685 63.1587 30.1621 62.0515 28.8092C55.1391 23.6061 38.3147 34.8329 38.4206 20.7096Z"
+                fill="#26C296" />
+              <path
+                d="M87.5845 0.283886C89.7063 1.41056 90.5356 3.06509 90.0283 5.50917C88.9343 10.801 86.614 15.4585 83.16 19.566C82.5601 20.2801 81.8146 21.1318 80.7471 20.4797C79.8119 19.9075 80.1472 18.9627 80.3765 18.0933C81.5764 13.5467 82.216 8.9025 82.7762 4.24055C82.7762 4.24055 83.0365 2.37755 84.104 1.10893C84.5054 0.634309 84.8936 0.408087 85.1009 0.306065C85.7273 0 86.2832 0 86.4199 0C86.9537 0.00887145 87.3639 0.172993 87.5845 0.283886Z"
+                fill="#E60028" />
+              <path
+                d="M69.1682 21.5076C66.7421 17.6175 66.795 17.4666 71.1047 15.8654C72.7192 15.2665 74.0117 14.9649 74.7528 15.5815C75.4718 16.1803 75.3174 17.409 75.2116 18.5223C74.6117 24.8965 75.7409 27.2075 74.7484 27.5801C73.8 27.9438 71.9649 25.9965 69.1682 21.5076Z"
+                fill="#F47761" />
+              <path
+                d="M140.383 26.4139C139.262 28.3257 138.12 30.3794 136.867 32.3622C136.483 32.9699 135.972 32.3267 135.526 32.1581C134.847 31.9009 134.882 31.4529 135.178 30.9339C136.192 29.1463 137.22 27.3631 138.23 25.5711C138.535 25.0299 138.923 24.8037 139.465 25.2162C139.84 25.5001 140.497 25.5489 140.383 26.4139Z"
+                fill="#464BA8" />
+              <path
+                d="M118.385 15.3448C117.988 14.8081 117.503 14.2181 116.911 13.6282C116.554 13.2689 116.197 12.9495 115.857 12.6656C94.7054 -5.46316 85.5256 27.9556 92.0542 28.0709C97.2595 20.2374 108.932 10.2127 118.385 15.3448Z"
+                fill="#FF76AF" />
+              <path
+                d="M106.047 15.5633C106.334 15.3548 106.744 15.0798 107.264 14.8092C108.87 13.9665 110.277 13.7935 111.636 13.6426C111.636 13.6426 114.159 13.3588 116.325 13.8866C116.612 13.9576 116.987 14.0729 117.388 14.3302C117.917 14.6717 118.231 15.0931 118.389 15.346C119.426 16.7743 120.286 18.2868 120.63 20.039C120.886 21.3386 120.52 22.2435 119.003 22.2391C115.474 22.2258 112.002 21.7068 108.601 20.8019C108.169 20.6866 107.635 20.4958 107.185 20.0123C106.585 19.3692 106.439 18.4953 106.214 17.0227C106.113 16.3972 106.069 15.8916 106.047 15.5633Z"
+                fill="#F25094" />
+              <path d="M27.3203 29L32.0183 33.8527" stroke="#2B2A35" stroke-miterlimit="10" />
+              <path d="M20 36.4219L26.4139 38.6176" stroke="#2B2A35" stroke-miterlimit="10" />
+              <path d="M33.7969 35.7734L36.1569 38.6167" stroke="#2B2A35" stroke-miterlimit="10" />
+              <path d="M28.3281 39.168L31.9189 40.2237" stroke="#2B2A35" stroke-miterlimit="10" />
+              <path d="M142.136 35.0273L137.195 39.534" stroke="#2B2A35" stroke-miterlimit="10" />
+              <path d="M135.099 41.1094L132.836 43.1631" stroke="#2B2A35" stroke-miterlimit="10" />
+              <path d="M144.609 45.1406L137.961 46.6976" stroke="#2B2A35" stroke-miterlimit="10" />
+              <path d="M135.461 47.1289L132.25 48.1003" stroke="#2B2A35" stroke-miterlimit="10" />
+              <path
+                d="M15.5 55C17.433 55 19 53.433 19 51.5C19 49.567 17.433 48 15.5 48C13.567 48 12 49.567 12 51.5C12 53.433 13.567 55 15.5 55Z"
+                fill="#464BA8" />
+              <path
+                d="M31 71C32.6569 71 34 69.6569 34 68C34 66.3432 32.6569 65 31 65C29.3431 65 28 66.3432 28 68C28 69.6569 29.3431 71 31 71Z"
+                fill="#E60028" />
+              <path
+                d="M151.5 56C153.433 56 155 54.433 155 52.5C155 50.567 153.433 49 151.5 49C149.567 49 148 50.567 148 52.5C148 54.433 149.567 56 151.5 56Z"
+                fill="#26C296" />
+              <path
+                d="M133.5 73C134.881 73 136 71.8807 136 70.5C136 69.1193 134.881 68 133.5 68C132.119 68 131 69.1193 131 70.5C131 71.8807 132.119 73 133.5 73Z"
+                fill="#F47761" />
+              <path
+                d="M82.6094 122.836C105.253 122.836 123.609 104.138 123.609 81.0724C123.609 58.0069 105.253 39.3086 82.6094 39.3086C59.9657 39.3086 41.6094 58.0069 41.6094 81.0724C41.6094 104.138 59.9657 122.836 82.6094 122.836Z"
+                fill="#464BA8" fill-opacity="0.3" />
+              <path
+                d="M83.2218 115.463C102.148 115.463 117.49 100.065 117.49 81.0695C117.49 62.0744 102.148 46.6758 83.2218 46.6758C64.2957 46.6758 48.9531 62.0744 48.9531 81.0695C48.9531 100.065 64.2957 115.463 83.2218 115.463Z"
+                fill="#464BA8" />
+              <path
+                d="M65.8618 77.9047C66.9629 77.9238 68.0293 78.4123 68.9254 79.3133C71.6576 82.0671 74.3994 84.8146 77.1253 87.5747C77.3935 87.8444 77.5292 87.8698 77.8131 87.5811C85.2022 80.1319 92.6071 72.6953 99.9993 65.2493C100.813 64.4308 101.76 63.9454 102.918 63.8407C105.117 63.6377 107.253 65.335 107.549 67.5558C107.748 69.0405 107.325 70.3254 106.281 71.3756C97.7214 79.9891 89.1618 88.6026 80.5927 97.2066C78.8133 98.9928 76.1157 98.9833 74.3331 97.2003C70.4114 93.2663 66.4928 89.326 62.5806 85.3793C61.3312 84.1198 60.9747 82.2384 61.6467 80.6458C62.3566 78.9739 63.9278 77.9079 65.8618 77.9047Z"
+                fill="white" />
+            </svg>
+
+            <h2 class="modal-title" id="exampleModalLabel">The company has been successfully added!
+              Would you like to create a vacancy for this company?
+            </h2>
+          </div>
+        </div>
+        <div class="modal-footer justify-content-center">
+          <a mat-button class="theme_btn btn_outline_primary success-model-btn" (click)="successCompanyModal.hide();"
+            routerLink="/admin/wil/wil-companies-list">Skip This
+            Step</a>
+          <a mat-button type="button" class="theme_btn btn_primary success-model-btn" data-toggle="modal"
+            data-target="#addVacancyPopup" data-dismiss="modal">Yes</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Add Compnay Popup Confirm -->
+<div class="modal fade bsModal ch_modal" id="addVacancyPopup" tabindex="-1" role="dialog"
+  aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" style="max-width: 800px;" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title" style="color: #464BA8;">What Type of Vacancy Are You Creating?</h2>
+        <button type="button" mat-icon-button id="closeModal" class="close" data-dismiss="modal" aria-label="Close">
+          <mat-icon>close</mat-icon>
+        </button>
+      </div>
+      <div class="modal-body p-5">
+        <div class="add-company-main-div">
+          <div class="add-company-box">
+            <svg width="116" height="153" viewBox="0 0 116 153" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect x="2.03809" y="2" width="111.925" height="148.927" rx="12" fill="#ECEDFF" stroke="#2B2A35"
+                stroke-width="4" />
+              <rect x="22.542" y="20.9609" width="70.9218" height="3.08356" rx="1.54178" fill="#464BA8" />
+              <rect x="22.542" y="51.0234" width="70.9218" height="3.08356" rx="1.54178" fill="#464BA8" />
+              <rect x="22.542" y="80.3203" width="70.9218" height="3.08356" rx="1.54178" fill="#464BA8" />
+              <rect x="22.542" y="39.4609" width="24.6685" height="3.08356" rx="1.54178" fill="#464BA8" />
+              <rect x="22.542" y="68.7578" width="24.6685" height="3.08356" rx="1.54178" fill="#464BA8" />
+              <rect x="22.542" y="98.8203" width="24.6685" height="3.08356" rx="1.54178" fill="#464BA8" />
+              <rect x="22.542" y="30.2109" width="24.6685" height="3.08356" rx="1.54178" fill="#464BA8" />
+              <rect x="22.542" y="59.5078" width="24.6685" height="3.08356" rx="1.54178" fill="#464BA8" />
+              <rect x="22.542" y="89.5703" width="24.6685" height="3.08356" rx="1.54178" fill="#464BA8" />
+              <rect x="22.542" y="113.469" width="53.1914" height="19.2722" rx="9.63612" fill="#464BA8" />
+              <path
+                d="M35.2052 125.901C34.6919 125.901 34.2419 125.811 33.8552 125.631C33.4686 125.451 33.1652 125.195 32.9452 124.861C32.7319 124.528 32.6219 124.131 32.6152 123.671H33.7352C33.7419 124.045 33.8719 124.361 34.1252 124.621C34.3786 124.881 34.7352 125.011 35.1952 125.011C35.6019 125.011 35.9186 124.915 36.1452 124.721C36.3786 124.521 36.4952 124.268 36.4952 123.961C36.4952 123.715 36.4386 123.515 36.3252 123.361C36.2186 123.208 36.0686 123.081 35.8752 122.981C35.6886 122.881 35.4719 122.791 35.2252 122.711C34.9786 122.631 34.7186 122.545 34.4452 122.451C33.9052 122.271 33.4986 122.038 33.2252 121.751C32.9586 121.465 32.8252 121.088 32.8252 120.621C32.8186 120.228 32.9086 119.885 33.0952 119.591C33.2886 119.298 33.5552 119.071 33.8952 118.911C34.2419 118.745 34.6452 118.661 35.1052 118.661C35.5586 118.661 35.9552 118.745 36.2952 118.911C36.6419 119.078 36.9119 119.311 37.1052 119.611C37.2986 119.905 37.3986 120.248 37.4052 120.641H36.2852C36.2852 120.461 36.2386 120.291 36.1452 120.131C36.0519 119.965 35.9152 119.828 35.7352 119.721C35.5552 119.615 35.3352 119.561 35.0752 119.561C34.7419 119.555 34.4652 119.638 34.2452 119.811C34.0319 119.985 33.9252 120.225 33.9252 120.531C33.9252 120.805 34.0052 121.015 34.1652 121.161C34.3252 121.308 34.5452 121.431 34.8252 121.531C35.1052 121.625 35.4252 121.735 35.7852 121.861C36.1319 121.975 36.4419 122.111 36.7152 122.271C36.9886 122.431 37.2052 122.641 37.3652 122.901C37.5319 123.161 37.6152 123.491 37.6152 123.891C37.6152 124.245 37.5252 124.575 37.3452 124.881C37.1652 125.181 36.8952 125.428 36.5352 125.621C36.1752 125.808 35.7319 125.901 35.2052 125.901ZM40.5641 125.901C39.9641 125.901 39.4908 125.715 39.1441 125.341C38.8041 124.968 38.6341 124.411 38.6341 123.671V120.821H39.6941V123.561C39.6941 124.521 40.0875 125.001 40.8741 125.001C41.2675 125.001 41.5908 124.861 41.8441 124.581C42.0975 124.301 42.2241 123.901 42.2241 123.381V120.821H43.2841V125.781H42.3441L42.2641 124.911C42.1108 125.218 41.8841 125.461 41.5841 125.641C41.2908 125.815 40.9508 125.901 40.5641 125.901ZM47.4226 125.901C47.0359 125.901 46.6926 125.825 46.3926 125.671C46.0993 125.518 45.8659 125.301 45.6926 125.021L45.5826 125.781H44.6326V118.581H45.6926V121.591C45.8526 121.358 46.0726 121.151 46.3526 120.971C46.6326 120.791 46.9926 120.701 47.4326 120.701C47.9126 120.701 48.3359 120.815 48.7026 121.041C49.0693 121.268 49.3559 121.578 49.5626 121.971C49.7759 122.365 49.8826 122.811 49.8826 123.311C49.8826 123.811 49.7759 124.258 49.5626 124.651C49.3559 125.038 49.0693 125.345 48.7026 125.571C48.3359 125.791 47.9093 125.901 47.4226 125.901ZM47.2426 124.981C47.6959 124.981 48.0693 124.828 48.3626 124.521C48.6559 124.208 48.8026 123.801 48.8026 123.301C48.8026 122.975 48.7359 122.685 48.6026 122.431C48.4693 122.178 48.2859 121.981 48.0526 121.841C47.8193 121.695 47.5493 121.621 47.2426 121.621C46.7893 121.621 46.4159 121.778 46.1226 122.091C45.8359 122.405 45.6926 122.808 45.6926 123.301C45.6926 123.801 45.8359 124.208 46.1226 124.521C46.4159 124.828 46.7893 124.981 47.2426 124.981ZM51.0291 125.781V120.821H51.9691L52.0591 121.521C52.2191 121.268 52.4291 121.068 52.6891 120.921C52.9557 120.775 53.2624 120.701 53.6091 120.701C54.3957 120.701 54.9424 121.011 55.2491 121.631C55.4291 121.345 55.6691 121.118 55.9691 120.951C56.2757 120.785 56.6057 120.701 56.9591 120.701C57.5791 120.701 58.0657 120.888 58.4191 121.261C58.7724 121.635 58.9491 122.191 58.9491 122.931V125.781H57.8891V123.041C57.8891 122.081 57.5224 121.601 56.7891 121.601C56.4157 121.601 56.1091 121.741 55.8691 122.021C55.6357 122.301 55.5191 122.701 55.5191 123.221V125.781H54.4591V123.041C54.4591 122.081 54.0891 121.601 53.3491 121.601C52.9824 121.601 52.6791 121.741 52.4391 122.021C52.2057 122.301 52.0891 122.701 52.0891 123.221V125.781H51.0291ZM60.7892 119.881C60.5892 119.881 60.4226 119.821 60.2892 119.701C60.1626 119.575 60.0992 119.418 60.0992 119.231C60.0992 119.045 60.1626 118.891 60.2892 118.771C60.4226 118.645 60.5892 118.581 60.7892 118.581C60.9892 118.581 61.1526 118.645 61.2792 118.771C61.4126 118.891 61.4792 119.045 61.4792 119.231C61.4792 119.418 61.4126 119.575 61.2792 119.701C61.1526 119.821 60.9892 119.881 60.7892 119.881ZM60.2592 125.781V120.821H61.3192V125.781H60.2592ZM64.7985 125.781C64.3119 125.781 63.9252 125.665 63.6385 125.431C63.3519 125.191 63.2085 124.768 63.2085 124.161V121.711H62.3585V120.821H63.2085L63.3385 119.561H64.2685V120.821H65.6685V121.711H64.2685V124.161C64.2685 124.435 64.3252 124.625 64.4385 124.731C64.5585 124.831 64.7619 124.881 65.0485 124.881H65.6185V125.781H64.7985Z"
+                fill="white" />
+            </svg>
+
+
+
+
+            <h2>Internship Vacancy</h2>
+            <p>
+              Internships offer students practical workplace experience, bridging the gap between academic studies and
+              professional careers.
+            </p>
+            <button mat-button type="button" [routerLink]="['/admin/wil/create-vacancy']"  [queryParams]="{ company_id: companyId }" class="theme_btn btn_primary"
+              data-dismiss="modal">Select</button>
+          </div>
+
+          <div class=" add-company-box">
+            <svg width="116" height="153" viewBox="0 0 116 153" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect x="2.03809" y="2" width="111.925" height="148.927" rx="12" fill="#ECEDFF" stroke="#2B2A35"
+                stroke-width="4" />
+              <path
+                d="M4.03809 14C4.03809 8.47715 8.51524 4 14.0381 4H101.963C107.485 4 111.963 8.47715 111.963 14V24.0431H4.03809V14Z"
+                fill="#464BA8" />
+              <rect x="22.5381" y="61.8125" width="70.9218" height="3.08356" rx="1.54178" fill="#464BA8" />
+              <rect x="22.5381" y="79.5469" width="24.6685" height="3.08356" rx="1.54178" fill="#464BA8" />
+              <rect x="22.5381" y="70.2969" width="24.6685" height="3.08356" rx="1.54178" fill="#464BA8" />
+              <rect x="23.0381" y="116.281" width="27.9586" height="13.6469" rx="6.82345" fill="white"
+                stroke="#464BA8" />
+              <path
+                d="M27.4247 126.125V119.125H29.8747C30.4213 119.125 30.8747 119.218 31.2347 119.405C31.5947 119.585 31.8613 119.835 32.0347 120.155C32.2147 120.468 32.3047 120.825 32.3047 121.225C32.3047 121.605 32.218 121.955 32.0447 122.275C31.878 122.588 31.6147 122.838 31.2547 123.025C30.8947 123.212 30.4347 123.305 29.8747 123.305H28.4847V126.125H27.4247ZM28.4847 122.435H29.8247C30.3247 122.435 30.6813 122.328 30.8947 122.115C31.1147 121.895 31.2247 121.598 31.2247 121.225C31.2247 120.838 31.1147 120.538 30.8947 120.325C30.6813 120.105 30.3247 119.995 29.8247 119.995H28.4847V122.435ZM33.3124 126.125V121.165H34.2624L34.3524 122.105C34.5257 121.778 34.7657 121.522 35.0724 121.335C35.3857 121.142 35.7624 121.045 36.2024 121.045V122.155H35.9124C35.6191 122.155 35.3557 122.205 35.1224 122.305C34.8957 122.398 34.7124 122.562 34.5724 122.795C34.4391 123.022 34.3724 123.338 34.3724 123.745V126.125H33.3124ZM39.2945 126.245C38.8078 126.245 38.3745 126.138 37.9945 125.925C37.6212 125.705 37.3278 125.402 37.1145 125.015C36.9012 124.628 36.7945 124.178 36.7945 123.665C36.7945 123.145 36.8978 122.688 37.1045 122.295C37.3178 121.902 37.6112 121.595 37.9845 121.375C38.3645 121.155 38.8045 121.045 39.3045 121.045C39.7912 121.045 40.2145 121.155 40.5745 121.375C40.9345 121.588 41.2145 121.875 41.4145 122.235C41.6145 122.595 41.7145 122.992 41.7145 123.425C41.7145 123.492 41.7112 123.565 41.7045 123.645C41.7045 123.718 41.7012 123.802 41.6945 123.895H37.8345C37.8678 124.375 38.0245 124.742 38.3045 124.995C38.5912 125.242 38.9212 125.365 39.2945 125.365C39.5945 125.365 39.8445 125.298 40.0445 125.165C40.2512 125.025 40.4045 124.838 40.5045 124.605H41.5645C41.4312 125.072 41.1645 125.462 40.7645 125.775C40.3712 126.088 39.8812 126.245 39.2945 126.245ZM39.2945 121.915C38.9412 121.915 38.6278 122.022 38.3545 122.235C38.0812 122.442 37.9145 122.755 37.8545 123.175H40.6545C40.6345 122.788 40.4978 122.482 40.2445 122.255C39.9912 122.028 39.6745 121.915 39.2945 121.915ZM44.009 126.125L42.149 121.165H43.259L44.639 125.115L46.019 121.165H47.119L45.269 126.125H44.009Z"
+                fill="#464BA8" />
+              <rect x="64.1709" y="115.781" width="28.9586" height="14.6469" rx="7.32345" fill="#464BA8" />
+              <path
+                d="M68.3885 126.125V119.125H69.4485L72.9585 124.395V119.125H74.0185V126.125H72.9585L69.4485 120.855V126.125H68.3885ZM77.7193 126.245C77.2326 126.245 76.7993 126.138 76.4193 125.925C76.046 125.705 75.7526 125.402 75.5393 125.015C75.326 124.628 75.2193 124.178 75.2193 123.665C75.2193 123.145 75.3226 122.688 75.5293 122.295C75.7426 121.902 76.036 121.595 76.4093 121.375C76.7893 121.155 77.2293 121.045 77.7293 121.045C78.216 121.045 78.6393 121.155 78.9993 121.375C79.3593 121.588 79.6393 121.875 79.8393 122.235C80.0393 122.595 80.1393 122.992 80.1393 123.425C80.1393 123.492 80.136 123.565 80.1293 123.645C80.1293 123.718 80.126 123.802 80.1193 123.895H76.2593C76.2926 124.375 76.4493 124.742 76.7293 124.995C77.016 125.242 77.346 125.365 77.7193 125.365C78.0193 125.365 78.2693 125.298 78.4693 125.165C78.676 125.025 78.8293 124.838 78.9293 124.605H79.9893C79.856 125.072 79.5893 125.462 79.1893 125.775C78.796 126.088 78.306 126.245 77.7193 126.245ZM77.7193 121.915C77.366 121.915 77.0526 122.022 76.7793 122.235C76.506 122.442 76.3393 122.755 76.2793 123.175H79.0793C79.0593 122.788 78.9226 122.482 78.6693 122.255C78.416 122.028 78.0993 121.915 77.7193 121.915ZM80.4662 126.125L82.2262 123.645L80.4662 121.165H81.5962L82.9262 123.065L84.2462 121.165H85.3862L83.6262 123.645L85.3862 126.125H84.2462L82.9262 124.225L81.5962 126.125H80.4662ZM88.3289 126.125C87.8423 126.125 87.4556 126.008 87.1689 125.775C86.8823 125.535 86.7389 125.112 86.7389 124.505V122.055H85.8889V121.165H86.7389L86.8689 119.905H87.7989V121.165H89.1989V122.055H87.7989V124.505C87.7989 124.778 87.8556 124.968 87.9689 125.075C88.0889 125.175 88.2923 125.225 88.5789 125.225H89.1489V126.125H88.3289Z"
+                fill="white" />
+            </svg>
+
+
+
+
+            <h2>Project Vacancy</h2>
+            <p>
+              Students apply academic knowledge to real-world challenges through company-sponsored projects, gaining
+              hands-on industry experience.
+            </p>
+            <button mat-button type="button" [routerLink]="['/admin/wil/create-project']" [queryParams]="{ company_id: companyId }"  class="theme_btn btn_primary"
+              data-dismiss="modal">Select</button>
+          </div>
+        </div>
+      </div>
+      <!-- <div class="modal-footer justify-content-around">
+        <button mat-button type="button" class="theme_btn btn_outline_primary"
+            data-dismiss="modal">Cancel</button>
+        <button mat-button type="submit" class="theme_btn btn_primary" (click)="addToPlacementGroup()" [disabled]="placemenGroupIds.length === 0" data-dismiss="modal">Add</button>
+    </div> -->
+    </div>
+  </div>
+</div>

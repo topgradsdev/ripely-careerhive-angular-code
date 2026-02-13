@@ -1,0 +1,146 @@
+<header *ngIf="!hiddenHeader" class="header-navbar">
+    <!-- <img src="../../../assets/img/monash_bg.png" class="img-fluid" alt="career_hive_logo"> -->
+    <div class="custom_container universal_header header-container">
+        
+        <!-- <div class="d-flex justify-content-between align-items-center logo_top_header">
+            <a [ngClass]="isDisabledNav ? 'disabled-nav' : ''" routerLink="/">
+              
+                <h1>Work Integrated Learning</h1>
+            </a>
+
+        </div> -->
+        <div class="nav-header">
+             <nav class="navbar navbar-expand-lg p-0">
+            <button class="navbar-toggler"  style="color:#fff" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <!-- <span class="navbar-toggler-icon"> -->
+                    <i class="fa fa-bars"></i>
+                <!-- </span> -->
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav emp-header-1" [ngClass]="isDisabledNav ? 'disabled-nav' : ''" >
+                    <li class="nav-item">
+                        <a class="nav-link" [routerLinkActive]="'active'" routerLink="/student/dashboard">Dashboard</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" [routerLinkActive]="'active'" routerLink="/student/my-placements">My Placements</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" [routerLinkActive]="'active'" routerLink="/student/my-project">My Projects</a>
+                    </li>
+                </ul>
+               
+                <ul class="navbar-nav ml-auto align-items-center">
+                    <li class="nav-item mr-1" *ngIf="userSDetail?.is_admin">
+                        <a class="nav-link underline" style="text-decoration: underline !important; cursor: pointer;" data-toggle="modal" data-target="#impersonateModel">Return to Admin Portal</a>
+                    </li>
+                    <ng-container  *ngIf="!userSDetail?.is_admin">
+                        <li class="nav-item" [ngClass]="isDisabledNav ? 'disabled-nav' : ''" >
+                            <button class="right_action_btn support" mat-icon-button  [routerLinkActive]="'active'" routerLink="/student/student-support">
+                                <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M11.871 0C12.3772 0.0674659 12.8838 0.127232 13.3838 0.238697C15.2833 0.66256 16.9555 1.52898 18.3906 2.83834C20.0676 4.36879 21.172 6.24463 21.705 8.45598C21.9631 9.52626 22.0485 10.6134 21.9744 11.7057C21.639 16.6542 18.1171 20.6226 13.4923 21.7075C12.4333 21.9561 11.3567 22.0592 10.2794 21.9664C6.35279 21.6291 3.3789 19.7492 1.38665 16.3451C0.624579 15.0434 0.176277 13.6234 0.0490813 12.1241C-0.269825 8.36101 0.964012 5.19011 3.78945 2.67224C5.35832 1.27415 7.21091 0.445129 9.2827 0.107066C9.55835 0.061966 9.83694 0.0351996 10.1141 0C10.6998 0 11.2856 0 11.871 0ZM20.5731 10.994C20.5929 5.70271 16.281 1.40982 11.0283 1.39919C5.73441 1.38819 1.42478 5.69611 1.41011 10.9705C1.39545 16.252 5.69592 20.5595 10.9718 20.5705C16.2638 20.5815 20.5841 16.2747 20.5731 10.994Z" fill="#FFF"/>
+                                    <path d="M10.8209 13.7701C10.6196 13.7701 10.4184 13.7712 10.2171 13.7697C9.98291 13.7682 9.96899 13.7514 9.96239 13.5218C9.93123 12.449 10.315 11.5785 11.1401 10.8683C11.6991 10.3869 12.1291 9.77235 12.5078 9.13803C12.8109 8.6302 12.8457 8.05931 12.727 7.48878C12.5712 6.73749 11.9466 6.23552 11.153 6.20326C10.7135 6.18529 10.2941 6.26082 9.90154 6.47716C9.63578 6.62382 9.45983 6.83612 9.35793 7.11625C9.2531 7.40408 9.17722 7.69924 9.17355 8.00687C9.17172 8.14914 9.13066 8.21807 8.97341 8.21514C8.5526 8.20744 8.13179 8.2089 7.71098 8.2144C7.56069 8.21624 7.49911 8.155 7.50644 8.00761C7.54383 7.26401 7.70145 6.55635 8.14829 5.94293C8.50385 5.45453 9.0119 5.1678 9.5698 4.99034C10.7109 4.62734 11.8487 4.66547 12.9297 5.1975C13.8354 5.64336 14.3068 6.43132 14.4428 7.41508C14.5891 8.47583 14.3134 9.42916 13.6657 10.2827C13.2515 10.8283 12.8135 11.3512 12.3106 11.8165C11.9235 12.174 11.7072 12.603 11.6929 13.1347C11.6889 13.2923 11.6533 13.4492 11.6636 13.6084C11.6717 13.7308 11.6079 13.7701 11.4979 13.7693C11.2721 13.7679 11.0467 13.769 10.8209 13.769C10.8209 13.769 10.8209 13.7693 10.8209 13.7701Z" fill="#FFF"/>
+                                    <path d="M11.7333 16.3055C11.7333 16.5372 11.7289 16.7693 11.7351 17.001C11.7384 17.1305 11.6962 17.1884 11.5577 17.1869C11.0819 17.1814 10.6061 17.1825 10.1307 17.1865C10.0082 17.1876 9.95399 17.1459 9.95509 17.0175C9.95913 16.5357 9.95913 16.0536 9.95509 15.5718C9.95399 15.4427 10.0115 15.402 10.1325 15.4027C10.6083 15.406 11.0841 15.4071 11.5595 15.4024C11.6999 15.4009 11.738 15.4651 11.7351 15.5923C11.7296 15.8295 11.7333 16.0675 11.7333 16.3055Z" fill="#FFF"/>
+                                    </svg>
+                            </button>
+                        </li>
+                        <li class="nav-item" [ngClass]="isDisabledNav ? 'disabled-nav' : ''" >
+                            <button class="right_action_btn" mat-icon-button>
+                                <svg style="height:36px; width:36px" width="36" height="36" viewBox="0 0 36 36" fill="none"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path
+                                        d="M16.543 8.37472C16.7007 7.96855 16.9713 7.6207 17.3199 7.37578C17.6686 7.13085 18.0795 7 18.5 7C18.9205 7 19.3314 7.13085 19.6801 7.37578C20.0287 7.6207 20.2993 7.96855 20.457 8.37472C22.0178 8.82202 23.3947 9.79088 24.3759 11.1325C25.3572 12.4741 25.8887 14.1143 25.8888 15.8011V20.9673L27.8225 23.9898C27.9286 24.1554 27.9895 24.348 27.9988 24.5469C28.008 24.7457 27.9653 24.9435 27.8752 25.1191C27.785 25.2947 27.6508 25.4415 27.4869 25.5438C27.3229 25.6461 27.1354 25.7001 26.9443 25.7001H22.1574C22.0303 26.6164 21.5907 27.4543 20.919 28.0604C20.2473 28.6664 19.3885 29 18.5 29C17.6115 29 16.7527 28.6664 16.081 28.0604C15.4093 27.4543 14.9697 26.6164 14.8426 25.7001H10.0557C9.8646 25.7001 9.67708 25.6461 9.51314 25.5438C9.3492 25.4415 9.215 25.2947 9.12484 25.1191C9.03469 24.9435 8.99197 24.7457 9.00124 24.5469C9.01051 24.348 9.07143 24.1554 9.17749 23.9898L11.1112 20.9673V15.8011C11.1112 12.2551 13.4123 9.26783 16.543 8.37472ZM17.0075 25.7001C17.1165 26.022 17.3186 26.3007 17.586 26.4979C17.8534 26.695 18.173 26.8009 18.5005 26.8009C18.8281 26.8009 19.1476 26.695 19.415 26.4979C19.6824 26.3007 19.8846 26.022 19.9936 25.7001H17.0064H17.0075ZM18.5 10.3017C17.1003 10.3017 15.7579 10.8811 14.7681 11.9125C13.7784 12.9438 13.2223 14.3426 13.2223 15.8011V21.3006C13.2224 21.5178 13.1607 21.7302 13.045 21.911L12.0285 23.5003H24.9704L23.954 21.911C23.8387 21.7301 23.7773 21.5177 23.7777 21.3006V15.8011C23.7777 14.3426 23.2216 12.9438 22.2319 11.9125C21.2421 10.8811 19.8997 10.3017 18.5 10.3017Z"
+                                        fill="#FFF" />
+                                </svg>
+                            </button>
+                        </li>
+                    </ng-container>
+                    
+                    <li class="nav-item dropdown">
+                        <button [matMenuTriggerFor]="menu" class="profile_btn_student">
+                            <img *ngIf="studentProfile?.image" [src]="studentProfile?.image" alt="avtar">
+                            <span *ngIf="!studentProfile?.image" class="profile-letter">{{ studentProfile?.first_name?.[0] }} {{studentProfile?.last_name?.[0] }}</span>
+                        </button>
+                        <mat-menu #menu="matMenu">
+                            <button  *ngIf="!isDisabledNav" mat-menu-item routerLink="/student/my-profile">
+                                <mat-icon class="material-icons-outlined">person_outline</mat-icon>
+                                My Profile</button>
+                              <!-- <button mat-menu-item [routerLink]="['changePassword']">
+                                <mat-icon class="material-icons-outlined">vpn_key</mat-icon>
+                                Change Password</button> -->
+                              <div class="border-top pt-3 pb-1 px-2 mt-2 text-center">
+                                <button mat-button class="theme_link_btn_c" (click)="logout()">
+                                  Log Out</button>
+                              </div>
+                        </mat-menu>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        </div>
+    </div>
+</header>
+
+
+<div class="modal fade bsModal ch_modal archived_vacancies_modal" id="impersonateModel" tabindex="-1" role="dialog"
+    aria-labelledby="impersonateModel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header pt-4 text-center justify-content-center">
+                <!-- <h2>Please set a description to flag this account.</h2> -->
+                <button type="button" mat-icon-button id="closeModal" class="close" data-dismiss="modal"
+                    aria-label="Close">
+                    <mat-icon>close</mat-icon>
+                </button>
+            </div>
+            <div class="modal-body d-flex align-items-center gap-3 flex-column">
+                <svg width="126" height="101" viewBox="0 0 126 101" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <g clip-path="url(#clip0_7031_247861)">
+                <path d="M95.371 100.165L11.656 100.194C7.45041 100.195 3.68314 98.0063 1.57906 94.3385C0.526894 92.5044 0.000693685 90.4924 6.85071e-07 88.48C-0.000692315 86.4678 0.52438 84.4552 1.57504 82.6206L43.4059 5.91924C45.5077 2.24973 49.2735 0.0583503 53.4791 0.0568855C57.6848 0.0554207 61.452 2.24417 63.5564 5.91222L105.445 82.5939C106.495 84.4232 107.02 86.4328 107.02 88.444C107.02 90.4551 106.495 92.4674 105.444 94.3023C103.342 97.9716 99.5766 100.163 95.371 100.165ZM1.0523 88.4786C1.05217 90.3102 10.2898 86.3633 11.2468 88.0317C13.1611 91.3685 7.82944 99.1376 11.6557 99.1362C11.6557 99.1362 102.623 97.112 104.534 93.7738C105.49 92.1048 105.968 90.2737 105.967 88.443C105.967 86.6124 105.488 84.7819 104.531 83.1135L62.6416 6.43178C60.7327 3.10449 57.3057 1.11314 53.4795 1.11448C49.655 1.11581 1.05245 86.6466 1.0523 88.4786Z" fill="#3F3D56"/>
+                <path d="M77.9031 83.2491C99.0694 83.2491 116.228 65.9664 116.228 44.647C116.228 23.3277 99.0694 6.04492 77.9031 6.04492C56.7368 6.04492 39.5781 23.3277 39.5781 44.647C39.5781 65.9664 56.7368 83.2491 77.9031 83.2491Z" fill="#464BA8"/>
+                <path d="M76.4827 53.0605L69.6851 23.4669L75.0264 22.3345L80.6501 52.1769L76.4827 53.0605ZM81.0383 64.3C80.1383 64.4908 79.2902 64.3435 78.4941 63.858C77.7289 63.3252 77.2522 62.6085 77.064 61.7079C76.8758 60.8074 77.0293 59.9775 77.5244 59.2183C78.0587 58.4508 78.7759 57.9716 79.6759 57.7808C80.5759 57.59 81.4044 57.7414 82.1614 58.2352C82.9184 58.7289 83.391 59.426 83.5792 60.3266C83.7674 61.2271 83.618 62.0766 83.131 62.8749C82.6359 63.6341 81.9383 64.1091 81.0383 64.3Z" fill="white"/>
+                </g>
+                <defs>
+                <clipPath id="clip0_7031_247861">
+                <rect width="126" height="101" fill="white"/>
+                </clipPath>
+                </defs>
+                </svg>
+
+                <h2 class="modal-heading mb-2">
+                    Are you sure you want to return to the Admin Portal?
+                </h2>
+
+                <p class="modal-p-content mb-0">Any unsaved changes will be lost. </p>
+            </div>
+            <div class="modal-footer justify-content-center">
+                <button mat-button type="button" class="theme_btn btn_outline_primary mr-4"
+                    data-dismiss="modal">No</button>
+                <button mat-button class="theme_btn btn_primary" data-dismiss="modal" (click)="adminLoginBack()">Yes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div *ngIf="userSDetail?.is_admin" class="hover-button">
+  <span class="label">Return to Admin Portal</span>
+  <button mat-icon-button class="theme_btn btn_primary" data-toggle="modal" data-target="#impersonateModel">
+    <div class="icon">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+           xmlns="http://www.w3.org/2000/svg">
+        <path d="M9 10L4 15L9 20" stroke="#464BA8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+        <path d="M20 4V11C20 12.0609 19.5786 13.0783 18.8284 13.8284C18.0783 14.5786 17.0609 15 16 15H4"
+              stroke="#464BA8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+      </svg>
+    </div>
+  </button>
+  
+  <div class="icon2">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+           xmlns="http://www.w3.org/2000/svg">
+        <path d="M9 10L4 15L9 20" stroke="#464BA8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+        <path d="M20 4V11C20 12.0609 19.5786 13.0783 18.8284 13.8284C18.0783 14.5786 17.0609 15 16 15H4"
+              stroke="#464BA8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+      </svg>
+  </div>
+</div>

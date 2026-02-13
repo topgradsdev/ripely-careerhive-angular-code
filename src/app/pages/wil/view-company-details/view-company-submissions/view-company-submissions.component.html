@@ -1,0 +1,672 @@
+<section class="form_main_container pt-0" *ngIf="filteredStudentList.length>0">
+  <div class="left_side_bar">
+    <div class="steps_container">
+      <div class="steps_card m-0" style="box-shadow: none">
+        <div class="steps_card_header">
+          Students
+        <div class="search-container">
+            <svg class="icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                <path
+                    d="M9.16667 15.8333C12.8486 15.8333 15.8333 12.8486 15.8333 9.16667C15.8333 5.48477 12.8486 2.5 9.16667 2.5C5.48477 2.5 2.5 5.48477 2.5 9.16667C2.5 12.8486 5.48477 15.8333 9.16667 15.8333Z"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                <path d="M17.5 17.5L13.875 13.875" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round" />
+            </svg>
+            <input type="text" class="form-control" [(ngModel)]="search" placeholder="Search Keywords"
+                (ngModelChange)="onChangeSearchKeyword()">
+        </div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <ul class="list-group team-list">
+        <li
+          class="list-group-item team-item d-flex justify-content-between align-items-center"
+          *ngFor="let item of filteredStudentList; let i = index;"
+          [ngClass]="{
+            'active-hover': selectedStudent._id == item._id
+          }"
+          (click)="selectedStudent = item;callApi()"
+        >
+          <span>{{item.student_name}}</span>
+          <span class="d-flex align-items-center gap-2">
+            <span class="badge rounded-pill team-badge">{{item.document_forms_count}}</span>
+          </span>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <div class="right_bar" >
+    <div class="steps_container">
+      <div class="steps_card position-relative">
+            <mat-tab-group *ngIf="!submissionCreate" (selectedTabChange)="onTabChanged($event)" [selectedIndex]="selectedIndex"
+                        animationDuration="0ms" class="mat_tab_bordred">
+                <mat-tab>
+                    <ng-template mat-tab-label>Documents</ng-template>
+                    <ul class="files_list">
+                        <li *ngFor="let document of documents">
+                            <div class="file_card">
+                                <div class="content">
+                                    
+
+                                    <div class="svg-width d-flex justify-content-center align-items-center" style="width: 60px;height:48px;padding-right: 8px;" [innerHTML]="getSafeSvg(document?.name)"></div>
+
+                                    <p>{{document?.name}}
+                                        <br />
+                                        <small class="small-fs">
+                                           <span *ngIf="document?.is_declined" class="declined-span">Declined</span> {{(document?.date)? 'Submitted on '+(document?.date | date:
+                                            'dd/MM/yyyy, hh:mm a'):''}}
+                                        </small>
+                                    </p>
+                                </div>
+                                <div class="btn_group">
+                                    <button mat-icon-button (click)="viewPDF(document?.url)">
+                                        <svg width="35" height="35" viewBox="0 0 35 35" fill="none"
+                                            xmlns="http://www.w3.org/2000/svg">
+                                            <circle cx="17.5" cy="17.5" r="17.5" fill="#F8F8F8" />
+                                            <path
+                                                d="M9.29565 17.7632C9.1361 17.5601 9.00404 17.3822 8.90095 17.2387C8.99761 17.0973 9.1211 16.923 9.27053 16.7246C9.69179 16.1651 10.3145 15.4194 11.1183 14.6754C12.7353 13.1787 15.0165 11.75 17.8214 11.75C20.6263 11.75 22.9076 13.1787 24.5246 14.6754C25.3283 15.4194 25.9511 16.1651 26.3723 16.7246C26.5218 16.923 26.6452 17.0973 26.7419 17.2387C26.6388 17.3822 26.5068 17.5601 26.3472 17.7632C25.9058 18.325 25.2587 19.0735 24.4375 19.82C22.7807 21.3262 20.4992 22.75 17.8214 22.75C15.1437 22.75 12.8621 21.3262 11.2054 19.82C10.3842 19.0735 9.73706 18.325 9.29565 17.7632Z"
+                                                stroke="#2B2A35" stroke-width="1.5" />
+                                            <circle cx="17.8214" cy="17.2511" r="2.82143" stroke="#2B2A35"
+                                                stroke-width="1.5" />
+                                        </svg>
+                                    </button>
+                                    <button *ngxPermissionsOnly="['WIL_Write']" mat-icon-button
+                                        (click)="downloadPDF(document?.url, document?.name)">
+                                        <svg width="35" height="35" viewBox="0 0 35 35" fill="none"
+                                            xmlns="http://www.w3.org/2000/svg">
+                                            <circle cx="17.5" cy="17.5" r="17.5" fill="#F8F8F8" />
+                                            <path fill-rule="evenodd" clip-rule="evenodd"
+                                                d="M24.7923 20.4141V23.3307C24.7923 24.1361 24.1394 24.7891 23.334 24.7891H11.6673C10.8619 24.7891 10.209 24.1361 10.209 23.3307V20.4141H11.6673V23.3307H23.334V20.4141H24.7923Z"
+                                                fill="#2B2A35" />
+                                            <path fill-rule="evenodd" clip-rule="evenodd"
+                                                d="M18.2295 17.9258L20.6305 15.5248L21.6617 16.556L17.5003 20.7174L13.3389 16.556L14.3701 15.5248L16.7711 17.9258V10.207H18.2295V17.9258Z"
+                                                fill="#2B2A35" />
+                                        </svg>
+
+                                    </button>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+
+                    <div class="show_more_links" *ngIf="documents.length > 0">
+                        <button [disabled]="documentpage === 1" mat-button
+                            (click)="getStudentProfileById(documentpage > 0 ? documentpage-1 : 0)">
+                            <svg *ngIf="documentpage!=1" width="7" height="14" viewBox="0 0 7 14" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path d="M7 13L1 7L7 1" stroke="#464ba9" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" />
+                            </svg>
+                            <svg *ngIf="documentpage==1" width="7" height="14" viewBox="0 0 7 14" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path d="M7 13L1 7L7 1" stroke="#C4C4C4" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" />
+                            </svg>
+                        </button>
+                        <span>{{ (documentpage - 1) * documentlimit + 1 }} - {{ (documentpage * documentlimit >
+                            totaldocumentList ? totaldocumentList : documentpage * documentlimit) }} of
+                            {{totaldocumentList}}
+
+
+                            <!-- {{documentpage+1}} - {{documentlimit}} of {{totaldocumentList}} -->
+                        </span>
+
+
+
+
+                        <button [disabled]="documentpage * documentlimit >= totaldocumentList" mat-button
+                            (click)="getStudentProfileById(documentpage+1)">
+                            <svg *ngIf="documentpage !== totaldocuments" width="8" height="14"
+                                viewBox="0 0 8 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M1 13L7 7L1 1" stroke="#464ba9" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" />
+                            </svg>
+
+                            <svg *ngIf="documentpage === totaldocuments" width="8" height="14"
+                                viewBox="0 0 8 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M1 13L7 7L1 1" stroke="#C4C4C4" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" />
+                            </svg>
+
+
+                        </button>
+                    </div>
+
+                    <div class="d-flex align-items-center justify-content-center text-center flex-column pt-3 pb-3" *ngIf="documents.length == 0">
+                        <p class="empty_text_placement_type">
+                        This Student has no File submissions yet.
+                        </p>
+                    </div>
+                </mat-tab>
+                <mat-tab>
+                    <ng-template mat-tab-label>Forms</ng-template>
+                    <ul class="files_list">
+                        <li *ngFor="let form of submittedForms">
+                            <div class="file_card">
+                                <div class="content">
+                                    <div class="svg-width d-flex justify-content-center align-items-center" style="width: 48px;height:48px; padding-right: 8px;" [innerHTML]="getSafeSvg('form')"></div>
+                                    <p>{{form?.formDetails?.title}}
+                                        <br />
+                                        <small class="small-fs">
+                                            {{(form?.added_at)? 'Submitted on '+(form?.added_at | date:
+                                            'dd/MM/yyyy, hh:mm a'):''}}
+                                        </small>
+                                    </p>
+                                </div>
+                                <div class="btn_group">
+                                    <button mat-icon-button data-toggle="modal"
+                                                data-target="#previewMultiStepPageModal"
+                                        (click)="updateSelectFom(form);">
+                                        <svg width="35" height="35" viewBox="0 0 35 35" fill="none"
+                                            xmlns="http://www.w3.org/2000/svg">
+                                            <circle cx="17.5" cy="17.5" r="17.5" fill="#F8F8F8" />
+                                            <path
+                                                d="M9.29565 17.7632C9.1361 17.5601 9.00404 17.3822 8.90095 17.2387C8.99761 17.0973 9.1211 16.923 9.27053 16.7246C9.69179 16.1651 10.3145 15.4194 11.1183 14.6754C12.7353 13.1787 15.0165 11.75 17.8214 11.75C20.6263 11.75 22.9076 13.1787 24.5246 14.6754C25.3283 15.4194 25.9511 16.1651 26.3723 16.7246C26.5218 16.923 26.6452 17.0973 26.7419 17.2387C26.6388 17.3822 26.5068 17.5601 26.3472 17.7632C25.9058 18.325 25.2587 19.0735 24.4375 19.82C22.7807 21.3262 20.4992 22.75 17.8214 22.75C15.1437 22.75 12.8621 21.3262 11.2054 19.82C10.3842 19.0735 9.73706 18.325 9.29565 17.7632Z"
+                                                stroke="#2B2A35" stroke-width="1.5" />
+                                            <circle cx="17.8214" cy="17.2511" r="2.82143" stroke="#2B2A35"
+                                                stroke-width="1.5" />
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+              
+                    <div class="show_more_links" *ngIf="submittedForms.length > 0">
+                        <button [disabled]="formpage === 1" mat-button
+                            (click)="getSubmittedDocuments(formpage > 0 ? formpage-1 : 0)">
+                            <svg *ngIf="formpage!=1" width="7" height="14" viewBox="0 0 7 14" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path d="M7 13L1 7L7 1" stroke="#464ba9" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" />
+                            </svg>
+                            <svg *ngIf="formpage==1" width="7" height="14" viewBox="0 0 7 14" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path d="M7 13L1 7L7 1" stroke="#C4C4C4" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" />
+                            </svg>
+                        </button>
+                        <span>{{ (formpage - 1) * formlimit + 1 }} - {{ (formpage * formlimit > totalformList ?
+                            totalformList : formpage * formlimit) }} of {{totalformList}}
+
+                        </span>
+
+
+                        <!--         
+                        {{formpage * formlimit}} {{totalformList}}
+
+                        {{formpage * formlimit >= totalformList}} -->
+                        <button [disabled]="formpage * formlimit >= totalformList" mat-button
+                            (click)="getSubmittedDocuments(formpage+1)">
+                            <svg *ngIf="(formpage)!=totalforms" width="8" height="14" viewBox="0 0 8 14"
+                                fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M1 13L7 7L1 1" stroke="#464ba9" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" />
+                            </svg>
+
+                            <svg *ngIf="(formpage)==totalforms" width="8" height="14" viewBox="0 0 8 14"
+                                fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M1 13L7 7L1 1" stroke="#C4C4C4" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" />
+                            </svg>
+
+
+                        </button>
+                    </div>
+
+                    <div class="d-flex align-items-center justify-content-center text-center flex-column pt-3 pb-3" *ngIf="submittedForms.length == 0">
+                        <p class="empty_text_placement_type">
+                        This Student has no Form submissions yet.
+                        </p>
+                    </div>
+                </mat-tab>
+                  <mat-tab>
+                    <ng-template mat-tab-label>Declined Forms</ng-template>
+                    <ul class="files_list">
+                        <li *ngFor="let form of submittedDeclinedForms">
+                            <div class="file_card">
+                                <div class="content">
+                                    <div class="svg-width d-flex justify-content-center align-items-center" style="width: 48px;height:48px; padding-right: 8px;" [innerHTML]="getSafeSvg('form')"></div>
+                                    <p>{{form?.formDetails?.title}}
+                                        <br />
+                                        <small class="small-fs">
+                                            {{(form?.staff_submitted_at)? 'Submitted on '+(form?.staff_submitted_at | date:
+                                            'dd/MM/yyyy, hh:mm a'):''}}
+                                        </small>
+                                    </p>
+                                </div>
+                                <div class="btn_group">
+                                    <button mat-icon-button data-toggle="modal"
+                                                data-target="#previewMultiStepPageModal"
+                                        (click)="updateSelectFom(form);">
+                                        <svg width="35" height="35" viewBox="0 0 35 35" fill="none"
+                                            xmlns="http://www.w3.org/2000/svg">
+                                            <circle cx="17.5" cy="17.5" r="17.5" fill="#F8F8F8" />
+                                            <path
+                                                d="M9.29565 17.7632C9.1361 17.5601 9.00404 17.3822 8.90095 17.2387C8.99761 17.0973 9.1211 16.923 9.27053 16.7246C9.69179 16.1651 10.3145 15.4194 11.1183 14.6754C12.7353 13.1787 15.0165 11.75 17.8214 11.75C20.6263 11.75 22.9076 13.1787 24.5246 14.6754C25.3283 15.4194 25.9511 16.1651 26.3723 16.7246C26.5218 16.923 26.6452 17.0973 26.7419 17.2387C26.6388 17.3822 26.5068 17.5601 26.3472 17.7632C25.9058 18.325 25.2587 19.0735 24.4375 19.82C22.7807 21.3262 20.4992 22.75 17.8214 22.75C15.1437 22.75 12.8621 21.3262 11.2054 19.82C10.3842 19.0735 9.73706 18.325 9.29565 17.7632Z"
+                                                stroke="#2B2A35" stroke-width="1.5" />
+                                            <circle cx="17.8214" cy="17.2511" r="2.82143" stroke="#2B2A35"
+                                                stroke-width="1.5" />
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+              
+                       <div class="show_more_links" *ngIf="submittedDeclinedForms.length > 0">
+                            <button [disabled]="formdDeclinedpage === 1" mat-button
+                                (click)="getSubmittedDeclinedDocuments(formdDeclinedpage > 0 ? formdDeclinedpage-1 : 0)">
+                                <svg *ngIf="formdDeclinedpage!=1" width="7" height="14" viewBox="0 0 7 14" fill="none"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M7 13L1 7L7 1" stroke="#464ba9" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round" />
+                                </svg>
+                                <svg *ngIf="formdDeclinedpage==1" width="7" height="14" viewBox="0 0 7 14" fill="none"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M7 13L1 7L7 1" stroke="#C4C4C4" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round" />
+                                </svg>
+                            </button>
+                            <span>{{ (formdDeclinedpage - 1) * formdDeclinedlimit + 1 }} - {{ (formdDeclinedpage * formdDeclinedlimit > totalformdDeclinedList ?
+                                totalformdDeclinedList : formdDeclinedpage * formdDeclinedlimit) }} of {{totalformdDeclinedList}}
+
+                            </span>
+
+
+                            <!--         
+                            {{formpage * formlimit}} {{totalformList}}
+
+                            {{formpage * formlimit >= totalformList}} -->
+                            <button [disabled]="formdDeclinedpage * formdDeclinedlimit >= totalformdDeclinedList" mat-button
+                                (click)="getSubmittedDeclinedDocuments(formdDeclinedpage+1)">
+                                <svg *ngIf="(formdDeclinedpage)!=totaldDeclinedforms" width="8" height="14" viewBox="0 0 8 14"
+                                    fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M1 13L7 7L1 1" stroke="#464ba9" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round" />
+                                </svg>
+
+                                <svg *ngIf="(formdDeclinedpage)==totaldDeclinedforms" width="8" height="14" viewBox="0 0 8 14"
+                                    fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M1 13L7 7L1 1" stroke="#C4C4C4" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round" />
+                                </svg>
+
+
+                            </button>
+                    </div>
+
+                    <div class="d-flex align-items-center justify-content-center text-center flex-column pt-3 pb-3" *ngIf="submittedDeclinedForms.length == 0">
+                        <p class="empty_text_placement_type">
+                        This Student has no Form submissions yet.
+                        </p>
+                    </div>
+                </mat-tab>
+            </mat-tab-group>
+            
+            <div class="file-add-btn" *ngIf="!submissionCreate && selectedIndex==0">
+                  <button mat-button  (click)="submissionCreate=true" class="theme_btn btn_primary">Add Document</button>
+            </div>
+
+             <div *ngIf="submissionCreate" class="form-group enquiry_file_upload">
+                <div class="p-3">
+                <p style="color:#cacaca">
+                    Accepted File Types: Adobe PDF (.pdf), Microsoft Word (.docx). 5MB file size limit.
+                </p>
+                <div class="file_upload ">
+                    <p><strong>Drag file here or <span>browse</span> </strong><br>
+                        <!-- Files allowed: .docx, .pdf. Maximum 5 MB -->
+                    </p>
+                    <label class="file_upload_label" for="image"></label>
+                    <input name="img" type="file" id="image" accept=".docx, .pdf" (change)="getFilDoc($event)">
+                </div>
+                <ul class="files_list mt-3" *ngIf="media.documents.length > 0">
+                    <li *ngFor="let file of media.documents; let i = index;">
+                        <div class="file_card">
+                            <div class="content">
+                                <div class="svg-width d-flex justify-content-center align-items-center" style="width: 60px;height:48px;padding-right: 8px;" [innerHTML]="getSafeSvg(file?.name)"></div>
+                                <p>{{file.name}}</p>
+                            </div>
+                            <div class="btn_group">
+                                <button (click)="removeFile(i)" mat-icon-button>
+                                    <svg width="35" height="35" viewBox="0 0 35 35" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <circle cx="17.5" cy="17.5" r="17.5" fill="#F8F8F8"/>
+                                        <path fill-rule="evenodd" clip-rule="evenodd" d="M15.0952 9H19.4588C20.2621 9 20.9134 9.65122 20.9134 10.4545V11.1817H23.0909C23.8942 11.1817 24.5455 11.8329 24.5455 12.6362V14.0908C24.5455 14.8941 23.8942 15.5453 23.0909 15.5453H23.0318L22.3628 23.5454C22.3628 24.3488 21.7116 25 20.9083 25H13.6356C12.8322 25 12.181 24.3488 12.1835 23.6058L11.5118 15.5453H11.4545C10.6512 15.5453 10 14.8941 10 14.0908V12.6362C10 11.8329 10.6512 11.1817 11.4545 11.1817H13.6406V10.4545C13.6406 9.65122 14.2918 9 15.0952 9ZM13.6406 12.6364V12.6358H11.4531V14.0904H23.0895V12.6358H20.9134V12.6364H13.6406ZM21.57 15.5453H12.9688L13.6331 23.545H20.9059L20.9084 23.4846L21.57 15.5453ZM19.4574 10.4541V11.1814H15.0938V10.4541H19.4574Z" fill="#2B2A35"/>
+                                        </svg>
+                                </button>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+
+                <div class="modal-footer justify-content-start pl-0 mt-3">
+                    <button mat-button [disabled]="media.documents.length==0" style="border-radius: 10px !important;width:100px" type="button" class="theme_btn btn_primary mr-4"
+                    (click)="updateCompanySubmission()">Save</button>
+
+                    <button mat-button  style="border-radius: 10px !important;width:100px" type="button" (click)="submissionCreate = false;" class="theme_btn btn_outline_primary mr-4"
+                        data-dismiss="modal">Cancel</button>
+                </div>
+                </div>
+                
+                <!-- <span *ngIf="fileName">{{fileName}}</span> -->
+            </div>
+
+
+      </div>
+    </div>
+  </div>
+
+  
+</section>
+<div class="d-flex justify-content-center align-items-center gap-4 flex-column" *ngIf="filteredStudentList.length==0">
+    <svg width="126" height="102" viewBox="0 0 126 102" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <g clip-path="url(#clip0_1267_96503)">
+    <path d="M95.371 100.666L11.656 100.696C7.45041 100.697 3.68314 98.508 1.57906 94.8402C0.526894 93.0061 0.000693685 90.9941 6.85071e-07 88.9817C-0.000692315 86.9695 0.52438 84.9569 1.57504 83.1223L43.4059 6.42095C45.5077 2.75144 49.2735 0.560059 53.4791 0.558594C57.6848 0.55713 61.452 2.74588 63.5564 6.41393L105.445 83.0956C106.495 84.9249 107.02 86.9345 107.02 88.9457C107.02 90.9568 106.495 92.9692 105.444 94.804C103.342 98.4733 99.5766 100.665 95.371 100.666ZM1.0523 88.9803C1.05217 90.812 10.2898 86.865 11.2468 88.5334C13.1611 91.8702 7.82944 99.6393 11.6557 99.638C11.6557 99.638 102.623 97.6137 104.534 94.2756C105.49 92.6065 105.968 90.7754 105.967 88.9447C105.967 87.1141 105.488 85.2836 104.531 83.6152L62.6416 6.93349C60.7327 3.6062 57.3057 1.61485 53.4795 1.61619C49.655 1.61752 1.05245 87.1483 1.0523 88.9803Z" fill="#3F3D56"/>
+    <path d="M77.9031 83.7511C99.0694 83.7511 116.228 66.4683 116.228 45.149C116.228 23.8296 99.0694 6.54688 77.9031 6.54688C56.7368 6.54688 39.5781 23.8296 39.5781 45.149C39.5781 66.4683 56.7368 83.7511 77.9031 83.7511Z" fill="#464BA8"/>
+    <path d="M76.3835 53.5796L69.5859 23.986L74.9271 22.8536L80.5508 52.696L76.3835 53.5796ZM81.0564 64.7942C80.0781 65.0016 79.191 64.8626 78.3948 64.3771C77.6296 63.8443 77.1488 63.108 76.9525 62.1683C76.7561 61.2286 76.9055 60.3791 77.4006 59.6199C77.9267 58.8133 78.6789 58.3062 79.6572 58.0988C80.5963 57.8997 81.4484 58.0666 82.2136 58.5995C83.0098 59.0849 83.506 59.7975 83.7024 60.7372C83.8988 61.6769 83.7339 62.55 83.2078 63.3567C82.7127 64.1159 81.9955 64.5951 81.0564 64.7942Z" fill="white"/>
+    </g>
+    <defs>
+    <clipPath id="clip0_1267_96503">
+    <rect width="126" height="101" fill="white" transform="translate(0 0.5)"/>
+    </clipPath>
+    </defs>
+    </svg>
+
+      <p class="p-no">
+        This Company has no Submissions yet. <br />
+        Placed Students will be shown here with any submissions related to their Placements!
+      </p>
+
+  </div>
+
+
+
+<div
+  bsModal
+  #removedepartmentConfirm="bs-modal"
+  class="modal fade bsModal ch_modal archived_vacancies_modal"
+  id="archive"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header pt-4 text-center justify-content-center">
+        <button
+          type="button"
+          mat-icon-button
+          id="closeModal"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+          (click)="removedepartmentConfirm.hide()"
+        >
+          <mat-icon>close</mat-icon>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div
+            class="col-md-12 d-flex align-items-center justify-content-center mb-4"
+          >
+            <svg
+              width="126"
+              height="101"
+              viewBox="0 0 126 101"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <g clip-path="url(#clip0_1349_34168)">
+                <path
+                  d="M95.371 100.166L11.656 100.196C7.45041 100.197 3.68314 98.008 1.57906 94.3402C0.526894 92.5061 0.000693685 90.4941 6.85071e-07 88.4817C-0.000692315 86.4695 0.52438 84.4569 1.57504 82.6223L43.4059 5.92095C45.5077 2.25144 49.2735 0.0600592 53.4791 0.0585945C57.6848 0.0571297 61.452 2.24588 63.5564 5.91393L105.445 82.5956C106.495 84.4249 107.02 86.4345 107.02 88.4457C107.02 90.4568 106.495 92.4692 105.444 94.304C103.342 97.9733 99.5766 100.165 95.371 100.166ZM1.0523 88.4803C1.05217 90.312 10.2898 86.365 11.2468 88.0334C13.1611 91.3702 7.82944 99.1393 11.6557 99.138C11.6557 99.138 102.623 97.1137 104.534 93.7756C105.49 92.1065 105.968 90.2754 105.967 88.4447C105.967 86.6141 105.488 84.7836 104.531 83.1152L62.6416 6.43349C60.7327 3.1062 57.3057 1.11485 53.4795 1.11619C49.655 1.11752 1.05245 86.6483 1.0523 88.4803Z"
+                  fill="#3F3D56"
+                />
+                <path
+                  d="M77.9031 83.2511C99.0694 83.2511 116.228 65.9683 116.228 44.649C116.228 23.3296 99.0694 6.04688 77.9031 6.04688C56.7368 6.04688 39.5781 23.3296 39.5781 44.649C39.5781 65.9683 56.7368 83.2511 77.9031 83.2511Z"
+                  fill="#464BA8"
+                />
+                <path
+                  d="M76.4827 53.0585L69.6851 23.465L75.0264 22.3325L80.6501 52.1749L76.4827 53.0585ZM81.0383 64.298C80.1383 64.4888 79.2902 64.3415 78.4941 63.8561C77.7289 63.3232 77.2522 62.6065 77.064 61.706C76.8758 60.8054 77.0293 59.9755 77.5244 59.2163C78.0587 58.4488 78.7759 57.9697 79.6759 57.7788C80.5759 57.588 81.4044 57.7395 82.1614 58.2332C82.9184 58.7269 83.391 59.4241 83.5792 60.3246C83.7674 61.2252 83.618 62.0746 83.131 62.873C82.6359 63.6322 81.9383 64.1072 81.0383 64.298Z"
+                  fill="white"
+                />
+              </g>
+              <defs>
+                <clipPath id="clip0_1349_34168">
+                  <rect width="126" height="101" fill="white" />
+                </clipPath>
+              </defs>
+            </svg>
+          </div>
+          <div class="col-md-12 text-center">
+            <h2 class="modal-title">
+              You cannot delete a department until the existing <br />
+              contacts are removed.
+            </h2>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer justify-content-between">
+        <button
+          id="cancel"
+          mat-button
+          type="button"
+          class="theme_btn btn_outline_primary mr-4"
+          data-dismiss="modal"
+          (click)="removedepartmentConfirm.hide()"
+        >
+          No
+        </button>
+        <button
+          mat-button
+          class="theme_btn btn_primary"
+          (click)="removeDepartment()"
+        >
+          Yes
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div
+  bsModal
+  #removedepartmentMessage="bs-modal"
+  class="modal fade bsModal ch_modal archived_vacancies_modal"
+  id="archive"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header pt-4 text-center justify-content-center">
+        <button
+          type="button"
+          mat-icon-button
+          id="closeModal"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+          (click)="removedepartmentMessage.hide()"
+        >
+          <mat-icon>close</mat-icon>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div
+            class="col-md-12 d-flex align-items-center justify-content-center mb-4"
+          >
+            <svg
+              width="126"
+              height="101"
+              viewBox="0 0 126 101"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <g clip-path="url(#clip0_1349_34168)">
+                <path
+                  d="M95.371 100.166L11.656 100.196C7.45041 100.197 3.68314 98.008 1.57906 94.3402C0.526894 92.5061 0.000693685 90.4941 6.85071e-07 88.4817C-0.000692315 86.4695 0.52438 84.4569 1.57504 82.6223L43.4059 5.92095C45.5077 2.25144 49.2735 0.0600592 53.4791 0.0585945C57.6848 0.0571297 61.452 2.24588 63.5564 5.91393L105.445 82.5956C106.495 84.4249 107.02 86.4345 107.02 88.4457C107.02 90.4568 106.495 92.4692 105.444 94.304C103.342 97.9733 99.5766 100.165 95.371 100.166ZM1.0523 88.4803C1.05217 90.312 10.2898 86.365 11.2468 88.0334C13.1611 91.3702 7.82944 99.1393 11.6557 99.138C11.6557 99.138 102.623 97.1137 104.534 93.7756C105.49 92.1065 105.968 90.2754 105.967 88.4447C105.967 86.6141 105.488 84.7836 104.531 83.1152L62.6416 6.43349C60.7327 3.1062 57.3057 1.11485 53.4795 1.11619C49.655 1.11752 1.05245 86.6483 1.0523 88.4803Z"
+                  fill="#3F3D56"
+                />
+                <path
+                  d="M77.9031 83.2511C99.0694 83.2511 116.228 65.9683 116.228 44.649C116.228 23.3296 99.0694 6.04688 77.9031 6.04688C56.7368 6.04688 39.5781 23.3296 39.5781 44.649C39.5781 65.9683 56.7368 83.2511 77.9031 83.2511Z"
+                  fill="#464BA8"
+                />
+                <path
+                  d="M76.4827 53.0585L69.6851 23.465L75.0264 22.3325L80.6501 52.1749L76.4827 53.0585ZM81.0383 64.298C80.1383 64.4888 79.2902 64.3415 78.4941 63.8561C77.7289 63.3232 77.2522 62.6065 77.064 61.706C76.8758 60.8054 77.0293 59.9755 77.5244 59.2163C78.0587 58.4488 78.7759 57.9697 79.6759 57.7788C80.5759 57.588 81.4044 57.7395 82.1614 58.2332C82.9184 58.7269 83.391 59.4241 83.5792 60.3246C83.7674 61.2252 83.618 62.0746 83.131 62.873C82.6359 63.6322 81.9383 64.1072 81.0383 64.298Z"
+                  fill="white"
+                />
+              </g>
+              <defs>
+                <clipPath id="clip0_1349_34168">
+                  <rect width="126" height="101" fill="white" />
+                </clipPath>
+              </defs>
+            </svg>
+          </div>
+          <div class="col-md-12 text-center">
+            <h2 class="modal-title">
+              You cannot delete a department until the existing <br />
+              contacts are removed.
+            </h2>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer justify-content-center">
+        <button
+          mat-button
+          class="theme_btn btn_primary"
+          (click)="removedepartmentMessage.hide()"
+        >
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div
+  bsModal
+  #removeContact="bs-modal"
+  class="modal fade bsModal ch_modal archived_vacancies_modal"
+  id="archive"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header pt-4 text-center justify-content-center">
+        <button
+          type="button"
+          mat-icon-button
+          id="closeModal"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+          (click)="removeContact.hide()"
+        >
+          <mat-icon>close</mat-icon>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div
+            class="col-md-12 d-flex align-items-center justify-content-center mb-4"
+          >
+            <svg
+              width="126"
+              height="101"
+              viewBox="0 0 126 101"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <g clip-path="url(#clip0_1349_34168)">
+                <path
+                  d="M95.371 100.166L11.656 100.196C7.45041 100.197 3.68314 98.008 1.57906 94.3402C0.526894 92.5061 0.000693685 90.4941 6.85071e-07 88.4817C-0.000692315 86.4695 0.52438 84.4569 1.57504 82.6223L43.4059 5.92095C45.5077 2.25144 49.2735 0.0600592 53.4791 0.0585945C57.6848 0.0571297 61.452 2.24588 63.5564 5.91393L105.445 82.5956C106.495 84.4249 107.02 86.4345 107.02 88.4457C107.02 90.4568 106.495 92.4692 105.444 94.304C103.342 97.9733 99.5766 100.165 95.371 100.166ZM1.0523 88.4803C1.05217 90.312 10.2898 86.365 11.2468 88.0334C13.1611 91.3702 7.82944 99.1393 11.6557 99.138C11.6557 99.138 102.623 97.1137 104.534 93.7756C105.49 92.1065 105.968 90.2754 105.967 88.4447C105.967 86.6141 105.488 84.7836 104.531 83.1152L62.6416 6.43349C60.7327 3.1062 57.3057 1.11485 53.4795 1.11619C49.655 1.11752 1.05245 86.6483 1.0523 88.4803Z"
+                  fill="#3F3D56"
+                />
+                <path
+                  d="M77.9031 83.2511C99.0694 83.2511 116.228 65.9683 116.228 44.649C116.228 23.3296 99.0694 6.04688 77.9031 6.04688C56.7368 6.04688 39.5781 23.3296 39.5781 44.649C39.5781 65.9683 56.7368 83.2511 77.9031 83.2511Z"
+                  fill="#464BA8"
+                />
+                <path
+                  d="M76.4827 53.0585L69.6851 23.465L75.0264 22.3325L80.6501 52.1749L76.4827 53.0585ZM81.0383 64.298C80.1383 64.4888 79.2902 64.3415 78.4941 63.8561C77.7289 63.3232 77.2522 62.6065 77.064 61.706C76.8758 60.8054 77.0293 59.9755 77.5244 59.2163C78.0587 58.4488 78.7759 57.9697 79.6759 57.7788C80.5759 57.588 81.4044 57.7395 82.1614 58.2332C82.9184 58.7269 83.391 59.4241 83.5792 60.3246C83.7674 61.2252 83.618 62.0746 83.131 62.873C82.6359 63.6322 81.9383 64.1072 81.0383 64.298Z"
+                  fill="white"
+                />
+              </g>
+              <defs>
+                <clipPath id="clip0_1349_34168">
+                  <rect width="126" height="101" fill="white" />
+                </clipPath>
+              </defs>
+            </svg>
+          </div>
+          <div class="col-md-12 text-center">
+            <h2 class="modal-title">
+             Removing Ciela Jones as a contact person will <br />
+revoke their access to Career Hive and affect  <br />
+the following vacancies:
+            </h2>
+            <p>
+                You may review and replace the notification routing destinations.
+            </p>
+            <ol class="role-list">
+                <li>Senior UI Designer</li>
+                <li>Junior Developer</li>
+            </ol>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer justify-content-between">
+        <button
+          id="cancel"
+          mat-button
+          type="button"
+          class="theme_btn btn_outline_primary mr-4"
+          data-dismiss="modal"
+          (click)="removeContact.hide()"
+        >
+          No
+        </button>
+        <button
+          mat-button
+          class="theme_btn btn_primary"
+          (click)="removeDepartment()"
+        >
+          Yes
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="previewMultiStepPageModal" class="modal bsModal ch_modal fade multi_preview" tabindex="-1" role="dialog"
+    aria-labelledby="previewMultiStepPageModal" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <!-- <h2 class="modal-title" id="exampleModalLabel">{{selectedForm?.formDetails?.title}}</h2> -->
+                <button mat-icon-button class="close" aria-label="Close" data-dismiss="modal">
+                    <mat-icon>close</mat-icon>
+                </button>
+            </div>
+            <div class="modal-body">
+                <ng-container *ngIf="selectedForm">
+                    <app-preview-forms id="donwloadFormHtml" [type]="'company'"
+                        [selectedTask]="selectedForm"></app-preview-forms>
+                </ng-container>
+            </div>
+            <div class="modal-footer justify-content-center">
+                <button #closeAddCompanyFlagModal mat-button class="theme_btn btn_outline_primary"
+                    data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>

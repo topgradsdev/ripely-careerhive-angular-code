@@ -1,0 +1,590 @@
+<div class="page_header">
+  <div class=" page_header_container">
+    <div>
+      <h4>Employer List</h4>
+      <div class="title_btn">
+        <button type="button" mat-button class="theme_link_btn" data-toggle="modal" data-target="#exampleModal"
+          id="btn-modal" (click)="bulk()"> <mat-icon>send</mat-icon> Send Email</button>
+        <!-- Download CSV Format -->
+        <button type="button" class="theme_link_btn" mat-button (click)="csvDownload()"><mat-icon>save_alt</mat-icon>
+          Download</button>
+      </div>
+    </div>
+    <div>
+      <button type="button" mat-button class="theme_btn btn_primary" data-toggle="modal" data-backdrop="static"
+        data-keyboard="false" data-target="#employer-creation" id="btn-modal"
+        (click)="intializeEmployerForm()"><mat-icon>add</mat-icon> Create Employer</button>
+    </div>
+  </div>
+  <!-- <cui-breadcrumb></cui-breadcrumb> -->
+</div>
+
+<section class="employer-mng-list">
+  <div class="">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="userAccountStat">
+          <div class="row">
+            <div class="col-md-3">
+              <div class="user_card">
+                <div class="user_card_header">
+                  <div class="card_title">
+                    <span>Account Created</span>
+                    <h4>{{createdCount}}</h4>
+                  </div>
+                  <div class="card_icon blue_circle">
+                    <mat-icon>person_add</mat-icon>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="user_card">
+                <div class="user_card_header">
+                  <div class="card_title">
+                    <span>Account Active</span>
+                    <h4>{{activeCount}}</h4>
+                  </div>
+                  <div class="card_icon green_circle">
+                    <mat-icon>check_circle</mat-icon>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="user_card">
+                <div class="user_card_header">
+                  <div class="card_title">
+                    <span>Account Deactive</span>
+                    <h4>{{deactiveCount}}</h4>
+                  </div>
+                  <div class="card_icon yellow_circle">
+                    <mat-icon>cancel</mat-icon>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="user_card">
+                <div class="user_card_header">
+                  <div class="card_title">
+                    <span>Account Deleted</span>
+                    <h4>{{deletedCount}}</h4>
+                  </div>
+                  <div class="card_icon red_circle">
+                    <mat-icon>delete_outline</mat-icon>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="tabl_upr">
+
+          <!-- <div class="fltr_div d-flex align-items-center">
+            <div class="form-group mb-0 ml-3">
+              <select class="form-control custom-select">
+                  <option selected>Select Filter</option>
+                  <option>Location</option>
+                  <option>Work Preference</option>
+                  <option>Availability</option>
+                  <option>Education</option>
+                  <option>License</option>
+                  <option>Work Rights</option>
+                  <option>Skills</option>
+              </select>
+            </div>
+
+            <div class="form-group mb-0 ml-3">
+              <select class="form-control custom-select">
+                  <option selected>Select Sub-Filter</option>
+                  <option>Melbourne</option>
+                  <option>Sydney</option>
+              </select>
+            </div>
+            <div class="appl_fltr ml-3">
+              <button class="btn btn-primary">
+              Apply Filter
+            </button>
+            </div>
+          </div> -->
+        </div>
+
+        <div class="custom_card employ_list_card">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-6">
+                <div class="search_container form-group">
+                  <mat-icon>search</mat-icon>
+                  <input (keyup)="applyFilter($event)" [(ngModel)]="search" placeholder="Ex. Mia" class="form-control"
+                    #input>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-3">
+                <div class="gradStatFilter">
+                  <select class="form-control custom-select" (change)="select($event)">
+                    <option value="" selected disabled>Select One</option>
+                    <option value="daily">Daily</option>
+                    <option value="week">Weekly</option>
+                    <option value="month">Monthly</option>
+                    <option value="lifetime">Lifetime</option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="gradStatFilter">
+                  <select class="form-control custom-select" (change)="selectfilters($event)">
+                    <option value="" selected disabled>Select One</option>
+                    <option value="companyName">Company Name</option>
+                    <option value="jobPosted">Job Posted</option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="gradStatFilter">
+                  <select matRipple class="form-control custom-select" (change)="selectsubfilters($event)">
+                    <option value="" selected disabled>Select One</option>
+                    <ng-container *ngIf="this.filterVal=='companyName'">
+                      <option *ngFor="let data of companyData" [value]="data">{{data}}</option>
+                    </ng-container>
+                  </select>
+                </div>
+              </div>
+              <div class="col-md-3 text-right">
+                <button mat-button class="btn_outline_primary" (click)="applyFilters()"><mat-icon>filter_alt</mat-icon>
+                  Apply Filters</button>
+              </div>
+            </div>
+          </div>
+          <div class="table-responsive">
+            <table mat-table [dataSource]="emplist" matSort>
+
+              <!-- Checkbox Column -->
+              <ng-container matColumnDef="select">
+                <th mat-header-cell *matHeaderCellDef>
+                  <mat-checkbox [checked]="findChecked()" (change)="selectAll($event)" class="td-check">
+                  </mat-checkbox>
+                </th>
+                <td mat-cell *matCellDef="let row">
+                  <mat-checkbox (change)="selectUser($event, row.email)" [(ngModel)]="row.checked" class="td-check">
+                  </mat-checkbox>
+                </td>
+              </ng-container>
+
+
+              <!-- ID Column -->
+              <ng-container matColumnDef="id">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> S.No </th>
+                <td mat-cell *matCellDef="let row ; let i=index"> {{i+1}} </td>
+              </ng-container>
+
+              <!-- Name Column -->
+              <ng-container matColumnDef="name">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>First Name </th>
+                <td mat-cell *matCellDef="let row"> {{row.first_name}} </td>
+              </ng-container>
+              <!-- lname Column -->
+              <ng-container matColumnDef="lname">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Last Name </th>
+                <td mat-cell *matCellDef="let row"> {{row.last_name}} </td>
+              </ng-container>
+              <!-- Email Column -->
+              <ng-container matColumnDef="email">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Work Email Address</th>
+                <td mat-cell *matCellDef="let row"> {{row.email}} </td>
+              </ng-container>
+              <!-- Company Column -->
+              <ng-container matColumnDef="company">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Company Name</th>
+                <td mat-cell *matCellDef="let row"> {{row.company_name}} </td>
+              </ng-container>
+              <!-- Job title Column -->
+              <ng-container matColumnDef="jobtitle">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Job Title</th>
+                <td mat-cell *matCellDef="let row"> {{row.role}} </td>
+              </ng-container>
+              <!-- creation date Column -->
+              <ng-container matColumnDef="creation">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Creation Date (Time)</th>
+                <td mat-cell *matCellDef="let row"> {{row?.createdAt | date}} </td>
+              </ng-container>
+              <!-- status column -->
+              <ng-container matColumnDef="status">
+                <th mat-header-cell *matHeaderCellDef> Status </th>
+                <td mat-cell *matCellDef="let row">
+                  <mat-slide-toggle [checked]="row.status=='active'?true:false"></mat-slide-toggle>
+                </td>
+              </ng-container>
+              <!-- Action column -->
+              <ng-container matColumnDef="action">
+                <th mat-header-cell *matHeaderCellDef> Action </th>
+                <td mat-cell *matCellDef="let row">
+                  <button mat-icon-button [matMenuTriggerFor]="menu" class="td-btn">
+                    <mat-icon>more_vert</mat-icon>
+                  </button>
+                  <mat-menu #menu="matMenu" class="td-menu">
+                    <a mat-menu-item class="" routerLink="/employerJobPost/{{row._id}}">
+                      <mat-icon class="material-icons-outlined">local_post_office</mat-icon>
+                      <span>Job Post</span>
+                    </a>
+                    <a mat-menu-item class="" routerLink="/viewEmployer/{{row._id}}">
+                      <mat-icon class="material-icons-outlined">visibility</mat-icon>
+                      <span>View</span>
+                    </a>
+                    <a mat-menu-item class="" routerLink="/editEmployer/{{row._id}}">
+                      <mat-icon class="material-icons-outlined">edit</mat-icon>
+                      <span>Edit</span>
+                    </a>
+                    <!-- <a mat-menu-item class="" data-toggle="modal" (click)="resetpswrd.show()">
+                        <mat-icon class="material-icons-outlined">cached</mat-icon>
+                        <span>Reset Password</span>
+                      </a>
+                      <a mat-menu-item class="" routerLink="">
+                        <mat-icon class="material-icons-outlined">block</mat-icon>
+                        <span>Ban</span>
+                      </a>
+                      <a mat-menu-item class="" routerLink="">
+                        <mat-icon class="material-icons-outlined">message</mat-icon>
+                        <span>Send Message</span>
+                      </a>
+                      <a mat-menu-item class="" routerLink="">
+                        <mat-icon class="material-icons-outlined">email</mat-icon>
+                        <span>Send Email</span>
+                      </a> -->
+                    <a mat-menu-item class="" data-toggle="modal" (click)="modal(row._id)">
+                      <mat-icon class="material-icons-outlined">delete</mat-icon>
+                      <span>Delete</span>
+                    </a>
+                  </mat-menu>
+                </td>
+              </ng-container>
+
+              <!-- Progress Column -->
+              <!-- <ng-container matColumnDef="progress">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Progress </th>
+                <td mat-cell *matCellDef="let row"> {{row.progress}}% </td>
+              </ng-container> -->
+
+              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+              <!-- Row shown when there is no matching data. -->
+              <tr class="mat-row" *matNoDataRow>
+                <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
+              </tr>
+            </table>
+          </div>
+          <mat-paginator [length]="totalRecords" [pageIndex]="topPage" [pageSize]="limit"
+            [pageSizeOptions]="getPageSizeOptions()" (page)="paginationOptionChange($event)"
+            aria-label="Select page of users"></mat-paginator>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- delete model----------------- -->
+<div bsModal #smallModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="smallModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-md confirm_modal" role="document">
+    <div class="modal-content">
+      <!-- <div class="modal-header">
+        <button type="button" class="close td-btn" (click)="smallModal.hide()" aria-label="Close">
+          <span aria-hidden="true" class="prof_modclose">
+            <img src="assets/img/Group 225.png">
+          </span>
+        </button>
+      </div> -->
+      <div class="modal-body">
+        <p class="confirm_message mt-2">Are you sure you want to delete <br> the selected user's account?</p>
+      </div>
+      <div class="modal-footer text-center justify-content-center">
+        <button mat-button type="submit" class="theme_link_btn_c" (click)="smallModal.hide()">No</button>
+        <button mat-button type="submit" class="theme_btn btn_primary" (click)="deleteEmp(this.delId)">Yes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<!-- Modal -->
+<div class="modal fade bsModal" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title" id="exampleModalLabel">Employer Email</h2>
+        <button type="button" mat-icon-button id="closeModal" class="close" data-dismiss="modal" aria-label="Close"
+        >
+          <mat-icon>close</mat-icon>
+        </button>
+      </div>
+      <form [formGroup]="empForm">
+        <div class="modal-body">
+          <div class="form-group form-floating">
+            <input type="text" name="" id="title" placeholder="Title" class="form-control" formControlName="title"
+              oninput="this.value = !this.value.trim() ? this.value.trim() : this.value">
+            <label for="title">Title</label>
+            <div *ngIf="(empForm.controls.title?.touched || empForm.controls.title?.dirty)
+								 && empForm.controls.title?.invalid && empForm.controls.title?.errors?.required" class="invalid">
+              Please enter title
+            </div>
+          </div>
+          <div class="form-group form-floating">
+            <textarea type="text" name="" placeholder="description" class="form-control" formControlName="description"
+              oninput="this.value = !this.value.trim() ? this.value.trim() : this.value">
+          </textarea>
+            <label>Description</label>
+            <div *ngIf="(empForm.controls.description?.touched || empForm.controls.description?.dirty)
+							 && empForm.controls.description?.invalid && empForm.controls.description?.errors?.required" class="invalid">
+              Please enter description
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button mat-button type="button" class="theme_link_btn_c" data-dismiss="modal">Cancel</button>
+          <button mat-button type="submit" class="theme_btn btn_primary" (click)="sendMail()">Send</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="employer-creation" tabindex="-1" role="dialog" aria-labelledby="employerModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title" id="employerModalLabel">Create Employer</h2>
+        <button mat-icon-button type="button" id="closeEmployerCreationModal" class="close" data-dismiss="modal"
+          aria-label="Close">
+          <mat-icon>close</mat-icon>
+        </button>
+      </div>
+      <div class="input_flds">
+        <form [formGroup]="registerEmpForm">
+          <div class="register-form-container">
+            <div class="row">
+              <div class="col-md-6 py-0 pr-2">
+                <div class="form-group form-floating">
+                  <input type="text" formControlName="first_name" pattern="[a-zA-Z ._-]*$" class="form-control"
+                    id="firstname" aria-describedby="emailHelp" placeholder="First name"
+                    oninput="this.value = !this.value.trim() ? this.value.trim() : this.value">
+                  <label for="firstname">First name</label>
+                  <div
+                    *ngIf="registerEmpForm.get('first_name') && (registerEmpForm.get('first_name')?.touched || registerEmpForm.get('first_name')?.dirty) && registerEmpForm.get('first_name')?.invalid && registerEmpForm.get('first_name')?.errors?.required"
+                    class="invalid">
+                    *Please enter first name
+                  </div>
+                  <div
+                    *ngIf="registerEmpForm.get('first_name') && (registerEmpForm.get('first_name')?.touched || registerEmpForm.get('first_name')?.dirty) && registerEmpForm.get('first_name')?.invalid && registerEmpForm.get('first_name')?.errors?.pattern"
+                    class="invalid">
+                    *Please enter valid first name
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6 py-0 pl-2">
+                <div class="form-group form-floating">
+                  <input type="text" formControlName="last_name" pattern="[a-zA-Z ._-]*$" class="form-control"
+                    id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Last name"
+                    oninput="this.value = !this.value.trim() ? this.value.trim() : this.value">
+                  <label for="exampleInputEmail1">Last name</label>
+                  <div
+                    *ngIf="registerEmpForm.get('last_name') && (registerEmpForm.get('last_name')?.touched || registerEmpForm.get('last_name')?.dirty) && registerEmpForm.get('last_name')?.invalid && registerEmpForm.get('last_name')?.errors?.required"
+                    class="invalid">
+                    *Please enter last name
+                  </div>
+                  <div
+                    *ngIf="registerEmpForm.get('last_name') && (registerEmpForm.get('last_name')?.touched || registerEmpForm.get('last_name')?.dirty) && registerEmpForm.get('last_name')?.invalid && registerEmpForm.get('last_name')?.errors?.pattern"
+                    class="invalid">
+                    *Please enter valid last name
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-12">
+                <div class="form-group form-floating">
+                  <input type="email" (input)="checkEmailExists($event)" formControlName="email" class="form-control"
+                    id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="name@domain.com">
+                  <label for="exampleInputEmail1">Work email address</label>
+                  <div
+                    *ngIf="(registerEmpForm.get('email')?.touched || registerEmpForm.get('email')?.dirty) && registerEmpForm.get('email')?.invalid && registerEmpForm.get('email')?.errors?.required"
+                    class="invalid">
+                    *Please enter email address
+                  </div>
+                  <div
+                    *ngIf="(registerEmpForm.get('email')?.touched || registerEmpForm.get('email')?.dirty) && registerEmpForm.get('email')?.invalid && registerEmpForm.get('email')?.errors?.email"
+                    class="invalid">
+                    *Please enter valid email address
+                  </div>
+                  <div
+                    *ngIf="(registerEmpForm.get('email')?.touched || registerEmpForm.get('email')?.dirty) && registerEmpForm.get('email')?.invalid && registerEmpForm.get('email')?.errors?.pattern && !registerEmpForm.get('email')?.errors?.email"
+                    class="invalid">
+                    *Please enter valid email address
+                  </div>
+                  <div
+                    *ngIf="emailExists && (registerEmpForm.get('email')?.touched || registerEmpForm.get('email')?.dirty) && registerEmpForm.get('email')?.valid"
+                    class="invalid">
+                    Email is already in use
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-12">
+                <div class="form-group form-floating">
+                  <input type="email" formControlName="confirm_email" class="form-control" id="exampleInputEmail1"
+                    aria-describedby="emailHelp" placeholder="name@domain.com">
+                  <label for="exampleInputEmail1">Confirm work email address</label>
+                  <div
+                    *ngIf="(registerEmpForm.get('confirm_email')?.touched || registerEmpForm.get('confirm_email')?.dirty) && registerEmpForm.get('confirm_email')?.invalid && registerEmpForm.get('confirm_email')?.errors?.required"
+                    class="invalid">
+                    <!-- *Please enter confirm Email address -->
+                    *Please enter correct email address.
+                  </div>
+                  <div
+                    *ngIf="(registerEmpForm.get('confirm_email')?.touched || registerEmpForm.get('confirm_email')?.dirty) && registerEmpForm.get('confirm_email')?.invalid && registerEmpForm.get('confirm_email')?.errors?.confirm_email"
+                    class="invalid">
+                    *Please enter valid email address
+                  </div>
+
+                  <div
+                    *ngIf="(registerEmpForm.get('confirm_email')?.touched || registerEmpForm.get('confirm_email')?.dirty) && registerEmpForm.hasError('mailNotSame') && !registerEmpForm.get('confirm_email')?.errors?.required"
+                    class="invalid">
+                    *Email does not match
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-12">
+                <div class="form-group form-floating">
+                  <input type="text" formControlName="company" class="form-control" id="exampleInputEmail1"
+                    aria-describedby="emailHelp" placeholder="Company name">
+                  <label for="exampleInputEmail1">Company Name</label>
+                  <div
+                    *ngIf="(registerEmpForm.get('company')?.touched || registerEmpForm.get('company')?.dirty) && registerEmpForm.get('company')?.invalid && registerEmpForm.get('company')?.errors?.required"
+                    class="invalid">
+                    *Please enter company name
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-12">
+                <div class="form-group form-floating">
+                  <select class="form-control custom-select job_ttl_select" id="exampleFormControlSelect1"
+                    formControlName="industry" (change)="selected()" [(ngModel)]="selectedLevel">
+                    <!-- <option>Select</option> -->
+                    <option value="{{item?._id}}" *ngFor="let item of industryList">{{item?.name}}</option>
+
+                    <option value="custom_roles">Other</option>
+                  </select>
+                  <label for="exampleFormControlSelect1">Industry</label>
+                  <div
+                    *ngIf="(registerEmpForm.get('industry')?.touched || registerEmpForm.get('industry')?.dirty) && registerEmpForm.get('industry')?.invalid && registerEmpForm.get('industry')?.errors?.required"
+                    class="invalid">
+                    *Please select industry
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-12 other_roles_div" *ngIf="this.selectedLevel == 'custom_roles'">
+                <div class="form-group form-floating">
+                  <input type="text" class="form-control" id="" aria-describedby="emailHelp"
+                    placeholder="Other industry" formControlName='others'>
+                  <label for="exampleInputEmail1">Please Specify</label>
+                  <div
+                    *ngIf="(registerEmpForm.get('others')?.touched || registerEmpForm.get('others')?.dirty) && registerEmpForm.get('others')?.invalid && registerEmpForm.get('others')?.errors?.required"
+                    class="invalid">
+                    *This field is required
+                  </div>
+                </div>
+              </div>
+              <!-- <div class="form-group" *ngIf="selectedValue == 'others'">
+                    <label for="name">Enter College Name:</label>
+                    <input type="text" class="form-control" id="name" ngModel name="other_college_name" required>
+                  </div> -->
+
+              <!-- <div class="col-sm-12">
+                    <div class="form-group position-relative">
+                        <label for="exampleInputEmail1">Password</label>
+                        <input [type]="pass" formControlName="password" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Password">
+                        <small id="emailHelp" class="form-text text-muted">
+                            Password must be at least 8 characters and contain at least one uppercase, one lowercase letter and one number.
+                        </small>
+                        <span *ngIf="pass == 'text'" class="eye_icon" (click)="onEyeClick('pass', 'password')">
+                            <svg width="20" height="13" viewBox="0 0 20 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M1.29565 6.7632C1.1361 6.56013 1.00404 6.38224 0.900947 6.23866C0.997612 6.09726 1.1211 5.92302 1.27053 5.72458C1.69179 5.16511 2.31455 4.41936 3.11828 3.6754C4.7353 2.17866 7.01653 0.75 9.82143 0.75C12.6263 0.75 14.9076 2.17866 16.5246 3.6754C17.3283 4.41936 17.9511 5.16511 18.3723 5.72458C18.5218 5.92302 18.6452 6.09726 18.7419 6.23866C18.6388 6.38224 18.5068 6.56013 18.3472 6.7632C17.9058 7.32498 17.2587 8.07347 16.4375 8.82004C14.7807 10.3262 12.4992 11.75 9.82143 11.75C7.14368 11.75 4.86212 10.3262 3.2054 8.82004C2.38417 8.07347 1.73706 7.32498 1.29565 6.7632Z" stroke="#545465" stroke-width="1.5"/>
+                                <circle cx="9.82143" cy="6.24965" r="2.82143" stroke="#545465" stroke-width="1.5"/>
+                            </svg>
+                        </span>
+                        <span *ngIf="pass == 'password'" class="eye_icon pswrd_hide" (click)="onEyeClick('pass', 'text')">
+                            <svg width="20" height="16" viewBox="0 0 20 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M1.30849 8.89459C1.14302 8.68399 1.00656 8.49996 0.900682 8.35228C0.999999 8.20676 1.12767 8.0264 1.28274 7.82046C1.71202 7.25034 2.34663 6.49038 3.16572 5.73222C4.81343 4.20707 7.1393 2.75 10 2.75C12.8607 2.75 15.1866 4.20707 16.8343 5.73222C17.6534 6.49038 18.288 7.25034 18.7173 7.82046C18.8723 8.0264 19 8.20676 19.0993 8.35228C18.9934 8.49996 18.857 8.68399 18.6915 8.89459C18.2417 9.46703 17.5824 10.2297 16.7455 10.9905C15.0575 12.525 12.7313 13.9773 10 13.9773C7.26867 13.9773 4.94248 12.525 3.2545 10.9905C2.41765 10.2297 1.75826 9.46703 1.30849 8.89459Z" stroke="#545465" stroke-width="1.5"/>
+                                <circle cx="10.0001" cy="8.36293" r="2.88636" stroke="#545465" stroke-width="1.5"/>
+                                <rect x="2.1875" y="1.44922" width="1.52727" height="20.3636" transform="rotate(-45 2.1875 1.44922)" fill="#545465"/>
+                                </svg>
+                        </span>
+                        <div *ngIf="(registerEmpForm.get('password')?.touched || registerEmpForm.get('password')?.dirty) && registerEmpForm.get('password')?.invalid && registerEmpForm.get('password')?.errors?.required" class="invalid">
+                            *Please enter password
+                        </div>
+                        <div *ngIf="(registerEmpForm.get('password')?.touched || registerEmpForm.get('password')?.dirty) && registerEmpForm.get('password')?.invalid && registerEmpForm.get('password')?.errors?.pattern" class="invalid">
+                            *Please enter valid password
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-12">
+                    <div class="form-group position-relative">
+                        <label for="exampleInputEmail1">Confirm password</label>
+                        <input [type]="confirmPass" formControlName="confirm_password" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Password">
+                        <span *ngIf="confirmPass == 'text'" class="eye_icon" (click)="onEyeClick('confirmPass', 'password')">
+                            <svg width="20" height="13" viewBox="0 0 20 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M1.29565 6.7632C1.1361 6.56013 1.00404 6.38224 0.900947 6.23866C0.997612 6.09726 1.1211 5.92302 1.27053 5.72458C1.69179 5.16511 2.31455 4.41936 3.11828 3.6754C4.7353 2.17866 7.01653 0.75 9.82143 0.75C12.6263 0.75 14.9076 2.17866 16.5246 3.6754C17.3283 4.41936 17.9511 5.16511 18.3723 5.72458C18.5218 5.92302 18.6452 6.09726 18.7419 6.23866C18.6388 6.38224 18.5068 6.56013 18.3472 6.7632C17.9058 7.32498 17.2587 8.07347 16.4375 8.82004C14.7807 10.3262 12.4992 11.75 9.82143 11.75C7.14368 11.75 4.86212 10.3262 3.2054 8.82004C2.38417 8.07347 1.73706 7.32498 1.29565 6.7632Z" stroke="#545465" stroke-width="1.5"/>
+                                <circle cx="9.82143" cy="6.24965" r="2.82143" stroke="#545465" stroke-width="1.5"/>
+                            </svg>
+                        </span>
+                        <span *ngIf="confirmPass == 'password'" class="eye_icon pswrd_hide" (click)="onEyeClick('confirmPass', 'text')">
+                            <svg width="20" height="16" viewBox="0 0 20 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M1.30849 8.89459C1.14302 8.68399 1.00656 8.49996 0.900682 8.35228C0.999999 8.20676 1.12767 8.0264 1.28274 7.82046C1.71202 7.25034 2.34663 6.49038 3.16572 5.73222C4.81343 4.20707 7.1393 2.75 10 2.75C12.8607 2.75 15.1866 4.20707 16.8343 5.73222C17.6534 6.49038 18.288 7.25034 18.7173 7.82046C18.8723 8.0264 19 8.20676 19.0993 8.35228C18.9934 8.49996 18.857 8.68399 18.6915 8.89459C18.2417 9.46703 17.5824 10.2297 16.7455 10.9905C15.0575 12.525 12.7313 13.9773 10 13.9773C7.26867 13.9773 4.94248 12.525 3.2545 10.9905C2.41765 10.2297 1.75826 9.46703 1.30849 8.89459Z" stroke="#545465" stroke-width="1.5"/>
+                                <circle cx="10.0001" cy="8.36293" r="2.88636" stroke="#545465" stroke-width="1.5"/>
+                                <rect x="2.1875" y="1.44922" width="1.52727" height="20.3636" transform="rotate(-45 2.1875 1.44922)" fill="#545465"/>
+                                </svg>
+                        </span>
+                        <div *ngIf="(registerEmpForm.get('confirm_password')?.touched || registerEmpForm.get('confirm_password')?.dirty) && registerEmpForm.get('confirm_password')?.invalid && registerEmpForm.get('confirm_password')?.errors?.required" class="invalid">
+                            *Please enter confirm password
+                        </div>
+                        <div *ngIf="(registerEmpForm.get('confirm_password')?.touched || registerEmpForm.get('confirm_password')?.dirty) && registerEmpForm.hasError('pwdNotSame') && !registerEmpForm.get('confirm_password')?.errors?.required" class="invalid">
+                            *Password does not match
+                        </div>
+                    </div>
+                </div> -->
+              <!-- <div class="col-sm-12 p-0 reg_padding">
+                    <div class="form-group position-relative">
+                        <div class="rem_me_txt st_role_cl agree_terms">
+                            <p class="m-0"><mat-checkbox class="example-margin">I agree to TopGraduates’ <a href="javascript:;" class="terms_colr" routerLink="/terms-and-conditions" target="_blank">Terms and Conditions</a> & <a href="javascript:;" class="terms_colr" routerLink="/privacy-policy" target="_blank">Privacy Policy</a></mat-checkbox></p>
+                         </div> 
+                    </div>
+                </div> -->
+              <!-- <div class="col-sm-12 p-0 reg_padding">
+                    <div class="form-group position-relative">
+                        <div class="rem_me_txt st_role_cl agree_terms">
+                            <p class="m-0">
+                                <mat-checkbox formControlName="terms" class="example-margin">I agree to TopGraduates’ <a href="javascript:;" class="terms_colr" routerLink="/contents/copyright-disclaimer" target="_blank">Copyright & Disclaimer</a> & <a href="javascript:;" class="terms_colr" routerLink="/contents/privacy-policy" target="_blank">Privacy Policy</a></mat-checkbox>
+                            </p>
+                        </div> 
+                        <div *ngIf="(registerEmpForm.get('terms')?.touched) && registerEmpForm.get('terms')?.errors" class="invalid">
+                            *Please accept our Copyright & Disclaimer & Privacy Policy
+                        </div>
+                    </div>
+                </div> -->
+            </div>
+            <div class="reg-submit-btns text-right">
+              <!-- <a class="btn btn-outline-green mr-3" role="button">Cancel</a> -->
+              <button mat-button class="theme_link_btn_c mr-3" data-dismiss="modal" aria-label="Close">Cancel</button>
+              <button type="button" mat-button class="theme_btn btn_primary" role="button"
+                (click)="createAccount()">Create account</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

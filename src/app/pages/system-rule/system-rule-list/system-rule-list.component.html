@@ -1,0 +1,280 @@
+<div class="page_header">
+    <div class="page_header_container">
+        <div>
+            <h4>Systems & Rules - Purge Policy</h4>
+        </div>
+    </div>
+</div>
+<section>
+    <div class="d-flex justify-content-end align-items-center gap-3 mb-3" *ngIf="systemRules.length==0">
+        <button *ngxPermissionsOnly="['WIL_Write']" mat-button class="theme_btn btn_primary" [routerLink]="['/admin/system-rule/add-rule']">
+            <mat-icon>add</mat-icon> Add New Rule
+        </button>
+    </div>
+    <div class="d-flex justify-content-center align-items-center gap-3 flex-column" *ngIf="systemRules.length==0">
+        <svg width="126" height="101" viewBox="0 0 126 101" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <g clip-path="url(#clip0_4062_143297)">
+            <path d="M95.371 100.164L11.656 100.194C7.45041 100.195 3.68314 98.0061 1.57906 94.3383C0.526894 92.5041 0.000693685 90.4921 6.85071e-07 88.4797C-0.000692315 86.4676 0.52438 84.455 1.57504 82.6203L43.4059 5.91899C45.5077 2.24948 49.2735 0.0581061 53.4791 0.0566414C57.6848 0.0551766 61.452 2.24393 63.5564 5.91197L105.445 82.5937C106.495 84.4229 107.02 86.4326 107.02 88.4437C107.02 90.4548 106.495 92.4672 105.444 94.3021C103.342 97.9713 99.5766 100.163 95.371 100.164ZM1.0523 88.4783C1.05217 90.31 10.2898 86.363 11.2468 88.0314C13.1611 91.3683 7.82944 99.1373 11.6557 99.136C11.6557 99.136 102.623 97.1118 104.534 93.7736C105.49 92.1045 105.968 90.2734 105.967 88.4428C105.967 86.6122 105.488 84.7817 104.531 83.1133L62.6416 6.43154C60.7327 3.10425 57.3057 1.1129 53.4795 1.11423C49.655 1.11557 1.05245 86.6464 1.0523 88.4783Z" fill="#3F3D56"/>
+            <path d="M77.9031 83.2491C99.0694 83.2491 116.228 65.9664 116.228 44.647C116.228 23.3277 99.0694 6.04492 77.9031 6.04492C56.7368 6.04492 39.5781 23.3277 39.5781 44.647C39.5781 65.9664 56.7368 83.2491 77.9031 83.2491Z" fill="#464BA8"/>
+            <path d="M76.4827 53.0605L69.6851 23.4669L75.0264 22.3345L80.6501 52.1769L76.4827 53.0605ZM81.0383 64.3C80.1383 64.4908 79.2902 64.3435 78.4941 63.858C77.7289 63.3252 77.2522 62.6085 77.064 61.7079C76.8758 60.8074 77.0293 59.9775 77.5244 59.2183C78.0587 58.4508 78.7759 57.9716 79.6759 57.7808C80.5759 57.59 81.4044 57.7414 82.1614 58.2352C82.9184 58.7289 83.391 59.426 83.5792 60.3266C83.7674 61.2271 83.618 62.0766 83.131 62.8749C82.6359 63.6341 81.9383 64.1091 81.0383 64.3Z" fill="white"/>
+            </g>
+            <defs>
+            <clipPath id="clip0_4062_143297">
+            <rect width="126" height="101" fill="white"/>
+            </clipPath>
+            </defs>
+            </svg>
+
+            <h2>You currently have no Data Purge Rules.</h2>
+    </div>
+    <div *ngIf="systemRules.length>0">
+
+         <!-- 'alert_info': employerProfile?.self_source_status=='pending', -->
+     <div *ngIf="hasPendingData" class="alert custom_alert alert-dismissible fade show" [ngClass]="{
+        'alert_reject': true,
+        }" role="alert">
+            <div class="d-flex p-3 gap-3 justify-content-center align-items-center">
+                    <div class="svg">
+                        <svg width="47" height="49" viewBox="0 0 47 49" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M23.4998 44.5C34.3154 44.5 43.0832 35.5457 43.0832 24.5C43.0832 13.4543 34.3154 4.5 23.4998 4.5C12.6843 4.5 3.9165 13.4543 3.9165 24.5C3.9165 35.5457 12.6843 44.5 23.4998 44.5Z" stroke="#F47761" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M23.5 32.5V24.5" stroke="#F47761" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M23.5 16.5H23.5188" stroke="#F47761" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+                    <div class="content start">
+                        <h3 class="mb-2 alert-h3">One or more System Rule requires your attention.</h3>
+                        <p class="alert-p">
+                         Please review the outstanding data and make your choice.
+                        </p>
+                    </div>
+            </div>
+        </div>
+        
+      <div class="row sub_header">
+        <div class="col-md-12 text-right">
+            <div class="d-flex align-items-center justify-content-end gap-3">
+                <div class="search-container">
+                    <svg class="icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20"
+                        fill="none">
+                        <path
+                            d="M9.16667 15.8333C12.8486 15.8333 15.8333 12.8486 15.8333 9.16667C15.8333 5.48477 12.8486 2.5 9.16667 2.5C5.48477 2.5 2.5 5.48477 2.5 9.16667C2.5 12.8486 5.48477 15.8333 9.16667 15.8333Z"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                        <path d="M17.5 17.5L13.875 13.875" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                            stroke-linejoin="round" />
+                    </svg>
+                    <input type="text" class="form-control"  [(ngModel)]="search"
+  (ngModelChange)="cleardata();loadRules()"placeholder="Search Keywords">
+                </div>
+                <button *ngxPermissionsOnly="['WIL_Write']" mat-button class="theme_btn btn_primary"  [routerLink]="['/admin/system-rule/add-rule']">
+                    <mat-icon>add</mat-icon> Add New Rule
+                </button>
+            </div>
+        </div>
+    </div>
+    <ng-container>
+        <div class="table-responsive sticky-table"  infiniteScroll
+[infiniteScrollDistance]="2"
+[infiniteScrollThrottle]="150"
+(scrolled)="onScrollDown()"
+[scrollWindow]="false">
+            <table mat-table [dataSource]="systemRules" matSort #placementGroupTbSort="matSort" class="ch_table">
+                <!-- Code Column -->
+                <ng-container matColumnDef="name">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
+                    <td mat-cell *matCellDef="let row">
+                        {{row.name}}
+                    </td>
+                </ng-container>
+                <!-- Title Column -->
+                <!-- <ng-container matColumnDef="title">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Title </th>
+                    <td mat-cell *matCellDef="let row"
+                    [state]="{type: 'view'}">
+                    <a class="td_link"  [routerLink]="row.category_id != '65a21e64fa6a8e4f5b252994' ? ['/admin/wil/placement-groups', row._id] : ['/admin/wil/placement-groups/project', row._id]">{{row.title}}</a>
+                    </td>
+                </ng-container> -->
+                <!-- Industry Column -->
+                <ng-container matColumnDef="user_type">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>User Type </th>
+                    <td mat-cell *matCellDef="let row"> {{row.user_type}} </td>
+                </ng-container>
+                <!-- Category Column -->
+                <ng-container matColumnDef="cycle_period">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Cycle Period </th>
+                    <td mat-cell *matCellDef="let row"> {{row.duration}} </td>
+                </ng-container>
+                <!-- Last Modified Comment -->
+                <!-- <ng-container matColumnDef="updated_at">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Last Modified </th>
+                    <td mat-cell *matCellDef="let row"> {{row.updated_at | date: 'dd/MM/YYYY'}} </td>
+                </ng-container>
+                <ng-container matColumnDef="publish_at">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Published On</th>
+                    <td mat-cell *matCellDef="let row"> {{row?.publish_on ? (row?.publish_on | date: 'dd/MM/yyyy HH:mm:ss a') : '-' }} </td>
+                </ng-container>
+      -->
+
+                <!-- Students Column -->
+                <ng-container matColumnDef="condition">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Condition </th>
+                    <td mat-cell *matCellDef="let row"> {{row.condition_to_trigger}} </td>
+                </ng-container>
+    
+                   <!-- Students Column -->
+                <ng-container matColumnDef="pending_data">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Pending Data </th>
+                    <!-- class="cursor-pointer" [routerLink]="['/admin/system-rule/detail/', row._id, row.user_type]" -->
+                    <td mat-cell *matCellDef="let row" > 
+                        <span [ngClass]="{
+                            'pending-error': row.pending_data > 0,
+                            'pending-primary': row.pending_data === 0
+                        }">{{row.pending_data}}</span>    
+                    </td>
+                </ng-container>
+    
+                <!-- Published By Column For -->
+                <ng-container matColumnDef="created_by">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Created By</th>
+                    <td mat-cell *matCellDef="let row">
+                        <div class="d-flex align-items-center">
+                            <div class="profile mr-1">
+                                <span>{{ getInitials(row?.created_by || row?.created_by) }}</span>
+                            </div> 
+                            <div class="d-flex flex-column gap-1">
+                                <span>{{row.created_by?row.created_by:row.created_by}}</span>
+                                <span class="date">{{row.created_at?(row.created_at | date: "dd/MM/yyyy"):row.created_at}}</span>
+                            </div>
+                        </div>
+                       
+                    </td>
+                </ng-container>
+
+                <!-- Action column -->
+                <ng-container matColumnDef="actions" stickyEnd>
+                    <th mat-header-cell *matHeaderCellDef> Actions </th>
+                    <td mat-cell *matCellDef="let row">
+                        <button mat-icon-button [matMenuTriggerFor]="menu" class="td-btn" (click)="selectedRule=row;">
+                            <mat-icon>more_horizantal</mat-icon>
+                        </button>
+
+                        <!-- [routerLink]="['/admin/wil/placement-groups', row._id]"
+                         
+                        [routerLink]="row.category_id === '65a21e64fa6a8e4f5b252994' 
+                            ? ['/admin/wil/placement-groups/project', row._id] 
+                            : ['/admin/wil/placement-groups', row._id]"    [state]="{type: 'view'}"-->
+                        <mat-menu #menu="matMenu" class="td-menu custome_theme_menu">
+                            <a mat-menu-item  [routerLink]="['/admin/system-rule/update-rule', row._id]">
+                                <span>Edit Rule</span>
+                            </a>
+                            <!-- <a mat-menu-item *ngIf="row.pending_data > 0">
+                                <span>View Pending Data</span>
+                            </a> -->
+                            <a *ngxPermissionsOnly="['WIL_Write']" mat-menu-item class="danger" (click)="removeCompany.show();">
+                                <span>Remove Rule</span>
+                            </a>
+                        </mat-menu>
+                    </td>
+                </ng-container>
+                <tr mat-header-row *matHeaderRowDef="displayedSystemRuleColumns;sticky: true"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedSystemRuleColumns;"></tr>
+                <!-- Row shown when there is no matching data. -->
+                <!-- <tr class="mat-row" *matNoDataRow><td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td></tr> -->
+            </table>
+        </div>
+    </ng-container>
+    <!-- <app-paginator [paginationObj]="paginationObj" (pagination)="getPaginationData($event)"></app-paginator> -->
+
+    <h4 *ngIf="applyfilter" class="result-found" style="color:#464BA8">
+        {{this.paginationObj.length}} Results Found! 
+        &nbsp;&nbsp;<button mat-button class="theme_btn btn_outline_primary" (click)="callApi(''); filterApply=[]; applyfilter = false;placementGroupStatus = placementGroupStatusEnum.ACTIVE; status = 'active'">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M15 5L5 15" stroke="#464BA8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M5 5L15 15" stroke="#464BA8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            &nbsp;&nbsp;  
+                Reset Filter
+        </button>
+    </h4>
+    </div>
+</section>
+
+<!-- Add Placement Group Modal -->
+<div bsModal #removeCompany="bs-modal"  class="modal fade bsModal ch_modal" id="addPlacementGroup" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document" style="max-width:700px">
+        <div class="modal-content"  style="max-height: calc(100vh - 150px) !important;" >
+            <div class="modal-header">
+                <!-- <h2 class="modal-title">Add&nbsp;<b>{{selectedRecords.length}}</b>&nbsp; companies to Placement Group</h2> -->
+                <!-- <h2 class="modal-title">Add to Placement Group</h2> -->
+                <button type="button" mat-icon-button id="closeModal" class="close" data-dismiss="modal"
+                    aria-label="Close" (click)="removeCompany.hide();">
+                    <mat-icon>close</mat-icon>
+                </button>
+            </div>
+            <div class="modal-body pt-3 d-flex flex-column gap-4 align-items-center justify-content-center">
+
+                <svg width="126" height="101" viewBox="0 0 126 101" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <g clip-path="url(#clip0_4405_48069)">
+                <path d="M95.371 100.166L11.656 100.196C7.45041 100.197 3.68314 98.008 1.57906 94.3402C0.526894 92.5061 0.000693685 90.4941 6.85071e-07 88.4817C-0.000692315 86.4695 0.52438 84.4569 1.57504 82.6223L43.4059 5.92095C45.5077 2.25144 49.2735 0.0600592 53.4791 0.0585945C57.6848 0.0571297 61.452 2.24588 63.5564 5.91393L105.445 82.5956C106.495 84.4249 107.02 86.4345 107.02 88.4457C107.02 90.4568 106.495 92.4692 105.444 94.304C103.342 97.9733 99.5766 100.165 95.371 100.166ZM1.0523 88.4803C1.05217 90.312 10.2898 86.365 11.2468 88.0334C13.1611 91.3702 7.82944 99.1393 11.6557 99.138C11.6557 99.138 102.623 97.1137 104.534 93.7756C105.49 92.1065 105.968 90.2754 105.967 88.4447C105.967 86.6141 105.488 84.7836 104.531 83.1152L62.6416 6.43349C60.7327 3.1062 57.3057 1.11485 53.4795 1.11619C49.655 1.11752 1.05245 86.6483 1.0523 88.4803Z" fill="#3F3D56"/>
+                <path d="M77.9031 83.2511C99.0694 83.2511 116.228 65.9683 116.228 44.649C116.228 23.3296 99.0694 6.04688 77.9031 6.04688C56.7368 6.04688 39.5781 23.3296 39.5781 44.649C39.5781 65.9683 56.7368 83.2511 77.9031 83.2511Z" fill="#464BA8"/>
+                <path d="M72.2285 53.8378L69.7828 44.4817L71.6023 44.0959C73.2458 43.7474 74.7905 43.3177 76.2366 42.8067C77.7136 42.2482 78.954 41.5354 79.9578 40.6684C81.0008 39.793 81.7363 38.7171 82.1642 37.4406C82.623 36.1166 82.6561 34.5149 82.2633 32.6355C81.9196 30.9911 81.2729 29.6562 80.3231 28.6309C79.4124 27.5973 78.2655 26.9 76.8824 26.539C75.5384 26.1698 74.0447 26.1593 72.4013 26.5078C70.7578 26.8562 69.395 27.4723 68.3129 28.3559C67.2308 29.2396 66.4758 30.3197 66.0479 31.5962C65.6118 32.8335 65.5574 34.2353 65.8847 35.8015L61.189 36.797C60.6981 34.4478 60.7968 32.2802 61.485 30.2942C62.2125 28.3 63.4326 26.6102 65.1454 25.2248C66.8582 23.8395 68.9864 22.8771 71.5298 22.3379C74.0733 21.7986 76.4255 21.811 78.5866 22.375C80.7477 22.9391 82.5643 24.0055 84.0363 25.5743C85.5084 27.1431 86.5021 29.1608 87.0176 31.6275C87.6232 34.5249 87.488 37.0069 86.6123 39.0735C85.7756 41.1318 84.3672 42.8002 82.3868 44.0787C80.4065 45.3572 78.0077 46.2952 75.1903 46.8925L75.9263 53.0538L72.2285 53.8378ZM76.6325 65.2321C75.7325 65.4229 74.8844 65.2756 74.0883 64.7902C73.3231 64.2573 72.8464 63.5406 72.6582 62.6401C72.47 61.7395 72.6235 60.9097 73.1186 60.1504C73.6529 59.3829 74.3701 58.9038 75.2701 58.713C76.1701 58.5222 76.9986 58.6736 77.7556 59.1673C78.5126 59.6611 78.9852 60.3582 79.1734 61.2587C79.3616 62.1593 79.2122 63.0087 78.7252 63.8071C78.23 64.5663 77.5325 65.0413 76.6325 65.2321Z" fill="white"/>
+                </g>
+                <defs>
+                <clipPath id="clip0_4405_48069">
+                <rect width="126" height="101" fill="white"/>
+                </clipPath>
+                </defs>
+                </svg>
+
+                <h2  class="m-0 text-center" *ngIf="selectedRule?.value>0">
+                   This Rule has pending data, are you sure you <br /> want to remove this Rule?
+                </h2>
+                <h2  class="m-0 text-center" *ngIf="selectedRule?.value==0">
+                    Are you sure you want to remove this Rule?
+                </h2>
+            </div>
+            <div class="modal-footer justify-content-around">
+                <button mat-button type="button" class="theme_btn btn_outline_primary" (click)="removeCompany.hide()">No</button>
+                <button mat-button type="submit" class="theme_btn btn_primary" (click)="removeRule()">Yes</button>
+                <!-- (click)="checkExist()" -->
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Add Placement Group Modal -->
+<div bsModal #removeCompanySuccess="bs-modal"  class="modal fade bsModal ch_modal" id="addPlacementGroup" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document" style="max-width:700px">
+        <div class="modal-content"  style="max-height: calc(100vh - 150px) !important;" >
+            <div class="modal-header">
+                <!-- <h2 class="modal-title">Add&nbsp;<b>{{selectedRecords.length}}</b>&nbsp; companies to Placement Group</h2> -->
+                <!-- <h2 class="modal-title">Add to Placement Group</h2> -->
+                <button type="button" mat-icon-button id="closeModal" class="close" data-dismiss="modal"
+                    aria-label="Close" (click)="removeCompanySuccess.hide();">
+                    <mat-icon>close</mat-icon>
+                </button>
+            </div>
+            <div class="modal-body pt-3 d-flex flex-column gap-4 align-items-center justify-content-center">
+                 <svg width="112" height="112" viewBox="0 0 112 112" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="56" cy="56" r="56" fill="#26C296"/>
+                <path d="M65.3337 49L52.5003 61.8333L46.667 56" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+
+                <h2  class="m-0" *ngIf="selectedRule?.value>0">
+
+                    Data has been purged.
+                </h2>
+                 <h2  class="m-0" *ngIf="selectedRule?.value==0">
+
+                   Rule has been removed.
+                </h2>
+
+                <!-- <p class="m-0">They will be required to redo the company details, contacts and the vacancy to be sent for approval again.</p> -->
+            </div>
+            <div class="modal-footer justify-content-center">
+                <button  mat-button type="submit" class="theme_btn btn_primary" (click)="removeCompanySuccess.hide();">Close</button>
+                <!-- (click)="checkExist()" -->
+            </div>
+        </div>
+    </div>
+</div>

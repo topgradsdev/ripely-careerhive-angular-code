@@ -1,0 +1,105 @@
+<div class="page_header">
+    <a class="back_Link" routerLink="/users/user-profile"> <svg xmlns="http://www.w3.org/2000/svg" width="24"
+            height="24" viewBox="0 0 24 24" fill="none">
+            <path d="M19 12H5" stroke="#464BA8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M12 19L5 12L12 5" stroke="#464BA8" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round" />
+        </svg> Back to Profile</a>
+    <div class=" page_header_container">
+        <div>
+            <h4>Adi Baskara - Activity List</h4>
+        </div>
+    </div>
+</div>
+<section>
+   
+    <div class="row">
+        <div class="col-12 sub__title">
+            <h5>Period</h5>
+            <p>Select a start and end date to filter the activity period</p>
+        </div>
+        <div class="col-md-6">
+            <div class="date_card">
+                <div class="date_range">
+                    <div class="form-group mb-0">
+                        <label class="date_label">Start Date</label>
+                        <div class="mat_date_input">
+                            <input class="form-control" placeholder="Select a Date" matInput [matDatepicker]="picker1" (click)="picker1.open()"
+                                formControlName="start_date">
+                            <mat-datepicker-toggle matSuffix [for]="picker1" class="mat_date_toggle">
+                                <svg matDatepickerToggleIcon width="19" height="21" viewBox="0 0 19 21" fill="none"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path
+                                        d="M1.64146 19.4286V16.2143H4.85575V19.4286H1.64146ZM5.57003 19.4286V16.2143H9.14146V19.4286H5.57003ZM1.64146 15.5V11.9286H4.85575V15.5H1.64146ZM5.57003 15.5V11.9286H9.14146V15.5H5.57003ZM1.64146 11.2143V8H4.85575V11.2143H1.64146ZM9.85575 19.4286V16.2143H13.4272V19.4286H9.85575ZM5.57003 11.2143V8H9.14146V11.2143H5.57003ZM14.1415 19.4286V16.2143H17.3557V19.4286H14.1415ZM9.85575 15.5V11.9286H13.4272V15.5H9.85575ZM5.92718 5.85714C5.92718 6.04688 5.75977 6.21429 5.57003 6.21429H4.85575C4.66602 6.21429 4.49861 6.04688 4.49861 5.85714V2.64286C4.49861 2.45312 4.66602 2.28571 4.85575 2.28571H5.57003C5.75977 2.28571 5.92718 2.45312 5.92718 2.64286V5.85714ZM14.1415 15.5V11.9286H17.3557V15.5H14.1415ZM9.85575 11.2143V8H13.4272V11.2143H9.85575ZM14.1415 11.2143V8H17.3557V11.2143H14.1415ZM14.4986 5.85714C14.4986 6.04688 14.3312 6.21429 14.1415 6.21429H13.4272C13.2374 6.21429 13.07 6.04688 13.07 5.85714V2.64286C13.07 2.45312 13.2374 2.28571 13.4272 2.28571H14.1415C14.3312 2.28571 14.4986 2.45312 14.4986 2.64286V5.85714ZM18.7843 5.14286C18.7843 4.36161 18.137 3.71429 17.3557 3.71429H15.9272V2.64286C15.9272 1.66071 15.1236 0.857141 14.1415 0.857141H13.4272C12.445 0.857141 11.6415 1.66071 11.6415 2.64286V3.71429H7.35575V2.64286C7.35575 1.66071 6.55218 0.857141 5.57003 0.857141H4.85575C3.8736 0.857141 3.07003 1.66071 3.07003 2.64286V3.71429H1.64146C0.860212 3.71429 0.212891 4.36161 0.212891 5.14286V19.4286C0.212891 20.2098 0.860212 20.8571 1.64146 20.8571H17.3557C18.137 20.8571 18.7843 20.2098 18.7843 19.4286V5.14286Z"
+                                        fill="#464BA8" />
+                                </svg>
+                            </mat-datepicker-toggle>
+                            <mat-datepicker #picker1></mat-datepicker>
+                        </div>
+                    </div>
+                        <span class="to">-</span>
+                    <div class="form-group mb-0">
+                        <label class="date_label">End Date</label>
+                        <div class="mat_date_input">
+                            <input class="form-control" placeholder="Select a Date" matInput [matDatepicker]="picker2" (click)="picker2.open()"
+                                formControlName="start_date">
+                            <mat-datepicker-toggle matSuffix [for]="picker2" class="mat_date_toggle">
+                                <svg matDatepickerToggleIcon width="19" height="21" viewBox="0 0 19 21" fill="none"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path
+                                        d="M1.64146 19.4286V16.2143H4.85575V19.4286H1.64146ZM5.57003 19.4286V16.2143H9.14146V19.4286H5.57003ZM1.64146 15.5V11.9286H4.85575V15.5H1.64146ZM5.57003 15.5V11.9286H9.14146V15.5H5.57003ZM1.64146 11.2143V8H4.85575V11.2143H1.64146ZM9.85575 19.4286V16.2143H13.4272V19.4286H9.85575ZM5.57003 11.2143V8H9.14146V11.2143H5.57003ZM14.1415 19.4286V16.2143H17.3557V19.4286H14.1415ZM9.85575 15.5V11.9286H13.4272V15.5H9.85575ZM5.92718 5.85714C5.92718 6.04688 5.75977 6.21429 5.57003 6.21429H4.85575C4.66602 6.21429 4.49861 6.04688 4.49861 5.85714V2.64286C4.49861 2.45312 4.66602 2.28571 4.85575 2.28571H5.57003C5.75977 2.28571 5.92718 2.45312 5.92718 2.64286V5.85714ZM14.1415 15.5V11.9286H17.3557V15.5H14.1415ZM9.85575 11.2143V8H13.4272V11.2143H9.85575ZM14.1415 11.2143V8H17.3557V11.2143H14.1415ZM14.4986 5.85714C14.4986 6.04688 14.3312 6.21429 14.1415 6.21429H13.4272C13.2374 6.21429 13.07 6.04688 13.07 5.85714V2.64286C13.07 2.45312 13.2374 2.28571 13.4272 2.28571H14.1415C14.3312 2.28571 14.4986 2.45312 14.4986 2.64286V5.85714ZM18.7843 5.14286C18.7843 4.36161 18.137 3.71429 17.3557 3.71429H15.9272V2.64286C15.9272 1.66071 15.1236 0.857141 14.1415 0.857141H13.4272C12.445 0.857141 11.6415 1.66071 11.6415 2.64286V3.71429H7.35575V2.64286C7.35575 1.66071 6.55218 0.857141 5.57003 0.857141H4.85575C3.8736 0.857141 3.07003 1.66071 3.07003 2.64286V3.71429H1.64146C0.860212 3.71429 0.212891 4.36161 0.212891 5.14286V19.4286C0.212891 20.2098 0.860212 20.8571 1.64146 20.8571H17.3557C18.137 20.8571 18.7843 20.2098 18.7843 19.4286V5.14286Z"
+                                        fill="#464BA8" />
+                                </svg>
+                            </mat-datepicker-toggle>
+                            <mat-datepicker #picker2></mat-datepicker>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row sub_header">
+        <div class="col-md-8 text-right">
+          <div class="d-inline-flex align-items-center">
+            <div class="search-container">
+              <svg class="icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                <path d="M9.16667 15.8333C12.8486 15.8333 15.8333 12.8486 15.8333 9.16667C15.8333 5.48477 12.8486 2.5 9.16667 2.5C5.48477 2.5 2.5 5.48477 2.5 9.16667C2.5 12.8486 5.48477 15.8333 9.16667 15.8333Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M17.5 17.5L13.875 13.875" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <input type="text" class="form-control" placeholder="Search Keywords">
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-8">
+            <table mat-table [dataSource]="activityList" matSort class="ch_table">
+                <!-- activity Column -->
+                <ng-container matColumnDef="activity">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header class="pl-5"> Activity </th>
+                  <td mat-cell *matCellDef="let row" class="pl-5"> 
+                    {{row.activity}} </td>
+                </ng-container>
+                 <!-- date Column -->
+                 <ng-container matColumnDef="date">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Date </th>
+                    <td mat-cell *matCellDef="let row"> 
+                      {{row.date}} </td>
+                  </ng-container>
+                   <!-- time Column -->
+                <ng-container matColumnDef="time">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Time </th>
+                    <td mat-cell *matCellDef="let row"> 
+                      {{row.time}} </td>
+                  </ng-container>
+    
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    
+                <tr class="mat-row" *matNoDataRow>
+                  <td class="mat-cell" colspan="3" class="text-center">No data matching the filter</td>
+                </tr>
+              </table>
+        </div>
+      </div>
+</section>

@@ -1,0 +1,227 @@
+<div class="page_header">
+    <a routerLink="/admin/email-templates" class="back_Link"> <svg xmlns="http://www.w3.org/2000/svg" width="24"
+            height="24" viewBox="0 0 24 24" fill="none">
+            <path d="M19 12H5" stroke="#464BA8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M12 19L5 12L12 5" stroke="#464BA8" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round" />
+        </svg> Back to Email Template List </a>
+    <div class=" page_header_container align-items-baseline">
+        <div class="page_heading">
+            <!-- <ng-container>
+                <div class="form-group mb-0">
+                    <input type="text" value="New Email Template" class="form-control">
+                </div>
+                <div>
+                    <button mat-icon-button>
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M20 6L9 17L4 12" stroke="#26C296" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" />
+                        </svg>
+                    </button>
+                    <button mat-icon-button>
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M18 6L6 18" stroke="#F47761" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" />
+                            <path d="M6 6L18 18" stroke="#F47761" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" />
+                        </svg>
+                    </button>
+                </div>
+            </ng-container> -->
+            <h4 *ngIf="!isEditFormName">{{formName}}</h4>
+            <div *ngIf="isEditFormName" class="element_main">
+                <input type="text" class="form-control" [(ngModel)]="formName"
+                    (blur)="isEditFormName = !isEditFormName">
+            </div>
+            <svg  *ngxPermissionsOnly="['Email_Templates_Write']" (click)="isEditFormName = !isEditFormName" width="35" height="35" viewBox="0 0 35 35" fill="none"
+                xmlns="http://www.w3.org/2000/svg">
+                <circle cx="17.5" cy="17.5" r="17.5" fill="#F8F8F8" />
+                <path fill-rule="evenodd" clip-rule="evenodd"
+                    d="M20.7343 10.2083C21.2117 10.2083 21.6693 10.3989 22.0036 10.7357L24.2646 12.9968C24.6013 13.3335 24.7904 13.79 24.7904 14.2661C24.7904 14.7422 24.6013 15.1988 24.2646 15.5354L16.0094 23.7881C15.5001 24.3756 14.7781 24.7366 13.951 24.7933H10.207V24.0641L10.2094 20.9907C10.2715 20.2218 10.629 19.5068 11.1743 19.0264L19.4641 10.7366C19.8002 10.3984 20.2574 10.2083 20.7343 10.2083ZM13.8995 23.3368C14.2891 23.3092 14.6517 23.1279 14.9428 22.7949L20.4567 17.281L17.7191 14.5433L12.1729 20.0882C11.8775 20.3494 11.6948 20.715 11.6654 21.0494V23.3354L13.8995 23.3368ZM18.7505 13.5122L21.4879 16.2498L23.2334 14.5042C23.2966 14.4411 23.3321 14.3554 23.3321 14.2661C23.3321 14.1768 23.2966 14.0912 23.2334 14.028L20.9704 11.7649C20.9079 11.702 20.8229 11.6666 20.7343 11.6666C20.6456 11.6666 20.5606 11.702 20.4982 11.7649L18.7505 13.5122Z"
+                    fill="#2B2A35" />
+            </svg>
+
+        </div>
+        <div class="btn_group_header">
+            <button mat-button class="theme_btn btn_outline_primary" data-toggle="modal"
+                data-target="#preview_html_email" (click)="getPreviewData()">
+                <svg class="mr-2" width="26" height="16" viewBox="0 0 26 16" fill="none"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <g clip-path="url(#clip0_10961_35632)">
+                        <path
+                            d="M1.71049 8.61941C1.51299 8.37634 1.34741 8.16154 1.21534 7.98461C1.33889 7.81088 1.49333 7.60114 1.67769 7.36437C2.23421 6.64964 3.05735 5.69635 4.12007 4.7451C6.25653 2.83275 9.2782 1 13 1C16.7218 1 19.7435 2.83275 21.8799 4.7451C22.9426 5.69635 23.7658 6.64964 24.3223 7.36437C24.5067 7.60114 24.6611 7.81088 24.7847 7.98461C24.6526 8.16154 24.487 8.37634 24.2895 8.61941C23.7062 9.3373 22.8507 10.2942 21.7647 11.249C19.5757 13.1734 16.5535 15 13 15C9.44653 15 6.42433 13.1734 4.23526 11.249C3.14927 10.2942 2.29378 9.3373 1.71049 8.61941Z"
+                            stroke="#464BA8" stroke-width="2" />
+                        <circle cx="13" cy="8" r="4" stroke="#464BA8" stroke-width="2" />
+                    </g>
+                    <defs>
+                        <clippath id="clip0_10961_35632">
+                            <rect width="26" height="16" fill="white" />
+                        </clippath>
+                    </defs>
+                </svg>
+                Preview</button>
+            <!-- <button mat-button class="theme_btn btn_primary" (click)="saveEmailTemplate()">
+                <svg class="mr-2" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path
+                        d="M19 21H5C4.46957 21 3.96086 20.7893 3.58579 20.4142C3.21071 20.0391 3 19.5304 3 19V5C3 4.46957 3.21071 3.96086 3.58579 3.58579C3.96086 3.21071 4.46957 3 5 3H16L21 8V19C21 19.5304 20.7893 20.0391 20.4142 20.4142C20.0391 20.7893 19.5304 21 19 21Z"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                    <path d="M17 21V13H7V21" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round" />
+                    <path d="M7 3V8H15" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round" />
+                </svg>
+                Save</button> -->
+        </div>
+    </div>
+</div>
+<div class="row sub_header">
+    <div class="col-md-6">
+        <div class="btn_tab">
+            <button mat-button class="theme_btn btn_primary" (click)="btnTabs(1)"
+                [ngClass]="selectedIndex === 1 ? 'active' :'inactive'">Information</button>
+            <button mat-button class="theme_btn btn_primary" (click)="btnTabs(2)"
+                [ngClass]="selectedIndex === 2 ? 'active' :'inactive'">Email Body</button>
+        </div>
+    </div>
+</div>
+<section [style.display]="selectedIndex === 1 ? '' : 'none'">
+    <div class="email_form_card" [formGroup]="emailTemplateForm">
+        <div class="form_title">
+            Information
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Email Subject *</label>
+                    <input type="text" placeholder="Subject" class="form-control" formControlName="subject">
+                    <div
+                        *ngIf="(emailTemplateForm.controls.subject.touched || emailTemplateForm.controls.subject.dirty) && emailTemplateForm.controls.subject.invalid && emailTemplateForm.controls.subject?.errors?.required  "
+                        class="invalid">
+                        Please enter subject
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Category * </label>
+                    <ng-select [searchable]="false" [multiple]="false" bindLabel="category_title" bindValue="_id"
+                        [clearable]="false" placeholder="Select a Category" formControlName="category">
+                        <ng-option value disabled>Select Category</ng-option>
+                        <ng-option *ngFor="let cat of categories" [value]=cat._id>{{cat.category_title}}</ng-option>
+                    </ng-select>
+                    <div
+                        *ngIf="(emailTemplateForm.controls.category.touched || emailTemplateForm.controls.category.dirty) && emailTemplateForm.controls.category.invalid && emailTemplateForm.controls.category?.errors?.required  "
+                        class="invalid">
+                        Please select category
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="form_main_container pt-0" [style.display]="selectedIndex === 2 ? '' : 'none'">
+    <div class="left_side_bar">
+        <div class="element_section" *ngFor="let elements of draggableEmailTemplateElements;let m= index">
+
+            <h5>{{elements.element}}</h5>
+            <div [ngClass]="elements.element === 'Section' ? 'section_container' : 'element_section_container'">
+                <!-- [draggable] [dragClass]="'active'"
+                    [dragData]="item" [dragScope]="item.type" [dragEnabled]="true"  -->
+                <div class="form_element" *ngFor="let item of elements.items; let i = index" 
+                     [dndDraggable]="{data:item,m, i}"
+                    [dndObject]="item"
+                    [dndEffectAllowed]="'copy'"
+                    >
+                    <figure>
+                        <img src="../../../../assets/icons/element-icons/{{item.icon}}.svg" alt="icons">
+
+                    </figure>
+                    <span>{{item.name}}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+     <!-- droppable [dropScope]="emailTemplateItemsType"
+            [dragHintClass]="'drag-hint'" (onDrop)="onEmailTemplateElementDrop($event)" -->
+
+            <!-- cdkDropList
+  [cdkDropListData]="emailTemplateItemsType"
+  class="drag-hint"
+  (cdkDropListDropped)="onEmailTemplateElementDrop($event)" -->
+    <div class="right_bar">
+        <div class="email_create_container row_gap" 
+         dndDropzone
+       (dndDrop)="onEmailTemplateElementDrop($event)"
+        >
+            <div cdkDropList (cdkDropListDropped)="sortEmailTemplateElement($event)"
+                [cdkDropListData]="droppedEmailTemplateItems">
+                <ng-template #dynamic></ng-template>
+            </div>
+            <div class="drop_container" *ngIf="droppedEmailTemplateItems.length === 0">
+                <span>Drag & drop a section here</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="modal fade bsModal ch_modal preview_html_email" id="preview_html_email" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" mat-icon-button id="closeModal" class="close" data-dismiss="modal"
+                    aria-label="Close">
+                    <mat-icon>close</mat-icon>
+                </button>
+            </div>
+            <div class="modal-body">
+                <!-- <h2 class="modal-title">{{formName}}</h2> -->
+                <!-- <div class="email_form_card">
+                    <div class="form_title">
+                        Information
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Email Subject</label>
+                                <p>{{emailTemplateForm?.value?.subject}}</p>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Category </label>
+                                <p>{{getCategoryName(emailTemplateForm?.value?.category)}}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div> -->
+                <div class="email_form_card">
+                    <!-- <div class="form_title">
+                        Email Body
+                    </div> -->
+                    <!-- <div class="row">
+                        <app-html-email-preview [emailTemplateData]="emailTemplateData"></app-html-email-preview>
+                    </div> -->
+                    <div id="html_template">
+                        <app-html-email-preview [emailTemplateData]="emailTemplateData"></app-html-email-preview>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button *ngxPermissionsOnly="['Email_Templates_Write']" mat-button class="theme_btn btn_primary" data-dismiss="modal" (click)="saveEmailTemplate()">
+                    <svg class="mr-2" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="M19 21H5C4.46957 21 3.96086 20.7893 3.58579 20.4142C3.21071 20.0391 3 19.5304 3 19V5C3 4.46957 3.21071 3.96086 3.58579 3.58579C3.96086 3.21071 4.46957 3 5 3H16L21 8V19C21 19.5304 20.7893 20.0391 20.4142 20.4142C20.0391 20.7893 19.5304 21 19 21Z"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                        <path d="M17 21V13H7V21" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                            stroke-linejoin="round" />
+                        <path d="M7 3V8H15" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                            stroke-linejoin="round" />
+                    </svg>
+                    Save</button>
+            </div>
+        </div>
+    </div>
+</div>

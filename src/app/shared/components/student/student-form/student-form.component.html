@@ -1,0 +1,988 @@
+<section>
+    <div class="page_sub_header">
+        <div class="custom_container">
+            <a routerLink="/student/my-placements">
+                < Back to My Tasks</a>
+                    <h3>{{taskDetail?.name}} - {{userDetail?.first_name}} {{userDetail?.last_name}}</h3>
+        </div>
+    </div>
+    <!-- <p *ngIf="showDownload">show</p>
+    <p *ngIf="!showDownload">hide</p> -->
+
+    <div class="custom_container alert custom_alert alert-dismissible fade show alert_info mt-4 mb-4" role="alert" *ngIf="processEnd">
+        <div class="onboading_company">
+            <div class="svg">
+                <svg width="47" height="48" viewBox="0 0 47 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path
+                        d="M23.4998 44C34.3154 44 43.0832 35.0457 43.0832 24C43.0832 12.9543 34.3154 4 23.4998 4C12.6843 4 3.9165 12.9543 3.9165 24C3.9165 35.0457 12.6843 44 23.4998 44Z"
+                        stroke="#464BA8" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+                    <path d="M23.5 32V24" stroke="#464BA8" stroke-width="4" stroke-linecap="round"
+                        stroke-linejoin="round" />
+                    <path d="M23.5 16H23.5188" stroke="#464BA8" stroke-width="4" stroke-linecap="round"
+                        stroke-linejoin="round" />
+                </svg>
+            </div>
+            <div class="content start">
+                <h3>{{errorMessage}}</h3>
+            </div>
+        </div>
+    </div>
+
+    <div [style.display]="studentFormDetail?.type === 'multi_step' ? '' : 'none'"
+        class="intern_stepper student_form_submit">
+        <mat-horizontal-stepper labelPosition="bottom" #multiStepFormStepper>
+              <ng-container *ngFor="let steps of multiStepForm; let i = index">
+
+               <mat-step *ngIf="steps?.permissions?.student?.read ?? true">
+                <ng-template matStepLabel>{{steps.name}}</ng-template>
+                <div class="preview_form_card_student pb-0 "
+                    [style.pointerEvents]="taskDetail?.task_status === 'completed' ? 'none' : ''">
+                    <div class="form_title">{{steps.name}}</div>
+                    <div class="row main_container pb-0">
+                       
+                        <div *ngFor="let field of steps.component" [ngClass]="[
+    field.isElementWidthFull ? 'col-md-12' : 'col-md-6',
+    checkFieldPermission(field.elementData?.permissions)
+  ]">
+                            <div class="form-group  position-relative" *ngIf="!field.hidden">
+
+                                <!-- Prompt Message -->
+                                <label *ngIf="field.id !== 'description'"
+                                    [ngClass]="checkFieldPermission(field.elementData?.permissions)"
+                                    [attr.tabindex]="checkFieldPermission(field.elementData?.permissions) === 'readOnly' ? '-1' : null">
+
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div class="d-block">
+                                            {{field.name}}
+                                            <span *ngIf="field.elementData?.required">(Required)</span>
+
+                                            <br /><small
+                                                class="description-opacity">{{field.elementData?.description}}</small>
+                                        </div>
+                                    </div>
+
+                                    <span [ngClass]="field?.name?.length > 80 ? 'bottom-side' : 'right-side'">
+                                        <span *ngIf="isFieldInvalid(field)" class="text-danger error-message"
+                                            [ngClass]="checkFieldPermission(field.elementData?.permissions)">
+                                            Please complete this field
+                                        </span>
+                                    </span>
+
+                                </label>
+                                <p *ngIf="field.id === 'description'"
+                                    [innerHTML]="field.elementData.value ? field.elementData.value : field.elementData.title"
+                                    [ngClass]="checkFieldPermission(field.elementData?.permissions)"
+                                    [attr.tabindex]="checkFieldPermission(field.elementData?.permissions) === 'readOnly' ? '-1' : null">
+                                    <span
+                                        [ngClass]="field.elementData?.value?.length > 80 ? 'bottom-side' : 'right-side'">
+                                        <div *ngIf="isFieldInvalid(field)"
+                                            class="text-danger position-absolute error-message"
+                                            [ngClass]="checkFieldPermission(field.elementData?.permissions)">
+                                            Please complete this field
+                                        </div>
+                                    </span>
+                                </p>
+
+                                <input *ngIf="field.id === 'single'" type="text" class="form-control"
+                                    [(ngModel)]="field.elementData.value"
+                                    (ngModelChange)="checkFieldLogic(field, steps.component)" [ngClass]="[
+                                      formSubmitted && 
+         field.elementData?.required && 
+         !field.elementData?.value && 
+         checkFieldPermission(field.elementData?.permissions) !== 'readOnly'  ? 'error-invalid' : '',
+                                      checkFieldPermission(field.elementData?.permissions)
+                                      ]"
+                                    [attr.tabindex]="checkFieldPermission(field.elementData?.permissions) === 'readOnly' ? '-1' : null">
+                                <!-- <textarea *ngIf="field.id === 'multi'" class="form-control mb-0" cols="30" rows="2"
+                                    [(ngModel)]="field.elementData.value" [ngClass]="checkFieldPermission(field.elementData?.permissions)" [attr.tabindex]="checkFieldPermission(field.elementData?.permissions) === 'readOnly' ? '-1' : null"></textarea> -->
+
+                                <mat-form-field appearance="outline" class="form-control no-padding-border"
+                                    *ngIf="field?.id === 'multi' && field?.elementData" [ngClass]="[
+                                      formSubmitted && 
+         field.elementData?.required && 
+         !field.elementData?.value && 
+         checkFieldPermission(field.elementData?.permissions) !== 'readOnly'  ? 'error-invalid-texarea' : '',
+                                      checkFieldPermission(field.elementData?.permissions)
+                                      ]"
+                                    [attr.tabindex]="checkFieldPermission(field.elementData?.permissions) === 'readOnly' ? '-1' : null">
+                                    <textarea matInput [(ngModel)]="field.elementData.value"
+                                        (ngModelChange)="checkFieldLogic(field, steps.component)"
+                                        [ngClass]="checkFieldPermission(field.elementData?.permissions)"
+                                        [attr.tabindex]="checkFieldPermission(field.elementData?.permissions) === 'readOnly' ? '-1' : null"
+                                        cdkTextareaAutosize cdkAutosizeMinRows="3" cdkAutosizeMaxRows="1000"
+                                        placeholder="Enter text"></textarea>
+                                </mat-form-field>
+                              
+                                <input *ngIf="field.id === 'number'" type="number" (wheel)="$event.preventDefault()"  (keydown.arrowup)="$event.preventDefault()"  (keydown.arrowdown)="$event.preventDefault()"  class="form-control"
+                                    [(ngModel)]="field.elementData.value"
+                                    (ngModelChange)="checkFieldLogic(field, steps.component)" [ngClass]="[
+                                      formSubmitted && 
+         field.elementData?.required && 
+         !field.elementData?.value && 
+         checkFieldPermission(field.elementData?.permissions) !== 'readOnly'  ? 'error-invalid' : '',
+                                      checkFieldPermission(field.elementData?.permissions)
+                                      ]"
+                                    [attr.tabindex]="checkFieldPermission(field.elementData?.permissions) === 'readOnly' ? '-1' : null">
+
+                                <div *ngIf="field.id === 'time'" class="custom_datepicker_container custom_timepicker_wrapper" [ngClass]="[
+                                      formSubmitted && 
+         field.elementData?.required && 
+         !field.elementData?.value && 
+         checkFieldPermission(field.elementData?.permissions) !== 'readOnly'  ? 'error-invalid-date' : '',
+                                      checkFieldPermission(field.elementData?.permissions)
+                                      ]"
+                                    [attr.tabindex]="checkFieldPermission(field.elementData?.permissions) === 'readOnly' ? '-1' : null">
+                                 
+                                    <input class="form-control" placeholder="hh:mm" matInput
+                                        [ngxTimepicker]="toggleTimepicker" [format]="field?.elementData?.display"
+                                    [(ngModel)]="field.elementData.value"
+                                        (ngModelChange)="checkFieldLogic(field, steps.component)">
+                                    <ngx-material-timepicker-toggle
+                                        [disabled]="checkFieldPermission(field.elementData?.permissions) === 'readOnly'"
+                                        class="time_picker_toggle" [for]="toggleTimepicker">
+                                        <svg ngxMaterialTimepickerToggleIcon width="17" height="9" viewBox="0 0 17 9"
+                                            fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M1 1L8.5 8L16 0.999997" stroke="#2B2A35" stroke-width="2"
+                                                stroke-linecap="round" stroke-linejoin="round" />
+                                        </svg>
+                                    </ngx-material-timepicker-toggle>
+                                    <ngx-material-timepicker #toggleTimepicker></ngx-material-timepicker>
+                                </div>
+                                <mat-radio-group *ngIf="field.id === 'yes_no'"
+                                    class="radio_group {{checkFieldPermission(field.elementData?.permissions)}}"
+                                    [(ngModel)]="field.elementData.value"
+                                    (ngModelChange)="checkFieldLogic(field, steps.component)"
+                                    [attr.tabindex]="checkFieldPermission(field.elementData?.permissions) === 'readOnly' ? '-1' : null"
+                                    [ngClass]="[
+                                      formSubmitted && 
+         field.elementData?.required && 
+         !field.elementData?.value && 
+         checkFieldPermission(field.elementData?.permissions) !== 'readOnly'  ? 'error-invalid-radio' : '',
+                                      checkFieldPermission(field.elementData?.permissions),
+                                      field.elementData?.display === 'horizontal' ? 'radio_horizontal' : ''
+                                  ]">
+                                    <mat-radio-button [value]="'Yes'">Yes</mat-radio-button>
+                                    <mat-radio-button [value]="'No'">No</mat-radio-button>
+                                </mat-radio-group>
+                                <mat-radio-group *ngIf=" field.id === 'radio'"
+                                    class="radio_group {{checkFieldPermission(field.elementData?.permissions)}}"
+                                    [(ngModel)]="field.elementData.value"
+                                    (ngModelChange)="checkFieldLogic(field, steps.component)"
+                                    [attr.tabindex]="checkFieldPermission(field.elementData?.permissions) === 'readOnly' ? '-1' : null"
+                                    [ngClass]="[
+                                      formSubmitted && 
+         field.elementData?.required && 
+         !field.elementData?.value && 
+         checkFieldPermission(field.elementData?.permissions) !== 'readOnly'  ? 'error-invalid-radio' : '',
+                                      checkFieldPermission(field.elementData?.permissions),
+                                      field.elementData?.display === 'horizontal' ? 'radio_horizontal' : ''
+                                  ]">
+                                    <mat-radio-button [value]="list.item"
+                                        *ngFor="let list of field.elementData.items">{{list.item}}</mat-radio-button>
+                                </mat-radio-group>
+                                <ng-select *ngIf="field.id === 'dropdown'" [(ngModel)]="field.elementData.value"
+                                    (ngModelChange)="checkFieldLogic(field, steps.component)" [searchable]="false"
+                                    [multiple]="false" bindLabel="item" [items]="field.elementData.items"
+                                    bindValue="item" [clearable]="false" placeholder="Select"
+                                    [(ngModel)]="field.elementData.value" [ngClass]="[
+                                  formSubmitted && 
+         field.elementData?.required && 
+         !field.elementData?.value && 
+         checkFieldPermission(field.elementData?.permissions) !== 'readOnly'  ? 'error-invalid-select' : '',
+                                  checkFieldPermission(field.elementData?.permissions)
+                                  ]"
+                                    [attr.tabindex]="checkFieldPermission(field.elementData?.permissions) === 'readOnly' ? '-1' : null">
+                                    <ng-option *ngFor="let list of field.elementData.items"
+                                        [value]="list">{{list}}</ng-option>
+                                </ng-select>
+                                <ul *ngIf="field.id === 'likert'"
+                                    [ngClass]="field.elementData?.display === 'vertical' ? '' : 'likert'"
+                                    class="{{checkFieldPermission(field.elementData?.permissions)}}" [ngClass]="[
+                                  formSubmitted && 
+         field.elementData?.required && 
+         !field.elementData?.value && 
+         checkFieldPermission(field.elementData?.permissions) !== 'readOnly'  ? 'error-invalid-radio' : '',
+                                  checkFieldPermission(field.elementData?.permissions),
+                                  field.elementData?.display === 'vertical' ? '' : 'likert'
+                              ]"
+                                    [attr.tabindex]="checkFieldPermission(field.elementData?.permissions) === 'readOnly' ? '-1' : null">
+                                    <mat-radio-group
+                                        [ngClass]="field.elementData?.display === 'vertical' ? '' : 'likert'"
+                                        [(ngModel)]="field.elementData.value"
+                                        (ngModelChange)="checkFieldLogic(field, steps.component)">
+                                        <li *ngFor="let item of field.elementData.items">
+                                            <mat-radio-button [value]="item.item">{{item.item}}</mat-radio-button>
+                                            <label *ngIf="field.elementData?.display !== 'vertical'"
+                                                class="label_title">{{item.item}}</label>
+                                        </li>
+                                    </mat-radio-group>
+                                </ul>
+                                <ul *ngIf="field.id === 'chips'" class="chipsList" [ngClass]="[
+                                  formSubmitted && 
+         field.elementData?.required && 
+         !field.elementData?.value && 
+         checkFieldPermission(field.elementData?.permissions) !== 'readOnly'  ? 'error-invalid' : '',
+                                  checkFieldPermission(field.elementData?.permissions),
+                                  field.elementData?.display === 'vertical' ? '' : 'likert'
+                              ]"
+                                    [attr.tabindex]="checkFieldPermission(field.elementData?.permissions) === 'readOnly' ? '-1' : null">
+                                    <li *ngFor="let list of field.elementData.items">
+                                        <span>{{list.item}}</span>
+                                    </li>
+                                </ul>
+                                  <div *ngIf="field.id === 'image'" [ngClass]="[
+                                  checkFieldPermission(field.elementData?.permissions)
+                                ]">
+                                    <img [src]="field?.elementData?.value"
+                                        [height]="field?.elementData?.height"
+                                        [width]="field?.elementData?.width"
+                                        [style.opacity]="(+ (field?.elementData?.transparency ?? 100)) / 100"/>
+                                </div>
+<ng-container *ngIf="field.id === 'attachment'">
+                                    <div class="file_upload" [ngClass]="[
+                                  formSubmitted && field.elementData?.required && 
+                                  (field.elementData?.type === 'attachment' 
+                                    ? !field.elementData?.value || field.elementData?.value.length === 0 
+                                    : !field.elementData?.value) 
+                                    ? 'error-invalid' : '',
+                                  checkFieldPermission(field.elementData?.permissions)
+                                ]">
+                                        <p><strong>Drag file here or <span>browse</span></strong> <br>
+                                            Accepted file types: <ng-container
+                                                *ngFor="let extention of field?.elementData?.extenstions">{{extention}},
+                                            </ng-container>. <br>
+                                            {{field?.elementData?.size}}MB file size limit.
+
+                                        </p>
+                                        <label class="file_upload_label" for="image{{i}}"></label>
+                                        <input name="img" type="file" id="image{{i}}"
+                                            [multiple]="field?.elementData?.selection_type === 'multi' ? true : false"
+                                            [accept]="getValueInsideSingleBracket(field?.elementData?.extenstions)"
+                                            (change)="uploadFile($event, field)">
+                                        <!-- <p *ngFor="let attachment of field.elementData?.value">{{attachment.name}}</p> -->
+                                    </div>
+                                    <ul class="files_list">
+                                        <li *ngFor="let attachment of field.elementData?.value; let i=index">
+                                            <div class="file_card">
+                                                <div class="content justify-content-between">
+                                                    <div class="file-center">
+                                                        <div class="svg-width d-flex justify-content-center align-items-center"
+                                                            style="width: 48px;height:48px; padding-right: 8px;"
+                                                            [innerHTML]="getSafeSvg(attachment?.name)"></div>
+                                                          <span [matTooltip]="attachment.name"
+  matTooltipPosition="above"
+  matTooltipShowDelay="300">{{attachment.name}}</span>
+                                                    </div>
+                                                    <div class="btn_group">
+                                                        <button mat-icon-button (click)="viewPDF(attachment?.url)">
+                                                            <svg width="36" height="36" viewBox="0 0 36 36" fill="none"
+                                                                xmlns="http://www.w3.org/2000/svg">
+                                                                <circle cx="18" cy="18" r="18" fill="#F8F8F8" />
+                                                                <path
+                                                                    d="M9.54434 18.2841C9.37548 18.0692 9.2365 17.8817 9.12905 17.7317C9.22987 17.5838 9.35993 17.3999 9.51823 17.1897C9.9521 16.6135 10.5935 15.8454 11.4213 15.0791C13.0866 13.5378 15.438 12.0645 18.3306 12.0645C21.2231 12.0645 23.5745 13.5378 25.2398 15.0791C26.0676 15.8454 26.709 16.6135 27.1429 17.1897C27.3012 17.3999 27.4312 17.5838 27.5321 17.7317C27.4246 17.8817 27.2856 18.0692 27.1168 18.2841C26.6622 18.8627 25.9958 19.6335 25.15 20.4024C23.4442 21.9531 21.0925 23.4216 18.3306 23.4216C15.5686 23.4216 13.2169 21.9531 11.5111 20.4024C10.6653 19.6335 9.9989 18.8627 9.54434 18.2841Z"
+                                                                    fill="#F8F8F8" stroke="#2B2A35"
+                                                                    stroke-width="1.5" />
+                                                                <circle cx="18.3297" cy="17.7438" r="2.92347"
+                                                                    fill="#F8F8F8" stroke="#2B2A35"
+                                                                    stroke-width="1.5" />
+                                                            </svg>
+                                                        </button>
+                                                        <button *ngIf="!showDownload" mat-icon-button
+                                                            (click)="deleteFile(i, field.elementData?.value)">
+                                                            <svg width="36" height="36" viewBox="0 0 36 36" fill="none"
+                                                                xmlns="http://www.w3.org/2000/svg">
+                                                                <circle cx="18" cy="18" r="18" fill="#F8F8F8" />
+                                                                <path fill-rule="evenodd" clip-rule="evenodd"
+                                                                    d="M15.6896 9H20.3182C21.1703 9 21.8611 9.69078 21.8611 10.5429V11.3108H24.1709C25.023 11.3108 25.7137 12.0016 25.7137 12.8537V14.3966C25.7137 15.2487 25.023 15.9395 24.1709 15.9395H24.1081L23.3985 24.4257C23.3985 25.2779 22.7077 25.9686 21.8556 25.9686H14.1413C13.2893 25.9686 12.5985 25.2779 12.6012 24.4898L11.8886 15.9395H11.828C10.9759 15.9395 10.2852 15.2487 10.2852 14.3966V12.8537C10.2852 12.0016 10.9759 11.3108 11.828 11.3108H14.1468V10.5429C14.1468 9.69078 14.8376 9 15.6896 9ZM14.1468 12.8572V12.8564H11.8265V14.3993H24.1693V12.8564H21.8611V12.8572H14.1468ZM22.5572 15.9395H13.4342L14.1387 24.4223H21.853L21.8556 24.3582L22.5572 15.9395ZM20.3167 10.5394V11.3109H15.6881V10.5394H20.3167Z"
+                                                                    fill="#2B2A35" />
+                                                            </svg>
+
+
+                                                        </button>
+
+                                                        <button *ngIf="showDownload" mat-icon-button
+                                                            (click)="downloadPDF(attachment?.url, attachment?.name)">
+                                                            <svg width="35" height="35" viewBox="0 0 35 35" fill="none"
+                                                                xmlns="http://www.w3.org/2000/svg">
+                                                                <circle cx="17.5" cy="17.5" r="17.5" fill="#F8F8F8" />
+                                                                <path fill-rule="evenodd" clip-rule="evenodd"
+                                                                    d="M24.7923 20.4141V23.3307C24.7923 24.1361 24.1394 24.7891 23.334 24.7891H11.6673C10.8619 24.7891 10.209 24.1361 10.209 23.3307V20.4141H11.6673V23.3307H23.334V20.4141H24.7923Z"
+                                                                    fill="#2B2A35" />
+                                                                <path fill-rule="evenodd" clip-rule="evenodd"
+                                                                    d="M18.2295 17.9258L20.6305 15.5248L21.6617 16.556L17.5003 20.7174L13.3389 16.556L14.3701 15.5248L16.7711 17.9258V10.207H18.2295V17.9258Z"
+                                                                    fill="#2B2A35" />
+                                                            </svg>
+
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </ng-container>
+                                <div *ngIf="field.id === 'date'" class="form-group custom_datepicker" [ngClass]="[
+                              formSubmitted && 
+         field.elementData?.required && 
+         !field.elementData?.value && 
+         checkFieldPermission(field.elementData?.permissions) !== 'readOnly'  ? 'error-invalid-date' : '',
+                              checkFieldPermission(field.elementData?.permissions)
+                              ]"
+                                    [attr.tabindex]="checkFieldPermission(field.elementData?.permissions) === 'readOnly' ? '-1' : null">
+                                    <div class="custom_datepicker_container">
+
+                                        <input placeholder="dd/mm/yyyy" class="form-control" matInput
+                                            [matDatepicker]="projectStartPicker" [(ngModel)]="field.elementData.value"
+                                            (ngModelChange)="checkFieldLogic(field, steps.component)">
+                                        <mat-datepicker-toggle
+                                            [disabled]="checkFieldPermission(field.elementData?.permissions) === 'readOnly'"
+                                            matSuffix [for]="projectStartPicker">
+
+                                            <svg matDatepickerToggleIcon width="17" height="9" viewBox="0 0 17 9"
+                                                fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M1 1L8.5 8L16 0.999997" stroke="#2B2A35" stroke-width="2"
+                                                    stroke-linecap="round" stroke-linejoin="round" />
+                                            </svg>
+                                        </mat-datepicker-toggle>
+                                        <mat-datepicker #projectStartPicker></mat-datepicker>
+                                    </div>
+                                </div>
+                                <div *ngIf="field.id === 'checkbox'"
+                                    class="checkbox_group {{checkFieldPermission(field.elementData?.permissions)}}"
+                                    [attr.tabindex]="checkFieldPermission(field.elementData?.permissions) === 'readOnly' ? '-1' : null"
+                                    [ngClass]="[
+                              formSubmitted && 
+         field.elementData?.required && 
+         !field.elementData?.value && 
+         checkFieldPermission(field.elementData?.permissions) !== 'readOnly'  ? 'error-invalid-checkbox' : '',
+                              checkFieldPermission(field.elementData?.permissions),
+                              field.elementData?.display === 'horizontal' ? 'checkbox_horizontal' : ''
+                              ]">
+                                    <ul class="pl-0 checkbox-size">
+                                        <li *ngFor="let item of field.elementData.items">
+                                            <mat-checkbox [(ngModel)]="item.selected"
+                                                (change)="checkFieldLogic(field, steps.component);onCheckboxChange(field)">
+                                                {{item.item}}
+                                            </mat-checkbox>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="pt-2" *ngIf="field.id === 'signature'" [ngClass]="[
+                                  formSubmitted && 
+         field.elementData?.required && 
+         !field.elementData?.value && 
+         checkFieldPermission(field.elementData?.permissions) !== 'readOnly'  ? 'error-invalid' : '',
+                                  checkFieldPermission(field.elementData?.permissions)
+                                  ]"
+                                    [attr.tabindex]="checkFieldPermission(field.elementData?.permissions) === 'readOnly' ? '-1' : null">
+                                    <div class="form-group mb-0"
+                                        [style.pointerEvents]="item.item === 'Student' ? '' : 'none'"
+                                        [style.opacity]="item.item === 'Student' ? '' : '0.5'"
+                                        *ngFor="let item of field.elementData?.items; let i = index">
+                                        <div class="sign_from">
+                                            <label>{{item.item}} Signature:</label>
+                                            <div class="form-control canvas_container p-0 overflow-auto">
+                                                <canvas *ngIf="!item?.signature?.url" id="signaturePad-{{ i }}"
+                                                    height="90px" width="1018" style="touch-action: none;"></canvas>
+                                                <img class="img-fluid" *ngIf="item?.signature?.url"
+                                                    [src]="item?.signature?.url" />
+                                            </div>
+                                        </div>
+                                        <div class="sign_foot_btn">
+                                            <button *ngIf="item?.signature?.url" (click)="cancelSignature(i, item)"
+                                                mat-button class="bs_btn with_icon_text default"><svg width="24"
+                                                    height="24" viewBox="0 0 24 24" fill="none"
+                                                    xmlns="http://www.w3.org/2000/svg">
+                                                    <path d="M3.59375 4L20.034 20.4402" stroke="white"
+                                                        stroke-width="2" />
+                                                    <path d="M20.5625 4L4.12227 20.4402" stroke="white"
+                                                        stroke-width="2" />
+                                                </svg>
+                                                Cancel</button>
+                                            <button *ngIf="!item?.signature?.url" (click)="getFile(i, item)" mat-button
+                                                class="bs_btn with_icon_text success"><svg width="20" height="16"
+                                                    viewBox="0 0 20 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <path d="M19 1L6.625 15L1 8.63636" stroke="white" stroke-width="2"
+                                                        stroke-linecap="round" stroke-linejoin="round" />
+                                                </svg>
+
+                                                Confirm</button>
+                                            <button *ngIf="!item?.signature?.url" (click)="cancelSignature(i, item)"
+                                                mat-button class="bs_btn with_icon_text danger"><svg width="24"
+                                                    height="24" viewBox="0 0 24 24" fill="none"
+                                                    xmlns="http://www.w3.org/2000/svg">
+                                                    <path d="M1 4V10H7" stroke="white" stroke-width="2"
+                                                        stroke-linecap="round" stroke-linejoin="round" />
+                                                    <path
+                                                        d="M3.51 15.0004C4.15839 16.8408 5.38734 18.4206 7.01166 19.5018C8.63598 20.583 10.5677 21.107 12.5157 20.9949C14.4637 20.8828 16.3226 20.1406 17.8121 18.8802C19.3017 17.6198 20.3413 15.9094 20.7742 14.0068C21.2072 12.1042 21.0101 10.1124 20.2126 8.33154C19.4152 6.55068 18.0605 5.07723 16.3528 4.1332C14.6451 3.18917 12.6769 2.8257 10.7447 3.09755C8.81245 3.36941 7.02091 4.26186 5.64 5.64044L1 10.0004"
+                                                        stroke="white" stroke-width="2" stroke-linecap="round"
+                                                        stroke-linejoin="round" />
+                                                </svg>
+                                                Clear</button>
+                                        </div>
+                                        <div class="sign_from">
+                                            <label>Name:</label>
+                                            <input type="text" placeholder class="form-control" [(ngModel)]="item.name">
+                                        </div>
+                                        <div class="sign_from custom_datepicker">
+                                            <label>Date:</label>
+                                            <!-- <input type="text" placeholder="" class="form-control"
+                                                [(ngModel)]="item.date"> -->
+                                            <div class="custom_datepicker_container" style="width: 100%;">
+                                                <input placeholder="dd/mm/yyyy" class="form-control" matInput readonly
+                                                    [matDatepicker]="signDate" [(ngModel)]="item.date">
+                                                <mat-datepicker-toggle matSuffix [for]="signDate">
+
+                                                    <svg matDatepickerToggleIcon width="17" height="9"
+                                                        viewBox="0 0 17 9" fill="none"
+                                                        xmlns="http://www.w3.org/2000/svg">
+                                                        <path d="M1 1L8.5 8L16 0.999997" stroke="#2B2A35"
+                                                            stroke-width="2" stroke-linecap="round"
+                                                            stroke-linejoin="round" />
+                                                    </svg>
+                                                </mat-datepicker-toggle>
+                                                <mat-datepicker #signDate></mat-datepicker>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <ng-container *ngIf="field.id === 'downloadable'">
+                                    <ul class="files_list">
+                                        <li *ngFor="let attachment of field.elementData?.value">
+                                            <div class="file_card">
+                                                <div class="content">
+                                                    <div class="svg-width d-flex justify-content-center align-items-center"
+                                                        style="width: 48px;height:48px; padding-right: 8px;"
+                                                        [innerHTML]="getSafeSvg(attachment?.name)"></div>
+                                                    <p>{{attachment.name}}</p>
+                                                    <div class="btn_group">
+                                                        <button mat-icon-button (click)="viewPDF(attachment?.url)">
+                                                            <svg width="35" height="35" viewBox="0 0 35 35" fill="none"
+                                                                xmlns="http://www.w3.org/2000/svg">
+                                                                <circle cx="17.5" cy="17.5" r="17.5" fill="#F8F8F8" />
+                                                                <path
+                                                                    d="M9.29565 17.7632C9.1361 17.5601 9.00404 17.3822 8.90095 17.2387C8.99761 17.0973 9.1211 16.923 9.27053 16.7246C9.69179 16.1651 10.3145 15.4194 11.1183 14.6754C12.7353 13.1787 15.0165 11.75 17.8214 11.75C20.6263 11.75 22.9076 13.1787 24.5246 14.6754C25.3283 15.4194 25.9511 16.1651 26.3723 16.7246C26.5218 16.923 26.6452 17.0973 26.7419 17.2387C26.6388 17.3822 26.5068 17.5601 26.3472 17.7632C25.9058 18.325 25.2587 19.0735 24.4375 19.82C22.7807 21.3262 20.4992 22.75 17.8214 22.75C15.1437 22.75 12.8621 21.3262 11.2054 19.82C10.3842 19.0735 9.73706 18.325 9.29565 17.7632Z"
+                                                                    stroke="#2B2A35" stroke-width="1.5" />
+                                                                <circle cx="17.8214" cy="17.2511" r="2.82143"
+                                                                    stroke="#2B2A35" stroke-width="1.5" />
+                                                            </svg>
+                                                        </button>
+                                                        <button style="pointer-events: auto;" mat-icon-button
+                                                            (click)="downloadPDF(attachment?.url, attachment?.name)">
+                                                            <svg width="35" height="35" viewBox="0 0 35 35" fill="none"
+                                                                xmlns="http://www.w3.org/2000/svg">
+                                                                <circle cx="17.5" cy="17.5" r="17.5" fill="#F8F8F8" />
+                                                                <path fill-rule="evenodd" clip-rule="evenodd"
+                                                                    d="M24.7923 20.4141V23.3307C24.7923 24.1361 24.1394 24.7891 23.334 24.7891H11.6673C10.8619 24.7891 10.209 24.1361 10.209 23.3307V20.4141H11.6673V23.3307H23.334V20.4141H24.7923Z"
+                                                                    fill="#2B2A35" />
+                                                                <path fill-rule="evenodd" clip-rule="evenodd"
+                                                                    d="M18.2295 17.9258L20.6305 15.5248L21.6617 16.556L17.5003 20.7174L13.3389 16.556L14.3701 15.5248L16.7711 17.9258V10.207H18.2295V17.9258Z"
+                                                                    fill="#2B2A35" />
+                                                            </svg>
+
+
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </ng-container>
+
+                                <div class="info-message" *ngIf="field.is_message">
+                                    {{field.message}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="submitted-by-form">
+                     <p *ngIf="studentFormDetail?.student_name">{{studentFormDetail?.student_name}} {{ taskDetail?.student_status?.toLowerCase()  === 'completed'?'Submitted':'Saved'}} this form on
+                      {{studentFormDetail?.student_submitted_at | date: 'dd/MM/yyyy HH:mm:ss a'}}</p>
+                    <p *ngIf="studentFormDetail?.employer_name">{{studentFormDetail?.employer_name}} {{taskDetail?.employee_status?.toLowerCase()  === 'completed'?'Submitted':'Saved'}} this form on
+                        {{studentFormDetail?.employer_submitted_at | date: 'dd/MM/yyyy HH:mm:ss a'}}</p>
+                    <p *ngIf="studentFormDetail?.staff_name">{{studentFormDetail?.staff_name}} Submitted this form on
+                        {{studentFormDetail?.staff_submitted_at | date: 'dd/MM/yyyy HH:mm:ss a'}}</p>
+                </div>
+                <div class="" [ngClass]="{ 'step_footer_end': i === 0, 'step_footer': i !== 0 }">
+                    <!-- [disabled]="disbaledBtnLogic" -->
+                    <button (click)="disbaledBtnLogic = false;stopnext= false;processEnd = false" *ngIf="i !== 0" mat-button
+                        class="theme_btn btn_outline_primary" (click)="formSubmitted=false"
+                        matStepperPrevious>Back</button>
+                    <!-- [disabled]="checkIsFormValid(steps.component)" -->
+
+                    <button *ngIf="!isLastVisibleStep(i)" mat-button class="theme_btn btn_primary ml-3"
+                        (click)="onNextOrSubmit(steps, multiStepFormStepper, 'next')"
+                        [disabled]="disbaledBtnLogic">Next</button>
+                    <button *ngIf="isLastVisibleStep(i) && taskDetail?.task_status !== 'completed'" mat-button
+                        class="theme_btn btn_primary ml-3"
+                        (click)="onNextOrSubmit(steps, multiStepFormStepper, 'submit')"
+                        [disabled]="submitdisabled || disbaledBtnLogic">Submit</button>
+                </div>
+            </mat-step>
+        </ng-container>
+        </mat-horizontal-stepper>
+    </div>
+    <section  [style.pointer-events]="!processEnd ? 'auto' : 'none'" [style.display]="studentFormDetail?.type === 'simple' ? '' : 'none'">
+        <div class="preview_form_card_student"
+            [style.pointerEvents]="taskDetail?.task_status === 'completed' ? 'none' : ''">
+            <!-- <div class="form_title">{{formName}}</div> -->
+            <div class="row main_container pb-0">
+                <div 
+                    *ngFor="let field of singleStepForm; let i = index"
+                    [ngClass]="[
+    field.isElementWidthFull ? 'col-md-12' : 'col-md-6',
+    checkFieldPermission(field.elementData?.permissions)
+  ]">
+
+                    <div class="form-group position-relative">
+                        <!-- Prompt Message -->
+                        <label *ngIf="field.id !== 'description'"
+                            [ngClass]="checkFieldPermission(field.elementData?.permissions)"
+                            [attr.tabindex]="checkFieldPermission(field.elementData?.permissions) === 'readOnly' ? '-1' : null">
+
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div class="d-block">
+                                    {{field.name}}
+                                    <span *ngIf="field.elementData?.required">(Required)</span>
+
+                                    <br /><small class="description-opacity">{{field.elementData?.description}}</small>
+                                </div>
+                            </div>
+
+                            <span [ngClass]="field?.name?.length > 80 ? 'bottom-side' : 'right-side'">
+                                <span *ngIf="isFieldInvalid(field)" class="text-danger error-message"
+                                    [ngClass]="checkFieldPermission(field.elementData?.permissions)">
+                                    Please complete this field
+                                </span>
+                            </span>
+
+                        </label>
+                        <p *ngIf="field.id === 'description'"
+                            [innerHTML]="field.elementData.value ? field.elementData.value : field.elementData.title"
+                            [ngClass]="checkFieldPermission(field.elementData?.permissions)"
+                            [attr.tabindex]="checkFieldPermission(field.elementData?.permissions) === 'readOnly' ? '-1' : null">
+                            <span [ngClass]="field.elementData?.value?.length > 80 ? 'bottom-side' : 'right-side'">
+                                <div *ngIf="isFieldInvalid(field)" class="text-danger position-absolute error-message"
+                                    [ngClass]="checkFieldPermission(field.elementData?.permissions)">
+                                    Please complete this field
+                                </div>
+                            </span>
+                        </p>
+                        <input *ngIf="field.id === 'single'" type="text" class="form-control"
+                            [(ngModel)]="field.elementData.value"  (ngModelChange)="checkFieldLogic(field, singleStepForm)"  [ngClass]="[
+                                      formSubmitted && 
+         field.elementData?.required && 
+         !field.elementData?.value && 
+         checkFieldPermission(field.elementData?.permissions) !== 'readOnly'  ? 'error-invalid' : '',
+                                      checkFieldPermission(field.elementData?.permissions)
+                                      ]"
+                            [attr.tabindex]="checkFieldPermission(field.elementData?.permissions) === 'readOnly' ? '-1' : null">
+                        <!-- <textarea *ngIf="field.id === 'multi'" class="form-control mb-0" cols="30" rows="2"
+                                    [(ngModel)]="field.elementData.value" [ngClass]="checkFieldPermission(field.elementData?.permissions)" [attr.tabindex]="checkFieldPermission(field.elementData?.permissions) === 'readOnly' ? '-1' : null"></textarea> -->
+
+                        <mat-form-field appearance="outline" class="form-control no-padding-border"
+                            *ngIf="field?.id === 'multi' && field?.elementData" [ngClass]="[
+                                      formSubmitted && 
+         field.elementData?.required && 
+         !field.elementData?.value && 
+         checkFieldPermission(field.elementData?.permissions) !== 'readOnly'  ? 'error-invalid-texarea' : '',
+                                      checkFieldPermission(field.elementData?.permissions)
+                                      ]"
+                            [attr.tabindex]="checkFieldPermission(field.elementData?.permissions) === 'readOnly' ? '-1' : null">
+                            <textarea matInput [(ngModel)]="field.elementData.value" (ngModelChange)="checkFieldLogic(field, singleStepForm)"
+                                [ngClass]="checkFieldPermission(field.elementData?.permissions)"
+                                [attr.tabindex]="checkFieldPermission(field.elementData?.permissions) === 'readOnly' ? '-1' : null"
+                                cdkTextareaAutosize cdkAutosizeMinRows="3" cdkAutosizeMaxRows="1000"
+                                placeholder="Enter text"></textarea>
+                        </mat-form-field>
+                        <input *ngIf="field.id === 'number'" type="number" (wheel)="$event.preventDefault()"  (keydown.arrowup)="$event.preventDefault()"  (keydown.arrowdown)="$event.preventDefault()"  class="form-control"
+                            [(ngModel)]="field.elementData.value" (ngModelChange)="checkFieldLogic(field, singleStepForm)"  [ngClass]="[
+                                      formSubmitted && 
+         field.elementData?.required && 
+         !field.elementData?.value && 
+         checkFieldPermission(field.elementData?.permissions) !== 'readOnly'  ? 'error-invalid' : '',
+                                      checkFieldPermission(field.elementData?.permissions)
+                                      ]"
+                            [attr.tabindex]="checkFieldPermission(field.elementData?.permissions) === 'readOnly' ? '-1' : null">
+                        <div *ngIf="field.id === 'time'" class="custom_datepicker_container custom_timepicker_wrapper" [ngClass]="[
+                                      formSubmitted && 
+         field.elementData?.required && 
+         !field.elementData?.value && 
+         checkFieldPermission(field.elementData?.permissions) !== 'readOnly'  ? 'error-invalid-date' : '',
+                                      checkFieldPermission(field.elementData?.permissions)
+                                      ]"
+                            [attr.tabindex]="checkFieldPermission(field.elementData?.permissions) === 'readOnly' ? '-1' : null">
+                            <input class="form-control" placeholder="hh:mm" matInput [ngxTimepicker]="toggleTimepicker"
+                                [format]="field?.elementData?.display"
+                                [(ngModel)]="field.elementData.value" (ngModelChange)="checkFieldLogic(field, singleStepForm)" >
+                            <ngx-material-timepicker-toggle
+                                [disabled]="checkFieldPermission(field.elementData?.permissions) === 'readOnly'"
+                                class="time_picker_toggle" [for]="toggleTimepicker">
+                                <svg ngxMaterialTimepickerToggleIcon width="17" height="9" viewBox="0 0 17 9"
+                                    fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M1 1L8.5 8L16 0.999997" stroke="#2B2A35" stroke-width="2"
+                                        stroke-linecap="round" stroke-linejoin="round" />
+                                </svg>
+                            </ngx-material-timepicker-toggle>
+                            <ngx-material-timepicker #toggleTimepicker></ngx-material-timepicker>
+                        </div>
+                        <mat-radio-group *ngIf="field.id === 'yes_no'"
+                            class="radio_group {{checkFieldPermission(field.elementData?.permissions)}}"
+                            [(ngModel)]="field.elementData.value" (ngModelChange)="checkFieldLogic(field, singleStepForm)"
+                            [attr.tabindex]="checkFieldPermission(field.elementData?.permissions) === 'readOnly' ? '-1' : null"
+                            [ngClass]="[
+                                      formSubmitted && 
+         field.elementData?.required && 
+         !field.elementData?.value && 
+         checkFieldPermission(field.elementData?.permissions) !== 'readOnly'  ? 'error-invalid-radio' : '',
+                                      checkFieldPermission(field.elementData?.permissions),
+                                      field.elementData?.display === 'horizontal' ? 'radio_horizontal' : ''
+                                  ]">
+                            <mat-radio-button [value]="'Yes'">Yes</mat-radio-button>
+                            <mat-radio-button [value]="'No'">No</mat-radio-button>
+                        </mat-radio-group>
+                        <mat-radio-group *ngIf=" field.id === 'radio'"
+                            class="radio_group {{checkFieldPermission(field.elementData?.permissions)}}"
+                            [(ngModel)]="field.elementData.value" (ngModelChange)="checkFieldLogic(field, singleStepForm)"
+                            [attr.tabindex]="checkFieldPermission(field.elementData?.permissions) === 'readOnly' ? '-1' : null"
+                            [ngClass]="[
+                                      formSubmitted && 
+         field.elementData?.required && 
+         !field.elementData?.value && 
+         checkFieldPermission(field.elementData?.permissions) !== 'readOnly'  ? 'error-invalid-radio' : '',
+                                      checkFieldPermission(field.elementData?.permissions),
+                                      field.elementData?.display === 'horizontal' ? 'radio_horizontal' : ''
+                                  ]">
+                            <mat-radio-button [value]="list.item"
+                                *ngFor="let list of field.elementData.items">{{list.item}}</mat-radio-button>
+                        </mat-radio-group>
+                        <ng-select *ngIf="field.id === 'dropdown'" [(ngModel)]="field.elementData.value" (ngModelChange)="checkFieldLogic(field, singleStepForm)"
+                            [searchable]="false" [multiple]="false" bindLabel="item" [items]="field.elementData.items"
+                            bindValue="item" [clearable]="false" placeholder="Select"
+                            [(ngModel)]="field.elementData.value" [ngClass]="[
+                                  formSubmitted && 
+         field.elementData?.required && 
+         !field.elementData?.value && 
+         checkFieldPermission(field.elementData?.permissions) !== 'readOnly'  ? 'error-invalid-select' : '',
+                                  checkFieldPermission(field.elementData?.permissions)
+                                  ]"
+                            [attr.tabindex]="checkFieldPermission(field.elementData?.permissions) === 'readOnly' ? '-1' : null">
+                            <ng-option *ngFor="let list of field.elementData.items" [value]="list">{{list}}</ng-option>
+                        </ng-select>
+                        <ul *ngIf="field.id === 'likert'"
+                            [ngClass]="field.elementData?.display === 'vertical' ? '' : 'likert'"
+                            class="{{checkFieldPermission(field.elementData?.permissions)}}" [ngClass]="[
+                                  formSubmitted && 
+         field.elementData?.required && 
+         !field.elementData?.value && 
+         checkFieldPermission(field.elementData?.permissions) !== 'readOnly'  ? 'error-invalid-radio' : '',
+                                  checkFieldPermission(field.elementData?.permissions),
+                                  field.elementData?.display === 'vertical' ? '' : 'likert'
+                              ]"
+                            [attr.tabindex]="checkFieldPermission(field.elementData?.permissions) === 'readOnly' ? '-1' : null">
+                            <mat-radio-group [ngClass]="field.elementData?.display === 'vertical' ? '' : 'likert'"
+                                [(ngModel)]="field.elementData.value" (ngModelChange)="checkFieldLogic(field, singleStepForm)">
+                                <li *ngFor="let item of field.elementData.items">
+                                    <mat-radio-button [value]="item.item">{{item.item}}</mat-radio-button>
+                                    <label *ngIf="field.elementData?.display !== 'vertical'"
+                                        class="label_title">{{item.item}}</label>
+                                </li>
+                            </mat-radio-group>
+                        </ul>
+                        <ul *ngIf="field.id === 'chips'" class="chipsList" [ngClass]="[
+                                  formSubmitted && 
+         field.elementData?.required && 
+         !field.elementData?.value && 
+         checkFieldPermission(field.elementData?.permissions) !== 'readOnly'  ? 'error-invalid' : '',
+                                  checkFieldPermission(field.elementData?.permissions),
+                                  field.elementData?.display === 'vertical' ? '' : 'likert'
+                              ]"
+                            [attr.tabindex]="checkFieldPermission(field.elementData?.permissions) === 'readOnly' ? '-1' : null">
+                            <li *ngFor="let list of field.elementData.items">
+                                <span>{{list.item}}</span>
+                            </li>
+                        </ul>
+                          <div *ngIf="field.id === 'image'" [ngClass]="[
+                                  checkFieldPermission(field.elementData?.permissions)
+                                ]">
+                                    <img [src]="field?.elementData?.value"
+                                        [height]="field?.elementData?.height"
+                                        [width]="field?.elementData?.width"
+                                        [style.opacity]="(+ (field?.elementData?.transparency ?? 100)) / 100"/>
+                                </div>
+<ng-container *ngIf="field.id === 'attachment'">
+                            <div class="file_upload" [ngClass]="[
+                                  formSubmitted && field.elementData?.required && 
+                                  (field.elementData?.type === 'attachment' 
+                                    ? !field.elementData?.value || field.elementData?.value.length === 0 
+                                    : !field.elementData?.value) 
+                                    ? 'error-invalid' : '',
+                                  checkFieldPermission(field.elementData?.permissions)
+                                ]">
+                                <p><strong>Drag file here or <span>browse</span></strong> <br>
+                                    Accepted file types: <ng-container
+                                        *ngFor="let extention of field?.elementData?.extenstions">{{extention}},
+                                    </ng-container>. <br>
+                                    {{field?.elementData?.size}}MB file size limit.
+
+                                </p>
+                                <label class="file_upload_label" for="image{{i}}"></label>
+                                <input name="img" type="file" id="image{{i}}"
+                                    [multiple]="field?.elementData?.selection_type === 'multi' ? true : false"
+                                    [accept]="getValueInsideSingleBracket(field?.elementData?.extenstions)"
+                                    (change)="uploadFile($event, field)">
+                                <!-- <p *ngFor="let attachment of field.elementData?.value">{{attachment.name}}</p> -->
+                            </div>
+                            <ul class="files_list">
+                                <li *ngFor="let attachment of field.elementData?.value; let i=index">
+                                    <div class="file_card">
+                                        <div class="content justify-content-between">
+                                            <div class="file-center">
+                                                <div class="svg-width d-flex justify-content-center align-items-center"
+                                                    style="width: 48px;height:48px; padding-right: 8px;"
+                                                    [innerHTML]="getSafeSvg(attachment?.name)"></div>
+                                                  <span [matTooltip]="attachment.name"
+  matTooltipPosition="above"
+  matTooltipShowDelay="300">{{attachment.name}}</span>
+                                            </div>
+                                            <div class="btn_group">
+                                                <button mat-icon-button (click)="viewPDF(attachment?.url)">
+                                                    <svg width="36" height="36" viewBox="0 0 36 36" fill="none"
+                                                        xmlns="http://www.w3.org/2000/svg">
+                                                        <circle cx="18" cy="18" r="18" fill="#F8F8F8" />
+                                                        <path
+                                                            d="M9.54434 18.2841C9.37548 18.0692 9.2365 17.8817 9.12905 17.7317C9.22987 17.5838 9.35993 17.3999 9.51823 17.1897C9.9521 16.6135 10.5935 15.8454 11.4213 15.0791C13.0866 13.5378 15.438 12.0645 18.3306 12.0645C21.2231 12.0645 23.5745 13.5378 25.2398 15.0791C26.0676 15.8454 26.709 16.6135 27.1429 17.1897C27.3012 17.3999 27.4312 17.5838 27.5321 17.7317C27.4246 17.8817 27.2856 18.0692 27.1168 18.2841C26.6622 18.8627 25.9958 19.6335 25.15 20.4024C23.4442 21.9531 21.0925 23.4216 18.3306 23.4216C15.5686 23.4216 13.2169 21.9531 11.5111 20.4024C10.6653 19.6335 9.9989 18.8627 9.54434 18.2841Z"
+                                                            fill="#F8F8F8" stroke="#2B2A35" stroke-width="1.5" />
+                                                        <circle cx="18.3297" cy="17.7438" r="2.92347" fill="#F8F8F8"
+                                                            stroke="#2B2A35" stroke-width="1.5" />
+                                                    </svg>
+                                                </button>
+                                                <button *ngIf="!showDownload" mat-icon-button
+                                                    (click)="deleteFile(i, field.elementData?.value)">
+                                                    <svg width="36" height="36" viewBox="0 0 36 36" fill="none"
+                                                        xmlns="http://www.w3.org/2000/svg">
+                                                        <circle cx="18" cy="18" r="18" fill="#F8F8F8" />
+                                                        <path fill-rule="evenodd" clip-rule="evenodd"
+                                                            d="M15.6896 9H20.3182C21.1703 9 21.8611 9.69078 21.8611 10.5429V11.3108H24.1709C25.023 11.3108 25.7137 12.0016 25.7137 12.8537V14.3966C25.7137 15.2487 25.023 15.9395 24.1709 15.9395H24.1081L23.3985 24.4257C23.3985 25.2779 22.7077 25.9686 21.8556 25.9686H14.1413C13.2893 25.9686 12.5985 25.2779 12.6012 24.4898L11.8886 15.9395H11.828C10.9759 15.9395 10.2852 15.2487 10.2852 14.3966V12.8537C10.2852 12.0016 10.9759 11.3108 11.828 11.3108H14.1468V10.5429C14.1468 9.69078 14.8376 9 15.6896 9ZM14.1468 12.8572V12.8564H11.8265V14.3993H24.1693V12.8564H21.8611V12.8572H14.1468ZM22.5572 15.9395H13.4342L14.1387 24.4223H21.853L21.8556 24.3582L22.5572 15.9395ZM20.3167 10.5394V11.3109H15.6881V10.5394H20.3167Z"
+                                                            fill="#2B2A35" />
+                                                    </svg>
+
+
+                                                </button>
+
+                                                <button *ngIf="showDownload" mat-icon-button
+                                                    (click)="downloadPDF(attachment?.url, attachment?.name)">
+                                                    <svg width="35" height="35" viewBox="0 0 35 35" fill="none"
+                                                        xmlns="http://www.w3.org/2000/svg">
+                                                        <circle cx="17.5" cy="17.5" r="17.5" fill="#F8F8F8" />
+                                                        <path fill-rule="evenodd" clip-rule="evenodd"
+                                                            d="M24.7923 20.4141V23.3307C24.7923 24.1361 24.1394 24.7891 23.334 24.7891H11.6673C10.8619 24.7891 10.209 24.1361 10.209 23.3307V20.4141H11.6673V23.3307H23.334V20.4141H24.7923Z"
+                                                            fill="#2B2A35" />
+                                                        <path fill-rule="evenodd" clip-rule="evenodd"
+                                                            d="M18.2295 17.9258L20.6305 15.5248L21.6617 16.556L17.5003 20.7174L13.3389 16.556L14.3701 15.5248L16.7711 17.9258V10.207H18.2295V17.9258Z"
+                                                            fill="#2B2A35" />
+                                                    </svg>
+
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </ng-container>
+                        <div *ngIf="field.id === 'date'" class="form-group custom_datepicker" [ngClass]="[
+                              formSubmitted && 
+         field.elementData?.required && 
+         !field.elementData?.value && 
+         checkFieldPermission(field.elementData?.permissions) !== 'readOnly'  ? 'error-invalid-date' : '',
+                              checkFieldPermission(field.elementData?.permissions)
+                              ]"
+                            [attr.tabindex]="checkFieldPermission(field.elementData?.permissions) === 'readOnly' ? '-1' : null">
+                            <div class="custom_datepicker_container">
+
+                                <input placeholder="dd/mm/yyyy" class="form-control" matInput
+                                    [matDatepicker]="projectStartPicker" [(ngModel)]="field.elementData.value" (ngModelChange)="checkFieldLogic(field, singleStepForm)">
+                                <mat-datepicker-toggle
+                                    [disabled]="checkFieldPermission(field.elementData?.permissions) === 'readOnly'"
+                                    matSuffix [for]="projectStartPicker">
+
+                                    <svg matDatepickerToggleIcon width="17" height="9" viewBox="0 0 17 9" fill="none"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M1 1L8.5 8L16 0.999997" stroke="#2B2A35" stroke-width="2"
+                                            stroke-linecap="round" stroke-linejoin="round" />
+                                    </svg>
+                                </mat-datepicker-toggle>
+                                <mat-datepicker #projectStartPicker></mat-datepicker>
+                            </div>
+                        </div>
+                        <div *ngIf="field.id === 'checkbox'"
+                            class="checkbox_group {{checkFieldPermission(field.elementData?.permissions)}}"
+                            [attr.tabindex]="checkFieldPermission(field.elementData?.permissions) === 'readOnly' ? '-1' : null"
+                            [ngClass]="[
+                              formSubmitted && 
+         field.elementData?.required && 
+         !field.elementData?.value && 
+         checkFieldPermission(field.elementData?.permissions) !== 'readOnly'  ? 'error-invalid-checkbox' : '',
+                              checkFieldPermission(field.elementData?.permissions),
+                              field.elementData?.display === 'horizontal' ? 'checkbox_horizontal' : ''
+                              ]">
+                            <ul class="pl-0 checkbox-size">
+                                <li *ngFor="let item of field.elementData.items">
+                                    <mat-checkbox [(ngModel)]="item.selected" (change)="checkFieldLogic(field, singleStepForm);onCheckboxChange(field)">
+                                        {{item.item}}
+                                    </mat-checkbox>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="pt-2" *ngIf="field.id === 'signature'" [ngClass]="[
+                                  formSubmitted && 
+         field.elementData?.required && 
+         !field.elementData?.value && 
+         checkFieldPermission(field.elementData?.permissions) !== 'readOnly'  ? 'error-invalid' : '',
+                                  checkFieldPermission(field.elementData?.permissions)
+                                  ]"
+                            [attr.tabindex]="checkFieldPermission(field.elementData?.permissions) === 'readOnly' ? '-1' : null">
+                            <div class="form-group mb-0" [style.pointerEvents]="item.item === 'Student' ? '' : 'none'"
+                                [style.opacity]="item.item === 'Student' ? '' : '0.5'"
+                                *ngFor="let item of field.elementData?.items; let i = index">
+                                <div class="sign_from">
+                                    <label>{{item.item}} Signature:</label>
+                                    <div class="form-control canvas_container p-0 overflow-auto">
+                                        <canvas *ngIf="!item?.signature?.url" id="signaturePad-{{ i }}" height="90px"
+                                            width="1018" style="touch-action: none;"></canvas>
+                                        <img class="img-fluid" *ngIf="item?.signature?.url"
+                                            [src]="item?.signature?.url" />
+                                    </div>
+                                </div>
+                                <div class="sign_foot_btn">
+                                    <button *ngIf="item?.signature?.url" (click)="cancelSignature(i, item)" mat-button
+                                        class="bs_btn with_icon_text default"><svg width="24" height="24"
+                                            viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M3.59375 4L20.034 20.4402" stroke="white" stroke-width="2" />
+                                            <path d="M20.5625 4L4.12227 20.4402" stroke="white" stroke-width="2" />
+                                        </svg>
+                                        Cancel</button>
+                                    <button *ngIf="!item?.signature?.url" (click)="getFile(i, item)" mat-button
+                                        class="bs_btn with_icon_text success"><svg width="20" height="16"
+                                            viewBox="0 0 20 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M19 1L6.625 15L1 8.63636" stroke="white" stroke-width="2"
+                                                stroke-linecap="round" stroke-linejoin="round" />
+                                        </svg>
+
+                                        Confirm</button>
+                                    <button *ngIf="!item?.signature?.url" (click)="cancelSignature(i, item)" mat-button
+                                        class="bs_btn with_icon_text danger"><svg width="24" height="24"
+                                            viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M1 4V10H7" stroke="white" stroke-width="2" stroke-linecap="round"
+                                                stroke-linejoin="round" />
+                                            <path
+                                                d="M3.51 15.0004C4.15839 16.8408 5.38734 18.4206 7.01166 19.5018C8.63598 20.583 10.5677 21.107 12.5157 20.9949C14.4637 20.8828 16.3226 20.1406 17.8121 18.8802C19.3017 17.6198 20.3413 15.9094 20.7742 14.0068C21.2072 12.1042 21.0101 10.1124 20.2126 8.33154C19.4152 6.55068 18.0605 5.07723 16.3528 4.1332C14.6451 3.18917 12.6769 2.8257 10.7447 3.09755C8.81245 3.36941 7.02091 4.26186 5.64 5.64044L1 10.0004"
+                                                stroke="white" stroke-width="2" stroke-linecap="round"
+                                                stroke-linejoin="round" />
+                                        </svg>
+                                        Clear</button>
+                                </div>
+                                <div class="sign_from">
+                                    <label>Name:</label>
+                                    <input type="text" placeholder class="form-control" [(ngModel)]="item.name">
+                                </div>
+                                <div class="sign_from custom_datepicker">
+                                    <label>Date:</label>
+                                    <!-- <input type="text" placeholder="" class="form-control"
+                                                [(ngModel)]="item.date"> -->
+                                    <div class="custom_datepicker_container" style="width: 100%;">
+                                        <input placeholder="dd/mm/yyyy" class="form-control" matInput readonly
+                                            [matDatepicker]="signDate" [(ngModel)]="item.date">
+                                        <mat-datepicker-toggle matSuffix [for]="signDate">
+
+                                            <svg matDatepickerToggleIcon width="17" height="9" viewBox="0 0 17 9"
+                                                fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M1 1L8.5 8L16 0.999997" stroke="#2B2A35" stroke-width="2"
+                                                    stroke-linecap="round" stroke-linejoin="round" />
+                                            </svg>
+                                        </mat-datepicker-toggle>
+                                        <mat-datepicker #signDate></mat-datepicker>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <ng-container *ngIf="field.id === 'downloadable'">
+                            <ul class="files_list">
+                                <li *ngFor="let attachment of field.elementData?.value">
+                                    <div class="file_card">
+                                        <div class="content">
+                                            <div class="svg-width d-flex justify-content-center align-items-center"
+                                                style="width: 60px;height:48px; padding-right: 8px;"
+                                                [innerHTML]="getSafeSvg(attachment?.name)"></div>
+                                            <p>{{attachment.name}}</p>
+                                            <div class="btn_group">
+                                                <button mat-icon-button (click)="viewPDF(attachment?.url)">
+                                                    <svg width="35" height="35" viewBox="0 0 35 35" fill="none"
+                                                        xmlns="http://www.w3.org/2000/svg">
+                                                        <circle cx="17.5" cy="17.5" r="17.5" fill="#F8F8F8" />
+                                                        <path
+                                                            d="M9.29565 17.7632C9.1361 17.5601 9.00404 17.3822 8.90095 17.2387C8.99761 17.0973 9.1211 16.923 9.27053 16.7246C9.69179 16.1651 10.3145 15.4194 11.1183 14.6754C12.7353 13.1787 15.0165 11.75 17.8214 11.75C20.6263 11.75 22.9076 13.1787 24.5246 14.6754C25.3283 15.4194 25.9511 16.1651 26.3723 16.7246C26.5218 16.923 26.6452 17.0973 26.7419 17.2387C26.6388 17.3822 26.5068 17.5601 26.3472 17.7632C25.9058 18.325 25.2587 19.0735 24.4375 19.82C22.7807 21.3262 20.4992 22.75 17.8214 22.75C15.1437 22.75 12.8621 21.3262 11.2054 19.82C10.3842 19.0735 9.73706 18.325 9.29565 17.7632Z"
+                                                            stroke="#2B2A35" stroke-width="1.5" />
+                                                        <circle cx="17.8214" cy="17.2511" r="2.82143" stroke="#2B2A35"
+                                                            stroke-width="1.5" />
+                                                    </svg>
+                                                </button>
+                                                <button style="pointer-events: auto;" mat-icon-button
+                                                    (click)="downloadPDF(attachment?.url, attachment?.name)">
+                                                    <svg width="35" height="35" viewBox="0 0 35 35" fill="none"
+                                                        xmlns="http://www.w3.org/2000/svg">
+                                                        <circle cx="17.5" cy="17.5" r="17.5" fill="#F8F8F8" />
+                                                        <path fill-rule="evenodd" clip-rule="evenodd"
+                                                            d="M24.7923 20.4141V23.3307C24.7923 24.1361 24.1394 24.7891 23.334 24.7891H11.6673C10.8619 24.7891 10.209 24.1361 10.209 23.3307V20.4141H11.6673V23.3307H23.334V20.4141H24.7923Z"
+                                                            fill="#2B2A35" />
+                                                        <path fill-rule="evenodd" clip-rule="evenodd"
+                                                            d="M18.2295 17.9258L20.6305 15.5248L21.6617 16.556L17.5003 20.7174L13.3389 16.556L14.3701 15.5248L16.7711 17.9258V10.207H18.2295V17.9258Z"
+                                                            fill="#2B2A35" />
+                                                    </svg>
+
+
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </ng-container>
+
+                        <div class="info-message" *ngIf="field.is_message">
+                            {{field.message}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="submitted-by-form">
+            <p *ngIf="studentFormDetail?.student_name">{{studentFormDetail?.student_name}} {{ taskDetail?.student_status?.toLowerCase()  === 'completed'?'Submitted':'Saved'}} this form on
+                {{studentFormDetail?.student_submitted_at | date: 'dd/MM/yyyy HH:mm:ss a'}}</p>
+            <p *ngIf="studentFormDetail?.employer_name">{{studentFormDetail?.employer_name}} {{taskDetail?.employee_status?.toLowerCase()  === 'completed'?'Submitted':'Saved'}} this form on
+                {{studentFormDetail?.employer_submitted_at | date: 'dd/MM/yyyy HH:mm:ss a'}}</p>
+            <p *ngIf="studentFormDetail?.staff_name">{{studentFormDetail?.staff_name}} Submitted this form on
+                {{studentFormDetail?.staff_submitted_at | date: 'dd/MM/yyyy HH:mm:ss a'}}</p>
+        </div>
+        <div class="step_footer" *ngIf="taskDetail?.task_status !== 'completed'">
+            <button mat-button class="theme_btn btn_primary"
+                (click)="onNextOrSubmit(singleStepForm, multiStepFormStepper, 'submit')"
+                [disabled]="submitdisabled || disbaledBtnLogic">Submit</button>
+        </div>
+    </section>
+
+
+       <div  *ngIf="taskDetail?.student_status != 'completed'" [style.display]="studentFormDetail?.type === 'multi_step' ? '' : 'none'" style="position: fixed;
+                right: 35px;
+                z-index: 999;
+                top: calc(100vh - 400px);">
+        <button (click)="submitForm('save')" mat-icon-button class="theme_btn btn_primary p-0" style="padding: 0px !important;">
+            <svg width="26" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M20.5833 22.75H5.41667C4.84203 22.75 4.29093 22.5217 3.8846 22.1154C3.47827 21.7091 3.25 21.158 3.25 20.5833V5.41667C3.25 4.84203 3.47827 4.29093 3.8846 3.8846C4.29093 3.47827 4.84203 3.25 5.41667 3.25H17.3333L22.75 8.66667V20.5833C22.75 21.158 22.5217 21.7091 22.1154 22.1154C21.7091 22.5217 21.158 22.75 20.5833 22.75Z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M18.4163 22.7506V14.084H7.58301V22.7506" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M7.58301 3.25V8.66667H16.2497" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+
+        </button>
+    </div>
+</section>

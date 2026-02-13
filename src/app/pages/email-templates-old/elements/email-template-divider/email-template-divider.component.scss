@@ -1,0 +1,151 @@
+.line_style{
+    list-style: none;
+    padding: 0px;
+    li{
+        cursor: pointer;
+        padding: 12px;
+        border: 1.5px solid transparent;
+        border-radius: 3px;
+        &.selected{
+            border: 1.5px solid var(--primary-color-first);
+        }
+        hr{
+            margin: 0px
+        }
+    }
+    .solid{
+        border-top: 1px solid var(--primary-color-first);
+    }
+    .dashed{
+        border-top: 1px dashed var(--primary-color-first);
+    }
+    .dotted{
+        border-top: 1px dotted var(--primary-color-first);
+    }
+}
+.color_container_section{
+    display: flex;
+    .color_container{
+        min-width: 100px;
+        margin-right: 37px;
+        display: flex;
+    align-items: center;
+    .color{
+        width: 28px;
+        height: 28px;
+        padding: 0px;
+        border: 0.5px solid rgba(154, 154, 154, 1);
+        border-radius: 3px;
+        margin-right: 11px;
+    }
+        .values{
+                border: 0px;
+                width: 51px;
+                outline: none;
+                font-family: var(--font-primary);
+                font-size: 16px;
+                font-weight: 500;
+                line-height: 16px;
+                letter-spacing: 0em;
+                text-align: right;
+                color: var(--main-black-color);
+                border-bottom: 1px solid var(--primary-color-first);
+                height: 21px;
+        }
+    }
+    .value_inter_input{
+        min-width: 58px;
+        width: 58px;
+    }
+}
+.divider_container{
+    margin-bottom: 30px;
+    .divider_container_inner{
+        position: relative;
+    }
+    &.selected{
+        .divider_container_inner{
+            border: 1.5px solid var(--pink-color);
+            border-radius: 5px;
+        }
+        .divider_container_main{
+            .action_container{
+                display: block;
+
+            }
+        }
+    }
+    .divider_container_main {
+        .action_container {
+            display: none;
+            border: 1px solid var(--pink-color);
+            width: max-content;
+            margin: 10px auto 0 auto;
+            .action_btn_container {
+                display: flex;
+                flex-wrap: wrap;
+                .icon_btn_group{
+                    padding: 0px 10px;
+                    button{
+                        border: 0px;
+                        background-color: #fff;
+                        outline: none;
+                        height: 32px;
+                        width: 32px;
+                    }
+                }
+                .drag_with_title {
+                    display: inline-flex;
+                    background-color: var(--pink-color);
+                    color: #fff;
+                }
+                .primary_btn_group{
+                    display: inline-flex;
+                    .action_btn{
+                            border-right: 1px solid var(--pink-color);
+                            border-left: 1px solid var(--pink-color);
+                        &:not(:first-child){
+                          margin-left: -1px;
+                        }
+                    }
+                }
+                .action_btn{
+                    font-family: var(--font-primary);
+                    font-size: 12px;
+                    font-weight: 500;
+                    line-height: 16px;
+                    letter-spacing: 0em;
+                    text-align: center;
+                    padding: 7px 13px;
+                    height: 32px;
+                    gap: 6px;
+                    align-items: center;
+                    user-select: none;
+                    border: 0px;
+                    outline: none;
+                    &.primary{
+                        background-color: #FF76AF;
+                        color: #fff;
+                    }
+                }
+              
+            }
+        }
+    }
+}
+.edit_element_modal{
+    &.ch_modal {
+        .modal-dialog{
+            max-width: 554px;
+        }
+    }
+}
+.line_width{
+    .value_inter_input{
+        min-width: 28px;
+        width: 28px;
+        input{
+            padding-right: 0px;
+        }
+    }
+}

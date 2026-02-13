@@ -1,0 +1,560 @@
+<div class="page_header">
+    <a routerLink="/admin/form-builder/form-builder-list" class="back_Link"> <svg xmlns="http://www.w3.org/2000/svg"
+            width="24" height="24" viewBox="0 0 24 24" fill="none">
+            <path d="M19 12H5" stroke="#464BA8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M12 19L5 12L12 5" stroke="#464BA8" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round" />
+        </svg> Back to Form List</a>
+    <div class="page_header_container align-items-baseline">
+        <div class="page_heading">
+            <h4 *ngIf="!isEditFormName">{{formName}}</h4>
+            <div *ngIf="isEditFormName" class="element_main">
+                <input type="text" class="form-control" [(ngModel)]="formName"
+                    (blur)="isEditFormName = !isEditFormName">
+            </div>
+            <svg *ngxPermissionsOnly="['Form_Builder_Write']" (click)="isEditFormName = !isEditFormName" width="35" height="35" viewBox="0 0 35 35" fill="none"
+                xmlns="http://www.w3.org/2000/svg">
+                <circle cx="17.5" cy="17.5" r="17.5" fill="#F8F8F8" />
+                <path fill-rule="evenodd" clip-rule="evenodd"
+                    d="M20.7343 10.2083C21.2117 10.2083 21.6693 10.3989 22.0036 10.7357L24.2646 12.9968C24.6013 13.3335 24.7904 13.79 24.7904 14.2661C24.7904 14.7422 24.6013 15.1988 24.2646 15.5354L16.0094 23.7881C15.5001 24.3756 14.7781 24.7366 13.951 24.7933H10.207V24.0641L10.2094 20.9907C10.2715 20.2218 10.629 19.5068 11.1743 19.0264L19.4641 10.7366C19.8002 10.3984 20.2574 10.2083 20.7343 10.2083ZM13.8995 23.3368C14.2891 23.3092 14.6517 23.1279 14.9428 22.7949L20.4567 17.281L17.7191 14.5433L12.1729 20.0882C11.8775 20.3494 11.6948 20.715 11.6654 21.0494V23.3354L13.8995 23.3368ZM18.7505 13.5122L21.4879 16.2498L23.2334 14.5042C23.2966 14.4411 23.3321 14.3554 23.3321 14.2661C23.3321 14.1768 23.2966 14.0912 23.2334 14.028L20.9704 11.7649C20.9079 11.702 20.8229 11.6666 20.7343 11.6666C20.6456 11.6666 20.5606 11.702 20.4982 11.7649L18.7505 13.5122Z"
+                    fill="#2B2A35" />
+            </svg>
+
+        </div>
+        <div class="btn_group_header">
+            <!-- <button mat-button class="theme_btn btn_outline_primary" (click)="saveSinglePageForm()">
+                <svg class="mr-2" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path
+                        d="M19 21H5C4.46957 21 3.96086 20.7893 3.58579 20.4142C3.21071 20.0391 3 19.5304 3 19V5C3 4.46957 3.21071 3.96086 3.58579 3.58579C3.96086 3.21071 4.46957 3 5 3H16L21 8V19C21 19.5304 20.7893 20.0391 20.4142 20.4142C20.0391 20.7893 19.5304 21 19 21Z"
+                        stroke="#464BA8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                    <path d="M17 21V13H7V21" stroke="#464BA8" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round" />
+                    <path d="M7 3V8H15" stroke="#464BA8" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round" />
+                </svg>
+                Save</button> -->
+
+      <button mat-button class="theme_btn btn_primary" style="width: 190px;" (click)="saveSinglePageForm('save')">
+               <svg width="24" height="25" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M21 6.5C21 4.84315 19.6569 3.5 18 3.5C16.3431 3.5 15 4.84315 15 6.5C15 8.15685 16.3431 9.5 18 9.5C19.6569 9.5 21 8.15685 21 6.5Z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M9 18.5C9 16.8431 7.65685 15.5 6 15.5C4.34315 15.5 3 16.8431 3 18.5C3 20.1569 4.34315 21.5 6 21.5C7.65685 21.5 9 20.1569 9 18.5Z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M6 11.5L6 8.5C6 7.96957 6.21071 7.46086 6.58579 7.08579C6.96086 6.71071 7.46957 6.5 8 6.5L15 6.5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M9 18.5L21 18.5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+
+                Conditional Logic</button>
+
+            <button mat-button class="theme_btn btn_outline_primary" (click)="previewSinglePageForm()">
+                <svg class="mr-2" width="26" height="16" viewBox="0 0 26 16" fill="none"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <g clip-path="url(#clip0_10961_35632)">
+                        <path
+                            d="M1.71049 8.61941C1.51299 8.37634 1.34741 8.16154 1.21534 7.98461C1.33889 7.81088 1.49333 7.60114 1.67769 7.36437C2.23421 6.64964 3.05735 5.69635 4.12007 4.7451C6.25653 2.83275 9.2782 1 13 1C16.7218 1 19.7435 2.83275 21.8799 4.7451C22.9426 5.69635 23.7658 6.64964 24.3223 7.36437C24.5067 7.60114 24.6611 7.81088 24.7847 7.98461C24.6526 8.16154 24.487 8.37634 24.2895 8.61941C23.7062 9.3373 22.8507 10.2942 21.7647 11.249C19.5757 13.1734 16.5535 15 13 15C9.44653 15 6.42433 13.1734 4.23526 11.249C3.14927 10.2942 2.29378 9.3373 1.71049 8.61941Z"
+                            stroke="#464BA8" stroke-width="2" />
+                        <circle cx="13" cy="8" r="4" stroke="#464BA8" stroke-width="2" />
+                    </g>
+                    <defs>
+                        <clippath id="clip0_10961_35632">
+                            <rect width="26" height="16" fill="white" />
+                        </clippath>
+                    </defs>
+                </svg>
+                Preview</button>
+            <!-- <button mat-button class="theme_btn btn_primary">
+                <svg class="mr-2" width="21" height="21" viewBox="0 0 21 21" fill="none"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <g clip-path="url(#clip0_12849_93628)">
+                        <circle cx="10.0625" cy="10.5" r="9.3125" stroke="white" stroke-width="1.5" />
+                        <path
+                            d="M7.54726 10.4508C7.54726 9.16938 7.54607 7.88852 7.54786 6.60706C7.54845 6.25824 7.57643 6.24189 7.87171 6.41509C10.0452 7.68928 12.2181 8.96468 14.3909 10.2395C14.4082 10.2498 14.4249 10.2601 14.4421 10.2704C14.7505 10.4593 14.7529 10.4678 14.4487 10.6483C13.5754 11.1667 12.7009 11.6838 11.8246 12.1974C10.5191 12.9629 9.21116 13.7253 7.90385 14.4878C7.55976 14.6889 7.54786 14.681 7.54726 14.2643C7.54667 12.9932 7.54726 11.722 7.54726 10.4508Z"
+                            fill="white" />
+                    </g>
+                    <defs>
+                        <clipPath id="clip0_12849_93628">
+                            <rect width="21" height="21" fill="white" />
+                        </clipPath>
+                    </defs>
+                </svg>
+                Create</button> -->
+        </div>
+    </div>
+    <div class="submiter_title">
+        <div class="p"><span class="label">Submitters:</span> &nbsp; {{selectedSubmitter}}
+        </div>
+    </div>
+    <!-- <div class="submiter_title">
+        <div class="p"><span class="label">Submitters:</span> &nbsp;
+            <div class="custom_chip_list" *ngIf="!isAddSubmitter">
+                <span class="custom_chip" *ngFor="let submitter of savedSubmitters"
+                    [ngClass]="submitter.selected ? 'active' : ''" (click)="submitter.selected = !submitter.selected">
+                    <span>{{submitter.name}}</span>
+                    <svg *ngIf="!submitter.selected" class="close_icon_chip" width="17" height="18" viewBox="0 0 17 18"
+                        fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12.75 4.75L4.25 13.25" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" />
+                        <path d="M4.25 4.75L12.75 13.25" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                    <svg *ngIf="submitter.selected" class="close_icon_chip" width="17" height="18" viewBox="0 0 17 18"
+                        fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12.75 4.75L4.25 13.25" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" />
+                        <path d="M4.25 4.75L12.75 13.25" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                </span>
+            </div>
+            <a href="void:javascript(0)" (click)="isAddSubmitter = !isAddSubmitter">
+                <span *ngIf="!isAddSubmitter && !isSubmittersAdded()">Add Submitters</span>
+                <span *ngIf="!isAddSubmitter && isSubmittersAdded()">Edit</span>
+            </a>
+            <div class="custom_chip_list" *ngIf="isAddSubmitter">
+                <span class="custom_chip" *ngFor="let submitter of submitters" [ngClass]="submitter.selected ? 'active' : ''"
+                    (click)="submitter.selected = !submitter.selected">
+                    <span>{{submitter.name}}</span>
+                    <svg *ngIf="!submitter.selected" class="close_icon_chip" width="17" height="18" viewBox="0 0 17 18"
+                        fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12.75 4.75L4.25 13.25" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" />
+                        <path d="M4.25 4.75L12.75 13.25" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                    <svg *ngIf="submitter.selected" class="close_icon_chip" width="17" height="18" viewBox="0 0 17 18"
+                        fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12.75 4.75L4.25 13.25" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" />
+                        <path d="M4.25 4.75L12.75 13.25" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                </span>
+            </div>
+            <button *ngIf="isAddSubmitter" matRipple class="custom_select_with_color blue"
+                                            [matMenuTriggerFor]="submitterSelect">
+                                            {{
+                                                submitter == "students" ? "Students":
+                                                submitter == "employers" ? "Employers":
+                                                submitter == "administrators" ? "Administrators": "Select Submitter"
+                                                }}
+                                                <svg width="14" height="8" viewBox="0 0 14 8" fill="none"
+                                                    xmlns="http://www.w3.org/2000/svg">
+                                                    <path d="M1 1L7 7L13 1" stroke="currentColor" stroke-width="2"
+                                                        stroke-linecap="round" stroke-linejoin="round" />
+                                                </svg>
+                                        </button>
+                                        <mat-menu #submitterSelect="matMenu">
+                                            <a mat-menu-item (click)="submitter='students';">
+                                                Students</a>
+                                            <a mat-menu-item (click)="submitter='employers'">
+                                                Employers</a>
+                                            <a mat-menu-item (click)="submitter='administrators'">
+                                                Administrators</a>
+                                        </mat-menu>
+            <button *ngIf="isAddSubmitter" mat-icon-button (click)="saveSubmitters()">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M20 6L9 17L4 12" stroke="#26C296" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round" />
+                </svg>
+            </button>
+            <button *ngIf="isAddSubmitter" mat-icon-button (click)="removeSubmitters()">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M18 6L6 18" stroke="#F47761" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                    <path d="M6 6L18 18" stroke="#F47761" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+            </button>
+        </div>
+    </div> -->
+</div>
+<section class="form_main_container">
+    <div class="left_side_bar">
+        <div class="search_header">
+            <div class="search_container">
+                  <form autocomplete="off">
+                      <input type="text" placeholder="Search Section Component" class="form-control"
+                    [(ngModel)]="searchValue" autocomplete="my-component">
+                  </form>
+              
+                <button mat-button class="theme_btn btn_primary">
+                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" clip-rule="evenodd"
+                            d="M8.11887 16.2377C3.63494 16.2377 0 12.6028 0 8.11886C0 3.63494 3.63494 0 8.11887 0C12.6028 0 16.2377 3.63494 16.2377 8.11886C16.2377 9.99479 15.6015 11.7221 14.5331 13.0968L20.0009 18.5647L18.5657 20L13.0979 14.5322C11.723 15.6012 9.9953 16.2377 8.11887 16.2377ZM14.2096 8.11893C14.2096 11.4819 11.4833 14.2081 8.1204 14.2081C4.75746 14.2081 2.03125 11.4819 2.03125 8.11893C2.03125 4.75599 4.75746 2.02979 8.1204 2.02979C11.4833 2.02979 14.2096 4.75599 14.2096 8.11893Z"
+                            fill="white" />
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <div class="element_section" *ngFor="let elements of draggableElements | filter: 'nested': searchValue; let m = index">
+            <h5>{{elements.element}} <span *ngIf="elements.info" matTooltipClass="info_primary_my_task"  matTooltipPosition="above" matTooltip="{{elements.info_des}}">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke="#464BA8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M12 16V12" stroke="#464BA8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M12 8H12.0113" stroke="#464BA8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    
+            </span> </h5>
+            <div class="element_section_container">
+                <!-- [draggable] [dragClass]="'active'"
+                    [dragData]="item" [dragScope]="item.type" [dragEnabled]="true" -->
+                <!-- <div class="form_element" *ngFor="let item of elements.items" 
+                   [dndDraggable]="item"
+                    [dndEffectAllowed]="'copy'"
+                    [dragEnabled]="true"
+                    [dndObject]="item"
+                    [dndDisableIf]="false"
+                    [draggable] 
+                    > -->
+                       <!-- <div
+          class="form_element"
+          *ngFor="let item of elements.items"
+          dndDraggable
+          [dragEnabled]="true"
+          [dragData]="item"
+          [effectAllowed]="'copy'"
+        >
+                    <figure>
+                        <img src="../../../../assets/icons/element-icons/{{item.icon}}.svg" alt="icons">
+                    </figure>
+                    <span>{{item.name}}</span>
+                </div> -->
+                 <div class="form_element" *ngFor="let item of elements.items; let i = index"
+                    [dndDraggable]="{data:item,m, i}"
+                    [dndObject]="item"
+                    [dndEffectAllowed]="'copy'"
+                    
+                    >
+                <figure>
+                    <img src="../../../../assets/icons/element-icons/{{item.icon}}.svg" alt="icons">
+                </figure>
+                <span>{{ item.name }}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+     <!-- droppable [dropScope]="itemsType" [dragHintClass]="'drag-hint'"
+        (onDrop)="onElementDrop($event)" -->
+    <div class="right_bar"
+     class="right_bar"
+    dndDropzone
+       (dndDrop)="onElementDrop($event)"
+   >
+        <div cdkDropList (cdkDropListDropped)="sortElement($event)" [cdkDropListData]="droppedItems">
+            <ng-template #dynamic></ng-template>
+        </div>
+        <div class="drop_container" *ngIf="droppedItems.length === 0">
+            <span>Drag & drop a step here</span>
+        </div>
+    </div>
+<!-- 
+  <div class="right_bar"
+       dndDropzone
+       (dndDrop)="onElementDrop($event)">
+    <ng-template #dynamic></ng-template>
+
+    <div class="drop_container" *ngIf="droppedItems.length === 0">
+      <span>Drag & drop a step here</span>
+    </div>
+  </div> -->
+</section>
+
+<div bsModal #previewSinglePageModal="bs-modal" class="modal fade ch_modal single_page_preview" tabindex="-1"
+    role="dialog" aria-labelledby="previewSinglePageModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Preview Form</h4>
+                <button type="button" mat-icon-button id="closeModal" class="close" (click)="cancelSinglePageModal()"
+                    aria-label="Close">
+                    <mat-icon>close</mat-icon>
+                </button>
+            </div>
+            <div class="modal-body" id="html_template">
+                <app-preview-single-form [formName]="formName" [elementsForm]="elementsForm"
+                    [fields]="fields"></app-preview-single-form>
+
+                <div class="row preview_form_card check_box_link mt-4 m-0" *ngIf="selectedSubmitter !='Students & Employers'">
+
+                    <div class="col-md-8 col-8 mb-3 p-0" *ngIf="selectedSubmitter=='Students' || selectedSubmitter=='Employers'">
+
+                        <div class="col-12 p-0">
+                            <label class="label_title">Select Form Type</label>
+                        </div>
+                        <div class="col-12 p-0">
+                          <ng-select
+                            [items]="selectedSubmitter=='Students'
+                                        ? ['Workflow', 'Additional Student Forms', 'Incident Reporting']
+                                        : ['Workflow', 'Host Company Agreement & Assessment Form (HCAAF)', 'Incident Reporting']"
+                            [clearable]="true"
+                            [multiple]="false"
+                            [searchable]="true"
+                            placeholder="Search & Select Contact"
+                            [(ngModel)]="form_type"
+                            (change)="onFormTypeChange($event)"
+                            class="custom-ng-select">
+
+                            <ng-template ng-option-tmp let-item="item">
+                                {{ item }}
+                            </ng-template>
+                            </ng-select>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <div class="col-md-12 col-12" *ngIf="form_type=='Host Company Agreement & Assessment Form (HCAAF)'">
+
+
+                        <div class="form-group hcaaf-toogle">
+                            <label> Mark this form as a Host Company Agreement & Assessment Form (HCAAF)</label> &nbsp; &nbsp;
+                            <mat-slide-toggle color="success" [(ngModel)]="checked" name="checked"
+                                [ngModelOptions]="{standalone: true}" class="ios-toggle p-0">
+                              
+                            </mat-slide-toggle>
+                        </div>
+
+                        <div class="row p-0" *ngIf="checked">
+                            <div class="col-5">
+                                <div class="form-group d-flex align-items-center justify-content-between w-100">
+                                    <label>Select Validity Period</label>
+                                    <div class="d-flex align-items-center gap-2">
+                                        <ng-select class="select_ng_custom" style=" min-width: 150px !important;"
+                                            [searchable]="true" [multiple]="false" bindLabel="name" bindValue="staff_id"
+                                            [clearable]="false" placeholder="Select Validity Period"
+                                            [(ngModel)]="hcaaf_validation" [ngModelOptions]="{ standalone: true }">
+                                            <ng-option [value]="12">
+                                                12
+                                            </ng-option>
+                                            <ng-option [value]="18">
+                                                18
+                                            </ng-option>
+                                            <ng-option [value]="24">
+                                                24
+                                            </ng-option>
+                                        </ng-select>
+                                        <label class="mb-0 ms-2">Month</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                         <div class="form-group hcaaf-toogle mb-2"  *ngIf="checked">
+                            <label> Automatically Request Renewal of HCAAF</label> &nbsp; &nbsp;
+                            <mat-slide-toggle color="success" [(ngModel)]="autoRenewal" name="checked"
+                                [ngModelOptions]="{standalone: true}" class="ios-toggle p-0">
+                            </mat-slide-toggle>
+                        </div>
+
+                        <p class="p-tag">
+                            When enabled, the agreement form will be automatically resent to companies 1 month before expiry.<br /> The associated contact person will also be notified by email.
+                            <!-- When enabled, the agreement form will be automatically resent to companies as it nears <br /> expiry (e.g. for a 12-month validity period, the agreement form will be resent in the last 3 <br /> months). -->
+                        </p>
+
+
+                        <!-- <mat-checkbox [(ngModel)]="checked" name="checked" [ngModelOptions]="{standalone: true}"
+                            class="example-margin">
+                            Mark this form as a Host Company Agreement & Assessment Form (HCAAF)</mat-checkbox> -->
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer justify-content-right">
+                <button mat-button type="button" class="theme_btn btn_secondary"
+                    (click)="cancelSinglePageModal()">Cancel</button>
+                <button *ngxPermissionsOnly="['Form_Builder_Write']" [disabled]="!isSuccess" mat-button class="theme_btn btn_outline_primary"
+                    (click)="saveSinglePageForm()">
+                    <svg class="mr-2" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="M19 21H5C4.46957 21 3.96086 20.7893 3.58579 20.4142C3.21071 20.0391 3 19.5304 3 19V5C3 4.46957 3.21071 3.96086 3.58579 3.58579C3.96086 3.21071 4.46957 3 5 3H16L21 8V19C21 19.5304 20.7893 20.0391 20.4142 20.4142C20.0391 20.7893 19.5304 21 19 21Z"
+                            stroke="#464BA8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                        <path d="M17 21V13H7V21" stroke="#464BA8" stroke-width="2" stroke-linecap="round"
+                            stroke-linejoin="round" />
+                        <path d="M7 3V8H15" stroke="#464BA8" stroke-width="2" stroke-linecap="round"
+                            stroke-linejoin="round" />
+                    </svg>
+                    Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<!-- Delete user group modal confim password -->
+<div  bsModal #deleteAlert="bs-modal" class="modal fade bsModal ch_modal" id="deleteAlert" tabindex="-1" role="dialog"
+  aria-labelledby="deleteAlert" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" mat-icon-button id="closeModal" class="close" (click)="deleteAlert.hide()" aria-label="Close">
+          <mat-icon>close</mat-icon>
+        </button>
+      </div>
+      <div class="modal-body pt-0 active_deactive_modal body-model">
+        <svg width="126" height="101" viewBox="0 0 126 101" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <g clip-path="url(#clip0_32945_181524)">
+            <path d="M95.371 100.165L11.656 100.194C7.45041 100.195 3.68314 98.0063 1.57906 94.3385C0.526894 92.5044 0.000693685 90.4924 6.85071e-07 88.48C-0.000692315 86.4678 0.52438 84.4552 1.57504 82.6206L43.4059 5.91924C45.5077 2.24973 49.2735 0.0583503 53.4791 0.0568855C57.6848 0.0554207 61.452 2.24417 63.5564 5.91222L105.445 82.5939C106.495 84.4232 107.02 86.4328 107.02 88.444C107.02 90.4551 106.495 92.4674 105.444 94.3023C103.342 97.9716 99.5766 100.163 95.371 100.165ZM1.0523 88.4786C1.05217 90.3102 10.2898 86.3633 11.2468 88.0317C13.1611 91.3685 7.82944 99.1376 11.6557 99.1362C11.6557 99.1362 102.623 97.112 104.534 93.7738C105.49 92.1048 105.968 90.2737 105.967 88.443C105.967 86.6124 105.488 84.7819 104.531 83.1135L62.6416 6.43178C60.7327 3.10449 57.3057 1.11314 53.4795 1.11448C49.655 1.11581 1.05245 86.6466 1.0523 88.4786Z" fill="#3F3D56"/>
+            <path d="M77.9031 83.2491C99.0694 83.2491 116.228 65.9664 116.228 44.647C116.228 23.3277 99.0694 6.04492 77.9031 6.04492C56.7368 6.04492 39.5781 23.3277 39.5781 44.647C39.5781 65.9664 56.7368 83.2491 77.9031 83.2491Z" fill="#464BA8"/>
+            <path d="M76.3835 53.0815L69.5859 23.488L74.9271 22.3555L80.5508 52.198L76.3835 53.0815ZM81.0564 64.2961C80.0781 64.5035 79.191 64.3645 78.3948 63.8791C77.6296 63.3462 77.1488 62.6099 76.9525 61.6702C76.7561 60.7305 76.9055 59.8811 77.4006 59.1219C77.9267 58.3152 78.6789 57.8082 79.6572 57.6008C80.5963 57.4017 81.4484 57.5685 82.2136 58.1014C83.0098 58.5868 83.506 59.2994 83.7024 60.2391C83.8988 61.1788 83.7339 62.052 83.2078 62.8586C82.7127 63.6178 81.9955 64.097 81.0564 64.2961Z" fill="white"/>
+            </g>
+            <defs>
+            <clipPath id="clip0_32945_181524">
+            <rect width="126" height="101" fill="white"/>
+            </clipPath>
+            </defs>
+        </svg>
+            <br />
+        <h4 class="mb-2">Deleting this field may impact autofill functionality in other forms.</h4>
+        <p class="mb-2">Please review the following affected forms and corresponding fields before proceeding.</p>
+        <ul class="mb-2">
+            <li class="list-style" *ngFor="let item of listLink; let i = index;">
+                {{item.current_form_name}} - {{item.link_field_name}}
+            </li>
+        </ul>
+      </div>
+      <div class="modal-footer justify-content-center">
+        <button mat-button type="button" class="theme_btn btn_outline_primary cancel-btn" (click)="deleteAlert.hide()">Cancel</button>
+        <button mat-button type="submit" class="theme_btn btn_primary" (click)="deleteAlert.hide()" data-toggle="modal"   data-target="#passwordConfirm">Proceed</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- End -->
+
+
+<!-- Delete user group modal confim password -->
+<div class="modal fade bsModal ch_modal" id="passwordConfirm" tabindex="-1" role="dialog"
+  aria-labelledby="passwordConfirm" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" mat-icon-button id="closeModal" class="close" data-dismiss="modal" aria-label="Close">
+          <mat-icon>close</mat-icon>
+        </button>
+      </div>
+      <div class="modal-body pt-0 active_deactive_modal">
+        <h4 class="mb-5">Please type your password to confirm</h4>
+        <!-- <div class="form-group mb-0 pt-2">
+          <label>Current Password</label>
+          <input type="text" class="form-control" [(ngModel)]="password">
+        </div> -->
+        <div class="form-group position-relative">
+            <label for="exampleInputPassword1">Password</label>
+            <input [type]="pass" id="exampleInputPassword1"  class="form-control" 
+                   placeholder="Password" autocomplete="current-password" required aria-required="true" 
+                   [(ngModel)]="password" aria-describedby="passwordHelpBlock">
+        
+            <!-- Show password button -->
+            <span class="eye_icon" *ngIf="pass == 'text'" (click)="onEyeClick('pass', 'password')" role="button" tabindex="0" aria-label="Hide password">
+              <svg width="20" height="13" viewBox="0 0 20 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path
+                  d="M1.29565 6.7632C1.1361 6.56013 1.00404 6.38224 0.900947 6.23866C0.997612 6.09726 1.1211 5.92302 1.27053 5.72458C1.69179 5.16511 2.31455 4.41936 3.11828 3.6754C4.7353 2.17866 7.01653 0.75 9.82143 0.75C12.6263 0.75 14.9076 2.17866 16.5246 3.6754C17.3283 4.41936 17.9511 5.16511 18.3723 5.72458C18.5218 5.92302 18.6452 6.09726 18.7419 6.23866C18.6388 6.38224 18.5068 6.56013 18.3472 6.7632C17.9058 7.32498 17.2587 8.07347 16.4375 8.82004C14.7807 10.3262 12.4992 11.75 9.82143 11.75C7.14368 11.75 4.86212 10.3262 3.2054 8.82004C2.38417 8.07347 1.73706 7.32498 1.29565 6.7632Z"
+                  stroke="#545465" stroke-width="1.5" />
+                <circle cx="9.82143" cy="6.24965" r="2.82143" stroke="#545465" stroke-width="1.5" />
+              </svg>
+            </span>
+
+            <!-- Hide password button -->
+            <span *ngIf="pass == 'password'" class="eye_icon pswrd_hide" (click)="onEyeClick('pass', 'text')" role="button" tabindex="0" aria-label="Show password">
+              <svg width="20" height="16" viewBox="0 0 20 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path
+                  d="M1.30849 8.89459C1.14302 8.68399 1.00656 8.49996 0.900682 8.35228C0.999999 8.20676 1.12767 8.0264 1.28274 7.82046C1.71202 7.25034 2.34663 6.49038 3.16572 5.73222C4.81343 4.20707 7.1393 2.75 10 2.75C12.8607 2.75 15.1866 4.20707 16.8343 5.73222C17.6534 6.49038 18.288 7.25034 18.7173 7.82046C18.8723 8.0264 19 8.20676 19.0993 8.35228C18.9934 8.49996 18.857 8.68399 18.6915 8.89459C18.2417 9.46703 17.5824 10.2297 16.7455 10.9905C15.0575 12.525 12.7313 13.9773 10 13.9773C7.26867 13.9773 4.94248 12.525 3.2545 10.9905C2.41765 10.2297 1.75826 9.46703 1.30849 8.89459Z"
+                  stroke="#545465" stroke-width="1.5" />
+                <circle cx="10.0001" cy="8.36293" r="2.88636" stroke="#545465" stroke-width="1.5" />
+                <rect x="2.1875" y="1.44922" width="1.52727" height="20.3636" transform="rotate(-45 2.1875 1.44922)" fill="#545465" />
+              </svg>
+            </span>
+          </div>
+      </div>
+      <div class="modal-footer justify-content-center">
+        <!-- <button mat-button type="button" class="theme_btn btn_outline_primary" data-dismiss="modal">Cancel</button>
+        <button mat-button type="submit" class="theme_btn btn_danger" data-dismiss="modal" (click)="removeComponent(deleteResult)">Delete</button> -->
+
+
+        <button mat-button type="button" class="theme_btn btn_outline_primary cancel-btn" data-dismiss="modal">Cancel</button>
+        <button mat-button type="submit" class="theme_btn btn_primary" (click)="removeComponent(deleteResult)"  data-dismiss="modal">Confirm</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- End -->
+
+
+<!-- Delete user group modal confim password -->
+<div bsModal #alreadyExist="bs-modal" class="modal fade bsModal ch_modal" id="alreadyExist" tabindex="-1" role="dialog"
+    aria-labelledby="alreadyExist" aria-hidden="true"  data-bs-backdrop="static" 
+     data-bs-keyboard="false" [config]="{ backdrop: 'static', keyboard: false }">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" mat-icon-button id="closeModal" class="close" (click)="alreadyExist.hide()"
+                    aria-label="Close">
+                    <mat-icon>close</mat-icon>
+                </button>
+            </div>
+            <div class="modal-body pt-0 active_deactive_modal body-model">
+               <svg width="126" height="101" viewBox="0 0 126 101" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <g clip-path="url(#clip0_6768_255077)">
+                <path d="M95.371 100.166L11.656 100.196C7.45041 100.197 3.68314 98.008 1.57906 94.3402C0.526894 92.5061 0.000693685 90.4941 6.85071e-07 88.4817C-0.000692315 86.4695 0.52438 84.4569 1.57504 82.6223L43.4059 5.92095C45.5077 2.25144 49.2735 0.0600592 53.4791 0.0585945C57.6848 0.0571297 61.452 2.24588 63.5564 5.91393L105.445 82.5956C106.495 84.4249 107.02 86.4345 107.02 88.4457C107.02 90.4568 106.495 92.4692 105.444 94.304C103.342 97.9733 99.5766 100.165 95.371 100.166ZM1.0523 88.4803C1.05217 90.312 10.2898 86.365 11.2468 88.0334C13.1611 91.3702 7.82944 99.1393 11.6557 99.138C11.6557 99.138 102.623 97.1137 104.534 93.7756C105.49 92.1065 105.968 90.2754 105.967 88.4447C105.967 86.6141 105.488 84.7836 104.531 83.1152L62.6416 6.43349C60.7327 3.1062 57.3057 1.11485 53.4795 1.11619C49.655 1.11752 1.05245 86.6483 1.0523 88.4803Z" fill="#3F3D56"/>
+                <path d="M77.9031 83.2511C99.0694 83.2511 116.228 65.9683 116.228 44.649C116.228 23.3296 99.0694 6.04688 77.9031 6.04688C56.7368 6.04688 39.5781 23.3296 39.5781 44.649C39.5781 65.9683 56.7368 83.2511 77.9031 83.2511Z" fill="#464BA8"/>
+                <path d="M76.3835 53.0796L69.5859 23.486L74.9271 22.3536L80.5508 52.196L76.3835 53.0796ZM81.0564 64.2942C80.0781 64.5016 79.191 64.3626 78.3948 63.8771C77.6296 63.3443 77.1488 62.608 76.9525 61.6683C76.7561 60.7286 76.9055 59.8791 77.4006 59.1199C77.9267 58.3133 78.6789 57.8062 79.6572 57.5988C80.5963 57.3997 81.4484 57.5666 82.2136 58.0995C83.0098 58.5849 83.506 59.2975 83.7024 60.2372C83.8988 61.1769 83.7339 62.05 83.2078 62.8567C82.7127 63.6159 81.9955 64.0951 81.0564 64.2942Z" fill="white"/>
+                </g>
+                <defs>
+                <clipPath id="clip0_6768_255077">
+                <rect width="126" height="101" fill="white"/>
+                </clipPath>
+                </defs>
+                </svg>
+
+                <br />
+                <h4 class="mb-2">There is currently an existing Incident Report Form.</h4>
+                <p class="mb-2">Employer Incident Report Form V1 29 Sept
+                </p>
+                <h4 class="mb-2">Would you like to replace it?</h4>
+            </div>
+            <div class="modal-footer justify-content-center">
+                <button mat-button type="button" class="theme_btn btn_outline_primary" (click)="alreadyExist.hide();form_type=''">Cancel</button>
+                <button mat-button type="submit" class="theme_btn btn_primary" (click)="alreadyExist.hide();saveSinglePageForm()">Save & Replace</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End -->
+
+
+ <!-- rename filter popup -->
+<div bsModal #removeLogicModel="bs-modal" class="modal fade bsModal ch_modal" id="addNewColumnPopup" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" style="max-width:700px" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <!-- <h2 class="modal-title " id="exampleModalLabel">Save as Favorite</h2> -->
+                <button mat-icon-button type="button" class="close" (click)="removeLogicModel.hide()" aria-label="Close">
+                    <mat-icon>close</mat-icon>
+                </button>
+            </div>
+            <form>
+                <div class="modal-body pt-3">
+                    <div class="row">
+                        <svg width="126" height="101" viewBox="0 0 126 101" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <g clip-path="url(#clip0_1514_66833)">
+                        <path d="M95.371 100.166L11.656 100.196C7.45041 100.197 3.68314 98.008 1.57906 94.3402C0.526894 92.5061 0.000693685 90.4941 6.85071e-07 88.4817C-0.000692315 86.4695 0.52438 84.4569 1.57504 82.6223L43.4059 5.92095C45.5077 2.25144 49.2735 0.0600592 53.4791 0.0585945C57.6848 0.0571297 61.452 2.24588 63.5564 5.91393L105.445 82.5956C106.495 84.4249 107.02 86.4345 107.02 88.4457C107.02 90.4568 106.495 92.4692 105.444 94.304C103.342 97.9733 99.5766 100.165 95.371 100.166ZM1.0523 88.4803C1.05217 90.312 10.2898 86.365 11.2468 88.0334C13.1611 91.3702 7.82944 99.1393 11.6557 99.138C11.6557 99.138 102.623 97.1137 104.534 93.7756C105.49 92.1065 105.968 90.2754 105.967 88.4447C105.967 86.6141 105.488 84.7836 104.531 83.1152L62.6416 6.43349C60.7327 3.1062 57.3057 1.11485 53.4795 1.11619C49.655 1.11752 1.05245 86.6483 1.0523 88.4803Z" fill="#3F3D56"/>
+                        <path d="M77.9031 83.2511C99.0694 83.2511 116.228 65.9683 116.228 44.649C116.228 23.3296 99.0694 6.04688 77.9031 6.04688C56.7368 6.04688 39.5781 23.3296 39.5781 44.649C39.5781 65.9683 56.7368 83.2511 77.9031 83.2511Z" fill="#464BA8"/>
+                        <path d="M76.3835 53.0796L69.5859 23.486L74.9271 22.3536L80.5508 52.196L76.3835 53.0796ZM81.0564 64.2942C80.0781 64.5016 79.191 64.3626 78.3948 63.8771C77.6296 63.3443 77.1488 62.608 76.9525 61.6683C76.7561 60.7286 76.9055 59.8791 77.4006 59.1199C77.9267 58.3133 78.6789 57.8062 79.6572 57.5988C80.5963 57.3997 81.4484 57.5666 82.2136 58.0995C83.0098 58.5849 83.506 59.2975 83.7024 60.2372C83.8988 61.1769 83.7339 62.05 83.2078 62.8567C82.7127 63.6159 81.9955 64.0951 81.0564 64.2942Z" fill="white"/>
+                        </g>
+                        <defs>
+                        <clipPath id="clip0_1514_66833">
+                        <rect width="126" height="101" fill="white"/>
+                        </clipPath>
+                        </defs>
+                        </svg>
+
+                        <h2 class="text-center mt-4">
+                           Removing this field will affect the corresponding <br /> Conditional Logic.
+                        </h2>
+                        <p class="text-center mt-2">
+                            Please review the corresponding logic before proceeding.
+                        </p>
+                    </div>
+                </div>
+                <div class="modal-footer justify-content-between">
+                    <button  (click)="removeLogicModel.hide()" mat-button type="button" class="theme_btn btn_outline_primary">Cancel</button>
+                    <button mat-button type="submit" class="theme_btn btn_primary" (click)="removeLogic(this.deleteResult)">Proceed</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

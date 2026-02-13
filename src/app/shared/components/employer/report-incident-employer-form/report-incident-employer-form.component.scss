@@ -1,0 +1,494 @@
+.page_sub_header {
+    background-color: rgb(var(--primary-color) , 85%);
+    padding: 29px 0px;
+    color: #fff;
+
+    a {
+        font-family: var(--font-primary);
+        font-size: 20px;
+        font-weight: 400;
+        line-height: 26px;
+        letter-spacing: 0em;
+        display: inline-block;
+        text-align: left;
+        margin-bottom: 5px;
+        color: #fff !important;
+    }
+
+    h3 {
+        font-family: var(--font-primary);
+        font-size: 26px;
+        font-weight: 500;
+        line-height: 34px;
+        letter-spacing: 0em;
+        text-align: left;
+        margin-bottom: 0px;
+
+    }
+}
+.preview_form_card_student {
+    max-width: 1201px;
+    margin: 0 auto;
+    width: 100%;
+    // box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.25);
+    border: 1px solid rgba(255, 255, 255, 1);
+    border-radius: 10px;
+    padding: 30px 24px 10px;
+    margin-top: 15px;
+
+    .form_title {
+        font-family: var(--font-primary);
+        font-size: 28px;
+        font-weight: 400;
+        line-height: 36px;
+        letter-spacing: 0em;
+        text-align: left;
+        color: var(--main-black-color);
+        padding-bottom: 35px;
+
+    }
+}
+.step_footer{
+    padding: 40px 24px;
+    max-width: 1201px;
+    margin: 0 auto;
+    text-align: right;
+    .theme_btn{
+        width: 135px;
+    }
+}
+.form-group{
+    margin-bottom: 50px;
+}
+.file_upload {
+    border: 1.5px dashed var(--pink-color);
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 90px;
+    width: 100%;
+    max-width: 550px;
+    position: relative;
+    // margin: 0 auto;
+    margin-bottom: 32px;
+    cursor: pointer;
+
+    .file_upload_label {
+        width: 100%;
+        position: absolute;
+        height: 100%;
+        margin: 0px;
+        cursor: pointer;
+    }
+
+    input {
+        // visibility: hidden;
+        opacity: 0;
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top: 0px;
+        left: 0px;
+        cursor: pointer;
+    }
+
+    p {
+        font-family: var(--font-primary);
+        font-size: 12px;
+        font-weight: 400;
+        line-height: 16.8px;
+        letter-spacing: 0em;
+        text-align: center;
+        color: var(--mid-dark-gray-color);
+        margin-bottom: 0px;
+
+        strong {
+            font-size: 16px;
+            font-weight: 400;
+            color: var(--header-footer-form-heading-color);
+        }
+
+        span {
+            color: var(--pink-color);
+        }
+
+    }
+}
+.sign_from {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+
+    label {
+        width: 106px;
+    }
+
+    .form-control {
+        flex-grow: 1;
+        width: 100%;
+    }
+    canvas.form-control{
+        padding: 0px;
+        height: 90px;
+    }
+}
+
+.files_list {
+    list-style: none;
+    margin: 0px;
+    padding: 0px;
+    margin-top: 30px;
+
+    li {
+        &:not(:last-child) {
+            margin-bottom: 20px;
+        }
+
+        .file_card {
+            display: flex;
+            align-items: center;
+
+            .content {
+                flex-grow: 1;
+                display: flex;
+                align-items: center;
+                // margin-right: 15px;
+                width: calc(100% - 100px);
+                span {
+                    font-family: var(--font-primary);
+                    font-size: 16px;
+                    font-weight: 400;
+                    line-height: 21px;
+                    letter-spacing: 0em;
+                    text-align: left;
+                    color: var(--main-black-color);
+                    white-space: nowrap;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    margin-bottom: 0px;}
+                p {
+                    font-family: var(--font-primary);
+                    font-size: 16px;
+                    font-weight: 400;
+                    line-height: 21px;
+                    letter-spacing: 0em;
+                    text-align: left;
+                    color: var(--main-black-color);
+                    white-space: nowrap;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    margin-bottom: 0px;
+                    max-width: calc(100% - 40px);
+                    margin-right: 12px;
+
+                    span {
+                        color: #9A9A9A;
+                        font-size: 14px;
+                        line-height: 18px;
+
+                        &.danger {
+                            color: var(--danger-color);
+                        }
+                    }
+                }
+
+                svg {
+                    margin-right: 12px;
+                }
+            }
+
+            .btn_group {
+                display: inline-flex;
+                align-items: center;
+                pointer-events: auto;
+            }
+        }
+    }
+}
+.sign_foot_btn{
+    text-align: right;
+    margin-top: 9px;
+    margin-bottom: 15px;
+    .bs_btn{
+        width: 140px;
+        margin-left: 6px;
+    }
+}
+.hidden {
+    display: none;
+  }
+  ::ng-deep .mat-horizontal-stepper-header{
+    pointer-events: none !important;
+}
+.error-message{
+    top: -10px; 
+    right: 0; 
+    font-size: 12px;
+    background: #FFEEEE;
+    color:#D73C3C !important;
+    border-radius: 10px;
+    border-width: 1px;
+    padding: 5px 20px;
+}
+.error-invalid{
+    // border-radius: 25px;
+    border-width: 1px;
+    border: 1px solid #D73C3C;
+    // color: #FFFFFF;
+    box-shadow: 4px 4px 5px 0px #D73C3C26;
+}
+.likert.error-invalid-radio li:not(:last-child)::before {
+    background: #D73C3C !important;
+  }
+  .likert li.error-invalid-radio:not(:last-child)::before {
+    background: #D73C3C !important;
+  }
+  ::ng-deep .error-invalid-radio .mat-radio-outer-circle {
+    border-color: #D73C3C !important;
+    border-width: 1px;
+  }
+  
+  ::ng-deep .error-invalid-radio .mat-radio-outer-circle {
+    border-color: #D73C3C !important;
+    border-width: 1px;
+  }
+
+  ::ng-deep .mat-checkbox.error-invalid-checkbox .mat-checkbox-inner-container {
+    border: 1px solid #D73C3C !important;
+    border-radius: 5px;
+  }
+  ::ng-deep .mat-checkbox.error-invalid-checkbox .mat-checkbox-background {
+    border-color: transparent !important;
+  }
+  
+  ::ng-deep .mat-checkbox.error-invalid-checkbox .mat-checkbox-frame {
+    border-width: 1px;
+    border-style: solid;
+    border-color: transparent !important;  // Red border on error
+    border-radius: 5px;
+  }
+
+
+  ::ng-deep .mat-radio-button.error-invalid-radio-group .mat-radio-inner {
+    border: 1px solid #D73C3C !important;  // Red border for error state
+  }
+  ::ng-deep .mat-radio-button.error-invalid-radio-group .mat-radio-outer-circle {
+    border: 1px solid #D73C3C !important;  // Red border for error state
+  }
+  
+//   ::ng-deep .mat-radio-button.error-invalid-radio-group .mat-radio-background {
+//     background-color: #ffe5e5 !important;  // Light red background when selected
+//   }
+ ::ng-deep .mat-stepper-label-position-bottom .mat-horizontal-stepper-header::after {
+    top: calc(calc((var(--mat-stepper-header-height) - 4px) / 2) + 12px) !important;
+}
+::ng-deep .mat-stepper-label-position-bottom .mat-horizontal-stepper-header::before{
+ top: calc(calc((var(--mat-stepper-header-height) - 4px) / 2) + 12px) !important;
+}
+
+.error-message{
+    top: 0px !important; 
+    right: 0; 
+    position: relative !important;
+    width: 185px;
+    font-size: 12px;
+    background: #FFEEEE;
+    color:#D73C3C !important;
+    border-radius: 10px;
+    border-width: 1px;
+    padding: 5px 20px;
+}
+.right-side{
+    right: 0; 
+    position: absolute;
+    top: -2px;
+}
+::ng-deep .bottom-side{
+    top: 4px !important;
+    bottom: 4px !important;
+    display: block !important;
+    margin: 8px 0 5px -1px !important;
+    position: relative !important;
+}
+.error-invalid{
+    border-radius: 25px;
+    border-width: 1px;
+    border: 1px solid #D73C3C !important;
+    box-shadow: 4px 4px 5px 0px #D73C3C26;
+}
+::ng-deep .error-invalid-select{
+    border-radius: 25px !important;
+  border: 1px solid #D73C3C !important;
+  box-shadow: 4px 4px 5px 0px #D73C3C26 !important;
+}
+::ng-deep .error-invalid-select .ng-select-container {
+  border-radius: 25px !important;
+  border: 1px solid #D73C3C !important;
+  box-shadow: 4px 4px 5px 0px #D73C3C26 !important;
+}
+
+::ng-deep .error-invalid-texarea{
+    border:0px;
+    border-color:transparent;
+    textarea{
+     border:0px;
+     border-color:transparent;
+    }
+    .mdc-text-field--outlined{
+            --mdc-outlined-text-field-outline-width: 0px !important;
+    }
+    .mat-mdc-text-field-wrapper{
+        border-radius: 5px;
+        border-width: 1px;
+        border: 1px solid #D73C3C !important;
+        box-shadow: 4px 4px 5px 0px #D73C3C26; 
+    }
+}
+.likert.error-invalid-radio li:not(:last-child)::before {
+    background: #D73C3C !important;
+}
+.likert li.error-invalid-radio:not(:last-child)::before {
+background: #D73C3C !important;
+}
+::ng-deep .error-invalid-radio .mat-radio-outer-circle {
+    border-color: #D73C3C !important;
+    border-width: 1px;
+}
+
+::ng-deep .error-invalid-radio .mat-radio-outer-circle {
+    border-color: #D73C3C !important;
+    border-width: 1px;
+}
+
+::ng-deep .mat-checkbox.error-invalid-checkbox .mat-checkbox-inner-container {
+    border: 1px solid #D73C3C !important;
+    border-radius: 5px;
+}
+::ng-deep .mat-checkbox.error-invalid-checkbox .mdc-checkbox__background {
+       border-radius: 25px;
+        border-width: 1px;
+        border: 1px solid #D73C3C !important;
+        box-shadow: 4px 4px 5px 0px #D73C3C26; 
+}
+
+::ng-deep .error-invalid-checkbox .mdc-checkbox .mdc-checkbox__native-control:enabled:not(:checked):not(:indeterminate):not([data-indeterminate=true]) ~ .mdc-checkbox__background{
+ border-width: 1px;
+    border: 1px solid #D73C3C !important;
+    border-color:  #D73C3C !important;
+    box-shadow: 4px 4px 5px 0px #D73C3C26; 
+}
+::ng-deep .error-invalid-checkbox .mdc-checkbox__background {
+  border: 1px solid #D73C3C !important;  /* red border */
+  border-radius: 5px !important;
+}
+::ng-deep .error-invalid-checkbox mat-checkbox .mdc-checkbox__background {
+    // border-radius: 25px;
+    border-width: 1px;
+    border: 1px solid #D73C3C !important;
+    border-color:  #D73C3C !important;
+    box-shadow: 4px 4px 5px 0px #D73C3C26; 
+}
+
+::ng-deep .error-invalid-date .custom_datepicker_container {
+    border-radius: 5px;
+    border-width: 1px;
+    border: 1px solid #D73C3C !important;
+    border-color:  #D73C3C !important;
+    box-shadow: 4px 4px 5px 0px #D73C3C26; 
+}
+
+
+
+::ng-deep .mat-radio-button.error-invalid-radio-group .mat-radio-inner {
+border: 1px solid #D73C3C !important;  // Red border for error state
+}
+::ng-deep .mat-radio-button.error-invalid-radio-group .mat-radio-outer-circle {
+border: 1px solid #D73C3C !important;  // Red border for error state
+}
+
+
+::ng-deep .error-invalid .ng-select-container {
+    border: 0px solid #D73C3C !important;
+  }
+
+  ::ng-deep .mat-checkbox.error-invalid-radio .mdc-radio__background .mdc-radio__outer-circle {
+       border-radius: 25px;
+        border-width: 1px;
+        border: 1px solid #D73C3C !important;
+        box-shadow: 4px 4px 5px 0px #D73C3C26; 
+}
+::ng-deep .error-invalid-radio .mdc-radio__outer-circle {
+  border: 1px solid #D73C3C !important;
+  border-radius: 25px !important;
+  box-shadow: 4px 4px 5px 0px #D73C3C26 !important;
+}
+
+
+
+.modal-heading{
+font-family: var(--font-primary);
+font-weight: 500;
+font-size: 24px;
+leading-trim: NONE;
+line-height: 100%;
+letter-spacing: 0%;
+text-align: center;
+vertical-align: middle;
+color: #2B2A35;
+margin: 0px !important;
+}
+.modal-p-content{
+font-family: var(--font-primary);
+font-weight: 400;
+font-style: Regular;
+font-size: 16px;
+leading-trim: NONE;
+line-height: 100%;
+letter-spacing: 0%;
+text-align: center;
+vertical-align: middle;
+color: #2B2A35;
+margin: 0px !important;
+}
+
+
+.info-message{
+    opacity: 1;
+    border-radius: 10px;
+    padding-top: 8px;
+    padding-right: 10px;
+    padding-bottom: 8px;
+    padding-left: 10px;
+    gap: 10px;
+    border-width: 1px;
+    font-family: DM Sans;
+    font-weight: 400;
+    font-size: 14px;
+    leading-trim: NONE;
+    line-height: 120%;
+    letter-spacing: 0%;
+    color: #2B2A35;
+    background: #F7F8FF;
+    border: 1px solid #464BA8;
+    margin-top: 15px !important;
+}
+
+.custom_timepicker_wrapper {
+  position: relative;
+  display: flex;
+  align-items: center; /* vertically center input and toggle */
+}
+
+.custom_timepicker_wrapper input.form-control {
+  width: 100%;
+  padding-right: 40px; /* give space for toggle button */
+}
+
+.custom_timepicker_wrapper .time_picker_toggle {
+  position: absolute;
+  right: 10px;   /* move toggle to right side */
+  top: 50%;
+  transform: translateY(-50%); /* vertically center */
+  cursor: pointer;
+}

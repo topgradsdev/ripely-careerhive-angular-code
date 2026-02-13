@@ -1,0 +1,136 @@
+<div class="page_header">
+	<div class="back_btn">
+		<a (click)="cancel()"><mat-icon>arrow_back</mat-icon> <span>Graduate</span></a>
+	</div>
+	<div class="page_header_container">
+		<div>
+			<h4>Edit Graduate</h4>
+		</div>
+		<div>
+			
+		</div>
+	</div>
+  </div>
+
+<section class="edit-graduate-sec">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="custom_card custom_card_form">
+					<div class="edit-wrapper">
+						<div class="card_title">
+							<h4>Edit Graduate Details</h4>
+						</div>
+						<div class="card-body">
+							<form [formGroup]="EditGraduateform">
+								<div class="text-center edit-profile">
+									<span class="user_dp position-relative">
+										<!-- <img src="assets/img/avatars/8.jpg" class="img-fluid">
+										<mat-icon class="material-icons-outlined dp-icon">edit</mat-icon>
+										<input type="file" name="" class="dp-input"> -->
+										<img [src]="imageFile ? imageFile :'assets/img/dummy.png'" class="img-fluid">
+										<mat-icon class="material-icons-outlined dp-icon">edit</mat-icon>
+										<input type="file" name="" class="dp-input" accept="image/*"
+											(change)="changeImage($event)">
+									</span>
+								</div>
+								<div class="edit-form mt-4">
+
+									<div class="edit-form-fields">
+										<div class="row justify-content-center">
+											<div class="col-md-8">
+												<div class="row">
+													<div class="col-md-6">
+														<div class="form-group form-floating">
+															
+															<input type="text" name="" placeholder="First name" class="form-control"
+																formControlName="first_name">
+																<label>First Name</label>
+																<div *ngIf="(EditGraduateform.controls.first_name.touched || EditGraduateform.controls.first_name.dirty) && EditGraduateform.controls.first_name.invalid && EditGraduateform.controls.first_name?.errors?.required  "
+															class="invalid">
+															*Please enter first name
+														</div>
+														<div *ngIf="(EditGraduateform.controls.first_name.touched || EditGraduateform.controls.first_name.dirty)  && EditGraduateform.controls.first_name?.errors?.maxlength  "
+															class="invalid">
+															*Maximum Length should be 50 characters
+														</div>
+														</div>
+														
+													</div>
+													<div class="col-md-6">
+														<div class="form-group form-floating">
+															<input type="text" name="" class="form-control"
+																formControlName="last_name" placeholder="Last name">
+																<label>Last Name</label>
+																<div *ngIf="(EditGraduateform.controls.last_name.touched || EditGraduateform.controls.last_name.dirty) && EditGraduateform.controls.last_name.invalid && EditGraduateform.controls.last_name?.errors?.required  "
+															class="invalid">
+															*Please enter last name
+														</div>
+														<div *ngIf="(EditGraduateform.controls.last_name.touched || EditGraduateform.controls.last_name.dirty)  && EditGraduateform.controls.last_name?.errors?.maxlength  "
+															class="invalid">
+															*Maximum Length should be 50 characters
+														</div>
+														</div>
+														
+													</div>
+												</div>
+												<div class="row">
+													<div class="col-md-6">
+														<div class="form-group form-floating">
+															<input type="text" name="" placeholder="Email" class="form-control"
+																formControlName="email">
+																<label>Email Address</label>
+																<div *ngIf="(EditGraduateform.controls.email.touched || EditGraduateform.controls.email.dirty) && EditGraduateform.controls.email.invalid && EditGraduateform.controls.email?.errors?.required  "
+															class="invalid">
+															*Please enter email
+														</div>
+														<div *ngIf="(EditGraduateform.controls.email.touched || EditGraduateform.controls.email.dirty)  && EditGraduateform.controls.email?.errors?.pattern  "
+															class="invalid">
+															*Please enter valid email
+														</div>
+														</div>
+														
+													</div>
+													<div class="col-md-6">
+														<div class="form-group only-view form-floating">
+															<input type="text" name="" class="form-control"
+																value="{{EditGraduateform.value.creation_date | date:'dd/MM/yyyy'}} ({{EditGraduateform.value.creation_date | date:'shortTime'}})"
+															placeholder="Creation Date"	formControlName="creation_date">
+																<label>Creation Date (Time)</label>
+														</div>
+													</div>
+												</div>
+												<div class="row">
+													<!-- <div class="col-md-6">
+															<div class="form-group">
+																<label>Password</label>
+																<input type="text" name="" class="form-control" value="abc123@">
+															</div>
+														</div> -->
+													<div class="col-md-6">
+														<div class="form-group form-floating">
+															<select class="form-control" formControlName="status">
+																<option value="active">Active</option>
+																<option value="inactive">Inactive</option>
+															</select>
+															<label>Status</label>
+														</div>
+													</div>
+												</div>
+												<div class="edit-btns d-flex justify-content-end">
+													<button mat-button class="theme_link_btn_c mr-3" (click)="cancel()">Cancel</button>
+													<button  mat-button class="theme_btn btn_primary"
+														(click)="edituser()">Save</button>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>

@@ -1,0 +1,439 @@
+<div class="page_header">
+    <div class="page_header_container">
+        <div>
+            <h4>Graduate List</h4>
+            <div class="title_btn">
+                <button type="button" mat-button class="theme_link_btn" data-toggle="modal" data-target="#exampleModal"
+                    id="btn-modal" (click)="bulk()"> <mat-icon>send</mat-icon> Send Email</button>
+                <!-- Download CSV Format -->
+                <button type="button" class="theme_link_btn" mat-button
+                    (click)="csvDownload()"><mat-icon>save_alt</mat-icon>
+                    Download</button>
+            </div>
+        </div>
+        <div>
+        </div>
+    </div>
+</div>
+<section class="grad-mn-list">
+    <div class="">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="userAccountStat mb-2">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="user_card">
+                                <div class="user_card_header">
+                                    <div class="card_title">
+                                        <span>Account Created</span>
+                                        <h4>{{createdCount}}</h4>
+                                    </div>
+                                    <div class="card_icon blue_circle">
+                                        <mat-icon>person_add</mat-icon>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="user_card">
+                                <div class="user_card_header">
+                                    <div class="card_title">
+                                        <span>Account Active</span>
+                                        <h4>{{activeCount}}</h4>
+                                    </div>
+                                    <div class="card_icon green_circle">
+                                        <mat-icon>check_circle</mat-icon>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="user_card">
+                                <div class="user_card_header">
+                                    <div class="card_title">
+                                        <span>Account Deactive</span>
+                                        <h4>{{deactiveCount}}</h4>
+                                    </div>
+                                    <div class="card_icon yellow_circle">
+                                        <mat-icon>cancel</mat-icon>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="user_card">
+                                <div class="user_card_header">
+                                    <div class="card_title">
+                                        <span>Account Deleted</span>
+                                        <h4>{{deletedCount}}</h4>
+                                    </div>
+                                    <div class="card_icon red_circle">
+                                        <mat-icon>delete_outline</mat-icon>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="tabl_upr">
+                    <div class="custom_card employ_list_card">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group search_container">
+                                        <mat-icon>search</mat-icon>
+                                        <input (keyup)="applyFilter($event)" placeholder="Ex. Mia" class="form-control"
+                                            #input>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <div class="gradStatFilter">
+                                        <select class="form-control" (change)="select($event)">
+                                            <option value="" selected disabled>Select One</option>
+                                            <option value="daily">Daily</option>
+                                            <option value="week">Weekly</option>
+                                            <option value="month">Monthly</option>
+                                            <option value="lifetime">Lifetime</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <select class="form-control custom-select" (change)="selectfilter($event)">
+
+                                        <option value="" selected disabled>Select Filter</option>
+                                        <option value="location">Location</option>
+                                        <option value="work_preference">Work Preference</option>
+                                        <option value="availability">Availability</option>
+                                        <option value="work_right">Work Rights</option>
+                                        <!-- <option>Education</option> -->
+                                        <!-- <option>License</option> -->
+                                        <!-- <option>Skills</option> -->
+                                        <!-- <option>Location</option> -->
+                                    </select>
+                                </div>
+                                <div class="col-md-3">
+                                    <select class="form-control custom-select" (change)="selectsubfilter($event)">
+                                        <option selected value="" selected disabled> Select Sub-Filter</option>
+                                        <!-- <option *ngFor="let filter of selectFilter" value="{{filter._id}}"
+                                            (click)="selectsubfilter($event)">
+                                            {{filter?.name ? filter?.name : "Null"}}</option> -->
+                                        <ng-container *ngIf="filtersData=='work_right'">
+                                            <option *ngFor="let data of selectFilter" value="{{data._id}}">
+                                                {{data?.name ? data?.name : "Null"}}</option>
+                                        </ng-container>
+                                        <ng-container *ngIf="filtersData=='availability'">
+                                            <option *ngFor="let data of selectFilter" value="{{data._id}}">
+                                                {{data?.name ? data?.name : "Null"}}</option>
+                                        </ng-container>
+                                        <ng-container *ngIf="filtersData=='work_preference'">
+                                            <option *ngFor="let data of selectFilter" value="{{data._id}}">
+                                                {{data?.name ? data?.name : "Null"}}</option>
+                                        </ng-container>
+                                        <ng-container *ngIf="filtersData=='location'">
+                                            <option *ngFor="let data of selectFilter" value="{{data?.location?.name}}">
+                                                {{data?.location?.name ? data?.location?.name : "Null"}}</option>
+                                        </ng-container>
+                                    </select>
+                                </div>
+                                <div class="col-md-3 text-right">
+                                    <button mat-button class="btn_outline_primary" (click)="applyfilters()">
+                                        <mat-icon>filter_alt</mat-icon> Apply Filter
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="table-responsive">
+                            <table mat-table [dataSource]="gradlist" matSort>
+                                <!-- Checkbox Column -->
+                                <!-- <ng-container matColumnDef="select">
+                    <th mat-header-cell *matHeaderCellDef>
+                      <mat-checkbox (change)="$event ? masterToggle() : null"
+                        [checked]="selection.hasValue() && isAllSelected()"
+                        [indeterminate]="selection.hasValue() && !isAllSelected()"
+                        [aria-label]="checkboxLabel()" class="td-check">
+                      </mat-checkbox>
+                    </th>
+                    <td mat-cell *matCellDef="let row">
+                      <mat-checkbox (click)="$event.stopPropagation()"
+                        (change)="$event ? selection.toggle(row) : null"
+                        [checked]="selection.isSelected(row)"
+                        [aria-label]="checkboxLabel(row)" class="td-check">
+                      </mat-checkbox>
+                    </td>
+                  </ng-container> -->
+                                <ng-container matColumnDef="select">
+                                    <th mat-header-cell *matHeaderCellDef>
+                                        <mat-checkbox [checked]="findChecked()" (change)="selectAll($event)"
+                                            class="td-check">
+                                        </mat-checkbox>
+                                    </th>
+                                    <td mat-cell *matCellDef="let row">
+                                        <mat-checkbox (change)="selectUser($event, row.email)" [(ngModel)]="row.checked"
+                                            class="td-check">
+                                        </mat-checkbox>
+                                    </td>
+                                </ng-container>
+
+                                <!-- ID Column -->
+                                <ng-container matColumnDef="id">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header> S.No </th>
+                                    <td mat-cell *matCellDef="let row; let i=index"> {{i+1}}</td>
+                                </ng-container>
+
+                                <!-- Name Column -->
+                                <ng-container matColumnDef="name">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header>First Name </th>
+                                    <td mat-cell *matCellDef="let row"> {{row?.first_name | titlecase}} </td>
+                                </ng-container>
+                                <!-- Email Column -->
+                                <ng-container matColumnDef="email">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Email Address</th>
+                                    <td mat-cell *matCellDef="let row"> {{row?.email | titlecase}} </td>
+                                </ng-container>
+                                <!-- Company Column -->
+                                <ng-container matColumnDef="company">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Creation Date (Time)</th>
+                                    <td mat-cell *matCellDef="let row"> {{row?.createdAt | date}} </td>
+                                </ng-container>
+
+                                <ng-container matColumnDef="location">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Location</th>
+                                    <td mat-cell *matCellDef="let row"> {{row?.location?.name ? row?.location?.name :
+                                        'Null'
+                                        | titlecase}}
+                                    </td>
+                                </ng-container>
+
+                                <ng-container matColumnDef="wrkpref">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Work Preference</th>
+                                    <td mat-cell *matCellDef="let row">{{row?.work_preference ? row?.work_preference
+                                        :'Null'
+                                        | titlecase}}
+                                    </td>
+                                </ng-container>
+                                <ng-container matColumnDef="profile_percentage">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header>profile completion</th>
+                                    <td mat-cell *matCellDef="let row">{{row?.profile_percentage ?
+                                        row?.profile_percentage :
+                                        'Null' | titlecase}}
+                                    </td>
+                                </ng-container>
+
+                                <ng-container matColumnDef="availability">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Availability</th>
+                                    <td mat-cell *matCellDef="let row"> {{row?.cType ? row?.cType : row?.availability ||
+                                        'Null' |
+                                        titlecase}} </td>
+                                </ng-container>
+
+                                <!-- <ng-container matColumnDef="education">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Education</th>
+                    <td mat-cell *matCellDef="let row"> {{row.education}} </td>
+                  </ng-container> -->
+
+                                <!-- <ng-container matColumnDef="license">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>License</th>
+                    <td mat-cell *matCellDef="let row"> {{row.license}} </td>
+                  </ng-container> -->
+
+                                <ng-container matColumnDef="wrkrights">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Work Rights</th>
+                                    <td mat-cell *matCellDef="let row"> {{row?.workType ? row?.workType :"N/A"}} </td>
+                                </ng-container>
+
+                                <!-- <ng-container matColumnDef="skills">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Skills</th>
+                    <td mat-cell *matCellDef="let row"> {{row.skills}} </td>
+                  </ng-container> -->
+
+                                <!-- lname Column -->
+                                <ng-container matColumnDef="lname">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Last Name </th>
+                                    <td mat-cell *matCellDef="let row"> {{row?.last_name | titlecase}} </td>
+                                </ng-container>
+                                <!-- status column -->
+                                <ng-container matColumnDef="status">
+                                    <th mat-header-cell *matHeaderCellDef> Status </th>
+                                    <td mat-cell *matCellDef="let row">
+                                        <mat-slide-toggle
+                                            [checked]="row.status=='active'?true:false"></mat-slide-toggle>
+                                    </td>
+                                </ng-container>
+                                <!-- Action column -->
+                                <ng-container matColumnDef="action">
+                                    <th mat-header-cell *matHeaderCellDef> Action </th>
+                                    <td mat-cell *matCellDef="let row">
+                                        <button mat-icon-button [matMenuTriggerFor]="menu" class="td-btn">
+                                            <mat-icon>more_vert</mat-icon>
+                                        </button>
+                                        <mat-menu #menu="matMenu" class="td-menu">
+                                            <a mat-menu-item class="" routerLink="/viewGraduate/{{row._id}}">
+                                                <mat-icon class="material-icons-outlined">visibility</mat-icon>
+                                                <span>View</span>
+                                            </a>
+                                            <a mat-menu-item class="" routerLink="/editGraduate/{{row._id}}">
+                                                <mat-icon class="material-icons-outlined">edit</mat-icon>
+                                                <span>Edit</span>
+                                            </a>
+                                            <!-- <a mat-menu-item class="" data-toggle="modal" (click)="resetpswrd.show()">
+                            <mat-icon class="material-icons-outlined">cached</mat-icon>
+                            <span>Reset Password</span>
+                          </a>
+                          <a mat-menu-item class="" routerLink="">
+                            <mat-icon class="material-icons-outlined">block</mat-icon>
+                            <span>Ban</span>
+                          </a>
+                          <a mat-menu-item class="" routerLink="">
+                            <mat-icon class="material-icons-outlined">message</mat-icon>
+                            <span>Send Message</span>
+                          </a>
+                          <a mat-menu-item class="" routerLink="">
+                            <mat-icon class="material-icons-outlined">email</mat-icon>
+                            <span>Send Email</span>
+                          </a> -->
+                                            <a mat-menu-item class="" data-toggle="modal" (click)="modal(row._id)">
+                                                <mat-icon class="material-icons-outlined">delete</mat-icon>
+                                                <span>Delete</span>
+                                            </a>
+                                        </mat-menu>
+                                    </td>
+                                </ng-container>
+
+                                <!-- Progress Column -->
+                                <!-- <ng-container matColumnDef="progress">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Progress </th>
+                    <td mat-cell *matCellDef="let row"> {{row.progress}}% </td>
+                  </ng-container> -->
+
+                                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+                                <!-- Row shown when there is no matching data. -->
+                                <tr class="mat-row" *matNoDataRow>
+                                    <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
+                                </tr>
+                            </table>
+                        </div>
+
+                        <mat-paginator [length]="totalRecords" [pageIndex]="topPage" [pageSize]="limit"
+                            [pageSizeOptions]="getPageSizeOptions()" (page)="paginationOptionChange($event)"
+                            aria-label="Select page of users"></mat-paginator>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Modal -->
+<div bsModal #smallModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="smallModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-md  modal-dialog-centered confirm_modal" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <!-- <button type="button" class="close td-btn" (click)="smallModal.hide()" aria-label="Close">
+                    <span aria-hidden="true" class="prof_modclose">
+                        <img src="assets/img/Group 225.png">
+                    </span>
+                </button> -->
+            </div>
+            <div class="modal-body">
+                <p class="confirm_message mt-2">Are you sure you want to delete <br> the selected user's account?</p>
+            </div>
+            <div class="modal-footer justify-content-center">
+                <button mat-button class="theme_link_btn_c" (click)="smallModal.hide()">No</button>
+                <button mat-button type="submit" class="theme_btn btn_primary"
+                    (click)="deleteEmp(this.delId)">Yes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div bsModal #resetpswrd="bs-modal" class="modal fade reset_pswrd" tabindex="-1" role="dialog"
+    aria-labelledby="replyModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close td-btn" (click)="resetpswrd.hide()" aria-label="Close">
+                    <span aria-hidden="true" class="prof_modclose">
+                        <img src="assets/img/Group 225.png">
+                    </span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label>Current Password</label>
+                                <input type="password" class="form-control" value="abc123@">
+                            </div>
+                            <div class="form-group">
+                                <label>New Password</label>
+                                <input type="password" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label>Confirm Password</label>
+                                <input type="password" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer justify-content-center">
+                <button type="button" class="btn btn-secondary" (click)="resetpswrd.hide()">Cancel</button>
+                <button type="button" class="btn btn-primary">Submit</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade bsModal" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title" id="exampleModalLabel">Graduate Email</h2>
+                <button mat-icon-button type="button" id="closeModal" class="close" data-dismiss="modal"
+                    aria-label="Close">
+                    <mat-icon>close</mat-icon>
+                </button>
+            </div>
+            <form [formGroup]="gradForm">
+                <div class="modal-body">
+                    <div class="form-group form-floating">
+                        <input type="text" name="" placeholder="Title" class="form-control" formControlName="title"
+                            oninput="this.value = !this.value.trim() ? this.value.trim() : this.value">
+                        <label>Title</label>
+                        <div *ngIf="(gradForm.controls.title?.touched || gradForm.controls.title?.dirty)
+								 && gradForm.controls.title?.invalid && gradForm.controls.title?.errors?.required" class="invalid">
+                            Please enter title
+                        </div>
+                    </div>
+                    <div class="form-group form-floating">
+                        <textarea type="text" placeholder="Description" name="" class="form-control"
+                            formControlName="desc"
+                            oninput="this.value = !this.value.trim() ? this.value.trim() : this.value">
+
+          </textarea>
+                        <label>Description</label>
+                        <div *ngIf="(gradForm.controls.desc?.touched || gradForm.controls.desc?.dirty)
+							 && gradForm.controls.desc?.invalid && gradForm.controls.desc?.errors?.required" class="invalid">
+                            Please enter description
+                        </div>
+                    </div>
+
+
+                </div>
+                <div class="modal-footer">
+                    <button mat-button type="button" class="theme_link_btn_c" data-dismiss="modal">Cancel</button>
+                    <button mat-button type="submit" class="theme_btn btn_primary" (click)="sendMail()">Send </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

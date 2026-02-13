@@ -1,0 +1,1631 @@
+<section>
+    <div class="page_header">
+            <a (click)="goBack()" class="back_Link"> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                    viewBox="0 0 24 24" fill="none">
+                    <path d="M19 12H5" stroke="#464BA8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                    <path d="M12 19L5 12L12 5" stroke="#464BA8" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round" />
+                </svg> Back to Systems & Rules </a>
+    </div>
+      <div class="card_header">
+            <div class="card_container  justify-content-between">
+                <!-- -->
+                <div class="d-flex flex-column">
+                    <div  class="d-flex gap-5">
+                         <div class="student_card" >
+                            <div class="content">
+                                <p>Awaiting Purge</p>
+                                <h4>{{paginationObj?.length || 0}}</h4>
+                            </div>
+                            <div class="">
+                                <svg width="54" height="54" viewBox="0 0 54 54" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <circle cx="27" cy="27" r="27" fill="#F47761"/>
+                                <path d="M15 19H17.6667H39" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M36.3332 18.9998V37.6665C36.3332 38.3737 36.0522 39.052 35.5521 39.5521C35.052 40.0522 34.3737 40.3332 33.6665 40.3332H20.3332C19.6259 40.3332 18.9476 40.0522 18.4476 39.5521C17.9475 39.052 17.6665 38.3737 17.6665 37.6665V18.9998M21.6665 18.9998V16.3332C21.6665 15.6259 21.9475 14.9476 22.4476 14.4476C22.9476 13.9475 23.6259 13.6665 24.3332 13.6665H29.6665C30.3737 13.6665 31.052 13.9475 31.5521 14.4476C32.0522 14.9476 32.3332 15.6259 32.3332 16.3332V18.9998" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <ng-container *ngIf="type=='Students'">
+              <div class="row sub_header">
+
+                <!--  -->
+                <!-- <div class="col-md-8 action_btns_header" [style.visibility]="isCheck ? 'visible' : 'hidden'">
+                    <button mat-button class="theme_btn theme_link_btn" data-toggle="modal" data-target="#sendEmail">
+                        <svg class="mr-2" xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 25 25"
+                            fill="none">
+                            <path
+                                d="M4.5 4.5H20.5C21.6 4.5 22.5 5.4 22.5 6.5V18.5C22.5 19.6 21.6 20.5 20.5 20.5H4.5C3.4 20.5 2.5 19.6 2.5 18.5V6.5C2.5 5.4 3.4 4.5 4.5 4.5Z"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                            <path d="M22.5 6.5L12.5 13.5L2.5 6.5" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round" />
+                        </svg> Email
+                    </button>
+                    <button mat-button class="theme_btn theme_link_btn" (click)="exportStudentData1('excel')">
+                        <svg width="25" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M21.5 15.5V19.5C21.5 20.0304 21.2893 20.5391 20.9142 20.9142C20.5391 21.2893 20.0304 21.5 19.5 21.5H5.5C4.96957 21.5 4.46086 21.2893 4.08579 20.9142C3.71071 20.5391 3.5 20.0304 3.5 19.5V15.5"
+                                stroke="#464BA8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                            <path d="M7.5 10.5L12.5 15.5L17.5 10.5" stroke="#464BA8" stroke-width="1.5"
+                                stroke-linecap="round" stroke-linejoin="round" />
+                            <path d="M12.5 15.5L12.5 3.5" stroke="#464BA8" stroke-width="1.5" stroke-linecap="round"
+                                stroke-linejoin="round" />
+                        </svg>
+                        Download (.xlsx)
+                    </button>
+                    <button mat-button class="theme_btn theme_link_btn" data-toggle="modal"
+                        data-target="#addPlacementGroup">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12 5V19" stroke="#464BA8" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" />
+                            <path d="M5 12H19" stroke="#464BA8" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" />
+                        </svg>
+                        Add&nbsp;<b>{{selectedRecords.length}}</b>&nbsp;students to Placement Group
+                    </button>
+
+                    <button mat-button class="theme_btn theme_link_btn" data-toggle="modal" data-target="#resendOTPEmailStudentBulk">
+                        <svg width="24" height="25" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M22 12.5H16L14 15.5H10L8 12.5H2" stroke="#464BA8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M5.45 5.61L2 12.5V18.5C2 19.0304 2.21071 19.5391 2.58579 19.9142C2.96086 20.2893 3.46957 20.5 4 20.5H20C20.5304 20.5 21.0391 20.2893 21.4142 19.9142C21.7893 19.5391 22 19.0304 22 18.5V12.5L18.55 5.61C18.3844 5.27679 18.1292 4.99637 17.813 4.80028C17.4967 4.60419 17.1321 4.5002 16.76 4.5H7.24C6.86792 4.5002 6.50326 4.60419 6.18704 4.80028C5.87083 4.99637 5.61558 5.27679 5.45 5.61Z" stroke="#464BA8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg> &nbsp;
+                            Send OTP Email
+                    </button>
+                </div> -->
+                <div class="col-md-12 text-right searchbar-end">
+                    <div class="d-inline-flex align-items-center">
+                        <div class="search-container">
+                            <svg class="icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20"
+                                fill="none">
+                                <path
+                                    d="M9.16667 15.8333C12.8486 15.8333 15.8333 12.8486 15.8333 9.16667C15.8333 5.48477 12.8486 2.5 9.16667 2.5C5.48477 2.5 2.5 5.48477 2.5 9.16667C2.5 12.8486 5.48477 15.8333 9.16667 15.8333Z"
+                                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                <path d="M17.5 17.5L13.875 13.875" stroke="currentColor" stroke-width="2"
+                                    stroke-linecap="round" stroke-linejoin="round" />
+                            </svg>
+                            <input type="text" class="form-control" placeholder="Search Keywords"
+                                [(ngModel)]="search" (ngModelChange)="loadData()">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="table-responsive">
+                    <table mat-table [dataSource]="systemRules" matSort #studentTbSort="matSort" class="ch_table">
+
+                         <!-- Checkbox Column -->
+                    
+                    <ng-container matColumnDef="icon_alumi" sticky>
+                        <th mat-header-cell *matHeaderCellDef> </th>
+                        <td mat-cell *matCellDef="let row"> 
+                            <span *ngIf="row.alumni" matTooltipClass="info_primary_my_task text-black"  matTooltipPosition="above" matTooltip="This student is an Alumni.">
+                                 <svg  width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M1 8.7L11.511 4.5L22.022 8.7L11.511 12.9L1 8.7Z" stroke="#464BA8" stroke-width="1.5" stroke-linejoin="round"/>
+                                    <path d="M22.0213 8.75635V13.3678M5.77734 10.9138V17.1348C5.77734 17.1348 8.18234 19.5013 11.5103 19.5013C14.8388 19.5013 17.2438 17.1348 17.2438 17.1348V10.9138" stroke="#464BA8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+
+                            </span>    
+                        </td>
+                    </ng-container>
+                    <!-- Checkbox Column -->
+                    <ng-container matColumnDef="checkbox" sticky>
+                        <th class="sticky_first_check_sort" mat-header-cell *matHeaderCellDef>
+                            <mat-checkbox *ngxPermissionsOnly="['Students_Write']" class="example-margin" [(ngModel)]="selectAllStdnt"
+                                (change)="selectAllStudent()"></mat-checkbox> 
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                            <mat-checkbox *ngxPermissionsOnly="['Students_Write']" class="example-margin" [(ngModel)]="element.selected"
+                                (change)="selectStudent(element)"></mat-checkbox>
+                        </td>
+                    </ng-container>
+                    <!-- Student ID Column -->
+                    <ng-container matColumnDef="student_id" sticky>
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Student Id </th>
+                        <td mat-cell *matCellDef="let row"> {{row.student_id}} </td>
+                    </ng-container>
+                    <!-- Name Column -->
+                    <ng-container matColumnDef="student_code" sticky>
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Student Code </th>
+                        <td mat-cell *matCellDef="let row"> {{row.student_code}} </td>
+                    </ng-container>
+                    <ng-container matColumnDef="full_name" sticky>
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Full Name</th>
+                        <td mat-cell *matCellDef="let row">
+                            <a (click)="viewProfile(row)" class="td_link">{{ row && row?.full_name }}</a>
+                        </td>
+                    </ng-container> 
+
+
+                    <ng-container matColumnDef="first_name">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> First name
+                    </th>
+                    <td mat-cell *matCellDef="let row">{{ row.first_name }}</td>
+                    </ng-container>
+                    <ng-container matColumnDef="middle_name">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Middle Name
+                    </th>
+                    <td mat-cell *matCellDef="let row">{{ row.middle_name }}</td>
+                    </ng-container>
+                    <ng-container matColumnDef="last_name">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Last name
+                    </th>
+                    <td mat-cell *matCellDef="let row">{{ row.last_name }}</td>
+                    </ng-container>
+                    <ng-container matColumnDef="preferred_name">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Preferred Name
+                    </th>
+                    <td mat-cell *matCellDef="let row">{{ row.preferred_name }}</td>
+                    </ng-container>
+                    <ng-container matColumnDef="username">
+                    <th mat-header-cell *matHeaderCellDef>Username
+                    </th>
+                    <td mat-cell *matCellDef="let row">{{ row.username }}</td>
+                    </ng-container>
+
+
+                    <ng-container matColumnDef="phone_no">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Phone No.
+                    </th>
+                    <td mat-cell *matCellDef="let row">{{ row.phone_no }}</td>
+                    </ng-container>
+                    <ng-container matColumnDef="advocate_care_history">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Advocate Care History
+                    </th>
+                    <td mat-cell *matCellDef="let row">{{ row.advocate_care_history }}</td>
+                    </ng-container>
+                    <ng-container matColumnDef="degree_level">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>degree Level
+                    </th>
+                    <td mat-cell *matCellDef="let row">{{ row.degree_level }}</td>
+                    </ng-container>
+                    <ng-container matColumnDef="majors">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Majors
+                    </th>
+                    <td mat-cell *matCellDef="let row">{{ row.major }}</td>
+                    </ng-container>
+                         <ng-container matColumnDef="class_level">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>class Level
+                    </th>
+                    <td mat-cell *matCellDef="let row">{{ row.class_level }}</td>
+                    </ng-container>
+                    <ng-container matColumnDef="minors">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Minors 
+                    </th>
+                    <td mat-cell *matCellDef="let row">{{ row.minors }}</td>
+                    </ng-container>
+                      <ng-container matColumnDef="gpa">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>WAM
+                    </th>
+                    <td mat-cell *matCellDef="let row">{{ row.gpa }}</td>
+                    </ng-container>
+                     <ng-container matColumnDef="certificates">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Certificates
+                    </th>
+                    <td mat-cell *matCellDef="let row">{{ row.certificates }}</td>
+                    </ng-container>
+                     <ng-container matColumnDef="credit_points">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Credit Points
+                    </th>
+                    <td mat-cell *matCellDef="let row">{{ row.credit_points }}</td>
+                    </ng-container>
+                    <ng-container matColumnDef="unit_name">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Unit Name
+                    </th>
+                    <td mat-cell *matCellDef="let row">{{ row.unit_name }}</td>
+                    </ng-container>
+                    <ng-container matColumnDef="unit_code">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Unit Code 
+                    </th>
+                    <td mat-cell *matCellDef="let row">{{ row.unit_code }}</td>
+                    </ng-container>
+                    <ng-container matColumnDef="delivery_mode">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Delivery Mode
+                    </th>
+                    <!-- <td mat-cell *matCellDef="let row">{{ row.delivery_mode }}</td> -->
+
+                     <td mat-cell *matCellDef="let row">
+                            <div>
+                                <!-- (selectionChange)="changeStudentPriority(row)" -->
+                                 <mat-select class="custom_dorp_select default" [(ngModel)]="row.delivery_mode" disabled>
+                                    <mat-option value="Select Level">Select delivery mode</mat-option>
+                                    <mat-option [value]="'On Campus'">On Campus</mat-option>
+                                    <mat-option [value]="'Off Campus'">Off Campus</mat-option>
+                                    <mat-option [value]="'Mixed'">Mixed</mat-option>
+                                </mat-select>
+                            </div>
+                        </td>
+                    </ng-container>
+                      <ng-container matColumnDef="work_authorization">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Work Rights
+                    </th>
+                    <td mat-cell *matCellDef="let row">{{ row.work_rights }}</td>
+                    </ng-container>
+                    <ng-container matColumnDef="program_type">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Program Type
+                    </th>
+                    <td mat-cell *matCellDef="let row">{{ row.program_type }}</td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="upload_id">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Upload ID
+                    </th>
+                    <td mat-cell *matCellDef="let row">{{ row.upload_id }}</td>
+                    </ng-container>
+                     <ng-container matColumnDef="verified">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> verified
+                    </th>
+                    <td mat-cell *matCellDef="let row">{{ row.verified }}</td>
+                    </ng-container>
+                    <ng-container matColumnDef="is_password_set">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Is Password Set
+                    </th>
+                    <td mat-cell *matCellDef="let row">{{ row.is_password_set }}</td>
+                    </ng-container>
+                     <ng-container matColumnDef="is_archive">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Is Archive 
+                    </th>
+                    <td mat-cell *matCellDef="let row">{{ row.is_archive }}</td>
+                    </ng-container>
+                    <ng-container matColumnDef="applicant_type">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Applicant Type
+                    </th>
+                    <!-- <td mat-cell *matCellDef="let row">{{ row.applicant_type }}</td> -->
+                    <td mat-cell *matCellDef="let row">
+                            <div>
+                                <!-- (selectionChange)="changeStudentPriority(row)" -->
+                                <mat-select class="custom_dorp_select default" [(ngModel)]="row.applicant_type" disbaled>
+                                    <mat-option value="Select Level">Select applicant type</mat-option>
+                                    <mat-option [value]="'A'">A</mat-option>
+                                    <mat-option [value]="'B'">B</mat-option>
+                                    <mat-option [value]="'C'">C</mat-option>
+                                    <mat-option [value]="'D'">D</mat-option>
+                                    <mat-option [value]="'E'">E</mat-option>
+                                </mat-select>
+                            </div>
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="geographic_preferences">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Geographic Preferences
+                    </th>
+                    <td mat-cell *matCellDef="let row">{{ row.geographic_preferences }}</td>
+                    </ng-container>
+                    <ng-container matColumnDef="affiliations">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Affiliations
+                    </th>
+                    <td mat-cell *matCellDef="let row">{{ row.affiliations }}</td>
+                    </ng-container>
+                      <ng-container matColumnDef="assignedTo">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header>Assigned To </th>
+                        <td mat-cell *matCellDef="let row">
+                            <div class="d-flex align-items-center">
+                                <div class="profile">
+                                    <span>
+                                        {{getFirstLetter(row.assigned_to)}}
+                                    </span>
+                                </div> <span>
+                                    {{row.assigned_to}}
+                                </span>
+                            </div>
+
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="priority">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header>Priority
+                        </th>
+                        <td mat-cell *matCellDef="let row">
+                            <div>
+                                <mat-select class="custom_dorp_select" [class]="getPriorityClassNames(row.priority)"
+                                    [(ngModel)]="row.priority" disabled>
+                                    <mat-option [value]="'Low'">Low</mat-option>
+                                    <mat-option [value]="'Medium'">Medium</mat-option>
+                                    <mat-option [value]="'High'">High</mat-option>
+                                </mat-select>
+                            </div>
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="status">
+                        <!-- <th mat-header-cell *matHeaderCellDef mat-sort-header>Status</th> -->
+                        <!-- <td mat-cell *matCellDef="let row">
+                            {{row.status}}
+                        </td> -->
+                         <!-- <td mat-cell *matCellDef="let row">
+                            <div>
+                                <mat-select class="custom_dorp_select" [class]="getPriorityClassNames(row.status)" [(ngModel)]="row.status"
+                               (selectionChange)="changeSelecStatus(row)">
+                                <mat-option value="Select Level">Select Status</mat-option>
+                                <mat-option [value]="'Placed'">Placed</mat-option>
+                                <mat-option [value]="'In Progress'">In Progress</mat-option>
+                                <mat-option [value]="'Deferred'">Deferred</mat-option>
+                            </mat-select>
+                            </div>
+                        </td> -->
+
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header>Internship Status
+                        </th>
+                        <td mat-cell *matCellDef="let row">
+                            <div>
+                                <p *ngIf="row.status" class="custom_dorp_select m-0"
+                                [ngClass]="row.status == 'Placed' ? 'green' :
+                                row.status == 'Interviews' ? 'yellow' :
+                                row.status == 'Accepted' ? 'yellow' :
+                                row.status == 'Rejected' ? 'red' :
+                                row.status == 'Application' ? 'red' :
+                                'default'">
+                                  {{row.status ?row.status :''}}  
+                                </p>
+                                <!-- <mat-select *ngIf="row.status" class="custom_dorp_select"
+                                [ngClass]="row.status == 'Placed' ? 'green' :
+                                row.status == 'Interviews' ? 'yellow' :
+                                row.status == 'Accepted' ? 'yellow' :
+                                row.status == 'Rejected' ? 'red' :
+                                row.status == 'Application' ? 'red' :
+                                'default'"
+                                [(ngModel)]="row.status">
+                                    <mat-option [value]="'Application'">Application</mat-option>
+                                    <mat-option [value]="'Interviews'">Interviews</mat-option>
+                                    <mat-option [value]="'Rejected'">Rejected</mat-option>
+                                    <mat-option [value]="'Accepted'">Accepted</mat-option>
+                                    <mat-option [value]="'Placed'">Placed</mat-option>
+                                </mat-select> -->
+                            </div>
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="placement_group">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header>Placement Group
+                        </th>
+
+                        <td mat-cell *matCellDef="let row"  class="position-relative">
+                            <div class="d-flex align-items-center">
+                                {{ row.placement_project_count }}
+
+                                <button *ngIf="row.placement_project_count" mat-icon-button data-toggle="modal" (click)="getStudentPG(row)"
+                                data-target="#viewStudentPG" [disabled]="row.vacancyCount === 0"><svg width="20"
+                                        height="20" viewBox="0 0 20 20" fill="none"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <circle cx="10" cy="10" r="10" fill="#F8F8F8" />
+                                        <path
+                                            d="M5 9.58333C5 9.58333 6.81818 6.25 10 6.25C13.1818 6.25 15 9.58333 15 9.58333C15 9.58333 13.1818 12.9167 10 12.9167C6.81818 12.9167 5 9.58333 5 9.58333Z"
+                                            stroke="black" stroke-linecap="round" stroke-linejoin="round" />
+                                        <path
+                                            d="M9.9984 10.8359C10.7515 10.8359 11.362 10.2763 11.362 9.58594C11.362 8.89558 10.7515 8.33594 9.9984 8.33594C9.24529 8.33594 8.63477 8.89558 8.63477 9.58594C8.63477 10.2763 9.24529 10.8359 9.9984 10.8359Z"
+                                            stroke="black" stroke-linecap="round" stroke-linejoin="round" />
+                                    </svg>
+                                </button>
+                            </div>
+                        </td>
+                        
+                    </ng-container>
+                    <ng-container matColumnDef="cohort_start_date">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Cohort Start Date
+                    </th>
+                    <td mat-cell *matCellDef="let row">{{ row.cohort_start_date }}</td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="cohort_end_date">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Cohort End Date 
+                    </th>
+                    <td mat-cell *matCellDef="let row">{{ row.cohort_end_date }}</td>
+                    </ng-container>
+                  
+
+                    <ng-container matColumnDef="home_campus">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header>Home Campus
+                        </th>
+                        <td mat-cell *matCellDef="let row"> {{row.home_campus?row.home_campus:row.campus}} </td>
+                    </ng-container>
+                    <ng-container matColumnDef="resume_level">
+                        <th mat-header-cell *matHeaderCellDef>Resume Level 
+                        </th>
+                        <td mat-cell *matCellDef="let row">
+                            <mat-select class="custom_dorp_select default" [(ngModel)]="row.resume_level"
+                                disabled>
+                                <mat-option value="Select Level">Select Level</mat-option>
+                                <mat-option [value]="'A'">A</mat-option>
+                                <mat-option [value]="'B'">B</mat-option>
+                                <mat-option [value]="'C'">C</mat-option>
+                            </mat-select>
+                        </td>
+                    </ng-container>
+                   
+                    <ng-container matColumnDef="placement_doc_status">
+                        <th mat-header-cell *matHeaderCellDef> Placement Doc Status 
+                        </th>
+                        <td mat-cell *matCellDef="let row">
+                            <mat-select class="custom_dorp_select"
+                                [ngClass]="row.placement_doc_received == 'Received' ? 'green' :
+                            row.placement_doc_received == 'Not Received' ? 'red' : 'default'"
+                                [(ngModel)]="row.placement_doc_received"
+                               disabled>
+                                <mat-option [value]="'Received'">Received</mat-option>
+                                <mat-option [value]="'Not Received'">Not Received</mat-option>
+                            </mat-select>
+                        </td>
+                    </ng-container>
+                   
+                    <ng-container matColumnDef="primaryEmail">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header>University Email 
+                        </th>
+                        <td mat-cell *matCellDef="let row">{{row.email}}</td>
+                    </ng-container>
+                     <ng-container matColumnDef="permanent_email">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header>Permanent Email
+                        </th>
+                        <td mat-cell *matCellDef="let row">{{row.permanent_email}}</td>
+                    </ng-container>
+                  
+                    <ng-container matColumnDef="gender">
+                        <th mat-header-cell *matHeaderCellDef>Gender
+                        </th>
+                        <td mat-cell *matCellDef="let row">{{row.gender}}</td>
+                    </ng-container>
+                    <ng-container matColumnDef="date_of_birth">
+                        <th mat-header-cell *matHeaderCellDef>Date of Birth
+                        </th>
+                        <td mat-cell *matCellDef="let row">{{row.date_of_birth}}</td>
+                    </ng-container>
+                    <ng-container matColumnDef="course_code">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header>Course Code
+                        </th>
+                        <td mat-cell *matCellDef="let row">{{row.course_code}}</td>
+                    </ng-container>
+                    <ng-container matColumnDef="graduation_date">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Graduation Date
+                    </th>
+                    <td mat-cell *matCellDef="let row">{{ row.graduation_date }}</td>
+                    </ng-container>
+                    <ng-container matColumnDef="course_name">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>course name
+                    </th>
+                    <td mat-cell *matCellDef="let row">{{ row.course_name }}</td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="nationality">
+                        <th mat-header-cell *matHeaderCellDef>Nationality
+                        </th>
+                        <td mat-cell *matCellDef="let row">{{row.nationality}}</td>
+                    </ng-container>
+                     <ng-container matColumnDef="address">
+                        <th mat-header-cell *matHeaderCellDef>Address
+                        </th>
+                        <td mat-cell *matCellDef="let row">{{row.address}}</td>
+                    </ng-container>
+                    <ng-container matColumnDef="addressLine1">
+                        <th mat-header-cell *matHeaderCellDef>Address Line 01 
+                        </th>
+                        <td mat-cell *matCellDef="let row">{{row.address_line_01}}</td>
+                    </ng-container>
+                    <ng-container matColumnDef="suburb">
+                        <th mat-header-cell *matHeaderCellDef>Suburb
+                        </th>
+                        <td mat-cell *matCellDef="let row">{{row.suburb}}</td>
+                    </ng-container>
+                    <ng-container matColumnDef="state">
+                        <th mat-header-cell *matHeaderCellDef>State
+                        </th>
+                        <td mat-cell *matCellDef="let row">{{row.state}}</td>
+                    </ng-container>
+                    <ng-container matColumnDef="postcode">
+                        <th mat-header-cell *matHeaderCellDef>Postcode
+                        </th>
+                        <td mat-cell *matCellDef="let row">{{row.post_code}}</td>
+                    </ng-container>
+                    <ng-container matColumnDef="country">
+                        <th mat-header-cell *matHeaderCellDef> Country
+                        </th>
+                        <td mat-cell *matCellDef="let row">{{row.country}}</td>
+                    </ng-container>
+                    <ng-container matColumnDef="mobile">
+                        <th mat-header-cell *matHeaderCellDef>Mobile
+                        </th>
+                        <td mat-cell *matCellDef="let row">{{row.mobile}}</td>
+                    </ng-container>
+                     <ng-container matColumnDef="permanentAddress">
+                        <th mat-header-cell *matHeaderCellDef>Permanent Address
+                        </th>
+                        <td mat-cell *matCellDef="let row">{{row.permanent_address}}</td>
+                    </ng-container>
+
+                     <ng-container matColumnDef="permanent_suburb">
+                        <th mat-header-cell *matHeaderCellDef>Permanent Suburb
+                        </th>
+                        <td mat-cell *matCellDef="let row">{{row.permanent_suburb}}</td>
+                    </ng-container>
+
+                     <ng-container matColumnDef="permanent_state">
+                        <th mat-header-cell *matHeaderCellDef>Permanent State 
+                        </th>
+                        <td mat-cell *matCellDef="let row">{{row.permanent_state}}</td>
+                    </ng-container>
+
+                     <ng-container matColumnDef="permanent_country">
+                        <th mat-header-cell *matHeaderCellDef>Permanent Country
+                        </th>
+                        <td mat-cell *matCellDef="let row">{{row.permanent_country}}</td>
+                    </ng-container>
+
+                     <ng-container matColumnDef="rights">
+                        <th mat-header-cell *matHeaderCellDef>Rights
+                        </th>
+                        <td mat-cell *matCellDef="let row">{{row.rights}}</td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="language_proficiencies">
+                        <th mat-header-cell *matHeaderCellDef>Language proficiencies
+                        </th>
+                        <td mat-cell *matCellDef="let row">{{row.language_proficiencies}}</td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="internship_start_date">
+                        <th mat-header-cell *matHeaderCellDef>Internship Start Date
+                        </th>
+                        <td mat-cell *matCellDef="let row">{{row.internship_start_date}} 
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="internship_end_date">
+                        <th mat-header-cell *matHeaderCellDef>Internship End Date
+                        </th>
+                        <td mat-cell *matCellDef="let row">{{row.internship_end_date}}</td>
+                    </ng-container>
+                    <ng-container matColumnDef="semester_name">
+                        <th mat-header-cell *matHeaderCellDef> Semester Name
+                        </th>
+                        <td mat-cell *matCellDef="let row">{{row.semester_name}}</td>
+                    </ng-container>
+                    <ng-container matColumnDef="year">
+                        <th mat-header-cell *matHeaderCellDef> Year
+                        </th>
+                        <td mat-cell *matCellDef="let row">{{row.year}}</td>
+                    </ng-container>
+                       <ng-container matColumnDef="alum">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header>Alumni
+                        </th>
+                      <td class="text-center" mat-cell *matCellDef="let row"><mat-checkbox
+                                [(ngModel)]="row.alumni" disabled></mat-checkbox></td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="advocate_incident_history">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Incident History
+                    </th>
+                    <td mat-cell *matCellDef="let row">{{ row.advocate_incident_history }}</td>
+                    </ng-container>
+                   
+                    <ng-container matColumnDef="accommodate_accessibility">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Accommodate Accessibility
+                      
+                    </th>
+                    <td mat-cell *matCellDef="let row">{{ row.accessibility }}</td>
+                    </ng-container>
+                    <ng-container matColumnDef="ABN">
+                        <th mat-header-cell *matHeaderCellDef> ABN
+                        </th>
+                        <td mat-cell *matCellDef="let row">{{row.abn}} </td>
+                    </ng-container>
+                  
+
+                    <!-- <ng-container matColumnDef="last_modified">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Last Modified</th>
+                    <td mat-cell *matCellDef="let row">{{ row.last_modified }}</td>
+                    </ng-container> -->
+
+                    <ng-container matColumnDef="last_login">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Last Login
+                      
+                    </th>
+                    <td mat-cell *matCellDef="let row">{{ row.last_login | date:'dd/MM/yyyy' }}</td>
+                    </ng-container>
+                     <ng-container matColumnDef="lastupdatedby">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Last Updated By
+                        
+                    </th>
+                    <td mat-cell *matCellDef="let row">{{ row.last_updated_by }}</td>
+                    </ng-container>
+                     <ng-container matColumnDef="lastupdate">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>last Modified
+                        
+                    </th>
+                    <td mat-cell *matCellDef="let row">{{ row.last_updated | date:'dd/MM/yyyy' }}</td>
+                    </ng-container>
+
+                      <!-- <ng-container matColumnDef="actions">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>last Modified
+                        
+                    </th>
+                    <td mat-cell *matCellDef="let row">{{ row.last_updated | date:'dd/MM/yyyy' }}</td>
+                    </ng-container> -->
+
+            
+                    <tr mat-header-row *matHeaderRowDef="displayColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayColumns;"></tr>
+                </table>
+            </div>
+           
+        </ng-container>
+
+        <ng-container *ngIf="type=='Companies'">
+
+                  <div class="row sub_header">
+            <!-- Begin:: Email and Download(xlsx) -->
+            <!-- <div class="col-md-7 action_btns_header" [style.visibility]="isCheck ? 'visible' : 'hidden'">
+                <button mat-button class="theme_btn theme_link_btn" data-toggle="modal"
+                    data-target="#sendEmailCompanies">
+                    <svg class="mr-2" xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 25 25"
+                        fill="none">
+                        <path
+                            d="M4.5 4.5H20.5C21.6 4.5 22.5 5.4 22.5 6.5V18.5C22.5 19.6 21.6 20.5 20.5 20.5H4.5C3.4 20.5 2.5 19.6 2.5 18.5V6.5C2.5 5.4 3.4 4.5 4.5 4.5Z"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                        <path d="M22.5 6.5L12.5 13.5L2.5 6.5" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round" />
+                    </svg> Email
+                </button>
+                <button (click)="exportPartnerData('csv')" mat-button class="theme_btn theme_link_btn">
+                    <svg width="25" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="M21.5 15.5V19.5C21.5 20.0304 21.2893 20.5391 20.9142 20.9142C20.5391 21.2893 20.0304 21.5 19.5 21.5H5.5C4.96957 21.5 4.46086 21.2893 4.08579 20.9142C3.71071 20.5391 3.5 20.0304 3.5 19.5V15.5"
+                            stroke="#464BA8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                        <path d="M7.5 10.5L12.5 15.5L17.5 10.5" stroke="#464BA8" stroke-width="1.5"
+                            stroke-linecap="round"
+                            stroke-linejoin="round" />
+                        <path d="M12.5 15.5L12.5 3.5" stroke="#464BA8" stroke-width="1.5" stroke-linecap="round"
+                            stroke-linejoin="round" />
+                    </svg>
+
+                    Download (.csv)
+                </button>
+                <button mat-button class="theme_btn theme_link_btn" data-toggle="modal"
+                    data-target="#sendEmailCompanies" (click)="resetCheckBox()">
+                    <svg class="mr-2" width="25" height="25" viewBox="0 0 25 25" fill="none"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="M20.5 7.5H4.5C3.39543 7.5 2.5 8.39543 2.5 9.5V19.5C2.5 20.6046 3.39543 21.5 4.5 21.5H20.5C21.6046 21.5 22.5 20.6046 22.5 19.5V9.5C22.5 8.39543 21.6046 7.5 20.5 7.5Z"
+                            stroke="#464BA8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                        <path
+                            d="M16.5 21.5V5.5C16.5 4.96957 16.2893 4.46086 15.9142 4.08579C15.5391 3.71071 15.0304 3.5 14.5 3.5H10.5C9.96957 3.5 9.46086 3.71071 9.08579 4.08579C8.71071 4.46086 8.5 4.96957 8.5 5.5V21.5"
+                            stroke="#464BA8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                    Request Opportunity
+                </button>
+                <button *ngIf="selectedInactiveRecords.length>0" mat-button class="theme_btn theme_link_btn" data-toggle="modal"
+                    data-target="#viewMuiltBlockListModel">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 5V19" stroke="#464BA8" stroke-width="2" stroke-linecap="round"
+                            stroke-linejoin="round" />
+                        <path d="M5 12H19" stroke="#464BA8" stroke-width="2" stroke-linecap="round"
+                            stroke-linejoin="round" />
+                    </svg>
+                    Add&nbsp;<b>{{selectedRecords.length + selectedInactiveRecords.length}}</b>&nbsp; companies to Placement Group
+                </button>
+
+                <button *ngIf="selectedInactiveRecords.length==0" mat-button class="theme_btn theme_link_btn" data-toggle="modal"
+                data-target="#addPlacementGroup" (click)="getPlacementGroups('');addCompanyPlacement.show()">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 5V19" stroke="#464BA8" stroke-width="2" stroke-linecap="round"
+                            stroke-linejoin="round" />
+                        <path d="M5 12H19" stroke="#464BA8" stroke-width="2" stroke-linecap="round"
+                            stroke-linejoin="round" />
+                    </svg>
+                    Add&nbsp;<b>{{selectedRecords.length + selectedInactiveRecords.length}}</b>&nbsp; companies to Placement Group
+                </button>
+            </div> -->
+            <div class="col-md-12 text-right searchbar-end">
+                <div class="d-inline-flex align-items-center">
+                    <div class="search-container">
+                        <svg class="icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20"
+                            fill="none">
+                            <path
+                                d="M9.16667 15.8333C12.8486 15.8333 15.8333 12.8486 15.8333 9.16667C15.8333 5.48477 12.8486 2.5 9.16667 2.5C5.48477 2.5 2.5 5.48477 2.5 9.16667C2.5 12.8486 5.48477 15.8333 9.16667 15.8333Z"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                            <path d="M17.5 17.5L13.875 13.875" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round"
+                                stroke-linejoin="round" />
+                        </svg>
+                        <input type="text" class="form-control" [(ngModel)]="search"
+                            placeholder="Search Keywords" (ngModelChange)="loadData()">
+                    </div>
+                </div>
+
+            
+            </div>
+        </div>
+              <div class="table-responsive">
+            <table mat-table [dataSource]="systemRules" matSort #companiesTbSort="matSort" class="ch_table" >
+                <!-- Checkbox Column -->
+                <!-- <ng-container matColumnDef="type_company" sticky>
+                    <th class="sticky_first_check_sort" mat-header-cell *matHeaderCellDef>
+                       
+                    </th>
+                    <td mat-cell *matCellDef="let element">
+                        <span class="span-babdge" *ngIf="element.is_headquarter">HQ</span>
+                        <span class="span-babdge" *ngIf="element.is_child">CC</span>
+                    </td>
+                </ng-container> -->
+                <!-- Checkbox Column -->
+                <ng-container matColumnDef="checkbox" sticky>
+                    <th class="sticky_first_check_sort padding-checkbox" *matHeaderCellDef>
+                        <mat-checkbox *ngxPermissionsOnly="['WIL_Write']" class="example-margin" [(ngModel)]="selectAllComp"
+                            (change)="selectAllCompany()"></mat-checkbox>
+                    </th>
+                    <td mat-cell *matCellDef="let element">
+                        <mat-checkbox *ngxPermissionsOnly="['WIL_Write']" class="example-margin" [(ngModel)]="element.selected"
+                            (change)="selectCompany()"></mat-checkbox>
+                    </td>
+                </ng-container>
+                <!-- Company Name Column -->
+                <ng-container matColumnDef="company_name" sticky>
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Company Name
+                        
+                        
+                    </th>
+                    <td mat-cell *matCellDef="let row">
+                        <div class="mod_groups pl-0 text-hidden">
+                            <div class="avatar">
+                                <img *ngIf="row?.company_logo" [src]="row?.company_logo" alt="woolworths">
+                                <div class="profile" *ngIf="!row?.company_logo">
+                                    <span style="color: #fff">
+                                        
+                                        {{ row?.company_name[0]}}
+                    {{row?.company_name?.split(' ')?.length > 1 ?
+                    row?.company_name?.split(' ')[1][0] : '' }}
+                                        <!-- {{ row?.company_name ? row?.company_name?.split(' ')[0][0]
+                                        : '' }} {{row?.company_name ? row?.company_name?.split(' ')[0][1] : '' }} -->
+                                        </span>
+                                </div>
+                            </div>
+                            <div>
+                                <span class="pb-2" (click)="goToCompanyProfile(row)">{{row.company_name}}</span>
+                                  <br />
+                                <span class="span-babdge" *ngIf="row.is_headquarter">HQ</span>
+                                 <span class="span-babdge" *ngIf="row.is_child">CC</span>
+                            </div>
+                          
+                            
+                        </div>
+                      
+                        <!-- <div class="profile">
+                       <img src="../../../../assets/img/woolworths.svg" alt="logo">
+                    </div>  -->
+                    </td>
+                </ng-container>
+                <!-- Company Code Column -->
+                <ng-container matColumnDef="company_code">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Company Code/ID
+                      
+                    </th>
+                    <td mat-cell *matCellDef="let row">
+                        {{row.company_code}}
+                    </td>
+                </ng-container>
+
+                  <!-- Vacancies Group column -->
+                <ng-container matColumnDef="vacancies" >
+                    <th mat-header-cell *matHeaderCellDef >  Vacancies
+                        
+                    </th>
+                    <td mat-cell *matCellDef="let row" class="position-relative"> 
+                        
+                        <div class="d-flex align-items-center">
+        {{row?.vacancy_count}}
+                                <!--  -->
+                                <button mat-icon-button data-toggle="modal" (click)="getCompanyVacancies(row)"
+                                data-target="#viewCompanyVacancy" [disabled]="row.vacancyCount === 0"><svg width="20"
+                                        height="20" viewBox="0 0 20 20" fill="none"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <circle cx="10" cy="10" r="10" fill="#F8F8F8" />
+                                        <path
+                                            d="M5 9.58333C5 9.58333 6.81818 6.25 10 6.25C13.1818 6.25 15 9.58333 15 9.58333C15 9.58333 13.1818 12.9167 10 12.9167C6.81818 12.9167 5 9.58333 5 9.58333Z"
+                                            stroke="black" stroke-linecap="round" stroke-linejoin="round" />
+                                        <path
+                                            d="M9.9984 10.8359C10.7515 10.8359 11.362 10.2763 11.362 9.58594C11.362 8.89558 10.7515 8.33594 9.9984 8.33594C9.24529 8.33594 8.63477 8.89558 8.63477 9.58594C8.63477 10.2763 9.24529 10.8359 9.9984 10.8359Z"
+                                            stroke="black" stroke-linecap="round" stroke-linejoin="round" />
+                                    </svg>
+                                </button>
+                        </div>
+                       </td>
+                </ng-container>
+
+                <ng-container matColumnDef="email">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Email
+                        
+                    </th>
+                    <td mat-cell *matCellDef="let row">
+                        {{row.email}}
+                    </td>
+                </ng-container>
+
+                <!-- Location Column -->
+                <ng-container matColumnDef="address">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Address
+                        
+                    </th>
+                    <td mat-cell *matCellDef="let row">
+                        {{row.address}}
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="suburb">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Suburb
+                        
+                    </th>
+                    <td mat-cell *matCellDef="let row">
+                        {{row.suburb}}
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="state">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> State
+                       
+                    </th>
+                    <td mat-cell *matCellDef="let row">
+                        {{row.state}}
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="postal_code">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Postcode
+                        
+                    </th>
+                    <td mat-cell *matCellDef="let row">
+                        {{row.postal_code}}
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="location">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Location
+                        
+                    </th>
+                    <td mat-cell *matCellDef="let row">
+                        {{row.location}}
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="company_alias">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Alias
+                       
+                    </th>
+                    <td mat-cell *matCellDef="let row">
+                        {{row.company_alias}}
+                    </td>
+                </ng-container>
+
+                <ng-container matColumnDef="company_type">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Type
+                      
+                    </th>
+                    <td mat-cell *matCellDef="let row">
+                         <!-- <ng-select  [searchable]="true" [multiple]="true" bindLabel="name" bindValue="name"
+                            [clearable]="false" placeholder="Select type"
+                            [(ngModel)]="row.type">
+                             <ng-option disable value="None">
+                               None
+                            </ng-option>
+                            <ng-option value="WIL Placements">
+                                WIL Placements
+                            </ng-option>
+                              <ng-option value="Jobs & Hiring">
+                                Jobs & Hiring
+                            </ng-option>
+                              <ng-option value="WIL Projects ">
+                                WIL Projects 
+                            </ng-option>
+                        </ng-select> -->
+ <!-- (selectionChange)="changeStatus('site_status', row)" -->
+                       <mat-select
+                        multiple
+                        [(ngModel)]="row.company_type"
+                        class="custom_dorp_select" 
+                        disabled
+                        (closed)="updateCampany(row, row.company_type)"
+                        [ngClass]="row.company_type?.includes('Active') ? 'green' :
+                                    row.company_type?.includes('Inactive') || row.company_type?.includes('Blacklisted') ? 'red' :
+                                    'default'">
+
+                        <mat-select-trigger>
+                            {{ row.displayText || 'None' }}
+                        </mat-select-trigger>
+
+                        <!-- <mat-option *ngIf="!row.company_type" [value]="" disabled>
+                            None
+                        </mat-option> -->
+
+                        <ng-container  *ngFor="let option of validOptions">
+                               <mat-option *ngIf="option" [value]="option">
+                                    {{ option }}
+                                </mat-option>
+                        </ng-container>
+                     
+                        </mat-select>
+                    </td>
+                </ng-container>
+
+                 <ng-container matColumnDef="company_industry">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Industries
+                       
+                    </th>
+                    <td mat-cell *matCellDef="let row">
+                        {{row.industry_name}}
+                    </td>
+                </ng-container>
+
+                 <ng-container matColumnDef="company_label">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Label
+                       
+                    </th>
+                    <td mat-cell *matCellDef="let row">
+                        {{row.company_label}}
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="company_description">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Description
+                        
+                    </th>
+                    <td mat-cell *matCellDef="let row">
+                       
+
+                        <div class="d-flex align-items-center">
+                        {{row.description?'Yes':'No'}}
+                        <button *ngIf="row.description" mat-icon-button data-toggle="modal" (click)="company = row"
+                            data-target="#viewDescription"><svg width="20"
+                                height="20" viewBox="0 0 20 20" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <circle cx="10" cy="10" r="10" fill="#F8F8F8" />
+                                <path
+                                    d="M5 9.58333C5 9.58333 6.81818 6.25 10 6.25C13.1818 6.25 15 9.58333 15 9.58333C15 9.58333 13.1818 12.9167 10 12.9167C6.81818 12.9167 5 9.58333 5 9.58333Z"
+                                    stroke="black" stroke-linecap="round" stroke-linejoin="round" />
+                                <path
+                                    d="M9.9984 10.8359C10.7515 10.8359 11.362 10.2763 11.362 9.58594C11.362 8.89558 10.7515 8.33594 9.9984 8.33594C9.24529 8.33594 8.63477 8.89558 8.63477 9.58594C8.63477 10.2763 9.24529 10.8359 9.9984 10.8359Z"
+                                    stroke="black" stroke-linecap="round" stroke-linejoin="round" />
+                            </svg>
+                        </button></div>
+                    </td>
+                </ng-container>
+
+                
+                <!-- ABN/ACN Column -->
+                <ng-container matColumnDef="abn_acn">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> ABN/ACN 
+                        
+                    </th>
+                    <td mat-cell *matCellDef="let row"> {{row.abn_acn}} </td>
+                </ng-container>
+                <!-- No. of Employees Column -->
+                <ng-container matColumnDef="no_of_employees">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> No. of Employees
+                        
+                    </th>
+                    <td mat-cell *matCellDef="let row"> {{row.no_of_employees}} </td>
+                </ng-container>
+
+
+                <ng-container matColumnDef="company_tax_id">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Tax ID 
+                        
+                    </th>
+                    <td mat-cell *matCellDef="let row">
+                        {{row.company_tax_id}}
+                    </td>
+                </ng-container>
+              
+                <!-- Company Phone Column -->
+                <ng-container matColumnDef="company_phone">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Company Phone 
+                       
+                    </th>
+                    <td mat-cell *matCellDef="let row">
+                        {{row.company_phone}}
+                    </td>
+                </ng-container>
+                <!-- Site Status column -->
+                <ng-container matColumnDef="site_status">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>  Site Status
+
+                    </th>
+                    <td mat-cell *matCellDef="let row">
+                        <mat-select class="custom_dorp_select"  [ngClass]="row.site_status == 'Active' ? 'green' : row.site_status == 'Inactive' ? 'red'  : row.site_status == 'Blacklisted' ? 'red': 'default'" [(ngModel)]="row.site_status"
+                            (selectionChange)="changeStatus('site_status', row)">
+                            <mat-option value="Select" disabled>Select</mat-option>
+                            <mat-option value="Active">Active</mat-option>
+                            <mat-option value="Inactive">Inactive</mat-option>
+                            <mat-option value="Blacklisted">Blacklisted</mat-option>
+                        </mat-select>
+                    </td>
+                </ng-container>
+                <!-- Web AddressColumn -->
+                <ng-container matColumnDef="web_address">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Web Address 
+                        
+                    </th>
+                    <td mat-cell *matCellDef="let row">
+                        {{row.web_address}}
+                    </td>
+                </ng-container>
+                <!-- Lead Source column -->
+                <ng-container matColumnDef="lead_source">
+                          <!-- <mat-option value="Self Sourced">Self Sourced</mat-option>
+                            <mat-option value="Employment">Employment</mat-option>
+                            <mat-option value="BNI">BNI</mat-option>
+                            <mat-option value="Website">Website</mat-option>
+                            <mat-option value="Own Network">Own Network</mat-option>
+                            <mat-option value="Host Network">Host Network</mat-option>
+                            <mat-option value="Cold Calling">Cold Calling</mat-option> -->
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header>Lead Source
+                           
+                        </th>
+                        <td mat-cell *matCellDef="let row">
+                            <mat-select
+                            class="custom_dorp_select default"
+                            [(ngModel)]="row.company_leadsource"
+                            disbaled
+                            >
+                            <mat-option value="Select" disabled>Select</mat-option>
+                            <!-- <mat-option value="Self Sourced">Self Sourced</mat-option>
+                            <mat-option value="Employment Based">Employment Based</mat-option>
+                            <mat-option value="BNI">BNI</mat-option>
+                            <mat-option value="Website">Website</mat-option>
+                            <mat-option value="Own Network">Own Network</mat-option>
+                            <mat-option value="Host Network">Host Network</mat-option>
+                            <mat-option value="Cold Calling">Cold Calling</mat-option> -->
+                             <mat-option value="Own Employment">Own Employment</mat-option>
+                            <mat-option value="Provider Placed">Provider Placed</mat-option>
+                            </mat-select>
+                        </td>
+                </ng-container>
+                <!-- Conversion Status column -->
+                <ng-container matColumnDef="conversion_status">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Conversion Status
+                       
+                    </th>
+                    <td mat-cell *matCellDef="let row">
+                        <mat-select class="custom_dorp_select default" [(ngModel)]="row.conversion_status"
+                            disbaled>
+                            <mat-option value="Select" disabled>Select</mat-option>
+                            <mat-option value="Converted">Converted</mat-option>
+                            <mat-option value="In Progress">In Progress</mat-option>
+                            <mat-option value="Dormant">Dormant</mat-option>
+                            <mat-option value="Dead Lead">Dead Lead</mat-option>
+                        </mat-select>
+                    </td>
+                </ng-container>
+                <!-- Created By Column -->
+                <ng-container matColumnDef="created_by">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Created By 
+                        
+                    </th>
+                    <td mat-cell *matCellDef="let row">
+                        
+                        
+                        {{row.created_by}}
+
+                        <span class="student ml-2" *ngIf="row.self_source_status === 'approve' ">
+                            Student
+                        </span>
+                        <!-- <button mat-icon-button data-toggle="modal"
+                        data-target="#changeOwner">
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="8" cy="8" r="8" fill="#F8F8F8" />
+                            <path fill-rule="evenodd" clip-rule="evenodd"
+                                d="M9.47847 4.66666C9.69671 4.66666 9.90592 4.7538 10.0587 4.9078L11.0924 5.94143C11.2462 6.09532 11.3327 6.30405 11.3327 6.52168C11.3327 6.73932 11.2462 6.94804 11.0924 7.10194L7.31852 10.8746C7.08569 11.1432 6.75565 11.3082 6.37755 11.3341H4.66602V11.0008L4.6671 9.59576C4.6955 9.24427 4.8589 8.91743 5.10818 8.6978L8.89781 4.9082C9.05148 4.7536 9.26047 4.66666 9.47847 4.66666ZM6.35401 10.6683C6.53208 10.6557 6.69784 10.5728 6.83095 10.4205L9.35158 7.8999L8.10012 6.64839L5.56472 9.18319C5.42967 9.30263 5.34612 9.46973 5.33268 9.6226V10.6676L6.35401 10.6683ZM8.57158 6.17704L9.82299 7.42849L10.6209 6.63053C10.6498 6.60166 10.666 6.56251 10.666 6.52168C10.666 6.48086 10.6498 6.4417 10.6209 6.41284L9.58639 5.37828C9.55785 5.34951 9.51899 5.33332 9.47847 5.33332C9.43794 5.33332 9.39909 5.34951 9.37054 5.37828L8.57158 6.17704Z"
+                                fill="#2B2A35" />
+                        </svg></button> -->
+                    </td>
+                </ng-container>
+                <!--  Date Created Column -->
+                <ng-container matColumnDef="date_created">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Date Created
+                        
+                    </th>
+                    <td mat-cell *matCellDef="let row">
+                        {{row.date_created}}
+                    </td>
+                </ng-container>
+                <!-- Last Updated  By Column -->
+                <ng-container matColumnDef="last_updated_by">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Last Updated By
+                        
+                    </th>
+                    <td mat-cell *matCellDef="let row">{{row.last_updated_by}}
+
+                    </td>
+                </ng-container>
+                <!-- Last Updated Column -->
+                <ng-container matColumnDef="last_updated">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Last Updated
+                       
+                    </th>
+                    <td mat-cell *matCellDef="let row">{{row.last_updated}}
+
+                    </td>
+                </ng-container>
+
+                 <!-- LAST HCAAF date Column -->
+                 <ng-container matColumnDef="hcaaf_status">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>HCAAF Status
+                        
+                    </th>
+                    <td mat-cell *matCellDef="let row">
+                        <span  [ngClass]="row.HCAAF_status == 'Pending' ? 'pending' : row.HCAAF_status == 'Signed' ? 'success'  : row.HCAAF_status == 'expired' ? 'danger': 'default'" >
+                            {{row.HCAAF_status}}
+                        </span>
+                    </td>
+
+                </ng-container>
+
+                <!-- LAST HCAAF date Column -->
+                <ng-container matColumnDef="last_hcaaf_update">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Last HCAAF Update
+                        
+                    </th>
+                    <td mat-cell *matCellDef="let row">{{row.last_hcaaf_update}}
+
+                    </td>
+                </ng-container>
+                <!-- HCAAF Expiry Column -->
+                <ng-container matColumnDef="hcaaf_expiry">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>HCAAF Expiry
+                       
+                    </th>
+                    <td mat-cell *matCellDef="let row">{{row.hcaaf_expiry}}
+
+                    </td>
+                </ng-container>
+                <!-- Students Placed Column -->
+                <ng-container matColumnDef="student_placed">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Students Placed
+                       </th>
+                    <td mat-cell *matCellDef="let row"> {{row?.student_placed ? row.student_placed : 0}} </td>
+                </ng-container>
+                <!-- Placement Groups Column -->
+              
+                <!-- Vacancy count Column -->
+                  <ng-container matColumnDef="vacancy_count">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Placement Group 
+                       
+                    </th>
+                    <td mat-cell *matCellDef="let row"> 
+
+                        <div class="d-flex align-items-center">
+                        {{row.placementGroups && row.placementGroups.length?row.placementGroups.length:0}} &nbsp; {{row.placement_groups}}
+                        <button mat-icon-button data-toggle="modal" (click)="getCompanyPlacementGroup(row)"
+                            data-target="#viewVacancy" [disabled]="row.vacancyCount === 0"><svg width="20"
+                                height="20" viewBox="0 0 20 20" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <circle cx="10" cy="10" r="10" fill="#F8F8F8" />
+                                <path
+                                    d="M5 9.58333C5 9.58333 6.81818 6.25 10 6.25C13.1818 6.25 15 9.58333 15 9.58333C15 9.58333 13.1818 12.9167 10 12.9167C6.81818 12.9167 5 9.58333 5 9.58333Z"
+                                    stroke="black" stroke-linecap="round" stroke-linejoin="round" />
+                                <path
+                                    d="M9.9984 10.8359C10.7515 10.8359 11.362 10.2763 11.362 9.58594C11.362 8.89558 10.7515 8.33594 9.9984 8.33594C9.24529 8.33594 8.63477 8.89558 8.63477 9.58594C8.63477 10.2763 9.24529 10.8359 9.9984 10.8359Z"
+                                    stroke="black" stroke-linecap="round" stroke-linejoin="round" />
+                            </svg>
+                        </button></div></td>
+                </ng-container>
+
+             
+                  <!-- prefeered_contact Column -->
+                  <ng-container matColumnDef="prefeered_contact">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Preferred Contact
+                       
+                    </th>
+                    <td mat-cell *matCellDef="let row"> 
+
+                        <div class="d-flex align-items-center">
+                        {{row.preferred_contact_count ?row.preferred_contact_count:0}}
+                        <button mat-icon-button data-toggle="modal" (click)="getCompanyPreferredContact(row)"
+                            data-target="#viewPreferredContact" [disabled]="row.preferred_contact_count === 0"><svg width="20"
+                                height="20" viewBox="0 0 20 20" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <circle cx="10" cy="10" r="10" fill="#F8F8F8" />
+                                <path
+                                    d="M5 9.58333C5 9.58333 6.81818 6.25 10 6.25C13.1818 6.25 15 9.58333 15 9.58333C15 9.58333 13.1818 12.9167 10 12.9167C6.81818 12.9167 5 9.58333 5 9.58333Z"
+                                    stroke="black" stroke-linecap="round" stroke-linejoin="round" />
+                                <path
+                                    d="M9.9984 10.8359C10.7515 10.8359 11.362 10.2763 11.362 9.58594C11.362 8.89558 10.7515 8.33594 9.9984 8.33594C9.24529 8.33594 8.63477 8.89558 8.63477 9.58594C8.63477 10.2763 9.24529 10.8359 9.9984 10.8359Z"
+                                    stroke="black" stroke-linecap="round" stroke-linejoin="round" />
+                            </svg>
+                        </button></div></td>
+                </ng-container>
+
+
+                 <!-- parent_company Column -->
+                <ng-container matColumnDef="parent_company">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Parent Company
+                       
+                    </th>
+                    <td mat-cell *matCellDef="let row">{{row.parent_company}}
+
+                    </td>
+                </ng-container>
+                
+
+
+                 <!-- account_manager Column -->
+                <ng-container matColumnDef="account_manager">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Account Manager
+                        
+                    </th>
+                    <td mat-cell *matCellDef="let row">{{row.company_acctmanager}}
+
+                    </td>
+                </ng-container>
+                
+             
+
+                <!-- WHS Check column -->
+                <ng-container matColumnDef="whs_check">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>WHS Check 
+                       WHS Check 
+                    </th>
+                    <td mat-cell *matCellDef="let row">
+                        <mat-select class="custom_dorp_select default" [(ngModel)]="row.whs_check"
+                            disabled>
+                            <mat-option value="Select" disabled>Select</mat-option>
+                            <mat-option value="Yes">Yes</mat-option>
+                            <mat-option value="No">No</mat-option>
+                        </mat-select>
+                    </td>
+                </ng-container>
+                <!-- Site Consent to use Logo column -->
+                <ng-container matColumnDef="company_concent_to_use_logo">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Site Consent to use Logo 
+                        
+                    </th>
+                    <td mat-cell *matCellDef="let row">
+                        <mat-select class="custom_dorp_select default" [(ngModel)]="row.company_concent_to_use_logo"
+                            disabled>
+                            <mat-option value="Select" disabled>Select</mat-option>
+                            <mat-option value="Yes">Yes</mat-option>
+                            <mat-option value="No">No</mat-option>
+                        </mat-select>
+                    </td>
+                </ng-container>
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+        </div>
+        
+        </ng-container>
+        <app-paginator [paginationObj]="paginationObj" (pagination)="getPaginationData($event)"></app-paginator>
+</section>
+
+<div class="modal fade bsModal ch_modal view_all_contact_popup" id="viewCompanyVacancy" tabindex="-1" role="dialog"
+    aria-labelledby="viewCompanyVacancy" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title primary" id="exampleModalLabel">{{company?.company_name}}'s Vacancies</h2>
+                <button type="button" mat-icon-button id="closeModal" class="close" data-dismiss="modal"
+                    aria-label="Close">
+                    <mat-icon>close</mat-icon>
+                </button>
+            </div>
+            <form>
+                <div class="modal-body pt-3">
+                    <div class="table-responsive manage_table_scroll position-relative" >
+                        <table mat-table [dataSource]="companyVacancies" matSort class="ch_table">
+                            <!-- Placement Group Column -->
+                            <ng-container matColumnDef="no">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header>No. </th>
+                              <td mat-cell *matCellDef="let row; let i = index">{{ i + 1 }}</td>
+                            </ng-container>
+                            <!-- Code Column -->
+                            <ng-container matColumnDef="name">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
+                                <td mat-cell *matCellDef="let row"> {{row.job_title}} </td>
+                            </ng-container>
+                            <!-- start date Column -->
+                            <ng-container matColumnDef="vacancy_type">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header>Vacancy Type </th>
+                                <td mat-cell *matCellDef="let row">{{row.type}}
+                                </td>
+                            </ng-container>
+                            <!-- end  date Column -->
+                            <ng-container matColumnDef="allocated">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header>Allocated </th>
+                                <td mat-cell *matCellDef="let row">{{row.allocated_count}}
+                                </td>
+                            </ng-container>
+                            <!-- Status Column -->
+                            <ng-container matColumnDef="placed">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header>Placed </th>
+                                <td mat-cell *matCellDef="let row">
+                                    {{row.placed_count}}
+                                </td>
+                            </ng-container>
+                            <tr mat-header-row *matHeaderRowDef="displayedCompanyVacanciesColumns"></tr>
+                            <tr mat-row *matRowDef="let row; columns: displayedCompanyVacanciesColumns;"></tr>
+                        </table>
+                    </div>
+                </div>
+                <div class="modal-footer justify-content-center">
+                    <button mat-button data-dismiss="modal" class="theme_btn btn_primary">Close</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade bsModal ch_modal view_all_contact_popup" id="viewVacancy" tabindex="-1" role="dialog"
+    aria-labelledby="viewVacancy" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title primary" id="exampleModalLabel">View {{company?.company_name}} Placement Group</h2>
+                <button type="button" mat-icon-button id="closeModal" class="close" data-dismiss="modal"
+                    aria-label="Close">
+                    <mat-icon>close</mat-icon>
+                </button>
+            </div>
+            <form>
+                <div class="modal-body pt-3">
+                    <div class="table-responsive manage_table_scroll position-relative" >
+                        <table mat-table [dataSource]="companyPlacementGroup" matSort class="ch_table">
+                            <!-- Placement Group Column -->
+                            <ng-container matColumnDef="placement_group">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header>Placement Group </th>
+                                <!-- <td mat-cell *matCellDef="let row">{{row.title}}
+                                </td> -->
+
+                                 <td mat-cell *matCellDef="let row"> 
+                                     <a *ngIf="row.category_id=='65a21e64fa6a8e4f5b252994'"  data-dismiss="modal" class="td_link" (click)="gotoPlacementProject(row)">  {{row.title}}</a>
+
+                                      <a *ngIf="row.category_id!='65a21e64fa6a8e4f5b252994'" data-dismiss="modal" class="td_link"  (click)="gotoPlacement(row)">  {{row.title}}</a>
+                                   </td>
+                            </ng-container>
+                            <!-- Code Column -->
+                            <ng-container matColumnDef="code">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header> Code </th>
+                                <td mat-cell *matCellDef="let row"> {{row.code}} </td>
+                            </ng-container>
+                            <!-- start date Column -->
+                            <ng-container matColumnDef="start_date">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header>Start date </th>
+                                <td mat-cell *matCellDef="let row">{{row.start_date}}
+                                </td>
+                            </ng-container>
+                            <!-- end  date Column -->
+                            <ng-container matColumnDef="end_date">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header>End date </th>
+                                <td mat-cell *matCellDef="let row">{{row.end_date}}
+                                </td>
+                            </ng-container>
+                            <!-- Status Column -->
+                            <ng-container matColumnDef="status">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header>Status </th>
+                                <td mat-cell *matCellDef="let row">
+                                    {{row.is_publish ? 'Published' : 'Unpublished'}}
+                                </td>
+                            </ng-container>
+                            <tr mat-header-row *matHeaderRowDef="displayedCompanyPlacementColumns"></tr>
+                            <tr mat-row *matRowDef="let row; columns: displayedCompanyPlacementColumns;"></tr>
+                        </table>
+                    </div>
+                </div>
+                <div class="modal-footer justify-content-center">
+                    <button #closemodelPgList mat-button data-dismiss="modal" class="theme_btn btn_primary">Close</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade bsModal ch_modal view_all_contact_popup" id="viewPlacement" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title primary" id="exampleModalLabel">View {{company?.company_name}} Preferred
+                    Groups</h2>
+                <button type="button" mat-icon-button id="closeModal" class="close" data-dismiss="modal"
+                    aria-label="Close">
+                    <mat-icon>close</mat-icon>
+                </button>
+            </div>
+            <form>
+                <div class="modal-body pt-3">
+                    <div class="table-responsive manage_table_scroll position-relative" >
+                        <table mat-table [dataSource]="companyPlacementGroup" matSort class="ch_table">
+                            <!-- Placement Group Column -->
+                            <ng-container matColumnDef="placement_group">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header>Placement Group </th>
+                                <td mat-cell *matCellDef="let row">{{row.title}}
+                                </td>
+                            </ng-container>
+                            <!-- Code Column -->
+                            <ng-container matColumnDef="code">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header> Code </th>
+                                <td mat-cell *matCellDef="let row"> {{row.code}} </td>
+                            </ng-container>
+                            <!-- start date Column -->
+                            <ng-container matColumnDef="start_date">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header>Start date </th>
+                                <td mat-cell *matCellDef="let row">{{row.start_date}}
+                                </td>
+                            </ng-container>
+                            <!-- end  date Column -->
+                            <ng-container matColumnDef="end_date">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header>End date </th>
+                                <td mat-cell *matCellDef="let row">{{row.end_date}}
+                                </td>
+                            </ng-container>
+                            <!-- Status Column -->
+                            <ng-container matColumnDef="status">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header>Status </th>
+                                <td mat-cell *matCellDef="let row">
+                                    {{row.is_publish ? 'Published' : 'Unpublished'}}
+                                </td>
+                            </ng-container>
+                            <tr mat-header-row *matHeaderRowDef="displayedCompanyPlacementColumns"></tr>
+                            <tr mat-row *matRowDef="let row; columns: displayedCompanyPlacementColumns;"></tr>
+                        </table>
+                    </div>
+                </div>
+                <div class="modal-footer justify-content-center">
+                    <button mat-button data-dismiss="modal" class="theme_btn btn_primary">Close</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade bsModal ch_modal view_all_contact_popup" id="viewPreferredContact" tabindex="-1" role="dialog"
+    aria-labelledby="viewPreferredContact" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title primary" id="exampleModalLabel">View {{company?.company_name}} Preferred
+                    Contacts</h2>
+                <button type="button" mat-icon-button id="closeModal" class="close" data-dismiss="modal"
+                    aria-label="Close">
+                    <mat-icon>close</mat-icon>
+                </button>
+            </div>
+            <form>
+                <div class="modal-body pt-3">
+                    <div class="table-responsive manage_table_scroll position-relative" >
+                        <table mat-table [dataSource]="companyPreferredContact" matSort class="ch_table">
+                            <!-- Placement Group Column -->
+                            <ng-container matColumnDef="contact_name">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header>Contact Name </th>
+                                <td mat-cell *matCellDef="let row">{{row.first_name}} {{row.last_name}}
+                                </td>
+                            </ng-container>
+                            <!-- Code Column -->
+                            <ng-container matColumnDef="department">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header> Department </th>
+                                <td mat-cell *matCellDef="let row">{{row.department_name}} </td>
+                            </ng-container>
+                            <!-- start date Column -->
+                            <ng-container matColumnDef="title">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header>Title </th>
+                                <td mat-cell *matCellDef="let row">{{row.role}}
+                                </td>
+                            </ng-container>
+                            <!-- end  date Column -->
+                            <ng-container matColumnDef="primary_email">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header>Primary Email </th>
+                                <td mat-cell *matCellDef="let row">{{row.primary_email}}
+                                </td>
+                            </ng-container>
+                            <!-- Status Column -->
+                            <ng-container matColumnDef="primary_phone">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header>Primary Phone </th>
+                                <td mat-cell *matCellDef="let row">
+                                    {{row.primary_phone}}
+                                </td>
+                            </ng-container>
+                            <tr mat-header-row *matHeaderRowDef="displayedCompanyPreferredColumns"></tr>
+                            <tr mat-row *matRowDef="let row; columns: displayedCompanyPreferredColumns;"></tr>
+                        </table>
+                    </div>
+                </div>
+                <div class="modal-footer justify-content-center">
+                    <button mat-button data-dismiss="modal" class="theme_btn btn_primary">Close</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade bsModal ch_modal view_all_contact_popup" id="viewDescription" tabindex="-1" role="dialog"
+    aria-labelledby="viewDescription" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header justify-content-center">
+                <h2 class="modal-title primary text-center" id="exampleModalLabel"> {{company?.company_name}}'s Description</h2>
+                <button type="button" mat-icon-button id="closeModal" class="close" data-dismiss="modal"
+                    aria-label="Close">
+                    <mat-icon>close</mat-icon>
+                </button>
+            </div>
+            <form>
+                <div class="modal-body pt-3">
+                   <p>
+                   {{ company?.description }}
+                   </p>
+                </div>
+                <div class="modal-footer justify-content-center">
+                    <button #closemodelPgList mat-button data-dismiss="modal" class="theme_btn btn_primary">Close</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade bsModal ch_modal view_all_contact_popup" id="viewStudentPG" tabindex="-1" role="dialog"
+    aria-labelledby="viewStudentPG" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title primary" id="exampleModalLabel">View {{selectedStudents?.first_name}} {{selectedStudents?.last_name}}'s Placement Groups</h2> 
+                <button type="button" mat-icon-button id="closeModal" class="close" data-dismiss="modal"
+                    aria-label="Close">
+                    <mat-icon>close</mat-icon>
+                </button>
+            </div>
+            <form>
+                <div class="modal-body pt-3">
+                 <!--  -->
+                    <div class="table-responsive manage_table_scroll position-relative">
+                      <table mat-table [dataSource]="studentPGs" matSort class="ch_table">
+                            <!-- Placement Group Column -->
+                            <ng-container matColumnDef="code">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header>Code </th>
+                              <td mat-cell *matCellDef="let row">{{ row.code }}</td>
+                            </ng-container>
+                            <!-- Code Column -->
+                            <ng-container matColumnDef="title">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header> Title </th>
+                                <td mat-cell *matCellDef="let row"> 
+                                     <a *ngIf="row.category_id=='65a21e64fa6a8e4f5b252994'"  data-dismiss="modal" class="td_link" (click)="gotoPlacementProject(selectedStudents, row)">  {{row.title}}</a>
+
+                                      <a *ngIf="row.category_id!='65a21e64fa6a8e4f5b252994'" data-dismiss="modal" class="td_link"  (click)="gotoPlacement(selectedStudents, row)">  {{row.title}}</a>
+                                   </td>
+                            </ng-container>
+                            <!-- start date Column -->
+                            <ng-container matColumnDef="industry">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header>Industry </th>
+                                <td mat-cell *matCellDef="let row">{{row.industry}}
+                                </td>
+                            </ng-container>
+                            <!-- end  date Column -->
+                            <ng-container matColumnDef="category">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header>Category </th>
+                                <td mat-cell *matCellDef="let row">{{row.category_name}}
+                                </td>
+                            </ng-container>
+                            <!-- Status Column -->
+                            <ng-container matColumnDef="published">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header>Published On </th>
+                                <td mat-cell *matCellDef="let row">
+                                   {{row.publish_on | date: 'dd/MM/YY HH:mm:ss a'}}
+                                </td>
+                            </ng-container>
+
+                            <!-- Status Column -->
+                            <ng-container matColumnDef="student">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header>Students </th>
+                                <td mat-cell *matCellDef="let row">
+                                    {{row.student_count}}
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="placement_type">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header>Placement Type </th>
+                                <td mat-cell *matCellDef="let row">
+                                    {{row.placement_type}}
+                                </td>
+                            </ng-container>
+                            <tr mat-header-row *matHeaderRowDef="displayedStudentPGColumns"></tr>
+                            <tr mat-row *matRowDef="let row; columns: displayedStudentPGColumns;"></tr>
+                        </table>
+                    </div>
+                </div>
+                <div class="modal-footer justify-content-center">
+                    <button #closemodelPgList mat-button data-dismiss="modal" class="theme_btn btn_primary">Close</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

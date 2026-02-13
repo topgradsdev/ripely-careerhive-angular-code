@@ -1,0 +1,301 @@
+.universal_header {
+    box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.25);
+    padding: 29px 22px 40px 22px;
+    position: sticky;
+    top: 0;
+    background-color: #fff;
+    z-index: 4;
+
+    .logo_top_header {
+        margin-bottom: 31px;
+
+        a {
+            img{
+                margin-bottom: 10px;
+            }
+            h1 {
+                font-family: var(--font-primary);
+                font-size: 20px;
+                font-weight: 700;
+                line-height: 26.04px;
+                text-align: left;
+                color: var(--main-black-color);
+                margin-bottom: 0px;
+
+            }
+        }
+    }
+
+    .navbar {
+
+        .navbar-nav {
+            .nav-item {
+                .nav-link {
+                    padding: 13px 0px;
+                    &.underline{
+                        text-decoration: underline;
+                    }
+                }
+            }
+        }
+    }
+    .profile_btn_student {
+        margin-right: 20px;
+        border: 0px solid var(--primary-color-first) !important;
+        display: inline-flex !important;
+        justify-content: center;
+        align-items: center;
+        width: 35px;
+        height: 35px;
+        cursor: pointer;
+        border-radius: 50px;
+        overflow: hidden;
+        background-color:#fff;
+        color:  var(--primary-color-first);;
+        margin-left: 12px !important;
+      
+        img {
+          width: 100%;
+        }
+      
+        span {
+          font-family: var(--font-primary);
+          font-size: 14px;
+          font-weight: 400;
+          line-height: 20px;
+          letter-spacing: 0em;
+          text-align: center;
+          text-transform: uppercase;
+      
+        }
+      
+        // .mat-button-wrapper {
+        //   display: inline-flex;
+        //   width: 32px;
+        //   height: 32px;
+        // }
+      }
+   
+}
+
+
+@media (min-width: 992px) {
+    .universal_header {
+        .navbar {
+            border-radius: 50px;
+            background: #464BA880;
+
+            .navbar-nav {
+                .nav-item {
+                    .nav-link {
+                        min-width: 160px;
+                        padding: 13px 0px;
+                        text-align: center;
+                        border-radius: 50px;
+                        transition: all ease-in-out 0.3s;
+                        color:#fff
+                    }
+
+                    .nav-link.active {
+                        background-color: #fff;
+                        color: var(--primary-color-first);
+                    }
+                }
+            }
+        }
+    }
+}
+
+.dropdown-menu {
+    left: unset;
+    right: 0;
+}
+
+.disabled-nav {
+    opacity: 0.5;
+    pointer-events: none;
+}
+// .right_action_btn{
+//     width: 36px;
+//     height: 36px;
+//     line-height: 1;
+//     margin-left: 14px;
+//     &.support{
+//         color: var(--primary-color-first);
+//         &.active{
+//             color: #fff;
+//             background-color: var(--primary-color-first);
+//         }
+//     }
+
+// }
+.right_action_btn {
+  width: 36px;
+  height: 36px;
+  line-height: 1;
+  margin-left: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  border-radius: 50%;
+  padding: 0;
+  background: transparent;
+  cursor: pointer;
+
+  &.support {
+    color: var(--primary-color-first);
+
+    &.active {
+      color: #fff;
+      background-color: var(--primary-color-first);
+    }
+  }
+//   svg{
+//     width: 30px !important;
+//     height: 30px !important;
+//   }
+}
+
+a{
+  text-decoration-line: none !important;
+}
+
+// .right_action_btn {
+//   width: 40px;        // same size for both
+//   height: 40px;
+//   padding: 0;
+//   border-radius: 50%;
+//   display: flex;
+//   align-items: center;
+//   justify-content: center;
+//   background: transparent;
+//   border: none;
+//   cursor: pointer;
+// }
+
+// .nav-item {
+//   margin-right: 8px;  // spacing between buttons (adjust as needed)
+// }
+
+.header-container{
+    // background-image: url('../../../assets/img/monash_bg.png');
+    background-image: url('/assets/img/monash_bg.png');
+    min-height: 230px;
+    background-size: cover;
+    display: inline-flex;
+    min-width: 100%;
+    justify-content: center;
+    align-items: end;
+}
+
+
+@media (min-width: 1300px) {
+  .header-container {
+    max-width: 1350px !important;
+    // max-width:100%;
+    margin: 0 auto;
+  }
+}
+.nav-header {
+  width: 100%;
+}
+
+@media (min-width: 1300px) {
+  .nav-header {
+    max-width: 1350px;
+    width: 100%;
+    margin: 0 auto; /* centers it */
+  }
+}
+
+
+/* return-button.component.css */
+.return-btn {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  background-color: #4b3df0;
+  color: white;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  transition: transform 0.2s ease;
+}
+
+.return-btn:hover {
+  transform: scale(1.1);
+}
+
+.hover-button {
+  position: fixed;
+  bottom: 100px;
+  right: 34px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color:#464BA80D !important;
+  // color: white;
+  border-radius: 50%;
+  width: 56px;
+  height: 56px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  overflow: hidden;
+  box-shadow: none;
+  z-index: 999999999 !important;
+  .icon2 {
+    display: flex;      // hidden by default
+    align-items: center;
+    justify-content: center;
+    margin-left: 8px;   // spacing if needed
+    transition: opacity 0.3s ease;
+    position: absolute;
+    right: 16px;
+  }
+  .label {
+    opacity: 0;
+    margin-right: 12px; // <-- text before icon, so use margin-right now
+    white-space: nowrap;
+    transition: opacity 0.3s ease;
+    font-family: var(--font-primary);
+    font-weight: 500;
+    font-size: 14px;
+    leading-trim: NONE;
+    line-height: 100%;
+    letter-spacing: 0%;
+    text-align: right;
+    vertical-align: middle;
+    color:#2B2A35 !important;
+
+  }
+  .icon{
+    top: 14px;
+    position: absolute;
+    right: 18px;
+  }
+  .icon svg path {
+    stroke: #464BA8 !important;
+  }
+
+  &:hover {
+    width: 230px;
+    border-radius: 28px;
+    // background: #ffffff !important;
+    justify-content: flex-start;
+    padding-left: 16px;
+
+     .icon2 {
+      display: none;    // show on hover
+    }
+    .label {
+      opacity: 1;
+      color: #000;
+    }
+    // .icon{
+    //   right: -140px;
+    // }
+
+    .icon svg path {
+      stroke: #fff !important;
+    }
+  }
+}

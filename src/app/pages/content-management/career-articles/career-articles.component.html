@@ -1,0 +1,151 @@
+<div class="page_header">
+  <div class="page_header_container">
+      <div>
+          <h4>Articles List</h4>
+      </div>
+      <div>
+          <button type="button" mat-button class="theme_btn btn_primary"
+        routerLink="/add-article"><mat-icon>add</mat-icon> Add Article</button>
+      </div>
+  </div>
+</div>
+
+<section class="category-mngmnt">
+  <div class="">
+    <div class="row">
+        <div class="col-md-12">
+          <div class="custom_card employ_list_card">
+            <div class="card-body">
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group search_container mb-0">
+                    <mat-icon>search</mat-icon>
+                    <input (keyup)="applyFilter($event)" placeholder="Ex. Mia" class="form-control" #input>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="table-responsive">
+              <table mat-table [dataSource]="sortedData" matSort>
+                <!-- Checkbox Column -->
+                <ng-container matColumnDef="select">
+                  <th mat-header-cell *matHeaderCellDef>
+                    <mat-checkbox  [checked]="findChecked()" (change)="selectAll($event)"
+                      class="td-check">
+                    </mat-checkbox>
+                  </th>
+                  <td mat-cell *matCellDef="let row">
+                    <mat-checkbox (change)="selectUser($event, row._id)" [(ngModel)]="row.checked" class="td-check">
+                    </mat-checkbox>
+                  </td>
+                </ng-container>
+                <!-- ID Column -->
+                <ng-container matColumnDef="id">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header> S.No </th>
+                  <td mat-cell *matCellDef="let row ; let i=index"> {{i+1+offset}} </td>
+                </ng-container>
+  
+                <!-- Name Column -->
+                <ng-container matColumnDef="image">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header>Image</th>
+                  <td mat-cell *matCellDef="let row"> <img [src]="row.media ? row?.media : 'assets/img/dummy.png'" class="article_img" /></td>
+                </ng-container>
+                <!-- worktype Column -->
+                <ng-container matColumnDef="title">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header>Article Title</th>
+                  <td mat-cell *matCellDef="let row" class="td-width"> {{row.article_title}} </td>
+                </ng-container>
+  
+                <!-- worktype Column -->
+                <ng-container matColumnDef="category">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header>Category</th>
+                  <td mat-cell *matCellDef="let row" class="td-width"> {{row?.category_name}} </td>
+                </ng-container>
+                
+                <!-- worktype Column -->
+  
+                <!-- worktype Column -->
+                <!-- <ng-container matColumnDef="type">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header>Article Type</th>
+                  <td mat-cell *matCellDef="let row" class="td-width"> {{row.article_name}} </td>
+                </ng-container> -->
+                
+                <!-- worktype Column -->
+                <!-- <ng-container matColumnDef="description">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header>Description</th>
+                  <td mat-cell *matCellDef="let row" class="td-width"> {{row.article_description}} </td>
+                </ng-container> -->
+  
+                <ng-container matColumnDef="postedBy">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header>Posted By</th>
+                  <td mat-cell *matCellDef="let row" class="td-width"> {{row.posted_by}} </td>
+                </ng-container>
+                
+                
+                 <ng-container matColumnDef="action">
+                  <th mat-header-cell *matHeaderCellDef> Action </th>
+                  <td mat-cell *matCellDef="let row">
+                      <button mat-icon-button [matMenuTriggerFor]="menu" class="td-btn">
+                        <mat-icon>more_vert</mat-icon>
+                      </button>
+                      <mat-menu #menu="matMenu" class="td-menu">
+                        <!-- <a mat-menu-item class="" routerLink="/addSubCategory">
+                          <mat-icon class="material-icons-outlined">add</mat-icon>
+                          <span>Add</span>
+                        </a> -->
+                        <a mat-menu-item class="" routerLink="/view-article/{{row._id}}">
+                          <mat-icon class="material-icons-outlined">visibility</mat-icon>
+                          <span>View</span>
+                      </a>
+                        <a mat-menu-item class="" routerLink="/edit-article/{{row._id}}">
+                          <mat-icon class="material-icons-outlined">edit</mat-icon>
+                          <span>Edit</span>
+                        </a>
+                        <a mat-menu-item class="" data-toggle="modal" (click)="Modal(row._id)">
+                          <mat-icon class="material-icons-outlined">delete</mat-icon>
+                          <span>Delete</span>
+                        </a>
+                      </mat-menu>
+                  </td>
+                </ng-container>
+  
+                <!-- Progress Column -->
+                <!-- <ng-container matColumnDef="progress">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header> Progress </th>
+                  <td mat-cell *matCellDef="let row"> {{row.progress}}% </td>
+                </ng-container> -->
+  
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  
+                <!-- Row shown when there is no matching data. -->
+                <tr class="mat-row" *matNoDataRow>
+                  <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
+                </tr>
+              </table>
+            </div>
+            <mat-paginator [length]="totalRecords" [pageIndex]="topPage" [pageSize]="limit"
+            [pageSizeOptions]="getPageSizeOptions()" (page)="paginationOptionChange($event)"  aria-label="Select page of users"></mat-paginator>
+          </div>
+        </div>
+      </div>
+    </div>
+</section>
+
+<!-- Modal -->
+<div bsModal #smallModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="smallModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-md  modal-dialog-centered confirm_modal" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+      </div>
+      <div class="modal-body">
+        <p class="confirm_message mt-2">Are you sure you want to delete <br> the selected Category?</p>
+      </div>
+      <div class="modal-footer justify-content-center">
+        <button type="button" mat-button class="theme_link_btn_c" (click)="smallModal.hide()">No</button>
+        <button mat-button type="submit" class="theme_btn btn_primary" (click)="deleteArticle(delId)">Yes</button>
+      </div>
+    </div>
+  </div>
+</div>
+

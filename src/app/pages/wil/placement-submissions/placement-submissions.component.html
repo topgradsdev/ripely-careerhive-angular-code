@@ -1,0 +1,448 @@
+<section class="main_container_place">
+    <div class="card_header" [ngStyle]="{'background-image': 'url('+ imageURL +')'}">
+       <div class="d-flex align-items-center justify-content-between">
+         <div class="card_container">
+            <!-- (click)="callApiFilter('')" -->
+            <div class="student_card">
+                <div class="content">
+                    <p>Total Submissions</p>
+                    <h4>{{overAllCount.total_submissions}}</h4>
+                </div>
+                <div class="">
+                    <svg width="54" height="54" viewBox="0 0 54 54" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="27" cy="27" r="27" fill="#65DAB9" />
+                        <g clip-path="url(#clip0_14064_85084)">
+                            <path
+                                d="M40.2274 22.882L28.0238 19.0322C27.3588 18.8224 26.6413 18.8224 25.9767 19.0322L13.7727 22.882C12.7428 23.2068 12.7428 24.6052 13.7727 24.93L15.9002 25.6011C15.4334 26.1937 15.1464 26.9165 15.118 27.708C14.6967 27.9559 14.4 28.4034 14.4 28.9375C14.4 29.4217 14.6485 29.8292 15.0064 30.0897L13.8895 35.2504C13.7923 35.6991 14.1248 36.125 14.5724 36.125H17.0272C17.4752 36.125 17.8077 35.6991 17.7106 35.2504L16.5937 30.0897C16.9515 29.8292 17.2 29.4217 17.2 28.9375C17.2 28.4177 16.917 27.9829 16.5149 27.7304C16.5482 27.0557 16.8842 26.4592 17.4201 26.0809L25.9763 28.7803C26.3727 28.9051 27.133 29.061 28.0233 28.7803L40.2274 24.9305C41.2577 24.6052 41.2577 23.2073 40.2274 22.882ZM28.4346 30.1544C27.1864 30.5479 26.1228 30.3305 25.565 30.1544L19.2204 28.1532L18.6 33.25C18.6 34.838 22.3608 36.125 27 36.125C31.6393 36.125 35.4 34.838 35.4 33.25L34.7797 28.1527L28.4346 30.1544Z"
+                                fill="white" />
+                        </g>
+                        <defs>
+                            <clippath id="clip0_14064_85084">
+                                <rect width="28" height="23" fill="white" transform="translate(13 16)" />
+                            </clippath>
+                        </defs>
+                    </svg>
+
+                </div>
+                <!-- <div class="action">
+                    <button (click)="callApiFilter('Pending Approvals')" mat-button class="theme_btn btn_primary">View Students</button>
+                </div> -->
+            </div>
+
+
+            <div class="student_card">
+                <div class="content">
+                    <p>Total Approved</p>
+                    <h4>{{overAllCount.total_approved}}</h4>
+                </div>
+                <div class="">
+                   <svg width="54" height="54" viewBox="0 0 54 54" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="27" cy="27" r="27" fill="#464BA8"/>
+                    <path d="M37.6654 19L22.9987 33.6667L16.332 27" stroke="white" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+
+                </div>
+                <!-- <div class="action">
+                    <button mat-button class="theme_btn btn_primary">View Students</button>
+                </div> -->
+            </div>
+
+            <div class="student_card">
+                <div class="content">
+                    <p>Total Declined</p>
+                    <h4>{{overAllCount.total_declined}}</h4>
+                </div>
+                <div class="">
+                   <svg width="54" height="54" viewBox="0 0 54 54" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="27" cy="27" r="27" fill="#F47761"/>
+                    <path d="M35 19L19 35" stroke="white" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M19 19L35 35" stroke="white" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+
+                </div>
+                <!-- <div class="action">
+                    <button  mat-button class="theme_btn btn_primary">View Students</button>
+                </div> -->
+            </div>
+
+           
+<!--            
+            <button mat-button class="theme_btn btn_white" *ngIf="!isArchive" (click)="callApi()">
+                View Archived Students
+            </button>
+            <button mat-button class="theme_btn btn_white" *ngIf="isArchive" (click)="callApi()">
+                View Active Student
+            </button>-->
+
+          
+
+
+        </div>
+
+          <button *ngxPermissionsOnly="['WIL_Write']"  [disabled]="placementType === '' && formList.length==0" mat-button class="theme_btn btn_white"
+                (click)="exportToCsv()">
+                Download (.xls)</button> 
+            <!-- <button  mat-icon-button [matMenuTriggerFor]="header_menu"  class="td-btn text-white">
+                <mat-icon>more_horizantal</mat-icon>
+            </button>
+
+             <mat-menu #header_menu="matMenu" class="td-menu custome_theme_menu">
+                <a *ngIf="!isArchive" (click)="callApi()" mat-menu-item>
+                    <span>View Archived Students</span>
+                </a>
+                <a *ngIf="isArchive" (click)="callApi()" mat-menu-item>
+                    <span>View Active Student</span>
+                </a>
+                <a  *ngxPermissionsOnly="['WIL_Write']" (click)="exportStudentData('excel')" mat-menu-item>
+                    <span>Download (.xls)</span>
+                </a>
+            </mat-menu> -->
+       </div>
+    </div>
+    
+    <div class="row sub_header">
+        <!-- Begin:: Email and Download(xlsx) -->
+        <div class="col-md-12 action_btns_header gap-4 d-flex">
+            <mat-select class="drop-down" 
+                [(ngModel)]="placementType" (ngModelChange)="search = '';getPlacemnetType($event)">
+                <mat-option value="">Select Workflow</mat-option>
+                 <mat-option *ngFor="let p of placementTypes" [value]="p.workflow_type_id">{{p.type}}</mat-option>
+            </mat-select>
+
+            <mat-select matTooltip="{{getTaskName(taskId)}}" matTooltipPosition="above" class="drop-down"
+                [(ngModel)]="taskId" (ngModelChange)="search = ''; selectTaskId($event);" [disabled]="placementType === '' && formList.length==0">
+                <mat-option value="">Select Task</mat-option>
+                <mat-option *ngFor="let p of formList" [value]="p.form_id" matTooltip="{{p.form_title}}" matTooltipPosition="above" >{{p.form_title}}</mat-option>
+            </mat-select>
+
+             <!--  -->
+            <mat-select *ngIf="taskId" class="drop-down" panelClass="drop-down-multi"
+                [(ngModel)]="status" [multiple]="true" (ngModelChange)="search = '';onStatusChange($event)" [disabled]="taskId === '' && formList.length==0">
+                <mat-option value="all">All</mat-option>
+                <mat-option value="to_do">To Do</mat-option>
+                <mat-option value="approve">Approved</mat-option>
+                <mat-option value="declined">Disapproved</mat-option>
+            </mat-select>
+        </div>
+    </div>
+
+
+  
+
+     <ng-container> 
+         <div class="row sub_header" >
+        <!-- Begin:: Email and Download(xlsx) -->
+        <div class="col-md-7 action_btns_header">
+            <ng-container *ngIf="showButtonHeaders && rowData.length>0">
+                <button #mailOpen mat-button class="theme_btn theme_link_btn" data-toggle="modal" data-target="#sendSubmission">
+                    <svg class="mr-2" xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 25 25"
+                        fill="none">
+                        <path
+                            d="M4.5 4.5H20.5C21.6 4.5 22.5 5.4 22.5 6.5V18.5C22.5 19.6 21.6 20.5 20.5 20.5H4.5C3.4 20.5 2.5 19.6 2.5 18.5V6.5C2.5 5.4 3.4 4.5 4.5 4.5Z"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                        <path d="M22.5 6.5L12.5 13.5L2.5 6.5" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round" />
+                    </svg> Email
+                </button>
+                <button (click)="approveAll()" mat-button class="theme_btn theme_link_btn" style="color: #26C296 !important;">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M20 6L9 17L4 12" stroke="#26C296" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+
+                    Approve
+                </button>
+                <button (click)="disapproveAll()" mat-button class="theme_btn theme_link_btn"  style="color: #F47761 !important;">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M18 6L6 18" stroke="#F47761" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M6 6L18 18" stroke="#F47761" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+
+                    Disapprove
+                </button>
+            </ng-container>
+        </div>
+        <div class="col-md-5 text-right searchbar-end">
+            <div class="d-inline-flex align-items-center">
+                <div class="search-container">
+                    <svg class="icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20"
+                        fill="none">
+                        <path
+                            d="M9.16667 15.8333C12.8486 15.8333 15.8333 12.8486 15.8333 9.16667C15.8333 5.48477 12.8486 2.5 9.16667 2.5C5.48477 2.5 2.5 5.48477 2.5 9.16667C2.5 12.8486 5.48477 15.8333 9.16667 15.8333Z"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                        <path d="M17.5 17.5L13.875 13.875" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                            stroke-linejoin="round" />
+                    </svg>
+                    <form autocomplete="off">
+                       <input type="text" class="form-control" placeholder="Search Keywords" [(ngModel)]="search"  name="searchsubmission"
+                         (input)="selectTaskId(taskId)" autocomplete="my-task-search">
+                     </form>
+                </div>
+
+                  
+
+                <!-- <button  mat-icon-button [matMenuTriggerFor]="header_menu"  class="td-btn text-black">
+                    <mat-icon>more_horizantal</mat-icon>
+                </button>
+                <mat-menu #header_menu="matMenu" class="td-menu custome_theme_menu">
+                    <a (click)="hideAllColumns()" mat-menu-item>
+                        <span>Minimise Columns</span>
+                    </a>
+                    <a (click)="showAllColumns()" mat-menu-item>
+                        <span>Maximise Columns</span>
+                    </a>
+                </mat-menu>  -->
+
+           
+
+            </div>
+        </div>
+    </div>
+
+    
+
+    <!-- <div class="table-controls mb-2">
+        <button (click)="zoomIn()">Zoom In</button>
+        <button (click)="zoomOut()">Zoom Out</button>
+        <button (click)="resetZoom()">Reset</button>
+        <span class="ms-2">Zoom: {{ (zoomLevel * 100) | number:'1.0-0' }}%</span>
+        </div> -->
+
+
+    <ng-container *ngIf="rowData.length==0"> 
+        <div class="d-flex align-items-center justify-content-center gap-4 flex-column mt-4" style="margin-top: 60px !important;">
+            <svg width="126" height="101" viewBox="0 0 126 101" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <g clip-path="url(#clip0_8898_110517)">
+            <path d="M95.371 100.166L11.656 100.196C7.45041 100.197 3.68314 98.008 1.57906 94.3402C0.526894 92.5061 0.000693685 90.4941 6.85071e-07 88.4817C-0.000692315 86.4695 0.52438 84.4569 1.57504 82.6223L43.4059 5.92095C45.5077 2.25144 49.2735 0.0600592 53.4791 0.0585945C57.6848 0.0571297 61.452 2.24588 63.5564 5.91393L105.445 82.5956C106.495 84.4249 107.02 86.4345 107.02 88.4457C107.02 90.4568 106.495 92.4692 105.444 94.304C103.342 97.9733 99.5766 100.165 95.371 100.166ZM1.0523 88.4803C1.05217 90.312 10.2898 86.365 11.2468 88.0334C13.1611 91.3702 7.82944 99.1393 11.6557 99.138C11.6557 99.138 102.623 97.1137 104.534 93.7756C105.49 92.1065 105.968 90.2754 105.967 88.4447C105.967 86.6141 105.488 84.7836 104.531 83.1152L62.6416 6.43349C60.7327 3.1062 57.3057 1.11485 53.4795 1.11619C49.655 1.11752 1.05245 86.6483 1.0523 88.4803Z" fill="#3F3D56"/>
+            <path d="M77.9031 83.2511C99.0694 83.2511 116.228 65.9683 116.228 44.649C116.228 23.3296 99.0694 6.04688 77.9031 6.04688C56.7368 6.04688 39.5781 23.3296 39.5781 44.649C39.5781 65.9683 56.7368 83.2511 77.9031 83.2511Z" fill="#464BA8"/>
+            <path d="M76.3835 53.0796L69.5859 23.486L74.9271 22.3536L80.5508 52.196L76.3835 53.0796ZM81.0564 64.2942C80.0781 64.5016 79.191 64.3626 78.3948 63.8771C77.6296 63.3443 77.1488 62.608 76.9525 61.6683C76.7561 60.7286 76.9055 59.8791 77.4006 59.1199C77.9267 58.3133 78.6789 57.8062 79.6572 57.5988C80.5963 57.3997 81.4484 57.5666 82.2136 58.0995C83.0098 58.5849 83.506 59.2975 83.7024 60.2372C83.8988 61.1769 83.7339 62.05 83.2078 62.8567C82.7127 63.6159 81.9955 64.0951 81.0564 64.2942Z" fill="white"/>
+            </g>
+            <defs>
+            <clipPath id="clip0_8898_110517">
+            <rect width="126" height="101" fill="white"/>
+            </clipPath>
+            </defs>
+            </svg>
+
+            <p class="no-data-p">
+              {{search ?'No results found! Try different keywords':taskId?'This form does not have any submissions':'Select a Workflow and corresponding Task to proceed'}}
+            </p>
+
+        </div>
+    </ng-container>
+
+    <div class="table-responsive sticky-table p-o border-none" style="padding: 0 !important; border: none !important;"  *ngIf="rowData.length>0">
+
+        
+          <ag-grid-angular
+            #gridContainer
+            class="ag-theme-alpine"
+            style="width: 100%; height: 600px;"
+            [rowData]="rowData"
+            [columnDefs]="columnDefs"
+            [defaultColDef]="defaultColDef"
+            [gridOptions]="gridOptions"
+            [rowHeight]="originalRowHeight"
+            [headerHeight]="originalHeaderHeight"
+            [pagination]="false"
+            [paginationPageSize]="10"
+            [animateRows]="true"
+            [rowSelection]="'multiple'"
+            [suppressRowClickSelection]="true"
+            (gridReady)="onGridReady($event)"
+            (selectionChanged)="onSelectionChanged($event)">
+        </ag-grid-angular>
+
+                    <!-- [sideBar]="sideBar" -->
+
+        </div>
+    </ng-container>
+
+
+   
+    <!-- <app-paginator [paginationObj]="paginationObj" (pagination)="getPaginationData($event)"></app-paginator> -->
+
+    <!-- <h4 *ngIf="status" class="result-found" style="color:#464BA8">
+        {{(eligibleStudentList.length>0)?filterCount:0}} Results Found! 
+        &nbsp;&nbsp;<button mat-button class="theme_btn btn_outline_primary" (click)="callApiFilter('')">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M15 5L5 15" stroke="#464BA8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M5 5L15 15" stroke="#464BA8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            &nbsp;&nbsp;  
+                Reset Filter
+        </button>
+    </h4> -->
+
+</section>
+
+
+
+
+
+<!-- Add Column popup -->
+<div bsModal #approveTask="bs-modal" class="modal fade bsModal ch_modal" id="addColumnPopup" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" style="max-width:700px" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button mat-icon-button type="button" class="close" (click)="approveTask.hide()" data-dismiss="modal" aria-label="Close">
+                    <mat-icon>close</mat-icon>
+                </button>
+            </div>
+            <form>
+                <div class="modal-body pt-3">
+                    <div class="d-flex align-items-center justify-content-center gap-4 flex-column mt-4">
+                        <svg width="126" height="101" viewBox="0 0 126 101" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <g clip-path="url(#clip0_8898_110517)">
+                        <path d="M95.371 100.166L11.656 100.196C7.45041 100.197 3.68314 98.008 1.57906 94.3402C0.526894 92.5061 0.000693685 90.4941 6.85071e-07 88.4817C-0.000692315 86.4695 0.52438 84.4569 1.57504 82.6223L43.4059 5.92095C45.5077 2.25144 49.2735 0.0600592 53.4791 0.0585945C57.6848 0.0571297 61.452 2.24588 63.5564 5.91393L105.445 82.5956C106.495 84.4249 107.02 86.4345 107.02 88.4457C107.02 90.4568 106.495 92.4692 105.444 94.304C103.342 97.9733 99.5766 100.165 95.371 100.166ZM1.0523 88.4803C1.05217 90.312 10.2898 86.365 11.2468 88.0334C13.1611 91.3702 7.82944 99.1393 11.6557 99.138C11.6557 99.138 102.623 97.1137 104.534 93.7756C105.49 92.1065 105.968 90.2754 105.967 88.4447C105.967 86.6141 105.488 84.7836 104.531 83.1152L62.6416 6.43349C60.7327 3.1062 57.3057 1.11485 53.4795 1.11619C49.655 1.11752 1.05245 86.6483 1.0523 88.4803Z" fill="#3F3D56"/>
+                        <path d="M77.9031 83.2511C99.0694 83.2511 116.228 65.9683 116.228 44.649C116.228 23.3296 99.0694 6.04688 77.9031 6.04688C56.7368 6.04688 39.5781 23.3296 39.5781 44.649C39.5781 65.9683 56.7368 83.2511 77.9031 83.2511Z" fill="#464BA8"/>
+                        <path d="M76.3835 53.0796L69.5859 23.486L74.9271 22.3536L80.5508 52.196L76.3835 53.0796ZM81.0564 64.2942C80.0781 64.5016 79.191 64.3626 78.3948 63.8771C77.6296 63.3443 77.1488 62.608 76.9525 61.6683C76.7561 60.7286 76.9055 59.8791 77.4006 59.1199C77.9267 58.3133 78.6789 57.8062 79.6572 57.5988C80.5963 57.3997 81.4484 57.5666 82.2136 58.0995C83.0098 58.5849 83.506 59.2975 83.7024 60.2372C83.8988 61.1769 83.7339 62.05 83.2078 62.8567C82.7127 63.6159 81.9955 64.0951 81.0564 64.2942Z" fill="white"/>
+                        </g>
+                        <defs>
+                        <clipPath id="clip0_8898_110517">
+                        <rect width="126" height="101" fill="white"/>
+                        </clipPath>
+                        </defs>
+                        </svg>
+
+                        <p class="no-data-p" *ngIf="selectedList.length>1">
+                            Are you sure you want to approve {{selectedList.length}} submissions?
+                        </p>
+                         <p class="no-data-p" *ngIf="selectedList.length==1">
+                           Are you sure you want to approve {{selectedList?.[0]?.full_name}} submission?
+                        </p>
+
+                    </div>
+                </div>
+                <div class="modal-footer justify-content-between">
+                    <button  (click)="approveTask.hide()" mat-button type="button" class="theme_btn btn_outline_primary"
+                        data-dismiss="modal">Cancel</button>
+                    <button mat-button type="submit" class="theme_btn btn_primary" (click)="Submitapprove()">Approve</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+<!-- Add Column popup -->
+<div bsModal #approveTaskSuccess="bs-modal" class="modal fade bsModal ch_modal" id="addColumnPopup" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" style="max-width:700px" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button mat-icon-button type="button" class="close" (click)="this.selectedList = [];approveTaskSuccess.hide()" data-dismiss="modal" aria-label="Close">
+                    <mat-icon>close</mat-icon>
+                </button>
+            </div>
+            <form>
+                <div class="modal-body pt-3">
+                    <div class="d-flex align-items-center justify-content-center gap-4 flex-column mt-4">
+                        <svg width="112" height="112" viewBox="0 0 112 112" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="56" cy="56" r="56" fill="#26C296"/>
+                        <path d="M65.3327 49L52.4993 61.8333L46.666 56" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+
+
+                        <p class="no-data-p" *ngIf="selectedList.length>1">
+                            Submissions have been approved!
+                        </p>
+
+                        <p class="no-data-p" *ngIf="selectedList.length==1">
+                           {{selectedList?.[0]?.full_name}} submission has been approved!
+                        </p>
+
+                    </div>
+                </div>
+                <div class="modal-footer justify-content-center">
+                    <button  (click)="this.selectedList = [];selectTaskId(taskId);approveTaskSuccess.hide()" mat-button type="button" class="theme_btn btn_primary"
+                        data-dismiss="modal">close</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Add Column popup -->
+<div bsModal #disapproveTask="bs-modal" class="modal fade bsModal ch_modal" id="addColumnPopup" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" style="max-width:700px" role="document">
+
+           <div class="modal-content disapprove_modal">
+            <div class="modal-header justify-content-center">
+                <h2 class="modal-title text-center" id="exampleModalLabel">Are you sure you want to disapprove these submissions?
+                </h2>
+                <button type="button" (click)="disapproveTask.hide()" mat-icon-button id="closeModal" class="close"
+                    data-dismiss="modal" aria-label="Close">
+                    <mat-icon>close</mat-icon>
+                </button>
+            </div>
+             <div class="modal-body pt-3">
+                <div class="row">
+                    <div class="col-md-12 text-center">
+                        <p>You are require to provide a comment explaining the disapproval.<br />
+The students will receive an email and information regarding this.
+                        </p>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form-group m-0">
+                            <label>Your Comment*</label>
+                            <textarea class="form-control" cols="30" rows="6" [(ngModel)]="comment"></textarea>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form-group">
+                           <mat-checkbox [(ngModel)]="copyfile" name="checked" [ngModelOptions]="{standalone: true}" class="example-margin"> Save a copy of the declined submission</mat-checkbox>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer justify-content-center">
+                <button mat-button class="theme_btn btn_outline_primary" data-dismiss="modal"
+                    (click)="disapproveTask.hide();comment=''">Cancel</button>
+                <button mat-button class="theme_btn btn_primary" data-dismiss="modal" [disabled]="!comment"
+                    (click)="SubmitDisapprove();">Disapprove</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Add Column popup -->
+<div bsModal #disapproveTaskSuccess="bs-modal" class="modal fade bsModal ch_modal" id="addColumnPopup" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" style="max-width:700px" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button mat-icon-button type="button" class="close" (click)="this.selectedList = [];disapproveTaskSuccess.hide()" data-dismiss="modal" aria-label="Close">
+                    <mat-icon>close</mat-icon>
+                </button>
+            </div>
+            <form>
+                <div class="modal-body pt-3">
+                    <div class="d-flex align-items-center justify-content-center gap-4 flex-column mt-4" style="margin-top: 60px !important;">
+                    
+                        <p class="no-data-p" *ngIf="selectedList.length>1">
+                            Submissions have been disapproved!
+                        </p>
+
+                        <p class="no-data-p" *ngIf="selectedList.length==1">
+                           {{selectedList?.[0]?.full_name}}'s submission has been disapproved!
+                        </p>
+
+
+                    </div>
+                </div>
+                <div class="modal-footer justify-content-center">
+                    <button  (click)="this.selectedList = [];selectTaskId(taskId);disapproveTaskSuccess.hide()" mat-button type="button" class="theme_btn btn_primary"
+                        data-dismiss="modal">Close</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<app-send-email-popup [type]="'student'" modalId="sendSubmission" [students]="selectedList" [emailType]="'student'"></app-send-email-popup>

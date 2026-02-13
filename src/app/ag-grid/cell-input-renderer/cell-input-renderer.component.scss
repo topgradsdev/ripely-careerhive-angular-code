@@ -1,0 +1,11 @@
+.text-truncate-scroll {
+  width: 100%;
+  box-sizing: border-box;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow-x: hidden;
+}
+
+.text-truncate-scroll:focus {
+  overflow-x: auto;
+}

@@ -1,0 +1,317 @@
+.main_card_onboarding {
+    box-shadow: 0px 1px 4px 0px rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(229, 229, 229, 1);
+    border-radius: 15px;
+    margin: 30px 0px;
+
+    .sub_title_onboarding {
+        font-family: var(--font-primary);
+        font-size: 24px;
+        font-weight: 400;
+        line-height: 31px;
+        letter-spacing: 0em;
+        text-align: left;
+        color: var(--primary-color-first);
+        margin-bottom: 20px;
+    }
+
+    .onboarding_title {
+        text-align: center;
+
+        h2 {
+            font-family: var(--font-primary);
+            font-size: 34px;
+            font-weight: 500;
+            line-height: 44px;
+            letter-spacing: 0em;
+            color: var(--main-black-color);
+            padding: 50px 0px 0px 0px;
+            margin-bottom: 0px;
+
+            span {
+                color: #26C296;
+            }
+        }
+    }
+
+    .tabs_buttons {
+        padding-top: 45px;
+
+        button.theme_btn {
+            width: 182px;
+        }
+    }
+
+
+    .form_fildls {
+        max-width: 615px;
+        margin: 0 auto;
+        &.job_form_preference{
+            max-width: 722px;
+        }
+    }
+
+    .main_editr_view {
+        margin-bottom: 70px;
+
+        .editer_view {
+            margin-bottom: 40px;
+
+            .editer_info {
+                .clikLink {
+                    color: var(--pink-color);
+                    text-decoration: underline;
+                    font-family: var(--font-primary);
+                    cursor: pointer;
+                    font-family: var(--font-primary);
+                    font-size: 11px;
+                    font-weight: 400;
+                    line-height: 13px;
+                    letter-spacing: 0em;
+                    text-align: left;
+                }
+
+                h5 {
+                    font-family: var(--font-primary);
+                    font-size: 14px;
+                    color: #545465;
+                    font-weight: 700;
+                    line-height: 18px;
+                    letter-spacing: 0em;
+                    text-align: left;
+                    margin-bottom: 5px;
+                }
+
+                p {
+                    font-family: var(--font-primary);
+                    font-size: 11px;
+                    font-weight: 400;
+                    line-height: 13px;
+                    letter-spacing: 0em;
+                    text-align: left;
+                    color: #9a9a9a;
+                    margin-bottom: 20px;
+                }
+            }
+        }
+    }
+
+}
+
+.avl_days {
+    list-style: none;
+    padding: unset;
+    margin: unset;
+    display: flex;
+    gap: 7px;
+
+    li {
+        width: 100%;
+
+        span {
+            padding: 5px 5px;
+            width: 100%;
+            height: 36px;
+            border-radius: 40px;
+            font-family: var(--font-primary);
+            font-size: 14px;
+            font-weight: 400;
+            line-height: 14px;
+            letter-spacing: 0em;
+            text-align: center;
+            border: 1px solid #C4C4C4;
+            color: #C4C4C4;
+            background-color: #fff;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+
+        &.active {
+            span {
+                color: #fff;
+                border: 1px solid var(--primary-color-first);
+                background-color: var(--primary-color-first);
+            }
+        }
+    }
+}
+
+.check_text {
+    font-family: var(--font-primary);
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 14px;
+    letter-spacing: 0em;
+    text-align: left;
+    color: #545465;
+    margin-bottom: 0px;
+
+    mat-checkbox {
+        margin-right: 12px;
+    }
+
+}
+
+.value_inter_input {
+    width: 56px;
+}
+
+.job_preference_card {
+    box-shadow: 0px 1px 4px 0px rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(229, 229, 229, 1);
+    padding: 35px 63px;
+    border-radius: 24px;
+    position: relative;
+    &:not(:last-child){
+        margin-bottom: 50px;
+    }
+    .remove_btn{
+        position: absolute;
+        right: 53px;
+        top: 30px;
+    }
+}
+
+.form-group {
+    &.label_span {
+        label {
+            span {
+                font-size: 16px;
+                font-weight: 400;
+                line-height: 16px;
+
+                color: #9A9A9A;
+            }
+        }
+    }
+}
+
+.custom_chip_list1 {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    margin: -5.5px;
+    padding-bottom: 21px;
+
+    .custom_chip {
+        color: black !important;
+        background-color: #ECEDFF !important;
+        padding: 2px 10px 2px 10px;
+        margin: 10px 5.5px !important;
+        border-radius: 16px;
+        align-items: center;
+        height: 30px;
+        display: inline-flex;
+        position: relative;
+        cursor: pointer;
+
+        &.active {
+            background-color: var(--primary-color-first) !important;
+            color: #fff !important;
+        }
+
+        span {
+            font-family: var(--font-primary);
+            font-size: 12px;
+            font-weight: 400;
+            line-height: 17px;
+            letter-spacing: 0em;
+            text-align: left;
+        }
+
+        svg {
+            margin-left: 8px;
+        }
+    }
+}
+.add_another {
+    display: flex;
+    align-items: center;
+    margin-bottom: 40px;
+
+    button {
+        margin-right: 10px;
+
+    }
+    p {
+        color: var(--main-black-color);
+        font-family: var(--font-primary);
+        font-size: 16px;
+        line-height: 16px;
+        font-weight: 400;
+        margin-bottom: 0px;
+
+        span {
+            color: var(--primary-color-first);
+            font-size: 12px;
+            line-height: 12px;
+        }
+    }
+}
+
+ ::ng-deep .mat-stepper-label-position-bottom .mat-horizontal-stepper-header::after {
+    top: calc(calc((var(--mat-stepper-header-height) - 12px) / 2) + 24px) !important;
+}
+ ::ng-deep .mat-stepper-label-position-bottom .mat-horizontal-stepper-header::before{
+ top: calc(calc((var(--mat-stepper-header-height) - 12px) / 2) + 24px) !important;
+}
+
+::ng-deep .mat-pseudo-checkbox-checked.mat-pseudo-checkbox-full{
+      background: #464ba9 !important;
+}
+
+
+/* Remove focus border for Angular Material mat-form-field */
+.mat-form-field-appearance-fill.mat-focused .mat-form-field-outline,
+.mat-form-field-appearance-outline.mat-focused .mat-form-field-outline {
+  border: none !important;
+}
+
+/* Optional: remove box shadow */
+::ng-deep .mat-form-field-appearance-fill.mat-focused .mat-form-field-flex,
+.mat-form-field-appearance-outline.mat-focused .mat-form-field-flex {
+//   box-shadow: none !important;
+}
+::ng-deep .mat-select.mat-focused .mat-select-trigger {
+//   border-bottom: none !important; /* Removes underline */
+//   box-shadow: none !important;
+}
+
+::ng-deep .mat-select-search-input {
+//   border: none !important;          /* Remove border */
+//   outline: none !important;         /* Remove focus outline */
+//   box-shadow: none !important;      /* Remove shadow */
+}
+.form-control:focus{
+    background-color: #fff !important;
+}
+
+::ng-deep .mat-select-search-input:focus,
+::ng-deep .mat-select-search-input:hover {
+//   border: none !important;          /* Remove border on focus/hover */
+//   outline: none !important;         /* Remove outline on focus/hover */
+//   box-shadow: none !important;      /* Remove shadow on focus/hover */
+}
+
+::ng-deep .mat-select-search-inner.mat-select-search-inner-multiple{
+    border: none !important;
+}
+
+::ng-deep .mdc-text-field--filled:not(.mdc-text-field--disabled){
+    background-color: #fff !important
+}
+::ng-deep .mat-mdc-form-field-subscript-wrapper{
+    display: none !important;
+}
+
+
+::ng-deep .mat-mdc-form-field-type-mat-select:not(.mat-form-field-disabled) .mat-mdc-text-field-wrapper{
+    padding: 0px !important;
+}
+
+::ng-deep .mdc-text-field--no-label:not(.mdc-text-field--outlined):not(.mdc-text-field--textarea) .mat-mdc-form-field-infix{
+     padding: 0px !important;
+}

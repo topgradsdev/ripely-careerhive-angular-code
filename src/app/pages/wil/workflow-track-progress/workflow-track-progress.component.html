@@ -1,0 +1,1183 @@
+<div class="page_header">
+    <a  [routerLink]="['/admin/wil/placement-groups', placementId]" [state]="{type: 'view'}"
+    [queryParams]="{redirectTo: 'worfkflow'}" class="back_Link"> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+            fill="none">
+            <path d="M19 12H5" stroke="#464BA8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M12 19L5 12L12 5" stroke="#464BA8" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round" />
+        </svg> Back to Workflows</a>
+    <div class=" page_header_container">
+        <div>
+            <h4>Track Progress - Provider Placed - Pre-Placement</h4>
+        </div>
+    </div>
+</div>
+<section>
+    <div class="main_track_card">
+        <div class="task_steps_card">
+            <div class="task_steps_card_header">
+                <h3>Step 1</h3>
+            </div>
+            <div class="step_task_card_body">
+                <div class="step_task_card" style="border-left-color: #9747FF;">
+                    <div class="track_card_header">
+                        <div class="row align-items-center">
+                            <div class="col-8">
+                                <p>Welcome to Placement Hive - Placement Type Selection</p>
+                            </div>
+                            <div class="col-4 text-right">
+                                <button class="toggle_btn_track" (click)="collapsToggle(1)"
+                                    [ngClass]="showCollapes == 1 ? 'show' : ''" mat-icon-button><svg width="19"
+                                        height="8" viewBox="0 0 19 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M1.5 1L9.5 7L17.5 1" stroke="#2B2A35" stroke-width="2"
+                                            stroke-linecap="round" stroke-linejoin="round" />
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="track_card_body" *ngIf="showCollapes == 1">
+                        <mat-tab-group animationDuration="0ms" class="custom_nav_tabs">
+                            <mat-tab>
+                                <ng-template mat-tab-label>Not Started <span
+                                        class="mat_label_count">4</span></ng-template>
+                                <div class="tab_table_header">
+                                    <div class="row mx-0">
+                                        <div class="col-md-6 pl-0">
+                                            <button mat-button class="theme_btn theme_link_btn" data-toggle="modal"
+                                                data-target="#sendEmailTrackProgress">
+                                                <svg class="mr-2" width="24" height="25" viewBox="0 0 24 25" fill="none"
+                                                    xmlns="http://www.w3.org/2000/svg">
+                                                    <path
+                                                        d="M4 4.5H20C21.1 4.5 22 5.4 22 6.5V18.5C22 19.6 21.1 20.5 20 20.5H4C2.9 20.5 2 19.6 2 18.5V6.5C2 5.4 2.9 4.5 4 4.5Z"
+                                                        stroke="#464BA8" stroke-width="1.5" stroke-linecap="round"
+                                                        stroke-linejoin="round" />
+                                                    <path d="M22 6.5L12 13.5L2 6.5" stroke="#464BA8" stroke-width="1.5"
+                                                        stroke-linecap="round" stroke-linejoin="round" />
+                                                </svg>
+                                                Email
+                                            </button>
+                                            <button mat-button class="theme_btn theme_link_btn" data-toggle="modal"
+                                                data-target="#sendReminaderTrackProgress">
+                                                <svg class="mr-2" width="24" height="25" viewBox="0 0 24 25" fill="none"
+                                                    xmlns="http://www.w3.org/2000/svg">
+                                                    <path
+                                                        d="M12 22.5C17.5228 22.5 22 18.0228 22 12.5C22 6.97715 17.5228 2.5 12 2.5C6.47715 2.5 2 6.97715 2 12.5C2 18.0228 6.47715 22.5 12 22.5Z"
+                                                        stroke="#464BA8" stroke-width="1.5" stroke-linecap="round"
+                                                        stroke-linejoin="round" />
+                                                    <path d="M12 8.5V12.5" stroke="#464BA8" stroke-width="1.5"
+                                                        stroke-linecap="round" stroke-linejoin="round" />
+                                                    <path d="M12 16.5H12.01" stroke="#464BA8" stroke-width="1.5"
+                                                        stroke-linecap="round" stroke-linejoin="round" />
+                                                </svg>
+                                                Send Reminder
+                                            </button>
+                                        </div>
+                                        <div class="col-md-6 text-right pr-0">
+                                            <div class="d-inline-flex align-items-center">
+                                                <div class="search-container">
+                                                    <svg class="icon" xmlns="http://www.w3.org/2000/svg" width="20"
+                                                        height="20" viewBox="0 0 20 20" fill="none">
+                                                        <path
+                                                            d="M9.16667 15.8333C12.8486 15.8333 15.8333 12.8486 15.8333 9.16667C15.8333 5.48477 12.8486 2.5 9.16667 2.5C5.48477 2.5 2.5 5.48477 2.5 9.16667C2.5 12.8486 5.48477 15.8333 9.16667 15.8333Z"
+                                                            stroke="currentColor" stroke-width="2"
+                                                            stroke-linecap="round" stroke-linejoin="round" />
+                                                        <path d="M17.5 17.5L13.875 13.875" stroke="currentColor"
+                                                            stroke-width="2" stroke-linecap="round"
+                                                            stroke-linejoin="round" />
+                                                    </svg>
+                                                    <input type="text" class="form-control"
+                                                        placeholder="Search Students">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="table-responsive">
+                                    <table mat-table [dataSource]="notStartedLists" matSort class="ch_table">
+                                        <!-- Checkbox Column -->
+                                        <ng-container matColumnDef="checkbox">
+                                            <th mat-header-cell *matHeaderCellDef>
+                                                <mat-checkbox class="example-margin"></mat-checkbox>
+                                            </th>
+                                            <td mat-cell *matCellDef="let element">
+                                                <mat-checkbox class="example-margin"></mat-checkbox>
+                                            </td>
+                                        </ng-container>
+
+                                        <!--  Student Id Column -->
+                                        <ng-container matColumnDef="student_id">
+                                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Student Id </th>
+                                            <td mat-cell *matCellDef="let row"> {{row.student_id}} </td>
+                                        </ng-container>
+                                        <!--  Name Column -->
+                                        <ng-container matColumnDef="name">
+                                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
+                                            <td mat-cell *matCellDef="let row"> {{row.name}} </td>
+                                        </ng-container>
+                                        <!-- Email Column -->
+                                        <ng-container matColumnDef="email">
+                                            <th mat-header-cell *matHeaderCellDef mat-sort-header>Email </th>
+                                            <td mat-cell *matCellDef="let row">{{row.email}}>
+                                            </td>
+                                        </ng-container>
+                                        <!-- Status Column -->
+                                        <ng-container matColumnDef="status">
+                                            <th mat-header-cell *matHeaderCellDef mat-sort-header>Status </th>
+                                            <td mat-cell *matCellDef="let row">
+                                                {{row.status}}
+                                            </td>
+                                        </ng-container>
+                                        <!-- Action column -->
+                                        <ng-container matColumnDef="actions">
+                                            <th mat-header-cell *matHeaderCellDef class="text-center"> Actions </th>
+                                            <td mat-cell *matCellDef="let row" class="text-center">
+                                                <button mat-icon-button [matMenuTriggerFor]="menu" class="td-btn">
+                                                    <mat-icon>more_horizantal</mat-icon>
+                                                </button>
+                                                <mat-menu #menu="matMenu" class="td-menu">
+                                                    <a mat-menu-item routerLink="/admin/wil/view-student-profile">
+                                                        <span>View Tasks</span>
+                                                    </a>
+                                                    <a mat-menu-item data-toggle="modal"
+                                                        data-target="#sendEmailTrackProgress">
+                                                        <span>Send Email</span>
+                                                    </a>
+                                                    <a mat-menu-item data-toggle="modal"
+                                                        data-target="#sendReminaderTrackProgress">
+                                                        <span>Send Reminder</span>
+                                                    </a>
+                                                </mat-menu>
+
+                                            </td>
+                                        </ng-container>
+                                        <tr mat-header-row *matHeaderRowDef="displayedNotStartedListsColumns"></tr>
+                                        <tr mat-row *matRowDef="let row; columns: displayedNotStartedListsColumns;">
+                                        </tr>
+                                    </table>
+                                </div>
+                            </mat-tab>
+                            <mat-tab>
+                                <ng-template mat-tab-label>Pending <span class="mat_label_count">2</span></ng-template>
+                                <div class="tab_table_header">
+                                    <div class="row mx-0">
+                                        <div class="col-md-6 pl-0">
+                                            <button mat-button class="theme_btn theme_link_btn" data-toggle="modal"
+                                                data-target="#sendEmailTrackProgress">
+                                                <svg class="mr-2" width="24" height="25" viewBox="0 0 24 25" fill="none"
+                                                    xmlns="http://www.w3.org/2000/svg">
+                                                    <path
+                                                        d="M4 4.5H20C21.1 4.5 22 5.4 22 6.5V18.5C22 19.6 21.1 20.5 20 20.5H4C2.9 20.5 2 19.6 2 18.5V6.5C2 5.4 2.9 4.5 4 4.5Z"
+                                                        stroke="#464BA8" stroke-width="1.5" stroke-linecap="round"
+                                                        stroke-linejoin="round" />
+                                                    <path d="M22 6.5L12 13.5L2 6.5" stroke="#464BA8" stroke-width="1.5"
+                                                        stroke-linecap="round" stroke-linejoin="round" />
+                                                </svg>
+                                                Email
+                                            </button>
+                                        </div>
+                                        <div class="col-md-6 text-right pr-0">
+                                            <div class="d-inline-flex align-items-center">
+                                                <div class="search-container">
+                                                    <svg class="icon" xmlns="http://www.w3.org/2000/svg" width="20"
+                                                        height="20" viewBox="0 0 20 20" fill="none">
+                                                        <path
+                                                            d="M9.16667 15.8333C12.8486 15.8333 15.8333 12.8486 15.8333 9.16667C15.8333 5.48477 12.8486 2.5 9.16667 2.5C5.48477 2.5 2.5 5.48477 2.5 9.16667C2.5 12.8486 5.48477 15.8333 9.16667 15.8333Z"
+                                                            stroke="currentColor" stroke-width="2"
+                                                            stroke-linecap="round" stroke-linejoin="round" />
+                                                        <path d="M17.5 17.5L13.875 13.875" stroke="currentColor"
+                                                            stroke-width="2" stroke-linecap="round"
+                                                            stroke-linejoin="round" />
+                                                    </svg>
+                                                    <input type="text" class="form-control"
+                                                        placeholder="Search Students">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="table-responsive">
+                                    <table mat-table [dataSource]="pendingLists" matSort class="ch_table">
+                                        <!-- Checkbox Column -->
+                                        <ng-container matColumnDef="checkbox">
+                                            <th mat-header-cell *matHeaderCellDef>
+                                                <mat-checkbox class="example-margin"></mat-checkbox>
+                                            </th>
+                                            <td mat-cell *matCellDef="let element">
+                                                <mat-checkbox class="example-margin"></mat-checkbox>
+                                            </td>
+                                        </ng-container>
+
+                                        <!--  Student Id Column -->
+                                        <ng-container matColumnDef="student_id">
+                                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Student Id </th>
+                                            <td mat-cell *matCellDef="let row"> {{row.student_id}} </td>
+                                        </ng-container>
+                                        <!--  Name Column -->
+                                        <ng-container matColumnDef="name">
+                                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
+                                            <td mat-cell *matCellDef="let row"> {{row.name}} </td>
+                                        </ng-container>
+                                        <!-- Email Column -->
+                                        <ng-container matColumnDef="email">
+                                            <th mat-header-cell *matHeaderCellDef mat-sort-header>Email </th>
+                                            <td mat-cell *matCellDef="let row">{{row.email}}>
+                                            </td>
+                                        </ng-container>
+                                        <!-- Status Column -->
+                                        <ng-container matColumnDef="status">
+                                            <th mat-header-cell *matHeaderCellDef mat-sort-header>Status </th>
+                                            <td mat-cell *matCellDef="let row">
+                                                {{row.status}}
+                                            </td>
+                                        </ng-container>
+                                        <!-- File Column -->
+                                        <ng-container matColumnDef="file">
+                                            <th mat-header-cell *matHeaderCellDef mat-sort-header>File </th>
+                                            <td mat-cell *matCellDef="let row">
+                                                <svg width="32" height="32" viewBox="0 0 32 32" fill="none"
+                                                    xmlns="http://www.w3.org/2000/svg">
+                                                    <circle cx="16" cy="16" r="16" fill="#F8F8F8" />
+                                                    <path
+                                                        d="M16.75 8.5H11.5C11.1022 8.5 10.7206 8.65804 10.4393 8.93934C10.158 9.22064 10 9.60218 10 10V22C10 22.3978 10.158 22.7794 10.4393 23.0607C10.7206 23.342 11.1022 23.5 11.5 23.5H20.5C20.8978 23.5 21.2794 23.342 21.5607 23.0607C21.842 22.7794 22 22.3978 22 22V13.75L16.75 8.5Z"
+                                                        stroke="#575757" stroke-width="1.5" stroke-linecap="round"
+                                                        stroke-linejoin="round" />
+                                                </svg>
+
+                                            </td>
+                                        </ng-container>
+                                        <!-- Action column -->
+                                        <ng-container matColumnDef="actions">
+                                            <th mat-header-cell *matHeaderCellDef class="text-center"> Actions </th>
+                                            <td mat-cell *matCellDef="let row" class="text-center">
+                                                <button mat-icon-button [matMenuTriggerFor]="menu" class="td-btn">
+                                                    <mat-icon>more_horizantal</mat-icon>
+                                                </button>
+                                                <mat-menu #menu="matMenu" class="td-menu">
+                                                    <a mat-menu-item data-toggle="modal" data-target="#approvePopup">
+                                                        <span>Approve</span>
+                                                    </a>
+                                                    <a mat-menu-item data-toggle="modal"
+                                                        data-target="#sendEmailTrackProgress">
+                                                        <span>Send Email</span>
+                                                    </a>
+                                                    <a mat-menu-item class="danger">
+                                                        <span>Decline</span>
+                                                    </a>
+                                                </mat-menu>
+
+                                            </td>
+                                        </ng-container>
+                                        <tr mat-header-row *matHeaderRowDef="displayedPendingListsColumns"></tr>
+                                        <tr mat-row *matRowDef="let row; columns: displayedPendingListsColumns;"></tr>
+                                    </table>
+                                </div>
+                            </mat-tab>
+                            <mat-tab>
+                                <ng-template mat-tab-label>Completed <span
+                                        class="mat_label_count">2</span></ng-template>
+
+                            </mat-tab>
+                        </mat-tab-group>
+                    </div>
+                </div>
+                <div class="step_task_card">
+                    <div class="track_card_header">
+                        <div class="row align-items-center">
+                            <div class="col-8">
+                                <p>Attend Internship Information Session (IIS) in person only</p>
+                            </div>
+                            <div class="col-4 text-right">
+                                <button class="toggle_btn_track" (click)="collapsToggle(2)"
+                                    [ngClass]="showCollapes == 1 ? 'show' : ''" mat-icon-button><svg width="19"
+                                        height="8" viewBox="0 0 19 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M1.5 1L9.5 7L17.5 1" stroke="#2B2A35" stroke-width="2"
+                                            stroke-linecap="round" stroke-linejoin="round" />
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="track_card_body" *ngIf="showCollapes == 2">
+                        <mat-tab-group animationDuration="0ms" class="custom_nav_tabs">
+                            <mat-tab>
+                                <ng-template mat-tab-label>Not Started <span
+                                        class="mat_label_count">4</span></ng-template>
+                                <div class="tab_table_header">
+                                    <div class="row mx-0">
+                                        <div class="col-md-6 pl-0">
+                                            <button mat-button class="theme_btn theme_link_btn" data-toggle="modal"
+                                                data-target="#sendEmailTrackProgress">
+                                                <svg class="mr-2" width="24" height="25" viewBox="0 0 24 25" fill="none"
+                                                    xmlns="http://www.w3.org/2000/svg">
+                                                    <path
+                                                        d="M4 4.5H20C21.1 4.5 22 5.4 22 6.5V18.5C22 19.6 21.1 20.5 20 20.5H4C2.9 20.5 2 19.6 2 18.5V6.5C2 5.4 2.9 4.5 4 4.5Z"
+                                                        stroke="#464BA8" stroke-width="1.5" stroke-linecap="round"
+                                                        stroke-linejoin="round" />
+                                                    <path d="M22 6.5L12 13.5L2 6.5" stroke="#464BA8" stroke-width="1.5"
+                                                        stroke-linecap="round" stroke-linejoin="round" />
+                                                </svg>
+                                                Email
+                                            </button>
+                                            <button mat-button class="theme_btn theme_link_btn" data-toggle="modal"
+                                                data-target="#sendReminaderTrackProgress">
+                                                <svg class="mr-2" width="24" height="25" viewBox="0 0 24 25" fill="none"
+                                                    xmlns="http://www.w3.org/2000/svg">
+                                                    <path
+                                                        d="M12 22.5C17.5228 22.5 22 18.0228 22 12.5C22 6.97715 17.5228 2.5 12 2.5C6.47715 2.5 2 6.97715 2 12.5C2 18.0228 6.47715 22.5 12 22.5Z"
+                                                        stroke="#464BA8" stroke-width="1.5" stroke-linecap="round"
+                                                        stroke-linejoin="round" />
+                                                    <path d="M12 8.5V12.5" stroke="#464BA8" stroke-width="1.5"
+                                                        stroke-linecap="round" stroke-linejoin="round" />
+                                                    <path d="M12 16.5H12.01" stroke="#464BA8" stroke-width="1.5"
+                                                        stroke-linecap="round" stroke-linejoin="round" />
+                                                </svg>
+                                                Send Reminder
+                                            </button>
+                                        </div>
+                                        <div class="col-md-6 text-right pr-0">
+                                            <div class="d-inline-flex align-items-center">
+                                                <div class="search-container">
+                                                    <svg class="icon" xmlns="http://www.w3.org/2000/svg" width="20"
+                                                        height="20" viewBox="0 0 20 20" fill="none">
+                                                        <path
+                                                            d="M9.16667 15.8333C12.8486 15.8333 15.8333 12.8486 15.8333 9.16667C15.8333 5.48477 12.8486 2.5 9.16667 2.5C5.48477 2.5 2.5 5.48477 2.5 9.16667C2.5 12.8486 5.48477 15.8333 9.16667 15.8333Z"
+                                                            stroke="currentColor" stroke-width="2"
+                                                            stroke-linecap="round" stroke-linejoin="round" />
+                                                        <path d="M17.5 17.5L13.875 13.875" stroke="currentColor"
+                                                            stroke-width="2" stroke-linecap="round"
+                                                            stroke-linejoin="round" />
+                                                    </svg>
+                                                    <input type="text" class="form-control"
+                                                        placeholder="Search Students">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="table-responsive">
+                                    <table mat-table [dataSource]="notStartedLists" matSort class="ch_table">
+                                        <!-- Checkbox Column -->
+                                        <ng-container matColumnDef="checkbox">
+                                            <th mat-header-cell *matHeaderCellDef>
+                                                <mat-checkbox class="example-margin"></mat-checkbox>
+                                            </th>
+                                            <td mat-cell *matCellDef="let element">
+                                                <mat-checkbox class="example-margin"></mat-checkbox>
+                                            </td>
+                                        </ng-container>
+
+                                        <!--  Student Id Column -->
+                                        <ng-container matColumnDef="student_id">
+                                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Student Id </th>
+                                            <td mat-cell *matCellDef="let row"> {{row.student_id}} </td>
+                                        </ng-container>
+                                        <!--  Name Column -->
+                                        <ng-container matColumnDef="name">
+                                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
+                                            <td mat-cell *matCellDef="let row"> {{row.name}} </td>
+                                        </ng-container>
+                                        <!-- Email Column -->
+                                        <ng-container matColumnDef="email">
+                                            <th mat-header-cell *matHeaderCellDef mat-sort-header>Email </th>
+                                            <td mat-cell *matCellDef="let row">{{row.email}}>
+                                            </td>
+                                        </ng-container>
+                                        <!-- Status Column -->
+                                        <ng-container matColumnDef="status">
+                                            <th mat-header-cell *matHeaderCellDef mat-sort-header>Status </th>
+                                            <td mat-cell *matCellDef="let row">
+                                                {{row.status}}
+                                            </td>
+                                        </ng-container>
+                                        <!-- Action column -->
+                                        <ng-container matColumnDef="actions">
+                                            <th mat-header-cell *matHeaderCellDef class="text-center"> Actions </th>
+                                            <td mat-cell *matCellDef="let row" class="text-center">
+                                                <button mat-icon-button [matMenuTriggerFor]="menu" class="td-btn">
+                                                    <mat-icon>more_horizantal</mat-icon>
+                                                </button>
+                                                <mat-menu #menu="matMenu" class="td-menu">
+                                                    <a mat-menu-item routerLink="/admin/wil/view-student-profile">
+                                                        <span>View Tasks</span>
+                                                    </a>
+                                                    <a mat-menu-item data-toggle="modal"
+                                                        data-target="#sendEmailTrackProgress">
+                                                        <span>Send Email</span>
+                                                    </a>
+                                                    <a mat-menu-item data-toggle="modal"
+                                                        data-target="#sendReminaderTrackProgress">
+                                                        <span>Send Reminder</span>
+                                                    </a>
+                                                </mat-menu>
+
+                                            </td>
+                                        </ng-container>
+                                        <tr mat-header-row *matHeaderRowDef="displayedNotStartedListsColumns"></tr>
+                                        <tr mat-row *matRowDef="let row; columns: displayedNotStartedListsColumns;">
+                                        </tr>
+                                    </table>
+                                </div>
+                            </mat-tab>
+                            <mat-tab>
+                                <ng-template mat-tab-label>Pending <span class="mat_label_count">2</span></ng-template>
+                                <div class="tab_table_header">
+                                    <div class="row mx-0">
+                                        <div class="col-md-6 pl-0">
+                                            <button mat-button class="theme_btn theme_link_btn" data-toggle="modal"
+                                                data-target="#sendEmailTrackProgress">
+                                                <svg class="mr-2" width="24" height="25" viewBox="0 0 24 25" fill="none"
+                                                    xmlns="http://www.w3.org/2000/svg">
+                                                    <path
+                                                        d="M4 4.5H20C21.1 4.5 22 5.4 22 6.5V18.5C22 19.6 21.1 20.5 20 20.5H4C2.9 20.5 2 19.6 2 18.5V6.5C2 5.4 2.9 4.5 4 4.5Z"
+                                                        stroke="#464BA8" stroke-width="1.5" stroke-linecap="round"
+                                                        stroke-linejoin="round" />
+                                                    <path d="M22 6.5L12 13.5L2 6.5" stroke="#464BA8" stroke-width="1.5"
+                                                        stroke-linecap="round" stroke-linejoin="round" />
+                                                </svg>
+                                                Email
+                                            </button>
+                                        </div>
+                                        <div class="col-md-6 text-right pr-0">
+                                            <div class="d-inline-flex align-items-center">
+                                                <div class="search-container">
+                                                    <svg class="icon" xmlns="http://www.w3.org/2000/svg" width="20"
+                                                        height="20" viewBox="0 0 20 20" fill="none">
+                                                        <path
+                                                            d="M9.16667 15.8333C12.8486 15.8333 15.8333 12.8486 15.8333 9.16667C15.8333 5.48477 12.8486 2.5 9.16667 2.5C5.48477 2.5 2.5 5.48477 2.5 9.16667C2.5 12.8486 5.48477 15.8333 9.16667 15.8333Z"
+                                                            stroke="currentColor" stroke-width="2"
+                                                            stroke-linecap="round" stroke-linejoin="round" />
+                                                        <path d="M17.5 17.5L13.875 13.875" stroke="currentColor"
+                                                            stroke-width="2" stroke-linecap="round"
+                                                            stroke-linejoin="round" />
+                                                    </svg>
+                                                    <input type="text" class="form-control"
+                                                        placeholder="Search Students">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="table-responsive">
+                                    <table mat-table [dataSource]="pendingLists" matSort class="ch_table">
+                                        <!-- Checkbox Column -->
+                                        <ng-container matColumnDef="checkbox">
+                                            <th mat-header-cell *matHeaderCellDef>
+                                                <mat-checkbox class="example-margin"></mat-checkbox>
+                                            </th>
+                                            <td mat-cell *matCellDef="let element">
+                                                <mat-checkbox class="example-margin"></mat-checkbox>
+                                            </td>
+                                        </ng-container>
+
+                                        <!--  Student Id Column -->
+                                        <ng-container matColumnDef="student_id">
+                                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Student Id </th>
+                                            <td mat-cell *matCellDef="let row"> {{row.student_id}} </td>
+                                        </ng-container>
+                                        <!--  Name Column -->
+                                        <ng-container matColumnDef="name">
+                                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
+                                            <td mat-cell *matCellDef="let row"> {{row.name}} </td>
+                                        </ng-container>
+                                        <!-- Email Column -->
+                                        <ng-container matColumnDef="email">
+                                            <th mat-header-cell *matHeaderCellDef mat-sort-header>Email </th>
+                                            <td mat-cell *matCellDef="let row">{{row.email}}>
+                                            </td>
+                                        </ng-container>
+                                        <!-- Status Column -->
+                                        <ng-container matColumnDef="status">
+                                            <th mat-header-cell *matHeaderCellDef mat-sort-header>Status </th>
+                                            <td mat-cell *matCellDef="let row">
+                                                {{row.status}}
+                                            </td>
+                                        </ng-container>
+                                        <!-- File Column -->
+                                        <ng-container matColumnDef="file">
+                                            <th mat-header-cell *matHeaderCellDef mat-sort-header>File </th>
+                                            <td mat-cell *matCellDef="let row">
+                                                <svg width="32" height="32" viewBox="0 0 32 32" fill="none"
+                                                    xmlns="http://www.w3.org/2000/svg">
+                                                    <circle cx="16" cy="16" r="16" fill="#F8F8F8" />
+                                                    <path
+                                                        d="M16.75 8.5H11.5C11.1022 8.5 10.7206 8.65804 10.4393 8.93934C10.158 9.22064 10 9.60218 10 10V22C10 22.3978 10.158 22.7794 10.4393 23.0607C10.7206 23.342 11.1022 23.5 11.5 23.5H20.5C20.8978 23.5 21.2794 23.342 21.5607 23.0607C21.842 22.7794 22 22.3978 22 22V13.75L16.75 8.5Z"
+                                                        stroke="#575757" stroke-width="1.5" stroke-linecap="round"
+                                                        stroke-linejoin="round" />
+                                                </svg>
+
+                                            </td>
+                                        </ng-container>
+                                        <!-- Action column -->
+                                        <ng-container matColumnDef="actions">
+                                            <th mat-header-cell *matHeaderCellDef class="text-center"> Actions </th>
+                                            <td mat-cell *matCellDef="let row" class="text-center">
+                                                <button mat-icon-button [matMenuTriggerFor]="menu" class="td-btn">
+                                                    <mat-icon>more_horizantal</mat-icon>
+                                                </button>
+                                                <mat-menu #menu="matMenu" class="td-menu">
+                                                    <a mat-menu-item data-toggle="modal" data-target="#approvePopup">
+                                                        <span>Approve</span>
+                                                    </a>
+                                                    <a mat-menu-item data-toggle="modal"
+                                                        data-target="#sendEmailTrackProgress">
+                                                        <span>Send Email</span>
+                                                    </a>
+                                                    <a mat-menu-item class="danger">
+                                                        <span>Decline</span>
+                                                    </a>
+                                                </mat-menu>
+
+                                            </td>
+                                        </ng-container>
+                                        <tr mat-header-row *matHeaderRowDef="displayedPendingListsColumns"></tr>
+                                        <tr mat-row *matRowDef="let row; columns: displayedPendingListsColumns;"></tr>
+                                    </table>
+                                </div>
+                            </mat-tab>
+                            <mat-tab>
+                                <ng-template mat-tab-label>Completed <span
+                                        class="mat_label_count">2</span></ng-template>
+
+                            </mat-tab>
+                        </mat-tab-group>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="task_steps_card">
+            <div class="task_steps_card_header">
+                <h3>Step 2</h3>
+            </div>
+            <div class="step_task_card_body">
+                <div class="step_task_card" style="border-left-color: #9747FF;">
+                    <div class="track_card_header">
+                        <div class="row align-items-center">
+                            <div class="col-8">
+                                <p>Welcome to Placement Hive - Placement Type Selection</p>
+                            </div>
+                            <div class="col-4 text-right">
+                                <button class="toggle_btn_track" (click)="collapsToggle(1)"
+                                    [ngClass]="showCollapes == 1 ? 'show' : ''" mat-icon-button><svg width="19"
+                                        height="8" viewBox="0 0 19 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M1.5 1L9.5 7L17.5 1" stroke="#2B2A35" stroke-width="2"
+                                            stroke-linecap="round" stroke-linejoin="round" />
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="track_card_body" *ngIf="showCollapes == 1">
+                        <mat-tab-group animationDuration="0ms" class="custom_nav_tabs">
+                            <mat-tab>
+                                <ng-template mat-tab-label>Not Started <span
+                                        class="mat_label_count">4</span></ng-template>
+                                <div class="tab_table_header">
+                                    <div class="row mx-0">
+                                        <div class="col-md-6 pl-0">
+                                            <button mat-button class="theme_btn theme_link_btn" data-toggle="modal"
+                                                data-target="#sendEmailTrackProgress">
+                                                <svg class="mr-2" width="24" height="25" viewBox="0 0 24 25" fill="none"
+                                                    xmlns="http://www.w3.org/2000/svg">
+                                                    <path
+                                                        d="M4 4.5H20C21.1 4.5 22 5.4 22 6.5V18.5C22 19.6 21.1 20.5 20 20.5H4C2.9 20.5 2 19.6 2 18.5V6.5C2 5.4 2.9 4.5 4 4.5Z"
+                                                        stroke="#464BA8" stroke-width="1.5" stroke-linecap="round"
+                                                        stroke-linejoin="round" />
+                                                    <path d="M22 6.5L12 13.5L2 6.5" stroke="#464BA8" stroke-width="1.5"
+                                                        stroke-linecap="round" stroke-linejoin="round" />
+                                                </svg>
+                                                Email
+                                            </button>
+                                            <button mat-button class="theme_btn theme_link_btn" data-toggle="modal"
+                                                data-target="#sendReminaderTrackProgress">
+                                                <svg class="mr-2" width="24" height="25" viewBox="0 0 24 25" fill="none"
+                                                    xmlns="http://www.w3.org/2000/svg">
+                                                    <path
+                                                        d="M12 22.5C17.5228 22.5 22 18.0228 22 12.5C22 6.97715 17.5228 2.5 12 2.5C6.47715 2.5 2 6.97715 2 12.5C2 18.0228 6.47715 22.5 12 22.5Z"
+                                                        stroke="#464BA8" stroke-width="1.5" stroke-linecap="round"
+                                                        stroke-linejoin="round" />
+                                                    <path d="M12 8.5V12.5" stroke="#464BA8" stroke-width="1.5"
+                                                        stroke-linecap="round" stroke-linejoin="round" />
+                                                    <path d="M12 16.5H12.01" stroke="#464BA8" stroke-width="1.5"
+                                                        stroke-linecap="round" stroke-linejoin="round" />
+                                                </svg>
+                                                Send Reminder
+                                            </button>
+                                        </div>
+                                        <div class="col-md-6 text-right pr-0">
+                                            <div class="d-inline-flex align-items-center">
+                                                <div class="search-container">
+                                                    <svg class="icon" xmlns="http://www.w3.org/2000/svg" width="20"
+                                                        height="20" viewBox="0 0 20 20" fill="none">
+                                                        <path
+                                                            d="M9.16667 15.8333C12.8486 15.8333 15.8333 12.8486 15.8333 9.16667C15.8333 5.48477 12.8486 2.5 9.16667 2.5C5.48477 2.5 2.5 5.48477 2.5 9.16667C2.5 12.8486 5.48477 15.8333 9.16667 15.8333Z"
+                                                            stroke="currentColor" stroke-width="2"
+                                                            stroke-linecap="round" stroke-linejoin="round" />
+                                                        <path d="M17.5 17.5L13.875 13.875" stroke="currentColor"
+                                                            stroke-width="2" stroke-linecap="round"
+                                                            stroke-linejoin="round" />
+                                                    </svg>
+                                                    <input type="text" class="form-control"
+                                                        placeholder="Search Students">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="table-responsive">
+                                    <table mat-table [dataSource]="notStartedLists" matSort class="ch_table">
+                                        <!-- Checkbox Column -->
+                                        <ng-container matColumnDef="checkbox">
+                                            <th mat-header-cell *matHeaderCellDef>
+                                                <mat-checkbox class="example-margin"></mat-checkbox>
+                                            </th>
+                                            <td mat-cell *matCellDef="let element">
+                                                <mat-checkbox class="example-margin"></mat-checkbox>
+                                            </td>
+                                        </ng-container>
+
+                                        <!--  Student Id Column -->
+                                        <ng-container matColumnDef="student_id">
+                                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Student Id </th>
+                                            <td mat-cell *matCellDef="let row"> {{row.student_id}} </td>
+                                        </ng-container>
+                                        <!--  Name Column -->
+                                        <ng-container matColumnDef="name">
+                                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
+                                            <td mat-cell *matCellDef="let row"> {{row.name}} </td>
+                                        </ng-container>
+                                        <!-- Email Column -->
+                                        <ng-container matColumnDef="email">
+                                            <th mat-header-cell *matHeaderCellDef mat-sort-header>Email </th>
+                                            <td mat-cell *matCellDef="let row">{{row.email}}>
+                                            </td>
+                                        </ng-container>
+                                        <!-- Status Column -->
+                                        <ng-container matColumnDef="status">
+                                            <th mat-header-cell *matHeaderCellDef mat-sort-header>Status </th>
+                                            <td mat-cell *matCellDef="let row">
+                                                {{row.status}}
+                                            </td>
+                                        </ng-container>
+                                        <!-- Action column -->
+                                        <ng-container matColumnDef="actions">
+                                            <th mat-header-cell *matHeaderCellDef class="text-center"> Actions </th>
+                                            <td mat-cell *matCellDef="let row" class="text-center">
+                                                <button mat-icon-button [matMenuTriggerFor]="menu" class="td-btn">
+                                                    <mat-icon>more_horizantal</mat-icon>
+                                                </button>
+                                                <mat-menu #menu="matMenu" class="td-menu">
+                                                    <a mat-menu-item routerLink="/admin/wil/view-student-profile">
+                                                        <span>View Tasks</span>
+                                                    </a>
+                                                    <a mat-menu-item data-toggle="modal"
+                                                        data-target="#sendEmailTrackProgress">
+                                                        <span>Send Email</span>
+                                                    </a>
+                                                    <a mat-menu-item data-toggle="modal"
+                                                        data-target="#sendReminaderTrackProgress">
+                                                        <span>Send Reminder</span>
+                                                    </a>
+                                                </mat-menu>
+
+                                            </td>
+                                        </ng-container>
+                                        <tr mat-header-row *matHeaderRowDef="displayedNotStartedListsColumns"></tr>
+                                        <tr mat-row *matRowDef="let row; columns: displayedNotStartedListsColumns;">
+                                        </tr>
+                                    </table>
+                                </div>
+                            </mat-tab>
+                            <mat-tab>
+                                <ng-template mat-tab-label>Pending <span class="mat_label_count">2</span></ng-template>
+                                <div class="tab_table_header">
+                                    <div class="row mx-0">
+                                        <div class="col-md-6 pl-0">
+                                            <button mat-button class="theme_btn theme_link_btn" data-toggle="modal"
+                                                data-target="#sendEmailTrackProgress">
+                                                <svg class="mr-2" width="24" height="25" viewBox="0 0 24 25" fill="none"
+                                                    xmlns="http://www.w3.org/2000/svg">
+                                                    <path
+                                                        d="M4 4.5H20C21.1 4.5 22 5.4 22 6.5V18.5C22 19.6 21.1 20.5 20 20.5H4C2.9 20.5 2 19.6 2 18.5V6.5C2 5.4 2.9 4.5 4 4.5Z"
+                                                        stroke="#464BA8" stroke-width="1.5" stroke-linecap="round"
+                                                        stroke-linejoin="round" />
+                                                    <path d="M22 6.5L12 13.5L2 6.5" stroke="#464BA8" stroke-width="1.5"
+                                                        stroke-linecap="round" stroke-linejoin="round" />
+                                                </svg>
+                                                Email
+                                            </button>
+                                        </div>
+                                        <div class="col-md-6 text-right pr-0">
+                                            <div class="d-inline-flex align-items-center">
+                                                <div class="search-container">
+                                                    <svg class="icon" xmlns="http://www.w3.org/2000/svg" width="20"
+                                                        height="20" viewBox="0 0 20 20" fill="none">
+                                                        <path
+                                                            d="M9.16667 15.8333C12.8486 15.8333 15.8333 12.8486 15.8333 9.16667C15.8333 5.48477 12.8486 2.5 9.16667 2.5C5.48477 2.5 2.5 5.48477 2.5 9.16667C2.5 12.8486 5.48477 15.8333 9.16667 15.8333Z"
+                                                            stroke="currentColor" stroke-width="2"
+                                                            stroke-linecap="round" stroke-linejoin="round" />
+                                                        <path d="M17.5 17.5L13.875 13.875" stroke="currentColor"
+                                                            stroke-width="2" stroke-linecap="round"
+                                                            stroke-linejoin="round" />
+                                                    </svg>
+                                                    <input type="text" class="form-control"
+                                                        placeholder="Search Students">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="table-responsive">
+                                    <table mat-table [dataSource]="pendingLists" matSort class="ch_table">
+                                        <!-- Checkbox Column -->
+                                        <ng-container matColumnDef="checkbox">
+                                            <th mat-header-cell *matHeaderCellDef>
+                                                <mat-checkbox class="example-margin"></mat-checkbox>
+                                            </th>
+                                            <td mat-cell *matCellDef="let element">
+                                                <mat-checkbox class="example-margin"></mat-checkbox>
+                                            </td>
+                                        </ng-container>
+
+                                        <!--  Student Id Column -->
+                                        <ng-container matColumnDef="student_id">
+                                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Student Id </th>
+                                            <td mat-cell *matCellDef="let row"> {{row.student_id}} </td>
+                                        </ng-container>
+                                        <!--  Name Column -->
+                                        <ng-container matColumnDef="name">
+                                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
+                                            <td mat-cell *matCellDef="let row"> {{row.name}} </td>
+                                        </ng-container>
+                                        <!-- Email Column -->
+                                        <ng-container matColumnDef="email">
+                                            <th mat-header-cell *matHeaderCellDef mat-sort-header>Email </th>
+                                            <td mat-cell *matCellDef="let row">{{row.email}}>
+                                            </td>
+                                        </ng-container>
+                                        <!-- Status Column -->
+                                        <ng-container matColumnDef="status">
+                                            <th mat-header-cell *matHeaderCellDef mat-sort-header>Status </th>
+                                            <td mat-cell *matCellDef="let row">
+                                                {{row.status}}
+                                            </td>
+                                        </ng-container>
+                                        <!-- File Column -->
+                                        <ng-container matColumnDef="file">
+                                            <th mat-header-cell *matHeaderCellDef mat-sort-header>File </th>
+                                            <td mat-cell *matCellDef="let row">
+                                                <svg width="32" height="32" viewBox="0 0 32 32" fill="none"
+                                                    xmlns="http://www.w3.org/2000/svg">
+                                                    <circle cx="16" cy="16" r="16" fill="#F8F8F8" />
+                                                    <path
+                                                        d="M16.75 8.5H11.5C11.1022 8.5 10.7206 8.65804 10.4393 8.93934C10.158 9.22064 10 9.60218 10 10V22C10 22.3978 10.158 22.7794 10.4393 23.0607C10.7206 23.342 11.1022 23.5 11.5 23.5H20.5C20.8978 23.5 21.2794 23.342 21.5607 23.0607C21.842 22.7794 22 22.3978 22 22V13.75L16.75 8.5Z"
+                                                        stroke="#575757" stroke-width="1.5" stroke-linecap="round"
+                                                        stroke-linejoin="round" />
+                                                </svg>
+
+                                            </td>
+                                        </ng-container>
+                                        <!-- Action column -->
+                                        <ng-container matColumnDef="actions">
+                                            <th mat-header-cell *matHeaderCellDef class="text-center"> Actions </th>
+                                            <td mat-cell *matCellDef="let row" class="text-center">
+                                                <button mat-icon-button [matMenuTriggerFor]="menu" class="td-btn">
+                                                    <mat-icon>more_horizantal</mat-icon>
+                                                </button>
+                                                <mat-menu #menu="matMenu" class="td-menu">
+                                                    <a mat-menu-item data-toggle="modal" data-target="#approvePopup">
+                                                        <span>Approve</span>
+                                                    </a>
+                                                    <a mat-menu-item data-toggle="modal"
+                                                        data-target="#sendEmailTrackProgress">
+                                                        <span>Send Email</span>
+                                                    </a>
+                                                    <a mat-menu-item class="danger">
+                                                        <span>Decline</span>
+                                                    </a>
+                                                </mat-menu>
+
+                                            </td>
+                                        </ng-container>
+                                        <tr mat-header-row *matHeaderRowDef="displayedPendingListsColumns"></tr>
+                                        <tr mat-row *matRowDef="let row; columns: displayedPendingListsColumns;"></tr>
+                                    </table>
+                                </div>
+                            </mat-tab>
+                            <mat-tab>
+                                <ng-template mat-tab-label>Completed <span
+                                        class="mat_label_count">2</span></ng-template>
+
+                            </mat-tab>
+                        </mat-tab-group>
+                    </div>
+                </div>
+                <div class="step_task_card">
+                    <div class="track_card_header">
+                        <div class="row align-items-center">
+                            <div class="col-8">
+                                <p>Attend Internship Information Session (IIS) in person only</p>
+                            </div>
+                            <div class="col-4 text-right">
+                                <button class="toggle_btn_track" (click)="collapsToggle(2)"
+                                    [ngClass]="showCollapes == 1 ? 'show' : ''" mat-icon-button><svg width="19"
+                                        height="8" viewBox="0 0 19 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M1.5 1L9.5 7L17.5 1" stroke="#2B2A35" stroke-width="2"
+                                            stroke-linecap="round" stroke-linejoin="round" />
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="track_card_body" *ngIf="showCollapes == 2">
+                        <mat-tab-group animationDuration="0ms" class="custom_nav_tabs">
+                            <mat-tab>
+                                <ng-template mat-tab-label>Not Started <span
+                                        class="mat_label_count">4</span></ng-template>
+                                <div class="tab_table_header">
+                                    <div class="row mx-0">
+                                        <div class="col-md-6 pl-0">
+                                            <button mat-button class="theme_btn theme_link_btn" data-toggle="modal"
+                                                data-target="#sendEmailTrackProgress">
+                                                <svg class="mr-2" width="24" height="25" viewBox="0 0 24 25" fill="none"
+                                                    xmlns="http://www.w3.org/2000/svg">
+                                                    <path
+                                                        d="M4 4.5H20C21.1 4.5 22 5.4 22 6.5V18.5C22 19.6 21.1 20.5 20 20.5H4C2.9 20.5 2 19.6 2 18.5V6.5C2 5.4 2.9 4.5 4 4.5Z"
+                                                        stroke="#464BA8" stroke-width="1.5" stroke-linecap="round"
+                                                        stroke-linejoin="round" />
+                                                    <path d="M22 6.5L12 13.5L2 6.5" stroke="#464BA8" stroke-width="1.5"
+                                                        stroke-linecap="round" stroke-linejoin="round" />
+                                                </svg>
+                                                Email
+                                            </button>
+                                            <button mat-button class="theme_btn theme_link_btn" data-toggle="modal"
+                                                data-target="#sendReminaderTrackProgress">
+                                                <svg class="mr-2" width="24" height="25" viewBox="0 0 24 25" fill="none"
+                                                    xmlns="http://www.w3.org/2000/svg">
+                                                    <path
+                                                        d="M12 22.5C17.5228 22.5 22 18.0228 22 12.5C22 6.97715 17.5228 2.5 12 2.5C6.47715 2.5 2 6.97715 2 12.5C2 18.0228 6.47715 22.5 12 22.5Z"
+                                                        stroke="#464BA8" stroke-width="1.5" stroke-linecap="round"
+                                                        stroke-linejoin="round" />
+                                                    <path d="M12 8.5V12.5" stroke="#464BA8" stroke-width="1.5"
+                                                        stroke-linecap="round" stroke-linejoin="round" />
+                                                    <path d="M12 16.5H12.01" stroke="#464BA8" stroke-width="1.5"
+                                                        stroke-linecap="round" stroke-linejoin="round" />
+                                                </svg>
+                                                Send Reminder
+                                            </button>
+                                        </div>
+                                        <div class="col-md-6 text-right pr-0">
+                                            <div class="d-inline-flex align-items-center">
+                                                <div class="search-container">
+                                                    <svg class="icon" xmlns="http://www.w3.org/2000/svg" width="20"
+                                                        height="20" viewBox="0 0 20 20" fill="none">
+                                                        <path
+                                                            d="M9.16667 15.8333C12.8486 15.8333 15.8333 12.8486 15.8333 9.16667C15.8333 5.48477 12.8486 2.5 9.16667 2.5C5.48477 2.5 2.5 5.48477 2.5 9.16667C2.5 12.8486 5.48477 15.8333 9.16667 15.8333Z"
+                                                            stroke="currentColor" stroke-width="2"
+                                                            stroke-linecap="round" stroke-linejoin="round" />
+                                                        <path d="M17.5 17.5L13.875 13.875" stroke="currentColor"
+                                                            stroke-width="2" stroke-linecap="round"
+                                                            stroke-linejoin="round" />
+                                                    </svg>
+                                                    <input type="text" class="form-control"
+                                                        placeholder="Search Students">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="table-responsive">
+                                    <table mat-table [dataSource]="notStartedLists" matSort class="ch_table">
+                                        <!-- Checkbox Column -->
+                                        <ng-container matColumnDef="checkbox">
+                                            <th mat-header-cell *matHeaderCellDef>
+                                                <mat-checkbox class="example-margin"></mat-checkbox>
+                                            </th>
+                                            <td mat-cell *matCellDef="let element">
+                                                <mat-checkbox class="example-margin"></mat-checkbox>
+                                            </td>
+                                        </ng-container>
+
+                                        <!--  Student Id Column -->
+                                        <ng-container matColumnDef="student_id">
+                                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Student Id </th>
+                                            <td mat-cell *matCellDef="let row"> {{row.student_id}} </td>
+                                        </ng-container>
+                                        <!--  Name Column -->
+                                        <ng-container matColumnDef="name">
+                                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
+                                            <td mat-cell *matCellDef="let row"> {{row.name}} </td>
+                                        </ng-container>
+                                        <!-- Email Column -->
+                                        <ng-container matColumnDef="email">
+                                            <th mat-header-cell *matHeaderCellDef mat-sort-header>Email </th>
+                                            <td mat-cell *matCellDef="let row">{{row.email}}>
+                                            </td>
+                                        </ng-container>
+                                        <!-- Status Column -->
+                                        <ng-container matColumnDef="status">
+                                            <th mat-header-cell *matHeaderCellDef mat-sort-header>Status </th>
+                                            <td mat-cell *matCellDef="let row">
+                                                {{row.status}}
+                                            </td>
+                                        </ng-container>
+                                        <!-- Action column -->
+                                        <ng-container matColumnDef="actions">
+                                            <th mat-header-cell *matHeaderCellDef class="text-center"> Actions </th>
+                                            <td mat-cell *matCellDef="let row" class="text-center">
+                                                <button mat-icon-button [matMenuTriggerFor]="menu" class="td-btn">
+                                                    <mat-icon>more_horizantal</mat-icon>
+                                                </button>
+                                                <mat-menu #menu="matMenu" class="td-menu">
+                                                    <a mat-menu-item routerLink="/admin/wil/view-student-profile">
+                                                        <span>View Tasks</span>
+                                                    </a>
+                                                    <a mat-menu-item data-toggle="modal"
+                                                        data-target="#sendEmailTrackProgress">
+                                                        <span>Send Email</span>
+                                                    </a>
+                                                    <a mat-menu-item data-toggle="modal"
+                                                        data-target="#sendReminaderTrackProgress">
+                                                        <span>Send Reminder</span>
+                                                    </a>
+                                                </mat-menu>
+
+                                            </td>
+                                        </ng-container>
+                                        <tr mat-header-row *matHeaderRowDef="displayedNotStartedListsColumns"></tr>
+                                        <tr mat-row *matRowDef="let row; columns: displayedNotStartedListsColumns;">
+                                        </tr>
+                                    </table>
+                                </div>
+                            </mat-tab>
+                            <mat-tab>
+                                <ng-template mat-tab-label>Pending <span class="mat_label_count">2</span></ng-template>
+                                <div class="tab_table_header">
+                                    <div class="row mx-0">
+                                        <div class="col-md-6 pl-0">
+                                            <button mat-button class="theme_btn theme_link_btn" data-toggle="modal"
+                                                data-target="#sendEmailTrackProgress">
+                                                <svg class="mr-2" width="24" height="25" viewBox="0 0 24 25" fill="none"
+                                                    xmlns="http://www.w3.org/2000/svg">
+                                                    <path
+                                                        d="M4 4.5H20C21.1 4.5 22 5.4 22 6.5V18.5C22 19.6 21.1 20.5 20 20.5H4C2.9 20.5 2 19.6 2 18.5V6.5C2 5.4 2.9 4.5 4 4.5Z"
+                                                        stroke="#464BA8" stroke-width="1.5" stroke-linecap="round"
+                                                        stroke-linejoin="round" />
+                                                    <path d="M22 6.5L12 13.5L2 6.5" stroke="#464BA8" stroke-width="1.5"
+                                                        stroke-linecap="round" stroke-linejoin="round" />
+                                                </svg>
+                                                Email
+                                            </button>
+                                        </div>
+                                        <div class="col-md-6 text-right pr-0">
+                                            <div class="d-inline-flex align-items-center">
+                                                <div class="search-container">
+                                                    <svg class="icon" xmlns="http://www.w3.org/2000/svg" width="20"
+                                                        height="20" viewBox="0 0 20 20" fill="none">
+                                                        <path
+                                                            d="M9.16667 15.8333C12.8486 15.8333 15.8333 12.8486 15.8333 9.16667C15.8333 5.48477 12.8486 2.5 9.16667 2.5C5.48477 2.5 2.5 5.48477 2.5 9.16667C2.5 12.8486 5.48477 15.8333 9.16667 15.8333Z"
+                                                            stroke="currentColor" stroke-width="2"
+                                                            stroke-linecap="round" stroke-linejoin="round" />
+                                                        <path d="M17.5 17.5L13.875 13.875" stroke="currentColor"
+                                                            stroke-width="2" stroke-linecap="round"
+                                                            stroke-linejoin="round" />
+                                                    </svg>
+                                                    <input type="text" class="form-control"
+                                                        placeholder="Search Students">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="table-responsive">
+                                    <table mat-table [dataSource]="pendingLists" matSort class="ch_table">
+                                        <!-- Checkbox Column -->
+                                        <ng-container matColumnDef="checkbox">
+                                            <th mat-header-cell *matHeaderCellDef>
+                                                <mat-checkbox class="example-margin"></mat-checkbox>
+                                            </th>
+                                            <td mat-cell *matCellDef="let element">
+                                                <mat-checkbox class="example-margin"></mat-checkbox>
+                                            </td>
+                                        </ng-container>
+
+                                        <!--  Student Id Column -->
+                                        <ng-container matColumnDef="student_id">
+                                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Student Id </th>
+                                            <td mat-cell *matCellDef="let row"> {{row.student_id}} </td>
+                                        </ng-container>
+                                        <!--  Name Column -->
+                                        <ng-container matColumnDef="name">
+                                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
+                                            <td mat-cell *matCellDef="let row"> {{row.name}} </td>
+                                        </ng-container>
+                                        <!-- Email Column -->
+                                        <ng-container matColumnDef="email">
+                                            <th mat-header-cell *matHeaderCellDef mat-sort-header>Email </th>
+                                            <td mat-cell *matCellDef="let row">{{row.email}}>
+                                            </td>
+                                        </ng-container>
+                                        <!-- Status Column -->
+                                        <ng-container matColumnDef="status">
+                                            <th mat-header-cell *matHeaderCellDef mat-sort-header>Status </th>
+                                            <td mat-cell *matCellDef="let row">
+                                                {{row.status}}
+                                            </td>
+                                        </ng-container>
+                                        <!-- File Column -->
+                                        <ng-container matColumnDef="file">
+                                            <th mat-header-cell *matHeaderCellDef mat-sort-header>File </th>
+                                            <td mat-cell *matCellDef="let row">
+                                                <svg width="32" height="32" viewBox="0 0 32 32" fill="none"
+                                                    xmlns="http://www.w3.org/2000/svg">
+                                                    <circle cx="16" cy="16" r="16" fill="#F8F8F8" />
+                                                    <path
+                                                        d="M16.75 8.5H11.5C11.1022 8.5 10.7206 8.65804 10.4393 8.93934C10.158 9.22064 10 9.60218 10 10V22C10 22.3978 10.158 22.7794 10.4393 23.0607C10.7206 23.342 11.1022 23.5 11.5 23.5H20.5C20.8978 23.5 21.2794 23.342 21.5607 23.0607C21.842 22.7794 22 22.3978 22 22V13.75L16.75 8.5Z"
+                                                        stroke="#575757" stroke-width="1.5" stroke-linecap="round"
+                                                        stroke-linejoin="round" />
+                                                </svg>
+
+                                            </td>
+                                        </ng-container>
+                                        <!-- Action column -->
+                                        <ng-container matColumnDef="actions">
+                                            <th mat-header-cell *matHeaderCellDef class="text-center"> Actions </th>
+                                            <td mat-cell *matCellDef="let row" class="text-center">
+                                                <button mat-icon-button [matMenuTriggerFor]="menu" class="td-btn">
+                                                    <mat-icon>more_horizantal</mat-icon>
+                                                </button>
+                                                <mat-menu #menu="matMenu" class="td-menu">
+                                                    <a mat-menu-item data-toggle="modal" data-target="#approvePopup">
+                                                        <span>Approve</span>
+                                                    </a>
+                                                    <a mat-menu-item data-toggle="modal"
+                                                        data-target="#sendEmailTrackProgress">
+                                                        <span>Send Email</span>
+                                                    </a>
+                                                    <a mat-menu-item class="danger">
+                                                        <span>Decline</span>
+                                                    </a>
+                                                </mat-menu>
+
+                                            </td>
+                                        </ng-container>
+                                        <tr mat-header-row *matHeaderRowDef="displayedPendingListsColumns"></tr>
+                                        <tr mat-row *matRowDef="let row; columns: displayedPendingListsColumns;"></tr>
+                                    </table>
+                                </div>
+                            </mat-tab>
+                            <mat-tab>
+                                <ng-template mat-tab-label>Completed <span
+                                        class="mat_label_count">2</span></ng-template>
+
+                            </mat-tab>
+                        </mat-tab-group>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Apporve Popup -->
+<div class="modal fade bsModal ch_modal done_modal_popup" id="approvePopup" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+            </div>
+            <div class="modal-body text-center">
+                <h2>Bob’s file submission has been approved.</h2>
+            </div>
+            <div class="modal-footer justify-content-center">
+                <button mat-button class="theme_btn btn_primary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Email popup -->
+<app-send-email-popup modalId="sendEmailTrackProgress"></app-send-email-popup>
+
+<!-- Send Remindar -->
+
+<div class="modal fade bsModal ch_modal" id="sendReminaderTrackProgress" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title" id="exampleModalLabel">Send Reminder</h2>
+            </div>
+            <form>
+                <div class="modal-body pt-3">
+                    <div class="row">
+                        <div class="col-md-5">
+                            <div class="form-group">
+                                <label>Select Category</label>
+                                <ng-select [searchable]="false" [multiple]="false" bindLabel="name" bindValue="id"
+                                    [clearable]="false" placeholder="Choose a Category">
+                                    <ng-option value="Placement Student">Placement Student</ng-option>
+                                </ng-select>
+                            </div>
+                        </div>
+                        <div class="col-md-7">
+                            <div class="form-group">
+                                <label>Select a Template</label>
+                                <ng-select [searchable]="false" [multiple]="false" bindLabel="name" bindValue="id"
+                                    [clearable]="false" placeholder="Choose a Template">
+                                </ng-select>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label>Sending to</label>
+                                <div class="form-control sendingTo">
+                                    <div class="email_sendTo">
+                                        <div class="profile">
+                                            <img src="../../../../assets/img/avatars/1.jpg" alt="avatars">
+                                        </div>
+                                        <div class="d-inline-block">
+                                            <h5>Adi Baskara</h5>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="email">Heading</label>
+                                <input type="text" name="" id="title" placeholder="Heading" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label>Message</label>
+                                <quill-editor [modules]="modules"></quill-editor>
+                                <!-- <editor class="ch_editor" apiKey="zcwi1f81304uers1lcszh0iq2lbhcaxl5cj6ez0v89wr25z3" [init]="{
+                  height: 200,
+                  menubar: false,
+                  statusbar: true,
+                  placeholder: 'Email content',
+                  plugins: [
+    'textcolor',
+                  'advlist autolink lists link image charmap print preview anchor',
+                  'searchreplace visualblocks code fullscreen',
+                  'insertdatetime media table paste code help wordcount'
+                  ],
+                  toolbar:
+                  'bold italic | \
+                  bullist | formatselect | link |',
+    contextmenu: false
+              }"></editor> -->
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="modal-footer justify-content-center">
+                    <button mat-button type="button" class="theme_btn btn_outline_primary"
+                        data-dismiss="modal">Cancel</button>
+                    <button mat-button class="theme_btn btn_primary">Send</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,812 @@
+
+
+<div class="activity_list">
+
+    <div class="activity_card mt-4 mb-4" *ngFor="let item of onGoingPlacementWorkFlow; let j = index;">
+        <div class="activity_card_header">
+            <div class="left">
+                <div class="content main-title">
+                    <div class="complete_placemet_card" *ngIf="!item.toggle">
+                        <div class="complete_placemet_card_container details">
+                            <figure>
+                                <img [src]="item?.student_vacancy[0]?.company_logo ? item?.student_vacancy[0]?.company_logo : 'assets/img/company-logo-placeholder.svg'"
+                                    class="img-fluid" alt="company logo">
+                            </figure>
+                            <div class="content align-self-center d-flex flex-column">
+                                <h1> {{item?.job_post_info?.job_title}} <span class="type-span" *ngIf="item?.job_post_info">{{item?.job_post_info?.type=='internship'? 'WIL Internships' :'Capstone Projects'}}</span></h1>
+                                <a style="cursor: pointer;"
+                                    (click)="goToCompanyProfile(studentVacancyDetail, item)">{{item?.student_vacancy[0]?.company_name}}</a>
+                                <p *ngIf=" item?.student_vacancy && item?.student_vacancy[0] && item?.student_vacancy[0]?.job_location  && item?.student_vacancy[0]?.job_location?.name"><svg width="14" height="19" viewBox="0 0 14 19" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path fill-rule="evenodd" clip-rule="evenodd"
+                                            d="M7 18.1176L7.51157 17.6516C11.8134 13.7327 14 10.3109 14 7.30303C14 3.04347 10.8134 0 7 0C3.1866 0 0 3.04347 0 7.30303C0 10.3109 2.18657 13.7327 6.48843 17.6516L7 18.1176ZM6.99935 15.9558C3.34894 12.5235 1.5549 9.61497 1.5549 7.30297C1.5549 3.97328 4.01588 1.62284 6.99935 1.62284C9.98281 1.62284 12.4438 3.97328 12.4438 7.30297C12.4438 9.61497 10.6498 12.5235 6.99935 15.9558ZM6.99826 3.24609C9.14604 3.24609 10.8872 5.06258 10.8872 7.30333C10.8872 9.54408 9.14604 11.3606 6.99826 11.3606C4.85049 11.3606 3.10938 9.54408 3.10938 7.30333C3.10938 5.06258 4.85049 3.24609 6.99826 3.24609ZM4.67188 7.30299C4.67188 5.95854 5.71654 4.86865 7.00521 4.86865C8.29387 4.86865 9.33854 5.95854 9.33854 7.30299C9.33854 8.64744 8.29387 9.73734 7.00521 9.73734C5.71654 9.73734 4.67188 8.64744 4.67188 7.30299Z"
+                                            fill="#9A9A9A" />
+                                    </svg>
+                                    {{item?.student_vacancy[0]?.job_location?.name}}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <h1 class="h1-style" *ngIf="item.toggle">
+                       {{item?.job_post_info?.job_title}} <span class="type-span" *ngIf="item?.job_post_info">{{item?.job_post_info?.type=='internship'? 'WIL Internships' :'Capstone Projects'}}</span>
+                    </h1>
+                </div>
+            </div>
+            <div class="right">
+                <div class="d-inline-flex align-items-center">
+                    <button style="width:143px;border-radius: 5px;display: flex;align-items: center;" class="see-details" (click)="item.toggle = !item.toggle" [ngClass]="item.toggle ? 'show' : ''"
+                        mat-icon-button>See Details &nbsp;&nbsp;<svg width="18" height="8" viewBox="0 0 18 8" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path d="M1 1L9 7L17 1" stroke="#2B2A35" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="" *ngIf="item.toggle">
+            <div *ngIf="onGoingPlacementWorkFlow.length > 0" class="complete_placemet_card">
+                <!-- <div class="complete_placemet_card_container complete_placemet_card_header">
+                    <div class="content align-self-center ">
+                        <h1 class="d-inline-flex align-items-center"><svg class="mr-2" width="37" height="29"
+                                viewBox="0 0 37 29" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path
+                                    d="M4.07895 28.3333C3.09474 28.3333 2.2519 28.041 1.55042 27.4565C0.84895 26.8719 0.49881 26.1701 0.500003 25.3509V8.94737C0.500003 8.12719 0.85074 7.42483 1.55221 6.84026C2.25369 6.2557 3.09593 5.96392 4.07895 5.96491H11.2368V2.98246C11.2368 2.16228 11.5876 1.45991 12.2891 0.875353C12.9905 0.290792 13.8328 -0.00099162 14.8158 2.5318e-06H21.9737C22.9579 2.5318e-06 23.8007 0.292283 24.5022 0.876844C25.2037 1.46141 25.5538 2.16328 25.5526 2.98246V5.96491H32.7105C33.6947 5.96491 34.5376 6.25719 35.2391 6.84176C35.9405 7.42632 36.2907 8.12819 36.2895 8.94737V25.3509C36.2895 26.171 35.9387 26.8734 35.2373 27.458C34.5358 28.0425 33.6935 28.3343 32.7105 28.3333H4.07895ZM14.8158 5.96491H21.9737V2.98246H14.8158V5.96491Z"
+                                    fill="#464BA8" />
+                            </svg>
+                            {{studentProfile?.title}}</h1>
+                        <p>{{studentVacancyDetail?.contract_type}} | {{studentVacancyDetail?.work_type}} </p>
+                    </div> -->
+                    <!-- <div class="align-self-start text-right">
+                <button mat-icon-button [matMenuTriggerFor]="menu">
+                    <svg width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="M4.5 12C4.5 12.2652 4.60536 12.5196 4.79289 12.7071C4.98043 12.8946 5.23478 13 5.5 13C5.76522 13 6.01957 12.8946 6.20711 12.7071C6.39464 12.5196 6.5 12.2652 6.5 12C6.5 11.7348 6.39464 11.4804 6.20711 11.2929C6.01957 11.1054 5.76522 11 5.5 11C5.23478 11 4.98043 11.1054 4.79289 11.2929C4.60536 11.4804 4.5 11.7348 4.5 12ZM11.5 12C11.5 12.2652 11.6054 12.5196 11.7929 12.7071C11.9804 12.8946 12.2348 13 12.5 13C12.7652 13 13.0196 12.8946 13.2071 12.7071C13.3946 12.5196 13.5 12.2652 13.5 12C13.5 11.7348 13.3946 11.4804 13.2071 11.2929C13.0196 11.1054 12.7652 11 12.5 11C12.2348 11 11.9804 11.1054 11.7929 11.2929C11.6054 11.4804 11.5 11.7348 11.5 12ZM18.5 12C18.5 12.2652 18.6054 12.5196 18.7929 12.7071C18.9804 12.8946 19.2348 13 19.5 13C19.7652 13 20.0196 12.8946 20.2071 12.7071C20.3946 12.5196 20.5 12.2652 20.5 12C20.5 11.7348 20.3946 11.4804 20.2071 11.2929C20.0196 11.1054 19.7652 11 19.5 11C19.2348 11 18.9804 11.1054 18.7929 11.2929C18.6054 11.4804 18.5 11.7348 18.5 12Z"
+                            stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                </button>
+                <mat-menu #menu="matMenu" class="td-menu custome_theme_menu">
+                    <a mat-menu-item class="danger" data-toggle="modal" data-target="#request_withdrawal">
+                        <span>Request withdrawal</span>
+                    </a>
+                </mat-menu>
+            </div> -->
+                <!-- </div> -->
+                <div class="complete_placemet_card_container details">
+                    <figure>
+                        <img [src]="item?.student_vacancy[0]?.company_logo ? item?.student_vacancy[0]?.company_logo : 'assets/img/company-logo-placeholder.svg'"
+                            class="img-fluid" alt="company logo">
+                    </figure>
+                    <div class="content align-self-center">
+                        <a style="cursor: pointer;"
+                            (click)="goToCompanyProfile(studentVacancyDetail, item)">{{item?.student_vacancy[0]?.company_name}}</a>
+                          <p *ngIf=" item?.student_vacancy && item?.student_vacancy[0] && item?.student_vacancy[0]?.job_location  && item?.student_vacancy[0]?.job_location?.name"><svg width="14" height="19" viewBox="0 0 14 19" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path fill-rule="evenodd" clip-rule="evenodd"
+                                            d="M7 18.1176L7.51157 17.6516C11.8134 13.7327 14 10.3109 14 7.30303C14 3.04347 10.8134 0 7 0C3.1866 0 0 3.04347 0 7.30303C0 10.3109 2.18657 13.7327 6.48843 17.6516L7 18.1176ZM6.99935 15.9558C3.34894 12.5235 1.5549 9.61497 1.5549 7.30297C1.5549 3.97328 4.01588 1.62284 6.99935 1.62284C9.98281 1.62284 12.4438 3.97328 12.4438 7.30297C12.4438 9.61497 10.6498 12.5235 6.99935 15.9558ZM6.99826 3.24609C9.14604 3.24609 10.8872 5.06258 10.8872 7.30333C10.8872 9.54408 9.14604 11.3606 6.99826 11.3606C4.85049 11.3606 3.10938 9.54408 3.10938 7.30333C3.10938 5.06258 4.85049 3.24609 6.99826 3.24609ZM4.67188 7.30299C4.67188 5.95854 5.71654 4.86865 7.00521 4.86865C8.29387 4.86865 9.33854 5.95854 9.33854 7.30299C9.33854 8.64744 8.29387 9.73734 7.00521 9.73734C5.71654 9.73734 4.67188 8.64744 4.67188 7.30299Z"
+                                            fill="#9A9A9A" />
+                                    </svg>
+                                    {{item?.student_vacancy[0]?.job_location?.name}}</p>
+                    </div>
+                </div>
+                <div class="complete_placemet_card_body">
+    
+                    <div class="card_container row">
+                        <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6">
+                            <!-- data-toggle="modal" data-target="#calandar" -->
+                            <div class="header_card duration">
+                                <div class="content">
+                                    <h5>Duration</h5>
+                                    <ng-container *ngIf="item?.job_post_info?.type=='internship'">
+                                        <p>{{item?.student_info?.internship_start_date}} - {{item?.student_info?.internship_end_date}}
+                                        </p>
+                                      <!-- <span>12 weeks, 3 months </span> -->
+                                     <span>{{ getInternshipDuration(item?.student_info?.internship_start_date, item?.student_info?.internship_end_date) }}</span>
+                                    </ng-container>
+                                     <ng-container *ngIf="item?.job_post_info?.type=='project'">
+                                        <p>{{item?.project_start_date}} - {{item?.project_end_date}}
+                                        </p>
+                                      <!-- <span>12 weeks, 3 months </span> -->
+                                     <span>{{ getInternshipDuration(item?.project_start_date, item?.project_end_date) }}</span>
+                                    </ng-container>
+                                 
+                                  
+                                </div>
+                                <div class="align-self-center" style="color: #F47761;">
+                                    <svg width="45" height="45" viewBox="0 0 45 45" fill="none"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <circle cx="22.5" cy="22.5" r="22.5" fill="#F47761" />
+                                        <path
+                                            d="M30 15H16C14.8954 15 14 15.8954 14 17V31C14 32.1046 14.8954 33 16 33H30C31.1046 33 32 32.1046 32 31V17C32 15.8954 31.1046 15 30 15Z"
+                                            stroke="white" stroke-width="2" stroke-linecap="round"
+                                            stroke-linejoin="round" />
+                                        <path d="M27 13V17" stroke="white" stroke-width="2" stroke-linecap="round"
+                                            stroke-linejoin="round" />
+                                        <path d="M19 13V17" stroke="white" stroke-width="2" stroke-linecap="round"
+                                            stroke-linejoin="round" />
+                                        <path d="M14 21H32" stroke="white" stroke-width="2" stroke-linecap="round"
+                                            stroke-linejoin="round" />
+                                    </svg>
+                                    <!-- <a>Calendar</a> -->
+                                </div>
+    
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6">
+                            <!-- (click)="currentTaskTab = 'task_progress'" -->
+                            <div class="header_card duration">
+                                <div class="content">
+                                    <h5>Task Progress</h5>
+                                    <ul class="progress_step">
+                                        <li>
+                                            <span>
+                                                <svg width="14" height="12" viewBox="0 0 14 12" fill="none"
+                                                    xmlns="http://www.w3.org/2000/svg">
+                                                    <path d="M12.7857 1.89258L4.79045 10.1016L1.15625 6.37023"
+                                                        stroke="white" stroke-width="2" stroke-linecap="round"
+                                                        stroke-linejoin="round" />
+                                                </svg>
+    
+                                            </span>
+                                        </li>
+                                        <li>
+                                            <span>
+                                                <svg width="14" height="12" viewBox="0 0 14 12" fill="none"
+                                                    xmlns="http://www.w3.org/2000/svg">
+                                                    <path d="M12.7857 1.89258L4.79045 10.1016L1.15625 6.37023"
+                                                        stroke="white" stroke-width="2" stroke-linecap="round"
+                                                        stroke-linejoin="round" />
+                                                </svg>
+    
+                                            </span>
+                                        </li>
+                                        <li class="step_progress">
+                                            <span>
+                                                <svg width="16" height="16" viewBox="0 0 16 16" fill="none"
+                                                    xmlns="http://www.w3.org/2000/svg">
+                                                    <path d="M7.97656 1.41602V4.03834" stroke="white" stroke-width="2"
+                                                        stroke-linecap="round" stroke-linejoin="round" />
+                                                    <path d="M7.97656 11.9062V14.5286" stroke="white" stroke-width="2"
+                                                        stroke-linecap="round" stroke-linejoin="round" />
+                                                    <path d="M3.34381 3.33789L5.19911 5.19319" stroke="white"
+                                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                                    <path d="M10.7579 10.752L12.6132 12.6072" stroke="white"
+                                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                                    <path d="M1.42188 7.97266H4.0442" stroke="white" stroke-width="2"
+                                                        stroke-linecap="round" stroke-linejoin="round" />
+                                                    <path d="M11.9141 7.97266H14.5364" stroke="white" stroke-width="2"
+                                                        stroke-linecap="round" stroke-linejoin="round" />
+                                                    <path d="M3.34381 12.6072L5.19911 10.752" stroke="white"
+                                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                                    <path d="M10.7579 5.19319L12.6132 3.33789" stroke="white"
+                                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                                </svg>
+    
+    
+                                            </span>
+                                        </li>
+                                        <li class="step_progress pending">
+                                            <span>
+                                                <svg width="15" height="14" viewBox="0 0 15 14" fill="none"
+                                                    xmlns="http://www.w3.org/2000/svg">
+                                                    <g clip-path="url(#clip0_16214_116021)">
+                                                        <path
+                                                            d="M11.3383 6.05469H3.16729C2.52261 6.05469 2 6.54464 2 7.14902V10.9792C2 11.5836 2.52261 12.0735 3.16729 12.0735H11.3383C11.983 12.0735 12.5056 11.5836 12.5056 10.9792V7.14902C12.5056 6.54464 11.983 6.05469 11.3383 6.05469Z"
+                                                            stroke="#9A9A9A" stroke-linecap="round"
+                                                            stroke-linejoin="round" />
+                                                        <path
+                                                            d="M4.33594 6.05341V3.86474C4.33594 3.13915 4.64339 2.44328 5.19066 1.93021C5.73794 1.41714 6.4802 1.12891 7.25416 1.12891C8.02812 1.12891 8.77038 1.41714 9.31765 1.93021C9.86493 2.44328 10.1724 3.13915 10.1724 3.86474V6.05341"
+                                                            stroke="#9A9A9A" stroke-linecap="round"
+                                                            stroke-linejoin="round" />
+                                                        <ellipse cx="7.25158" cy="8.14503" rx="1.23595" ry="1.15871"
+                                                            fill="#9A9A9A" />
+                                                        <rect x="6.84375" y="8.53125" width="0.823968" height="2.31741"
+                                                            fill="#9A9A9A" />
+                                                    </g>
+                                                    <defs>
+                                                        <clipPath id="clip0_16214_116021">
+                                                            <rect width="14.0075" height="13.132" fill="white"
+                                                                transform="translate(0.25 0.253906)" />
+                                                        </clipPath>
+                                                    </defs>
+                                                </svg>
+    
+                                            </span>
+                                        </li>
+                                    </ul>
+                                    <span>({{completedTaskCountOfOngoing}} / {{item && item.tasks && item.tasks.length}}
+                                        tasks)</span>
+                                </div>
+                                <div class="align-self-center" style="color: #26C296">
+                                    <svg width="45" height="45" viewBox="0 0 45 45" fill="none"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <circle cx="22.5" cy="22.5" r="22.5" fill="#26C296" />
+                                        <path
+                                            d="M26.5 13.25H28.75C29.3467 13.25 29.919 13.4871 30.341 13.909C30.7629 14.331 31 14.9033 31 15.5V31.25C31 31.8467 30.7629 32.419 30.341 32.841C29.919 33.2629 29.3467 33.5 28.75 33.5H15.25C14.6533 33.5 14.081 33.2629 13.659 32.841C13.2371 32.419 13 31.8467 13 31.25V15.5C13 14.9033 13.2371 14.331 13.659 13.909C14.081 13.4871 14.6533 13.25 15.25 13.25H17.5"
+                                            stroke="white" stroke-width="2" stroke-linecap="round"
+                                            stroke-linejoin="round" />
+                                        <path
+                                            d="M25.375 11H18.625C18.0037 11 17.5 11.5037 17.5 12.125V14.375C17.5 14.9963 18.0037 15.5 18.625 15.5H25.375C25.9963 15.5 26.5 14.9963 26.5 14.375V12.125C26.5 11.5037 25.9963 11 25.375 11Z"
+                                            stroke="white" stroke-width="2" stroke-linecap="round"
+                                            stroke-linejoin="round" />
+                                    </svg>
+                                    <!-- <a>Update</a> -->
+                                </div>
+                            </div>
+                        </div>
+                        <!-- (click)="currentTaskTab = 'working_hours'" -->
+                        <!-- <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6">
+                            <div class="header_card duration">
+                                <div class="content">
+                                    <h5>Working Hours</h5>
+                                    <div class="progress">
+                                        <div class="progress-bar" style="width: 70%;" role="progressbar" id="pp"
+                                            aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
+                                            {{completedWorkingHours}}h</div>
+                                    </div>
+                                    <span>({{completedWorkingHours}} / {{totalWorkingHours}} hrs)</span>
+                                </div>
+                                <div class="align-self-center" style="color: #464BA8;">
+                                    <svg width="45" height="45" viewBox="0 0 45 45" fill="none"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <circle cx="22.5" cy="22.5" r="22.5" fill="#464BA8" />
+                                        <path
+                                            d="M22.5026 32.9154C28.2556 32.9154 32.9193 28.2517 32.9193 22.4987C32.9193 16.7457 28.2556 12.082 22.5026 12.082C16.7496 12.082 12.0859 16.7457 12.0859 22.4987C12.0859 28.2517 16.7496 32.9154 22.5026 32.9154Z"
+                                            stroke="white" stroke-width="2" stroke-linecap="round"
+                                            stroke-linejoin="round" />
+                                        <path d="M22.5 16.25V22.5L26.6667 24.5833" stroke="white" stroke-width="2"
+                                            stroke-linecap="round" stroke-linejoin="round" />
+                                    </svg>
+                                </div>
+                            </div>
+                        </div> -->
+                        <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6">
+                            <!-- data-toggle="modal" data-target="#contact" -->
+                            <div class="header_card duration">
+                                <div class="content">
+                                    <h5>Supervisor</h5>
+                                    <ng-container *ngIf="item?.job_post_info?.type=='internship'">
+                                        <p>{{item?.student_vacancy[0]?.supervisor?.supervisor}}</p>
+                                        <span>{{item?.student_vacancy[0]?.supervisor?.primary_email}}</span>
+                                    </ng-container>
+                                    <ng-container *ngIf="item?.job_post_info?.type=='project'">
+                                        <p>{{item?.supervisor}}</p>
+                                        <span>{{item?.primary_email}}</span>
+                                    </ng-container>
+                                   
+                                </div>
+                                <div class="align-self-center" style="color: #F2C94C">
+                                    <svg width="45" height="45" viewBox="0 0 45 45" fill="none"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <circle cx="22.5" cy="22.5" r="22.5" fill="#F2C94C" />
+                                        <path
+                                            d="M15 15H31C32.1 15 33 15.9 33 17V29C33 30.1 32.1 31 31 31H15C13.9 31 13 30.1 13 29V17C13 15.9 13.9 15 15 15Z"
+                                            stroke="white" stroke-width="2" stroke-linecap="round"
+                                            stroke-linejoin="round" />
+                                        <path d="M33 17L23 24L13 17" stroke="white" stroke-width="2" stroke-linecap="round"
+                                            stroke-linejoin="round" />
+                                    </svg>
+                                    <!-- <a>Contact</a> -->
+                                </div>
+    
+    
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div *ngIf="item && item.tasks &&  item.tasks.length > 0" class="task_tab_header">
+                <div class="icon_with_title" [ngClass]="{'active': currentTaskTab == 'task_progress'}"
+                    (click)="changeTaskTab('task_progress')">
+                    <svg width="45" height="45" viewBox="0 0 45 45" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="22.5" cy="22.5" r="22.5" fill="currentColor" />
+                        <path
+                            d="M26.5 13.25H28.75C29.3467 13.25 29.919 13.4871 30.341 13.909C30.7629 14.331 31 14.9033 31 15.5V31.25C31 31.8467 30.7629 32.419 30.341 32.841C29.919 33.2629 29.3467 33.5 28.75 33.5H15.25C14.6533 33.5 14.081 33.2629 13.659 32.841C13.2371 32.419 13 31.8467 13 31.25V15.5C13 14.9033 13.2371 14.331 13.659 13.909C14.081 13.4871 14.6533 13.25 15.25 13.25H17.5"
+                            stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                        <path
+                            d="M25.375 11H18.625C18.0037 11 17.5 11.5037 17.5 12.125V14.375C17.5 14.9963 18.0037 15.5 18.625 15.5H25.375C25.9963 15.5 26.5 14.9963 26.5 14.375V12.125C26.5 11.5037 25.9963 11 25.375 11Z"
+                            stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                    Task Progress
+                </div>
+                <!-- <div class="icon_with_title" [ngClass]="{'active_working_hours': currentTaskTab == 'working_hours'}"
+            (click)="changeTaskTab('working_hours');">
+            <svg width="45" height="45" viewBox="0 0 45 45" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="22.5" cy="22.5" r="22.5" fill="currentColor" />
+                <path
+                    d="M22.5026 32.9154C28.2556 32.9154 32.9193 28.2517 32.9193 22.4987C32.9193 16.7457 28.2556 12.082 22.5026 12.082C16.7496 12.082 12.0859 16.7457 12.0859 22.4987C12.0859 28.2517 16.7496 32.9154 22.5026 32.9154Z"
+                    stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                <path d="M22.5 16.25V22.5L26.6667 24.5833" stroke="white" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round" />
+            </svg>
+    
+            Working Hours
+        </div> -->
+            </div>
+      
+            <div *ngIf="item && item.tasks && item.tasks.length > 0" class="task_tab_container">
+                <ng-container *ngIf="currentTaskTab == 'task_progress'">
+                    <div class="activity_list">
+                        <div class="activity_card_container" *ngFor="let task of item.tasks; let i = index;">
+                            <div class="status_bar"
+                                [ngClass]="task.task_status === 'lock' ? 'step_progress pending' : (task.task_status === 'pending' ? 'step_progress' : '')">
+                                <span *ngIf="task.task_status === 'completed'" class="bar">
+                                    <svg width="19" height="14" viewBox="0 0 19 14" fill="none"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M18 1L6.3125 13L1 7.54545" stroke="white" stroke-width="2"
+                                            stroke-linecap="round" stroke-linejoin="round" />
+                                    </svg>
+    
+                                </span>
+                                <span *ngIf="task.task_status === 'pending'" class="bar">
+                                    <svg width="25" height="25" viewBox="0 0 25 25" fill="none"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M12.5 2.08203V6.2487" stroke="white" stroke-width="2"
+                                            stroke-linecap="round" stroke-linejoin="round" />
+                                        <path d="M12.5 18.75V22.9167" stroke="white" stroke-width="2" stroke-linecap="round"
+                                            stroke-linejoin="round" />
+                                        <path d="M5.14062 5.13477L8.08854 8.08268" stroke="white" stroke-width="2"
+                                            stroke-linecap="round" stroke-linejoin="round" />
+                                        <path d="M16.9219 16.918L19.8698 19.8659" stroke="white" stroke-width="2"
+                                            stroke-linecap="round" stroke-linejoin="round" />
+                                        <path d="M2.08594 12.5H6.2526" stroke="white" stroke-width="2"
+                                            stroke-linecap="round" stroke-linejoin="round" />
+                                        <path d="M18.75 12.5H22.9167" stroke="white" stroke-width="2" stroke-linecap="round"
+                                            stroke-linejoin="round" />
+                                        <path d="M5.14062 19.8639L8.08854 16.916" stroke="white" stroke-width="2"
+                                            stroke-linecap="round" stroke-linejoin="round" />
+                                        <path d="M16.9219 8.08464L19.8698 5.13672" stroke="white" stroke-width="2"
+                                            stroke-linecap="round" stroke-linejoin="round" />
+                                    </svg>
+    
+    
+                                </span>
+                                <span *ngIf="task.task_status === 'lock'" class="bar">
+                                    <svg width="17" height="17" viewBox="0 0 17 17" fill="none"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <path
+                                            d="M13.4583 7.79297H3.54167C2.75926 7.79297 2.125 8.42723 2.125 9.20964V14.168C2.125 14.9504 2.75926 15.5846 3.54167 15.5846H13.4583C14.2407 15.5846 14.875 14.9504 14.875 14.168V9.20964C14.875 8.42723 14.2407 7.79297 13.4583 7.79297Z"
+                                            stroke="#9A9A9A" stroke-linecap="round" stroke-linejoin="round" />
+                                        <path
+                                            d="M4.95801 7.79297V4.95964C4.95801 4.02033 5.33115 3.11949 5.99534 2.4553C6.65953 1.79111 7.56037 1.41797 8.49967 1.41797C9.43898 1.41797 10.3398 1.79111 11.004 2.4553C11.6682 3.11949 12.0413 4.02033 12.0413 4.95964V7.79297"
+                                            stroke="#9A9A9A" stroke-linecap="round" stroke-linejoin="round" />
+                                        <circle cx="8.5" cy="10.5" r="1.5" fill="#9A9A9A" />
+                                        <rect x="8" y="11" width="1" height="3" fill="#9A9A9A" />
+                                    </svg>
+    
+                                </span>
+                            </div>
+                            <div class="activity_card">
+                                <div class="activity_card_header align-items-center">
+                                    <div class="left ">
+                                        <div class="content"><span>{{i+1}}</span>
+                                            <p>{{task.name}}</p>
+                                        </div>
+                                    </div>
+                                    <div class="right">
+                                        <div class="d-inline-flex align-items-center">
+                                            <span *ngIf="task.task_status=='lock'" style="color: #9A9A9A;">Lock</span>
+    
+                                            <!-- <span *ngIf="task.task_status!='lock'"
+                                                [ngClass]="{'orange': task.student_status === 'pending' || taskStatus(task.student_status) =='In Progress'}">{{taskStatus(task.student_status)}}</span> -->
+   <span *ngIf="task.task_status!='lock' && task.submission_timestamp && task.task_display_status =='In Progress'" class="timestamp-form">
+                                            {{task.submission_timestamp | date:'dd/MM/yy, hh:mm a'}}
+                                    </span>
+                                    <!-- <span *ngIf="task.task_status!='lock'" [ngClass]="{'orange': task.student_status === 'pending' || taskStatus(task.student_status, task) =='In Progress', 'primary': taskStatus(task.student_status, task) =='Awaiting Approval'}">{{taskStatus(task.student_status, task)}}</span> -->
+  <span *ngIf="task?.task_status !== 'lock'" [ngClass]="{
+                                                'orange': task?.task_display_status === 'pending' || task?.task_display_status === 'In Progress',
+                                                'primary': task?.task_display_status === 'Awaiting Approval',
+                                                'success': (task?.task_display_status === 'Completed' || task?.task_status === 'Completed')
+                                            }">
+                                        {{ task?.task_display_status ||  task?.task_status }}
+                                        </span>
+
+                                            <button (click)="collapsToggle(task)"
+                                                [ngClass]="task.showCollapes ? 'show' : ''" mat-icon-button><svg width="18"
+                                                    height="8" viewBox="0 0 18 8" fill="none"
+                                                    xmlns="http://www.w3.org/2000/svg">
+                                                    <path d="M1 1L9 7L17 1" stroke="#2B2A35" stroke-width="2"
+                                                        stroke-linecap="round" stroke-linejoin="round" />
+                                                </svg>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="activity_card_body" *ngIf="task.showCollapes">
+                                    <div *ngIf="task.completion_criteria === 'Submit a Form'">
+                                        <p [innerHTML]="task.description"></p>
+                                        <div class="text-center">
+                                            <!-- <button *ngIf="task.task_status === 'completed'" mat-button
+                                        class="theme_btn btn_primary" (click)="goToStudentForm(task)">View
+                                        Submission</button>
+                                    <button *ngIf="task.task_status === 'pending'" mat-button class="theme_btn btn_primary"
+                                        (click)="goToStudentForm(task)">Start the
+                                        Form</button>
+                                    <button *ngIf="task.task_status === 'lock'" mat-button class="theme_btn btn_primary"
+                                        disabled>Start the
+                                        Form</button> -->
+                                        </div>
+                                    </div>
+                                    <div
+                                        *ngIf="task.completion_criteria === 'Get Document Approval' || task.completion_criteria === 'Student Uploads Document'">
+                                        <p class="text-center" [innerHTML]="task.description"></p>
+    
+                                        <div *ngIf="task.task_status !== 'completed'" class="file_upload" matRipple>
+                                            <p><strong>Drag file here or <span>browse</span> </strong><br>
+                                                Accepted file types: Adobe PDF (.pdf). <br>
+                                                5MB file size limit.
+                                            </p>
+                                            <label class="file_upload_label" for="image"></label>
+                                            <input name="img" type="file" id="image" accept=".doc, .docx, .pdf"
+                                                (change)="uploadFile($event, task)">
+                                        </div>
+                                        <div class="files_list mt-3" *ngIf="task?.file" style="max-width: 550px; margin: auto;">
+                                        <li>
+                                            <div class="file_card">
+                                                <div class="content">
+                                                    <div class="svg-width d-flex justify-content-center align-items-center" style="width: 60px;height:48px;padding-right: 8px;" [innerHTML]="getSafeSvg(task.file.name)"></div>
+                                                    <p>{{task.file.name}}</p>
+                                                </div>
+                                                <div class="btn_group">
+    
+                                                    <button (click)="viewFile(0, task.file)" mat-icon-button>
+                                                        <svg width="35" height="36" viewBox="0 0 35 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                        <circle cx="17.5" cy="17.9297" r="17.5" fill="#F8F8F8"/>
+                                                        <path d="M9.29565 18.1929C9.1361 17.9898 9.00404 17.8119 8.90095 17.6683C8.99761 17.5269 9.1211 17.3527 9.27053 17.1543C9.69179 16.5948 10.3145 15.849 11.1183 15.1051C12.7353 13.6083 15.0165 12.1797 17.8214 12.1797C20.6263 12.1797 22.9076 13.6083 24.5246 15.1051C25.3283 15.849 25.9511 16.5948 26.3723 17.1543C26.5218 17.3527 26.6452 17.5269 26.7419 17.6683C26.6388 17.8119 26.5068 17.9898 26.3472 18.1929C25.9058 18.7547 25.2587 19.5032 24.4375 20.2497C22.7807 21.7558 20.4992 23.1797 17.8214 23.1797C15.1437 23.1797 12.8621 21.7558 11.2054 20.2497C10.3842 19.5032 9.73706 18.7547 9.29565 18.1929Z" stroke="#2B2A35" stroke-width="1.5"/>
+                                                        <circle cx="17.8214" cy="17.6808" r="2.82143" stroke="#2B2A35" stroke-width="1.5"/>
+                                                        </svg>
+                                                    </button>
+    
+                                                    <!-- <button (click)="downloadFile(i)" mat-icon-button>
+                                                    <svg width="35" height="35" viewBox="0 0 35 35" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                        <circle cx="17.5" cy="17.5" r="17.5" fill="#F8F8F8"/>
+                                                        <path fill-rule="evenodd" clip-rule="evenodd" d="M24.7923 20.4141V23.3307C24.7923 24.1361 24.1394 24.7891 23.334 24.7891H11.6673C10.8619 24.7891 10.209 24.1361 10.209 23.3307V20.4141H11.6673V23.3307H23.334V20.4141H24.7923Z" fill="#2B2A35"/>
+                                                        <path fill-rule="evenodd" clip-rule="evenodd" d="M18.2295 17.9258L20.6305 15.5248L21.6617 16.556L17.5003 20.7174L13.3389 16.556L14.3701 15.5248L16.7711 17.9258V10.207H18.2295V17.9258Z" fill="#2B2A35"/>
+                                                        </svg>
+                                                        
+                                                        
+                                                </button> -->
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </div>
+                                        <div class="text-center">
+                                            <!-- <button *ngIf="task.task_status === 'completed'" mat-button
+                                        class="theme_btn btn_primary" (click)="getSubmittedTask(task)">View
+                                        Submission</button>
+                                    <button *ngIf="task.task_status === 'lock'" mat-button class="theme_btn btn_primary"
+                                        disabled>Submit</button>
+                                    <button *ngIf="task.task_status === 'pending'" mat-button class="theme_btn btn_primary"
+                                        [disabled]="!task.file?.name"
+                                        (click)="submitWorkflowttachment(task)">Submit</button> -->
+                                        </div>
+                                    </div>
+                                    <div *ngIf="task.completion_criteria === 'Attend Appointment'">
+                                        <p class="mb-1" [innerHTML]="task.description"></p>
+                                        <div class="text-center">
+                                            <!-- <button *ngIf="task.task_status === 'pending'" mat-button
+                                        class="theme_btn btn_primary">I have Attended the
+                                        Appointment</button>
+                                    <button *ngIf="task.task_status === 'lock'" mat-button class="theme_btn btn_primary"
+                                        disabled>I have Attended the
+                                        Appointment</button> -->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="d-flex align-self-center align-items-center">
+    
+                                <!-- [ngClass]="{'success': task.completed_step_count === task.total_step_count, 'pending': task.completed_step_count !== task.total_step_count}" -->
+                                <span class="span-babge" #tooltipRef="matTooltip" [matTooltip]="getMessage(task)" matTooltipPosition="above"
+                                    matTooltipClass="custom-tooltip"> {{task.completed_step_count ||
+                                    0}}/{{task.total_step_count || 0}}</span>
+                            </div>
+                        </div>
+                        <!-- <div class="activity_card_container">
+                    <div class="status_bar ">
+                        <span class="bar">
+                            <svg width="19" height="14" viewBox="0 0 19 14" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path d="M18 1L6.3125 13L1 7.54545" stroke="white" stroke-width="2"
+                                    stroke-linecap="round" stroke-linejoin="round" />
+                            </svg>
+    
+                        </span>
+                    </div>
+                    <div class="activity_card">
+                        <div class="activity_card_header">
+                            <div class="left ">
+                                <div class="content"><span>02</span>
+                                    <p>Book & Attend the Pre Placement Interview (PPI)</p>
+                                </div>
+                            </div>
+                            <div class="right">
+                                <div class="d-inline-flex align-items-center"><span>Locked</span>
+                                    <button (click)="collapsToggle(2)" [ngClass]="showCollapes == 2 ? 'show' : ''"
+                                        mat-icon-button><svg width="18" height="8" viewBox="0 0 18 8" fill="none"
+                                            xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M1 1L9 7L17 1" stroke="#2B2A35" stroke-width="2"
+                                                stroke-linecap="round" stroke-linejoin="round" />
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="activity_card_body" *ngIf="showCollapes == 2">
+                            <div>
+                                <p class="mb-1">Please attend the event on 24 January, 12 pm AEDT.</p>
+                                <ol>
+                                    <li>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+                                        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+                                        quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+                                        consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+                                        cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat
+                                        non proident, sunt in culpa qui officia deserunt mollit anim id est
+                                        laborum.Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+                                        eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
+                                        veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
+                                        commodo consequat.</li>
+                                </ol>
+                                <div class="text-center">
+                                    <button mat-button class="theme_btn btn_primary">I have Attended the
+                                        Appointment</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="activity_card_container">
+                    <div class="status_bar step_progress">
+                        <span class="bar">
+                            <svg width="25" height="25" viewBox="0 0 25 25" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path d="M12.5 2.08203V6.2487" stroke="white" stroke-width="2"
+                                    stroke-linecap="round" stroke-linejoin="round" />
+                                <path d="M12.5 18.75V22.9167" stroke="white" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" />
+                                <path d="M5.14062 5.13477L8.08854 8.08268" stroke="white" stroke-width="2"
+                                    stroke-linecap="round" stroke-linejoin="round" />
+                                <path d="M16.9219 16.918L19.8698 19.8659" stroke="white" stroke-width="2"
+                                    stroke-linecap="round" stroke-linejoin="round" />
+                                <path d="M2.08594 12.5H6.2526" stroke="white" stroke-width="2"
+                                    stroke-linecap="round" stroke-linejoin="round" />
+                                <path d="M18.75 12.5H22.9167" stroke="white" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" />
+                                <path d="M5.14062 19.8639L8.08854 16.916" stroke="white" stroke-width="2"
+                                    stroke-linecap="round" stroke-linejoin="round" />
+                                <path d="M16.9219 8.08464L19.8698 5.13672" stroke="white" stroke-width="2"
+                                    stroke-linecap="round" stroke-linejoin="round" />
+                            </svg>
+    
+    
+                        </span>
+                    </div>
+                    <div class="activity_card">
+                        <div class="activity_card_header">
+                            <div class="left ">
+                                <div class="content"><span>03</span>
+                                    <p>Submit Resume</p>
+                                </div>
+                            </div>
+                            <div class="right">
+                                <div class="d-inline-flex align-items-center"><span>Locked</span>
+                                    <button (click)="collapsToggle(3)" [ngClass]="showCollapes == 3 ? 'show' : ''"
+                                        mat-icon-button><svg width="18" height="8" viewBox="0 0 18 8" fill="none"
+                                            xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M1 1L9 7L17 1" stroke="#2B2A35" stroke-width="2"
+                                                stroke-linecap="round" stroke-linejoin="round" />
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="activity_card_body" *ngIf="showCollapes == 3">
+                            <div>
+                                <p class="text-center">Please upload your Resume in PDF format. Additionally, a
+                                    staff member will review and verify this document.</p>
+                                <div class="file_upload" matRipple>
+                                    <p><strong>Drag file here or <span>browse</span> </strong><br>
+                                        Accepted file types: Adobe PDF (.pdf). <br>
+                                        5MB file size limit.
+                                    </p>
+                                    <label class="file_upload_label" for="image"></label>
+                                    <input name="img" type="file" id="image" accept=".doc, .docx, .pdf">
+                                </div>
+                                <div class="text-center">
+                                    <button mat-button class="theme_btn btn_primary">Submit</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="activity_card_container">
+                    <div class="status_bar step_progress pending">
+                        <span class="bar">
+                            <svg width="17" height="17" viewBox="0 0 17 17" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path
+                                    d="M13.4583 7.79297H3.54167C2.75926 7.79297 2.125 8.42723 2.125 9.20964V14.168C2.125 14.9504 2.75926 15.5846 3.54167 15.5846H13.4583C14.2407 15.5846 14.875 14.9504 14.875 14.168V9.20964C14.875 8.42723 14.2407 7.79297 13.4583 7.79297Z"
+                                    stroke="#9A9A9A" stroke-linecap="round" stroke-linejoin="round" />
+                                <path
+                                    d="M4.95801 7.79297V4.95964C4.95801 4.02033 5.33115 3.11949 5.99534 2.4553C6.65953 1.79111 7.56037 1.41797 8.49967 1.41797C9.43898 1.41797 10.3398 1.79111 11.004 2.4553C11.6682 3.11949 12.0413 4.02033 12.0413 4.95964V7.79297"
+                                    stroke="#9A9A9A" stroke-linecap="round" stroke-linejoin="round" />
+                                <circle cx="8.5" cy="10.5" r="1.5" fill="#9A9A9A" />
+                                <rect x="8" y="11" width="1" height="3" fill="#9A9A9A" />
+                            </svg>
+    
+                        </span>
+                    </div>
+                    <div class="activity_card">
+                        <div class="activity_card_header">
+                            <div class="left ">
+                                <div class="content"><span>04</span>
+                                    <p>Review & Sign off Training Plan Form (TPF)</p>
+                                </div>
+                            </div>
+                            <div class="right">
+                                <div class="d-inline-flex align-items-center"><span>
+                                        Locked
+                                    </span>
+                                    <button (click)="collapsToggle(4)" [ngClass]="showCollapes == 4 ? 'show' : ''"
+                                        mat-icon-button><svg width="18" height="8" viewBox="0 0 18 8" fill="none"
+                                            xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M1 1L9 7L17 1" stroke="#2B2A35" stroke-width="2"
+                                                stroke-linecap="round" stroke-linejoin="round" />
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="activity_card_body" *ngIf="showCollapes == 4">
+                            <div>
+                                <p>This is a form description based on what the staff member has set up. To complete
+                                    this task, the student must click the following CTA button to take them to a new
+                                    tab with the actual form. Once that form is submitted, this task will be marked
+                                    as complete.</p>
+                                <div class="text-center">
+                                    <button mat-button class="theme_btn btn_primary" disabled>Start the
+                                        Form</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div> -->
+                    </div>
+                </ng-container>
+                <ng-container *ngIf="currentTaskTab == 'working_hours'">
+                    <div class="row working_hour_container">
+                        <div class="col-12">
+                            <h4>Summary</h4>
+                        </div>
+                        <div class="col-3 left align-self-center">
+                            <h3>Total Hours Worked</h3>
+                            <h1>{{completedWorkingHours}} <span>/ {{totalWorkingHours}} hrs</span></h1>
+                            <div class="progress">
+                                <div class="progress-bar" style="width: 30%;" role="progressbar" id="pp" aria-valuenow="25"
+                                    aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+                        </div>
+                        <div class="col-9">
+                            <canvas baseChart width="400" height="100" [datasets]="overviewLineChartData"
+                                [labels]="overviewLineChartLabels" [options]="overviewLineChartOptions"
+                                [legend]="overviewLineChartLegend" [chartType]="overviewLineChartType">
+                            </canvas>
+                        </div>
+                    </div>
+                    <div class="hour_list">
+                        <div class="hour_list_item_card" [ngClass]="workingHour?.isCurrentWeek ? '' : 'inactive'"
+                            *ngFor="let workingHour of workingHoursDetail; let i = index;">
+                            <div class="row">
+                                <div class="col-md-6 left">
+                                    <div class="content">
+                                        <h3>Week {{i + 1}}</h3>
+                                        <span *ngIf="workingHour?.isCurrentWeek">(current week)</span>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 right">
+                                    <div class="content">
+                                        <svg width="26" height="26" viewBox="0 0 26 26" fill="none"
+                                            xmlns="http://www.w3.org/2000/svg">
+                                            <path
+                                                d="M13.0052 23.8327C18.9883 23.8327 23.8385 18.9824 23.8385 12.9993C23.8385 7.01626 18.9883 2.16602 13.0052 2.16602C7.02212 2.16602 2.17188 7.01626 2.17188 12.9993C2.17188 18.9824 7.02212 23.8327 13.0052 23.8327Z"
+                                                stroke="#464BA8" stroke-width="2" stroke-linecap="round"
+                                                stroke-linejoin="round" />
+                                            <path d="M13 6.5V13L17.3333 15.1667" stroke="#464BA8" stroke-width="2"
+                                                stroke-linecap="round" stroke-linejoin="round" />
+                                        </svg>
+                                        <p>Hours Worked:</p>
+                                        <ng-container *ngIf="!workingHour?.isEditWorkingHour">
+                                            <h3>{{workingHour?.working_hours}} <span>hrs</span></h3>
+                                            <!-- <button (click)="workingHour.isEditWorkingHour = true" *ngIf="workingHour?.isCurrentWeek" class="edit_btn" mat-icon-button><svg width="28" height="28" viewBox="0 0 28 28"
+                                        fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <circle cx="14" cy="14" r="14" fill="#F8F8F8" />
+                                        <path fill-rule="evenodd" clip-rule="evenodd"
+                                            d="M17.6444 6.41846C18.1082 6.41846 18.5528 6.60363 18.8775 6.93088L21.0739 9.12735C21.401 9.45437 21.5847 9.89791 21.5847 10.3604C21.5847 10.8229 21.401 11.2664 21.0739 11.5934L13.0545 19.6103C12.5598 20.181 11.8584 20.5317 11.055 20.5868H7.41797V19.8784L7.42027 16.8928C7.48061 16.1459 7.82786 15.4514 8.35757 14.9846L16.4105 6.93174C16.7371 6.60321 17.1812 6.41846 17.6444 6.41846ZM11.0063 19.1735C11.3847 19.1467 11.7369 18.9706 12.0197 18.647L17.3765 13.2903L14.7171 10.6309L9.32901 16.0177C9.04203 16.2715 8.86449 16.6266 8.83594 16.9514V19.1721L11.0063 19.1735ZM15.719 9.62927L18.3782 12.2886L20.0735 10.5933C20.1348 10.532 20.1693 10.4488 20.1693 10.362C20.1693 10.2752 20.1348 10.192 20.0735 10.1307L17.8751 7.93225C17.8144 7.87112 17.7318 7.83673 17.6457 7.83673C17.5596 7.83673 17.477 7.87112 17.4164 7.93225L15.719 9.62927Z"
+                                            fill="#464BA8" />
+                                    </svg>
+    
+                                </button> -->
+                                        </ng-container>
+                                        <ng-container *ngIf="workingHour?.isEditWorkingHour">
+                                            <div class="edit">
+                                                <h3><input type="text" [(ngModel)]="workingHour.working_hours" min="0"
+                                                        max="24"><span>hrs</span></h3>
+                                                <div class="up_down_value_btn"><svg width="24" height="24"
+                                                        viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                        <path d="M18 15L12 9L6 15" stroke="#464BA8" stroke-width="2"
+                                                            stroke-linecap="round" stroke-linejoin="round" />
+                                                    </svg>
+                                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                                        xmlns="http://www.w3.org/2000/svg">
+                                                        <path d="M6 9L12 15L18 9" stroke="#464BA8" stroke-width="2"
+                                                            stroke-linecap="round" stroke-linejoin="round" />
+                                                    </svg>
+    
+                                                </div>
+                                            </div>
+                                            <button (click)="submitStudentWorkingHours(workingHour)" class="edit_btn"
+                                                mat-icon-button><svg width="28" height="28" viewBox="0 0 28 28" fill="none"
+                                                    xmlns="http://www.w3.org/2000/svg">
+                                                    <g clip-path="url(#clip0_22342_32116)">
+                                                        <circle cx="14" cy="14" r="14" fill="#F8F8F8" />
+                                                        <path d="M21.3307 8.75L11.2474 19.2917L6.66406 14.5"
+                                                            stroke="#26C296" stroke-width="2" stroke-linecap="round"
+                                                            stroke-linejoin="round" />
+                                                    </g>
+                                                    <defs>
+                                                        <clipPath id="clip0_22342_32116">
+                                                            <rect width="28" height="28" fill="white" />
+                                                        </clipPath>
+                                                    </defs>
+                                                </svg>
+    
+                                            </button>
+                                            <button (click)="getWorkingHourForStudent()" class="edit_btn"
+                                                mat-icon-button><svg width="28" height="28" viewBox="0 0 28 28" fill="none"
+                                                    xmlns="http://www.w3.org/2000/svg">
+                                                    <g clip-path="url(#clip0_22342_32119)">
+                                                        <circle cx="14" cy="14" r="14" fill="#F8F8F8" />
+                                                        <path d="M19.5 8.75L8.5 20.25" stroke="#F47761" stroke-width="2"
+                                                            stroke-linecap="round" stroke-linejoin="round" />
+                                                        <path d="M8.5 8.75L19.5 20.25" stroke="#F47761" stroke-width="2"
+                                                            stroke-linecap="round" stroke-linejoin="round" />
+                                                    </g>
+                                                    <defs>
+                                                        <clipPath id="clip0_22342_32119">
+                                                            <rect width="28" height="28" fill="white" />
+                                                        </clipPath>
+                                                    </defs>
+                                                </svg>
+                                            </button>
+                                        </ng-container>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="separator"><a>Show All Entries</a></div>
+                </ng-container>
+            </div>
+        </div>
+    </div>
+</div>
+<div *ngIf="onGoingPlacementWorkFlow.length === 0" class="no_data">
+    <svg width="126" height="101" viewBox="0 0 126 101" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <g clip-path="url(#clip0_15421_144016)">
+            <path
+                d="M95.371 100.164L11.656 100.194C7.45041 100.195 3.68314 98.0061 1.57906 94.3383C0.526894 92.5041 0.000693685 90.4921 6.85071e-07 88.4797C-0.000692315 86.4676 0.52438 84.455 1.57504 82.6203L43.4059 5.91899C45.5077 2.24948 49.2735 0.0581061 53.4791 0.0566414C57.6848 0.0551766 61.452 2.24393 63.5564 5.91197L105.445 82.5937C106.495 84.4229 107.02 86.4326 107.02 88.4437C107.02 90.4548 106.495 92.4672 105.444 94.3021C103.342 97.9713 99.5766 100.163 95.371 100.164ZM1.0523 88.4783C1.05217 90.31 10.2898 86.363 11.2468 88.0314C13.1611 91.3683 7.82944 99.1373 11.6557 99.136C11.6557 99.136 102.623 97.1118 104.534 93.7736C105.49 92.1045 105.968 90.2734 105.967 88.4428C105.967 86.6122 105.488 84.7817 104.531 83.1133L62.6416 6.43154C60.7327 3.10425 57.3057 1.1129 53.4795 1.11423C49.655 1.11557 1.05245 86.6464 1.0523 88.4783Z"
+                fill="#3F3D56" />
+            <path
+                d="M77.9031 83.2491C99.0694 83.2491 116.228 65.9664 116.228 44.647C116.228 23.3277 99.0694 6.04492 77.9031 6.04492C56.7368 6.04492 39.5781 23.3277 39.5781 44.647C39.5781 65.9664 56.7368 83.2491 77.9031 83.2491Z"
+                fill="#464BA8" />
+            <path
+                d="M76.3835 53.0815L69.5859 23.488L74.9271 22.3555L80.5508 52.198L76.3835 53.0815ZM81.0564 64.2961C80.0781 64.5035 79.191 64.3645 78.3948 63.8791C77.6296 63.3462 77.1488 62.6099 76.9525 61.6702C76.7561 60.7305 76.9055 59.8811 77.4006 59.1219C77.9267 58.3152 78.6789 57.8082 79.6572 57.6008C80.5963 57.4017 81.4484 57.5685 82.2136 58.1014C83.0098 58.5868 83.506 59.2994 83.7024 60.2391C83.8988 61.1788 83.7339 62.052 83.2078 62.8586C82.7127 63.6178 81.9955 64.097 81.0564 64.2961Z"
+                fill="white" />
+        </g>
+        <defs>
+            <clipPath id="clip0_15421_144016">
+                <rect width="126" height="101" fill="white" />
+            </clipPath>
+        </defs>
+    </svg>
+    <h3>The student currently has no placements</h3>
+    <p>Ongoing placement and the corresponding working hours will be displayed here once the student secures a
+        job.</p>
+</div>

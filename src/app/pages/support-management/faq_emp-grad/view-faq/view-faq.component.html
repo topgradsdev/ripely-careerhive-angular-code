@@ -1,0 +1,47 @@
+<section class="home-header-sec">
+	<div class="container">
+	    <div class="row">
+	      <div class="col-md-12">
+	      	<div class="card">
+	      		<div class="manage-home-header">
+	      			<div class="card-header" *ngIf="user?.category_id.user_type != 'employer'">
+	      				<strong>Graduate View FAQ</strong>
+	      			</div>
+					  <div class="card-header" *ngIf="user?.category_id.user_type == 'employer'">
+						<strong>Employer View FAQ</strong>
+					</div>
+	      			<div class="card-body">
+	      				<form>
+		      				<div class="home-mng-form">
+		      					<div class="form-group">
+									<label>Category</label>
+									<input type="text" name="" class="form-control" value="{{user?.category_id.name}}" disabled="disabled">
+								</div>
+		      					<div class="form-group">
+									<label>Title</label>
+									<input type="text" name="" class="form-control" placeholder="Enter Title" value="{{user?.title}}" disabled="disabled">
+								</div>
+								<div class="form-group">
+									<label>Description</label>
+									<textarea style="height: 100px;"  class="form-control" rows="4" disabled="disabled" [innerHTML]="user?.description" >
+									</textarea>
+									<!-- <div [innerHTML]="user?.description">
+
+									</div> -->
+								</div>
+								<div class="edit-btns d-flex justify-content-end" *ngIf="user?.category_id.user_type != 'employer'">
+									<button class="btn btn-primary"  (click)="graduateBack()">Back</button>
+								</div>
+								<div class="edit-btns d-flex justify-content-end" *ngIf="user?.category_id.user_type == 'employer'">
+									<button class="btn btn-primary"  (click)="employerBack()">Back</button>
+								</div>
+		      				</div>
+		      			</form>
+	      			</div>
+		      	</div>
+	      	</div>
+	      </div>
+	  	</div>
+	</div>
+</section>
+

@@ -1,0 +1,16 @@
+<!-- <div *ngIf="isLoading$ | async" class="loader-container">
+    <div class="loader"></div>
+    <p>Processing, please wait...</p>
+  </div>
+   -->
+
+  <div class="loader-container" *ngIf="isLoading$ | async">
+    <div class="loader-content">
+      <p class="loader-text">Processing, <span class="highlight">please wait</span> ..</p>
+      <mat-progress-spinner
+        mode="indeterminate"
+        diameter="50"
+        color="primary"
+      ></mat-progress-spinner>
+    </div>
+  </div>

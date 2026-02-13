@@ -1,0 +1,693 @@
+<div class="page_header">
+    <a (click)="goBack()"  *ngIf="navigateFrom === 'admin'" routerLink="/admin/users/admins" class="back_Link"> <svg xmlns="http://www.w3.org/2000/svg" width="24"
+            height="24" viewBox="0 0 24 24" fill="none">
+            <path d="M19 12H5" stroke="#464BA8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M12 19L5 12L12 5" stroke="#464BA8" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round" />
+        </svg> Back </a>
+        <a *ngIf="navigateFrom === 'staff'" routerLink="/admin/users/staff-member" class="back_Link"> <svg xmlns="http://www.w3.org/2000/svg" width="24"
+            height="24" viewBox="0 0 24 24" fill="none">
+            <path d="M19 12H5" stroke="#464BA8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M12 19L5 12L12 5" stroke="#464BA8" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round" />
+        </svg> Back to Staff List</a>
+    <div class=" page_header_container">
+        <div>
+            <h4>View Profile</h4>
+        </div>
+    </div>  
+</div>
+<section>
+    <div class="profile_about">
+        <div class="profile_name">
+              <figure>
+                <img *ngIf="userProfile?.image" [src]="userProfile?.image" alt="avtar">
+                <span *ngIf="!userProfile?.image" class="profile-letter">{{ userProfile?.first_name[0] }} {{ userProfile?.last_name[0] }}</span>
+            </figure>
+            <button *ngxPermissionsOnly="['Users_Write']" mat-icon-button data-toggle="modal" data-target="#update_profile"> <svg width="39" height="39"
+                    viewBox="0 0 39 39" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="19.5" cy="19.5" r="19.5" fill="#F8F8F8" />
+                    <path fill-rule="evenodd" clip-rule="evenodd"
+                        d="M23.1053 11.375C23.6373 11.375 24.1473 11.5874 24.5197 11.9628L27.0392 14.4823C27.4143 14.8574 27.625 15.3661 27.625 15.8966C27.625 16.4271 27.4143 16.9359 27.0392 17.311L17.8405 26.5068C17.273 27.1615 16.4685 27.5637 15.5469 27.6269H11.375V26.8144L11.3776 23.3897C11.4469 22.5329 11.8452 21.7363 12.4528 21.2009L21.69 11.9638C22.0646 11.5869 22.574 11.375 23.1053 11.375ZM15.4895 26.0039C15.9235 25.9732 16.3276 25.7712 16.652 25.4001L22.7961 19.256L19.7456 16.2055L13.5656 22.3841C13.2364 22.6752 13.0328 23.0825 13 23.4551V26.0024L15.4895 26.0039ZM20.8948 15.0566L23.9451 18.107L25.8901 16.162C25.9605 16.0916 26 15.9962 26 15.8966C26 15.7971 25.9605 15.7017 25.8901 15.6313L23.3684 13.1096C23.2988 13.0395 23.2041 13 23.1053 13C23.0066 13 22.9119 13.0395 22.8423 13.1096L20.8948 15.0566Z"
+                        fill="#545465" />
+                </svg></button>
+
+            <h4>
+                {{userProfile?.first_name}}
+                {{userProfile?.last_name}}
+            </h4>
+        </div>
+        <div class="profile_list">
+            <div class="profile_list_card">
+                <div class="profile_list_card_title">
+                    <svg class="mr-4" width="45" height="45" viewBox="0 0 45 45" fill="none"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="22.5" cy="22.5" r="22.5" fill="#65DAB9" />
+                        <path
+                            d="M30.8468 17.1475H14.879C13.7767 17.1475 12.8831 18.0411 12.8831 19.1434V29.1233C12.8831 30.2256 13.7767 31.1192 14.879 31.1192H30.8468C31.9491 31.1192 32.8427 30.2256 32.8427 29.1233V19.1434C32.8427 18.0411 31.9491 17.1475 30.8468 17.1475Z"
+                            stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                        <path
+                            d="M26.855 31.119V15.1512C26.855 14.6219 26.6447 14.1142 26.2704 13.7399C25.896 13.3656 25.3884 13.1553 24.859 13.1553H20.8671C20.3377 13.1553 19.83 13.3656 19.4557 13.7399C19.0814 14.1142 18.8711 14.6219 18.8711 15.1512V31.119"
+                            stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                    <h5>User Groups</h5>
+                </div>
+                <div class="row flex-grow-1">
+                    <div class="col-12">
+                        <!-- <span class="group_badge">IT Support</span> -->
+                        <!-- <span class="group_badge" style="background-color: #A0C6FF;">Career Adviser</span> -->
+                        N/A
+                    </div>
+                </div>
+            </div>
+            <div class="profile_list_card">
+                <div class="profile_list_card_title">
+                    <svg class="mr-4" width="45" height="45" viewBox="0 0 45 45" fill="none"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="22.5" cy="22.5" r="22.5" fill="#F47761" />
+                        <path
+                            d="M32.8429 27.7728V30.7668C32.844 31.0447 32.7871 31.3198 32.6757 31.5745C32.5644 31.8292 32.4011 32.0578 32.1963 32.2457C31.9915 32.4336 31.7497 32.5766 31.4864 32.6657C31.2231 32.7547 30.9441 32.7878 30.6673 32.7627C27.5963 32.4291 24.6465 31.3797 22.0547 29.6989C19.6434 28.1667 17.599 26.1223 16.0668 23.711C14.3802 21.1075 13.3306 18.1433 13.003 15.0585C12.978 14.7825 13.0108 14.5044 13.0993 14.2418C13.1877 13.9792 13.3299 13.7379 13.5167 13.5332C13.7035 13.3286 13.9309 13.165 14.1844 13.0531C14.4379 12.9411 14.7119 12.8832 14.989 12.8829H17.9829C18.4672 12.8781 18.9368 13.0497 19.304 13.3655C19.6712 13.6813 19.9111 14.1199 19.9789 14.5994C20.1052 15.5576 20.3396 16.4983 20.6775 17.4038C20.8117 17.761 20.8408 18.1492 20.7612 18.5224C20.6816 18.8956 20.4967 19.2382 20.2284 19.5095L18.9609 20.777C20.3816 23.2755 22.4503 25.3442 24.9488 26.7649L26.2163 25.4974C26.4876 25.2291 26.8302 25.0442 27.2034 24.9646C27.5766 24.885 27.9648 24.9141 28.322 25.0483C29.2275 25.3862 30.1682 25.6206 31.1264 25.7469C31.6111 25.8153 32.0539 26.0595 32.3704 26.433C32.6869 26.8066 32.855 27.2834 32.8429 27.7728Z"
+                            stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                    <h5>Contact Phone</h5>
+                </div>
+                <div class="row flex-grow-1">
+                    <div class="col-5 contact_info"><svg class="mr-3" xmlns="http://www.w3.org/2000/svg" width="24"
+                            height="24" viewBox="0 0 24 24" fill="none">
+                            <path
+                                d="M3 9L12 2L21 9V20C21 20.5304 20.7893 21.0391 20.4142 21.4142C20.0391 21.7893 19.5304 22 19 22H5C4.46957 22 3.96086 21.7893 3.58579 21.4142C3.21071 21.0391 3 20.5304 3 20V9Z"
+                                stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                            <path d="M9 22V12H15V22" stroke="black" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" />
+                        </svg> {{userProfile?.phone}}</div>
+                    <div class="col-7 contact_info"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                            viewBox="0 0 24 24" fill="none">
+                            <path
+                                d="M17 2H7C5.89543 2 5 2.89543 5 4V20C5 21.1046 5.89543 22 7 22H17C18.1046 22 19 21.1046 19 20V4C19 2.89543 18.1046 2 17 2Z"
+                                stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                            <path d="M12 18H12.01" stroke="black" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" />
+                        </svg> {{userProfile?.secondary_phone}}</div>
+                </div>
+                <div class="action_btns" *ngxPermissionsOnly="['Users_Write']">
+                    <svg data-toggle="modal" data-target="#modify_phone" width="39" height="39" viewBox="0 0 39 39"
+                        fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="19.5" cy="19.5" r="19.5" fill="#F8F8F8" />
+                        <path fill-rule="evenodd" clip-rule="evenodd"
+                            d="M23.1053 11.375C23.6373 11.375 24.1473 11.5874 24.5197 11.9628L27.0392 14.4823C27.4143 14.8574 27.625 15.3661 27.625 15.8966C27.625 16.4271 27.4143 16.9359 27.0392 17.311L17.8405 26.5068C17.273 27.1615 16.4685 27.5637 15.5469 27.6269H11.375V26.8144L11.3776 23.3897C11.4469 22.5329 11.8452 21.7363 12.4528 21.2009L21.69 11.9638C22.0646 11.5869 22.574 11.375 23.1053 11.375ZM15.4895 26.0039C15.9235 25.9732 16.3276 25.7712 16.652 25.4001L22.7961 19.256L19.7456 16.2055L13.5656 22.3841C13.2364 22.6752 13.0328 23.0825 13 23.4551V26.0024L15.4895 26.0039ZM20.8948 15.0566L23.9451 18.107L25.8901 16.162C25.9605 16.0916 26 15.9962 26 15.8966C26 15.7971 25.9605 15.7017 25.8901 15.6313L23.3684 13.1096C23.2988 13.0395 23.2041 13 23.1053 13C23.0066 13 22.9119 13.0395 22.8423 13.1096L20.8948 15.0566Z"
+                            fill="#545465" />
+                    </svg>
+                </div>
+            </div>
+            <div class="profile_list_card">
+                <div class="profile_list_card_title">
+                    <svg class="mr-4" width="45" height="45" viewBox="0 0 45 45" fill="none"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="22.5" cy="22.5" r="22.5" fill="#F25094" />
+                        <path
+                            d="M14.879 14.1533H30.8468C31.9445 14.1533 32.8427 15.0515 32.8427 16.1493V28.1251C32.8427 29.2229 31.9445 30.1211 30.8468 30.1211H14.879C13.7812 30.1211 12.8831 29.2229 12.8831 28.1251V16.1493C12.8831 15.0515 13.7812 14.1533 14.879 14.1533Z"
+                            stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                        <path d="M32.8427 16.1494L22.8629 23.1353L12.8831 16.1494" stroke="white" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                    <h5>Email Address</h5>
+                </div>
+                <div class="row flex-grow-1">
+                    <div class="col-5 contact_info"><svg class="mr-3" xmlns="http://www.w3.org/2000/svg" width="24"
+                            height="24" viewBox="0 0 24 24" fill="none">
+                            <path
+                                d="M3 9L12 2L21 9V20C21 20.5304 20.7893 21.0391 20.4142 21.4142C20.0391 21.7893 19.5304 22 19 22H5C4.46957 22 3.96086 21.7893 3.58579 21.4142C3.21071 21.0391 3 20.5304 3 20V9Z"
+                                stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                            <path d="M9 22V12H15V22" stroke="black" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" />
+                        </svg> {{userProfile?.email}}</div>
+                    <div class="col-7 contact_info"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                            viewBox="0 0 24 24" fill="none">
+                            <path
+                                d="M20 7H4C2.89543 7 2 7.89543 2 9V19C2 20.1046 2.89543 21 4 21H20C21.1046 21 22 20.1046 22 19V9C22 7.89543 21.1046 7 20 7Z"
+                                stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                            <path
+                                d="M16 21V5C16 4.46957 15.7893 3.96086 15.4142 3.58579C15.0391 3.21071 14.5304 3 14 3H10C9.46957 3 8.96086 3.21071 8.58579 3.58579C8.21071 3.96086 8 4.46957 8 5V21"
+                                stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                        </svg> {{userProfile?.secondary_email}}</div>
+                </div>
+                <div class="action_btns" *ngxPermissionsOnly="['Users_Write']">
+                    <svg data-toggle="modal" data-target="#modify_email" width="39" height="39" viewBox="0 0 39 39"
+                        fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="19.5" cy="19.5" r="19.5" fill="#F8F8F8" />
+                        <path fill-rule="evenodd" clip-rule="evenodd"
+                            d="M23.1053 11.375C23.6373 11.375 24.1473 11.5874 24.5197 11.9628L27.0392 14.4823C27.4143 14.8574 27.625 15.3661 27.625 15.8966C27.625 16.4271 27.4143 16.9359 27.0392 17.311L17.8405 26.5068C17.273 27.1615 16.4685 27.5637 15.5469 27.6269H11.375V26.8144L11.3776 23.3897C11.4469 22.5329 11.8452 21.7363 12.4528 21.2009L21.69 11.9638C22.0646 11.5869 22.574 11.375 23.1053 11.375ZM15.4895 26.0039C15.9235 25.9732 16.3276 25.7712 16.652 25.4001L22.7961 19.256L19.7456 16.2055L13.5656 22.3841C13.2364 22.6752 13.0328 23.0825 13 23.4551V26.0024L15.4895 26.0039ZM20.8948 15.0566L23.9451 18.107L25.8901 16.162C25.9605 16.0916 26 15.9962 26 15.8966C26 15.7971 25.9605 15.7017 25.8901 15.6313L23.3684 13.1096C23.2988 13.0395 23.2041 13 23.1053 13C23.0066 13 22.9119 13.0395 22.8423 13.1096L20.8948 15.0566Z"
+                            fill="#545465" />
+                    </svg>
+                </div>
+            </div>
+            <!-- <div class="profile_list_card">
+                <div class="profile_list_card_title">
+
+                    <svg class="mr-4" width="45" height="45" viewBox="0 0 45 45" fill="none"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="22.5" cy="22.5" r="22.5" fill="#9747FF" />
+                        <path
+                            d="M31.8449 12.1572L29.8489 14.1532M29.8489 14.1532L32.8429 17.1471L29.35 20.6401L26.356 17.6461M29.8489 14.1532L26.356 17.6461M22.2543 21.7479C22.7696 22.2563 23.1792 22.8616 23.4596 23.529C23.74 24.1964 23.8856 24.9127 23.888 25.6366C23.8904 26.3605 23.7496 27.0778 23.4737 27.747C23.1978 28.4163 22.7923 29.0244 22.2804 29.5363C21.7685 30.0481 21.1604 30.4537 20.4912 30.7296C19.8219 31.0055 19.1047 31.1463 18.3808 31.1439C17.6568 31.1415 16.9406 30.9959 16.2732 30.7155C15.6058 30.4351 15.0004 30.0255 14.492 29.5102C13.4921 28.4749 12.9389 27.0884 12.9514 25.6493C12.9639 24.2101 13.5411 22.8334 14.5588 21.8157C15.5765 20.798 16.9532 20.2208 18.3924 20.2083C19.8316 20.1957 21.2181 20.749 22.2533 21.7488L22.2543 21.7479ZM22.2543 21.7479L26.356 17.6461"
+                            stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                    <h5>Password</h5>
+                </div>
+                <div class="row flex-grow-1">
+                    <div class="col-12">
+                        <span *ngIf="showPs">{{userProfile?.password}}</span><span *ngIf="!showPs"> **********</span>
+                    </div>
+                </div>
+                <div class="action_btns">
+                    <svg *ngxPermissionsOnly="['Users_Write']" data-toggle="modal" data-target="#modify_password" width="39" height="39" viewBox="0 0 39 39"
+                        fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="19.5" cy="19.5" r="19.5" fill="#F8F8F8" />
+                        <path fill-rule="evenodd" clip-rule="evenodd"
+                            d="M23.1053 11.375C23.6373 11.375 24.1473 11.5874 24.5197 11.9628L27.0392 14.4823C27.4143 14.8574 27.625 15.3661 27.625 15.8966C27.625 16.4271 27.4143 16.9359 27.0392 17.311L17.8405 26.5068C17.273 27.1615 16.4685 27.5637 15.5469 27.6269H11.375V26.8144L11.3776 23.3897C11.4469 22.5329 11.8452 21.7363 12.4528 21.2009L21.69 11.9638C22.0646 11.5869 22.574 11.375 23.1053 11.375ZM15.4895 26.0039C15.9235 25.9732 16.3276 25.7712 16.652 25.4001L22.7961 19.256L19.7456 16.2055L13.5656 22.3841C13.2364 22.6752 13.0328 23.0825 13 23.4551V26.0024L15.4895 26.0039ZM20.8948 15.0566L23.9451 18.107L25.8901 16.162C25.9605 16.0916 26 15.9962 26 15.8966C26 15.7971 25.9605 15.7017 25.8901 15.6313L23.3684 13.1096C23.2988 13.0395 23.2041 13 23.1053 13C23.0066 13 22.9119 13.0395 22.8423 13.1096L20.8948 15.0566Z"
+                            fill="#545465" />
+                    </svg>
+                    <span (click)="showPassword()">
+                        <svg *ngIf="!showPs" width="39" height="39" viewBox="0 0 39 39" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="19.5" cy="19.5" r="19.5" fill="#F8F8F8" />
+                            <path
+                                d="M8.06611 19.676C8.09966 19.597 8.91137 17.718 10.7159 15.835C13.1204 13.326 16.1573 12 19.5 12C22.8427 12 25.8796 13.326 28.2841 15.835C30.0886 17.718 30.9042 19.6 30.9339 19.676C30.9775 19.7783 31 19.889 31 20.001C31 20.113 30.9775 20.2237 30.9339 20.326C30.9003 20.405 30.0886 22.283 28.2841 24.166C25.8796 26.674 22.8427 28 19.5 28C16.1573 28 13.1204 26.674 10.7159 24.166C8.91137 22.283 8.09966 20.405 8.06611 20.326C8.02252 20.2237 8 20.113 8 20.001C8 19.889 8.02252 19.7783 8.06611 19.676ZM19.5 26.4C22.4498 26.4 25.0267 25.281 27.16 23.075C28.0353 22.1667 28.7799 21.131 29.3708 20C28.7801 18.8689 28.0354 17.8332 27.16 16.925C25.0267 14.719 22.4498 13.6 19.5 13.6C16.5502 13.6 13.9733 14.719 11.84 16.925C10.963 17.833 10.2167 18.8687 9.62437 20C10.3153 21.346 13.3255 26.4 19.5 26.4ZM19.5 15.2C20.4098 15.2 21.2992 15.4815 22.0556 16.0089C22.8121 16.5364 23.4017 17.286 23.7498 18.1631C24.098 19.0402 24.1891 20.0053 24.0116 20.9364C23.8341 21.8675 23.396 22.7228 22.7527 23.3941C22.1094 24.0654 21.2897 24.5226 20.3974 24.7078C19.5051 24.893 18.5802 24.7979 17.7397 24.4346C16.8991 24.0713 16.1807 23.4561 15.6752 22.6667C15.1698 21.8774 14.9 20.9494 14.9 20C14.9013 18.7274 15.3863 17.5072 16.2487 16.6073C17.1111 15.7075 18.2804 15.2013 19.5 15.2ZM19.5 23.2C20.1065 23.2 20.6994 23.0123 21.2037 22.6607C21.7081 22.3091 22.1011 21.8093 22.3332 21.2246C22.5653 20.6399 22.6261 19.9965 22.5077 19.3757C22.3894 18.755 22.0973 18.1848 21.6685 17.7373C21.2396 17.2897 20.6932 16.985 20.0983 16.8615C19.5034 16.738 18.8868 16.8014 18.3264 17.0436C17.7661 17.2858 17.2871 17.6959 16.9502 18.2222C16.6132 18.7484 16.4333 19.3671 16.4333 20C16.4333 20.8487 16.7564 21.6626 17.3315 22.2627C17.9066 22.8629 18.6867 23.2 19.5 23.2Z"
+                                fill="#545465" />
+                        </svg>
+
+                        <svg *ngIf="showPs" width="39" height="39" viewBox="0 0 39 39" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="19.5" cy="19.5" r="19.5" fill="#F8F8F8" />
+                            <path
+                                d="M8.06611 19.676C8.09966 19.597 8.91137 17.718 10.7159 15.835C13.1204 13.326 16.1573 12 19.5 12C22.8427 12 25.8796 13.326 28.2841 15.835C30.0886 17.718 30.9042 19.6 30.9339 19.676C30.9775 19.7783 31 19.889 31 20.001C31 20.113 30.9775 20.2237 30.9339 20.326C30.9003 20.405 30.0886 22.283 28.2841 24.166C25.8796 26.674 22.8427 28 19.5 28C16.1573 28 13.1204 26.674 10.7159 24.166C8.91137 22.283 8.09966 20.405 8.06611 20.326C8.02252 20.2237 8 20.113 8 20.001C8 19.889 8.02252 19.7783 8.06611 19.676ZM19.5 26.4C22.4498 26.4 25.0267 25.281 27.16 23.075C28.0353 22.1667 28.7799 21.131 29.3708 20C28.7801 18.8689 28.0354 17.8332 27.16 16.925C25.0267 14.719 22.4498 13.6 19.5 13.6C16.5502 13.6 13.9733 14.719 11.84 16.925C10.963 17.833 10.2167 18.8687 9.62437 20C10.3153 21.346 13.3255 26.4 19.5 26.4ZM19.5 15.2C20.4098 15.2 21.2992 15.4815 22.0556 16.0089C22.8121 16.5364 23.4017 17.286 23.7498 18.1631C24.098 19.0402 24.1891 20.0053 24.0116 20.9364C23.8341 21.8675 23.396 22.7228 22.7527 23.3941C22.1094 24.0654 21.2897 24.5226 20.3974 24.7078C19.5051 24.893 18.5802 24.7979 17.7397 24.4346C16.8991 24.0713 16.1807 23.4561 15.6752 22.6667C15.1698 21.8774 14.9 20.9494 14.9 20C14.9013 18.7274 15.3863 17.5072 16.2487 16.6073C17.1111 15.7075 18.2804 15.2013 19.5 15.2ZM19.5 23.2C20.1065 23.2 20.6994 23.0123 21.2037 22.6607C21.7081 22.3091 22.1011 21.8093 22.3332 21.2246C22.5653 20.6399 22.6261 19.9965 22.5077 19.3757C22.3894 18.755 22.0973 18.1848 21.6685 17.7373C21.2396 17.2897 20.6932 16.985 20.0983 16.8615C19.5034 16.738 18.8868 16.8014 18.3264 17.0436C17.7661 17.2858 17.2871 17.6959 16.9502 18.2222C16.6132 18.7484 16.4333 19.3671 16.4333 20C16.4333 20.8487 16.7564 21.6626 17.3315 22.2627C17.9066 22.8629 18.6867 23.2 19.5 23.2Z"
+                                fill="#545465" />
+                            <line x1="29.3536" y1="10.3536" x2="8.35355" y2="31.3536" stroke="#545465" />
+                        </svg>
+                    </span>
+                </div>
+            </div> -->
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card user_card">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    Recent Activity
+                    <!-- <button routerLink="/users/user-activity" mat-button class="btn_primary theme_btn sm-theme_btn">View
+                        All</button> -->
+                    <div class="search-container">
+                        <svg class="icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20"
+                            fill="none">
+                            <path
+                                d="M9.16667 15.8333C12.8486 15.8333 15.8333 12.8486 15.8333 9.16667C15.8333 5.48477 12.8486 2.5 9.16667 2.5C5.48477 2.5 2.5 5.48477 2.5 9.16667C2.5 12.8486 5.48477 15.8333 9.16667 15.8333Z"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                            <path d="M17.5 17.5L13.875 13.875" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" />
+                        </svg>
+                        <form autocomplete="off">
+                            <input type="text" class="form-control" placeholder="Search Activity" [(ngModel)]="searchKeyword" (input)="onSearchChange()" name="searchtask" autocomplete="my-task-search">
+                        </form>
+                    
+                    </div>
+                </div>
+                <div class="card-body card-body-activity">
+                    <!-- <div class="activity_list">
+                        <div class="activity_card">
+                            <div class="left">
+                                <ul>
+                                    <li>Updated Personal Email Address</li>
+                                    <li>Changed Profile Picture</li>
+                                </ul>
+                            </div>
+                            <div class="right">
+                                <h5>Today <br> <span>12:33 PM</span></h5>
+                            </div>
+                        </div>
+                        <div class="activity_card">
+                            <div class="left">
+                                <ul>
+                                    <li>Updated Personal Email Address</li>
+                                    <li>Changed Profile Picture</li>
+                                </ul>
+                            </div>
+                            <div class="right">
+                                <h5>Today <br> <span>12:33 PM</span></h5>
+                            </div>
+                        </div>
+                        <div class="activity_card">
+                            <div class="left">
+                                <ul>
+                                    <li>Updated Personal Email Address</li>
+                                    <li>Changed Profile Picture</li>
+                                </ul>
+                            </div>
+                            <div class="right">
+                                <h5>Today <br> <span>12:33 PM</span></h5>
+                            </div>
+                        </div>
+                    </div> -->
+
+                    <ul class="recent_activity_ul" infiniteScroll
+[infiniteScrollDistance]="2"
+[infiniteScrollThrottle]="150"
+(scrolled)="onScrollDown()"
+ [scrollWindow]="false"
+  style="height: 500px; overflow-y: auto;">
+                         <!-- Loader -->
+                        <div *ngIf="isLoading && activityLogs.length === 0"
+                            class="loader-container">
+                            <mat-spinner diameter="40"></mat-spinner>
+                            <p>Loading activities...</p>
+                        </div>
+
+                        <!-- No data message -->
+                        <div *ngIf="!isLoading && activityLogs.length === 0"
+                            class="no-data-container">
+                            <p>No activities found</p>
+                        </div>
+                        <li *ngFor="let activity of activityLogs">
+                            <div class="left_date_container" style="position: relative;">
+                                            <div class="date_time" style="position: absolute;left: 0;top: -16px;">
+                                    <span class="date">{{activity.created_at}}</span>
+                                    <!-- <span class="time">{{activity.activities && activity.activities.length>0?(activity.activities[0].created_at | date: 'HH:mm a'):''}}</span> -->
+                                    <!-- <span class="date">{{activity.created_at | date: 'dd/MM/YYYY'}}</span>
+                                    <span class="time">{{activity.created_at | date: 'HH:mm a'}}</span> -->
+                                </div>
+                            </div>
+                            <div class="right_recent_activity_container">
+                                <div class="recent_activity_title">
+                                    <!-- data-toggle="modal" data-target="#update_profile" -->
+                                    <button *ngIf="activity.module && activity.module!='My Tasks'" mat-icon-button >
+                                        <svg width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M30 31.5V28.5C30 26.9087 29.3679 25.3826 28.2426 24.2574C27.1174 23.1321 25.5913 22.5 24 22.5H12C10.4087 22.5 8.88258 23.1321 7.75736 24.2574C6.63214 25.3826 6 26.9087 6 28.5V31.5" stroke="#545465" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        <path d="M18 16.5C21.3137 16.5 24 13.8137 24 10.5C24 7.18629 21.3137 4.5 18 4.5C14.6863 4.5 12 7.18629 12 10.5C12 13.8137 14.6863 16.5 18 16.5Z" stroke="#545465" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        </svg>
+                                    </button>
+
+                                    <button  class="task-icon"  *ngIf="activity.module && activity.module=='My Tasks'"  mat-icon-button>
+                                         <svg width="36" height="36" viewBox="0 0 36 36" fill="none"
+                                            xmlns="http://www.w3.org/2000/svg">
+                                            <circle cx="18" cy="18" r="18" fill="#ECEDFF" />
+                                            <path
+                                                d="M26.7017 15.2535L18.2642 10.7535C18.1828 10.7102 18.092 10.6875 17.9998 10.6875C17.9076 10.6875 17.8168 10.7102 17.7354 10.7535L9.29795 15.2535C9.20795 15.3015 9.13269 15.373 9.08021 15.4604C9.02772 15.5479 9 15.6479 9 15.7499C9 15.8519 9.02772 15.9519 9.08021 16.0394C9.13269 16.1268 9.20795 16.1984 9.29795 16.2463L11.2498 17.2876V20.6922C11.2492 20.9685 11.3509 21.2352 11.5353 21.441C12.4564 22.4669 14.5201 24.1874 17.9998 24.1874C19.1536 24.1969 20.2988 23.988 21.3748 23.5715V25.8749C21.3748 26.0241 21.4341 26.1672 21.5396 26.2727C21.6451 26.3781 21.7881 26.4374 21.9373 26.4374C22.0865 26.4374 22.2296 26.3781 22.3351 26.2727C22.4406 26.1672 22.4998 26.0241 22.4998 25.8749V23.028C23.2333 22.6045 23.8962 22.0691 24.4644 21.441C24.6487 21.2352 24.7504 20.9685 24.7498 20.6922V17.2876L26.7017 16.2463C26.7917 16.1984 26.867 16.1268 26.9194 16.0394C26.9719 15.9519 26.9996 15.8519 26.9996 15.7499C26.9996 15.6479 26.9719 15.5479 26.9194 15.4604C26.867 15.373 26.7917 15.3015 26.7017 15.2535ZM17.9998 23.0624C14.9574 23.0624 13.1679 21.576 12.3748 20.6922V17.8874L17.7354 20.7463C17.8168 20.7896 17.9076 20.8123 17.9998 20.8123C18.092 20.8123 18.1828 20.7896 18.2642 20.7463L21.3748 19.0876V22.3459C20.4889 22.7594 19.3723 23.0624 17.9998 23.0624ZM23.6248 20.6894C23.2876 21.0635 22.9104 21.3995 22.4998 21.6913V18.4872L23.6248 17.8874V20.6894ZM22.2186 17.3629L22.2031 17.3537L18.2656 15.2535C18.1342 15.1864 17.9818 15.1736 17.841 15.2178C17.7003 15.2621 17.5826 15.3598 17.5133 15.49C17.4439 15.6202 17.4285 15.7725 17.4703 15.9139C17.5121 16.0554 17.6079 16.1747 17.7369 16.2463L21.0233 17.9999L17.9998 19.6122L10.7576 15.7499L17.9998 11.8876L25.242 15.7499L22.2186 17.3629Z"
+                                                fill="#545465" />
+                                        </svg>
+                                    </button>
+                                    <h5>{{activity.module}} - {{activity.sub_module}}</h5>
+                                </div>
+                                <div class="recent_activity_data_li" style=" position: relative;" *ngFor="let act of activity.activities">
+                                    <span class="time" style="display: flex;
+                                    position: absolute;
+                                    left: -80px;
+                                    top: 28px;
+                                    font-size: 12px;
+                                    color: #6a6868;
+                                    align-items: center;">{{act.created_at | date: 'HH:mm a'}}</span>
+                                    <div class="recent_activity_data">
+                                        <span class="line_vr" [style.--after-bg]="'#'+(act.color?act.color:'464BA8')"></span>
+                                        <!-- <div class="date_time">
+                                            <span class="date">13/05/2024</span>
+                                            <span class="time">11:12 AM</span>
+                                        </div> -->
+                                        <div class="card_info_message"  [style.border-color]="'#' + (act.color ? act.color : '464BA8')">
+                                            <p class="content"  matTooltipClass="info_primary_my_task text-black" matTooltipPosition="above" matTooltip={{act.activity}}>{{act.activity}}</p>
+                                        </div>
+                                    </div>
+                                    <!-- <div class="recent_activity_data">
+                                        <span class="line_vr"></span>
+                                        <div class="card_info_message">
+                                            <p class="content">Successfully updated profile picture</p>
+                                        </div>
+                                    </div>
+                                    <div class="recent_activity_data">
+                                        <span class="line_vr"></span>
+                                        <div class="card_info_message">
+                                            <p class="content">Successfully updated profile picture</p>
+                                        </div>
+                                    </div> -->
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 d-none">
+            <div class="card user_card">
+                <div class="card-header">
+                    Superadmin Notes
+                </div>
+                <div class="card-body">
+                    <div class="form-group note_add_input">
+                        <input type="text" class="form-control" placeholder="Add Quick Note">
+                        <button mat-button class="btn_primary theme_btn sm-theme_btn">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="25" viewBox="0 0 24 25"
+                                fill="none">
+                                <path d="M12 5.73047V19.7305" stroke="white" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" />
+                                <path d="M5 12.7305H19" stroke="white" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" />
+                            </svg>
+                        </button>
+                    </div>
+                    <div class="notes_list">
+                        <div class="notes_card">
+                            <p>Adi needs to update his prototype</p>
+                            <span>Oct 12 2023, 4:00 PM</span>
+                        </div>
+                        <div class="notes_card">
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
+                                ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation
+                                ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
+                                reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur
+                                sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id
+                                est laborum.</p>
+                            <span>Oct 10 2023, 3:12 PM</span>
+                        </div>
+                        <div class="notes_card">
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
+                                ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation
+                                ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+                            <span>Oct 8 2023, 10:22 AM</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Modify Phone Modal -->
+<div class="modal fade bsModal ch_modal ch_info_modal" id="update_profile" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title" id="exampleModalLabel">Update Profile</h2>
+                <button type="button" mat-icon-button id="closeModal" class="close" data-dismiss="modal"
+                    aria-label="Close">
+                    <mat-icon>close</mat-icon>
+                </button>
+            </div>
+            <div class="modal-body" [formGroup]="userProfileForm">
+                <figure class="profile_container">
+                    <img *ngIf="userProfileForm.get('image')?.value" [src]="userProfileForm.get('image')?.value"
+                        alt="avtar">
+                    <span *ngIf="!userProfileForm.get('image')?.value" class="profile-letter">{{
+                        userProfileForm.get('first_name')?.value[0] }} {{userProfileForm.get('last_name')?.value[0]
+                        }}</span>
+                    <label for="profile">
+                        <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="20" cy="20" r="20" fill="#F8F8F8" />
+                            <path fill-rule="evenodd" clip-rule="evenodd"
+                                d="M23.6952 11.6665C24.2408 11.6665 24.7638 11.8844 25.1458 12.2694L27.7299 14.8534C28.1146 15.2382 28.3308 15.76 28.3308 16.3041C28.3308 16.8482 28.1146 17.37 27.7299 17.7547L18.2953 27.1863C17.7132 27.8577 16.8881 28.2703 15.9429 28.3351H11.6641V27.5018L11.6668 23.9893C11.7378 23.1105 12.1463 22.2934 12.7695 21.7444L22.2436 12.2704C22.6277 11.8839 23.1502 11.6665 23.6952 11.6665ZM15.884 26.6705C16.3292 26.639 16.7436 26.4318 17.0764 26.0512L23.378 19.7496L20.2493 16.6208L13.9108 22.9578C13.5732 23.2564 13.3643 23.6742 13.3307 24.0564V26.669L15.884 26.6705ZM21.428 15.4425L24.5565 18.5711L26.5514 16.5762C26.6236 16.504 26.6641 16.4061 26.6641 16.3041C26.6641 16.202 26.6236 16.1041 26.5514 16.032L23.965 13.4456C23.8936 13.3736 23.7965 13.3332 23.6952 13.3332C23.5939 13.3332 23.4967 13.3736 23.4254 13.4456L21.428 15.4425Z"
+                                fill="#545465" />
+                        </svg>
+
+                        <input type="file" id="profile" accept="image/*" (change)="getFile($event)">
+                    </label>
+                </figure>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <div class="form-group">
+                                <label>First Name</label>
+                                <input type="text" class="form-control" formControlName="first_name">
+                                <div *ngIf="userProfileForm.get('first_name') && (userProfileForm.get('first_name')?.touched || userProfileForm.get('first_name')?.dirty) && userProfileForm.get('first_name')?.invalid && userProfileForm.get('first_name')?.errors?.required" class="invalid-feedback">
+                                    Please enter first name
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Last Name</label>
+                            <input type="text" class="form-control" formControlName="last_name">
+                            <div *ngIf="userProfileForm.get('last_name') && (userProfileForm.get('last_name')?.touched || userProfileForm.get('last_name')?.dirty) && userProfileForm.get('last_name')?.invalid && userProfileForm.get('last_name')?.errors?.required" class="invalid-feedback">
+                                Please enter first name
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer justify-content-between">
+                <button mat-button class="theme_btn btn_outline_primary" data-dismiss="modal">Cancel</button>
+                <button mat-button class="theme_btn btn_primary" [disabled]="userProfileForm.invalid" (click)="updateAdminProfile()" data-dismiss="modal">Update</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End -->
+<!-- Modify Phone Modal -->
+<div class="modal fade bsModal ch_modal ch_info_modal" id="modify_phone" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title" id="exampleModalLabel">Update Contact Phone</h2>
+                <button type="button" mat-icon-button id="closeModal" class="close" data-dismiss="modal"
+                    aria-label="Close">
+                    <mat-icon>close</mat-icon>
+                </button>
+            </div>
+            <div class="modal-body" [formGroup]="userProfileForm">
+                <div class="form-group">
+                    <label>Mobile Number</label>
+                    <input type="tel" maxlength="13" minlength="12" (input)="addSpacesInNumber()" class="form-control" formControlName="phone">
+                    <div *ngIf="userProfileForm.get('phone') && (userProfileForm.get('phone')?.touched || userProfileForm.get('phone')?.dirty) && userProfileForm.get('phone')?.invalid && userProfileForm.get('phone')?.errors?.required" class="invalid-feedback">
+                        Please enter mobile number
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Other Number</label>
+                    <input type="tel" maxlength="13" minlength="12"  (input)="addSpacesInNumber()" class="form-control" formControlName="secondary_phone">
+                </div>
+            </div>
+            <div class="modal-footer justify-content-between">
+                <button mat-button class="theme_btn btn_outline_primary" data-dismiss="modal">Cancel</button>
+                <button mat-button class="theme_btn btn_primary" [disabled]="userProfileForm.invalid" (click)="updateAdminProfile()" data-dismiss="modal">Update</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End -->
+
+<!-- Modify Email Modal -->
+<div class="modal fade bsModal ch_modal ch_info_modal" id="modify_email" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title" id="exampleModalLabel">Update Email Address</h2>
+                <button type="button" mat-icon-button id="closeModal" class="close" data-dismiss="modal"
+                    aria-label="Close">
+                    <mat-icon>close</mat-icon>
+                </button>
+            </div>
+            <div class="modal-body" [formGroup]="userProfileForm">
+                <div class="form-group">
+                    <label>Work Email</label>
+                    <input type="text" placeholder="Email" class="form-control" formControlName="email">
+                    <div
+                    *ngIf="(userProfileForm.get('email')?.touched || userProfileForm.get('email')?.dirty) && userProfileForm.get('email')?.invalid && userProfileForm.get('email')?.errors?.required"
+                    class="invalid-feedback">
+                    Please enter Work email
+                  </div>
+                  <div
+                    *ngIf="(userProfileForm.get('email')?.touched || userProfileForm.get('email')?.dirty) && userProfileForm.get('email')?.invalid && userProfileForm.get('email')?.errors?.email"
+                    class="invalid-feedback">
+                    Please enter valid Work email
+                  </div>
+                  <div
+                    *ngIf="(userProfileForm.get('email')?.touched || userProfileForm.get('email')?.dirty) && userProfileForm.get('email')?.invalid && userProfileForm.get('email')?.errors?.pattern && !userProfileForm.get('email')?.errors?.email"
+                    class="invalid-feedback">
+                    Please enter valid Work email
+                  </div>
+                </div>
+                <div class="form-group">
+                    <label>Personal Email</label>
+                    <input type="text" placeholder="Email" class="form-control" formControlName="secondary_email">
+                    <div
+                    *ngIf="(userProfileForm.get('secondary_email')?.touched || userProfileForm.get('secondary_email')?.dirty) && userProfileForm.get('secondary_email')?.invalid && userProfileForm.get('secondary_email')?.errors?.email"
+                    class="invalid-feedback">
+                    Please enter valid Personal email
+                  </div>
+                  <div
+                    *ngIf="(userProfileForm.get('secondary_email')?.touched || userProfileForm.get('secondary_email')?.dirty) && userProfileForm.get('secondary_email')?.invalid && userProfileForm.get('secondary_email')?.errors?.pattern && !userProfileForm.get('secondary_email')?.errors?.email"
+                    class="invalid-feedback">
+                    Please enter valid Personal email
+                  </div>
+                </div>
+            </div>
+            <div class="modal-footer justify-content-between">
+                <button mat-button class="theme_btn btn_outline_primary" data-dismiss="modal">Cancel</button>
+                <button mat-button class="theme_btn btn_primary" data-dismiss="modal" data-toggle="modal"
+                    data-target="#update_email_alert" [disabled]="userProfileForm.invalid" (click)="password = null;">Update</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End -->
+<div class="modal fade bsModal ch_modal" id="update_email_alert" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header pb-0">
+                <button type="button" mat-icon-button id="closeModal" class="close" data-dismiss="modal"
+                    aria-label="Close">
+                    <mat-icon>close</mat-icon>
+                </button>
+            </div>
+            <div class="modal-body active_deactive_modal">
+                <h4>To update {{userProfileForm.get('first_name')?.value}}’s Work Email, please type your password to confirm.?</h4>
+                <div class="form-group mb-0 position-relative">
+                    <label>Password</label>
+                    <input [type]="pass" class="form-control" autocomplete="new-password" [(ngModel)]="password">
+                    <span class="eye_icon" *ngIf="pass == 'text'" (click)="onEyeClick('pass', 'password')">
+                        <svg width="20" height="13" viewBox="0 0 20 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M1.29565 6.7632C1.1361 6.56013 1.00404 6.38224 0.900947 6.23866C0.997612 6.09726 1.1211 5.92302 1.27053 5.72458C1.69179 5.16511 2.31455 4.41936 3.11828 3.6754C4.7353 2.17866 7.01653 0.75 9.82143 0.75C12.6263 0.75 14.9076 2.17866 16.5246 3.6754C17.3283 4.41936 17.9511 5.16511 18.3723 5.72458C18.5218 5.92302 18.6452 6.09726 18.7419 6.23866C18.6388 6.38224 18.5068 6.56013 18.3472 6.7632C17.9058 7.32498 17.2587 8.07347 16.4375 8.82004C14.7807 10.3262 12.4992 11.75 9.82143 11.75C7.14368 11.75 4.86212 10.3262 3.2054 8.82004C2.38417 8.07347 1.73706 7.32498 1.29565 6.7632Z"
+                                stroke="#545465" stroke-width="1.5" />
+                            <circle cx="9.82143" cy="6.24965" r="2.82143" stroke="#545465" stroke-width="1.5" />
+                        </svg>
+                    </span>
+                    <span *ngIf="pass == 'password'" class="eye_icon pswrd_hide" (click)="onEyeClick('pass', 'text')">
+                        <svg width="20" height="16" viewBox="0 0 20 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M1.30849 8.89459C1.14302 8.68399 1.00656 8.49996 0.900682 8.35228C0.999999 8.20676 1.12767 8.0264 1.28274 7.82046C1.71202 7.25034 2.34663 6.49038 3.16572 5.73222C4.81343 4.20707 7.1393 2.75 10 2.75C12.8607 2.75 15.1866 4.20707 16.8343 5.73222C17.6534 6.49038 18.288 7.25034 18.7173 7.82046C18.8723 8.0264 19 8.20676 19.0993 8.35228C18.9934 8.49996 18.857 8.68399 18.6915 8.89459C18.2417 9.46703 17.5824 10.2297 16.7455 10.9905C15.0575 12.525 12.7313 13.9773 10 13.9773C7.26867 13.9773 4.94248 12.525 3.2545 10.9905C2.41765 10.2297 1.75826 9.46703 1.30849 8.89459Z"
+                                stroke="#545465" stroke-width="1.5" />
+                            <circle cx="10.0001" cy="8.36293" r="2.88636" stroke="#545465" stroke-width="1.5" />
+                            <rect x="2.1875" y="1.44922" width="1.52727" height="20.3636"
+                                transform="rotate(-45 2.1875 1.44922)" fill="#545465" />
+                        </svg>
+                    </span>
+                </div>
+            </div>
+            <div class="modal-footer justify-content-around">
+                <button mat-button type="button" class="theme_btn btn_outline_primary" data-dismiss="modal">No</button>
+                <button mat-button type="submit" [disabled]="!password" class="theme_btn btn_primary" data-dismiss="modal" (click)="updateAdminProfile('email')">Confirm</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade bsModal ch_modal done_modal_popup" id="updated_email_done" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+            </div>
+            <div class="modal-body text-center">
+                <h2>{{userProfileForm.get('first_name')?.value}}’s Work Email has been updated.</h2>
+            </div>
+            <div class="modal-footer justify-content-center">
+                <button mat-button class="theme_btn btn_primary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modify Pass Modal -->
+<div class="modal fade bsModal ch_modal ch_info_modal" id="modify_password" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title" id="exampleModalLabel">Update Password</h2>
+                <button type="button" mat-icon-button id="closeModal" class="close" data-dismiss="modal"
+                    aria-label="Close">
+                    <mat-icon>close</mat-icon>
+                </button>
+            </div>
+            <div class="modal-body" [formGroup]="resetPasswordForm">
+                <!-- <div class="form-group">
+                    <label>Current Password</label>
+                    <input type="password" class="form-control" formControlName="password">
+                    <div *ngIf="(resetPasswordForm.touched || resetPasswordForm.dirty) && resetPasswordForm.invalid && resetPasswordForm.controls.password.errors?.required" class="invalid">
+                        *Please enter password
+                      </div>
+                </div> -->
+                <div class="form-group position-relative">
+                    <label>New Password</label>
+                    <input [type]="newpass" class="form-control" formControlName="newPassword">
+
+                    <span class="eye_icon" *ngIf="newpass == 'text'" (click)="onEyeClickNew('pass', 'password')">
+                        <svg width="20" height="13" viewBox="0 0 20 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M1.29565 6.7632C1.1361 6.56013 1.00404 6.38224 0.900947 6.23866C0.997612 6.09726 1.1211 5.92302 1.27053 5.72458C1.69179 5.16511 2.31455 4.41936 3.11828 3.6754C4.7353 2.17866 7.01653 0.75 9.82143 0.75C12.6263 0.75 14.9076 2.17866 16.5246 3.6754C17.3283 4.41936 17.9511 5.16511 18.3723 5.72458C18.5218 5.92302 18.6452 6.09726 18.7419 6.23866C18.6388 6.38224 18.5068 6.56013 18.3472 6.7632C17.9058 7.32498 17.2587 8.07347 16.4375 8.82004C14.7807 10.3262 12.4992 11.75 9.82143 11.75C7.14368 11.75 4.86212 10.3262 3.2054 8.82004C2.38417 8.07347 1.73706 7.32498 1.29565 6.7632Z"
+                                stroke="#545465" stroke-width="1.5" />
+                            <circle cx="9.82143" cy="6.24965" r="2.82143" stroke="#545465" stroke-width="1.5" />
+                        </svg>
+                    </span>
+                    <span *ngIf="newpass == 'password'" class="eye_icon pswrd_hide" (click)="onEyeClickNew('pass', 'text')">
+                        <svg width="20" height="16" viewBox="0 0 20 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M1.30849 8.89459C1.14302 8.68399 1.00656 8.49996 0.900682 8.35228C0.999999 8.20676 1.12767 8.0264 1.28274 7.82046C1.71202 7.25034 2.34663 6.49038 3.16572 5.73222C4.81343 4.20707 7.1393 2.75 10 2.75C12.8607 2.75 15.1866 4.20707 16.8343 5.73222C17.6534 6.49038 18.288 7.25034 18.7173 7.82046C18.8723 8.0264 19 8.20676 19.0993 8.35228C18.9934 8.49996 18.857 8.68399 18.6915 8.89459C18.2417 9.46703 17.5824 10.2297 16.7455 10.9905C15.0575 12.525 12.7313 13.9773 10 13.9773C7.26867 13.9773 4.94248 12.525 3.2545 10.9905C2.41765 10.2297 1.75826 9.46703 1.30849 8.89459Z"
+                                stroke="#545465" stroke-width="1.5" />
+                            <circle cx="10.0001" cy="8.36293" r="2.88636" stroke="#545465" stroke-width="1.5" />
+                            <rect x="2.1875" y="1.44922" width="1.52727" height="20.3636"
+                                transform="rotate(-45 2.1875 1.44922)" fill="#545465" />
+                        </svg>
+                    </span>
+
+
+                    <div *ngIf="(resetPasswordForm.controls.newPassword.touched || resetPasswordForm.controls.newPassword.dirty) && resetPasswordForm.controls.newPassword.invalid && resetPasswordForm.controls.newPassword.errors?.required" class="invalid">
+                        *Please enter password
+                      </div>
+                      <div *ngIf="(resetPasswordForm.controls.newPassword.touched || resetPasswordForm.controls.newPassword.dirty) && resetPasswordForm.controls.newPassword.invalid && resetPasswordForm.controls.newPassword.errors?.pattern" class="invalid">
+                          *Please enter valid Password
+                      </div>
+                </div>
+                <div class="form-group position-relative">
+                    <label>Confirm New Password</label>
+                    <input [type]="cpass" class="form-control" formControlName="confirmPassword">
+
+                    <span class="eye_icon" *ngIf="cpass == 'text'" (click)="onEyeClickC('pass', 'password')">
+                        <svg width="20" height="13" viewBox="0 0 20 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M1.29565 6.7632C1.1361 6.56013 1.00404 6.38224 0.900947 6.23866C0.997612 6.09726 1.1211 5.92302 1.27053 5.72458C1.69179 5.16511 2.31455 4.41936 3.11828 3.6754C4.7353 2.17866 7.01653 0.75 9.82143 0.75C12.6263 0.75 14.9076 2.17866 16.5246 3.6754C17.3283 4.41936 17.9511 5.16511 18.3723 5.72458C18.5218 5.92302 18.6452 6.09726 18.7419 6.23866C18.6388 6.38224 18.5068 6.56013 18.3472 6.7632C17.9058 7.32498 17.2587 8.07347 16.4375 8.82004C14.7807 10.3262 12.4992 11.75 9.82143 11.75C7.14368 11.75 4.86212 10.3262 3.2054 8.82004C2.38417 8.07347 1.73706 7.32498 1.29565 6.7632Z"
+                                stroke="#545465" stroke-width="1.5" />
+                            <circle cx="9.82143" cy="6.24965" r="2.82143" stroke="#545465" stroke-width="1.5" />
+                        </svg>
+                    </span>
+                    <span *ngIf="cpass == 'password'" class="eye_icon pswrd_hide" (click)="onEyeClickC('pass', 'text')">
+                        <svg width="20" height="16" viewBox="0 0 20 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M1.30849 8.89459C1.14302 8.68399 1.00656 8.49996 0.900682 8.35228C0.999999 8.20676 1.12767 8.0264 1.28274 7.82046C1.71202 7.25034 2.34663 6.49038 3.16572 5.73222C4.81343 4.20707 7.1393 2.75 10 2.75C12.8607 2.75 15.1866 4.20707 16.8343 5.73222C17.6534 6.49038 18.288 7.25034 18.7173 7.82046C18.8723 8.0264 19 8.20676 19.0993 8.35228C18.9934 8.49996 18.857 8.68399 18.6915 8.89459C18.2417 9.46703 17.5824 10.2297 16.7455 10.9905C15.0575 12.525 12.7313 13.9773 10 13.9773C7.26867 13.9773 4.94248 12.525 3.2545 10.9905C2.41765 10.2297 1.75826 9.46703 1.30849 8.89459Z"
+                                stroke="#545465" stroke-width="1.5" />
+                            <circle cx="10.0001" cy="8.36293" r="2.88636" stroke="#545465" stroke-width="1.5" />
+                            <rect x="2.1875" y="1.44922" width="1.52727" height="20.3636"
+                                transform="rotate(-45 2.1875 1.44922)" fill="#545465" />
+                        </svg>
+                    </span>
+
+
+                    <div
+                    *ngIf="
+                      (resetPasswordForm.controls.confirmPassword.touched ||
+                        resetPasswordForm.controls.confirmPassword.dirty) &&
+                      resetPasswordForm.controls.confirmPassword.errors?.required
+                    "
+                    class="invalid"
+                  >
+                    *Please enter Confirm Password
+                  </div>
+                  <div
+                    *ngIf="
+                      (resetPasswordForm.touched || resetPasswordForm.dirty) &&
+                      resetPasswordForm.hasError('pwdNotSame') &&
+                      !resetPasswordForm.controls.confirmPassword.errors?.required
+                    "
+                    class="invalid"
+                  >
+                    *Passwords do not match
+                  </div>
+                </div>
+            </div>
+            <div class="modal-footer justify-content-between">
+                <button mat-button class="theme_btn btn_outline_primary" data-dismiss="modal">Cancel</button>
+                <button mat-button class="theme_btn btn_primary" [disabled]="resetPasswordForm.invalid" (click)="updateAdminPassword()" data-dismiss="modal">Update</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End -->

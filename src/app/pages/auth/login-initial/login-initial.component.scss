@@ -1,0 +1,32 @@
+.login_initial {
+    padding: 98px 0px;
+
+    .btn {
+        font-size: 16px !important;
+    }
+
+    .login_initial_card {
+        padding: 44px 72px;
+        background-color: #FEFAF2;
+        border-radius: 50px;
+
+        h1 {
+            color: var(--main-black-color);
+            font-size: 32px;
+            font-weight: 500;
+            line-height: 42px;
+            margin-bottom: 15px;
+        }
+
+        p {
+            margin-top: 96px;
+            font-size: 18px;
+            font-weight: 400;
+            line-height: 23px;
+
+            a {
+                color: var(--primary-color-first);
+            }
+        }
+    }
+}

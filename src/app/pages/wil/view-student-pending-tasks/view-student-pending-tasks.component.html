@@ -1,0 +1,636 @@
+<section>
+    <!-- <h2 class="title_pending">Pending Tasks</h2> -->
+    <div class="no_data" *ngIf="prePlacementWorkFlow.length === 0 && projectPendingTask.length === 0">
+        <svg width="126" height="101" viewBox="0 0 126 101" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <g clip-path="url(#clip0_9549_67784)">
+            <path d="M95.371 100.165L11.656 100.194C7.45041 100.195 3.68314 98.0062 1.57906 94.3385C0.526894 92.5043 0.000693685 90.4923 6.85071e-07 88.4799C-0.000692315 86.4677 0.52438 84.4551 1.57504 82.6205L43.4059 5.91918C45.5077 2.24967 49.2735 0.0582892 53.4791 0.0568245C57.6848 0.0553597 61.452 2.24411 63.5564 5.91216L105.445 82.5939C106.495 84.4231 107.02 86.4328 107.02 88.4439C107.02 90.455 106.495 92.4674 105.444 94.3023C103.342 97.9715 99.5766 100.163 95.371 100.165ZM1.0523 88.4785C1.05217 90.3102 10.2898 86.3632 11.2468 88.0316C13.1611 91.3685 7.82944 99.1375 11.6557 99.1362C11.6557 99.1362 102.623 97.112 104.534 93.7738C105.49 92.1047 105.968 90.2736 105.967 88.443C105.967 86.6123 105.488 84.7819 104.531 83.1134L62.6416 6.43172C60.7327 3.10443 57.3057 1.11308 53.4795 1.11442C49.655 1.11575 1.05245 86.6466 1.0523 88.4785Z" fill="#3F3D56"/>
+            <path d="M77.9031 83.2491C99.0694 83.2491 116.228 65.9664 116.228 44.647C116.228 23.3277 99.0694 6.04492 77.9031 6.04492C56.7368 6.04492 39.5781 23.3277 39.5781 44.647C39.5781 65.9664 56.7368 83.2491 77.9031 83.2491Z" fill="#464BA8"/>
+            <path d="M76.4827 53.0605L69.6851 23.4669L75.0264 22.3345L80.6501 52.1769L76.4827 53.0605ZM81.0383 64.3C80.1383 64.4908 79.2902 64.3435 78.4941 63.858C77.7289 63.3252 77.2522 62.6085 77.064 61.7079C76.8758 60.8074 77.0293 59.9775 77.5244 59.2183C78.0587 58.4508 78.7759 57.9716 79.6759 57.7808C80.5759 57.59 81.4044 57.7414 82.1614 58.2352C82.9184 58.7289 83.391 59.426 83.5792 60.3266C83.7674 61.2271 83.618 62.0766 83.131 62.8749C82.6359 63.6341 81.9383 64.1091 81.0383 64.3Z" fill="white"/>
+            </g>
+            <defs>
+            <clipPath id="clip0_9549_67784">
+            <rect width="126" height="101" fill="white"/>
+            </clipPath>
+            </defs>
+        </svg>
+            
+        <h3>The student currently has no pending tasks</h3>
+        <p>Pending tasks will appear here once the student meets the pre-placement condition.</p>
+    </div>
+    <div class="activity_list" *ngIf="prePlacementWorkFlow.length > 0 || projectPendingTask.length > 0">
+
+        <div class="activity_card" *ngIf="prePlacementWorkFlow.length > 0">
+            <div class="activity_card_header">
+                <div class="left">
+                    <div class="content main-title">
+                        <p>Internship Pre-Placement Tasks</p>
+                    </div>
+                </div>
+                <div class="right">
+                    <div class="d-inline-flex align-items-center">
+                        <button (click)="intershiptoggle = !intershiptoggle;closeAll()" [ngClass]="intershiptoggle ? 'show' : ''"
+                            mat-icon-button><svg width="18" height="8" viewBox="0 0 18 8" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path d="M1 1L9 7L17 1" stroke="#2B2A35" stroke-width="2"
+                                    stroke-linecap="round" stroke-linejoin="round" />
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class=" pt-4" *ngIf="intershiptoggle">
+                <div class="activity_card_container" *ngFor="let task of prePlacementWorkFlow; let i = index;">
+                    <div class="status_bar"
+                        [ngClass]="task.task_status === 'lock' ? 'step_progress pending' : (task.task_status === 'pending' ? 'step_progress' : '')">
+                        <span *ngIf="task.task_status === 'completed'" class="bar">
+                            <svg width="19" height="14" viewBox="0 0 19 14" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path d="M18 1L6.3125 13L1 7.54545" stroke="white" stroke-width="2"
+                                    stroke-linecap="round" stroke-linejoin="round" />
+                            </svg>
+
+                        </span>
+                        <span *ngIf="task.task_status === 'pending'" class="bar">
+                            <svg width="25" height="25" viewBox="0 0 25 25" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path d="M12.5 2.08203V6.2487" stroke="white" stroke-width="2"
+                                    stroke-linecap="round" stroke-linejoin="round" />
+                                <path d="M12.5 18.75V22.9167" stroke="white" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" />
+                                <path d="M5.14062 5.13477L8.08854 8.08268" stroke="white" stroke-width="2"
+                                    stroke-linecap="round" stroke-linejoin="round" />
+                                <path d="M16.9219 16.918L19.8698 19.8659" stroke="white" stroke-width="2"
+                                    stroke-linecap="round" stroke-linejoin="round" />
+                                <path d="M2.08594 12.5H6.2526" stroke="white" stroke-width="2"
+                                    stroke-linecap="round" stroke-linejoin="round" />
+                                <path d="M18.75 12.5H22.9167" stroke="white" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" />
+                                <path d="M5.14062 19.8639L8.08854 16.916" stroke="white" stroke-width="2"
+                                    stroke-linecap="round" stroke-linejoin="round" />
+                                <path d="M16.9219 8.08464L19.8698 5.13672" stroke="white" stroke-width="2"
+                                    stroke-linecap="round" stroke-linejoin="round" />
+                            </svg>
+
+                        </span>
+                        <span *ngIf="task.task_status === 'lock'" class="bar">
+                            <svg width="17" height="17" viewBox="0 0 17 17" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path
+                                    d="M13.4583 7.79297H3.54167C2.75926 7.79297 2.125 8.42723 2.125 9.20964V14.168C2.125 14.9504 2.75926 15.5846 3.54167 15.5846H13.4583C14.2407 15.5846 14.875 14.9504 14.875 14.168V9.20964C14.875 8.42723 14.2407 7.79297 13.4583 7.79297Z"
+                                    stroke="#9A9A9A" stroke-linecap="round" stroke-linejoin="round" />
+                                <path
+                                    d="M4.95801 7.79297V4.95964C4.95801 4.02033 5.33115 3.11949 5.99534 2.4553C6.65953 1.79111 7.56037 1.41797 8.49967 1.41797C9.43898 1.41797 10.3398 1.79111 11.004 2.4553C11.6682 3.11949 12.0413 4.02033 12.0413 4.95964V7.79297"
+                                    stroke="#9A9A9A" stroke-linecap="round" stroke-linejoin="round" />
+                                <circle cx="8.5" cy="10.5" r="1.5" fill="#9A9A9A" />
+                                <rect x="8" y="11" width="1" height="3" fill="#9A9A9A" />
+                            </svg>
+
+                        </span>
+                    </div>
+                    <div class="activity_card ">
+                        <div class="activity_card_header">
+                            <div class="left ">
+                                <div class="content"><span>{{i+1}}</span>
+                                    <p>{{task.name}}</p>
+                                </div>
+                            </div>
+                            <div class="right">
+                                <div class="d-inline-flex align-items-center">
+                                    <span *ngIf="task.task_status=='lock'" style="color: #9A9A9A;">Lock</span>
+
+                                    <!-- <span *ngIf="task.task_status!='lock'" [ngClass]="{'orange': task.student_status === 'pending' || taskStatus(task.student_status) =='In Progress'}">{{taskStatus(task.student_status)}}</span> -->
+
+                                       <span *ngIf="task.task_status!='lock' && task.submission_timestamp && task.task_display_status =='In Progress'" class="timestamp-form">
+                                            {{task.submission_timestamp | date:'dd/MM/yy, hh:mm a'}}
+                                    </span>
+                                    <!-- <span *ngIf="task.task_status!='lock'" [ngClass]="{'orange': task.student_status === 'pending' || taskStatus(task.student_status, task) =='In Progress', 'primary': taskStatus(task.student_status, task) =='Awaiting Approval'}">{{taskStatus(task.student_status, task)}}</span> -->
+  <span *ngIf="task?.task_status !== 'lock'" [ngClass]="{
+                                                'orange': task?.task_display_status === 'pending' || task?.task_display_status === 'In Progress',
+                                                'primary': task?.task_display_status === 'Awaiting Approval',
+                                                'success': (task?.task_display_status === 'Completed' || task?.task_status === 'Completed')
+                                            }">
+                                        {{ task?.task_display_status ||  task?.task_status }}
+                                        </span>
+                                    <button (click)="collapsToggle(task)" [ngClass]="task.showCollapes ? 'show' : ''"
+                                        mat-icon-button><svg width="18" height="8" viewBox="0 0 18 8" fill="none"
+                                            xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M1 1L9 7L17 1" stroke="#2B2A35" stroke-width="2"
+                                                stroke-linecap="round" stroke-linejoin="round" />
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="activity_card_body" *ngIf="task.showCollapes">
+                            <div *ngIf="task.completion_criteria === 'Submit a Form'">
+                                <p [innerHTML]="task.description"></p>
+                                <div class="text-center">
+                                    <!-- <button *ngIf="task.task_status === 'completed'" mat-button class="theme_btn btn_primary">View Approval</button> -->
+                                    <!-- <button *ngIf="task.task_status === 'pending'" mat-button class="theme_btn btn_primary">Track Progress</button> -->
+                                    <!-- <button *ngIf="task.task_status === 'lock'" mat-button class="theme_btn btn_primary" disabled>Approval Actions</button> -->
+                                </div>
+                            </div>
+                            <!-- *ngIf="task.completion_criteria === 'Get Document Approval' || task.completion_criteria === 'Student Uploads Document'" -->
+                            <div >
+                                <p class="text-center" [innerHTML]="task.description"></p>
+                                
+                               <!-- <div *ngIf="task.task_status !== 'completed'" class="file_upload" matRipple>
+                                    <p><strong>Drag file here or <span>browse</span> </strong><br>
+                                        Accepted file types: Adobe PDF (.pdf). <br>
+                                        5MB file size limit.
+                                    </p>
+                                    <label class="file_upload_label" for="image"></label>
+                                    <input name="img" type="file" id="image" accept=".doc, .docx, .pdf"
+                                        (change)="uploadFile($event, task)">
+                                </div> -->
+                                <div class="files_list mt-3" *ngIf="task?.file" style="max-width: 550px; margin: auto;">
+                                        <li>
+                                            <div class="file_card">
+                                                <div class="content">
+                                                    <div class="svg-width d-flex justify-content-center align-items-center" style="width: 60px;height:48px;padding-right: 8px;" [innerHTML]="getSafeSvg(task.file.name)"></div>
+                                                    <p>{{task.file.name}}</p>
+                                                </div>
+                                                <div class="btn_group">
+    
+                                                    <button (click)="viewFile(0, task.file)" mat-icon-button>
+                                                        <svg width="35" height="36" viewBox="0 0 35 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                        <circle cx="17.5" cy="17.9297" r="17.5" fill="#F8F8F8"/>
+                                                        <path d="M9.29565 18.1929C9.1361 17.9898 9.00404 17.8119 8.90095 17.6683C8.99761 17.5269 9.1211 17.3527 9.27053 17.1543C9.69179 16.5948 10.3145 15.849 11.1183 15.1051C12.7353 13.6083 15.0165 12.1797 17.8214 12.1797C20.6263 12.1797 22.9076 13.6083 24.5246 15.1051C25.3283 15.849 25.9511 16.5948 26.3723 17.1543C26.5218 17.3527 26.6452 17.5269 26.7419 17.6683C26.6388 17.8119 26.5068 17.9898 26.3472 18.1929C25.9058 18.7547 25.2587 19.5032 24.4375 20.2497C22.7807 21.7558 20.4992 23.1797 17.8214 23.1797C15.1437 23.1797 12.8621 21.7558 11.2054 20.2497C10.3842 19.5032 9.73706 18.7547 9.29565 18.1929Z" stroke="#2B2A35" stroke-width="1.5"/>
+                                                        <circle cx="17.8214" cy="17.6808" r="2.82143" stroke="#2B2A35" stroke-width="1.5"/>
+                                                        </svg>
+                                                    </button>
+    
+                                                    <!-- <button (click)="downloadFile(i)" mat-icon-button>
+                                                    <svg width="35" height="35" viewBox="0 0 35 35" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                        <circle cx="17.5" cy="17.5" r="17.5" fill="#F8F8F8"/>
+                                                        <path fill-rule="evenodd" clip-rule="evenodd" d="M24.7923 20.4141V23.3307C24.7923 24.1361 24.1394 24.7891 23.334 24.7891H11.6673C10.8619 24.7891 10.209 24.1361 10.209 23.3307V20.4141H11.6673V23.3307H23.334V20.4141H24.7923Z" fill="#2B2A35"/>
+                                                        <path fill-rule="evenodd" clip-rule="evenodd" d="M18.2295 17.9258L20.6305 15.5248L21.6617 16.556L17.5003 20.7174L13.3389 16.556L14.3701 15.5248L16.7711 17.9258V10.207H18.2295V17.9258Z" fill="#2B2A35"/>
+                                                        </svg>
+                                                        
+                                                        
+                                                </button> -->
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </div>
+                                <div class="text-center">
+                                    <!-- <button *ngIf="task.task_status === 'completed'" mat-button class="theme_btn btn_primary">View Approval</button>
+                                    <button *ngIf="task.task_status === 'lock'" mat-button class="theme_btn btn_primary" disabled>Approval Actions</button> -->
+                                    <!-- <button *ngIf="task.task_status === 'pending'" mat-button class="theme_btn btn_primary" [disabled]="!task.file?.name">Track Progress</button> -->
+                                </div>
+                            </div>
+                            <div *ngIf="task.completion_criteria === 'Attend Appointment'">
+                                <p class="mb-1" [innerHTML]="task.description"></p>
+                                <div class="text-center">
+                                    <button *ngIf="task.task_status === 'pending'" mat-button class="theme_btn btn_primary">I
+                                        have Attended the
+                                        Appointment</button>
+                                    <button *ngIf="task.task_status === 'lock'" mat-button class="theme_btn btn_primary"
+                                        disabled>I have Attended the
+                                        Appointment</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="d-flex align-self-center align-items-center">
+                    <span class="span-babge" [matTooltip]="getMessage(task)" matTooltipPosition="above" matTooltipClass="custom-tooltip"> {{task.completed_step_count || 0}}/{{task.total_step_count || 0}}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+<!-- project pending task -->
+  <ng-container *ngIf="projectPendingTask.length > 0">
+    <div class="activity_card mt-4 mb-4"  *ngFor="let item of projectPendingTask; let j = index;">
+            <div class="activity_card_header">
+                <div class="left">
+                    <div class="content main-title">
+                        <p>Project Application Tasks - {{item?.job_post_info?.job_title}}</p>
+                    </div>
+                </div>
+                <div class="right">
+                    <div class="d-inline-flex align-items-center">
+                        <!-- item.toggle = !item.toggle -->
+                        <button (click)="closeToogle(item);" [ngClass]="item.toggle ? 'show' : ''"
+                            mat-icon-button><svg width="18" height="8" viewBox="0 0 18 8" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path d="M1 1L9 7L17 1" stroke="#2B2A35" stroke-width="2"
+                                    stroke-linecap="round" stroke-linejoin="round" />
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="pt-4" *ngIf="item.toggle">
+                <div class="activity_card_container" *ngFor="let task of projectTask; let i = index;">
+                    <div class="status_bar"
+                        [ngClass]="task.task_status === 'lock' ? 'step_progress pending' : (task.task_status === 'pending' ? 'step_progress' : '')">
+                        <span *ngIf="task.task_status === 'completed'" class="bar">
+                            <svg width="19" height="14" viewBox="0 0 19 14" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path d="M18 1L6.3125 13L1 7.54545" stroke="white" stroke-width="2"
+                                    stroke-linecap="round" stroke-linejoin="round" />
+                            </svg>
+
+                        </span>
+                        <span *ngIf="task.task_status === 'pending'" class="bar">
+                            <svg width="25" height="25" viewBox="0 0 25 25" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path d="M12.5 2.08203V6.2487" stroke="white" stroke-width="2"
+                                    stroke-linecap="round" stroke-linejoin="round" />
+                                <path d="M12.5 18.75V22.9167" stroke="white" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" />
+                                <path d="M5.14062 5.13477L8.08854 8.08268" stroke="white" stroke-width="2"
+                                    stroke-linecap="round" stroke-linejoin="round" />
+                                <path d="M16.9219 16.918L19.8698 19.8659" stroke="white" stroke-width="2"
+                                    stroke-linecap="round" stroke-linejoin="round" />
+                                <path d="M2.08594 12.5H6.2526" stroke="white" stroke-width="2"
+                                    stroke-linecap="round" stroke-linejoin="round" />
+                                <path d="M18.75 12.5H22.9167" stroke="white" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" />
+                                <path d="M5.14062 19.8639L8.08854 16.916" stroke="white" stroke-width="2"
+                                    stroke-linecap="round" stroke-linejoin="round" />
+                                <path d="M16.9219 8.08464L19.8698 5.13672" stroke="white" stroke-width="2"
+                                    stroke-linecap="round" stroke-linejoin="round" />
+                            </svg>
+
+                        </span>
+                        <span *ngIf="task.task_status === 'lock'" class="bar">
+                            <svg width="17" height="17" viewBox="0 0 17 17" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path
+                                    d="M13.4583 7.79297H3.54167C2.75926 7.79297 2.125 8.42723 2.125 9.20964V14.168C2.125 14.9504 2.75926 15.5846 3.54167 15.5846H13.4583C14.2407 15.5846 14.875 14.9504 14.875 14.168V9.20964C14.875 8.42723 14.2407 7.79297 13.4583 7.79297Z"
+                                    stroke="#9A9A9A" stroke-linecap="round" stroke-linejoin="round" />
+                                <path
+                                    d="M4.95801 7.79297V4.95964C4.95801 4.02033 5.33115 3.11949 5.99534 2.4553C6.65953 1.79111 7.56037 1.41797 8.49967 1.41797C9.43898 1.41797 10.3398 1.79111 11.004 2.4553C11.6682 3.11949 12.0413 4.02033 12.0413 4.95964V7.79297"
+                                    stroke="#9A9A9A" stroke-linecap="round" stroke-linejoin="round" />
+                                <circle cx="8.5" cy="10.5" r="1.5" fill="#9A9A9A" />
+                                <rect x="8" y="11" width="1" height="3" fill="#9A9A9A" />
+                            </svg>
+
+                        </span>
+                    </div>
+                    <div class="activity_card">
+                        <div class="activity_card_header">
+                            <div class="left ">
+                                <div class="content"><span>{{i+1}}</span>
+                                    <p>{{task.name}}</p>
+                                </div>
+                            </div>
+                            <div class="right">
+                                <div class="d-inline-flex align-items-center">
+                                    <span *ngIf="task.task_status=='lock'" style="color: #9A9A9A;">Lock</span>
+
+                                    <!-- <span *ngIf="task.task_status!='lock'" [ngClass]="{'orange': task.student_status === 'pending' || taskStatus(task.student_status) =='In Progress'}">{{taskStatus(task.student_status)}}</span> -->
+   <span *ngIf="task.task_status!='lock' && task.submission_timestamp && task.task_display_status =='In Progress'" class="timestamp-form">
+                                            {{task.submission_timestamp | date:'dd/MM/yy, hh:mm a'}}
+                                    </span>
+                                    <!-- <span *ngIf="task.task_status!='lock'" [ngClass]="{'orange': task.student_status === 'pending' || taskStatus(task.student_status, task) =='In Progress', 'primary': taskStatus(task.student_status, task) =='Awaiting Approval'}">{{taskStatus(task.student_status, task)}}</span> -->
+  <span *ngIf="task?.task_status !== 'lock'" [ngClass]="{
+                                                'orange': task?.task_display_status === 'pending' || task?.task_display_status === 'In Progress',
+                                                'primary': task?.task_display_status === 'Awaiting Approval',
+                                                'success': (task?.task_display_status === 'Completed' || task?.task_status === 'Completed')
+                                            }">
+                                        {{ task?.task_display_status ||  task?.task_status }}
+                                        </span>
+                                    <button (click)="collapsToggle(task)" [ngClass]="task.showCollapes ? 'show' : ''"
+                                        mat-icon-button><svg width="18" height="8" viewBox="0 0 18 8" fill="none"
+                                            xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M1 1L9 7L17 1" stroke="#2B2A35" stroke-width="2"
+                                                stroke-linecap="round" stroke-linejoin="round" />
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="activity_card_body" *ngIf="task.showCollapes">
+                            <div *ngIf="task.completion_criteria === 'Submit a Form'">
+                                <p [innerHTML]="task.description"></p>
+                                <div class="text-center">
+                                    <!-- <button *ngIf="task.task_status === 'completed'" mat-button class="theme_btn btn_primary">View Approval</button> -->
+                                    <!-- <button *ngIf="task.task_status === 'pending'" mat-button class="theme_btn btn_primary">Track Progress</button> -->
+                                    <!-- <button *ngIf="task.task_status === 'lock'" mat-button class="theme_btn btn_primary" disabled>Approval Actions</button> -->
+                                </div>
+                            </div>
+                            <div *ngIf="task.completion_criteria === 'Get Document Approval' || task.completion_criteria === 'Student Uploads Document'">
+                                <p class="text-center" [innerHTML]="task.description"></p>
+                                
+                            <div *ngIf="task.task_status !== 'completed'" class="file_upload" matRipple>
+                                    <p><strong>Drag file here or <span>browse</span> </strong><br>
+                                        Accepted file types: Adobe PDF (.pdf). <br>
+                                        5MB file size limit.
+                                    </p>
+                                    <label class="file_upload_label" for="image"></label>
+                                    <input name="img" type="file" id="image" accept=".doc, .docx, .pdf"
+                                        (change)="uploadFile($event, task)">
+                                </div>
+                                 <div class="files_list mt-3" *ngIf="task?.file" style="max-width: 550px; margin: auto;">
+                                        <li>
+                                            <div class="file_card">
+                                                <div class="content">
+                                                    <div class="svg-width d-flex justify-content-center align-items-center" style="width: 60px;height:48px;padding-right: 8px;" [innerHTML]="getSafeSvg(task.file.name)"></div>
+                                                    <p>{{task.file.name}}</p>
+                                                </div>
+                                                <div class="btn_group">
+    
+                                                    <button (click)="viewFile(0, task.file)" mat-icon-button>
+                                                        <svg width="35" height="36" viewBox="0 0 35 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                        <circle cx="17.5" cy="17.9297" r="17.5" fill="#F8F8F8"/>
+                                                        <path d="M9.29565 18.1929C9.1361 17.9898 9.00404 17.8119 8.90095 17.6683C8.99761 17.5269 9.1211 17.3527 9.27053 17.1543C9.69179 16.5948 10.3145 15.849 11.1183 15.1051C12.7353 13.6083 15.0165 12.1797 17.8214 12.1797C20.6263 12.1797 22.9076 13.6083 24.5246 15.1051C25.3283 15.849 25.9511 16.5948 26.3723 17.1543C26.5218 17.3527 26.6452 17.5269 26.7419 17.6683C26.6388 17.8119 26.5068 17.9898 26.3472 18.1929C25.9058 18.7547 25.2587 19.5032 24.4375 20.2497C22.7807 21.7558 20.4992 23.1797 17.8214 23.1797C15.1437 23.1797 12.8621 21.7558 11.2054 20.2497C10.3842 19.5032 9.73706 18.7547 9.29565 18.1929Z" stroke="#2B2A35" stroke-width="1.5"/>
+                                                        <circle cx="17.8214" cy="17.6808" r="2.82143" stroke="#2B2A35" stroke-width="1.5"/>
+                                                        </svg>
+                                                    </button>
+    
+                                                    <!-- <button (click)="downloadFile(i)" mat-icon-button>
+                                                    <svg width="35" height="35" viewBox="0 0 35 35" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                        <circle cx="17.5" cy="17.5" r="17.5" fill="#F8F8F8"/>
+                                                        <path fill-rule="evenodd" clip-rule="evenodd" d="M24.7923 20.4141V23.3307C24.7923 24.1361 24.1394 24.7891 23.334 24.7891H11.6673C10.8619 24.7891 10.209 24.1361 10.209 23.3307V20.4141H11.6673V23.3307H23.334V20.4141H24.7923Z" fill="#2B2A35"/>
+                                                        <path fill-rule="evenodd" clip-rule="evenodd" d="M18.2295 17.9258L20.6305 15.5248L21.6617 16.556L17.5003 20.7174L13.3389 16.556L14.3701 15.5248L16.7711 17.9258V10.207H18.2295V17.9258Z" fill="#2B2A35"/>
+                                                        </svg>
+                                                        
+                                                        
+                                                </button> -->
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </div>
+                                <div class="text-center">
+                                    <!-- <button *ngIf="task.task_status === 'completed'" mat-button class="theme_btn btn_primary">View Approval</button>
+                                    <button *ngIf="task.task_status === 'lock'" mat-button class="theme_btn btn_primary" disabled>Approval Actions</button> -->
+                                    <!-- <button *ngIf="task.task_status === 'pending'" mat-button class="theme_btn btn_primary" [disabled]="!task.file?.name">Track Progress</button> -->
+                                </div>
+                            </div>
+                            <div *ngIf="task.completion_criteria === 'Attend Appointment'">
+                                <p class="mb-1" [innerHTML]="task.description"></p>
+                                <div class="text-center">
+                                    <button *ngIf="task.task_status === 'pending'" mat-button class="theme_btn btn_primary">I
+                                        have Attended the
+                                        Appointment</button>
+                                    <button *ngIf="task.task_status === 'lock'" mat-button class="theme_btn btn_primary"
+                                        disabled>I have Attended the
+                                        Appointment</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="d-flex align-self-center align-items-center">
+                    <span class="span-babge" [matTooltip]="getMessage(task)" matTooltipPosition="above" matTooltipClass="custom-tooltip"> {{task.completed_step_count || 0}}/{{task.total_step_count || 0}}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+</ng-container>
+      
+        <!-- <div class="activity_card_container">
+            <div class="status_bar">
+                <span class="bar">
+                    <svg width="19" height="14" viewBox="0 0 19 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M18 1L6.3125 13L1 7.54545" stroke="white" stroke-width="2" stroke-linecap="round"
+                            stroke-linejoin="round" />
+                    </svg>
+
+                </span>
+            </div>
+            <div class="activity_card">
+                <div class="activity_card_header">
+                    <div class="left ">
+                        <div class="content"><span>01</span>
+                            <p>[Step 1] Attend Internship Information Session (IIS)*</p>
+                        </div>
+                    </div>
+                    <div class="right">
+                        <div class="d-inline-flex align-items-center"><span>(100%)</span>
+                            <button (click)="collapsToggle(1)" [ngClass]="showCollapes == 1 ? 'show' : ''"
+                                mat-icon-button><svg width="18" height="8" viewBox="0 0 18 8" fill="none"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M1 1L9 7L17 1" stroke="#2B2A35" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round" />
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="activity_card_body" *ngIf="showCollapes == 1">
+                    <div>
+                        <p>Task already approved. You can review the Attend Internship Information Session (IIS), but no further actions are required.</p>
+                    <button mat-button class="theme_btn btn_primary">View Approval</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="activity_card_container">
+            <div class="status_bar">
+                <span class="bar">
+                    <svg width="19" height="14" viewBox="0 0 19 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M18 1L6.3125 13L1 7.54545" stroke="white" stroke-width="2" stroke-linecap="round"
+                            stroke-linejoin="round" />
+                    </svg>
+
+                </span>
+            </div>
+            <div class="activity_card">
+                <div class="activity_card_header">
+                    <div class="left ">
+                        <div class="content"><span>02</span>
+                            <p>[Step 2] Login to Placement Hive & complete Placement Type Selection (PTS)*</p>
+                        </div>
+                    </div>
+                    <div class="right">
+                        <div class="d-inline-flex align-items-center"><span>(100%)</span>
+                            <button (click)="collapsToggle(2)" [ngClass]="showCollapes == 2 ? 'show' : ''"
+                                mat-icon-button><svg width="18" height="8" viewBox="0 0 18 8" fill="none"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M1 1L9 7L17 1" stroke="#2B2A35" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round" />
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="activity_card_body" *ngIf="showCollapes == 2">
+                    <div>
+                        <p>Review and verify the Placement Type Selection uploaded by the student, then proceed to approve this task.</p>
+                    <button mat-button class="theme_btn btn_primary">Approval Actions</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="activity_card_container">
+            <div class="status_bar step_progress">
+                <span class="bar">
+                    <svg width="25" height="25" viewBox="0 0 25 25" fill="none"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12.5 2.08203V6.2487" stroke="white" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round" />
+                    <path d="M12.5 18.75V22.9167" stroke="white" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round" />
+                    <path d="M5.14062 5.13477L8.08854 8.08268" stroke="white" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round" />
+                    <path d="M16.9219 16.918L19.8698 19.8659" stroke="white" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round" />
+                    <path d="M2.08594 12.5H6.2526" stroke="white" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round" />
+                    <path d="M18.75 12.5H22.9167" stroke="white" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round" />
+                    <path d="M5.14062 19.8639L8.08854 16.916" stroke="white" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round" />
+                    <path d="M16.9219 8.08464L19.8698 5.13672" stroke="white" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+
+                </span>
+            </div>
+            <div class="activity_card">
+                <div class="activity_card_header">
+                    <div class="left ">
+                        <div class="content"><span>03</span>
+                            <p>[Step 2] Complete the Student ECA Placement Application Form (PAF)*</p>
+                        </div>
+                    </div>
+                    <div class="right">
+                        <div class="d-inline-flex align-items-center"><span>(75%)</span>
+                            <button (click)="collapsToggle(3)" [ngClass]="showCollapes == 3 ? 'show' : ''"
+                                mat-icon-button><svg width="18" height="8" viewBox="0 0 18 8" fill="none"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M1 1L9 7L17 1" stroke="#2B2A35" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round" />
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="activity_card_body" *ngIf="showCollapes == 3">
+                    <div class="text-center">
+                        <p>Student is currently in progress of completing the Student ECA Placement Application Form. Please check back later.</p>
+
+                        <svg class="d-block mx-auto mb-4" width="72" height="71" viewBox="0 0 72 71" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M43.2772 7.81693L43.2733 7.83362C43.0804 8.66737 42.9479 9.50783 42.8145 10.3543C42.7439 10.8019 42.6731 11.2512 42.5929 11.7021L42.5929 11.7022C42.4698 12.3933 42.3539 13.0858 42.2381 13.7793L42.228 13.84C42.1156 14.513 42.0031 15.1869 41.884 15.8599C41.884 15.8599 41.884 15.86 41.884 15.86L41.7363 15.8338C41.5883 16.6725 41.1091 17.0231 40.303 16.8777L43.2772 7.81693ZM43.2772 7.81693V7.79981V7.81693ZM33.8541 6.2152L33.9379 6.09079C36.3903 7.74268 38.3469 9.9132 39.8712 12.4948C39.9021 12.5472 39.9334 12.5985 39.9651 12.6501C40.1706 11.464 40.3741 10.2772 40.5777 9.09026C40.6608 8.60559 40.7439 8.1209 40.8271 7.63624C40.8474 7.51734 40.8704 7.39547 40.8993 7.27583L40.8994 7.27513C41.0421 6.6958 41.4283 6.3147 41.9784 6.25304C41.9784 6.25303 41.9785 6.25303 41.9785 6.25303L41.9952 6.40209L33.8541 6.2152ZM33.8541 6.2152L33.9379 6.09078M33.8541 6.2152L33.9379 6.09078M33.9379 6.09078C29.9892 3.43142 25.6552 2.29914 20.9525 2.85869L33.9379 6.09078ZM29.2882 6.40528C32.9815 7.90672 35.841 10.4156 37.8806 13.94L20.9524 2.8587C16.1126 3.43184 12.0363 5.59778 8.72865 9.30045L8.72864 9.30046C6.66621 11.6096 5.22379 14.2848 4.36639 17.2983L4.51066 17.3394L4.36638 17.2983C3.93019 18.8317 3.67244 20.399 3.60179 21.9947L3.60179 21.9948C3.58505 22.3756 3.68653 22.7053 3.88687 22.9466C4.08799 23.1888 4.37926 23.3302 4.71727 23.3492C5.06892 23.3688 5.37481 23.2598 5.60072 23.0372C5.82461 22.8166 5.95727 22.4973 5.9916 22.1171L5.99161 22.117C6.00348 21.9843 6.0145 21.8522 6.02548 21.7206C6.06414 21.257 6.10228 20.7996 6.17524 20.3472L6.17524 20.3471C6.90813 15.7917 8.95175 12.0169 12.4282 9.11215C15.1578 6.83166 18.2894 5.5523 21.776 5.2681C24.3533 5.05829 26.8657 5.42084 29.2882 6.40528Z" fill="#464BA8" stroke="#464BA8" stroke-width="0.3"/>
+                            <path d="M21.5059 43.1806L21.4948 43.1789C21.3999 43.1647 21.3048 43.1505 21.2096 43.1363C20.9642 43.0998 20.7181 43.0632 20.4728 43.0246C20.1179 42.9687 19.8255 42.8192 19.6284 42.5885C19.4304 42.3566 19.3393 42.055 19.3664 41.7175L21.5059 43.1806ZM21.5059 43.1806H21.5171M21.5059 43.1806H21.5171M21.5171 43.1806H21.5191H21.521H21.523H21.5249H21.5269H21.5288H21.5308H21.5327H21.5347H21.5367H21.5386H21.5406H21.5425H21.5445H21.5464H21.5484H21.5503H21.5523H21.5542H21.5562H21.5582H21.5601H21.5621H21.564H21.566H21.5679H21.5699H21.5718H21.5738H21.5757H21.5777H21.5797H21.5816H21.5836H21.5855H21.5875H21.5894H21.5914H21.5933H21.5953H21.5972H21.5992H21.6012H21.6031H21.6051H21.607H21.609H21.6109H21.6129H21.6148H21.6168H21.6187H21.6207H21.6226H21.6246H21.6266H21.6285H21.6305H21.6324H21.6344H21.6363H21.6383H21.6402H21.6422H21.6441H21.6461H21.6481H21.65H21.652H21.6539H21.6559H21.6578H21.6598H21.6617H21.6637H21.6656H21.6676H21.6695H21.6715H21.6735H21.6754H21.6774H21.6793H21.6813H21.6832H21.6852H21.6871H21.6891H21.691H21.693H21.6949H21.6969H21.6988H21.7008H21.7028H21.7047H21.7067H21.7086H21.7106H21.7125H21.7145H21.7164H21.7184H21.7203H21.7223H21.7242H21.7262H21.7282H21.7301H21.7321H21.734H21.736H21.7379H21.7399H21.7418H21.7438H21.7457H21.7477H21.7496H21.7516H21.7535H21.7555H21.7574H21.7594H21.7614H21.7633H21.7653H21.7672H21.7692H21.7711H21.7731H21.775H21.777H21.7789H21.7809H21.7828H21.7848H21.7867H21.7887H21.7906H21.7926H21.7946H21.7965H21.7985H21.8004H21.8024H21.8043H21.8063H21.8082H21.8102H21.8121H21.8141H21.816H21.818H21.8199H21.8219H21.8238H21.8258H21.8278H21.8297H21.8317H21.8336H21.8356H21.8375H21.8395H21.8414H21.8434H21.8453H21.8473H21.8492H21.8512H21.8531H21.8551H21.857H21.859H21.8609H21.8629H21.8649H21.8668H21.8688H21.8707H21.8727H21.8746H21.8766H21.8785H21.8805H21.8824H21.8844H21.8863H21.8883H21.8902H21.8922H21.8941H21.8961H21.898H21.9H21.9019H21.9039H21.9058H21.9078H21.9098H21.9117H21.9137H21.9156H21.9176H21.9195H21.9215H21.9234H21.9254H21.9273H21.9293H21.9312H21.9332H21.9351H21.9371H21.939H21.941H21.9429H21.9449H21.9468H21.9488H21.9507H21.9527H21.9547H21.9566H21.9586H21.9605H21.9625H21.9644H21.9664H21.9683H21.9703H21.9722H21.9742H21.9761H21.9781H21.98H21.982H21.9839H21.9859H21.9878H21.9898H21.9917H21.9937H21.9956H21.9976H21.9995H22.0015H22.0034H22.0054H22.0074H22.0093H22.0113H22.0132H22.0152H22.0171H22.0191H22.021H22.023H22.0249H22.0269H22.0288H22.0308H22.0327H22.0347H22.0366H22.0386H22.0405H22.0425H22.0444H22.0464H22.0483H22.0503H22.0522H22.0542H22.0561H22.0581H22.06H22.062H22.0639H22.0659H22.0678H22.0698H22.0718H22.0737H22.0757H22.0776H22.0796H22.0815H22.0835H22.0854H22.0874H22.0893H22.0913H22.0932H22.0952H22.0971H22.0991H22.101H22.103H22.1049H22.1069H22.1088H22.1108H22.1127H22.1147H22.1166H22.1186H22.1205H22.1225H22.1244H22.1264H22.1283H22.1303H22.1322H22.1342H22.1361H22.1381H22.14H22.142H22.1439H22.1459H22.1479H22.1498H22.1518H22.1537H22.1557H22.1576H22.1596H22.1615H22.1635H22.1654H22.1674H22.1693H22.1713H22.1732H22.1752H22.1771H22.1791H22.181H22.183H22.1849H22.1869H22.1888H22.1908H22.1927H22.1947H22.1966H22.1986H22.2005H22.2025H22.2044H22.2064H22.2083H22.2103H22.2122H22.2142H22.2161H22.2181H22.22H22.222H22.2239H22.2259H22.2278H22.2298H22.2317H22.2337H22.2356H22.2376H22.2395H22.2415H22.2434H22.2454H22.2474H22.2493H22.2513H22.2532H22.2552H22.2571H22.2591H22.261H22.263H22.2649H22.2669H22.2688H22.2708H22.2727H22.2747H22.2766H22.2786H22.2805H22.2825H22.2844H22.2864H22.2883H22.2903H22.2922H22.2942H22.2961H22.2981H22.3H22.302H22.3039H22.3059H22.3078H22.3098H22.3117H22.3137H22.3156H22.3176H22.3195H22.3215H22.3234H22.3254H22.3273H22.3293H22.3312H22.3332H22.3351H22.3371H22.339H22.341H22.3429H22.3449H22.3468H22.3488H22.3507H22.3527H22.3546H22.3566H22.3585H22.3605H22.3624H22.3644H22.3663H22.3683H22.3702H22.3722H22.3741H22.3761H22.378H22.38H22.3819H22.3839H22.3859H22.3878H22.3898H22.3917H22.3937H22.3956H22.3976H22.3995H22.4015H22.4034H22.4054H22.4073H22.4093H22.4112H22.4132H22.4151H22.4171H22.419H22.421H22.4229H22.4249H22.4268H22.4288H22.4307H22.4327H22.4346H22.4366H22.4385H22.4405H22.4424H22.4444H22.4463H22.4483H22.4502H22.4522H22.4541H22.4561H22.458H22.46H22.4619H22.4639H22.4658H22.4678H22.4697H22.4717H22.4736H22.4756H22.4775H22.4795H22.4814H22.4834H22.4853H22.4873H22.4892H22.4912H22.4931H22.4951H22.497H22.499H22.5009H22.5029H22.5048H22.5068H22.5087H22.5107H22.5126H22.5146H22.5165H22.5636L22.6022 43.1537C22.626 43.1371 22.649 43.121 22.6716 43.1051C22.7116 43.0769 22.7504 43.0496 22.7907 43.0224L22.791 43.0222C23.2311 42.724 23.4376 42.258 23.3437 41.7494C23.248 41.2303 22.8802 40.8234 22.3421 40.7433L22.342 40.7433C21.7952 40.6622 21.2424 40.5969 20.6876 40.567L20.6875 40.567M21.5171 43.1806L20.6875 40.567M20.6875 40.567C19.9616 40.5282 19.4221 41.0212 19.3664 41.7175L20.6875 40.567Z" fill="#464BA8" stroke="#464BA8" stroke-width="0.3"/>
+                            <path d="M21.9972 14.3285L21.9974 14.3285C22.3593 14.3298 22.667 14.4528 22.883 14.6931C23.0972 14.9315 23.2059 15.2682 23.2071 15.6697M21.9972 14.3285L21.3329 25.2503C23.1778 25.2463 25.0225 25.2461 26.8674 25.2459C27.9436 25.2457 29.02 25.2456 30.0964 25.2447C30.3621 25.2447 30.614 25.1666 30.8352 25.0072L30.8353 25.007C31.2661 24.6955 31.4509 24.1632 31.3046 23.6555L31.3045 23.6553C31.2257 23.3831 31.0869 23.1614 30.8816 23.0086C30.6765 22.856 30.4184 22.782 30.1183 22.7811H30.1183C28.6468 22.7772 27.1755 22.7775 25.7044 22.7779C25.0359 22.778 24.3675 22.7781 23.6991 22.7779H23.699C23.5358 22.7779 23.4262 22.7777 23.3467 22.7687C23.2663 22.7597 23.2497 22.7445 23.2468 22.7417C23.2437 22.7385 23.2284 22.7211 23.2194 22.6395C23.2105 22.559 23.2102 22.4481 23.2102 22.2833C23.2102 21.7034 23.2105 21.1233 23.2107 20.5432C23.2115 18.9189 23.2122 17.2943 23.2071 15.6697M21.9972 14.3285C21.6357 14.3276 21.3332 14.4484 21.1235 14.6918M21.9972 14.3285L21.1235 14.6918M23.2071 15.6697L23.0571 15.6702L23.2071 15.6697ZM20.8119 24.6415L20.8119 24.6413C20.8165 23.497 20.816 22.3523 20.8154 21.2072C20.8152 20.8253 20.815 20.4434 20.815 20.0614C20.815 19.6233 20.8148 19.1853 20.8146 18.7471C20.8141 17.7244 20.8136 16.7015 20.8158 15.6787L20.8119 24.6415ZM20.8119 24.6415C20.8115 24.7772 20.8195 24.9344 20.8981 25.0561M20.8119 24.6415L20.8981 25.0561M21.1235 14.6918C20.9166 14.9318 20.8166 15.2716 20.8158 15.6786L21.1235 14.6918ZM20.8981 25.0561C20.9882 25.1957 21.1413 25.2508 21.3329 25.2503L20.8981 25.0561Z" fill="#464BA8" stroke="#464BA8" stroke-width="0.3"/>
+                            <path d="M30.5246 40.8879V40.888C30.5241 41.1498 30.4709 41.3824 30.3478 41.5767C30.2239 41.7721 30.0375 41.9155 29.7941 42.012L29.794 42.012C29.2285 42.2355 28.6497 42.4357 28.0507 42.5723C27.4544 42.7085 26.9009 42.3849 26.6762 41.8029C26.4785 41.2927 26.6625 40.6109 27.1728 40.3371C27.1728 40.3371 27.1728 40.3371 27.1728 40.3371L27.2437 40.4692C27.8702 40.133 28.5514 39.9205 29.2403 39.7895L30.5246 40.8879ZM30.5246 40.8879C30.5254 40.1571 29.9518 39.5011 29.2123 39.6422L30.5246 40.8879Z" fill="#464BA8" stroke="#464BA8" stroke-width="0.3"/>
+                            <path d="M39.8174 29.6506V29.6508C40.6943 29.6508 41.2602 30.4966 40.9587 31.2969L40.9587 31.297C40.7306 31.9014 40.4382 32.4721 40.1207 33.0233L40.1207 33.0233C39.8184 33.5479 39.1912 33.7725 38.6644 33.541C38.3981 33.4242 38.1784 33.2021 38.0458 32.9435C37.9132 32.6847 37.8616 32.3766 37.9519 32.0868L39.8174 29.6506ZM39.8174 29.6506L39.8097 29.651M39.8174 29.6506L39.8097 29.651M39.8097 29.651C39.5097 29.6664 39.1255 29.7718 38.9225 30.113L38.9224 30.1132M39.8097 29.651L38.9224 30.1132M38.9224 30.1132L38.9188 30.1192M38.9224 30.1132L38.9188 30.1192M38.9188 30.1192C38.5539 30.7338 38.1738 31.3738 37.9519 32.0867L38.9188 30.1192Z" fill="#464BA8" stroke="#464BA8" stroke-width="0.3"/>
+                            <path d="M4.75163 29.3717C4.56823 28.7934 4.40256 28.2072 4.27156 27.6145L6.8998 28.7176M4.75163 29.3717L4.60858 29.4168C4.60859 29.4168 4.6086 29.4169 4.60861 29.4169M4.75163 29.3717C4.89803 29.8357 5.25096 30.0609 5.72101 30.0577M4.75163 29.3717L5.72101 30.0577M4.60861 29.4169C4.4243 28.8358 4.25731 28.2451 4.12509 27.6469L4.12506 27.6468C3.97427 26.9614 4.33999 26.3632 4.97459 26.1813L4.97465 26.1812C5.56471 26.0123 6.21069 26.3626 6.4153 26.988L6.41533 26.9881C6.60063 27.5555 6.76607 28.1333 6.8998 28.7176M4.60861 29.4169C4.69048 29.6763 4.8335 29.8781 5.02983 30.0134C5.22531 30.1481 5.46273 30.2095 5.72189 30.2077M4.60861 29.4169L5.72189 30.2077M6.8998 28.7176C7.0764 29.489 6.49233 30.2032 5.72189 30.2077M6.8998 28.7176L5.72189 30.2077M5.72189 30.2077L5.72101 30.0577M5.72189 30.2077C5.72194 30.2077 5.72198 30.2077 5.72203 30.2077L5.72101 30.0577" fill="#464BA8" stroke="#464BA8" stroke-width="0.3"/>
+                            <path d="M15.6371 38.9365L15.6371 38.9365C16.2737 39.2996 16.5184 40.0049 16.2154 40.643C16.2154 40.643 16.2154 40.6431 16.2154 40.6431L16.0799 40.5787C15.8194 41.1274 15.233 41.3191 14.6389 41.0196L15.6371 38.9365ZM15.6371 38.9365C15.384 38.7922 15.1272 38.6511 14.8716 38.5106C14.7205 38.4276 14.5699 38.3448 14.4207 38.2617C14.228 38.1539 14.0095 38.0711 13.7799 38.0813C13.1917 38.0768 12.7299 38.4051 12.5681 38.9453C12.4083 39.4733 12.6072 40.0341 13.1095 40.3424L13.1095 40.3424C13.5851 40.634 14.075 40.9035 14.5714 41.1536L15.6371 38.9365Z" fill="#464BA8" stroke="#464BA8" stroke-width="0.3"/>
+                            <path d="M8.52537 36.3795L8.5253 36.3794C8.08468 35.9186 7.69681 35.4118 7.34974 34.8774C6.99978 34.3395 7.0776 33.7334 7.51747 33.3185L7.51751 33.3184C7.93644 32.9235 8.60379 32.8337 9.05905 33.2479L8.52537 36.3795ZM8.52537 36.3795C8.87548 36.7451 9.38869 36.8522 9.82377 36.6579C10.2664 36.4603 10.5287 36.0156 10.5237 35.5075C10.5274 35.3454 10.5205 35.1373 10.4145 34.9642L10.4145 34.9642M8.52537 36.3795L10.4145 34.9642M10.4145 34.9642L10.4141 34.9636M10.4145 34.9642L10.4141 34.9636M10.4141 34.9636C10.0315 34.3457 9.60289 33.7426 9.05908 33.248L10.4141 34.9636Z" fill="#464BA8" stroke="#464BA8" stroke-width="0.3"/>
+                            <path d="M35.0953 39.0014L35.0952 39.0015C34.5724 39.4237 33.9029 39.3792 33.4665 38.9031C33.0327 38.431 33.0004 37.6672 33.4843 37.1858C33.8549 36.8171 34.2637 36.4874 34.6643 36.1643C34.7475 36.0971 34.8303 36.0303 34.9124 35.9634L34.9126 35.9634C35.1137 35.7999 35.3618 35.7609 35.5649 35.7716C35.8273 35.7681 36.056 35.8307 36.2445 35.9573C36.434 36.0846 36.5729 36.2698 36.666 36.4943L35.0953 39.0014ZM35.0953 39.0014C35.5575 38.6275 36.0279 38.2443 36.4461 37.7954M35.0953 39.0014L36.4461 37.7954M36.4461 37.7954C36.8033 37.4125 36.8533 36.9452 36.666 36.4943L36.4461 37.7954Z" fill="#464BA8" stroke="#464BA8" stroke-width="0.3"/>
+                            <path d="M45.7482 45.8862C41.9154 45.8862 38.0836 45.8862 34.2508 45.8871C33.998 45.8871 33.7434 45.895 33.4996 45.8172C33.1012 45.6899 32.8842 45.4166 32.8877 44.9966C32.8913 44.5765 33.111 44.2988 33.5148 44.191C33.7122 44.1379 33.9257 44.1246 34.132 44.1246C41.9011 44.1211 49.6703 44.122 57.4395 44.1211C57.6637 44.1211 57.8888 44.1202 58.0995 44.1998C58.4711 44.3404 58.6837 44.6234 58.6775 45.0098C58.6703 45.4131 58.4533 45.7182 58.0424 45.8146C57.786 45.8747 57.5127 45.8835 57.2474 45.8835C53.4129 45.8871 49.581 45.8862 45.7482 45.8862Z" fill="#2B2A35"/>
+                            <path d="M43.0527 53.1584C40.0667 53.1584 37.0807 53.1584 34.0947 53.1584C33.9464 53.1584 33.7964 53.1672 33.649 53.1504C33.2274 53.1044 32.9666 52.8621 32.8978 52.4554C32.829 52.0486 32.9987 51.7364 33.3765 51.5489C33.5811 51.4472 33.8035 51.4375 34.0286 51.4375C40.0453 51.4384 46.0619 51.4384 52.0777 51.4393C52.1965 51.4393 52.3162 51.441 52.4332 51.4605C52.9281 51.5436 53.2657 51.9318 53.2327 52.3687C53.1987 52.8268 52.8396 53.1487 52.3225 53.1531C51.298 53.1619 50.2725 53.1566 49.2471 53.1566C47.1829 53.1593 45.1178 53.1584 43.0527 53.1584Z" fill="#2B2A35"/>
+                            <path d="M41.2422 60.4859C38.8662 60.4859 36.4903 60.4859 34.1143 60.4851C33.9509 60.4851 33.7856 60.493 33.6249 60.4709C33.2202 60.4143 32.9201 60.0924 32.888 59.7007C32.8531 59.285 33.1059 58.9127 33.5248 58.8084C33.7088 58.7624 33.9071 58.7624 34.0983 58.7624C38.8502 58.7598 43.602 58.7606 48.3539 58.7606C48.5915 58.7606 48.8309 58.7447 49.0542 58.8491C49.4311 59.025 49.6294 59.3231 49.5776 59.7316C49.5258 60.1358 49.2722 60.3966 48.8586 60.4683C48.6996 60.4957 48.5326 60.4842 48.37 60.4842C45.9941 60.4868 43.6181 60.4859 41.2422 60.4859Z" fill="#2B2A35"/>
+                            <path fill-rule="evenodd" clip-rule="evenodd" d="M43.8379 31.2461C45.4217 31.246 47.0055 31.2458 48.5894 31.2455C48.6143 31.2455 48.6392 31.2456 48.6641 31.2458C48.8032 31.2466 48.9432 31.2474 49.078 31.2234C49.5782 31.1349 49.8721 30.7219 49.8006 30.2285C49.7363 29.7828 49.3898 29.5246 48.827 29.5237C47.3858 29.5212 45.945 29.5213 44.504 29.5217C44.3022 30.1063 44.0799 30.6814 43.8379 31.2461Z" fill="#2B2A35"/>
+                            <path fill-rule="evenodd" clip-rule="evenodd" d="M39.0791 38.5691C42.6061 38.5697 46.1331 38.5699 49.6601 38.57C52.2562 38.5701 54.8523 38.5702 57.4486 38.5705C57.6719 38.5705 57.8952 38.567 58.1078 38.4883C58.4883 38.3468 58.7357 37.9532 58.6776 37.5871C58.6133 37.1821 58.3132 36.8956 57.8997 36.8585C57.7777 36.8478 57.6548 36.8492 57.532 36.8505C57.491 36.8509 57.4501 36.8514 57.4093 36.8514H45.7716C44.6075 36.8514 43.4433 36.8513 42.2791 36.8512C41.6978 36.8511 41.1165 36.8511 40.5352 36.851C40.0748 37.4451 39.5889 38.0183 39.0791 38.5691Z" fill="#2B2A35"/>
+                            <path fill-rule="evenodd" clip-rule="evenodd" d="M45.8969 21.5326C45.8987 21.4056 45.8997 21.2784 45.8997 21.151C45.8997 20.7006 45.888 20.2529 45.8651 19.8082C48.4189 19.8068 50.9728 19.8045 53.5266 19.8008C54.0429 19.7999 54.4234 19.9511 54.7869 20.3137C57.8569 23.3726 60.9358 26.4217 64.0254 29.4611C64.4131 29.8422 64.5873 30.2481 64.5855 30.7893C64.5738 34.0474 64.5764 37.3061 64.579 40.5643C64.5794 41.0293 64.5798 41.4942 64.5801 41.9592C64.5803 41.9925 64.579 42.0261 64.5777 42.0604C64.5723 42.2029 64.5664 42.3583 64.6614 42.5614C64.8783 42.3456 65.0909 42.1328 65.3009 41.9226C65.7656 41.4575 66.2179 41.0048 66.6774 40.5584C67.6054 39.6564 68.9524 39.4044 70.1002 39.9031C71.3158 40.4311 72.0554 41.5798 71.9974 42.8851C71.9607 43.7163 71.6088 44.4079 71.013 44.9951C70.1972 45.7985 69.3838 46.6043 68.5705 47.41C67.3875 48.582 66.2046 49.7538 65.0142 50.9182C64.7052 51.2207 64.5712 51.5258 64.5721 51.9591C64.5837 56.835 64.5819 61.7116 64.58 66.5876C64.5797 67.3183 64.5795 68.049 64.5792 68.7797C64.5792 68.9999 64.5792 69.2237 64.5417 69.4385C64.4542 69.9364 64.1639 70.1734 63.6539 70.1955C63.5648 70.1995 63.4756 70.199 63.3865 70.1985C63.3568 70.1983 63.3272 70.1982 63.2975 70.1982H28.2916C27.2358 70.2 27 69.9683 27 68.9345V45.9035C27.5911 45.7427 28.1738 45.5612 28.7471 45.36V67.8733C28.7471 68.4738 28.7489 68.4755 29.3661 68.4755H62.139C62.7991 68.4755 62.8008 68.4746 62.8008 67.8149C62.8008 67.0326 62.8009 66.2503 62.8009 65.4679C62.801 61.5563 62.8011 57.6447 62.7982 53.733C62.7973 53.6944 62.7998 53.655 62.8024 53.6153C62.8102 53.4964 62.8181 53.3753 62.733 53.2652C62.6054 53.2838 62.5329 53.3688 62.4623 53.4516C62.4389 53.479 62.4157 53.5061 62.3909 53.5305C62.2112 53.7064 62.0289 53.8801 61.8466 54.0537C61.3853 54.4931 60.924 54.9326 60.5053 55.4079C59.3682 56.6981 58.0266 57.6444 56.3876 58.228C55.6305 58.498 54.8953 58.8286 54.1601 59.1592C53.7442 59.3462 53.3283 59.5332 52.9085 59.7093C52.3288 59.9524 51.784 59.6827 51.6509 59.1238C51.5921 58.8759 51.6871 58.6614 51.7824 58.4462L51.7831 58.4447C51.9707 58.0201 52.1586 57.5956 52.3464 57.1711C52.9098 55.8981 53.4731 54.6252 54.0304 53.3492C54.1751 53.0185 54.368 52.7364 54.6253 52.4817C55.8537 51.2692 57.0804 50.0553 58.3071 48.8415C59.6875 47.4755 61.0679 46.1096 62.4507 44.7457C62.6731 44.5264 62.8053 44.3071 62.8044 43.979C62.7955 39.6821 62.7964 35.3852 62.8026 31.0882C62.8026 30.8017 62.7097 30.5895 62.5043 30.3879C61.0257 28.9298 59.5497 27.4696 58.0738 26.0094C57.0897 25.0359 56.1057 24.0624 55.121 23.0896C55.1033 23.0721 55.0869 23.0514 55.07 23.0302C55.0075 22.9516 54.9393 22.8658 54.7825 22.9083C54.7825 23.4395 54.7832 23.9708 54.7838 24.5022C54.7857 25.9999 54.7876 27.4979 54.7744 28.9959C54.7709 29.4018 54.8959 29.531 55.3077 29.523C56.4519 29.4991 57.5961 29.508 58.7412 29.5195C59.2959 29.5248 59.6192 29.8555 59.6139 30.3649C59.6076 30.9061 59.2262 31.228 58.5465 31.2324C57.0754 31.2403 55.6033 31.2412 54.1322 31.2324C53.3489 31.228 53.0443 30.9061 53.0434 30.1137C53.0424 28.5917 53.0425 27.0696 53.0427 25.5477C53.0428 24.4063 53.0429 23.265 53.0425 22.1239C53.0425 21.5349 53.0407 21.5332 52.4592 21.5332C50.2718 21.5329 48.0844 21.5327 45.8969 21.5326ZM67.1081 46.1926C67.1348 46.2246 67.1624 46.2575 67.1919 46.2915C67.1655 46.3241 67.1415 46.3558 67.1184 46.3863C67.0757 46.4427 67.0361 46.4949 66.9909 46.5408C65.8804 47.6417 64.7694 48.742 63.6585 49.8423C61.9137 51.5704 60.169 53.2985 58.4259 55.0285C58.2374 55.2151 58.0999 55.2249 57.9105 55.0303C57.4469 54.5537 56.978 54.0814 56.4912 53.6287C56.2643 53.4173 56.2643 53.2829 56.4885 53.0654C57.3574 52.2196 58.2179 51.3655 59.0784 50.5115C59.3821 50.2101 59.6858 49.9087 59.9899 49.6077C60.4314 49.1703 60.8735 48.7334 61.3155 48.2964C62.5234 47.1025 63.7314 45.9085 64.9294 44.705C65.2009 44.4317 65.3679 44.4034 65.6368 44.6997C65.9183 45.01 66.2197 45.3022 66.5213 45.5945C66.6658 45.7344 66.8102 45.8744 66.9525 46.0164C67.0064 46.071 67.0556 46.1298 67.1081 46.1926ZM67.9672 41.7204C68.2262 41.4737 68.5487 41.3738 68.8372 41.3941C69.4723 41.3985 69.8751 41.6656 70.1154 42.1555C70.3664 42.6658 70.3181 43.1742 69.9394 43.5987C69.6861 43.8823 69.4131 44.1487 69.14 44.4152C68.9788 44.5725 68.8175 44.7298 68.6603 44.8907C68.5058 45.049 68.3915 45.0119 68.2521 44.8721C67.7519 44.369 67.2481 43.8684 66.739 43.3741C66.5791 43.2185 66.5631 43.092 66.731 42.9311C66.924 42.7457 67.114 42.5572 67.3039 42.3689C67.5235 42.1511 67.743 41.9333 67.9672 41.7204ZM54.3457 57.2181L54.2626 57.1279C54.3391 56.9548 54.4156 56.7817 54.4921 56.6086C54.7171 56.0998 54.9422 55.5908 55.1648 55.0807C55.238 54.9136 55.3166 54.8853 55.4524 55.0224C55.7838 55.3575 56.1196 55.6883 56.4555 56.019C56.5832 56.1454 56.5734 56.2471 56.4054 56.3205C55.8742 56.5534 55.3423 56.7847 54.8104 57.016C54.6555 57.0834 54.5006 57.1507 54.3457 57.2181Z" fill="#2B2A35"/>
+                            </svg>
+                            
+                    <button mat-button class="theme_btn btn_primary">Track Progress</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="activity_card_container">
+            <div class="status_bar step_progress pending">
+                <span class="bar">
+                    <svg width="17" height="17" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M13.4583 7.79297H3.54167C2.75926 7.79297 2.125 8.42723 2.125 9.20964V14.168C2.125 14.9504 2.75926 15.5846 3.54167 15.5846H13.4583C14.2407 15.5846 14.875 14.9504 14.875 14.168V9.20964C14.875 8.42723 14.2407 7.79297 13.4583 7.79297Z" stroke="#9A9A9A" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M4.95801 7.79297V4.95964C4.95801 4.02033 5.33115 3.11949 5.99534 2.4553C6.65953 1.79111 7.56037 1.41797 8.49967 1.41797C9.43898 1.41797 10.3398 1.79111 11.004 2.4553C11.6682 3.11949 12.0413 4.02033 12.0413 4.95964V7.79297" stroke="#9A9A9A" stroke-linecap="round" stroke-linejoin="round"/>
+                        <circle cx="8.5" cy="10.5" r="1.5" fill="#9A9A9A"/>
+                        <rect x="8" y="11" width="1" height="3" fill="#9A9A9A"/>
+                        </svg>
+                        
+
+                </span>
+            </div>
+            <div class="activity_card">
+                <div class="activity_card_header">
+                    <div class="left ">
+                        <div class="content"><span>04</span>
+                            <p>[Step 2] Complete the Student ECA Placement Application Form (PAF)*</p>
+                        </div>
+                    </div>
+                    <div class="right">
+                        <div class="d-inline-flex align-items-center"><span>(0%)</span>
+                            <button (click)="collapsToggle(4)" [ngClass]="showCollapes == 4 ? 'show' : ''"
+                                mat-icon-button><svg width="18" height="8" viewBox="0 0 18 8" fill="none"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M1 1L9 7L17 1" stroke="#2B2A35" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round" />
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="activity_card_body" *ngIf="showCollapes == 4">
+                    <div class="text-center">
+                        <p>No approval is available. Please wait until the student books & attends the Pre Placement Interview.</p>
+
+                        
+                            <svg class="d-block mx-auto mb-4" width="64" height="65" viewBox="0 0 64 65" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M31.9351 34.935C39.3138 34.935 46.6926 34.9442 54.0714 34.9219C54.8296 34.9193 55.3202 35.1603 55.7504 35.7929C58.2756 39.5076 60.8388 43.1973 63.3876 46.8949C63.4624 47.0024 63.5372 47.1098 63.6054 47.2211C64.1353 48.0882 63.7287 48.8649 62.7081 48.8754C60.6998 48.8937 58.6914 48.8819 56.6831 48.8819C55.6416 48.8819 55.6402 48.8819 55.6402 49.9088C55.6402 53.9418 55.6389 57.9747 55.6402 62.0063C55.6402 62.6233 55.5878 63.2336 55.248 63.768C54.76 64.5382 54.0687 64.9731 53.1321 64.9718C51.6472 64.9704 50.1636 64.9731 48.6786 64.9731C36.1918 64.9731 23.705 64.9482 11.2182 64.9993C9.20982 65.0071 8.17745 63.7418 8.1945 61.9854C8.23516 57.9092 8.20762 53.8331 8.20631 49.7569C8.20631 48.8859 8.20237 48.8833 7.34053 48.8833C5.3322 48.8819 3.32386 48.8793 1.31553 48.8846C0.836731 48.8859 0.389414 48.8361 0.127058 48.3672C-0.153663 47.8655 0.0785221 47.4503 0.361866 47.039C2.98674 43.234 5.61554 39.4316 8.22467 35.6148C8.59197 35.0765 9.0524 34.9245 9.66763 34.9258C17.091 34.9389 24.513 34.935 31.9351 34.935ZM30.9604 39.3858C30.9145 39.3779 30.8686 39.37 30.8214 39.3622C30.685 39.556 30.5459 39.7486 30.4134 39.9464C28.5874 42.6577 26.7536 45.3638 24.9459 48.0882C24.5694 48.6553 24.1247 48.899 23.4347 48.895C19.3105 48.8715 15.1876 48.8964 11.0634 48.8688C10.4153 48.8649 10.2002 49.0234 10.2055 49.7019C10.2369 53.7322 10.2199 57.7625 10.2212 61.7928C10.2212 62.9599 10.3052 63.0424 11.4962 63.0437C17.6708 63.045 23.8453 63.0437 30.0199 63.0437C30.9578 63.0437 30.9591 63.0424 30.9591 62.1124C30.9591 54.7486 30.9591 47.3848 30.9591 40.021C30.9604 39.8088 30.9604 39.598 30.9604 39.3858ZM32.9255 39.1919C32.9045 39.4919 32.8914 39.5966 32.8914 39.7014C32.8901 47.263 32.8966 54.8246 32.8783 62.3862C32.8769 62.9861 33.1432 63.0516 33.6312 63.0516C39.9382 63.0411 46.2453 63.0463 52.5523 63.0437C53.4719 63.0437 53.6293 62.8852 53.6306 61.9893C53.6319 57.8922 53.6162 53.7964 53.6476 49.6993C53.6529 49.0142 53.4273 48.8662 52.7858 48.8702C48.6616 48.8963 44.536 48.8715 40.4118 48.895C39.7179 48.899 39.2705 48.6553 38.9033 48.083C38.1267 46.8714 37.3081 45.6886 36.504 44.4954C35.347 42.7795 34.19 41.0663 32.9255 39.1919ZM60.8388 46.7862C60.7929 46.6841 60.7745 46.6212 60.7391 46.5688C58.6285 43.4973 56.5126 40.4297 54.4111 37.3529C54.1802 37.015 53.8943 36.9377 53.523 36.9377C47.2173 36.9429 40.9129 36.9403 34.6072 36.9429C34.417 36.9429 34.1677 36.867 34.0562 37.049C33.9159 37.2783 34.1612 37.4459 34.2753 37.6149C36.18 40.4572 38.1083 43.2838 39.9868 46.1431C40.3606 46.7116 40.7725 46.8923 41.4297 46.891C47.6476 46.8701 53.8654 46.8792 60.0832 46.8753C60.318 46.8753 60.562 46.9277 60.8388 46.7862ZM2.92902 46.8268C3.21236 46.8517 3.36191 46.8753 3.51014 46.8753C9.92474 46.8766 16.338 46.874 22.7526 46.8832C23.1999 46.8845 23.4689 46.7129 23.7115 46.3501C25.6582 43.4318 27.6233 40.524 29.5765 37.6096C29.6893 37.4407 29.9359 37.273 29.7929 37.0438C29.6814 36.867 29.4309 36.9416 29.2407 36.9416C22.935 36.939 16.6306 36.9429 10.3248 36.9325C9.87751 36.9312 9.60335 37.0975 9.3633 37.4616C8.68904 38.4794 7.98199 39.4735 7.29068 40.4795C5.86084 42.5608 4.43101 44.6408 2.92902 46.8268Z" fill="#2B2A35"/>
+                                <path d="M30.1022 26.7789C30.0786 24.196 30.8578 23.0302 33.2558 22.0256C35.3179 21.1611 36.6231 19.1977 36.6323 16.9461C36.6415 14.612 35.3704 12.6879 33.2099 11.7671C31.2199 10.9196 28.86 11.3676 27.2596 12.8988C26.4791 13.6454 25.9596 13.7397 25.4808 13.2223C25.0257 12.7311 25.145 12.1902 25.8639 11.4868C27.9955 9.40024 31.1923 8.79773 33.9917 9.95168C36.7372 11.0834 38.6144 13.817 38.6446 16.7261C38.6773 19.8421 36.9314 22.5914 34.1517 23.803C33.892 23.9157 33.6231 24.01 33.3686 24.1331C32.5461 24.53 32.1093 25.1809 32.0975 26.1004C32.0909 26.6453 32.108 27.1902 32.0857 27.7338C32.0634 28.3075 31.7787 28.6821 31.1766 28.7384C30.6165 28.7908 30.1888 28.4371 30.1101 27.8228C30.0655 27.481 30.1022 27.1273 30.1022 26.7789Z" fill="#464BA8"/>
+                                <path d="M21.8273 0.0160439C22.2405 0.022593 22.5172 0.238713 22.7153 0.583195C23.3778 1.73191 24.0547 2.87407 24.7014 4.03064C25.0477 4.65018 24.9073 5.2265 24.3957 5.50418C23.9038 5.77139 23.3489 5.60504 23.0105 5.03658C22.3218 3.87739 21.6384 2.71427 20.9903 1.53281C20.5706 0.76395 21.0192 -0.00491318 21.8273 0.0160439Z" fill="#2B2A35"/>
+                                <path d="M38.9532 4.45756C38.9493 4.39993 39.0556 4.18381 39.1749 3.97555C39.8256 2.84517 40.471 1.71087 41.1373 0.589666C41.4732 0.0238243 42.0267 -0.143832 42.5213 0.12599C43.0197 0.397123 43.1824 0.957725 42.8636 1.53012C42.1973 2.72598 41.502 3.90744 40.8094 5.08889C40.547 5.53554 40.143 5.71499 39.6419 5.57484C39.192 5.44778 38.9742 5.1164 38.9532 4.45756Z" fill="#2B2A35"/>
+                                <path d="M14.3465 7.38672C14.6049 7.39458 14.8226 7.4915 15.0312 7.61201C16.1449 8.2512 17.2626 8.88253 18.3658 9.53613C19.019 9.92384 19.2027 10.4766 18.8983 10.9992C18.5966 11.5179 18.0326 11.6161 17.3557 11.2323C16.2197 10.5892 15.0942 9.92777 13.966 9.27155C13.52 9.0122 13.3207 8.62188 13.4518 8.11629C13.5699 7.66702 13.9096 7.4509 14.3465 7.38672Z" fill="#2B2A35"/>
+                                <path d="M50.432 8.40011C50.428 8.78651 50.226 9.0655 49.9112 9.25018C48.7096 9.95356 47.5093 10.6622 46.2894 11.3328C45.7423 11.6327 45.198 11.4533 44.933 10.9752C44.6654 10.4919 44.7926 9.96011 45.3383 9.63265C46.532 8.91487 47.7349 8.21281 48.9601 7.54873C49.6829 7.15709 50.4503 7.62994 50.432 8.40011Z" fill="#2B2A35"/>
+                                <path d="M13.7788 19.4549C13.1046 19.4549 12.4303 19.468 11.7561 19.4523C11.1067 19.4366 10.6778 19.0306 10.6857 18.4739C10.6935 17.9329 11.0923 17.5439 11.722 17.536C13.1138 17.519 14.5056 17.519 15.8974 17.5374C16.5165 17.5452 16.9009 17.9486 16.893 18.5053C16.8851 19.0567 16.4968 19.4327 15.8659 19.451C15.1706 19.4693 14.4741 19.4549 13.7788 19.4549Z" fill="#2B2A35"/>
+                                <path d="M50.0677 19.4554C49.3934 19.4554 48.7192 19.4659 48.0449 19.4515C47.3628 19.4371 46.9627 19.0756 46.9561 18.5006C46.9496 17.9203 47.3457 17.5379 48.0187 17.5313C49.3672 17.5182 50.7157 17.5182 52.0642 17.5313C52.7411 17.5379 53.1582 17.9151 53.1635 18.4744C53.17 19.0507 52.7267 19.441 52.0249 19.4528C51.3729 19.4646 50.7209 19.4554 50.0677 19.4554Z" fill="#2B2A35"/>
+                                <path d="M32.0809 31.5635C32.0678 32.0704 31.6087 32.5183 31.1023 32.517C30.5632 32.5157 30.0844 32.0311 30.1093 31.5098C30.1343 30.9832 30.6445 30.5169 31.1614 30.5484C31.6625 30.5759 32.0941 31.054 32.0809 31.5635Z" fill="#464BA8"/>
+                                </svg>
+                                
+                            
+                    <button mat-button class="theme_btn btn_primary">Track Progress</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="activity_card_container">
+            <div class="status_bar step_progress pending">
+                <span class="bar">
+                    <svg width="17" height="17" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M13.4583 7.79297H3.54167C2.75926 7.79297 2.125 8.42723 2.125 9.20964V14.168C2.125 14.9504 2.75926 15.5846 3.54167 15.5846H13.4583C14.2407 15.5846 14.875 14.9504 14.875 14.168V9.20964C14.875 8.42723 14.2407 7.79297 13.4583 7.79297Z" stroke="#9A9A9A" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M4.95801 7.79297V4.95964C4.95801 4.02033 5.33115 3.11949 5.99534 2.4553C6.65953 1.79111 7.56037 1.41797 8.49967 1.41797C9.43898 1.41797 10.3398 1.79111 11.004 2.4553C11.6682 3.11949 12.0413 4.02033 12.0413 4.95964V7.79297" stroke="#9A9A9A" stroke-linecap="round" stroke-linejoin="round"/>
+                        <circle cx="8.5" cy="10.5" r="1.5" fill="#9A9A9A"/>
+                        <rect x="8" y="11" width="1" height="3" fill="#9A9A9A"/>
+                        </svg>
+                        
+
+                </span>
+            </div>
+            <div class="activity_card">
+                <div class="activity_card_header">
+                    <div class="left ">
+                        <div class="content"><span>05</span>
+                            <p>[Step 2] Submit Resume</p>
+                        </div>
+                    </div>
+                    <div class="right">
+                        <div class="d-inline-flex align-items-center"><span>(0%)</span>
+                            <button (click)="collapsToggle(5)" [ngClass]="showCollapes == 5 ? 'show' : ''"
+                                mat-icon-button><svg width="18" height="8" viewBox="0 0 18 8" fill="none"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M1 1L9 7L17 1" stroke="#2B2A35" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round" />
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="activity_card_body" *ngIf="showCollapes == 5">
+                    <div class="text-center">
+                        <p>No approval is available. Please wait until the student submits the Resume.</p>
+                            <svg class="d-block mx-auto mb-4" width="64" height="65" viewBox="0 0 64 65" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M31.9351 34.935C39.3138 34.935 46.6926 34.9442 54.0714 34.9219C54.8296 34.9193 55.3202 35.1603 55.7504 35.7929C58.2756 39.5076 60.8388 43.1973 63.3876 46.8949C63.4624 47.0024 63.5372 47.1098 63.6054 47.2211C64.1353 48.0882 63.7287 48.8649 62.7081 48.8754C60.6998 48.8937 58.6914 48.8819 56.6831 48.8819C55.6416 48.8819 55.6402 48.8819 55.6402 49.9088C55.6402 53.9418 55.6389 57.9747 55.6402 62.0063C55.6402 62.6233 55.5878 63.2336 55.248 63.768C54.76 64.5382 54.0687 64.9731 53.1321 64.9718C51.6472 64.9704 50.1636 64.9731 48.6786 64.9731C36.1918 64.9731 23.705 64.9482 11.2182 64.9993C9.20982 65.0071 8.17745 63.7418 8.1945 61.9854C8.23516 57.9092 8.20762 53.8331 8.20631 49.7569C8.20631 48.8859 8.20237 48.8833 7.34053 48.8833C5.3322 48.8819 3.32386 48.8793 1.31553 48.8846C0.836731 48.8859 0.389414 48.8361 0.127058 48.3672C-0.153663 47.8655 0.0785221 47.4503 0.361866 47.039C2.98674 43.234 5.61554 39.4316 8.22467 35.6148C8.59197 35.0765 9.0524 34.9245 9.66763 34.9258C17.091 34.9389 24.513 34.935 31.9351 34.935ZM30.9604 39.3858C30.9145 39.3779 30.8686 39.37 30.8214 39.3622C30.685 39.556 30.5459 39.7486 30.4134 39.9464C28.5874 42.6577 26.7536 45.3638 24.9459 48.0882C24.5694 48.6553 24.1247 48.899 23.4347 48.895C19.3105 48.8715 15.1876 48.8964 11.0634 48.8688C10.4153 48.8649 10.2002 49.0234 10.2055 49.7019C10.2369 53.7322 10.2199 57.7625 10.2212 61.7928C10.2212 62.9599 10.3052 63.0424 11.4962 63.0437C17.6708 63.045 23.8453 63.0437 30.0199 63.0437C30.9578 63.0437 30.9591 63.0424 30.9591 62.1124C30.9591 54.7486 30.9591 47.3848 30.9591 40.021C30.9604 39.8088 30.9604 39.598 30.9604 39.3858ZM32.9255 39.1919C32.9045 39.4919 32.8914 39.5966 32.8914 39.7014C32.8901 47.263 32.8966 54.8246 32.8783 62.3862C32.8769 62.9861 33.1432 63.0516 33.6312 63.0516C39.9382 63.0411 46.2453 63.0463 52.5523 63.0437C53.4719 63.0437 53.6293 62.8852 53.6306 61.9893C53.6319 57.8922 53.6162 53.7964 53.6476 49.6993C53.6529 49.0142 53.4273 48.8662 52.7858 48.8702C48.6616 48.8963 44.536 48.8715 40.4118 48.895C39.7179 48.899 39.2705 48.6553 38.9033 48.083C38.1267 46.8714 37.3081 45.6886 36.504 44.4954C35.347 42.7795 34.19 41.0663 32.9255 39.1919ZM60.8388 46.7862C60.7929 46.6841 60.7745 46.6212 60.7391 46.5688C58.6285 43.4973 56.5126 40.4297 54.4111 37.3529C54.1802 37.015 53.8943 36.9377 53.523 36.9377C47.2173 36.9429 40.9129 36.9403 34.6072 36.9429C34.417 36.9429 34.1677 36.867 34.0562 37.049C33.9159 37.2783 34.1612 37.4459 34.2753 37.6149C36.18 40.4572 38.1083 43.2838 39.9868 46.1431C40.3606 46.7116 40.7725 46.8923 41.4297 46.891C47.6476 46.8701 53.8654 46.8792 60.0832 46.8753C60.318 46.8753 60.562 46.9277 60.8388 46.7862ZM2.92902 46.8268C3.21236 46.8517 3.36191 46.8753 3.51014 46.8753C9.92474 46.8766 16.338 46.874 22.7526 46.8832C23.1999 46.8845 23.4689 46.7129 23.7115 46.3501C25.6582 43.4318 27.6233 40.524 29.5765 37.6096C29.6893 37.4407 29.9359 37.273 29.7929 37.0438C29.6814 36.867 29.4309 36.9416 29.2407 36.9416C22.935 36.939 16.6306 36.9429 10.3248 36.9325C9.87751 36.9312 9.60335 37.0975 9.3633 37.4616C8.68904 38.4794 7.98199 39.4735 7.29068 40.4795C5.86084 42.5608 4.43101 44.6408 2.92902 46.8268Z" fill="#2B2A35"/>
+                                <path d="M30.1022 26.7789C30.0786 24.196 30.8578 23.0302 33.2558 22.0256C35.3179 21.1611 36.6231 19.1977 36.6323 16.9461C36.6415 14.612 35.3704 12.6879 33.2099 11.7671C31.2199 10.9196 28.86 11.3676 27.2596 12.8988C26.4791 13.6454 25.9596 13.7397 25.4808 13.2223C25.0257 12.7311 25.145 12.1902 25.8639 11.4868C27.9955 9.40024 31.1923 8.79773 33.9917 9.95168C36.7372 11.0834 38.6144 13.817 38.6446 16.7261C38.6773 19.8421 36.9314 22.5914 34.1517 23.803C33.892 23.9157 33.6231 24.01 33.3686 24.1331C32.5461 24.53 32.1093 25.1809 32.0975 26.1004C32.0909 26.6453 32.108 27.1902 32.0857 27.7338C32.0634 28.3075 31.7787 28.6821 31.1766 28.7384C30.6165 28.7908 30.1888 28.4371 30.1101 27.8228C30.0655 27.481 30.1022 27.1273 30.1022 26.7789Z" fill="#464BA8"/>
+                                <path d="M21.8273 0.0160439C22.2405 0.022593 22.5172 0.238713 22.7153 0.583195C23.3778 1.73191 24.0547 2.87407 24.7014 4.03064C25.0477 4.65018 24.9073 5.2265 24.3957 5.50418C23.9038 5.77139 23.3489 5.60504 23.0105 5.03658C22.3218 3.87739 21.6384 2.71427 20.9903 1.53281C20.5706 0.76395 21.0192 -0.00491318 21.8273 0.0160439Z" fill="#2B2A35"/>
+                                <path d="M38.9532 4.45756C38.9493 4.39993 39.0556 4.18381 39.1749 3.97555C39.8256 2.84517 40.471 1.71087 41.1373 0.589666C41.4732 0.0238243 42.0267 -0.143832 42.5213 0.12599C43.0197 0.397123 43.1824 0.957725 42.8636 1.53012C42.1973 2.72598 41.502 3.90744 40.8094 5.08889C40.547 5.53554 40.143 5.71499 39.6419 5.57484C39.192 5.44778 38.9742 5.1164 38.9532 4.45756Z" fill="#2B2A35"/>
+                                <path d="M14.3465 7.38672C14.6049 7.39458 14.8226 7.4915 15.0312 7.61201C16.1449 8.2512 17.2626 8.88253 18.3658 9.53613C19.019 9.92384 19.2027 10.4766 18.8983 10.9992C18.5966 11.5179 18.0326 11.6161 17.3557 11.2323C16.2197 10.5892 15.0942 9.92777 13.966 9.27155C13.52 9.0122 13.3207 8.62188 13.4518 8.11629C13.5699 7.66702 13.9096 7.4509 14.3465 7.38672Z" fill="#2B2A35"/>
+                                <path d="M50.432 8.40011C50.428 8.78651 50.226 9.0655 49.9112 9.25018C48.7096 9.95356 47.5093 10.6622 46.2894 11.3328C45.7423 11.6327 45.198 11.4533 44.933 10.9752C44.6654 10.4919 44.7926 9.96011 45.3383 9.63265C46.532 8.91487 47.7349 8.21281 48.9601 7.54873C49.6829 7.15709 50.4503 7.62994 50.432 8.40011Z" fill="#2B2A35"/>
+                                <path d="M13.7788 19.4549C13.1046 19.4549 12.4303 19.468 11.7561 19.4523C11.1067 19.4366 10.6778 19.0306 10.6857 18.4739C10.6935 17.9329 11.0923 17.5439 11.722 17.536C13.1138 17.519 14.5056 17.519 15.8974 17.5374C16.5165 17.5452 16.9009 17.9486 16.893 18.5053C16.8851 19.0567 16.4968 19.4327 15.8659 19.451C15.1706 19.4693 14.4741 19.4549 13.7788 19.4549Z" fill="#2B2A35"/>
+                                <path d="M50.0677 19.4554C49.3934 19.4554 48.7192 19.4659 48.0449 19.4515C47.3628 19.4371 46.9627 19.0756 46.9561 18.5006C46.9496 17.9203 47.3457 17.5379 48.0187 17.5313C49.3672 17.5182 50.7157 17.5182 52.0642 17.5313C52.7411 17.5379 53.1582 17.9151 53.1635 18.4744C53.17 19.0507 52.7267 19.441 52.0249 19.4528C51.3729 19.4646 50.7209 19.4554 50.0677 19.4554Z" fill="#2B2A35"/>
+                                <path d="M32.0809 31.5635C32.0678 32.0704 31.6087 32.5183 31.1023 32.517C30.5632 32.5157 30.0844 32.0311 30.1093 31.5098C30.1343 30.9832 30.6445 30.5169 31.1614 30.5484C31.6625 30.5759 32.0941 31.054 32.0809 31.5635Z" fill="#464BA8"/>
+                                </svg>
+                    <button mat-button class="theme_btn btn_primary">Approval Actions</button>
+                    </div>
+                </div>
+            </div>
+        </div> -->
+    </div>
+</section>

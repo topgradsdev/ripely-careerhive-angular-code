@@ -1,0 +1,65 @@
+// Variable overrides
+
+// :root {
+//     --sidebar_width: 279px;
+//     --font-primary: 'DM Sans', sans-serif !important;
+//     --font-secondary: 'Inter', sans-serif !important;
+//     --font-third: 'Roboto', sans-serif !important;
+//     // --primary-color: #6366f1;
+//     // --primary-color: 99 102 241;
+//     --primary-color: 70, 75, 168;
+//     --primary-color-first: #464BA8;
+//     --light-blue-color: #ECEDFF;
+//     --primary-color-hover: rgb(67, 56, 202);
+//     --white-color: rgb(123, 20, 20);
+//     --secondary-text-color: #6c737f;
+//     --mid-dark-gray-color: #9A9A9A;
+//     --light-mid-gray-color: #E5E5E5;
+//     --primary-text-color: #111927;
+//     --main-black-color: #2B2A35;
+//     --error-color: #f04438;
+//     --danger-color: #F47761;
+//     --success-color: #65CA7E;
+//     --pink-color: #F25094;
+//     --header-footer-form-heading-color: #545465;
+//   }
+  
+:root {
+  --sidebar_width: 279px;
+  --font-primary: 'DM Sans', sans-serif !important;
+  --font-secondary: 'Inter', sans-serif !important;
+  --font-third: 'Roboto', sans-serif !important;
+  --primary-color: 70, 75, 168;
+  --primary-color-first: #464BA8;
+  --light-blue-color: #ECEDFF;
+  --primary-color-hover: rgb(67, 56, 202);
+  --white-color: #ffffff;
+  --secondary-text-color: #6c737f;
+  --mid-dark-gray-color: #9A9A9A;
+  --light-mid-gray-color: #E5E5E5;
+  --primary-text-color: #111927;
+  --main-black-color: #2B2A35;
+  --error-color: #f04438;
+  --danger-color: #F47761;
+  --success-color: #65CA7E;
+  --pink-color: #F25094;
+  --header-footer-form-heading-color: #545465;
+}
+
+// .dark-theme {
+//   --primary-color: 230, 230, 250;
+//   --primary-color-first: #aab0f1;
+//   --light-blue-color: #2b2d42;
+//   --primary-color-hover: rgb(99, 102, 241);
+//   --white-color: #1a1a1a;
+//   --secondary-text-color: #d1d5db;
+//   --mid-dark-gray-color: #b0b0b0;
+//   --light-mid-gray-color: #333;
+//   --primary-text-color: #ffffff;
+//   --main-black-color: #ffffff;
+//   --error-color: #f87171;
+//   --danger-color: #f87171;
+//   --success-color: #4ade80;
+//   --pink-color: #ec4899;
+//   --header-footer-form-heading-color: #e5e7eb;
+// }

@@ -1,0 +1,57 @@
+.element_main{
+    p{
+        color: var(--New-group-TG-Dark-Grey, #9A9A9A);
+    }
+}
+
+.permissions_List {
+    .permissions_list_head {
+        background-color: #F6F6FB;
+        border-radius: 50px;
+        font-size: 20px;
+        font-weight: 500;
+        line-height: 26px;
+        color: var(--primary-color-first);
+        height: 60px;
+        align-items: center;
+        margin-bottom: 30px;
+    }
+
+    .permissions_list_card {
+        box-shadow: 2px 2px 2px 0px rgba(0, 0, 0, 0.25);
+        border: 1px solid rgba(70, 75, 168, 0.5);
+        border-radius: 10px;
+        margin-bottom: 22px;
+        overflow: hidden;
+
+        .row {
+            align-items: center;
+            padding: 10px 0px;
+            font-size: 16px;
+            font-family: var(--font-primary);
+            font-weight: 500;
+            line-height: 21px;
+            color: #000;
+            height: 70px;
+
+            // &:nth-child(even) {
+            //     background: rgba(248, 248, 248, 1);
+            //   }
+            .toggle_btn {
+                margin-right: 15px;
+
+                &.show {
+                    svg {
+                        transform: rotate(180deg);
+                    }
+                }
+            }
+        }
+    }
+
+    .heading {
+        font-size: 20px;
+        padding: 14px 0px;
+        line-height: 2;
+    }
+}

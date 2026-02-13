@@ -1,0 +1,206 @@
+<div class="page_header">
+    <div class=" page_header_container">
+        <div>
+            <h4>Resume Review</h4>
+        </div>
+    </div>
+</div>
+<section>
+    <div class="row sub_header">
+        <div class="col-md-6">
+            <div class="btn_tab">
+                <button mat-button class="theme_btn btn_primary" (click)="btnTabs(1)"
+                    [ngClass]="selectedIndex === 1 ? 'active' :'inactive'">In-Progress</button>
+                <button mat-button class="theme_btn btn_primary" (click)="btnTabs(2)"
+                    [ngClass]="selectedIndex === 2 ? 'active' :'inactive'">Completed</button>
+            </div>
+        </div>
+        <div class="col-md-6 text-right">
+            <div class="d-inline-flex align-items-center">
+                <div class="search-container">
+                    <svg class="icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20"
+                        fill="none">
+                        <path
+                            d="M9.16667 15.8333C12.8486 15.8333 15.8333 12.8486 15.8333 9.16667C15.8333 5.48477 12.8486 2.5 9.16667 2.5C5.48477 2.5 2.5 5.48477 2.5 9.16667C2.5 12.8486 5.48477 15.8333 9.16667 15.8333Z"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                        <path d="M17.5 17.5L13.875 13.875" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                            stroke-linejoin="round" />
+                    </svg>
+                    <input type="text" class="form-control" placeholder="Search Keywords">
+                </div>
+            </div>
+        </div>
+    </div>
+    <ng-container *ngIf="selectedIndex === 1">
+        <div class="table-responsive">
+            <table mat-table [dataSource]="resumeInProgressList" matSort class="ch_table">
+                <!-- Name Column -->
+                <ng-container matColumnDef="name">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> First Name </th>
+                    <td mat-cell *matCellDef="let row">
+                        {{row.name}}
+                    </td>
+                </ng-container>
+
+                <!-- Last Name Column -->
+                <ng-container matColumnDef="lname">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Last Name </th>
+                    <td mat-cell *matCellDef="let row">
+                        {{row.lname}}
+                    </td>
+                </ng-container>
+
+                <!-- ID Column -->
+                <ng-container matColumnDef="student_id" sticky>
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Student Id </th>
+                    <td mat-cell *matCellDef="let row"> {{row.student_id}} </td>
+                </ng-container>
+                <!-- Major Column -->
+                <ng-container matColumnDef="major">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Major </th>
+                    <td mat-cell *matCellDef="let row"> {{row.major}} </td>
+                </ng-container>
+                <!-- Total Comment -->
+                <ng-container matColumnDef="totalComments">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Total Comments </th>
+                    <td mat-cell *matCellDef="let row"> {{row.totalComments}} </td>
+                </ng-container>
+
+                <!-- Last Comment -->
+                <ng-container matColumnDef="lastComments">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Last Comments </th>
+                    <td mat-cell *matCellDef="let row"> 23/06/23 <br>
+                        5:01 AM </td>
+                </ng-container>
+
+
+                <!-- Status Column -->
+                <ng-container matColumnDef="status">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Status</th>
+                    <td mat-cell *matCellDef="let row">
+                        <div>
+                            <mat-select class="custom_dorp_select yellow">
+                                <mat-option value="Completed">Completed</mat-option>
+                                <mat-option value="In Progress">In Progress</mat-option>
+                                <mat-option value="Awaiting Review">Awaiting Review</mat-option>
+                            </mat-select>
+                        </div>
+                    </td>
+                </ng-container>
+                <!-- Action column -->
+                <ng-container matColumnDef="actions" stickyEnd>
+                    <th mat-header-cell *matHeaderCellDef> Actions </th>
+                    <td mat-cell *matCellDef="let row">
+                        <button mat-button class="btn_primary theme_btn sm-theme_btn">Review</button>
+                        <button mat-icon-button [matMenuTriggerFor]="menu" class="td-btn">
+                            <mat-icon>more_horizantal</mat-icon>
+                        </button>
+                        <mat-menu #menu="matMenu" class="td-menu custome_theme_menu">
+                            <a mat-menu-item class="success">
+                                <span>Mark Complete</span>
+                            </a>
+                            <a mat-menu-item>
+                                <span>Send Reminder</span>
+                            </a>
+                            <a mat-menu-item data-toggle="modal" data-target="#sendEmail">
+                                <span>Email Candidate</span>
+                            </a>
+                        </mat-menu>
+                    </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedInprogressColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedInprogressColumns;"></tr>
+
+                <!-- Row shown when there is no matching data. -->
+                <!-- <tr class="mat-row" *matNoDataRow>
+        <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
+      </tr> -->
+            </table>
+        </div>
+    </ng-container>
+    <ng-container *ngIf="selectedIndex === 2">
+        <div class="table-responsive">
+            <table mat-table [dataSource]="resumeCompletedList" matSort class="ch_table">
+                <!-- Name Column -->
+                <ng-container matColumnDef="name">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> First Name </th>
+                    <td mat-cell *matCellDef="let row">
+                        {{row.name}}
+                    </td>
+                </ng-container>
+
+                <!-- Last Name Column -->
+                <ng-container matColumnDef="lname">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Last Name </th>
+                    <td mat-cell *matCellDef="let row">
+                        {{row.lname}}
+                    </td>
+                </ng-container>
+
+                <!-- ID Column -->
+                <ng-container matColumnDef="student_id" sticky>
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Student Id </th>
+                    <td mat-cell *matCellDef="let row"> {{row.student_id}} </td>
+                </ng-container>
+                <!-- Major Column -->
+                <ng-container matColumnDef="major">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Major </th>
+                    <td mat-cell *matCellDef="let row"> {{row.major}} </td>
+                </ng-container>
+                <!-- Email Comment -->
+                <ng-container matColumnDef="email">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Email </th>
+                    <td mat-cell *matCellDef="let row"> {{row.email}} </td>
+                </ng-container>
+                 <!--  Comment Resolved-->
+                 <ng-container matColumnDef="commentResolved">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Comment Resolved </th>
+                    <td mat-cell *matCellDef="let row"> {{row.commentResolved}} </td>
+                </ng-container>
+
+                <!-- Last Comment -->
+                <ng-container matColumnDef="lastComments">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Last Comments </th>
+                    <td mat-cell *matCellDef="let row"> 23/06/23 <br>
+                        5:01 AM </td>
+                </ng-container>
+
+
+                <!-- Completed Column -->
+                <ng-container matColumnDef="completed">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Completed</th>
+                    <td mat-cell *matCellDef="let row">
+                        23/06/23 <br>
+                        5:01 AM
+                    </td>
+                </ng-container>
+                <!-- Action column -->
+                <ng-container matColumnDef="actions" stickyEnd>
+                    <th mat-header-cell *matHeaderCellDef> Actions </th>
+                    <td mat-cell *matCellDef="let row">
+                        <button mat-icon-button [matMenuTriggerFor]="menu" class="td-btn">
+                            <mat-icon>more_horizantal</mat-icon>
+                        </button>
+                        <mat-menu #menu="matMenu" class="td-menu custome_theme_menu">
+                            <a mat-menu-item >
+                                <span>View Resume</span>
+                            </a>
+                            <a mat-menu-item data-toggle="modal" data-target="#sendEmail">
+                                <span>Email Candidate</span>
+                            </a>
+                        </mat-menu>
+                    </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedCompletedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedCompletedColumns;"></tr>
+
+                <!-- Row shown when there is no matching data. -->
+                <!-- <tr class="mat-row" *matNoDataRow>
+        <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
+      </tr> -->
+            </table>
+        </div>
+    </ng-container>
+</section>

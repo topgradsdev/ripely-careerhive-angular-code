@@ -1,0 +1,478 @@
+<div class="page_header">
+	<div class="back_btn">
+		<a routerLink="/graduateList"><mat-icon>arrow_back</mat-icon> <span>Graduate</span></a>
+	</div>
+	<div class="page_header_container">
+		<div>
+			<h4>Graduate Details View</h4>
+		</div>
+		<div>
+			
+		</div>
+	</div>
+  </div>
+
+<section class="view-graduate-sec">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="custom_card custom_card_form">
+					<div class="card_title">
+						<h4>Graduate Profile</h4>
+					</div>
+					<div class="card-body">
+						<div class="edit-wrapper">
+							<div class="edit-form mt-4">
+								<div class="edit-profile d-flex align-items-center">
+									<span class="user_dp position-relative ml-5">
+										<img [src]="this.image?this.image:'assets/img/dummy.png'" class="img-fluid">
+									</span>
+									<div class="view_heading ml-3">
+										<h2>{{profiledata?.first_name | titlecase}} {{profiledata?.last_name |
+											titlecase}}</h2>
+										<p class="gt_dash_sub_head">{{profiledata?.headline | titlecase}}</p>
+										<p class="accoun_date">{{profiledata?.location?.name | titlecase}}</p>
+									</div>
+									<div class="other_dtls ml-5">
+										<p><span class="dtl_hdng">Work preferences:</span>{{profiledata?.work_preference
+											| titlecase}}</p>
+										<p *ngIf="profiledata?.availability == 'temp_contract'"><span
+												class="dtl_hdng">Availability:</span>Temp/Contract</p>
+										<p *ngIf="profiledata?.availability == 'part_time'"><span
+												class="dtl_hdng">Availability:</span>Part Time</p>
+										<p *ngIf="profiledata?.availability == 'full_time'"><span
+												class="dtl_hdng">Availability:</span>Full Time</p>
+										<p
+											*ngIf="profiledata?.open_to_relocation == true &&  profiledata?.open_to_remote_work == true">
+											<span class="dtl_hdng">Location:</span>Open to remote working/relocation
+										</p>
+										<p
+											*ngIf="profiledata?.open_to_relocation == true  && profiledata?.open_to_remote_work == false">
+											<span class="dtl_hdng">Location:</span>Open to relocation
+										</p>
+										<p
+											*ngIf="profiledata?.open_to_remote_work == true && profiledata?.open_to_relocation == false">
+											<span class="dtl_hdng">Location:</span>Open to remote working
+										</p>
+									</div>
+								</div>
+
+								<div class="access-form-fields mt-3">
+									<div class="row justify-content-center">
+										<div class="col-md-11">
+											<div class="access-form">
+												<div class="grad_dtls">
+													<div class="prfl_smry">
+														<h2>Profile summary</h2>
+														<p>{{profiledata?.summary | titlecase}}</p>
+													</div>
+													<div class="prfl_smry"
+														*ngFor="let i of profiledata?.work_experience">
+														<h2>Work experience</h2>
+														<div class="expe_list1">
+															<ul type="none">
+																<li>
+																	<div class="experiene_txt d-flex">
+																		<div class="exper_img mr-3">
+																			<div class="experience_inner">
+																				<img src="{{i.company_logo}}"
+																					class="img-fluid">
+																			</div>
+																		</div>
+																		<div class="work_right_txt">
+																			<div
+																				class="all_headings d-flex justify-content-between">
+																				<div class="ex_headings">
+																					<p class="account_intern">
+																						{{i?.job_title | titlecase}}</p>
+																					<p class="accnt_subhead">
+																						{{i?.company_name | titlecase}}
+																						• {{i.employment_type |
+																						titlecase}}</p>
+																					<p class="accoun_date"
+																						*ngIf="i.still_in_role==true">
+																						{{i?.monthName}}
+																						{{i?.start_year}} - Present
+																						({{i?.ServingMonths}} months)
+																					</p>
+																					<p class="accoun_date"
+																						*ngIf="i.still_in_role==false">
+																						{{i?.monthName}}
+																						{{i?.start_year}} -
+																						{{i?.lastMonthName}}
+																						{{i?.end_year}}</p>
+																				</div>
+																			</div>
+																			<ul type="none">
+																				<li>- {{i?.description | titlecase}}
+																				</li>
+																			</ul>
+																		</div>
+																	</div>
+																</li>
+															</ul>
+														</div>
+														<div class="files_prevw mb-3">
+															<p class="prw_ttl">Files</p>
+															<div class="file_icons_pw d-flex align-items-center"
+																*ngFor="let f of i.media">
+																<svg width="25" height="32" viewBox="0 0 25 32"
+																	fill="none" xmlns="{{f?.url}}">
+																	<path
+																		d="M21.1761 5.17688C20.8764 4.88148 20.5691 4.58109 20.2671 4.27585C19.9625 3.97307 19.663 3.66538 19.3682 3.36506C17.2671 1.21606 16.0158 0 14.7104 0H4.94144C2.2349 0 0.0293812 2.20931 0.0293812 4.92326V24.6657C0.0293812 25.3182 0.55831 25.8471 1.21078 25.8471C1.86324 25.8471 2.39217 25.3182 2.39217 24.6657V4.90854C2.39217 3.54972 3.49247 2.44691 4.8482 2.44691L13.8446 2.44195C14.7191 2.44195 14.7191 3.75896 14.7191 4.85069V8.60098C14.7104 9.84532 14.7104 9.8318 15.9471 9.8318H19.6312C20.8555 9.8318 22.0872 9.83795 22.0872 11.0626V27.0767C22.0872 28.4356 20.9869 29.5384 19.6312 29.5384H4.8482C3.49247 29.5384 2.39217 28.4356 2.39217 27.0767V24.3343C2.39217 23.6737 1.85667 23.1382 1.19609 23.1382C0.535506 23.1382 0 23.6737 0 24.3343V27.0767C0 29.7907 2.20429 32 4.91206 32H19.6213C22.329 32 24.5333 29.7907 24.5333 27.0767V9.84532C24.5333 8.5382 23.3202 7.2828 21.1761 5.17688Z"
+																		fill="#9A9A9A" />
+																</svg>
+																<div class="prew_info">
+																	<p class="pw_accnt mb-0">{{f?.name}}</p>
+																	<p class="pw_size mb-0">{{f?.size}} • Added
+																		{{f?.date | date:"dd/MM/yyyy"}}</p>
+																</div>
+															</div>
+														</div>
+													</div>
+													<div class="prfl_smry" *ngFor="let e of profiledata?.education">
+														<h2>Education</h2>
+														<div class="expe_list1">
+															<ul type="none">
+																<li>
+																	<div class="experiene_txt d-flex">
+																		<div class="exper_img mr-3">
+																			<div class="experience_inner">
+																				<img src="assets/img/image 22.png"
+																					class="img-fluid">
+																			</div>
+																		</div>
+																		<div class="work_right_txt">
+																			<div class="all_headings">
+																				<div class="ex_headings">
+																					<p class="account_intern">
+																						{{e?.institution | titlecase}}
+																					</p>
+																					<p class="accnt_subhead">
+																						{{e?.qualification | titlecase}}
+																					</p>
+																					<p class="accoun_date mb-0">
+																						{{e?.start_year}} -
+																						{{e.end_year}} </p>
+																					<p class="accoun_date mb-0">Grade:
+																						{{e?.grade | titlecase}}</p>
+																				</div>
+																			</div>
+																		</div>
+																	</div>
+																</li>
+															</ul>
+														</div>
+														<div class="files_prevw mb-3" *ngFor="let edu of e?.media">
+															<p class="prw_ttl">Files</p>
+															<div class="file_icons_pw d-flex align-items-center">
+																<svg width="25" height="32" viewBox="0 0 25 32"
+																	fill="none" xmlns="{{edu.url}}">
+																	<path
+																		d="M21.1761 5.17688C20.8764 4.88148 20.5691 4.58109 20.2671 4.27585C19.9625 3.97307 19.663 3.66538 19.3682 3.36506C17.2671 1.21606 16.0158 0 14.7104 0H4.94144C2.2349 0 0.0293812 2.20931 0.0293812 4.92326V24.6657C0.0293812 25.3182 0.55831 25.8471 1.21078 25.8471C1.86324 25.8471 2.39217 25.3182 2.39217 24.6657V4.90854C2.39217 3.54972 3.49247 2.44691 4.8482 2.44691L13.8446 2.44195C14.7191 2.44195 14.7191 3.75896 14.7191 4.85069V8.60098C14.7104 9.84532 14.7104 9.8318 15.9471 9.8318H19.6312C20.8555 9.8318 22.0872 9.83795 22.0872 11.0626V27.0767C22.0872 28.4356 20.9869 29.5384 19.6312 29.5384H4.8482C3.49247 29.5384 2.39217 28.4356 2.39217 27.0767V24.3343C2.39217 23.6737 1.85667 23.1382 1.19609 23.1382C0.535506 23.1382 0 23.6737 0 24.3343V27.0767C0 29.7907 2.20429 32 4.91206 32H19.6213C22.329 32 24.5333 29.7907 24.5333 27.0767V9.84532C24.5333 8.5382 23.3202 7.2828 21.1761 5.17688Z"
+																		fill="#9A9A9A" />
+																</svg>
+																<div class="prew_info">
+																	<p class="pw_accnt mb-0">{{edu?.name}}</p>
+																	<p class="pw_size mb-0">{{edu?.size}} • Added
+																		{{edu?.date | date:"dd/MM/yyyy"}}</p>
+																</div>
+															</div>
+														</div>
+													</div>
+
+													<div class="prfl_smry"
+														*ngFor="let project of profiledata?.projects">
+														<h2>Projects (Uni/TAFE)</h2>
+														<div class="expe_list1">
+															<ul type="none">
+																<li>
+																	<div class="experiene_txt d-flex">
+																		<div class="exper_img mr-3">
+																			<div class="experience_inner">
+																				<img src="assets/img/image 22.png"
+																					class="img-fluid">
+																			</div>
+																		</div>
+																		<div class="work_right_txt">
+																			<div class="all_headings">
+																				<div class="ex_headings">
+																					<p class="account_intern">
+																						{{project?.project_name |
+																						titlecase}}</p>
+																					<p class="accnt_subhead">
+																						{{project?.education |
+																						titlecase}}</p>
+																					<p class="accoun_date mb-0">
+																						{{project?.year}} </p>
+																				</div>
+																				<div class="singl_div">
+																					<p class="accoun_date mb-0">Summary
+																					</p>
+																					<p>{{project?.project_summary |
+																						titlecase}}</p>
+																				</div>
+																				<div class="singl_div">
+																					<p class="accoun_date mb-0">Key
+																						tasks</p>
+																					<ul type="none">
+																						<li>- {{project?.key_tasks |
+																							titlecase}}
+																						</li>
+																					</ul>
+																				</div>
+																				<div class="singl_div">
+																					<p class="accoun_date mb-0">Outcomes
+																					</p>
+																					<ul type="none">
+																						<li>- {{project?.outcomes |
+																							titlecase}}
+																						</li>
+																					</ul>
+																				</div>
+																			</div>
+																		</div>
+																	</div>
+																</li>
+															</ul>
+														</div>
+														<div class="files_prevw mb-3">
+															<p class="prw_ttl">Files</p>
+															<div class="file_icons_pw d-flex align-items-center"
+																*ngFor="let media of project?.media">
+																<svg width="25" height="32" viewBox="0 0 25 32"
+																	fill="none" xmlns="{{media.url}}">
+																	<path
+																		d="M21.1761 5.17688C20.8764 4.88148 20.5691 4.58109 20.2671 4.27585C19.9625 3.97307 19.663 3.66538 19.3682 3.36506C17.2671 1.21606 16.0158 0 14.7104 0H4.94144C2.2349 0 0.0293812 2.20931 0.0293812 4.92326V24.6657C0.0293812 25.3182 0.55831 25.8471 1.21078 25.8471C1.86324 25.8471 2.39217 25.3182 2.39217 24.6657V4.90854C2.39217 3.54972 3.49247 2.44691 4.8482 2.44691L13.8446 2.44195C14.7191 2.44195 14.7191 3.75896 14.7191 4.85069V8.60098C14.7104 9.84532 14.7104 9.8318 15.9471 9.8318H19.6312C20.8555 9.8318 22.0872 9.83795 22.0872 11.0626V27.0767C22.0872 28.4356 20.9869 29.5384 19.6312 29.5384H4.8482C3.49247 29.5384 2.39217 28.4356 2.39217 27.0767V24.3343C2.39217 23.6737 1.85667 23.1382 1.19609 23.1382C0.535506 23.1382 0 23.6737 0 24.3343V27.0767C0 29.7907 2.20429 32 4.91206 32H19.6213C22.329 32 24.5333 29.7907 24.5333 27.0767V9.84532C24.5333 8.5382 23.3202 7.2828 21.1761 5.17688Z"
+																		fill="#9A9A9A" />
+																</svg>
+																<div class="prew_info">
+																	<p class="pw_accnt mb-0">{{media?.name}}</p>
+																	<p class="pw_size mb-0">{{media?.size}} • Added
+																		{{media?.date | date:"dd/MM/yyyy"}}</p>
+																</div>
+															</div>
+														</div>
+													</div>
+
+													<div class="prfl_smry">
+														<h2>Licences and certifications</h2>
+														<div class="expe_list1">
+															<ul type="none">
+																<li>
+																	<div class="experiene_txt">
+																		<div class="work_right_txt"
+																			*ngFor="let license of profiledata?.licenses">
+																			<div class="all_headings">
+																				<div class="singl_div">
+																					<p class="mb-1">{{license?.name |
+																						titlecase}}
+																					</p>
+																					<p class="accoun_date ">
+																						{{license?.issuingMonthName}}
+																						{{license?.issuing_year}} -
+																						{{license?.expiryMonthName}}
+																						{{license?.expiry_year}}
+																					</p>
+																				</div>
+																				<hr>
+																			</div>
+																		</div>
+																	</div>
+																</li>
+															</ul>
+														</div>
+													</div>
+
+													<div class="prfl_smry"
+														*ngFor="let experience of profiledata?.volunteer_experience">
+														<h2>Volunteer experience</h2>
+														<div class="expe_list1">
+															<ul type="none">
+																<li>
+																	<div class="experiene_txt d-flex">
+																		<div class="exper_img mr-3">
+																			<div class="experience_inner">
+																				<img src="{{experience.organization_logo}}"
+																					class="img-fluid">
+																			</div>
+																		</div>
+																		<div class="work_right_txt">
+																			<div class="all_headings">
+																				<div class="ex_headings">
+																					<p class="account_intern">
+																						{{experience?.organization |
+																						titlecase}}
+																					</p>
+																					<p class="accnt_subhead">
+																						{{experience?.description |
+																						titlecase}}
+																					</p>
+																					<p class="accoun_date mb-0">
+																						{{experience?.startMonthName}}
+																						{{experience?.start_year}} -
+																						Present (10 months)
+																					</p>
+																				</div>
+																			</div>
+																		</div>
+																	</div>
+																</li>
+															</ul>
+														</div>
+													</div>
+
+													<div class="prfl_smry">
+														<h2>Resume</h2>
+														<div class="files_prevw mb-3">
+															<div class="file_icons_pw d-flex align-items-center">
+																<svg width="25" height="32" viewBox="0 0 25 32"
+																	fill="none" xmlns="{{profiledata?.resume?.url}}">
+																	<path
+																		d="M21.1761 5.17688C20.8764 4.88148 20.5691 4.58109 20.2671 4.27585C19.9625 3.97307 19.663 3.66538 19.3682 3.36506C17.2671 1.21606 16.0158 0 14.7104 0H4.94144C2.2349 0 0.0293812 2.20931 0.0293812 4.92326V24.6657C0.0293812 25.3182 0.55831 25.8471 1.21078 25.8471C1.86324 25.8471 2.39217 25.3182 2.39217 24.6657V4.90854C2.39217 3.54972 3.49247 2.44691 4.8482 2.44691L13.8446 2.44195C14.7191 2.44195 14.7191 3.75896 14.7191 4.85069V8.60098C14.7104 9.84532 14.7104 9.8318 15.9471 9.8318H19.6312C20.8555 9.8318 22.0872 9.83795 22.0872 11.0626V27.0767C22.0872 28.4356 20.9869 29.5384 19.6312 29.5384H4.8482C3.49247 29.5384 2.39217 28.4356 2.39217 27.0767V24.3343C2.39217 23.6737 1.85667 23.1382 1.19609 23.1382C0.535506 23.1382 0 23.6737 0 24.3343V27.0767C0 29.7907 2.20429 32 4.91206 32H19.6213C22.329 32 24.5333 29.7907 24.5333 27.0767V9.84532C24.5333 8.5382 23.3202 7.2828 21.1761 5.17688Z"
+																		fill="#9A9A9A" />
+																</svg>
+																<div class="prew_info">
+																	<p class="pw_accnt mb-0">
+																		{{profiledata?.resume?.name}}</p>
+																	<p class="pw_size mb-0">
+																		{{profiledata?.resume?.size}} • Added
+																		{{profiledata?.resume?.date |
+																		date:"dd/MM/yyyy"}}</p>
+																</div>
+															</div>
+														</div>
+													</div>
+													<div class="prfl_smry" *ngIf="profiledata?.video_resume">
+														<h2>Video Resume</h2>
+														<div class="video_info ">
+															<!-- <video controls (click)="toggleVideo($event)" #videoPlayer
+																src="{{profiledata?.video_resume?.url}}"
+																type="video/mp4" class="videoResume">
+																Browser not supported
+															</video> -->
+															<!-- <iframe src="https://www.youtube.com/embed/PrGylftXLnw" >
+															</iframe> -->
+															<!-- <iframe src="{{videoUrl}}">
+
+															</iframe> -->
+															<youtube-player [videoId]="id">
+														  </youtube-player>
+
+														</div>
+													</div>
+													<div class="prfl_smry">
+														<h2>Technical skills</h2>
+														<div class="expe_list1">
+															<ul class="typed_text typed_subpart d-flex flex-wrap"
+																type="none">
+																<li *ngFor="let skill of profiledata?.skills">
+																	<div class="skill_dtl dropdown" dropdown
+																		placement="bottom right">
+																		<span data-toggle="dropdown" dropdownToggle
+																			(click)="false">{{skill?.skill_id?.name |
+																			titlecase}}</span>
+
+																		<div class="dropdown-menu dropdown-menu-right text-center"
+																			*dropdownMenu
+																			aria-labelledby="simple-dropdown">
+																			<div class="dropdown-header text-center">
+																				<strong>{{skill?.skill_id?.name |
+																					titlecase}}</strong>
+																			</div>
+																			<h4>Proficiency Level</h4>
+																			<div class="ratng_stars">
+																				<ul class="list-inline">
+																					<li class="list-inline-item"><svg
+																							width="30" height="29"
+																							viewBox="0 0 30 29"
+																							fill="none"
+																							xmlns="http://www.w3.org/2000/svg">
+																							<path
+																								d="M29.671 12.1172C29.8164 11.9745 29.9194 11.7933 29.9682 11.5942C30.0169 11.3952 30.0096 11.1863 29.9469 10.9913C29.8842 10.7963 29.7688 10.623 29.6137 10.4912C29.4586 10.3593 29.27 10.274 29.0695 10.2452L20.5824 8.99605C20.4087 8.9696 20.244 8.90104 20.1021 8.79623C19.9603 8.69142 19.8456 8.55346 19.7677 8.39409L15.9865 0.61033C15.8966 0.427029 15.7579 0.272783 15.586 0.164956C15.4141 0.0571287 15.2159 0 15.0137 0C14.8116 0 14.6134 0.0571287 14.4415 0.164956C14.2696 0.272783 14.1309 0.427029 14.041 0.61033L10.2598 8.39409C10.1819 8.55346 10.0672 8.69142 9.92537 8.79623C9.78352 8.90104 9.61875 8.9696 9.44509 8.99605L0.930534 10.2452C0.729973 10.274 0.541424 10.3593 0.386317 10.4912C0.23121 10.623 0.115766 10.7963 0.0531045 10.9913C-0.00955693 11.1863 -0.0169222 11.3952 0.0318457 11.5942C0.0806135 11.7933 0.183559 11.9745 0.328981 12.1172L6.46826 18.1751C6.59481 18.2987 6.68949 18.4519 6.74403 18.6211C6.79856 18.7903 6.81128 18.9705 6.78107 19.1459L5.33046 27.716C5.29652 27.918 5.31899 28.1255 5.39533 28.3152C5.47167 28.505 5.59885 28.6693 5.76253 28.7898C5.92621 28.9102 6.11989 28.982 6.32171 28.997C6.52354 29.0121 6.7255 28.9697 6.90482 28.8747L14.4947 24.8211C14.6507 24.7387 14.8241 24.6957 15 24.6957C15.1759 24.6957 15.3493 24.7387 15.5053 24.8211L23.0952 28.8608C23.2734 28.9546 23.4738 28.9965 23.6741 28.982C23.8744 28.9674 24.0668 28.8969 24.23 28.7783C24.3931 28.6597 24.5205 28.4976 24.5981 28.3101C24.6757 28.1226 24.7004 27.9169 24.6695 27.716L23.2189 19.1459C23.1887 18.9705 23.2014 18.7903 23.256 18.6211C23.3105 18.4519 23.4052 18.2987 23.5317 18.1751L29.671 12.1172Z"
+																								fill="#FADE97" />
+																						</svg></li>
+																					<li class="list-inline-item"><svg
+																							width="30" height="29"
+																							viewBox="0 0 30 29"
+																							fill="none"
+																							xmlns="http://www.w3.org/2000/svg">
+																							<path
+																								d="M29.671 12.1172C29.8164 11.9745 29.9194 11.7933 29.9682 11.5942C30.0169 11.3952 30.0096 11.1863 29.9469 10.9913C29.8842 10.7963 29.7688 10.623 29.6137 10.4912C29.4586 10.3593 29.27 10.274 29.0695 10.2452L20.5824 8.99605C20.4087 8.9696 20.244 8.90104 20.1021 8.79623C19.9603 8.69142 19.8456 8.55346 19.7677 8.39409L15.9865 0.61033C15.8966 0.427029 15.7579 0.272783 15.586 0.164956C15.4141 0.0571287 15.2159 0 15.0137 0C14.8116 0 14.6134 0.0571287 14.4415 0.164956C14.2696 0.272783 14.1309 0.427029 14.041 0.61033L10.2598 8.39409C10.1819 8.55346 10.0672 8.69142 9.92537 8.79623C9.78352 8.90104 9.61875 8.9696 9.44509 8.99605L0.930534 10.2452C0.729973 10.274 0.541424 10.3593 0.386317 10.4912C0.23121 10.623 0.115766 10.7963 0.0531045 10.9913C-0.00955693 11.1863 -0.0169222 11.3952 0.0318457 11.5942C0.0806135 11.7933 0.183559 11.9745 0.328981 12.1172L6.46826 18.1751C6.59481 18.2987 6.68949 18.4519 6.74403 18.6211C6.79856 18.7903 6.81128 18.9705 6.78107 19.1459L5.33046 27.716C5.29652 27.918 5.31899 28.1255 5.39533 28.3152C5.47167 28.505 5.59885 28.6693 5.76253 28.7898C5.92621 28.9102 6.11989 28.982 6.32171 28.997C6.52354 29.0121 6.7255 28.9697 6.90482 28.8747L14.4947 24.8211C14.6507 24.7387 14.8241 24.6957 15 24.6957C15.1759 24.6957 15.3493 24.7387 15.5053 24.8211L23.0952 28.8608C23.2734 28.9546 23.4738 28.9965 23.6741 28.982C23.8744 28.9674 24.0668 28.8969 24.23 28.7783C24.3931 28.6597 24.5205 28.4976 24.5981 28.3101C24.6757 28.1226 24.7004 27.9169 24.6695 27.716L23.2189 19.1459C23.1887 18.9705 23.2014 18.7903 23.256 18.6211C23.3105 18.4519 23.4052 18.2987 23.5317 18.1751L29.671 12.1172Z"
+																								fill="#FADE97" />
+																						</svg></li>
+																					<li class="list-inline-item"><svg
+																							width="30" height="29"
+																							viewBox="0 0 30 29"
+																							fill="none"
+																							xmlns="http://www.w3.org/2000/svg">
+																							<path
+																								d="M29.671 12.1172C29.8164 11.9745 29.9194 11.7933 29.9682 11.5942C30.0169 11.3952 30.0096 11.1863 29.9469 10.9913C29.8842 10.7963 29.7688 10.623 29.6137 10.4912C29.4586 10.3593 29.27 10.274 29.0695 10.2452L20.5824 8.99605C20.4087 8.9696 20.244 8.90104 20.1021 8.79623C19.9603 8.69142 19.8456 8.55346 19.7677 8.39409L15.9865 0.61033C15.8966 0.427029 15.7579 0.272783 15.586 0.164956C15.4141 0.0571287 15.2159 0 15.0137 0C14.8116 0 14.6134 0.0571287 14.4415 0.164956C14.2696 0.272783 14.1309 0.427029 14.041 0.61033L10.2598 8.39409C10.1819 8.55346 10.0672 8.69142 9.92537 8.79623C9.78352 8.90104 9.61875 8.9696 9.44509 8.99605L0.930534 10.2452C0.729973 10.274 0.541424 10.3593 0.386317 10.4912C0.23121 10.623 0.115766 10.7963 0.0531045 10.9913C-0.00955693 11.1863 -0.0169222 11.3952 0.0318457 11.5942C0.0806135 11.7933 0.183559 11.9745 0.328981 12.1172L6.46826 18.1751C6.59481 18.2987 6.68949 18.4519 6.74403 18.6211C6.79856 18.7903 6.81128 18.9705 6.78107 19.1459L5.33046 27.716C5.29652 27.918 5.31899 28.1255 5.39533 28.3152C5.47167 28.505 5.59885 28.6693 5.76253 28.7898C5.92621 28.9102 6.11989 28.982 6.32171 28.997C6.52354 29.0121 6.7255 28.9697 6.90482 28.8747L14.4947 24.8211C14.6507 24.7387 14.8241 24.6957 15 24.6957C15.1759 24.6957 15.3493 24.7387 15.5053 24.8211L23.0952 28.8608C23.2734 28.9546 23.4738 28.9965 23.6741 28.982C23.8744 28.9674 24.0668 28.8969 24.23 28.7783C24.3931 28.6597 24.5205 28.4976 24.5981 28.3101C24.6757 28.1226 24.7004 27.9169 24.6695 27.716L23.2189 19.1459C23.1887 18.9705 23.2014 18.7903 23.256 18.6211C23.3105 18.4519 23.4052 18.2987 23.5317 18.1751L29.671 12.1172Z"
+																								fill="#FADE97" />
+																						</svg></li>
+																					<li class="list-inline-item"><svg
+																							width="30" height="29"
+																							viewBox="0 0 30 29"
+																							fill="none"
+																							xmlns="http://www.w3.org/2000/svg">
+																							<path
+																								d="M29.671 12.1172C29.8164 11.9745 29.9194 11.7933 29.9682 11.5942C30.0169 11.3952 30.0096 11.1863 29.9469 10.9913C29.8842 10.7963 29.7688 10.623 29.6137 10.4912C29.4586 10.3593 29.27 10.274 29.0695 10.2452L20.5824 8.99605C20.4087 8.9696 20.244 8.90104 20.1021 8.79623C19.9603 8.69142 19.8456 8.55346 19.7677 8.39409L15.9865 0.61033C15.8966 0.427029 15.7579 0.272783 15.586 0.164956C15.4141 0.0571287 15.2159 0 15.0137 0C14.8116 0 14.6134 0.0571287 14.4415 0.164956C14.2696 0.272783 14.1309 0.427029 14.041 0.61033L10.2598 8.39409C10.1819 8.55346 10.0672 8.69142 9.92537 8.79623C9.78352 8.90104 9.61875 8.9696 9.44509 8.99605L0.930534 10.2452C0.729973 10.274 0.541424 10.3593 0.386317 10.4912C0.23121 10.623 0.115766 10.7963 0.0531045 10.9913C-0.00955693 11.1863 -0.0169222 11.3952 0.0318457 11.5942C0.0806135 11.7933 0.183559 11.9745 0.328981 12.1172L6.46826 18.1751C6.59481 18.2987 6.68949 18.4519 6.74403 18.6211C6.79856 18.7903 6.81128 18.9705 6.78107 19.1459L5.33046 27.716C5.29652 27.918 5.31899 28.1255 5.39533 28.3152C5.47167 28.505 5.59885 28.6693 5.76253 28.7898C5.92621 28.9102 6.11989 28.982 6.32171 28.997C6.52354 29.0121 6.7255 28.9697 6.90482 28.8747L14.4947 24.8211C14.6507 24.7387 14.8241 24.6957 15 24.6957C15.1759 24.6957 15.3493 24.7387 15.5053 24.8211L23.0952 28.8608C23.2734 28.9546 23.4738 28.9965 23.6741 28.982C23.8744 28.9674 24.0668 28.8969 24.23 28.7783C24.3931 28.6597 24.5205 28.4976 24.5981 28.3101C24.6757 28.1226 24.7004 27.9169 24.6695 27.716L23.2189 19.1459C23.1887 18.9705 23.2014 18.7903 23.256 18.6211C23.3105 18.4519 23.4052 18.2987 23.5317 18.1751L29.671 12.1172Z"
+																								fill="#FADE97" />
+																						</svg></li>
+																					<li class="list-inline-item"><svg
+																							width="30" height="29"
+																							viewBox="0 0 30 29"
+																							fill="none"
+																							xmlns="http://www.w3.org/2000/svg">
+																							<path
+																								d="M29.3208 11.7604L29.3198 11.7613L23.1824 17.8174C23.1821 17.8177 23.1819 17.8179 23.1816 17.8181C22.997 17.9987 22.8593 18.2219 22.7801 18.4678C22.7008 18.7136 22.6823 18.9752 22.726 19.2298C22.7261 19.2301 22.7261 19.2305 22.7262 19.2308L24.1758 27.7953C24.1921 27.905 24.1783 28.017 24.1361 28.1189C24.0935 28.2218 24.024 28.3098 23.9359 28.3739C23.8479 28.4379 23.7447 28.4755 23.6378 28.4833C23.5313 28.491 23.4244 28.4689 23.3289 28.4188C23.3286 28.4186 23.3283 28.4185 23.328 28.4184L15.7402 24.3797L15.7387 24.3789C15.5109 24.2587 15.2575 24.1957 15 24.1957C14.7425 24.1957 14.4891 24.2587 14.2613 24.3788L14.2591 24.38L6.67083 28.4329C6.67064 28.433 6.67045 28.4331 6.67027 28.4332C6.57408 28.484 6.46626 28.5064 6.3588 28.4984C6.25111 28.4904 6.14723 28.4521 6.05891 28.3871C5.97053 28.322 5.90108 28.2327 5.85919 28.1286C5.81732 28.0245 5.80488 27.9104 5.82349 27.7993C5.82351 27.7992 5.82353 27.799 5.82355 27.7989L7.27381 19.2308C7.27387 19.2305 7.27392 19.2301 7.27398 19.2298C7.31767 18.9752 7.29916 18.7136 7.21993 18.4678C7.14071 18.2219 7.00307 17.9988 6.81846 17.8182C6.81819 17.818 6.81792 17.8177 6.81764 17.8174L0.680169 11.7613L0.679246 11.7604C0.600571 11.6832 0.544246 11.5845 0.517479 11.4753C0.490705 11.366 0.494768 11.2512 0.529131 11.1443L0.0553482 10.9921L0.529131 11.1443C0.563481 11.0374 0.626506 10.9432 0.71022 10.8721C0.793878 10.8009 0.894917 10.7555 1.00169 10.7401L1.00311 10.7399L9.51767 9.49077L9.52039 9.49035C9.77473 9.4516 10.0156 9.35126 10.2225 9.19836C10.4294 9.04549 10.5962 8.8447 10.7091 8.61349L10.7095 8.61257L14.4898 0.830625C14.4899 0.830374 14.4901 0.830124 14.4902 0.829874C14.5395 0.729797 14.6149 0.646439 14.7072 0.588498C14.7998 0.530449 14.9059 0.5 15.0137 0.5C15.1216 0.5 15.2277 0.530448 15.3203 0.588498C15.4126 0.64644 15.488 0.729796 15.5373 0.829872C15.5374 0.830122 15.5376 0.830372 15.5377 0.830623L19.318 8.61257L19.3184 8.61349C19.4313 8.8447 19.5981 9.04549 19.805 9.19836C20.0119 9.35126 20.2528 9.4516 20.5071 9.49036L20.5096 9.49072L28.9967 10.7399L28.9983 10.7401C29.1051 10.7555 29.2061 10.8009 29.2898 10.8721C29.3735 10.9432 29.4365 11.0374 29.4709 11.1443C29.5052 11.2512 29.5093 11.366 29.4825 11.4752L29.9682 11.5942L29.4825 11.4753C29.4558 11.5845 29.3994 11.6832 29.3208 11.7604Z"
+																								stroke="#FADE97" />
+																						</svg></li>
+																				</ul>
+																			</div>
+																			<h4>Description</h4>
+																			<p>{{skill?.description}}</p>
+																		</div>
+																	</div>
+																</li>
+															</ul>
+														</div>
+													</div>
+													<div class="prfl_smry">
+														<h2>Work rights</h2>
+														<div class="expe_list1">
+															<ul type="none">
+																<li>
+																	<div class="experiene_txt">
+																		<div class="work_right_txt">
+																			<div class="all_headings">
+																				<div class="singl_div">
+																					<p class="mb-1">
+																						{{profiledata?.work_right?.work_right?.name}}</p>
+																					<p class="accoun_date ">Valid until:- 
+																						Work Expiry: {{profiledata?.work_right?.work_expiry ? profiledata?.work_right?.work_expiry : "N/A " }}, Expiry year: {{profiledata?.work_right?.expiry_year ? profiledata?.work_right?.expiry_year :'N/A'}}
+																					</p>
+																				</div>
+																			</div>
+																		</div>
+																	</div>
+																</li>
+															</ul>
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="edit-btns d-flex justify-content-end">
+												<button  mat-button class="theme_btn btn_primary" routerLink="/graduateList">Back</button>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>

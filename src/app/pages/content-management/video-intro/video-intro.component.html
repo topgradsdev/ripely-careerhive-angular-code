@@ -1,0 +1,280 @@
+<section class="employer-header-sec">
+	<div class="container">
+		<form [formGroup]="headerSection">
+			<div class="row">
+				<div class="col-md-12">
+					<div class="card">
+						<div class="manage-home-header">
+							<div class="card-header d-flex justify-content-between">
+								<strong>Video Intro Header Section</strong>
+								<div class="slide-cs">
+									<span class="mr-2">Visibility </span>
+									<mat-slide-toggle formControlName="is_visible" (change)="fun($event)"></mat-slide-toggle>
+								</div>
+							</div>
+							<div class="card-body">
+								
+									<div class="home-mng-form">
+										<div class="form-group">
+											<label>Main Image</label>
+											<div class="slider-video-cntnt">
+												<div class="prev-upld-img resume_img">
+													<img [src]="HeadingImage1?HeadingImage1:'assets/img/video_img.png'" class="img-fluid">
+													<div class="upload-imag text-center">
+														<button class="btn-primary btn  mt-3 position-relative" >
+															<input type="file" name="" class="img-input-upld" (change)="setHeadingImage($event)">
+														Upload Image
+														</button>
+													</div>
+													<div *ngIf="headerSection.controls['Image']?.errors?.required "
+													class="invalid">
+													*Please select image
+													</div>
+													<div *ngIf="headerSection.controls.county?.errors?.required  " class="invalid">
+														*Only images are allowed
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="edit-btns d-flex justify-content-end">
+											<button class="btn btn-primary mr-4" (click)="postcontent('header')">Save</button>
+											<!-- <button class="btn btn-primary">Back</button> -->
+										</div>
+									</div>
+								
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</form>
+	</div>
+</section>
+
+<section class="Endorsed-steps-sec resume_tips_sctn video_resm">
+	<div class="container">
+		<form [formGroup]="tipsSection">
+			<div class="row">
+				<div class="col-md-12">
+					<div class="card">
+						<div class="manage-home-header">
+							<div class="card-header d-flex justify-content-between">
+								<strong>Video Resume Tips</strong>
+								<div class="slide-cs">
+									<span class="mr-2">Visibility </span>
+									<mat-slide-toggle formControlName="is_visible" (change)="fun1($event)"></mat-slide-toggle>
+								</div>
+							</div>
+							<div class="card-body">
+								
+									<div class="home-mng-form">
+										<div class="form-group">
+											<label>Main Heading</label>
+											<input type="text" name="" class="form-control" value="Why should you upload your Video Resume?" formControlName="heading">
+										</div>
+										<div *ngIf="(tipsSection.controls.heading.touched || tipsSection.controls.heading.dirty) && tipsSection.controls.heading.invalid && tipsSection.controls.heading?.errors?.required  " class="invalid">
+											*Please enter heading
+										</div>
+										<div *ngIf="(tipsSection.controls.heading.touched || tipsSection.controls.heading.dirty) && tipsSection.controls.heading.invalid && tipsSection.controls.heading?.errors?.maxlength  " class="invalid">
+											**Maximum Length should be 200 characters
+										</div>
+										<div class="form-group">
+											<label>Sub Heading</label>
+											<input type="text" name="" class="form-control" value="Video resumes create a connection between you and the recruiters." formControlName="subheading">
+										</div>
+										<div *ngIf="(tipsSection.controls.subheading.touched || tipsSection.controls.subheading.dirty) && tipsSection.controls.subheading.invalid && tipsSection.controls.subheading?.errors?.required  " class="invalid">
+											*Please enter subheading
+										</div>
+										<div *ngIf="(tipsSection.controls.subheading.touched || tipsSection.controls.subheading.dirty) && tipsSection.controls.subheading.invalid && tipsSection.controls.subheading?.errors?.maxlength  " class="invalid">
+											**Maximum Length should be 200 characters
+										</div>
+										<div class="endrose-step">
+											<div class="form-group">
+												<ng-container formArrayName="tipsArray"
+													*ngFor="let alias of tipsSection.controls['tipsArray'].controls; let i=index">
+													<ng-container [formGroupName]="i">
+														<label>{{i+1}}: Image</label>
+														<div class="slider-video-cntnt">
+															<div class="prev-upld-img icons">
+																<img [src]="tipsArray.controls[i].controls['image'].value ? tipsArray.controls[i].controls['image'].value:'assets/img/video-card1.png'"class="img-fluid">
+																<div class="upload-imag text-center">
+																	<button class="btn-primary btn  mt-3 position-relative">
+																		<input type="file" name="" class="img-input-upld" (change)="onTipsChangeImage($event,i)">
+																	Upload Image
+																	</button>
+																</div>
+																<div *ngIf="tipsArray.controls[i].controls['image']?.errors?.required "
+																class="invalid">
+																*Please select image
+																</div>
+																<div *ngIf="tipsArray.controls[i].controls['image'].county?.errors?.required"
+																	class="invalid">
+																	*Only images are allowed
+																</div>
+															</div>
+														</div>
+													
+														<label>Heading</label>
+														<input type="text" name="" class="form-control" value="Get found by Recruiter" formControlName="heading">
+														<div *ngIf="tipsArray.controls[i].controls['heading'].errors?.required  "
+															class="invalid">
+															*Please enter heading
+														</div>
+														<div *ngIf="tipsArray.controls[i].controls['heading'].errors?.maxlength  "
+															class="invalid">
+															*Maximum Length should be 50 characters
+														</div>
+													</ng-container>
+												</ng-container>
+											</div>
+										</div>
+										<!-- <div class="endrose-step">
+											<div class="form-group">
+												<label>2: Image</label>
+												<div class="slider-video-cntnt">
+													<div class="prev-upld-img icons">
+														<img src="assets/img/video-card2.png" class="img-fluid">
+														<div class="upload-imag text-center">
+															<button class="btn-primary btn  mt-3 position-relative">
+																<input type="file" name="" class="img-input-upld">
+															Upload Image
+															</button>
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="form-group">
+												<label>Heading</label>
+												<input type="text" name="" class="form-control" value="Get into more Interviews">
+											</div>
+										</div>
+										<div class="endrose-step">
+											<div class="form-group">
+												<label>3: Image</label>
+												<div class="slider-video-cntnt">
+													<div class="prev-upld-img icons">
+														<img src="assets/img/video-card3.png" class="img-fluid">
+														<div class="upload-imag text-center">
+															<button class="btn-primary btn  mt-3 position-relative">
+																<input type="file" name="" class="img-input-upld">
+															Upload Image
+															</button>
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="form-group">
+												<label>Heading</label>
+												<input type="text" name="" class="form-control" value="Get Hired Faster">
+											</div>
+										</div> -->
+										<div class="edit-btns d-flex justify-content-end">
+											<button class="btn btn-primary mr-4" (click)="postcontent('tips')" >Save</button>
+											<!-- <button class="btn btn-primary">Back</button> -->
+										</div>
+									</div>
+								
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</form>
+	</div>
+</section>
+
+<section class="work-for-sec">
+	<div class="container">
+		<form [formGroup]="getStartedSection">
+			<div class="row">
+				<div class="col-md-12">
+					<div class="card">
+						<div class="manage-home-header">
+							<div class="card-header d-flex justify-content-between">
+								<strong>Get started</strong>
+								<div class="slide-cs">
+									<span class="mr-2">Visibility </span>
+									<mat-slide-toggle formControlName="is_visible" (change)="fun2($event)"></mat-slide-toggle>
+								</div>
+							</div>
+							<div class="card-body">
+								
+									<div class="home-mng-form">
+										<div class="form-group">
+											<label>Heading</label>
+											<input type="text" name="" class="form-control" value="Get started with three easy steps" formControlName="heading">
+										</div>
+										<div *ngIf="(getStartedSection.controls.heading.touched || getStartedSection.controls.heading.dirty) && getStartedSection.controls.heading.invalid && getStartedSection.controls.heading?.errors?.required  " class="invalid">
+											*Please enter heading
+										</div>
+										<div *ngIf="(getStartedSection.controls.heading.touched || getStartedSection.controls.heading.dirty) && getStartedSection.controls.heading.invalid && getStartedSection.controls.heading?.errors?.maxlength  " class="invalid">
+											**Maximum Length should be 200 characters
+										</div>
+										<div class="form-group">
+											<label>Image</label>
+											<div class="slider-video-cntnt">
+												<div class="prev-upld-img resume_img">
+													<img [src]="HeadingImage2?HeadingImage2:'assets/img/steps_img.png'" class="img-fluid">
+													<div class="upload-imag text-center">
+														<button class="btn-primary btn  mt-3 position-relative">
+															<input type="file" name="" class="img-input-upld" (change)="setHeadingImage1($event)">
+														Upload Image
+														</button>
+													</div>
+													<div *ngIf="getStartedSection.controls['Image']?.errors?.required "
+													class="invalid">
+													*Please select image
+													</div>
+													<div *ngIf="getStartedSection.controls.county?.errors?.required  " class="invalid">
+														*Only images are allowed
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="edit-btns d-flex justify-content-end">
+											<button class="btn btn-primary mr-4" (click)="postcontent('getstart')">Save</button>
+											<!-- <button class="btn btn-primary">Back</button> -->
+										</div>
+									</div>
+								
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</form>
+	</div>
+</section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

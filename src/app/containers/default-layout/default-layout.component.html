@@ -1,0 +1,618 @@
+<div class="app-body" [class.sidebar-hidden]="!sidebarVisible">
+  <!-- Sidebar -->
+  <c-sidebar
+    #sidebar="cSidebar"
+    class="d-print-none sidebar sidebar-fixed transition-sidebar"
+    id="sidebar"
+    [visible]="sidebarVisible"
+    (visibleChange)="onSidebarVisibleChange($event)"
+    [narrow]="sidebarCollapsed"
+  >
+    <c-sidebar-brand
+      [brandFull]="{
+        src: '../../../assets/img/careerHive/ch-full-logo.svg',
+        width: 200,
+        height: 46,
+        alt: 'CareerHive'
+      }"
+      [brandNarrow]="{
+        src: '../../../assets/img/careerHive/ch-logo-icon.svg',
+        width: 46,
+        height: 46,
+        alt: 'CareerHive'
+      }"
+      routerLink="/admin/my-task"
+    />
+    <ng-scrollbar style="height: calc(100vh - 100px); overflow-y: auto;overflow-x: hidden;" pointerEventsMethod="scrollbar">
+      <c-sidebar-nav
+        [navItems]="navItems"
+        dropdownMode="none"
+        [closeOnItemClick]="false"
+        (click)="closeParentDropdown($event)"
+      ></c-sidebar-nav>
+    </ng-scrollbar>
+
+    <!-- 🔽 Sidebar Footer -->
+    <div class="footer-div text-center p-2">
+       <p>Version 1.0.0 | &copy; 2025</p>
+    </div>
+    
+  </c-sidebar>
+
+
+  <!-- Wrapper for header + main -->
+  <div class="main-wrapper"  style="width: 100%;" [class.sidebar-collapsed]="sidebarCollapsed">
+    <!-- Header -->
+    <header class="app-header">
+      <button class="btn btn-md" (click)="toggleSidebar()">
+       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M3 12H21" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M3 6H21" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M3 18H21" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+
+      </button>
+
+      <!-- <button type="button" class="d-lg-block d-none navbar-toggler ng-star-inserted __web-inspector-hide-shortcut__" ng-reflect-breakpoint="lg"><span class="navbar-toggler-icon"></span></button>
+       -->
+      <!-- Add logo, profile menu etc. -->
+         <ul class="nav navbar-nav ml-auto">
+           
+            <li class="nav-item">
+             
+            
+              <!-- <button mat-icon-button [matMenuTriggerFor]="notification" #menuTrigger="matMenuTrigger"
+                (menuOpened)="archive_notification=null" (menuClosed)="allowCloseOnClickOut()">
+                  <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path
+                      d="M24 12C24 9.87827 23.1571 7.84344 21.6569 6.34315C20.1566 4.84285 18.1217 4 16 4C13.8783 4 11.8434 4.84285 10.3431 6.34315C8.84286 7.84344 8 9.87827 8 12C8 21.3333 4 24 4 24H28C28 24 24 21.3333 24 12Z"
+                      stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                    <path
+                      d="M18.3086 27.3334C18.0742 27.7375 17.7378 28.0729 17.3329 28.3061C16.9281 28.5393 16.4692 28.662 16.002 28.662C15.5348 28.662 15.0758 28.5393 14.671 28.3061C14.2662 28.0729 13.9297 27.7375 13.6953 27.3334"
+                      stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                  </svg>
+               
+              </button>  -->
+              <mat-menu #notification="matMenu" class="notification_menu">
+
+                <ng-container *ngFor="let item of notifications; let i= index;">
+
+                  <div class="notification_header position-relative" *ngIf="item.type=='notification'"
+                    (click)="$event.stopPropagation()">
+                    <div class="d-flex align-items-center"
+                      [ngStyle]="{'filter': archive_notification == item.id? 'blur(6px)': 'blur(0)'}">
+                      <div class="notification-dot"></div>
+                      <svg width="62" height="70" viewBox="0 0 62 70" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path
+                          d="M40.1035 37.4571V30.1429C40.1035 25.0932 35.9802 21 30.8937 21C25.8071 21 21.6839 25.0932 21.6839 30.1429V37.4571L18 44.7714H26.3818C26.8082 46.8578 28.6658 48.4286 30.8937 48.4286C33.1215 48.4286 34.9791 46.8578 35.4055 44.7714H43.7873L40.1035 37.4571ZM30.8937 46.6C29.6927 46.6 28.6806 45.8347 28.3002 44.7714H33.488C33.1068 45.8347 32.0946 46.6 30.8937 46.6ZM20.763 42.9428L23.5259 37.4571V30.1429C23.5259 26.1036 26.8248 22.8286 30.8937 22.8286C34.9625 22.8286 38.2615 26.1036 38.2615 30.1429V37.4571L41.0244 42.9429H20.763V42.9428Z"
+                          fill="#464BA8" />
+                      </svg>
+                      <div>
+                        <h4>{{item.title}} </h4>
+                        <small>4 hour ago</small>
+                        <br />
+                        <button class="notification-btn" mat-stroked-button>View More</button>
+                      </div>
+
+                    </div>
+
+                    <button mat-icon-button class="d-flex align-self-start"
+                      (click)="$event.stopPropagation();archive_notification=item.id;"
+                      [ngStyle]="{'filter': archive_notification == item.id? 'blur(6px)': 'blur(0)'}">
+                      <svg width="20" height="20" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M22.5 7.5L7.5 22.5" stroke="black" stroke-width="2" stroke-linecap="round"
+                          stroke-linejoin="round" />
+                        <path d="M7.5 7.5L22.5 22.5" stroke="black" stroke-width="2" stroke-linecap="round"
+                          stroke-linejoin="round" />
+                      </svg>
+                    </button>
+
+                    <div (click)="$event.stopPropagation()"
+                      class="position-absolute w-100 text-center d-flex flex-column justify-content-center align-items-center"
+                      *ngIf="archive_notification == item.id">
+                      <p>Are you sure you want to archive this notification?</p>
+                      <p style="color:#464BA8;"><span><a>Yes</a></span> &nbsp;/&nbsp; <span><a>No</a></span></p>
+                    </div>
+                  </div>
+
+                  <div class="notification_header position-relative" *ngIf="item.reference_type=='HCAAF'"
+                   >
+                    <div  (click)="$event.stopPropagation()" class="d-flex align-items-center"
+                      [ngStyle]="{'filter': archive_notification == item._id? 'blur(6px)': 'blur(0)'}">
+                      <div class="notification-dot"></div>
+                      <svg width="62" height="70" viewBox="0 0 62 70" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path
+                          d="M40.1035 37.4571V30.1429C40.1035 25.0932 35.9802 21 30.8937 21C25.8071 21 21.6839 25.0932 21.6839 30.1429V37.4571L18 44.7714H26.3818C26.8082 46.8578 28.6658 48.4286 30.8937 48.4286C33.1215 48.4286 34.9791 46.8578 35.4055 44.7714H43.7873L40.1035 37.4571ZM30.8937 46.6C29.6927 46.6 28.6806 45.8347 28.3002 44.7714H33.488C33.1068 45.8347 32.0946 46.6 30.8937 46.6ZM20.763 42.9428L23.5259 37.4571V30.1429C23.5259 26.1036 26.8248 22.8286 30.8937 22.8286C34.9625 22.8286 38.2615 26.1036 38.2615 30.1429V37.4571L41.0244 42.9429H20.763V42.9428Z"
+                          fill="#464BA8" />
+                      </svg>
+                      <div>
+                        <h4>{{item.message}} </h4>
+                        <small>{{item.created_at |  dateAgo}}</small>
+                        <br />
+                        <button class="notification-btn" [routerLink]="['/admin/wil/view-company-details']" [queryParams]="{company_id: item.sender_id}"  (click)="notificationMenu.closeMenu();" mat-stroked-button>View More</button>
+                      </div>
+
+                    </div>
+
+                    <button mat-icon-button class="d-flex align-self-start"
+                      (click)="$event.stopPropagation();archive_notification=item._id;"
+                      [ngStyle]="{'filter': archive_notification == item._id? 'blur(6px)': 'blur(0)'}">
+                      <svg width="20" height="20" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M22.5 7.5L7.5 22.5" stroke="black" stroke-width="2" stroke-linecap="round"
+                          stroke-linejoin="round" />
+                        <path d="M7.5 7.5L22.5 22.5" stroke="black" stroke-width="2" stroke-linecap="round"
+                          stroke-linejoin="round" />
+                      </svg>
+                    </button>
+
+                    <div (click)="$event.stopPropagation()"
+                      class="position-absolute w-100 text-center d-flex flex-column justify-content-center align-items-center" style="width:92% !important"
+                      *ngIf="archive_notification == item._id">
+                      <p>Are you sure you want to archive this notification?</p>
+                      <p style="color:#464BA8;"><span><a (click)="notificationArchive(item)">Yes</a></span> &nbsp;/&nbsp; <span><a (click)="archive_notification='';$event.stopPropagation()">No</a></span></p>
+                      <!-- notificationMenu.closeMenu(); -->
+                    </div>
+                  </div>
+
+                  <div class="notification_header  position-relative" *ngIf="item.type=='task'"
+                    (click)="$event.stopPropagation()">
+                    <div class="d-flex align-items-center"
+                      [ngStyle]="{'filter': archive_notification == item.id? 'blur(6px)': 'blur(0)'}">
+                      <div class="notification-dot"></div>
+                      <div class="d-flex align-items-start">
+                        <svg width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <circle cx="18.122" cy="18.1825" r="17.122" fill="#464BA8" />
+                          <path
+                            d="M9.11 23.0605V12.5605H15.605V13.5955H10.37V17.2555H15.155V18.2755H10.37V22.0255H15.605V23.0605H9.11ZM22.0918 23.2405C21.1118 23.2405 20.2518 23.0155 19.5118 22.5655C18.7718 22.1055 18.1968 21.4705 17.7868 20.6605C17.3768 19.8405 17.1718 18.8955 17.1718 17.8255C17.1718 16.7555 17.3768 15.8105 17.7868 14.9905C18.2068 14.1705 18.7968 13.5305 19.5568 13.0705C20.3268 12.6105 21.2318 12.3805 22.2718 12.3805C23.4518 12.3805 24.4318 12.6655 25.2118 13.2355C26.0018 13.8055 26.5118 14.5905 26.7418 15.5905H25.2868C25.1468 14.9605 24.8118 14.4605 24.2818 14.0905C23.7618 13.7205 23.0918 13.5355 22.2718 13.5355C21.5018 13.5355 20.8318 13.7105 20.2618 14.0605C19.6918 14.4005 19.2468 14.8905 18.9268 15.5305C18.6168 16.1705 18.4618 16.9355 18.4618 17.8255C18.4618 18.7155 18.6168 19.4805 18.9268 20.1205C19.2368 20.7605 19.6668 21.2555 20.2168 21.6055C20.7668 21.9455 21.4068 22.1155 22.1368 22.1155C23.2568 22.1155 24.1018 21.7905 24.6718 21.1405C25.2418 20.4805 25.5668 19.5805 25.6468 18.4405H22.6168V17.4505H26.9368V23.0605H25.7818L25.6768 21.3355C25.2968 21.9455 24.8318 22.4155 24.2818 22.7455C23.7318 23.0755 23.0018 23.2405 22.0918 23.2405Z"
+                            fill="white" />
+                          <circle cx="18" cy="18" r="17.25" fill="#F47761" stroke="white" stroke-width="1.5" />
+                          <path
+                            d="M21.625 11H23.5C23.9973 11 24.4742 11.1844 24.8258 11.5126C25.1775 11.8408 25.375 12.2859 25.375 12.75V25C25.375 25.4641 25.1775 25.9092 24.8258 26.2374C24.4742 26.5656 23.9973 26.75 23.5 26.75H12.25C11.7527 26.75 11.2758 26.5656 10.9242 26.2374C10.5725 25.9092 10.375 25.4641 10.375 25V12.75C10.375 12.2859 10.5725 11.8408 10.9242 11.5126C11.2758 11.1844 11.7527 11 12.25 11H14.125"
+                            stroke="white" stroke-linecap="round" stroke-linejoin="round" />
+                          <path
+                            d="M20.6875 9.25H15.0625C14.5447 9.25 14.125 9.64175 14.125 10.125V11.875C14.125 12.3582 14.5447 12.75 15.0625 12.75H20.6875C21.2053 12.75 21.625 12.3582 21.625 11.875V10.125C21.625 9.64175 21.2053 9.25 20.6875 9.25Z"
+                            stroke="white" stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+
+                        <div class="ml-3">
+                          <h4>{{item.title}} </h4>
+                          <small>5 hour ago</small>
+                          <br />
+                          <button class="notification-btn" mat-stroked-button>View Task</button>
+                        </div>
+                      </div>
+                    </div>
+                    <button mat-icon-button class="d-flex align-self-start"
+                      (click)="$event.stopPropagation();archive_notification=item.id;"
+                      [ngStyle]="{'filter': archive_notification == item.id? 'blur(6px)': 'blur(0)'}">
+                      <svg width="20" height="20" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M22.5 7.5L7.5 22.5" stroke="black" stroke-width="2" stroke-linecap="round"
+                          stroke-linejoin="round" />
+                        <path d="M7.5 7.5L22.5 22.5" stroke="black" stroke-width="2" stroke-linecap="round"
+                          stroke-linejoin="round" />
+                      </svg>
+                    </button>
+
+                    <div (click)="$event.stopPropagation()"
+                      class="position-absolute w-100 text-center d-flex flex-column justify-content-center align-items-center"
+                      *ngIf="archive_notification == item.id">
+                      <p>Are you sure you want to archive this notification?</p>
+                      <p style="color:#464BA8;"><span><a>Yes</a></span> &nbsp;/&nbsp; <span><a>No</a></span></p>
+                    </div>
+                  </div>
+
+                  <div class="notification_header  position-relative" *ngIf="item.type=='reminder'"
+                    (click)="$event.stopPropagation()">
+                    <div class="d-flex align-items-center"
+                      [ngStyle]="{'filter': archive_notification == item.id? 'blur(6px)': 'blur(0)'}">
+                      <div class="notification-dot"></div>
+                      <div class="d-flex align-items-start">
+                        <svg width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <circle cx="18.122" cy="18.1825" r="17.122" fill="#464BA8" />
+                          <path
+                            d="M9.11 23.0605V12.5605H15.605V13.5955H10.37V17.2555H15.155V18.2755H10.37V22.0255H15.605V23.0605H9.11ZM22.0918 23.2405C21.1118 23.2405 20.2518 23.0155 19.5118 22.5655C18.7718 22.1055 18.1968 21.4705 17.7868 20.6605C17.3768 19.8405 17.1718 18.8955 17.1718 17.8255C17.1718 16.7555 17.3768 15.8105 17.7868 14.9905C18.2068 14.1705 18.7968 13.5305 19.5568 13.0705C20.3268 12.6105 21.2318 12.3805 22.2718 12.3805C23.4518 12.3805 24.4318 12.6655 25.2118 13.2355C26.0018 13.8055 26.5118 14.5905 26.7418 15.5905H25.2868C25.1468 14.9605 24.8118 14.4605 24.2818 14.0905C23.7618 13.7205 23.0918 13.5355 22.2718 13.5355C21.5018 13.5355 20.8318 13.7105 20.2618 14.0605C19.6918 14.4005 19.2468 14.8905 18.9268 15.5305C18.6168 16.1705 18.4618 16.9355 18.4618 17.8255C18.4618 18.7155 18.6168 19.4805 18.9268 20.1205C19.2368 20.7605 19.6668 21.2555 20.2168 21.6055C20.7668 21.9455 21.4068 22.1155 22.1368 22.1155C23.2568 22.1155 24.1018 21.7905 24.6718 21.1405C25.2418 20.4805 25.5668 19.5805 25.6468 18.4405H22.6168V17.4505H26.9368V23.0605H25.7818L25.6768 21.3355C25.2968 21.9455 24.8318 22.4155 24.2818 22.7455C23.7318 23.0755 23.0018 23.2405 22.0918 23.2405Z"
+                            fill="white" />
+                          <circle cx="18" cy="18" r="17.25" fill="#F47761" stroke="white" stroke-width="1.5" />
+                          <path
+                            d="M21.625 11H23.5C23.9973 11 24.4742 11.1844 24.8258 11.5126C25.1775 11.8408 25.375 12.2859 25.375 12.75V25C25.375 25.4641 25.1775 25.9092 24.8258 26.2374C24.4742 26.5656 23.9973 26.75 23.5 26.75H12.25C11.7527 26.75 11.2758 26.5656 10.9242 26.2374C10.5725 25.9092 10.375 25.4641 10.375 25V12.75C10.375 12.2859 10.5725 11.8408 10.9242 11.5126C11.2758 11.1844 11.7527 11 12.25 11H14.125"
+                            stroke="white" stroke-linecap="round" stroke-linejoin="round" />
+                          <path
+                            d="M20.6875 9.25H15.0625C14.5447 9.25 14.125 9.64175 14.125 10.125V11.875C14.125 12.3582 14.5447 12.75 15.0625 12.75H20.6875C21.2053 12.75 21.625 12.3582 21.625 11.875V10.125C21.625 9.64175 21.2053 9.25 20.6875 9.25Z"
+                            stroke="white" stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+
+                        <div class="ml-3">
+                          <h4>{{item.title}} </h4>
+                          <small>5 hour ago</small>
+                          <br />
+                          <button class="notification-btn" mat-stroked-button>View Allocations</button>
+                        </div>
+                      </div>
+                    </div>
+
+                    <button mat-icon-button class="d-flex align-self-start"
+                      [ngStyle]="{'filter': archive_notification == item.id? 'blur(6px)': 'blur(0)'}"
+                      (click)="$event.stopPropagation();archive_notification=item.id;">
+                      <svg width="20" height="20" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M22.5 7.5L7.5 22.5" stroke="black" stroke-width="2" stroke-linecap="round"
+                          stroke-linejoin="round" />
+                        <path d="M7.5 7.5L22.5 22.5" stroke="black" stroke-width="2" stroke-linecap="round"
+                          stroke-linejoin="round" />
+                      </svg>
+                    </button>
+
+                    <div (click)="$event.stopPropagation()"
+                      class="position-absolute w-100 text-center d-flex flex-column justify-content-center align-items-center"
+                      *ngIf="archive_notification == item.id">
+                      <p>Are you sure you want to archive this notification?</p>
+                      <p style="color:#464BA8;"><span><a>Yes</a></span> &nbsp;/&nbsp; <span><a>No</a></span></p>
+                    </div>
+                  </div>
+
+                  <div class="notification_header  position-relative" *ngIf="item.type=='placementtype'"
+                    (click)="$event.stopPropagation()">
+                    <div class="d-flex align-items-center"
+                      [ngStyle]="{'filter': archive_notification == item.id? 'blur(6px)': 'blur(0)'}">
+                      <div class="notification-dot"></div>
+                      <div class="d-flex align-items-start">
+                        <svg width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <circle cx="18.122" cy="18.1825" r="17.122" fill="#464BA8" />
+                          <path
+                            d="M9.11 23.0605V12.5605H15.605V13.5955H10.37V17.2555H15.155V18.2755H10.37V22.0255H15.605V23.0605H9.11ZM22.0918 23.2405C21.1118 23.2405 20.2518 23.0155 19.5118 22.5655C18.7718 22.1055 18.1968 21.4705 17.7868 20.6605C17.3768 19.8405 17.1718 18.8955 17.1718 17.8255C17.1718 16.7555 17.3768 15.8105 17.7868 14.9905C18.2068 14.1705 18.7968 13.5305 19.5568 13.0705C20.3268 12.6105 21.2318 12.3805 22.2718 12.3805C23.4518 12.3805 24.4318 12.6655 25.2118 13.2355C26.0018 13.8055 26.5118 14.5905 26.7418 15.5905H25.2868C25.1468 14.9605 24.8118 14.4605 24.2818 14.0905C23.7618 13.7205 23.0918 13.5355 22.2718 13.5355C21.5018 13.5355 20.8318 13.7105 20.2618 14.0605C19.6918 14.4005 19.2468 14.8905 18.9268 15.5305C18.6168 16.1705 18.4618 16.9355 18.4618 17.8255C18.4618 18.7155 18.6168 19.4805 18.9268 20.1205C19.2368 20.7605 19.6668 21.2555 20.2168 21.6055C20.7668 21.9455 21.4068 22.1155 22.1368 22.1155C23.2568 22.1155 24.1018 21.7905 24.6718 21.1405C25.2418 20.4805 25.5668 19.5805 25.6468 18.4405H22.6168V17.4505H26.9368V23.0605H25.7818L25.6768 21.3355C25.2968 21.9455 24.8318 22.4155 24.2818 22.7455C23.7318 23.0755 23.0018 23.2405 22.0918 23.2405Z"
+                            fill="white" />
+                          <circle cx="18" cy="18" r="17.25" fill="#F47761" stroke="white" stroke-width="1.5" />
+                          <path
+                            d="M21.625 11H23.5C23.9973 11 24.4742 11.1844 24.8258 11.5126C25.1775 11.8408 25.375 12.2859 25.375 12.75V25C25.375 25.4641 25.1775 25.9092 24.8258 26.2374C24.4742 26.5656 23.9973 26.75 23.5 26.75H12.25C11.7527 26.75 11.2758 26.5656 10.9242 26.2374C10.5725 25.9092 10.375 25.4641 10.375 25V12.75C10.375 12.2859 10.5725 11.8408 10.9242 11.5126C11.2758 11.1844 11.7527 11 12.25 11H14.125"
+                            stroke="white" stroke-linecap="round" stroke-linejoin="round" />
+                          <path
+                            d="M20.6875 9.25H15.0625C14.5447 9.25 14.125 9.64175 14.125 10.125V11.875C14.125 12.3582 14.5447 12.75 15.0625 12.75H20.6875C21.2053 12.75 21.625 12.3582 21.625 11.875V10.125C21.625 9.64175 21.2053 9.25 20.6875 9.25Z"
+                            stroke="white" stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+
+                        <div class="ml-3">
+                          <h4>{{item.title}} </h4>
+                          <small>5 hour ago</small>
+                          <br />
+                          <button class="notification-btn" mat-stroked-button>Select Placement Type</button>
+                        </div>
+                      </div>
+                    </div>
+
+                    <button mat-icon-button class="d-flex align-self-start"
+                      [ngStyle]="{'filter': archive_notification == item.id? 'blur(6px)': 'blur(0)'}"
+                      (click)="$event.stopPropagation();archive_notification=item.id;">
+                      <svg width="20" height="20" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M22.5 7.5L7.5 22.5" stroke="black" stroke-width="2" stroke-linecap="round"
+                          stroke-linejoin="round" />
+                        <path d="M7.5 7.5L22.5 22.5" stroke="black" stroke-width="2" stroke-linecap="round"
+                          stroke-linejoin="round" />
+                      </svg>
+                    </button>
+
+                    <div (click)="$event.stopPropagation()"
+                      class="position-absolute w-100 text-center d-flex flex-column justify-content-center align-items-center"
+                      *ngIf="archive_notification == item.id">
+                      <p>Are you sure you want to archive this notification?</p>
+                      <p style="color:#464BA8;"><span><a>Yes</a></span> &nbsp;/&nbsp; <span><a>No</a></span></p>
+                    </div>
+                  </div>
+
+                  <div class="notification_header  position-relative" *ngIf="item.type=='review'"
+                    (click)="$event.stopPropagation()">
+                    <div class="d-flex align-items-center"
+                      [ngStyle]="{'filter': archive_notification == item.id? 'blur(6px)': 'blur(0)'}">
+                      <div class="notification-dot"></div>
+                      <div class="d-flex align-items-start">
+                        <svg width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <circle cx="18.122" cy="18.1825" r="17.122" fill="#464BA8" />
+                          <path
+                            d="M9.11 23.0605V12.5605H15.605V13.5955H10.37V17.2555H15.155V18.2755H10.37V22.0255H15.605V23.0605H9.11ZM22.0918 23.2405C21.1118 23.2405 20.2518 23.0155 19.5118 22.5655C18.7718 22.1055 18.1968 21.4705 17.7868 20.6605C17.3768 19.8405 17.1718 18.8955 17.1718 17.8255C17.1718 16.7555 17.3768 15.8105 17.7868 14.9905C18.2068 14.1705 18.7968 13.5305 19.5568 13.0705C20.3268 12.6105 21.2318 12.3805 22.2718 12.3805C23.4518 12.3805 24.4318 12.6655 25.2118 13.2355C26.0018 13.8055 26.5118 14.5905 26.7418 15.5905H25.2868C25.1468 14.9605 24.8118 14.4605 24.2818 14.0905C23.7618 13.7205 23.0918 13.5355 22.2718 13.5355C21.5018 13.5355 20.8318 13.7105 20.2618 14.0605C19.6918 14.4005 19.2468 14.8905 18.9268 15.5305C18.6168 16.1705 18.4618 16.9355 18.4618 17.8255C18.4618 18.7155 18.6168 19.4805 18.9268 20.1205C19.2368 20.7605 19.6668 21.2555 20.2168 21.6055C20.7668 21.9455 21.4068 22.1155 22.1368 22.1155C23.2568 22.1155 24.1018 21.7905 24.6718 21.1405C25.2418 20.4805 25.5668 19.5805 25.6468 18.4405H22.6168V17.4505H26.9368V23.0605H25.7818L25.6768 21.3355C25.2968 21.9455 24.8318 22.4155 24.2818 22.7455C23.7318 23.0755 23.0018 23.2405 22.0918 23.2405Z"
+                            fill="white" />
+                          <circle cx="18" cy="18" r="17.25" fill="#F47761" stroke="white" stroke-width="1.5" />
+                          <path
+                            d="M21.625 11H23.5C23.9973 11 24.4742 11.1844 24.8258 11.5126C25.1775 11.8408 25.375 12.2859 25.375 12.75V25C25.375 25.4641 25.1775 25.9092 24.8258 26.2374C24.4742 26.5656 23.9973 26.75 23.5 26.75H12.25C11.7527 26.75 11.2758 26.5656 10.9242 26.2374C10.5725 25.9092 10.375 25.4641 10.375 25V12.75C10.375 12.2859 10.5725 11.8408 10.9242 11.5126C11.2758 11.1844 11.7527 11 12.25 11H14.125"
+                            stroke="white" stroke-linecap="round" stroke-linejoin="round" />
+                          <path
+                            d="M20.6875 9.25H15.0625C14.5447 9.25 14.125 9.64175 14.125 10.125V11.875C14.125 12.3582 14.5447 12.75 15.0625 12.75H20.6875C21.2053 12.75 21.625 12.3582 21.625 11.875V10.125C21.625 9.64175 21.2053 9.25 20.6875 9.25Z"
+                            stroke="white" stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+
+                        <div class="ml-3">
+                          <h4>{{item.title}} </h4>
+                          <small>5 hour ago</small>
+                          <br />
+                          <button class="notification-btn" mat-stroked-button>View Pending Companies</button>
+                        </div>
+                      </div>
+                    </div>
+
+                    <button mat-icon-button class="d-flex align-self-start"
+                      [ngStyle]="{'filter': archive_notification == item.id? 'blur(6px)': 'blur(0)'}"
+                      (click)="$event.stopPropagation();archive_notification=item.id;">
+                      <svg width="20" height="20" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M22.5 7.5L7.5 22.5" stroke="black" stroke-width="2" stroke-linecap="round"
+                          stroke-linejoin="round" />
+                        <path d="M7.5 7.5L22.5 22.5" stroke="black" stroke-width="2" stroke-linecap="round"
+                          stroke-linejoin="round" />
+                      </svg>
+                    </button>
+
+                    <div (click)="$event.stopPropagation()"
+                      class="position-absolute w-100 text-center d-flex flex-column justify-content-center align-items-center"
+                      *ngIf="archive_notification == item.id">
+                      <p>Are you sure you want to archive this notification?</p>
+                      <p style="color:#464BA8;"><span><a>Yes</a></span> &nbsp;/&nbsp; <span><a>No</a></span></p>
+                    </div>
+                  </div>
+
+                  <div class="notification_header position-relative" *ngIf="item.type=='placementgroup'"
+                    (click)="$event.stopPropagation()">
+                    <div class="d-flex align-items-center"
+                      [ngStyle]="{'filter': archive_notification == item.id? 'blur(6px)': 'blur(0)'}">
+                      <div class="notification-dot"></div>
+                      <div class="d-flex align-items-start">
+
+                        <figure style="position: relative;">
+                          <span *ngIf="item?.name" class="notification-profile-letter">{{ item?.name[0]
+                            }}
+                            {{item?.name?.split(' ')?.length > 1 ? item?.name?.split(' ')[1][0] : '' }}</span>
+
+                          <svg style="position: absolute;width: 20px;
+                                right: -6px;
+                                bottom: -10px;" width="36" height="36" viewBox="0 0 36 36" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="18.122" cy="18.1825" r="17.122" fill="#464BA8" />
+                            <path
+                              d="M9.11 23.0605V12.5605H15.605V13.5955H10.37V17.2555H15.155V18.2755H10.37V22.0255H15.605V23.0605H9.11ZM22.0918 23.2405C21.1118 23.2405 20.2518 23.0155 19.5118 22.5655C18.7718 22.1055 18.1968 21.4705 17.7868 20.6605C17.3768 19.8405 17.1718 18.8955 17.1718 17.8255C17.1718 16.7555 17.3768 15.8105 17.7868 14.9905C18.2068 14.1705 18.7968 13.5305 19.5568 13.0705C20.3268 12.6105 21.2318 12.3805 22.2718 12.3805C23.4518 12.3805 24.4318 12.6655 25.2118 13.2355C26.0018 13.8055 26.5118 14.5905 26.7418 15.5905H25.2868C25.1468 14.9605 24.8118 14.4605 24.2818 14.0905C23.7618 13.7205 23.0918 13.5355 22.2718 13.5355C21.5018 13.5355 20.8318 13.7105 20.2618 14.0605C19.6918 14.4005 19.2468 14.8905 18.9268 15.5305C18.6168 16.1705 18.4618 16.9355 18.4618 17.8255C18.4618 18.7155 18.6168 19.4805 18.9268 20.1205C19.2368 20.7605 19.6668 21.2555 20.2168 21.6055C20.7668 21.9455 21.4068 22.1155 22.1368 22.1155C23.2568 22.1155 24.1018 21.7905 24.6718 21.1405C25.2418 20.4805 25.5668 19.5805 25.6468 18.4405H22.6168V17.4505H26.9368V23.0605H25.7818L25.6768 21.3355C25.2968 21.9455 24.8318 22.4155 24.2818 22.7455C23.7318 23.0755 23.0018 23.2405 22.0918 23.2405Z"
+                              fill="white" />
+                            <circle cx="18" cy="18" r="17.25" fill="#F47761" stroke="white" stroke-width="1.5" />
+                            <path
+                              d="M21.625 11H23.5C23.9973 11 24.4742 11.1844 24.8258 11.5126C25.1775 11.8408 25.375 12.2859 25.375 12.75V25C25.375 25.4641 25.1775 25.9092 24.8258 26.2374C24.4742 26.5656 23.9973 26.75 23.5 26.75H12.25C11.7527 26.75 11.2758 26.5656 10.9242 26.2374C10.5725 25.9092 10.375 25.4641 10.375 25V12.75C10.375 12.2859 10.5725 11.8408 10.9242 11.5126C11.2758 11.1844 11.7527 11 12.25 11H14.125"
+                              stroke="white" stroke-linecap="round" stroke-linejoin="round" />
+                            <path
+                              d="M20.6875 9.25H15.0625C14.5447 9.25 14.125 9.64175 14.125 10.125V11.875C14.125 12.3582 14.5447 12.75 15.0625 12.75H20.6875C21.2053 12.75 21.625 12.3582 21.625 11.875V10.125C21.625 9.64175 21.2053 9.25 20.6875 9.25Z"
+                              stroke="white" stroke-linecap="round" stroke-linejoin="round" />
+                          </svg>
+                        </figure>
+
+                        <div class="ml-3">
+                          <h4>{{item.title}} </h4>
+                          <small>5 hour ago</small>
+                          <br />
+                          <button class="notification-btn" mat-stroked-button>View Placement Group</button>
+                        </div>
+                      </div>
+                    </div>
+
+                    <button mat-icon-button class="d-flex align-self-start"
+                      [ngStyle]="{'filter': archive_notification == item.id? 'blur(6px)': 'blur(0)'}"
+                      (click)="$event.stopPropagation();archive_notification=item.id;">
+                      <svg width="20" height="20" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M22.5 7.5L7.5 22.5" stroke="black" stroke-width="2" stroke-linecap="round"
+                          stroke-linejoin="round" />
+                        <path d="M7.5 7.5L22.5 22.5" stroke="black" stroke-width="2" stroke-linecap="round"
+                          stroke-linejoin="round" />
+                      </svg>
+                    </button>
+
+                    <div (click)="$event.stopPropagation()"
+                      class="position-absolute w-100 text-center d-flex flex-column justify-content-center align-items-center"
+                      *ngIf="archive_notification == item.id">
+                      <p>Are you sure you want to archive this notification?</p>
+                      <p style="color:#464BA8;"><span><a>Yes</a></span> &nbsp;/&nbsp; <span><a>No</a></span></p>
+                    </div>
+                  </div>
+
+                  <div class="notification_header position-relative" *ngIf="item.type=='student'"
+                    (click)="$event.stopPropagation()">
+                    <div class="d-flex align-items-center"
+                      [ngStyle]="{'filter': archive_notification == item.id? 'blur(6px)': 'blur(0)'}">
+                      <div class="notification-dot"></div>
+                      <div class="d-flex align-items-start">
+
+                        <figure style="position: relative;">
+                          <span *ngIf="item?.name" class="notification-profile-letter">{{ item?.name[0]
+                            }}
+                            {{item?.name?.split(' ')?.length > 1 ? item?.name?.split(' ')[1][0] : '' }}</span>
+
+                          <svg style="position: absolute;width: 20px;
+                                right: -6px;
+                                bottom: -10px;" width="36" height="36" viewBox="0 0 36 36" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="18.122" cy="18.1825" r="17.122" fill="#464BA8" />
+                            <path
+                              d="M9.11 23.0605V12.5605H15.605V13.5955H10.37V17.2555H15.155V18.2755H10.37V22.0255H15.605V23.0605H9.11ZM22.0918 23.2405C21.1118 23.2405 20.2518 23.0155 19.5118 22.5655C18.7718 22.1055 18.1968 21.4705 17.7868 20.6605C17.3768 19.8405 17.1718 18.8955 17.1718 17.8255C17.1718 16.7555 17.3768 15.8105 17.7868 14.9905C18.2068 14.1705 18.7968 13.5305 19.5568 13.0705C20.3268 12.6105 21.2318 12.3805 22.2718 12.3805C23.4518 12.3805 24.4318 12.6655 25.2118 13.2355C26.0018 13.8055 26.5118 14.5905 26.7418 15.5905H25.2868C25.1468 14.9605 24.8118 14.4605 24.2818 14.0905C23.7618 13.7205 23.0918 13.5355 22.2718 13.5355C21.5018 13.5355 20.8318 13.7105 20.2618 14.0605C19.6918 14.4005 19.2468 14.8905 18.9268 15.5305C18.6168 16.1705 18.4618 16.9355 18.4618 17.8255C18.4618 18.7155 18.6168 19.4805 18.9268 20.1205C19.2368 20.7605 19.6668 21.2555 20.2168 21.6055C20.7668 21.9455 21.4068 22.1155 22.1368 22.1155C23.2568 22.1155 24.1018 21.7905 24.6718 21.1405C25.2418 20.4805 25.5668 19.5805 25.6468 18.4405H22.6168V17.4505H26.9368V23.0605H25.7818L25.6768 21.3355C25.2968 21.9455 24.8318 22.4155 24.2818 22.7455C23.7318 23.0755 23.0018 23.2405 22.0918 23.2405Z"
+                              fill="white" />
+                            <circle cx="18" cy="18" r="17.25" fill="#F47761" stroke="white" stroke-width="1.5" />
+                            <path
+                              d="M21.625 11H23.5C23.9973 11 24.4742 11.1844 24.8258 11.5126C25.1775 11.8408 25.375 12.2859 25.375 12.75V25C25.375 25.4641 25.1775 25.9092 24.8258 26.2374C24.4742 26.5656 23.9973 26.75 23.5 26.75H12.25C11.7527 26.75 11.2758 26.5656 10.9242 26.2374C10.5725 25.9092 10.375 25.4641 10.375 25V12.75C10.375 12.2859 10.5725 11.8408 10.9242 11.5126C11.2758 11.1844 11.7527 11 12.25 11H14.125"
+                              stroke="white" stroke-linecap="round" stroke-linejoin="round" />
+                            <path
+                              d="M20.6875 9.25H15.0625C14.5447 9.25 14.125 9.64175 14.125 10.125V11.875C14.125 12.3582 14.5447 12.75 15.0625 12.75H20.6875C21.2053 12.75 21.625 12.3582 21.625 11.875V10.125C21.625 9.64175 21.2053 9.25 20.6875 9.25Z"
+                              stroke="white" stroke-linecap="round" stroke-linejoin="round" />
+                          </svg>
+                        </figure>
+
+                        <div class="ml-3">
+                          <h4>{{item.title}} </h4>
+                          <small>5 hour ago</small>
+                          <br />
+                          <button class="notification-btn" mat-stroked-button>View Student</button>
+                        </div>
+                      </div>
+                    </div>
+
+                    <button mat-icon-button class="d-flex align-self-start"
+                      [ngStyle]="{'filter': archive_notification == item.id? 'blur(6px)': 'blur(0)'}"
+                      (click)="$event.stopPropagation();archive_notification=item.id;">
+                      <svg width="20" height="20" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M22.5 7.5L7.5 22.5" stroke="black" stroke-width="2" stroke-linecap="round"
+                          stroke-linejoin="round" />
+                        <path d="M7.5 7.5L22.5 22.5" stroke="black" stroke-width="2" stroke-linecap="round"
+                          stroke-linejoin="round" />
+                      </svg>
+                    </button>
+
+                    <div (click)="$event.stopPropagation()"
+                      class="position-absolute w-100 text-center d-flex flex-column justify-content-center align-items-center"
+                      *ngIf="archive_notification == item.id">
+                      <p>Are you sure you want to archive this notification?</p>
+                      <p style="color:#464BA8;"><span><a>Yes</a></span> &nbsp;/&nbsp; <span><a>No</a></span></p>
+                    </div>
+                  </div>
+
+                  <div class="notification_header position-relative" (click)="$event.stopPropagation()"
+                    *ngIf="item.type=='message'">
+                    <div class="d-flex align-items-center"
+                      [ngStyle]="{'filter': archive_notification == item.id? 'blur(6px)': 'blur(0)'}">
+                      <div class="notification-dot"></div>
+                      <div class="d-flex align-items-start">
+
+                        <figure style="position: relative;">
+                          <span *ngIf="item?.name" class="notification-profile-letter">{{ item?.name[0]
+                            }}
+                            {{item?.name?.split(' ')?.length > 1 ? item?.name?.split(' ')[1][0] : '' }}</span>
+
+                          <svg style="position: absolute;width: 20px;
+                                right: -6px;
+                                bottom: -10px;" width="36" height="36" viewBox="0 0 36 36" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="18.122" cy="18.1825" r="17.122" fill="#464BA8" />
+                            <path
+                              d="M9.11 23.0605V12.5605H15.605V13.5955H10.37V17.2555H15.155V18.2755H10.37V22.0255H15.605V23.0605H9.11ZM22.0918 23.2405C21.1118 23.2405 20.2518 23.0155 19.5118 22.5655C18.7718 22.1055 18.1968 21.4705 17.7868 20.6605C17.3768 19.8405 17.1718 18.8955 17.1718 17.8255C17.1718 16.7555 17.3768 15.8105 17.7868 14.9905C18.2068 14.1705 18.7968 13.5305 19.5568 13.0705C20.3268 12.6105 21.2318 12.3805 22.2718 12.3805C23.4518 12.3805 24.4318 12.6655 25.2118 13.2355C26.0018 13.8055 26.5118 14.5905 26.7418 15.5905H25.2868C25.1468 14.9605 24.8118 14.4605 24.2818 14.0905C23.7618 13.7205 23.0918 13.5355 22.2718 13.5355C21.5018 13.5355 20.8318 13.7105 20.2618 14.0605C19.6918 14.4005 19.2468 14.8905 18.9268 15.5305C18.6168 16.1705 18.4618 16.9355 18.4618 17.8255C18.4618 18.7155 18.6168 19.4805 18.9268 20.1205C19.2368 20.7605 19.6668 21.2555 20.2168 21.6055C20.7668 21.9455 21.4068 22.1155 22.1368 22.1155C23.2568 22.1155 24.1018 21.7905 24.6718 21.1405C25.2418 20.4805 25.5668 19.5805 25.6468 18.4405H22.6168V17.4505H26.9368V23.0605H25.7818L25.6768 21.3355C25.2968 21.9455 24.8318 22.4155 24.2818 22.7455C23.7318 23.0755 23.0018 23.2405 22.0918 23.2405Z"
+                              fill="white" />
+                            <circle cx="18" cy="18" r="17.25" fill="#F47761" stroke="white" stroke-width="1.5" />
+                            <path
+                              d="M21.625 11H23.5C23.9973 11 24.4742 11.1844 24.8258 11.5126C25.1775 11.8408 25.375 12.2859 25.375 12.75V25C25.375 25.4641 25.1775 25.9092 24.8258 26.2374C24.4742 26.5656 23.9973 26.75 23.5 26.75H12.25C11.7527 26.75 11.2758 26.5656 10.9242 26.2374C10.5725 25.9092 10.375 25.4641 10.375 25V12.75C10.375 12.2859 10.5725 11.8408 10.9242 11.5126C11.2758 11.1844 11.7527 11 12.25 11H14.125"
+                              stroke="white" stroke-linecap="round" stroke-linejoin="round" />
+                            <path
+                              d="M20.6875 9.25H15.0625C14.5447 9.25 14.125 9.64175 14.125 10.125V11.875C14.125 12.3582 14.5447 12.75 15.0625 12.75H20.6875C21.2053 12.75 21.625 12.3582 21.625 11.875V10.125C21.625 9.64175 21.2053 9.25 20.6875 9.25Z"
+                              stroke="white" stroke-linecap="round" stroke-linejoin="round" />
+                          </svg>
+                        </figure>
+
+                        <div class="ml-3">
+                          <h4>{{item.title}} </h4>
+                          <small>5 hour ago</small>
+                          <br />
+                          <button class="notification-btn" mat-stroked-button>Open Messages</button>
+                        </div>
+                      </div>
+                    </div>
+
+                    <button mat-icon-button class="d-flex align-self-start"
+                      (click)="$event.stopPropagation();archive_notification=item.id;"
+                      [ngStyle]="{'filter': archive_notification == item.id? 'blur(6px)': 'blur(0)'}">
+                      <svg width="20" height="20" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M22.5 7.5L7.5 22.5" stroke="black" stroke-width="2" stroke-linecap="round"
+                          stroke-linejoin="round" />
+                        <path d="M7.5 7.5L22.5 22.5" stroke="black" stroke-width="2" stroke-linecap="round"
+                          stroke-linejoin="round" />
+                      </svg>
+                    </button>
+
+                    <div (click)="$event.stopPropagation()"
+                      class="position-absolute w-100 text-center d-flex flex-column justify-content-center align-items-center"
+                      *ngIf="archive_notification == item.id">
+                      <p>Are you sure you want to archive this notification?</p>
+                      <p style="color:#464BA8;"><span><a>Yes</a></span> &nbsp;/&nbsp; <span><a>No</a></span></p>
+                    </div>
+                  </div>
+
+                  <div class="notification_header position-relative" *ngIf="item.type=='update'"
+                    (click)="$event.stopPropagation()">
+                    <div class="d-flex align-items-center"
+                      [ngStyle]="{'filter': archive_notification == item.id? 'blur(6px)': 'blur(0)'}">
+                      <div class="notification-dot"></div>
+                      <div class="d-flex align-items-start w-100">
+                       
+
+                        <div class="ml-3" style="flex: 10;">
+                          <h4>{{item.title}} </h4>
+                          <small>5 hour ago</small>
+                          <br />
+                          <p class="d-block" *ngIf="item.less">
+                            {{ (item.desicription ) ? (item.desicription .length>70)? (item.desicription |
+                            slice:0:70)+'..':(item.desicription ) : ''}}
+                          </p>
+                          <p class="d-block" *ngIf="!item.less">
+                            {{ item.desicription}}
+                          </p>
+                          <br />
+                          <button *ngIf="item.less" (click)="$event.stopPropagation();item.less = !item.less; "
+                            mat-icon-button style="color:#464ba8" class="p-0">View more <svg width="12" height="7"
+                              viewBox="0 0 12 7" fill="none" xmlns="http://www.w3.org/2000/svg">
+                              <path d="M1 1L6 6L11 1" stroke="#464BA8" stroke-width="1.5" stroke-linecap="round"
+                                stroke-linejoin="round" />
+                            </svg>
+                          </button>
+
+                          <button *ngIf="!item.less" (click)="$event.stopPropagation();item.less = !item.less; "
+                            mat-icon-button style="color:#464ba8" class="p-0">View less <svg width="12" height="7"
+                              viewBox="0 0 12 7" fill="none" xmlns="http://www.w3.org/2000/svg">
+                              <path d="M11 6L6 1L1 6" stroke="#464BA8" stroke-width="1.5" stroke-linecap="round"
+                                stroke-linejoin="round" />
+                            </svg>
+
+                          </button>
+
+                        </div>
+                      </div>
+                    </div>
+
+                    <button mat-icon-button class="d-flex align-self-start"
+                      (click)="$event.stopPropagation();archive_notification=item.id;"
+                      [ngStyle]="{'filter': archive_notification == item.id? 'blur(6px)': 'blur(0)'}">
+                      <svg width="20" height="20" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M22.5 7.5L7.5 22.5" stroke="black" stroke-width="2" stroke-linecap="round"
+                          stroke-linejoin="round" />
+                        <path d="M7.5 7.5L22.5 22.5" stroke="black" stroke-width="2" stroke-linecap="round"
+                          stroke-linejoin="round" />
+                      </svg>
+                    </button>
+
+                    <div (click)="$event.stopPropagation()"
+                      class="position-absolute w-100 text-center d-flex flex-column justify-content-center align-items-center"
+                      *ngIf="archive_notification == item.id">
+                      <p>Are you sure you want to archive this notification?</p>
+                      <p style="color:#464BA8;"><span><a (click)="Done()">Yes</a></span> &nbsp;/&nbsp; <span><a
+                            (click)="Done()">No</a></span></p>
+                    </div>
+                  </div>
+
+                </ng-container>
+
+              </mat-menu>
+            </li>
+            <li class="nav-item dropdown">
+              <button [matMenuTriggerFor]="menu" class="profile_btn">
+                <img *ngIf="userDetail?.image" [src]="userDetail?.image" alt="avtar">
+                <span *ngIf="!userDetail?.image" class="profile-letter">{{ userDetail?.first_name[0] }}
+                  {{userDetail?.last_name[0] }}</span>
+              </button>
+              <mat-menu #menu="matMenu">
+                <button mat-menu-item routerLink="/admin/users/my-profile">
+                  <mat-icon class="material-icons-outlined">person_outline</mat-icon>
+                  My Profile</button>
+                <!-- <button mat-menu-item [routerLink]="['changePassword']">
+                  <mat-icon class="material-icons-outlined">vpn_key</mat-icon>
+                  Change Password</button> -->
+                <div class="border-top pt-3 pb-1 px-2 mt-2 text-center">
+                  <button mat-button class="theme_link_btn_c" (click)="logout()">
+                    Log Out</button>
+                </div>
+              </mat-menu>
+            </li>
+          </ul>
+    </header>
+
+    <!-- Main Content -->
+    <main class="app-main-router">
+      <app-loader></app-loader>
+      <app-loader-custom></app-loader-custom>
+      <router-outlet></router-outlet>
+    </main>
+  </div>
+</div>
+
+

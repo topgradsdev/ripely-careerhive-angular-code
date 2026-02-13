@@ -1,0 +1,360 @@
+<section class="employer-header-sec">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="card">
+					<form [formGroup]="headerSection">
+						<div class="manage-home-header">
+							<div class="card-header d-flex justify-content-between">
+								<strong>About Us Header Section</strong>
+								<div class="slide-cs">
+									<span class="mr-2">Visibility </span>
+									<mat-slide-toggle 
+									formControlName="is_visible" (change)="fun($event)"
+									>
+									
+									</mat-slide-toggle>
+									<!-- [checked]="headerSection.controls['is_visible']"
+										(change)="onSliderChange($event)"> -->
+								</div>
+							</div>
+							<div class="card-body">
+
+								<div class="home-mng-form">
+									<div class="form-group">
+										<label>Heading</label>
+										<input type="text" name="" class="form-control" formControlName="heading"
+											value="This is...testing">
+											<div *ngIf="(headerSection.controls.heading.touched || headerSection.controls.heading.dirty) && headerSection.controls.heading.invalid && headerSection.controls.heading?.errors?.required  " class="invalid">
+												*Please enter heading
+											</div>
+											<div *ngIf="(headerSection.controls.heading.touched || headerSection.controls.heading.dirty) && headerSection.controls.heading.invalid && headerSection.controls.heading?.errors?.maxlength  " class="invalid">
+												**Maximum Length should be 50 characters
+											</div>
+									</div>
+									<div class="form-group">
+										<label>TopGrads Logo</label>
+										<div class="slider-video-cntnt">
+											<div class="prev-upld-img resume_img">
+												<img [src]="HeadingImage?HeadingImage:'assets/img/no_image_placeholder.png'"
+													class="img-fluid">
+												<div class="upload-imag text-center">
+													<button class="btn-primary btn  mt-3 position-relative">
+														<input type="file" name="" class="img-input-upld"
+															(change)="setHeadingImage($event)">
+														Upload Image
+													</button>
+												</div>
+												<div *ngIf="headerSection.controls.county?.errors?.required  " class="invalid">
+													*Only images are allowed
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="form-group">
+										<label>Description</label>
+										<textarea class="form-control" rows="4"
+											formControlName="description"> ut aliquip ex ea commodo consequat.</textarea>
+											<div *ngIf="(headerSection.controls.description.touched || headerSection.controls.description.dirty) && headerSection.controls.description.invalid && headerSection.controls.description?.errors?.required  " class="invalid">
+												*Please enter description
+											</div>
+											<div *ngIf="(headerSection.controls.description.touched || headerSection.controls.description.dirty) && headerSection.controls.description.invalid && headerSection.controls.description?.errors?.maxlength  " class="invalid">
+												**Maximum Length should be 500 characters
+											</div>
+									</div>
+									<div class="edit-btns d-flex justify-content-end">
+										<button class="btn btn-primary mr-4" (click)="postAboutUsdata('headerSection')">Save</button>
+										<!-- <button class="btn btn-primary">Back</button> -->
+									</div>
+								</div>
+
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+<section class="work-for-sec">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="card">
+					<form [formGroup]="Champions">
+						<div class="manage-home-header">
+							<div class="card-header d-flex justify-content-between">
+								<strong>Testing Champions of Graduate Jobs</strong>
+								<div class="slide-cs">
+									<span class="mr-2">Visibility </span>
+									<mat-slide-toggle formControlName="is_visible" (change)="fun1($event)"></mat-slide-toggle>
+								</div>
+							</div>
+							<div class="card-body">
+
+								<div class="home-mng-form">
+									<div class="form-group">
+										<label>Heading 1</label>
+										<input type="text" name="" class="form-control" value=""
+										[formControl]="Champions.controls['heading']">
+										<!-- <textarea class="form-control" [formControl]="Champions.controls['description']"
+											rows="4"></textarea> -->
+										<!-- <editor [formControl]="Champions.controls['description']"></editor> -->
+										<div *ngIf="(Champions.controls.heading.touched || Champions.controls.heading.dirty) && Champions.controls.heading.invalid && Champions.controls.heading?.errors?.required  " class="invalid">
+											*Please enter heading
+										</div>
+										<div *ngIf="(Champions.controls.heading.touched || Champions.controls.heading.dirty) && Champions.controls.heading.invalid && Champions.controls.heading?.errors?.maxlength " class="invalid">
+											*Maximum Length should be 50 characters
+										</div>
+									</div>
+									<div class="form-group">
+										<label>Heading 2</label>
+										<input type="text" name="" class="form-control" value=""
+										[formControl]="Champions.controls['heading1']">
+										<!-- <textarea class="form-control" [formControl]="Champions.controls['description']"
+											rows="4"></textarea> -->
+										<!-- <editor [formControl]="Champions.controls['description']"></editor> -->
+										<div *ngIf="(Champions.controls.heading1.touched || Champions.controls.heading1.dirty) && Champions.controls.heading1.invalid && Champions.controls.heading1?.errors?.required  " class="invalid">
+											*Please enter heading
+										</div>
+										<div *ngIf="(Champions.controls.heading1.touched || Champions.controls.heading1.dirty) && Champions.controls.heading1.invalid && Champions.controls.heading1?.errors?.maxlength  " class="invalid">
+											*Maximum Length should be 50 characters
+										</div>
+									</div>
+									<div class="edit-btns d-flex justify-content-end">
+										<button class="btn btn-primary mr-4" (click)="postAboutUsdata('Champions')">Save</button>
+										<!-- <button class="btn btn-primary">Back</button> -->
+									</div>
+								</div>
+
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+<section class="work-for-sec">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="card">
+					<form [formGroup]="ourVision">
+						<div class="manage-home-header">
+							<div class="card-header d-flex justify-content-between">
+								<strong>Our Vision</strong>
+								<div class="slide-cs">
+									<span class="mr-2">Visibility </span>
+									<mat-slide-toggle formControlName="is_visible" (change)="fun2($event)"></mat-slide-toggle>
+								</div>
+							</div>
+							<div class="card-body">
+
+								<div class="home-mng-form">
+									<div class="form-group">
+										<label>Heading</label>
+										<input type="text" name="" class="form-control" value=""
+											formControlName="heading">
+											<div *ngIf="(ourVision.controls.heading.touched || ourVision.dirty) && ourVision.controls.heading.invalid && ourVision.controls.heading?.errors?.required  " class="invalid">
+												*Please enter heading
+											</div>
+											<div *ngIf="(ourVision.controls.heading.touched || ourVision.controls.heading.dirty) && ourVision.controls.heading.invalid && ourVision.controls.heading?.errors?.maxlength  " class="invalid">
+												*Maximum Length should be 50 characters
+											</div>
+									</div>
+									<div class="form-group">
+										<label>Description</label>
+										<textarea class="form-control" formControlName="description"
+											rows="4"></textarea>
+											<div *ngIf="(ourVision.controls.description || ourVision.controls.description) && ourVision.controls.description.invalid && ourVision.controls.description?.errors?.required  " class="invalid">
+												*Please enter description
+											</div>
+											<div *ngIf="(ourVision.controls.description || ourVision.controls.description) && ourVision.controls.description.invalid && ourVision.controls.description?.errors?.maxlength  " class="invalid">
+												*Maximum Length should be 500 characters
+											</div>
+									</div>
+									<div class="edit-btns d-flex justify-content-end">
+										<button class="btn btn-primary mr-4" (click)="postAboutUsdata('ourVision')">Save</button>
+										<!-- <button class="btn btn-primary">Back</button> -->
+									</div>
+								</div>
+
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+<section class="work-for-sec">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="card">
+					<form [formGroup]="ourMission">
+						<div class="manage-home-header">
+							<div class="card-header d-flex justify-content-between">
+								<strong>Our Mission</strong>
+								<div class="slide-cs">
+									<span class="mr-2">Visibility </span>
+									<mat-slide-toggle formControlName="is_visible" (change)="fun3($event)"></mat-slide-toggle>
+								</div>
+							</div>
+							<div class="card-body">
+
+								<div class="home-mng-form">
+									<div class="form-group">
+										<label>Heading</label>
+										<input type="text" name="" class="form-control" value="Our Mission"
+											formControlName="heading">
+											<div *ngIf="(ourMission.controls.heading.touched || ourMission.controls.heading.dirty) && ourMission.controls.heading.invalid && ourMission.controls.heading?.errors?.required  " class="invalid">
+												*Please enter heading
+											</div>
+											<div *ngIf="(ourMission.controls.heading.touched || ourMission.controls.heading.dirty) && ourMission.controls.heading.invalid && ourMission.controls.heading?.errors?.maxlength  " class="invalid">
+												*Maximum Length should be 50 characters
+											</div>
+									</div>
+									<div class="form-group">
+										<label>Description</label>
+										<textarea class="form-control" formControlName="description"
+											rows="4"></textarea>
+											 <div *ngIf="(ourMission.controls.description.touched || ourMission.controls.description.dirty) && ourMission.controls.description.invalid && ourMission.controls.description?.errors?.required  " class="invalid">
+												 *Please enter description
+											 </div>
+											 <div *ngIf="(ourMission.controls.description.touched || ourMission.controls.description.dirty) && ourMission.controls.description.invalid && ourMission.controls.description?.errors?.maxlength  " class="invalid">
+												 *Maximum Length should be 500 characters
+											 </div>
+									</div>
+									<div class="edit-btns d-flex justify-content-end">
+										<button class="btn btn-primary mr-4" (click)="postAboutUsdata('ourMission')">Save</button>
+										<!-- <button class="btn btn-primary">Back</button> -->
+									</div>
+								</div>
+
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+<section class="work-for-sec">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="card">
+					<form [formGroup]="jobOpenings">
+						<div class="manage-home-header">
+							<div class="card-header d-flex justify-content-between">
+								<strong>Graduate Job Openings</strong>
+								<div class="slide-cs">
+									<span class="mr-2">Visibility </span>
+									<mat-slide-toggle formControlName="is_visible" (change)="fun4($event)"></mat-slide-toggle>
+								</div>
+							</div>
+							<div class="card-body">
+
+								<div class="home-mng-form">
+									<div class="form-group">
+										<label>Heading</label>
+										<input type="text" name="" class="form-control" 
+										formControlName="heading"
+											value=" Testing Graduate Job Openings Across Australia">
+											<div *ngIf="(jobOpenings.controls.heading.touched || jobOpenings.controls.heading.dirty) && jobOpenings.controls.heading.invalid && jobOpenings.controls.heading?.errors?.required  " class="invalid">
+											 *Please enter heading
+											</div>
+											<div *ngIf="(jobOpenings.controls.heading.touched || jobOpenings.controls.heading.dirty) && jobOpenings.controls.heading.invalid && jobOpenings.controls.heading?.errors?.maxlength  " class="invalid">
+												*Maximum Length should be 50 characters
+										    </div>
+										
+									</div>
+									<div class="form-group">
+										<label>Description</label>
+										<textarea class="form-control" formControlName="description"
+											rows="4">Testing Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+											 sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+											  quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</textarea>
+											  <div *ngIf="(jobOpenings.controls.description.touched || jobOpenings.controls.description.dirty) && jobOpenings.controls.description.invalid && jobOpenings.controls.description?.errors?.required  " class="invalid">
+												  *Please enter description
+											  </div>
+											  <div *ngIf="(jobOpenings.controls.description.touched || jobOpenings.controls.description.dirty) && jobOpenings.controls.description.invalid && jobOpenings.controls.description?.errors?.maxlength  " class="invalid">
+												  *Maximum Length should be 500 characters
+											  </div>
+									</div>
+									<div class="edit-btns d-flex justify-content-end">
+										<button class="btn btn-primary mr-4" (click)="postAboutUsdata('jobOpenings')">Save</button>
+										<!-- <button class="btn btn-primary">Back</button> -->
+									</div>
+								</div>
+
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+<section class="work-for-sec">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="card">
+					<form  [formGroup]="TopGraduates">
+					<div class="manage-home-header">
+						<div class="card-header d-flex justify-content-between">
+							<strong>TopGraduates isn’t...</strong>
+							<div class="slide-cs">
+								<span class="mr-2">Visibility </span>
+								<mat-slide-toggle formControlName="is_visible" (change)="fun5($event)"></mat-slide-toggle>
+							</div>
+						</div>
+						<div class="card-body">
+							
+								<div class="home-mng-form">
+									<div class="form-group">
+										<label>Heading</label>
+										<input type="text" name="" class="form-control" value="Testing TopGraduates isn’t..." 
+										formControlName="heading">
+										<div *ngIf="(TopGraduates.controls.heading.touched || TopGraduates.controls.heading.dirty) && TopGraduates.controls.heading.invalid && TopGraduates.controls.heading?.errors?.required  " class="invalid">
+											*Please enter heading
+										</div>
+										<div *ngIf="(TopGraduates.controls.heading.touched || TopGraduates.controls.heading.dirty) && TopGraduates.controls.heading.invalid && TopGraduates.controls.heading?.errors?.maxlength  " class="invalid">
+											*Maximum Length should be 50 characters
+										</div>
+									</div>
+									<ng-container  formArrayName="Fields">
+									<div class="form-group" *ngFor="let alias of Fields.controls; let i=index" >
+										<label>Text {{i+1}}</label>
+										<input type="text" name="" class="form-control"  [formControlName]="i">
+										<div *ngIf="Fields.controls[i].errors?.required  " class="invalid">
+											*Field is Required
+										</div>
+										<div *ngIf="Fields.controls[i].errors?.maxlength  " class="invalid">
+											*Maximum Length should be 100 characters
+										</div>
+									</div>
+								</ng-container>
+									
+									<div class="edit-btns d-flex justify-content-end">
+										<button class="btn btn-primary mr-4" (click)="postAboutUsdata('TopGraduates')">Save</button>
+										<!-- <button class="btn btn-primary">Back</button> -->
+									</div>
+								</div>
+							
+						</div>
+					</div>
+				</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>

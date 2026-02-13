@@ -1,0 +1,68 @@
+.sub__title {
+    margin-bottom: 19px;
+
+    h5 {
+        font-family: var(--font-primary);
+        font-size: 16px;
+        font-weight: 500;
+        line-height: 21px;
+        margin-bottom: 0px;
+        color: #000000;
+    }
+
+    p {
+        font-family: var(--font-primary);
+        font-size: 14px;
+        font-weight: 400;
+        line-height: 18px;
+        margin-bottom: 0px;
+        color: #000000;
+    }
+}
+
+.date_card {
+    border: 2px solid rgba(246, 248, 251, 1);
+    box-shadow: 5px 5px 10px 0px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    padding: 17px 30px;
+    margin-bottom: 40px;
+
+    .date_label {
+        color: rgb(var(--primary-color));
+    }
+}
+
+.mat_date_input {
+    position: relative;
+
+    .form-control {
+        border: 0px;
+        border-bottom: 2px solid #C4C4C4;
+        border-radius: 0px;
+        padding: 8px 0px;
+    }
+
+    .mat_date_toggle {
+        position: absolute;
+        right: 0;
+        top: 50%;
+        transform: translateY(-50%);
+    }
+}
+
+.date_range {
+    display: flex;
+    .form-group {
+        max-width: 153px;
+        width: 100%;
+    }
+    .to {
+        margin-bottom: 0px;
+        align-self: flex-end;
+        font-size: 32px;
+        font-weight: 400;
+        line-height: 32px;
+        padding: 6px 24px;
+        color: var(--mid-dark-gray-color);
+    }
+}   

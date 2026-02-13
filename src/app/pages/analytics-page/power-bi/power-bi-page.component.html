@@ -1,0 +1,102 @@
+<div class="page_header">
+    <div class="page_header_container">
+        <div>
+            <h4>Power BI</h4>
+        </div>
+
+        <!-- <div class="form-group">
+         <ng-select [(ngModel)]="selectedReportId"
+           (ngModelChange)="onReportChange($event)"
+           [searchable]="false"
+           [multiple]="false"
+           bindLabel="name"
+           bindValue="id"
+           [clearable]="false"
+           placeholder="Select Report"
+           style="min-width: 350px;"> 
+            <ng-option [value]="''">Select Report</ng-option>
+
+            <ng-option *ngFor="let report of reports" [value]="report.id">
+                {{ report.name }}
+            </ng-option>
+            </ng-select>
+
+            </div>
+        </div> -->
+</div>
+<section>
+    <!-- <div #reportContainer style="height:600px; width:100%; margin-top:20px; border:1px solid #ccc;"></div> -->
+<!-- 
+    <div style="height:600px; width:100%; margin-top:20px; border:1px solid #ccc;">
+        <ng-container *ngIf="selectedReportId; else noReport">
+            <div #reportContainer style="height:100%; width:100%;"></div>
+        </ng-container>
+    </div>
+
+    <ng-template #noReport>
+        <div style="height:100%; width:100%; display:flex; align-items:center; justify-content:center; color:#666;">
+            🚫 No report found
+        </div>
+    </ng-template> -->
+
+     <!-- <iframe title="pharma-analysis" src="https://app.powerbi.com/reportEmbed?reportId=6568bf3c-f602-42b4-ae97-8850e3516f7b&autoAuth=true&ctid=7b5536df-b6fd-4942-826a-6fdc5ecadfe9" frameborder="0" allowFullScreen="true" style="width:100%; height:100vh"></iframe> -->
+
+
+     <!-- <div class="row">
+        <div *ngIf="!loading">
+            <highcharts-chart
+                [Highcharts]="Highcharts"
+                [options]="chartOptions"
+                style="width: 100%; height: 400px; display: block;"
+            ></highcharts-chart>
+        </div>
+
+
+        <div>
+        <label>Select State:</label>
+        <select [(ngModel)]="selectedState" (change)="onStateChange()">
+            <option value="">All States</option>
+            <option *ngFor="let state of states" [value]="state">{{ state }}</option>
+        </select>
+        </div>
+
+        <div *ngIf="!loadingQuarterly">
+        <highcharts-chart
+            [Highcharts]="Highcharts"
+            [options]="chartOptionsQuarterly"
+            style="width: 100%; height: 400px; display: block;">
+        </highcharts-chart>
+        </div>
+
+
+        <div *ngIf="!loadingSite">
+            <highcharts-chart
+                [Highcharts]="Highcharts"
+                [options]="chartOptionsSite"
+                style="width: 100%; height: 500px; display: block;">
+            </highcharts-chart>
+        </div>
+
+          <div *ngIf="!loadinghcaaf">
+            <highcharts-chart
+                [Highcharts]="Highcharts"
+                [options]="chartOptionshcaaf"
+                style="width: 100%; height: 500px; display: block;">
+            </highcharts-chart>
+        </div>
+
+
+           <div *ngIf="!loadinginter">
+            <highcharts-chart
+                [Highcharts]="Highcharts"
+                [options]="chartinterOptions"
+                style="width: 100%; height: 500px; display: block;">
+            </highcharts-chart>
+        </div>
+
+     </div> -->
+
+
+
+     <iframe title="MonashAgreement" src="https://app.powerbi.com/reportEmbed?reportId=7d5f0ad2-f072-40ef-8fea-ed274b6874d5&autoAuth=true&ctid=7b5536df-b6fd-4942-826a-6fdc5ecadfe9" rameborder="0" allowFullScreen="true" style="width:100%; height:100vh"></iframe>
+</section>

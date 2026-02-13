@@ -1,0 +1,29 @@
+<!-- <div class="form-group m-0" style="width: 100%;">
+  <input
+    type="text"
+    class="form-control text-truncate-scroll"
+    [placeholder]="placeholder || 'Enter value'"
+    [(ngModel)]="value"
+    [ngModelOptions]="{ standalone: true }"
+    (blur)="onBlur()"
+    (keydown.enter)="onBlur()"
+    name="rename"
+  />
+</div> -->
+<!-- 
+
+<div class="form-group m-0" style="width: 100%;">
+  <input
+    type="text"
+    class="form-control text-truncate-scroll"
+    [placeholder]="placeholder || 'Enter value'"
+    [(ngModel)]="value"
+    [ngModelOptions]="{ standalone: true }"
+    (input)="onInput()"
+    (focusout)="onFocusOut()"
+  />
+</div> -->
+
+<div class="cell-input" style="padding-left:10px" (dblclick)="startEdit()">
+  {{ value || placeholder }}
+</div>

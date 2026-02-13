@@ -1,0 +1,634 @@
+<div>
+    <!-- [selectedIndex]="2" -->
+    <mat-horizontal-stepper  class="import_add_student_steps" [linear]="false" labelPosition="bottom" #stepper>
+        <mat-step>
+            <ng-template matStepLabel>Import Via Excel</ng-template>
+            <section class="inner_module_section_placement">
+                <div class="place_inner_title">
+                    <h4>Please use this excel format for a seamless upload.</h4>
+                    <p>You may download our template to import the list.</p>
+                </div>
+                <div class="cards">
+                    <div class="table-responsive">
+                        <table mat-table [dataSource]="eligibleStudentList" matSort class="ch_table import_edit_table">
+                            <!-- Name Column -->
+                            <ng-container matColumnDef="name">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
+                                <td mat-cell *matCellDef="let row">
+                                    <input type="text" class="input">
+                                </td>
+                            </ng-container>
+                            <!-- Last Name Column -->
+                            <ng-container matColumnDef="last_name">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header>Last Name </th>
+                                <td mat-cell *matCellDef="let row">
+                                    <input type="text" class="input">
+                                </td>
+                            </ng-container>
+                            <!-- Major Column -->
+                            <ng-container matColumnDef="major">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header> Major </th>
+                                <td mat-cell *matCellDef="let row">
+                                    <input type="text" class="input">
+                                </td>
+                            </ng-container>
+    
+                            <!-- Priority Column -->
+                            <ng-container matColumnDef="priority">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header>Priority</th>
+                                <td mat-cell *matCellDef="let row">
+                                    <mat-select class="custom_dorp_select select">
+                                        <mat-option value="Low">Low</mat-option>
+                                        <mat-option value="Medium">Medium</mat-option>
+                                        <mat-option value="High">High</mat-option>
+                                    </mat-select>
+                                </td>
+                            </ng-container>
+    
+                            <!-- Campus Column -->
+                            <ng-container matColumnDef="status">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header>Status</th>
+                                <td mat-cell *matCellDef="let row">
+                                    <mat-select class="custom_dorp_select select">
+                                        <mat-option value="Placed">Placed</mat-option>
+                                        <mat-option value="In Progress">In Progress</mat-option>
+                                        <mat-option value="Not Placed">Not Placed</mat-option>
+                                    </mat-select>
+                                </td>
+                            </ng-container>
+    
+                            <!-- Placement Group column -->
+                            <ng-container matColumnDef="workflow">
+                                <th mat-header-cell *matHeaderCellDef> Workflow </th>
+                                <td mat-cell *matCellDef="let row">
+                                    <mat-select class="custom_dorp_select select">
+                                        <mat-option value="Standard">Standard</mat-option>
+                                    </mat-select>
+                                </td>
+                            </ng-container>
+    
+                            <tr mat-header-row *matHeaderRowDef="eligibleStudentListDisplayedColumns"></tr>
+                            <tr mat-row *matRowDef="let row; columns: eligibleStudentListDisplayedColumns;"></tr>
+                        </table>
+                    </div>
+                </div>
+                <div class="place_footer_btn">
+                    <div class="row">
+                        <div class="col-md-4 col-sm-6 text-md-left text-center">
+                            <button mat-button class="theme_btn btn_outline_primary" (click)="returnBack()">
+                                Return to Students</button>
+                        </div>
+    
+                        <div class="col-md-4 col-sm-6 text-center">
+                            <button mat-button class="theme_btn btn_primary" (click)="downloadStudentTemplate()">
+                                Download Template</button>
+                        </div>
+                        <div class="col-md-4 col-sm-12 text-md-right text-center">
+                            <button mat-button class="theme_btn btn_primary" matStepperNext>
+                                Next</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </mat-step>
+        <mat-step>
+            <ng-template matStepLabel>Uploading</ng-template>
+            <section  *ngIf="!isLoading" class="inner_module_section_placement">
+                <div class="place_inner_title">
+                    <h4>Next, start uploading to import the student list</h4>
+                </div>
+                <div class="file_upload" matRipple>
+                    <p><strong>Drag file here or <span>browse</span> </strong><br>
+                        Accepted file types: (.csv), <br>
+                        4MB file size limit.
+                    </p>
+                    <label class="file_upload_label" for="image"></label>
+                    <input name="img" type="file" id="image" accept=".csv" (change)="getFile($event, stepper)">
+                </div>
+                <!-- <span *ngIf="fileName">{{fileName}}</span> -->
+                <div class="form-group text-center">
+                    <label *ngIf="fileName">{{fileName}} </label>
+                    <button id="errorPopup" style="visibility: hidden;" data-target="#errorModalImporting"
+                    data-toggle="modal">Error Popup</button>
+                </div>
+                <div class="place_footer_btn">
+                    <div class="row justify-content-center">
+                        <div class="col-md-4 col-sm-6 text-md-left text-center">
+                            <button mat-button matStepperPrevious class="theme_btn btn_outline_primary">
+                                Back</button>
+                        </div>
+    
+                        <div class="col-md-4 col-sm-12 text-md-right text-center">
+                            <button [disabled]="!fileName" mat-button class="theme_btn btn_primary" matStepperNext (click)="getUploadedStudensList()">
+                                Next</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <div class="loader-container" *ngIf="isLoading">
+                <h3>Importing Student Data, please wait...</h3>
+                
+                <!-- Circular Loader -->
+                <div class="circular-loader">
+                  <div class="spinner"></div>
+                </div>
+              
+                <!-- Progress Text -->
+                <h3>{{ uploadProgress }}% uploaded</h3>
+              </div>
+            
+
+        </mat-step>
+        <mat-step>
+            <ng-template matStepLabel>Uploading Done</ng-template>
+            <section class="inner_module_section_placement">
+                <div class="place_inner_title">
+                    <h4>Almost done! Review the outcome of the Students List</h4>
+                </div>
+                <div class="cards">
+                    <div class="table-responsive">
+                        <div class="table-responsive">
+                            <table mat-table [dataSource]="studentList" matSort class="ch_table">
+                                  <!--School Name Column -->
+                                  <!-- <ng-container matColumnDef="school_name">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header>School Name</th>
+                                    <td mat-cell *matCellDef="let row">{{row.school_name}}</td>
+                                </ng-container> -->
+                               <!-- Student ID Column -->
+                    <ng-container matColumnDef="student_id">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Student Id </th>
+                        <td mat-cell *matCellDef="let row"> {{row.student_id}} </td>
+                    </ng-container>
+                    <!-- Name Column -->
+                    <ng-container matColumnDef="student_code">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Student Code </th>
+                        <td mat-cell *matCellDef="let row"> {{row.student_code}} </td>
+                    </ng-container>
+                    <ng-container matColumnDef="full_name">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Full Name </th>
+                        <td mat-cell *matCellDef="let row">
+                       
+                            <a >{{ row && row?.full_name }}</a>
+                        </td>
+                    </ng-container> 
+                    <ng-container matColumnDef="first_name">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>First name</th>
+                    <td mat-cell *matCellDef="let row">{{ row.first_name }}</td>
+                    </ng-container>
+                    <ng-container matColumnDef="middle_name">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Middle Name</th>
+                    <td mat-cell *matCellDef="let row">{{ row.middle_name }}</td>
+                    </ng-container>
+                    <ng-container matColumnDef="last_name">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Last name</th>
+                    <td mat-cell *matCellDef="let row">{{ row.last_name }}</td>
+                    </ng-container>
+                    <ng-container matColumnDef="preferred_name">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Preferred Name</th>
+                    <td mat-cell *matCellDef="let row">{{ row.preferred_name }}</td>
+                    </ng-container>
+                    <ng-container matColumnDef="username">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Username
+                          <!-- <button mat-icon-button [matMenuTriggerFor]="usernameMenu">
+                            <mat-icon>more_vert</mat-icon>
+                            </button> -->
+
+                    </th>
+                    <td mat-cell *matCellDef="let row">{{ row.username }}</td>
+                    </ng-container>
+
+
+                    <ng-container matColumnDef="phone_no">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Phone No.</th>
+                    <td mat-cell *matCellDef="let row">{{ row.phone_no }}</td>
+                    </ng-container>
+                    <ng-container matColumnDef="advocate_care_history">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Advocate Care History</th>
+                    <td mat-cell *matCellDef="let row">{{ row.advocate_care_history }}</td>
+                    </ng-container>
+                    <ng-container matColumnDef="degree_level">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>degree Level</th>
+                    <td mat-cell *matCellDef="let row">{{ row.degree_level }}</td>
+                    </ng-container>
+                    <ng-container matColumnDef="majors">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Majors</th>
+                    <td mat-cell *matCellDef="let row">{{ row.major }}</td>
+                    </ng-container>
+                         <ng-container matColumnDef="class_level">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>class Level</th>
+                    <td mat-cell *matCellDef="let row">{{ row.class_level }}</td>
+                    </ng-container>
+                    <ng-container matColumnDef="minors">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Minors</th>
+                    <td mat-cell *matCellDef="let row">{{ row.minors }}</td>
+                    </ng-container>
+                      <ng-container matColumnDef="gpa">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>WAM</th>
+                    <td mat-cell *matCellDef="let row">{{ row.gpa }}</td>
+                    </ng-container>
+                     <ng-container matColumnDef="certificates">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Certificates</th>
+                    <td mat-cell *matCellDef="let row">{{ row.certificates }}</td>
+                    </ng-container>
+                     <ng-container matColumnDef="credit_points">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Credit Points</th>
+                    <td mat-cell *matCellDef="let row">{{ row.credit_points }}</td>
+                    </ng-container>
+                    <ng-container matColumnDef="unit_name">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Unit Name</th>
+                    <td mat-cell *matCellDef="let row">{{ row.unit_name }}</td>
+                    </ng-container>
+                    <ng-container matColumnDef="unit_code">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Unit Code</th>
+                    <td mat-cell *matCellDef="let row">{{ row.unit_code }}</td>
+                    </ng-container>
+                    <ng-container matColumnDef="delivery_mode">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Delivery Mode</th>
+                    <!-- <td mat-cell *matCellDef="let row">{{ row.delivery_mode }}</td> -->
+
+                     <td mat-cell *matCellDef="let row">
+                            <div>
+                                <!-- (selectionChange)="changeStudentPriority(row)" -->
+                                 <mat-select class="custom_dorp_select default" [(ngModel)]="row.delivery_mode"
+                               >
+                                    <mat-option value="Select Level">Select delivery mode</mat-option>
+                                    <mat-option [value]="'On Campus'">On Campus</mat-option>
+                                    <mat-option [value]="'Off Campus'">Off Campus</mat-option>
+                                    <mat-option [value]="'Mixed'">Mixed</mat-option>
+                                </mat-select>
+                            </div>
+                        </td>
+                    </ng-container>
+                      <ng-container matColumnDef="work_authorization">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Work Rights</th>
+                    <td mat-cell *matCellDef="let row">{{ row.work_rights }}</td>
+                    </ng-container>
+                    <ng-container matColumnDef="program_type">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Program Type</th>
+                    <td mat-cell *matCellDef="let row">{{ row.program_type }}</td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="upload_id">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Upload ID</th>
+                    <td mat-cell *matCellDef="let row">{{ row.upload_id }}</td>
+                    </ng-container>
+                     <ng-container matColumnDef="verified">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>verified</th>
+                    <td mat-cell *matCellDef="let row">{{ row.verified }}</td>
+                    </ng-container>
+                    <ng-container matColumnDef="is password set">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Is Password Set</th>
+                    <td mat-cell *matCellDef="let row">{{ row.is_password_set }}</td>
+                    </ng-container>
+                     <ng-container matColumnDef="is_archive">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Is Archive</th>
+                    <td mat-cell *matCellDef="let row">{{ row.is_archive }}</td>
+                    </ng-container>
+                    <ng-container matColumnDef="applicant_type">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Applicant Type</th>
+                    <!-- <td mat-cell *matCellDef="let row">{{ row.applicant_type }}</td> -->
+                    <td mat-cell *matCellDef="let row">
+                            <div>
+                                <!-- (selectionChange)="changeStudentPriority(row)" -->
+                                <mat-select class="custom_dorp_select default" [(ngModel)]="row.applicant_type"
+                                >
+                                    <mat-option value="Select Level">Select applicant type</mat-option>
+                                    <mat-option [value]="'A'">A</mat-option>
+                                    <mat-option [value]="'B'">B</mat-option>
+                                    <mat-option [value]="'C'">C</mat-option>
+                                    <mat-option [value]="'D'">D</mat-option>
+                                    <mat-option [value]="'E'">E</mat-option>
+                                </mat-select>
+                            </div>
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="geographic_preferences">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Geographic Preferences</th>
+                    <td mat-cell *matCellDef="let row">{{ row.geographic_preferences }}</td>
+                    </ng-container>
+                    <ng-container matColumnDef="affiliations">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Affiliations</th>
+                    <td mat-cell *matCellDef="let row">{{ row.affiliations }}</td>
+                    </ng-container>
+                      <ng-container matColumnDef="assignedTo">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Assigned To </th>
+                        <td mat-cell *matCellDef="let row">
+                            <div class="d-flex align-items-center">
+                                <div class="profile">
+                                    <span>
+                                        {{getFirstLetter(row.assigned_to)}}
+                                    </span>
+                                </div> <span>
+                                    {{row.assigned_to}}
+                                </span>
+                            </div>
+
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="priority">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header>Priority</th>
+                        <td mat-cell *matCellDef="let row">
+                            <div>
+                                <mat-select class="custom_dorp_select" [class]="getPriorityClassNames(row.priority)"
+                                    [(ngModel)]="row.priority">
+                                    <mat-option [value]="'Low'">Low</mat-option>
+                                    <mat-option [value]="'Medium'">Medium</mat-option>
+                                    <mat-option [value]="'High'">High</mat-option>
+                                </mat-select>
+                            </div>
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="status">
+                        <!-- <th mat-header-cell *matHeaderCellDef mat-sort-header>Status</th> -->
+                        <!-- <td mat-cell *matCellDef="let row">
+                            {{row.status}}
+                        </td> -->
+                         <!-- <td mat-cell *matCellDef="let row">
+                            <div>
+                                <mat-select class="custom_dorp_select" [class]="getPriorityClassNames(row.status)" [(ngModel)]="row.status"
+                               (selectionChange)="changeSelecStatus(row)">
+                                <mat-option value="Select Level">Select Status</mat-option>
+                                <mat-option [value]="'Placed'">Placed</mat-option>
+                                <mat-option [value]="'In Progress'">In Progress</mat-option>
+                                <mat-option [value]="'Deferred'">Deferred</mat-option>
+                            </mat-select>
+                            </div>
+                        </td> -->
+
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header>Status</th>
+                        <td mat-cell *matCellDef="let row">
+                            <div>
+                                <p *ngIf="row.status" class="custom_dorp_select m-0"
+                                [ngClass]="row.status == 'Placed' ? 'green' :
+                                row.status == 'Interviews' ? 'yellow' :
+                                row.status == 'Accepted' ? 'yellow' :
+                                row.status == 'Rejected' ? 'red' :
+                                row.status == 'Application' ? 'red' :
+                                'default'">
+                                  {{row.status ?row.status :''}}  
+                                </p>
+                                <!-- <mat-select *ngIf="row.status" class="custom_dorp_select"
+                                [ngClass]="row.status == 'Placed' ? 'green' :
+                                row.status == 'Interviews' ? 'yellow' :
+                                row.status == 'Accepted' ? 'yellow' :
+                                row.status == 'Rejected' ? 'red' :
+                                row.status == 'Application' ? 'red' :
+                                'default'"
+                                [(ngModel)]="row.status">
+                                    <mat-option [value]="'Application'">Application</mat-option>
+                                    <mat-option [value]="'Interviews'">Interviews</mat-option>
+                                    <mat-option [value]="'Rejected'">Rejected</mat-option>
+                                    <mat-option [value]="'Accepted'">Accepted</mat-option>
+                                    <mat-option [value]="'Placed'">Placed</mat-option>
+                                </mat-select> -->
+                            </div>
+                        </td>
+                    </ng-container>
+<!-- 
+                    <ng-container matColumnDef="placement_group">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Placement Group</th>
+
+                        <td mat-cell *matCellDef="let row"> {{ row.placement_project_count }}
+
+                        <button *ngIf="row.placement_project_count" mat-icon-button data-toggle="modal" (click)="getStudentPG(row)"
+                        data-target="#viewStudentPG" [disabled]="row.vacancyCount === 0"><svg width="20"
+                                height="20" viewBox="0 0 20 20" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <circle cx="10" cy="10" r="10" fill="#F8F8F8" />
+                                <path
+                                    d="M5 9.58333C5 9.58333 6.81818 6.25 10 6.25C13.1818 6.25 15 9.58333 15 9.58333C15 9.58333 13.1818 12.9167 10 12.9167C6.81818 12.9167 5 9.58333 5 9.58333Z"
+                                    stroke="black" stroke-linecap="round" stroke-linejoin="round" />
+                                <path
+                                    d="M9.9984 10.8359C10.7515 10.8359 11.362 10.2763 11.362 9.58594C11.362 8.89558 10.7515 8.33594 9.9984 8.33594C9.24529 8.33594 8.63477 8.89558 8.63477 9.58594C8.63477 10.2763 9.24529 10.8359 9.9984 10.8359Z"
+                                    stroke="black" stroke-linecap="round" stroke-linejoin="round" />
+                            </svg>
+                        </button></td>
+                        
+                    </ng-container> -->
+                    <ng-container matColumnDef="cohort_start_date">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Cohort Start Date</th>
+                    <td mat-cell *matCellDef="let row">{{ row.cohort_start_date }}</td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="cohort_end_date">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Cohort End Date</th>
+                    <td mat-cell *matCellDef="let row">{{ row.cohort_end_date }}</td>
+                    </ng-container>
+                  
+
+                    <ng-container matColumnDef="home_campus">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header>Home Campus</th>
+                        <td mat-cell *matCellDef="let row"> {{row.home_campus?row.home_campus:row.campus}} </td>
+                    </ng-container>
+                    <ng-container matColumnDef="resume_level">
+                        <th mat-header-cell *matHeaderCellDef> Resume Level </th>
+                        <td mat-cell *matCellDef="let row">
+                            <mat-select class="custom_dorp_select default" [(ngModel)]="row.resume_level"
+                               >
+                                <mat-option value="Select Level">Select Level</mat-option>
+                                <mat-option [value]="'A'">A</mat-option>
+                                <mat-option [value]="'B'">B</mat-option>
+                                <mat-option [value]="'C'">C</mat-option>
+                            </mat-select>
+                        </td>
+                    </ng-container>
+                   
+                    <ng-container matColumnDef="placement_doc_status">
+                        <th mat-header-cell *matHeaderCellDef> Placement Doc Status </th>
+                        <td mat-cell *matCellDef="let row">
+                            <mat-select class="custom_dorp_select"
+                                [ngClass]="row.placement_doc_received == 'Received' ? 'green' :
+                            row.placement_doc_received == 'Not Received' ? 'red' : 'default'"
+                                [(ngModel)]="row.placement_doc_received"
+                                >
+                                <mat-option [value]="'Received'">Received</mat-option>
+                                <mat-option [value]="'Not Received'">Not Received</mat-option>
+                            </mat-select>
+                        </td>
+                    </ng-container>
+                   
+                    <ng-container matColumnDef="primaryEmail">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header>University Email</th>
+                        <td mat-cell *matCellDef="let row">{{row.email}}</td>
+                    </ng-container>
+                     <ng-container matColumnDef="permanent_email">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header>Permanent Email</th>
+                        <td mat-cell *matCellDef="let row">{{row.permanent_email}}</td>
+                    </ng-container>
+                  
+                    <ng-container matColumnDef="gender">
+                        <th mat-header-cell *matHeaderCellDef>Gender</th>
+                        <td mat-cell *matCellDef="let row">{{row.gender}}</td>
+                    </ng-container>
+                    <ng-container matColumnDef="date_of_birth">
+                        <th mat-header-cell *matHeaderCellDef>Date of Birth</th>
+                        <td mat-cell *matCellDef="let row">{{row.date_of_birth}}</td>
+                    </ng-container>
+                    <ng-container matColumnDef="course_code">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header>Course Code</th>
+                        <td mat-cell *matCellDef="let row">{{row.course_code}}</td>
+                    </ng-container>
+                    <ng-container matColumnDef="graduation_date">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Graduation Date</th>
+                    <td mat-cell *matCellDef="let row">{{ row.graduationdate }}</td>
+                    </ng-container>
+                    <ng-container matColumnDef="course_name">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>course name</th>
+                    <td mat-cell *matCellDef="let row">{{ row.course_name }}</td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="nationality">
+                        <th mat-header-cell *matHeaderCellDef>Nationality</th>
+                        <td mat-cell *matCellDef="let row">{{row.nationality}}</td>
+                    </ng-container>
+                     <ng-container matColumnDef="address">
+                        <th mat-header-cell *matHeaderCellDef>Address</th>
+                        <td mat-cell *matCellDef="let row">{{row.address}}</td>
+                    </ng-container>
+                    <ng-container matColumnDef="addressLine1">
+                        <th mat-header-cell *matHeaderCellDef>Address Line 01</th>
+                        <td mat-cell *matCellDef="let row">{{row.address_line_01}}</td>
+                    </ng-container>
+                    <ng-container matColumnDef="suburb">
+                        <th mat-header-cell *matHeaderCellDef>Suburb</th>
+                        <td mat-cell *matCellDef="let row">{{row.suburb}}</td>
+                    </ng-container>
+                    <ng-container matColumnDef="state">
+                        <th mat-header-cell *matHeaderCellDef>State</th>
+                        <td mat-cell *matCellDef="let row">{{row.state}}</td>
+                    </ng-container>
+                    <ng-container matColumnDef="postcode">
+                        <th mat-header-cell *matHeaderCellDef>Postcode</th>
+                        <td mat-cell *matCellDef="let row">{{row.post_code}}</td>
+                    </ng-container>
+                    <ng-container matColumnDef="country">
+                        <th mat-header-cell *matHeaderCellDef>Country</th>
+                        <td mat-cell *matCellDef="let row">{{row.country}}</td>
+                    </ng-container>
+                    <ng-container matColumnDef="mobile">
+                        <th mat-header-cell *matHeaderCellDef>Mobile</th>
+                        <td mat-cell *matCellDef="let row">{{row.mobile}}</td>
+                    </ng-container>
+                     <ng-container matColumnDef="permanentAddress">
+                        <th mat-header-cell *matHeaderCellDef>Permanent Address</th>
+                        <td mat-cell *matCellDef="let row">{{row.permanent_address}}</td>
+                    </ng-container>
+
+                     <ng-container matColumnDef="permanent_suburb">
+                        <th mat-header-cell *matHeaderCellDef>Permanent Suburb</th>
+                        <td mat-cell *matCellDef="let row">{{row.permanent_suburb}}</td>
+                    </ng-container>
+
+                     <ng-container matColumnDef="permanent_state">
+                        <th mat-header-cell *matHeaderCellDef>Permanent State</th>
+                        <td mat-cell *matCellDef="let row">{{row.permanent_state}}</td>
+                    </ng-container>
+
+                     <ng-container matColumnDef="permanent_country">
+                        <th mat-header-cell *matHeaderCellDef>Permanent Country</th>
+                        <td mat-cell *matCellDef="let row">{{row.permanent_country}}</td>
+                    </ng-container>
+
+                     <ng-container matColumnDef="rights">
+                        <th mat-header-cell *matHeaderCellDef>Rights</th>
+                        <td mat-cell *matCellDef="let row">{{row.rights}}</td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="language_proficiencies">
+                        <th mat-header-cell *matHeaderCellDef>Language proficiencies</th>
+                        <td mat-cell *matCellDef="let row">{{row.language_proficiencies}}</td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="internship_start_date">
+                        <th mat-header-cell *matHeaderCellDef>Internship Start Date</th>
+                        <td mat-cell *matCellDef="let row">{{row.internship_start_date}} 
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="internship_end_date">
+                        <th mat-header-cell *matHeaderCellDef>Internship End Date</th>
+                        <td mat-cell *matCellDef="let row">{{row.internship_end_date}}</td>
+                    </ng-container>
+                    <ng-container matColumnDef="semester_name">
+                        <th mat-header-cell *matHeaderCellDef>Semester Name</th>
+                        <td mat-cell *matCellDef="let row">{{row.semester_name}}</td>
+                    </ng-container>
+                    <ng-container matColumnDef="year">
+                        <th mat-header-cell *matHeaderCellDef>Year</th>
+                        <td mat-cell *matCellDef="let row">{{row.year}}</td>
+                    </ng-container>
+                       <ng-container matColumnDef="alum">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header>Alumni</th>
+                      <td class="text-center" mat-cell *matCellDef="let row"><mat-checkbox
+                                [(ngModel)]="row.alumni"></mat-checkbox></td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="advocate_incident_history">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Incident History</th>
+                    <td mat-cell *matCellDef="let row">{{ row.advocate_incident_history }}</td>
+                    </ng-container>
+                   
+                    <ng-container matColumnDef="accommodate_accessibility">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Accommodate Accessibility</th>
+                    <td mat-cell *matCellDef="let row">{{ row.accessibility }}</td>
+                    </ng-container>
+                    <ng-container matColumnDef="ABN">
+                        <th mat-header-cell *matHeaderCellDef>ABN</th>
+                        <td mat-cell *matCellDef="let row">{{row.abn}} </td>
+                    </ng-container>
+                                <tr mat-header-row *matHeaderRowDef="displayStudentColumns"></tr>
+                                <tr mat-row *matRowDef="let row; columns: displayStudentColumns;"></tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="place_footer_btn">
+                    <div class="row justify-content-center">
+                        <div class="col-md-4 col-sm-6 text-md-left text-center">
+                            <button mat-button matStepperPrevious class="theme_btn btn_outline_primary">
+                                Re-upload</button>
+                        </div>
+    
+                        <div class="col-md-4 col-sm-12 text-md-right text-center">
+                            <button mat-button class="theme_btn btn_primary" matStepperNext (click)="confirm()">
+                                Confirm</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            </mat-step>
+    </mat-horizontal-stepper>
+
+</div>
+
+
+
+  
+
+<div class="modal fade bsModal ch_modal importing_data_error_modal" id="errorModalImporting" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header pt-4 text-center justify-content-center">
+                <button type="button" mat-icon-button id="closeModal" class="close" data-dismiss="modal"
+                    aria-label="Close">
+                    <mat-icon>close</mat-icon>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <img src="../../../../assets/img/undraw_warning.svg" alt="undraw_warning">
+                    </div>
+                    <div class="col-md-12 text-center">
+                        <h2 class="modal-title">We've detected that the uploaded sheet doesn't match our data columns. Please review the contents and ensure alignment with our template.</h2>
+                        <p> Alternatively, you can download the template to ensure compatibility. <br>
+                            If you need further assistance, feel free to reach out to our support team.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer justify-content-center">
+                <button mat-button class="theme_btn btn_primary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>

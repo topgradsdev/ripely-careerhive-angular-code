@@ -1,0 +1,172 @@
+<div class="page_header">
+    <div class=" page_header_container">
+        <div>
+            <h4>Articles List</h4>
+        </div>
+    </div>
+</div>
+<div class="row sub_header">
+    <div class="col-md-7">
+        <button type="button" mat-button class="theme_btn btn_primary" routerLink="/admin/articles/create-article"><svg
+                width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 5V19" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                <path d="M5 12H19" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+            Add Article</button>
+    </div>
+    <div class="col-md-5 text-right searchbar-end">
+        <div class="d-inline-flex align-items-center">
+            <div class="search-container">
+                <svg class="icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20"
+                    fill="none">
+                    <path
+                        d="M9.16667 15.8333C12.8486 15.8333 15.8333 12.8486 15.8333 9.16667C15.8333 5.48477 12.8486 2.5 9.16667 2.5C5.48477 2.5 2.5 5.48477 2.5 9.16667C2.5 12.8486 5.48477 15.8333 9.16667 15.8333Z"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                    <path d="M17.5 17.5L13.875 13.875" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round" />
+                </svg>
+                <input type="text" (keyup)="applyFilter($event)" #input class="form-control"
+                    placeholder="Search Keywords">
+            </div>
+        </div>
+    </div>
+</div>
+<div class="table-responsive">
+    <table mat-table [dataSource]="sortedData" class="ch_table" matSort>
+        <!-- Checkbox Column -->
+        <ng-container matColumnDef="select">
+            <th mat-header-cell *matHeaderCellDef>
+                <mat-checkbox [checked]="findChecked()" (change)="selectAll($event)" class="td-check">
+                </mat-checkbox>
+            </th>
+            <td mat-cell *matCellDef="let row">
+                <mat-checkbox (change)="selectUser($event, row._id)" [(ngModel)]="row.checked" class="td-check">
+                </mat-checkbox>
+            </td>
+        </ng-container>
+        <!-- ID Column -->
+        <!-- <ng-container matColumnDef="id">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> S.No </th>
+            <td mat-cell *matCellDef="let row ; let i=index"> {{i+1+offset}} </td>
+        </ng-container> -->
+
+        <!-- Name Column -->
+        <ng-container matColumnDef="image">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Image</th>
+            <td mat-cell *matCellDef="let row"> <img [src]="row.media ? row?.media : 'assets/img/dummy.png'"
+                    class="article_img" /></td>
+        </ng-container>
+        <!-- worktype Column -->
+        <ng-container matColumnDef="title">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Article Title</th>
+            <td mat-cell *matCellDef="let row"> {{row.article_title}} </td>
+        </ng-container>
+        <ng-container matColumnDef="postedBy">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Posted By</th>
+            <td mat-cell *matCellDef="let row"> {{row.posted_by}} </td>
+        </ng-container>
+        <ng-container matColumnDef="postDate">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Post Date</th>
+            <td mat-cell *matCellDef="let row"> 24/06/23 </td>
+        </ng-container>
+        <!-- worktype Column -->
+        <ng-container matColumnDef="category">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Category</th>
+            <td mat-cell *matCellDef="let row"> {{row?.category_name}} </td>
+        </ng-container>
+
+
+        <!-- worktype Column -->
+        <!-- <ng-container matColumnDef="type">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Article Type</th>
+        <td mat-cell *matCellDef="let row" > {{row.article_name}} </td>
+      </ng-container> -->
+
+        <!-- worktype Column -->
+        <!-- <ng-container matColumnDef="description">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Description</th>
+        <td mat-cell *matCellDef="let row" > {{row.article_description}} </td>
+      </ng-container> -->
+        <ng-container matColumnDef="action">
+            <th mat-header-cell *matHeaderCellDef> Action </th>
+            <td mat-cell *matCellDef="let row">
+                <button mat-icon-button [matMenuTriggerFor]="menu" class="td-btn">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="M4 12C4 12.2652 4.10536 12.5196 4.29289 12.7071C4.48043 12.8946 4.73478 13 5 13C5.26522 13 5.51957 12.8946 5.70711 12.7071C5.89464 12.5196 6 12.2652 6 12C6 11.7348 5.89464 11.4804 5.70711 11.2929C5.51957 11.1054 5.26522 11 5 11C4.73478 11 4.48043 11.1054 4.29289 11.2929C4.10536 11.4804 4 11.7348 4 12ZM11 12C11 12.2652 11.1054 12.5196 11.2929 12.7071C11.4804 12.8946 11.7348 13 12 13C12.2652 13 12.5196 12.8946 12.7071 12.7071C12.8946 12.5196 13 12.2652 13 12C13 11.7348 12.8946 11.4804 12.7071 11.2929C12.5196 11.1054 12.2652 11 12 11C11.7348 11 11.4804 11.1054 11.2929 11.2929C11.1054 11.4804 11 11.7348 11 12ZM18 12C18 12.2652 18.1054 12.5196 18.2929 12.7071C18.4804 12.8946 18.7348 13 19 13C19.2652 13 19.5196 12.8946 19.7071 12.7071C19.8946 12.5196 20 12.2652 20 12C20 11.7348 19.8946 11.4804 19.7071 11.2929C19.5196 11.1054 19.2652 11 19 11C18.7348 11 18.4804 11.1054 18.2929 11.2929C18.1054 11.4804 18 11.7348 18 12Z"
+                            stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                    </svg>
+                </button>
+                <mat-menu #menu="matMenu" class="td-menu custome_theme_menu">
+                    <a mat-menu-item routerLink="/admin/articles/view-article">
+                        <span>View</span>
+                    </a>
+                    <a mat-menu-item routerLink="/admin/articles/create-article">
+                        <span>Edit</span>
+                    </a>
+                    <a mat-menu-item class="danger" data-toggle="modal" (click)="Modal(row._id)">
+                        <span>Delete</span>
+                    </a>
+                </mat-menu>
+            </td>
+        </ng-container>
+
+        <!-- Progress Column -->
+        <!-- <ng-container matColumnDef="progress">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Progress </th>
+        <td mat-cell *matCellDef="let row"> {{row.progress}}% </td>
+      </ng-container> -->
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+        <!-- Row shown when there is no matching data. -->
+        <tr class="mat-row" *matNoDataRow>
+            <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
+        </tr>
+    </table>
+</div>
+<app-paginator [paginationObj]="paginationObj" (pagination)="paginationOptionChange($event)"></app-paginator>
+<!-- Modal -->
+<!-- <div bsModal #smallModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="smallModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-md  modal-dialog-centered confirm_modal" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+            </div>
+            <div class="modal-body">
+                <p class="confirm_message mt-2">Are you sure you want to delete <br> the selected Category?</p>
+            </div>
+            <div class="modal-footer justify-content-center">
+                <button type="button" mat-button class="theme_link_btn_c" (click)="smallModal.hide()">No</button>
+                <button mat-button type="submit" class="theme_btn btn_primary"
+                    (click)="deleteArticle(delId)">Yes</button>
+            </div>
+        </div>
+    </div>
+</div> -->
+<div bsModal #deleteArticleModal="bs-modal" class="modal fade ch_modal  delete_articles_modal" id="duplicateCol"
+    tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header text-center justify-content-center">
+                <h2 class="modal-title" id="exampleModalLabel">Are you sure you want to delete the following article?
+                </h2>
+                <button mat-icon-button type="button" class="close" (click)="deleteArticleModal.hide()">
+                    <mat-icon>close</mat-icon>
+                </button>
+            </div>
+            <div class="modal-body pt-3">
+                <div class="row">
+                    <div class="col-md-12 text-center">
+                        <p>Graduate Resume Writing - Where to start?</p>
+                    </div>
+                </div>
+                <div class="modal-footer justify-content-around">
+                    <button mat-button class="theme_btn btn_secondary" (click)="deleteArticleModal.hide()">No</button>
+                    <button mat-button type="button" class="theme_btn btn_primary" data-dismiss="modal">Yes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

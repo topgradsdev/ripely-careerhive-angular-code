@@ -1,0 +1,535 @@
+<div class="page_header">
+  <div class=" page_header_container">
+    <div>
+      <h4>Manage User Groups</h4>
+      <!-- <h4 *ngIf="selectedIndex === 2">Manage Deleted User Groups</h4> -->
+    </div>
+  </div>
+</div>
+<!-- <div class="info">
+  <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32" fill="none">
+    <path d="M16 29.3334C23.3638 29.3334 29.3333 23.3638 29.3333 16C29.3333 8.63622 23.3638 2.66669 16 2.66669C8.63616 2.66669 2.66663 8.63622 2.66663 16C2.66663 23.3638 8.63616 29.3334 16 29.3334Z" stroke="#464BA8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M16 21.3333V16" stroke="#464BA8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M16 10.6667H16.0125" stroke="#464BA8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  User groups other than Admins have combined permissions. Enabled Read & Write permissions will overtake other groups without it.
+</div> -->
+<section>
+  <div class="row sub_header">
+    <div class="col-md-12">
+      <ng-container *ngxPermissionsOnly="['Users_Write']">
+        <button mat-button class="theme_btn btn_primary" data-toggle="modal"
+          data-target="#addNewUserGroup" (click)="resetPopupDetail()">
+          <mat-icon>add</mat-icon>Add New User Group
+        </button>
+      </ng-container>
+    </div>
+  </div>
+
+  <ng-container>
+    <div class="div_table">
+      <div class="div_thead">
+        <div class="row">
+          <div class="col-4">Group Name</div>
+          <div class="col-2">Users</div>
+          <div class="col-4">Permissions</div>
+          <div class="col-2 text-center">Action</div>
+        </div>
+      </div>
+      <div class="div_tbody">
+        <!-- Loop through permissionsGroupList -->
+        <div class="div_trowCard" *ngFor="let group of permissionsGroupList">
+          <div class="row align-items-center">
+            <div class="col-4">{{ group.group_name }}</div>
+
+            <!-- Loop through users in the group (only show first 3) -->
+            <div class="col-2">
+              <div class="user_profiles">
+                <div *ngFor="let user of group?.users?.slice(0, 3); let i = index" class="profile" 
+                  matTooltip="{{ user.first_name }} {{ user.last_name }}" matTooltipPosition="above">
+                  <img *ngIf="user?.image" [src]="user.image" alt="avatars">
+                  <!-- Safely access first characters of first_name and last_name -->
+                  <span *ngIf="user?.first_name && user?.last_name">
+                    {{ user.first_name[0] }}{{ user.last_name[0] }}
+                  </span>
+                </div>
+                <span *ngIf="group?.users?.length > 3" class="more_profile">
+                  +{{ group?.users?.length - 3 }}
+                </span>
+              </div>
+            </div>
+
+            <!-- Display permissions as a string or custom badge -->
+            <div class="col-4">
+              <span class="group_badge">{{ group.permissions ? group.permissions : 'Custom' }}</span>
+            </div>
+
+            <div class="col-2 text-center">
+              <button mat-icon-button [matMenuTriggerFor]="menu" class="td-btn" (click)="selectedGroup = group;">
+                <mat-icon>more_horizantal</mat-icon>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+</section>
+<mat-menu #menu="matMenu" class="td-menu">
+  <a mat-menu-item (click)="viewUsers()">
+    <span>View Users</span>
+  </a>
+  <!-- <a *ngxPermissionsOnly="['Users_Write']" mat-menu-item data-toggle="modal" data-target="#sendEmail">
+    <span>Send Email to Users</span>
+  </a> -->
+  <a *ngxPermissionsOnly="['Users_Write']" mat-menu-item (click)="editUserGroup()">
+    <span>Edit User Group</span>
+  </a>
+  <!-- <a mat-menu-item data-toggle="modal" data-target="#deleleteUserGroup" class="danger_item">
+    <span>Delete</span>
+  </a> -->
+  <ng-container *ngIf="selectedGroup?.users?.length === 0">
+  <a *ngxPermissionsOnly="['Users_Write']" mat-menu-item data-toggle="modal" data-target="#deleleteUserGroupStep1" (click)="password = null;" class="danger">
+    <span>Delete</span>
+  </a>
+  </ng-container>
+</mat-menu>
+<!-- Email Send  -->
+<!-- <app-send-email-popup [type]="'user'" modalId="sendEmail" [students]="selectedGroup?.users" [emailType]="'users'"></app-send-email-popup> -->
+<div class="modal fade bsModal ch_modal" id="send-success" tabindex="-1" role="dialog"
+  aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content email_success_send">
+      <div class="modal-body text-center">
+        <h2>Success! An invitation has been sent to
+          robertsmith@email.com.au</h2>
+        <svg xmlns="http://www.w3.org/2000/svg" width="115" height="115" viewBox="0 0 115 115" fill="none">
+          <path
+            d="M105.416 53.0912V57.4995C105.41 67.8324 102.065 77.8865 95.8778 86.1624C89.6909 94.4384 80.9946 100.493 71.0858 103.422C61.177 106.352 50.5866 106 40.894 102.419C31.2015 98.8385 22.9261 92.2204 17.3022 83.5521C11.6782 74.8838 9.00701 64.6298 9.68688 54.3194C10.3667 44.0089 14.3613 34.1944 21.0748 26.3397C27.7882 18.4849 36.8609 13.0107 46.9398 10.7335C57.0186 8.45637 67.5635 9.49821 77.0018 13.7037"
+            stroke="#26C296" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" />
+          <path d="M105.417 19.1665L57.5 67.1311L43.125 52.7561" stroke="#26C296" stroke-width="5"
+            stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+      </div>
+      <div class="modal-footer justify-content-center">
+        <button mat-button data-dismiss="modal" class="theme_btn btn_primary">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- End -->
+
+<!-- Create User Group Modal -->
+<div class="modal fade bsModal ch_modal" id="addNewUserGroup" tabindex="-1" role="dialog"
+  aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content" style="width: 40em;">
+      <div class="modal-header">
+        <h2 class="modal-title" id="exampleModalLabel">Add New User Group</h2>
+        <button type="button" mat-icon-button id="closeModal" class="close" data-dismiss="modal" aria-label="Close">
+          <mat-icon>close</mat-icon>
+        </button>
+      </div>
+      <form [formGroup]="userGroupForm">
+        <div class="modal-body">
+          <div class="form-group">
+            <label for="name">Group Name*</label>
+            <input type="text" name="" id="title" placeholder="Name" class="form-control" formControlName="group_name">
+            <div *ngIf="userGroupForm.get('group_name') && (userGroupForm.get('group_name')?.touched || userGroupForm.get('group_name')?.dirty) && userGroupForm.get('group_name')?.invalid && userGroupForm.get('group_name')?.errors?.required" class="invalid-feedback">
+              Please enter group name
+            </div>
+          </div>
+          <!-- <div class="form-group">
+            <label>Group Color*</label>
+            <div class="color_picker_container">
+              <div class="d-flex flex-column align-items-center">
+                <div class="color_picker">
+                  <label for="pick">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                      <path
+                        d="M11 7.00002L17 13M4 16L15.7 4.30002C15.8869 4.11679 16.1382 4.01416 16.4 4.01416C16.6618 4.01416 16.9131 4.11679 17.1 4.30002L19.7 6.90002C19.8832 7.08695 19.9859 7.33826 19.9859 7.60002C19.9859 7.86177 19.8832 8.11309 19.7 8.30002L8 20H4V16Z"
+                        stroke="black" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                  </label>
+                  <input type="color" id="pick" class="color_pick" value="#ECEDFF" />
+                </div>
+                <small>Current Color</small>
+              </div>
+              <div class="statick_colors">
+                <span style="background-color: #26C296;"></span>
+                <span style="background-color: #702F8B;"></span>
+                <span style="background-color: #65DAB9;"></span>
+                <span style="background-color: #7378DC;"></span>
+                <span style="background-color: #A0616A;"></span>
+                <span style="background-color: #9A9A9A;"></span>
+
+                <span style="background-color: #FFD569;"></span>
+                <span style="background-color: #9747FF;"></span>
+                <span style="background-color: #27AE60;"></span>
+                <span style="background-color: #ED893E;"></span>
+                <span style="background-color: #F25094;"></span>
+                <span style="background-color: #202C76;"></span>
+              </div>
+            </div>
+          </div> -->
+          <div class="row">
+            <div class="col-8">
+              <div class="form-group">
+                <label>Copy Permissions from:</label>
+                <ng-select [searchable]="false" [multiple]="false" bindLabel="group_name" bindValue="_id" [clearable]="false"
+                  placeholder="Select an existing User Group" [(ngModel)]="selectedGroupId" [ngModelOptions]="{standalone: true}" (change)="getUserPermissionByGrouId()">
+                  <ng-option *ngFor="let permissionGroup of permissionsGroupList" [value]="permissionGroup._id">{{permissionGroup.group_name}}</ng-option>
+                </ng-select>
+              </div>
+            </div>
+            <div class="col-4 align-self-end">
+              <div class="form-group">
+                <button mat-button class="theme_btn btn_primary w-100" (click)="copySelectedGroupPermission()">Copy</button>
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="mb-3">Set Permissions*</label>
+            <table mat-table [dataSource]="permissions" matSort class="ch_table permission_table">
+              <ng-container matColumnDef="title">
+                <th mat-header-cell *matHeaderCellDef> Navigation </th>
+                <td mat-cell *matCellDef="let row"> {{row.title}} </td>
+              </ng-container>
+              <ng-container matColumnDef="is_view">
+                <th mat-header-cell *matHeaderCellDef class="text-center"> Read </th>
+                <td mat-cell *matCellDef="let row" class="text-center">
+                  <mat-slide-toggle class="custom_switch" [(ngModel)]="row.is_view" [ngModelOptions]="{standalone: true}" (change)="addPermission('read', row)"></mat-slide-toggle>
+                </td>
+              </ng-container>
+              <ng-container matColumnDef="is_write">
+                <th mat-header-cell *matHeaderCellDef class="text-center"> Write </th>
+                <td mat-cell *matCellDef="let row" class="text-center">
+                  <mat-slide-toggle class="custom_switch" [(ngModel)]="row.is_write" [ngModelOptions]="{standalone: true}" (change)="addPermission('write', row)"></mat-slide-toggle>
+                </td>
+              </ng-container>
+              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+            <div *ngIf="userGroupForm.get('permissions') && (userGroupForm.get('permissions')?.touched || userGroupForm.get('permissions')?.dirty) && userGroupForm.get('permissions')?.invalid && userGroupForm.get('permissions')?.errors?.required" class="invalid-feedback">
+              Please select permissions
+          </div>
+          </div>
+        </div>
+        <div class="modal-footer justify-content-center">
+          <button mat-button type="submit" class="theme_btn btn_primary" data-toggle="modal"
+            data-target="#create_success" data-dismiss="modal" [disabled]="userGroupForm.invalid" (click)="createUserGroup()">Create Group</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<div class="modal fade bsModal ch_modal" id="create_success" tabindex="-1" role="dialog"
+  aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content create_group_success">
+      <div class="modal-body text-center">
+        <h2>{{userGroupForm?.get('group_name')?.value}} user group has been successfully added!</h2>
+        <svg xmlns="http://www.w3.org/2000/svg" width="115" height="115" viewBox="0 0 115 115" fill="none">
+          <path
+            d="M105.416 53.0912V57.4995C105.41 67.8324 102.065 77.8865 95.8778 86.1624C89.6909 94.4384 80.9946 100.493 71.0858 103.422C61.177 106.352 50.5866 106 40.894 102.419C31.2015 98.8385 22.9261 92.2204 17.3022 83.5521C11.6782 74.8838 9.00701 64.6298 9.68688 54.3194C10.3667 44.0089 14.3613 34.1944 21.0748 26.3397C27.7882 18.4849 36.8609 13.0107 46.9398 10.7335C57.0186 8.45637 67.5635 9.49821 77.0018 13.7037"
+            stroke="#26C296" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" />
+          <path d="M105.417 19.1665L57.5 67.1311L43.125 52.7561" stroke="#26C296" stroke-width="5"
+            stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+      </div>
+      <div class="modal-footer justify-content-center">
+        <button mat-button data-dismiss="modal" class="theme_btn btn_primary">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- End -->
+
+
+<!-- View Deletion -->
+<div class="modal fade bsModal ch_modal" id="deletion" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title" id="exampleModalLabel">View Deletion Requests</h2>
+        <button type="button" mat-icon-button id="closeModal" class="close" data-dismiss="modal" aria-label="Close">
+          <mat-icon>close</mat-icon>
+        </button>
+      </div>
+      <div class="modal-body pt-3">
+        <table mat-table [dataSource]="deletionList" matSort class="ch_table permission_table">
+          <ng-container matColumnDef="group_name">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header class="pl-3"> User Group </th>
+            <td mat-cell *matCellDef="let row" class="pl-3"> {{row.group_name}} </td>
+          </ng-container>
+          <ng-container matColumnDef="user">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header class="text-center"> Users </th>
+            <td mat-cell *matCellDef="let row" class="text-center">
+              <div class="user_profiles">
+                <div class="profile">
+                  <img src="../../../../assets/img/avatars/1.jpg" alt="avatars">
+                  <!-- <span>nk</span> -->
+                </div>
+                <div class="profile">
+                  <!-- <img src="../../../../assets/img/avatars/1.jpg" alt="avatars"> -->
+                  <span>nk</span>
+                </div>
+                <div class="profile">
+                  <!-- <img src="../../../../assets/img/avatars/1.jpg" alt="avatars"> -->
+                  <span>nk</span>
+                </div>
+                <span class="more_profile">+1</span>
+              </div>
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="flagged_by">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header class="pl-2"> Flagged By </th>
+            <td mat-cell *matCellDef="let row">
+              <div class="d-flex align-items-center">
+                <div class="profile flagged_profile mr-0">
+                  <img src="../../../../assets/img/avatars/1.jpg" alt="avatars">
+                  <!-- <span>nk</span> -->
+                </div>
+                <span class="dates">23/06/23 <br>
+                  5:01 AM</span>
+              </div>
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="actions">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header class="text-left pr-3 position-relative"> Actions </th>
+            <td mat-cell *matCellDef="let row" class="text-center pr-3">
+              <button mat-icon-button [matMenuTriggerFor]="menu" class="td-btn">
+                <mat-icon>more_horizantal</mat-icon>
+              </button>
+              <mat-menu #menu="matMenu" class="td-menu">
+                <a mat-menu-item data-toggle="modal" data-target="#sendEmail">
+                  <span>Email [first name]</span>
+                </a>
+                <a mat-menu-item data-toggle="modal" data-target="#descline">
+                  <span>Decline Request</span>
+                </a>
+                <a mat-menu-item data-toggle="modal" data-target="#deleleteUserGroup" data-dismiss="modal"
+                  class="danger">
+                  <span>Delete User Group</span>
+                </a>
+
+              </mat-menu>
+            </td>
+          </ng-container>
+          <tr mat-header-row *matHeaderRowDef="displayedDeletionColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedDeletionColumns;"></tr>
+        </table>
+      </div>
+      <div class="modal-footer justify-content-center">
+        <button mat-button type="submit" class="theme_btn btn_primary" data-toggle="modal" data-target="#create_success"
+          data-dismiss="modal">Close</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+<!-- End -->
+
+<!-- Descline Modal  -->
+<div class="modal fade bsModal ch_modal" id="descline" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" mat-icon-button id="closeModal" class="close" data-dismiss="modal" aria-label="Close">
+          <mat-icon>close</mat-icon>
+        </button>
+      </div>
+      <div class="modal-body pt-3 active_deactive_modal">
+        <h4 class="mb-0">Are you sure you want to decline [first name]’s request to delete [user group]? </h4>
+      </div>
+      <div class="modal-footer justify-content-around">
+        <button mat-button type="button" class="theme_btn btn_outline_primary" data-dismiss="modal">No</button>
+        <button mat-button type="submit" class="theme_btn btn_outline_primary" data-dismiss="modal" data-toggle="modal"
+          data-target="#descline_done">Yes</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- End -->
+
+<!-- Descline done -->
+<div class="modal fade bsModal ch_modal" id="descline_done" tabindex="-1" role="dialog"
+  aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" mat-icon-button id="closeModal" class="close" data-dismiss="modal" aria-label="Close">
+          <mat-icon>close</mat-icon>
+        </button>
+      </div>
+      <div class="modal-body pt-3 active_deactive_modal">
+        <h4 class="mb-0">Deletion request has been declined. </h4>
+      </div>
+      <div class="modal-footer justify-content-center">
+        <button mat-button type="button" class="theme_btn btn_primary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- End -->
+
+<!-- Delete user group modal -->
+<div class="modal fade bsModal ch_modal" id="deleleteUserGroup" tabindex="-1" role="dialog"
+  aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" mat-icon-button id="closeModal" class="close" data-dismiss="modal" aria-label="Close">
+          <mat-icon>close</mat-icon>
+        </button>
+      </div>
+      <div class="modal-body pt-0 active_deactive_modal">
+        <h4>You cannot delete this user group while the following users belong in this group.</h4>
+        <div class="user_profiles text-center mb-5">
+          <div class="profile" matTooltip="[First Name] [Last Name]"
+          matTooltipPosition="above">
+            <img src="../../../../assets/img/avatars/1.jpg" alt="avatars">
+            <!-- <span>nk</span> -->
+          </div>
+          <div class="profile" matTooltip="[First Name] [Last Name]"
+          matTooltipPosition="above">
+            <!-- <img src="../../../../assets/img/avatars/1.jpg" alt="avatars"> -->
+            <span>nk</span>
+          </div>
+          <div class="profile" matTooltip="[First Name] [Last Name]"
+          matTooltipPosition="above">
+            <!-- <img src="../../../../assets/img/avatars/1.jpg" alt="avatars"> -->
+            <span>nk</span>
+          </div>
+          <span class="more_profile">+1</span>
+        </div>
+        <!-- <p class="mb-4">Assigning them to a new user group will prevent deactivation.</p> -->
+        <!-- <h4 class="mb-0">Are you sure you want to proceed?</h4> -->
+        <h5 class="mb-0">Please assign them to a different group before proceeding.</h5>
+      </div>
+      <div class="modal-footer justify-content-center">
+        <!-- <button mat-button type="button" class="theme_btn btn_outline_primary" data-dismiss="modal">No, I’m not</button>
+        <button mat-button type="submit" class="theme_btn btn_outline_primary" data-toggle="modal"
+          data-target="#deleteUserPs" data-dismiss="modal">Yes, I’m sure</button> -->
+        <button mat-button class="theme_btn btn_outline_primary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- End -->
+
+<div class="modal fade bsModal ch_modal" id="deleleteUserGroupStep1" tabindex="-1" role="dialog"
+  aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" mat-icon-button id="closeModal" class="close" data-dismiss="modal" aria-label="Close">
+          <mat-icon>close</mat-icon>
+        </button>
+      </div>
+      <div class="modal-body pt-0 active_deactive_modal">
+        <h4 class="mb-0">Are you sure you want to delete
+          <br> {{selectedGroup?.group_name}}?
+        </h4>
+      </div>
+      <div class="modal-footer justify-content-around">
+        <button mat-button class="theme_btn btn_outline_primary" data-dismiss="modal">No</button>
+        <button mat-button class="theme_btn btn_primary" data-toggle="modal"
+          data-target="#deleteUserPs" data-dismiss="modal">Yes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Delete user group modal confim password -->
+<div class="modal fade bsModal ch_modal" id="deleteUserPs" tabindex="-1" role="dialog"
+  aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" mat-icon-button id="closeModal" class="close" data-dismiss="modal" aria-label="Close">
+          <mat-icon>close</mat-icon>
+        </button>
+      </div>
+      <div class="modal-body pt-0 active_deactive_modal">
+        <h4 class="mb-5">Please type your password to <br>
+          proceed with user group deletion.</h4>
+        <div class="form-group mb-0 pt-2 position-relative">
+          <label>Current Password</label>
+          <!-- <input type="text" class="form-control" [(ngModel)]="password"> -->
+          <input [type]="pass" class="form-control" [(ngModel)]="password">
+          <span class="eye_icon" *ngIf="pass == 'text'" (click)="onEyeClick('pass', 'password')">
+            <svg width="20" height="13" viewBox="0 0 20 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path
+                d="M1.29565 6.7632C1.1361 6.56013 1.00404 6.38224 0.900947 6.23866C0.997612 6.09726 1.1211 5.92302 1.27053 5.72458C1.69179 5.16511 2.31455 4.41936 3.11828 3.6754C4.7353 2.17866 7.01653 0.75 9.82143 0.75C12.6263 0.75 14.9076 2.17866 16.5246 3.6754C17.3283 4.41936 17.9511 5.16511 18.3723 5.72458C18.5218 5.92302 18.6452 6.09726 18.7419 6.23866C18.6388 6.38224 18.5068 6.56013 18.3472 6.7632C17.9058 7.32498 17.2587 8.07347 16.4375 8.82004C14.7807 10.3262 12.4992 11.75 9.82143 11.75C7.14368 11.75 4.86212 10.3262 3.2054 8.82004C2.38417 8.07347 1.73706 7.32498 1.29565 6.7632Z"
+                stroke="#545465" stroke-width="1.5" />
+              <circle cx="9.82143" cy="6.24965" r="2.82143" stroke="#545465" stroke-width="1.5" />
+            </svg>
+          </span>
+          <span *ngIf="pass == 'password'" class="eye_icon pswrd_hide" (click)="onEyeClick('pass', 'text')">
+            <svg width="20" height="16" viewBox="0 0 20 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path
+                d="M1.30849 8.89459C1.14302 8.68399 1.00656 8.49996 0.900682 8.35228C0.999999 8.20676 1.12767 8.0264 1.28274 7.82046C1.71202 7.25034 2.34663 6.49038 3.16572 5.73222C4.81343 4.20707 7.1393 2.75 10 2.75C12.8607 2.75 15.1866 4.20707 16.8343 5.73222C17.6534 6.49038 18.288 7.25034 18.7173 7.82046C18.8723 8.0264 19 8.20676 19.0993 8.35228C18.9934 8.49996 18.857 8.68399 18.6915 8.89459C18.2417 9.46703 17.5824 10.2297 16.7455 10.9905C15.0575 12.525 12.7313 13.9773 10 13.9773C7.26867 13.9773 4.94248 12.525 3.2545 10.9905C2.41765 10.2297 1.75826 9.46703 1.30849 8.89459Z"
+                stroke="#545465" stroke-width="1.5" />
+              <circle cx="10.0001" cy="8.36293" r="2.88636" stroke="#545465" stroke-width="1.5" />
+              <rect x="2.1875" y="1.44922" width="1.52727" height="20.3636" transform="rotate(-45 2.1875 1.44922)"
+                fill="#545465" />
+            </svg>
+          </span>
+        </div>
+      </div>
+      <div class="modal-footer justify-content-around">
+        <button mat-button type="button" class="theme_btn btn_outline_primary" data-dismiss="modal">Cancel</button>
+        <button mat-button type="submit" class="theme_btn btn_danger" data-dismiss="modal" (click)="deleteUserGroup()">Delete</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- End -->
+
+<!-- User group deleted modal -->
+<div class="modal fade bsModal ch_modal" id="deleteUserGroupDeleted" tabindex="-1" role="dialog"
+  aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" mat-icon-button id="closeModal" class="close" data-dismiss="modal" aria-label="Close">
+          <mat-icon>close</mat-icon>
+        </button>
+      </div>
+      <div class="modal-body pt-3 active_deactive_modal">
+        <h4 class="mb-0">{{selectedGroup?.group_name}} has been deleted.</h4>
+      </div>
+      <div class="modal-footer justify-content-center">
+        <button mat-button data-dismiss="modal" class="theme_btn btn_primary">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- End -->
+
+<!-- Reactive User modal  -->
+<div class="modal fade bsModal ch_modal" id="reActivate" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" mat-icon-button id="closeModal" class="close" data-dismiss="modal" aria-label="Close">
+          <mat-icon>close</mat-icon>
+        </button>
+      </div>
+      <div class="modal-body pt-3 active_deactive_modal">
+        <h4 class="mb-0">Are you sure you want to reactivate <br>
+          Adi Baskara’s account?</h4>
+        <!-- <p>You can reactivate later if you want to change your mind.</p> -->
+      </div>
+      <div class="modal-footer justify-content-around">
+        <button mat-button type="button" class="theme_btn btn_outline_primary" data-dismiss="modal">No</button>
+        <button mat-button type="submit" class="theme_btn btn_outline_primary">Yes</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- End -->

@@ -1,0 +1,273 @@
+<div class="bg">
+    <div class="page_sub_header">
+        <div class="search-container">
+            <div class="search-box">
+                <span class="search-icon">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="M11 19C15.4183 19 19 15.4183 19 11C19 6.58172 15.4183 3 11 3C6.58172 3 3 6.58172 3 11C3 15.4183 6.58172 19 11 19Z"
+                            stroke="#464BA8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                        <path d="M21.0004 20.9999L16.6504 16.6499" stroke="#464BA8" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+
+                </span>
+                 <!-- (ngModelChange)="getPlacementGroups()"  -->
+                <input type="text" [(ngModel)]="searchText" (ngModelChange)="getPlacementGroups()" placeholder="Search for any keywords related to the program e.g Design & Art"/>
+                <!-- <button mat-button class="theme_btn btn_primary select-btn" [disabled]="!searchText" (click)="getPlacementGroups()">Search</button> -->
+            </div>
+        </div>
+    </div>
+</div>
+<section>
+    <div class="custom_container container">
+        <ng-container *ngIf="!loader && placementTypes.length>0">
+            <div [ngStyle]="{display : successPage ? 'none' : ''}" class="placement_form_card">
+                <div class="row m-0">
+                    <div class="col-md-12 mb-5 m-0">
+                        <p class="count">{{ this.placementTypes.length}} Programs Found!</p>
+                    </div>
+                    <div class="placement-container">
+                        <!-- <h4 class="title">Select Placement Type</h4> -->
+
+                        <div *ngFor="let type of placementTypes" class="placement-card">
+                            <img [src]="type.selectedImage" alt="{{type.type}}" class="placement-icon" />
+
+                            <div class="d-flex align-items-center justify-content-between w-100">
+                                <div class="placement-info">
+                                    <h5 class="placement-title"  matTooltip="{{type.title}}">{{ type.title }}</h5>
+                                    <p class="placement-desc"> {{type.code}}</p>
+                                    <p class="placement-desc"> {{type.industry}}</p>
+                                   
+                                </div>
+                                <div class="placement-info">
+                                    <!-- <h4 class="title">Industry</h4> -->
+                                    <div (click)="selectedGroup=type;convert(type);viewEligiblityCriteria.show()" class="position-relative mt-1" *ngIf="type?.metCriteria && (objectKeys(type.metCriteria).length > 0)">
+                                        <span  class="" [ngClass]="allFiltersTrue(type.metCriteria) ? 'succes-babdge-icon' : 'danger-babdge-icon'">
+                                            {{allFiltersTrue(type.metCriteria) ? 'Eligible to apply!' : 'Ineligible to apply!'}}
+                                        </span>
+                                    </div>
+
+                                </div>
+                                <div class="placement-info position-relative">
+                                    <ng-container *ngIf="type.deadline">
+                                        <h4 class="title">Deadline</h4>
+                                        <div class=" position-relative mt-1">
+                                            <span class="babdge-icon" [ngClass]="{
+                                                'future-babdge-icon': isOneWeekOrLess(type.deadline),
+                                                'babdge-icon': !isOneWeekOrLess(type.deadline)
+                                            }">
+                                                {{type.deadline | date : 'dd/MM/YYYY'}}
+                                            </span>
+                                        </div>
+                                        <p class="deadlin" *ngIf="type.deadline && isOneWeekOrLess(type.deadline)">
+                                            {{ daysLeft(type.deadline) }} days left to apply!
+                                        </p>
+                                    </ng-container>
+                                </div>
+                                <a mat-button class="theme_btn btn_primary"
+                                    (click)="selectedGroup=type;convert(type);viewPlacementGorup.show()">View & Apply</a>
+                            </div>
+                            <!-- 
+                            <button mat-raised-button color="primary" class="select-btn"
+                                    (click)="onSelect(type)">
+                            Select -->
+
+
+                            <!-- </button> -->
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </ng-container>
+        <!-- Show after submit -->
+        <ng-container  *ngIf="!loader && placementTypes.length==0">
+            <div class="success_div">
+                <p class="p-no">
+                    No results found! Try searching with different keywords
+                </p>
+                <svg width="138" height="115" viewBox="0 0 138 115" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M69.0341 50.7087C84.8133 50.7087 100.592 50.7283 116.372 50.6807C117.993 50.6751 119.042 51.1905 119.962 52.5434C125.362 60.487 130.844 68.3774 136.294 76.2846C136.454 76.5143 136.614 76.744 136.76 76.9821C137.893 78.8363 137.023 80.4973 134.841 80.5197C130.546 80.5589 126.252 80.5337 121.957 80.5337C119.729 80.5337 119.727 80.5337 119.727 82.7297C119.727 91.354 119.724 99.9782 119.727 108.6C119.727 109.919 119.614 111.224 118.888 112.367C117.844 114.014 116.366 114.944 114.363 114.941C111.188 114.938 108.015 114.944 104.84 114.944C78.1369 114.944 51.4344 114.891 24.7318 115C20.437 115.017 18.2293 112.311 18.2658 108.555C18.3528 99.8382 18.2939 91.1215 18.2911 82.4048C18.2911 80.5421 18.2826 80.5365 16.4396 80.5365C12.1449 80.5337 7.85014 80.5281 3.5554 80.5393C2.5315 80.5421 1.57493 80.4357 1.0139 79.4329C0.413586 78.3601 0.910104 77.4722 1.51602 76.5927C7.12921 68.4558 12.7508 60.3245 18.3303 52.1624C19.1158 51.0112 20.1004 50.6863 21.416 50.6891C37.2906 50.7171 53.1624 50.7087 69.0341 50.7087ZM66.9499 60.2265C66.8517 60.2097 66.7535 60.1929 66.6525 60.1761C66.3608 60.5906 66.0634 61.0024 65.7801 61.4253C61.8753 67.2234 57.9536 73.0103 54.0881 78.8363C53.283 80.0492 52.332 80.5701 50.8565 80.5617C42.037 80.5113 33.2203 80.5645 24.4008 80.5057C23.015 80.4973 22.5549 80.8362 22.5662 82.2871C22.6335 90.9058 22.597 99.5245 22.5998 108.143C22.5998 110.639 22.7794 110.815 25.3265 110.818C38.5305 110.821 51.7345 110.818 64.9385 110.818C66.9442 110.818 66.9471 110.815 66.9471 108.827C66.9471 93.0794 66.9471 77.3322 66.9471 61.585C66.9499 61.1312 66.9499 60.6803 66.9499 60.2265ZM71.152 59.812C71.1071 60.4534 71.0791 60.6775 71.0791 60.9015C71.0763 77.0717 71.0903 93.2418 71.051 109.412C71.0482 110.695 71.6177 110.835 72.6612 110.835C86.1486 110.812 99.6359 110.824 113.123 110.818C115.09 110.818 115.426 110.479 115.429 108.563C115.432 99.8018 115.398 91.0431 115.466 82.2815C115.477 80.8166 114.994 80.5001 113.623 80.5085C104.803 80.5645 95.9808 80.5113 87.1612 80.5617C85.6773 80.5701 84.7207 80.0492 83.9353 78.8251C82.2746 76.2342 80.5242 73.7049 78.8046 71.1532C76.3304 67.4839 73.8562 63.8202 71.152 59.812ZM130.844 76.0521C130.745 75.8337 130.706 75.6992 130.63 75.5872C126.117 69.0188 121.592 62.4589 117.098 55.8794C116.604 55.1567 115.993 54.9914 115.199 54.9914C101.715 55.0027 88.2328 54.997 74.7483 55.0026C74.3415 55.0026 73.8085 54.8402 73.5701 55.2295C73.2699 55.7197 73.7945 56.0782 74.0386 56.4396C78.1117 62.5177 82.2353 68.5623 86.2524 74.6768C87.0518 75.8925 87.9327 76.279 89.3381 76.2762C102.635 76.2314 115.931 76.251 129.228 76.2426C129.73 76.2426 130.252 76.3546 130.844 76.0521ZM7.00578 76.139C7.6117 76.1922 7.93149 76.2426 8.24848 76.2426C21.9659 76.2454 35.6804 76.2398 49.3978 76.2594C50.3544 76.2622 50.9294 75.8953 51.4484 75.1194C55.6113 68.8788 59.8135 62.6606 63.9904 56.4284C64.2316 56.067 64.759 55.7085 64.4532 55.2183C64.2148 54.8402 63.679 54.9998 63.2723 54.9998C49.7877 54.9942 36.306 55.0026 22.8214 54.9802C21.8649 54.9774 21.2786 55.3332 20.7652 56.1118C19.3234 58.2882 17.8114 60.4142 16.333 62.5653C13.2754 67.0161 10.2177 71.4641 7.00578 76.139Z" fill="#2B2A35"/>
+                <path d="M47.4176 0.034099C48.3012 0.0481039 48.8931 0.510268 49.3167 1.24693C50.7333 3.7034 52.1808 6.14587 53.5637 8.61915C54.3043 9.94402 54.0042 11.1765 52.9101 11.7703C51.8582 12.3417 50.6716 11.986 49.9479 10.7703C48.4751 8.29144 47.0136 5.80415 45.6279 3.27765C44.7302 1.63347 45.6896 -0.010717 47.4176 0.034099Z" fill="#464BA8"/>
+                <path d="M84.0412 9.53232C84.0328 9.40908 84.26 8.94691 84.5153 8.50155C85.9067 6.08429 87.2868 3.65863 88.7119 1.26098C89.43 0.0509473 90.6138 -0.30758 91.6714 0.269425C92.7373 0.849231 93.0852 2.04806 92.4035 3.27209C90.9785 5.8294 89.4917 8.3559 88.0106 10.8824C87.4495 11.8375 86.5855 12.2213 85.514 11.9216C84.5518 11.6499 84.0861 10.9412 84.0412 9.53232Z" fill="#464BA8"/>
+                <path d="M31.4219 15.7979C31.9745 15.8147 32.4402 16.0219 32.8862 16.2796C35.2678 17.6465 37.6578 18.9966 40.017 20.3943C41.414 21.2234 41.8067 22.4054 41.1559 23.523C40.5107 24.6322 39.3045 24.8423 37.857 24.0216C35.4277 22.6463 33.0209 21.2318 30.6084 19.8285C29.6546 19.2739 29.2283 18.4392 29.5088 17.358C29.7612 16.3973 30.4878 15.9351 31.4219 15.7979Z" fill="#464BA8"/>
+                <path d="M108.589 17.9605C108.581 18.7868 108.149 19.3834 107.476 19.7784C104.906 21.2825 102.339 22.7978 99.7305 24.2319C98.5608 24.8734 97.3966 24.4896 96.83 23.4673C96.2577 22.4337 96.5298 21.2965 97.6968 20.5963C100.249 19.0613 102.822 17.56 105.442 16.1399C106.988 15.3024 108.629 16.3135 108.589 17.9605Z" fill="#464BA8"/>
+                <path d="M30.2067 41.6036C28.7648 41.6036 27.3229 41.6316 25.8811 41.598C24.4925 41.5644 23.5752 40.696 23.592 39.5056C23.6089 38.3488 24.4616 37.5169 25.8081 37.5001C28.7844 37.4637 31.7607 37.4637 34.737 37.5029C36.0611 37.5197 36.883 38.3824 36.8662 39.5728C36.8493 40.7521 36.019 41.556 34.6697 41.5952C33.183 41.6344 31.6934 41.6036 30.2067 41.6036Z" fill="#464BA8"/>
+                <path d="M107.812 41.6064C106.37 41.6064 104.929 41.6288 103.487 41.598C102.028 41.5672 101.172 40.7941 101.158 39.5644C101.144 38.3236 101.992 37.5057 103.431 37.4917C106.314 37.4637 109.198 37.4637 112.082 37.4917C113.529 37.5057 114.421 38.3124 114.433 39.5084C114.447 40.7409 113.498 41.5756 111.998 41.6008C110.603 41.626 109.209 41.6064 107.812 41.6064Z" fill="#464BA8"/>
+                </svg>
+
+            </div>
+        </ng-container>
+    </div>
+</section>
+
+
+<div class="modal bsModal ch_modal fade multi_preview" id="confirmModel" tabindex="-1" role="dialog"
+    aria-labelledby="confirmModel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-xl" style="max-width:800px" role="document">
+        <div class="modal-content">
+            <div class="modal-header justify-content-center">
+                <h2 class="modal-title text-center" id="exampleModalLabel">Please confirm your Placement Type Selection.
+                </h2>
+                <button mat-icon-button class="close" aria-label="Close" data-dismiss="modal">
+                    <mat-icon>close</mat-icon>
+                </button>
+            </div>
+            <div class="modal-body pt-3 d-block">
+                <p class="text-center">
+                    Once selected, this choice cannot be changed by you. If you make an incorrect selection, you will
+                    need to contact an administrator or staff member to make any adjustments.
+                </p>
+            </div>
+
+            <div class="modal-footer justify-content-center">
+                <button #closeConfirmModal mat-button type="button" class="theme_btn btn_outline_primary mr-4"
+                    data-dismiss="modal">Cancel</button>
+
+                <button mat-button type="button" class="theme_btn btn_primary mr-4"
+                    (click)="submitForm()">Confirm</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Add Column popup -->
+<div bsModal #viewPlacementGorup="bs-modal" class="modal fade bsModal ch_modal" id="addNewColumnPopup" tabindex="-1"
+    role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static" 
+     data-bs-keyboard="false" [config]="{ backdrop: 'static', keyboard: false }">
+    <div class="modal-dialog modal-dialog-centered" style="max-width:800px" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title " id="exampleModalLabel">{{selectedGroup?.title}}</h2>
+                <button mat-icon-button type="button" class="close" (click)="selectedGroup=null;viewPlacementGorup.hide()"
+                    data-dismiss="modal" aria-label="Close">
+                    <mat-icon>close</mat-icon>
+                </button>
+            </div>
+            <form>
+                <div class="modal-body pt-3">
+                    <div class="row">
+                        <div class="col-md-7">
+                            <div class="placement-card">
+                                <img [src]="selectedGroup?.selectedImage" alt="{{selectedGroup?.type}}"
+                                    class="placement-icon" />
+                                <div class="placement-info">
+                                    <h5 class="placement-title">{{ selectedGroup?.code }}</h5>
+                                    <div class=" position-relative mt-1">
+                                        <span class="babdge-icon">
+                                            {{selectedGroup?.industry}}
+                                        </span>
+                                    </div>
+                                    <!-- <p class="deadlin" *ngIf="isFuture(type?.publish_at)">
+                                        2 days left to apply!
+                                    </p> -->
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-5 d-flex align-items-center justify-content-end">
+                            <!-- <div class="placement-card d-flex align-items-center justify-content-end"> -->
+                            <div class="placement-info position-relative" *ngIf="selectedGroup?.deadline">
+                                <h4 class="title">Deadline</h4>
+                                <p class="placement-desc">
+                                    {{ daysLeft(selectedGroup?.deadline) }} days left to apply!
+                                </p>
+                                <div class=" position-relative mt-1" *ngIf="selectedGroup?.deadline">
+                                    <span class="babdge-icon" [ngClass]="{
+                                            'future-babdge-icon': isOneWeekOrLess(selectedGroup?.deadline),
+                                            'babdge-icon': !isOneWeekOrLess(selectedGroup?.deadline)
+                                        }">
+                                        {{selectedGroup?.deadline | date : 'dd/MM/YYYY'}}
+                                    </span>
+                                </div>
+                                <!-- </div> -->
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="placement-card d-flex align-items-center justify-content-end">
+                                <div class="placement-info position-relative">
+                                    <h4 class="title">Description </h4>
+                                    <p [innerHTML]="selectedGroup?.description"></p>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="col-12 mt-4 error-div text-center" *ngIf="!allFiltersTrue(selectedGroup?.metCriteria)">
+                            <h1 class="title">You cannot apply for this opportunity </h1>
+                            <p>To be able to apply, you must meet all of the criteria. Contact a staff member for further information.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer justify-content-between">
+                    <button (click)="selectedGroup=null;viewPlacementGorup.hide()" mat-button type="button"
+                        class="theme_btn btn_outline_primary" data-dismiss="modal">Close</button>
+                   
+                     <a *ngIf="allFiltersTrue(selectedGroup?.metCriteria)" mat-button type="submit" class="theme_btn btn_primary"
+                        [routerLink]="'/student/placement-type-form'"
+                        [queryParams]="{ id: selectedGroup?._id }">Apply</a>
+
+                     <a *ngIf="!allFiltersTrue(selectedGroup?.metCriteria)" mat-button type="submit" class="theme_btn btn_primary"  (click)="convert(selectedGroup);viewPlacementGorup.hide();viewEligiblityCriteria.show();">View Eligibility</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<div bsModal #viewEligiblityCriteria="bs-modal" class="modal fade bsModal ch_modal" id="addNewColumnPopup" tabindex="-1"
+    role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static" 
+     data-bs-keyboard="false" [config]="{ backdrop: 'static', keyboard: false }">
+    <div class="modal-dialog modal-dialog-centered" style="max-width:800px" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title " id="exampleModalLabel">View Eligiblity Criteria For {{selectedGroup?.title}}</h2>
+                <button mat-icon-button type="button" class="close" (click)="selectedGroup=null;viewEligiblityCriteria.hide()"
+                    data-dismiss="modal" aria-label="Close">
+                    <mat-icon>close</mat-icon>
+                </button>
+            </div>
+            <form>
+                <div class="modal-body pt-1">
+                    <div class="criteria_main  w-100" *ngIf="selectedGroup?.allCriteria1.length>0">
+                        <div class="row w-100 m-0" >
+                            <ng-container *ngFor="let item of selectedGroup?.allCriteria1">
+                                <div class="key col-5 d-flex gap-2 align-items-center">
+                                    <ng-container *ngIf="!selectedGroup?.metCriteria[item.name]">
+                                       <svg width="24" height="25" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <rect x="0.5" y="1" width="23" height="23" rx="11.5" fill="#F5CDCD"/>
+                                        <rect x="0.5" y="1" width="23" height="23" rx="11.5" stroke="#D73C3C" stroke-linecap="round" stroke-linejoin="round"/>
+                                        <path d="M16.5 8L7.5 17" stroke="#D73C3C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                        <path d="M7.5 8L16.5 17" stroke="#D73C3C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                        </svg>
+
+
+                                    </ng-container>
+                                    <ng-container *ngIf="selectedGroup?.metCriteria[item.name]">
+                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <rect x="0.5" y="0.5" width="23" height="23" rx="11.5" fill="#EDFFE6"/>
+                                        <rect x="0.5" y="0.5" width="23" height="23" rx="11.5" stroke="#4FA352" stroke-linecap="round" stroke-linejoin="round"/>
+                                        <path d="M7 12.899L11.0305 16.7172L16.8437 8" stroke="#26C296" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                        </svg>
+
+                                    </ng-container> 
+                                    {{ prettyKey(item.key) }}
+                                
+                                </div>
+                                <div class="value col-7 d-flex align-items-center justify-content-end"> {{ getValue(item.key, item.value) }}</div>
+                            </ng-container>
+                           
+                        </div>
+                    </div>
+
+                </div>
+                <div class="modal-footer justify-content-between">
+                    <button (click)="selectedGroup=null;viewEligiblityCriteria.hide()" mat-button type="button"
+                        class="theme_btn btn_outline_primary" data-dismiss="modal">Close</button>
+                    <a mat-button type="submit" class="theme_btn btn_primary" (click)="viewEligiblityCriteria.hide();viewPlacementGorup.show()">View Program</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

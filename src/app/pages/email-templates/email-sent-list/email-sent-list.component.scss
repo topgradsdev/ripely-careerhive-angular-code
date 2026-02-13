@@ -1,0 +1,59 @@
+.sub_header {
+    .selected_lable {
+        color: var(--primary-color-first);
+        font-family: var(--font-primary);
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: normal;
+    }
+
+    .action_btns_header {
+        display: inline-flex;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 10px;
+
+        .main_ac {
+            width: 150px;
+        }
+    }
+}
+
+.page_header_container {
+    p {
+        font-family: var(--font-primary);
+        font-size: 16px;
+        font-weight: 400;
+        line-height: 20.83px;
+        text-align: left;
+        margin-bottom: 0px;
+        color: var(--main-black-color);
+
+        span {
+            font-weight: 500;
+        }
+    }
+}
+td {
+    .link_student_link {
+        color: var(--main-black-color);
+        text-decoration: underline;
+
+        &:hover {
+            color: var(--primary-color-first);
+            font-weight: 500;
+        }
+    }
+}
+.date_group.file_upload_date {
+    flex-direction: column;
+
+    .form-group {
+        width: 100%;
+    }
+
+    .to {
+        padding: 10px 0px;
+    }
+}

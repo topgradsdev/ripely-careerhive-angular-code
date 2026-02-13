@@ -1,0 +1,228 @@
+<section>
+    <div class="custom_container py-4">
+        <div class="main_card_vacancy_create successPage">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="vacancy_create_title text-center">
+                        <h2>View Project</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="vacancy_create_stepper">
+                <div class="form_fildls employJob_fields">
+                    <div class="preview_result pb-5">
+                        <div class="vacancy_preview" *ngIf="vacancyDetail">
+                            <div class="preview_container">
+                              <!-- Job Title -->
+                              <h1 class="job_title mb-2 m-0 review-h1">{{ vacancyDetail?.job_title }}</h1>
+                          
+                              <div class="d-flex justify-content-between">
+                                <div style="flex: 1; max-width: 50%;">
+                                  <div style="display: flex; gap: 15px;">
+                                    <!-- Company Logo -->
+                                    <figure *ngIf="vacancyDetail?.company_info?.length > 0; else defaultLogo">
+                                        <img 
+                                          [src]="vacancyDetail.company_info[0].company_logo || '../../../assets/img/company-logo-placeholder.svg'" 
+                                          class="img-fluid" 
+                                         alt="Company Logo" style="width:64px;height: 64px;">
+                                      </figure>
+                                      
+                                      <ng-template #defaultLogo>
+                                        <img src="../../../assets/img/company-logo-placeholder.svg" class="img-fluid" alt="Default Company Logo">
+                                      </ng-template>
+                                      
+                                      <div style="display: flex; flex: 1; margin-right: 15px; flex-direction: column;">
+                                        <h2 class="company_name m-0">
+                                          {{ vacancyDetail?.company_info?.length > 0 ? vacancyDetail.company_info[0].company_name : '' }}
+                                        </h2>
+                                        <p class="location">{{ vacancyDetail?.job_location?.name }}</p>
+                                      </div>
+                                      
+                                  </div>
+                          
+                                  <!-- Work Commitment & Workplace Arrangement -->
+                                  <div class="job_details">
+                                    <p class="m-0">Work Commitment:</p>
+                                    <h2 class="company_name mb-2 m-0">
+                                      <span *ngIf="vacancyDetail?.contract_type">
+                                        {{
+                                          {
+                                            'any': 'Any',
+                                            'part_time': 'Part Time',
+                                            'full_time': 'Full Time',
+                                            'casual': 'Casual',
+                                            'temp_contract': 'Temp/Contract',
+                                            'Full Time': vacancyDetail.contract_type,
+                                            'Part Time': vacancyDetail.contract_type
+                                          }[vacancyDetail.contract_type] || vacancyDetail.contract_type
+                                        }}
+                                      </span>
+                                    </h2>
+                                    <p class="m-0">Workplace Arrangement:</p>
+                                    <h2 class="company_name mb-2 m-0">{{ vacancyDetail?.work_type }}</h2>
+                                  </div>
+                                </div>
+                          
+                                <!-- Skills Section -->
+                                <div class="skills_section m-0" style="flex: 1; max-width: 50%; flex-direction: column; gap: 20px;">
+                                  <div>
+                                    <h4 class="heading fw-post mb-1">Posted By</h4>
+                                      <div class="mod_groups p-0">
+                                    <div class="avatar">
+                                       <img *ngIf="userDetail?.image && !vacancyDetail?.created_by_logo" [src]="userDetail.image" class="rounded-circle	" alt="avatar" />
+
+                                        <img *ngIf="vacancyDetail?.created_by_logo" [src]="vacancyDetail.created_by_logo" class="rounded-circle	" alt="company logo" />
+
+                                        <div class="profile" *ngIf="!vacancyDetail?.created_by_logo && !userDetail?.image">
+                                            <span style="color: #fff;display: flex
+                                            ;
+                                                justify-content: center;
+                                                margin-top: 8px;">
+                                                {{ 
+                                                  vacancyDetail?.created_by_name 
+                                                    ? vacancyDetail.created_by_name.split(' ')[0].charAt(0) + vacancyDetail.created_by_name.split(' ')[1]?.charAt(0) 
+                                                    : userDetail?.first_name?.charAt(0) + userDetail?.last_name?.charAt(0)
+                                                }}
+
+                                          <!-- {{selectedCompany?.created_by_name ?
+                                        selectedCompany?.created_by_name.split(' ')[0][0] : ''}}
+                                        {{selectedCompany?.created_by_name.split(' ')[1] ?
+                                        selectedCompany?.created_by_name.split(' ')[1][0] :userDetail?.first_name?.charAt(0) + userDetail?.last_name?.charAt(1)}} -->
+                                        
+                                      </span>    
+                                        </div>
+                                    </div>
+                                    <span style="font: size 16px;">{{vacancyDetail && vacancyDetail?.created_by_name ? vacancyDetail?.created_by_name:userDetail?.first_name+' ' +userDetail?.last_name}}</span>
+                                      
+                                  </div> 
+                                  
+                                  <!-- <div class="mod_groups p-0">
+                                    <div class="avatar">
+                                       <img *ngIf="userDetail?.image && !vacancyDetail?.created_by_logo" [src]="userDetail.image" class="rounded-circle	" alt="avatar" />
+
+                                        <img *ngIf="vacancyDetail?.created_by_logo" [src]="vacancyDetail.created_by_logo" class="rounded-circle	" alt="company logo" />
+
+                                        <div class="profile" *ngIf="!vacancyDetail?.created_by_logo && !userDetail?.image">
+                                            <span style="color: #fff;display: flex
+                                            ;
+                                                justify-content: center;
+                                                margin-top: 8px;">
+                                                {{ 
+                                                  vacancyDetail?.created_by_name 
+                                                    ? vacancyDetail.created_by_name.split(' ')[0].charAt(0) + vacancyDetail.created_by_name.split(' ')[1]?.charAt(0) 
+                                                    : userDetail?.first_name?.charAt(0) + userDetail?.last_name?.charAt(0)
+                                                }}
+                                      </span>    
+                                        </div>
+                                    </div>
+                                    <span style="font: size 16px;">{{vacancyDetail && vacancyDetail?.created_by_name ? vacancyDetail?.created_by_name:userDetail?.first_name+' ' +userDetail?.last_name}}</span>
+                                      
+                                  </div>
+                                       -->
+                                  </div>
+                          
+                                  <!-- Required Skills -->
+                                  <div class="skills_wrapper">
+                                    <h5>Required Skills:</h5>
+                                    <div class="skills_list">
+                                      <span *ngFor="let skill of vacancyDetail?.skills" class="skill_chip">{{ skill.name }}</span>
+                                    </div>
+                                  </div>
+                          
+                                  <!-- Develop Skills (Only if available) -->
+                                  <div class="skills_wrapper" *ngIf="vacancyDetail?.skills_to_develop?.length > 0">
+                                    <h5>Develop Skills:</h5>
+                                    <div class="skills_list">
+                                      <span *ngFor="let skill of vacancyDetail?.skills_to_develop" class="skill_chip">{{ skill.name }}</span>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                          
+                              <!-- Description Section -->
+                              <div class="description_section">
+                                <h4 class="heading fw">Description:</h4>
+                                <div class="description_content">
+                                  <p class="discription" [innerHTML]="vacancyDetail?.job_description"></p>
+                                </div>
+                              </div>
+                          
+                              <!-- Number of Vacancies -->
+                              <div class="vacancies_section">
+                                <h5 class="heading fw">Number of Vacancies:</h5>
+                                <!-- <p>{{ vacancyDetail?.no_of_vacancy }}</p> -->
+                                <p>{{ vacancyDetail?.no_limit?'No Limit' : vacancyDetail?.no_of_vacancy }}</p>
+                              </div>
+                          
+                              <!-- Certifications -->
+                              <div class="certifications_section" *ngIf="vacancyDetail?.license_certification">
+                                <h5 class="heading fw">Licenses & Certifications required:</h5>
+                                <span class="certification_chip" *ngFor="let certification of (vacancyDetail?.license_certification?.split(',') || [])">
+                                  {{ certification }}
+                                </span>
+                              </div>
+
+
+                                  <!-- Certifications -->
+                              <!-- <div class="certifications_section" *ngIf="vacancyDetail?.application_receivers_info">
+                                <h5 class="heading fw">Application Routing Destinations</h5>
+                                  <span class="certification_chip1"> {{ getApplication(vacancyDetail) }}</span>
+                              
+                              </div> -->
+
+                                  <!-- Certifications -->
+                              <div class="certifications_section" *ngIf="vacancyDetail?.placement_supervisor_name">
+                                <h5 class="heading fw">Default Supervisor</h5>
+                                  <span class="certification_chip1">{{vacancyDetail?.placement_supervisor_name}}</span>
+                              
+                              </div>
+                          
+                              <!-- Document Section -->
+                              <div class="certifications_section"  *ngIf="vacancyDetail?.documents?.length > 0">
+                                <h5 class="heading fw">Project Documents</h5>
+                                <ul class="files_list mt-3" *ngIf="vacancyDetail?.documents?.length > 0">
+                                  <li *ngFor="let file of vacancyDetail.documents; let i = index;">
+                                    <div class="file_card">
+                                      <div class="content">
+                                    <div class="svg-width d-flex justify-content-center align-items-center"  style="width: 60px;height:48px;padding-right: 8px;" [innerHTML]="getSafeSvg(file?.name)"></div>
+                                            
+                                        <p>{{ file.name }}</p>
+                                      </div>
+                                      <div class="btn_group">
+                                        <!-- View Button -->
+                                        <button (click)="viewFile(i, file)" mat-icon-button>
+                                            <svg width="35" height="35" viewBox="0 0 35 35" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <circle cx="17.5" cy="17.5" r="17.5" fill="#F8F8F8"/>
+                                                <path d="M9.29565 17.7632C9.1361 17.5601 9.00404 17.3822 8.90095 17.2387C8.99761 17.0973 9.1211 16.923 9.27053 16.7246C9.69179 16.1651 10.3145 15.4194 11.1183 14.6754C12.7353 13.1787 15.0165 11.75 17.8214 11.75C20.6263 11.75 22.9076 13.1787 24.5246 14.6754C25.3283 15.4194 25.9511 16.1651 26.3723 16.7246C26.5218 16.923 26.6452 17.0973 26.7419 17.2387C26.6388 17.3822 26.5068 17.5601 26.3472 17.7632C25.9058 18.325 25.2587 19.0735 24.4375 19.82C22.7807 21.3262 20.4992 22.75 17.8214 22.75C15.1437 22.75 12.8621 21.3262 11.2054 19.82C10.3842 19.0735 9.73706 18.325 9.29565 17.7632Z" stroke="#2B2A35" stroke-width="1.5"/>
+                                                <circle cx="17.8214" cy="17.2511" r="2.82143" stroke="#2B2A35" stroke-width="1.5"/>
+                                                </svg>
+                                                
+                                        </button>
+                                        <!-- button [href]="file.url" [download]="file.name" target="_blank" -->
+                                        <!-- Delete Button -->
+                                        <button (click)="downloadFile(i, file)" mat-icon-button>
+                                            <svg width="35" height="35" viewBox="0 0 35 35" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <circle cx="17.5" cy="17.5" r="17.5" fill="#F8F8F8"/>
+                                                <path fill-rule="evenodd" clip-rule="evenodd" d="M24.7923 20.4141V23.3307C24.7923 24.1361 24.1394 24.7891 23.334 24.7891H11.6673C10.8619 24.7891 10.209 24.1361 10.209 23.3307V20.4141H11.6673V23.3307H23.334V20.4141H24.7923Z" fill="#2B2A35"/>
+                                                <path fill-rule="evenodd" clip-rule="evenodd" d="M18.2295 17.9258L20.6305 15.5248L21.6617 16.556L17.5003 20.7174L13.3389 16.556L14.3701 15.5248L16.7711 17.9258V10.207H18.2295V17.9258Z" fill="#2B2A35"/>
+                                                </svg>
+                                                
+                                                
+                                        </button>
+                                      </div>
+                                    </div>
+                                  </li>
+                                </ul>
+                              </div>
+                            </div>
+                          </div>
+                          <br /> <br />
+                        <div class="tabs_buttons d-flex  pt-0 justify-content-center align-items-center">
+                            <button class="theme_btn btn_primary px-4" style="width: auto !important;"  (click)="navigateToProjectTab()" mat-button>Back to WIL Vacancies</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

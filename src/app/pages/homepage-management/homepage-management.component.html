@@ -1,0 +1,960 @@
+<section class="home-header-sec">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="card">
+					<form [formGroup]="headerform">
+						<div class="manage-home-header">
+							<div class="card-header d-flex justify-content-between">
+								<strong>Home Header Section</strong>
+								<div class="slide-cs">
+									<span class="mr-2">Visibility </span>
+									<mat-slide-toggle formControlName="is_visible" (change)="fun($event)"></mat-slide-toggle>
+								</div>
+							</div>
+							<div class="card-body">
+
+								<div class="home-mng-form">
+									<div class="form-group">
+										<label>Title</label>
+										<quill-editor [modules]="modules" [formControl]="headerform.controls['title']"></quill-editor>
+										<!-- <editor apiKey="zcwi1f81304uers1lcszh0iq2lbhcaxl5cj6ez0v89wr25z3" initialValue="Top Platform to find the Best Employer"
+											[formControl]="headerform.controls['title']"></editor> -->
+									</div>
+									<div *ngIf="(headerform.controls.title.touched || headerform.controls.title.dirty) && headerform.controls.title.invalid && headerform.controls.title?.errors?.required  "
+										class="invalid">
+										*Please enter heading
+									</div>
+									<div *ngIf="(headerform.controls.title.touched || headerform.controls.title.dirty)  && headerform.controls.title?.errors?.maxlength  "
+										class="invalid">
+										*Maximum Length should be 200 characters
+									</div>
+									<div class="form-group">
+										<label>Section Image</label>
+										<div class="slider-video-cntnt">
+											<div class="prev-upld-img">
+												<!-- <img src="assets/img/home-img.png" class="img-fluid"> -->
+												<img [src]="headerform.controls['image'].value" class="img-fluid">
+												<div class="upload-imag text-center">
+													<button class="btn-primary btn  mt-3 position-relative">
+														<input type="file" name="" accept="image/*" class="img-input-upld"
+															(change)="onHeaderFormChange($event)">
+														Upload Image
+													</button>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div *ngIf="(headerform.controls.image.touched || headerform.controls.image.dirty) && headerform.controls.image.invalid && headerform.controls.image?.errors?.required"
+										class="invalid">
+										*Please upload image
+									</div>
+									<div *ngIf="headerform.controls.image.valid && headerform.controls.county?.errors?.required" class="invalid">
+										*Only images are allowed
+									</div>
+									<div class="edit-btns d-flex justify-content-end">
+										<button class="btn btn-primary mr-4" (click)="postHomePageContent('headerform')">Save</button>
+										<!-- <button class="btn btn-primary">Back</button> -->
+									</div>
+								</div>
+
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+<section class="home-header-sec">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="card">
+					<form [formGroup]="storyform">
+						<div class="manage-home-header">
+							<div class="card-header d-flex justify-content-between">
+								<strong>Our Story Section</strong>
+								<div class="slide-cs text-right">
+									<span class="mr-2">Visibility </span>
+									<mat-slide-toggle formControlName="is_visible" (change)="fun1($event)"></mat-slide-toggle>
+								</div>
+							</div>
+							<div class="card-body">
+
+								<div class="home-mng-form">
+									<div class="form-group">
+										<label>Title</label>
+										<input type="text" name="" class="form-control" value="testing Our story"
+											[formControl]="storyform.controls['title1']">
+									</div>
+									<div *ngIf="(storyform.controls.title1.touched || storyform.controls.title1.dirty) && storyform.controls.title1.invalid && storyform.controls.title1?.errors?.required  "
+										class="invalid">
+										*Please enter title
+									</div>
+									<div *ngIf="(storyform.controls.title1.touched || storyform.controls.title1.dirty)  && storyform.controls.title1?.errors?.maxlength  "
+										class="invalid">
+										*Maximum Length should be 50 characters
+									</div>
+									<div class="form-group">
+										<label>Description</label>
+										<quill-editor [modules]="modules" [formControl]="storyform.controls['description']"></quill-editor>
+										<!-- <editor apiKey="zcwi1f81304uers1lcszh0iq2lbhcaxl5cj6ez0v89wr25z3" [formControl]="storyform.controls['description']"> </editor> -->
+									</div>
+									<div *ngIf="(storyform.controls.description?.touched || storyform.controls.description.dirty) && storyform.controls.description.invalid && storyform.controls.description?.errors?.required  "
+										class="invalid">
+										*Please enter description
+									</div>
+									<div class="form-group">
+										<label>Section Video</label>
+										<div class="slider-video-cntnt">
+											<div class="video">
+												<iframe *ngIf="storyform.controls['video'].value" width="420"
+													height="315" [src]="storyform.controls['video'].value"
+													frameborder="0" allowfullscreen ></iframe>
+												<div class="upload-imag text-center">
+													<button class="btn-primary btn mt-3 position-relative">
+														<input type="file" name="" class="img-input-upld"
+															(change)="onStoryFormimageChange($event)" accept="video/*" >
+														Upload Video
+													</button>
+												</div>
+												<div *ngIf="(storyform.controls.video.touched || storyform.controls.video.dirty) && storyform.controls.video.invalid && storyform.controls.video?.errors?.required  "
+													class="invalid">
+													*Please upload video
+												</div>
+												<div *ngIf="storyform.controls.video.valid && storyform.controls.county?.errors?.required  "
+													class="invalid">
+													*Only videos are allowed
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="form-group">
+										<label>Posted By</label>
+										<input type="text" name="" class="form-control"
+											value=" testing Naren Chellappah"
+											[formControl]="storyform.controls['name']">
+									</div>
+									<div *ngIf="(storyform.controls.name.touched || storyform.controls.name.dirty) && storyform.controls.name.invalid && storyform.controls.name?.errors?.required  "
+										class="invalid">
+										*Please enter name
+									</div>
+									<div *ngIf="(storyform.controls.name.touched || storyform.controls.name.dirty)  && storyform.controls.name?.errors?.maxlength  "
+										class="invalid">
+										*Maximum Length should be 50 characters
+									</div>
+									<div class="form-group">
+										<label>Posted Position</label>
+										<input type="text" name="" class="form-control"
+											value=" testing Founder of Top Graduates"
+											[formControl]="storyform.controls['designation']">
+									</div>
+									<div *ngIf="(storyform.controls.designation.touched || storyform.controls.designation.dirty)  && storyform.controls.designation?.errors?.maxlength  "
+										class="invalid">
+										*Maximum Length should be 50 characters
+									</div>
+									<div *ngIf="(storyform.controls.designation.touched || storyform.controls.designation.dirty) && storyform.controls.designation.invalid && storyform.controls.designation?.errors?.required  "
+										class="invalid">
+										*Please enter designation
+									</div>
+									<div class="edit-btns d-flex justify-content-end">
+										<button class="btn btn-primary mr-4" (click)="postHomePageContent('storyform')">Save</button>
+										<!-- <button class="btn btn-primary">Back</button> -->
+									</div>
+								</div>
+
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+<section class="work-for-sec">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="card">
+					<form [formGroup]="curatedform">
+					<div class="manage-home-header">
+						<div class="card-header d-flex justify-content-between">
+							<strong>Curated Especially For You</strong>
+							<div class="slide-cs">
+								<span class="mr-2">Visibility </span>
+								<mat-slide-toggle formControlName="is_visible" (change)="fun2($event)"></mat-slide-toggle>
+							</div>
+						</div>
+						<div class="card-body">
+							
+								<div class="home-mng-form">
+									<div class="form-group">
+										<label>Heading</label>
+										<quill-editor [modules]="modules" [formControl]="curatedform.controls['heading']"></quill-editor>
+										<!-- <editor apiKey="zcwi1f81304uers1lcszh0iq2lbhcaxl5cj6ez0v89wr25z3" initialValue="Curated Especially For You" [innerHTML]=""
+											[formControl]="curatedform.controls['heading']"></editor> -->
+									</div>
+									<div *ngIf="(curatedform.controls.heading.touched || curatedform.controls.heading.dirty) && curatedform.controls.heading.invalid && curatedform.controls.heading?.errors?.required  "
+										class="invalid">
+										*Please enter heading
+									</div>
+									<div class="edit-btns d-flex justify-content-end">
+										<button class="btn btn-primary mr-4" (click)="postHomePageContent('curatedform')">Save</button>
+										<!-- <button class="btn btn-primary">Back</button> -->
+									</div>
+								</div>
+							
+						</div>
+					</div>
+				</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+<section class="work-for-sec">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="card">
+					<form [formGroup]="mainBenefitsForBoth">
+						<div class="manage-home-header">
+							<div class="card-header d-flex justify-content-between">
+								<strong>The Main Benefits For Both</strong>
+								<div class="slide-cs">
+									<span class="mr-2">Visibility </span>
+									<mat-slide-toggle formControlName="is_visible" (change)="fun3($event)"></mat-slide-toggle>
+								</div>
+							</div>
+							<div class="card-body">
+
+								<div class="home-mng-form">
+									<div class="form-group">
+										<label>Heading</label>
+										<input type="text" name="" class="form-control"
+											value="" formControlName="heading">
+									</div>
+									<div *ngIf="(mainBenefitsForBoth.controls.heading.touched || mainBenefitsForBoth.controls.heading.dirty) && mainBenefitsForBoth.controls.heading.invalid && mainBenefitsForBoth.controls.heading?.errors?.required  "
+										class="invalid">
+										*Please enter heading
+									</div>
+									<div *ngIf="(mainBenefitsForBoth.controls.heading.touched || mainBenefitsForBoth.controls.heading.dirty)  && mainBenefitsForBoth.controls.heading?.errors?.maxlength  "
+										class="invalid">
+										*Maximum Length should be 50 characters
+									</div>
+								</div>
+								<div class="card">
+									<div class="card-body p-0">
+										<div class="uppr_tabs">
+											<mat-tab-group>
+												<mat-tab label="Employers">
+
+													<div class="insid_tabs">
+														<ng-template matTabContent>
+															<form formGroupName="employerTab">
+																<div class="grad_card">
+																	<div class="grad_tab">
+																		
+																		<div class="form-group">
+																			<ng-container formArrayName="employerArray"
+																				*ngFor="let alias of mainBenefitsForBoth.controls['employerTab'].controls['employerArray'].controls; let i=index">
+																				<ng-container [formGroupName]="i">
+																					<div class="insid_tabs emp_home_page">
+                                                                                        <div class="slide-cs text-right">
+																							<span class="mr-2">Visibility </span>
+																							<mat-slide-toggle formControlName="is_visible" (change)="fun4($event)"></mat-slide-toggle>
+																						</div>
+
+																						<label>Tab
+																							Heading</label>
+																						<input type="text" name=""
+																							class="form-control"
+																							value=""
+																							formControlName="heading">
+
+																						<div *ngIf="employerArray.controls[i].controls['heading'].errors?.required  "
+																							class="invalid">
+																							*Please enter heading
+																						</div>
+																						<div *ngIf="employerArray.controls[i].controls['heading'].errors?.maxlength  "
+																							class="invalid">
+																							*Maximum Length should be 50 characters
+																						</div>
+																					</div>
+
+
+																					<div class="form-group">
+																						<label>Description</label>
+																						<textarea class="form-control"
+																							rows="4"
+																							formControlName="Description"></textarea>
+																						<div *ngIf="employerArray.controls[i].controls['Description'].errors?.required "
+																							class="invalid">
+																							*Please enter description
+																						</div>
+																						<div *ngIf="employerArray.controls[i].controls['Description'].errors?.maxlength  "
+																							class="invalid">
+																							*Maximum Length should be 500 characters
+																						</div>
+																					</div>
+
+																					<div class="form-group">
+																						<label>Tab Image</label>
+																						<div class="upld-body">
+																							<div
+																								class="prev-upld-img mb-3">
+																								<img [src]="employerArray.controls[i].controls['image']?employerArray.controls[i].controls['image'].value:'assets/img/etabimg1.png'"
+																									class="img-fluid">
+																								<div *ngIf="employerArray.controls[i].controls['image'].errors?.required "
+																									class="invalid">
+																									*Please select image
+																								</div>
+                                                                                                <div *ngIf="employerArray.controls[i]?.controls.county?.errors" class="invalid">
+																									*Only images are allowed
+																								</div>
+																								<div
+																									class="upload-imag text-center">
+																									<button
+																										class="btn-primary btn mt-3 position-relative">
+																										<input
+																											type="file"
+																											name=""
+																											class="img-input-upld"
+																											(change)="onEmployerChangeImage($event,i)">
+																										Upload Image
+																									</button>
+																								</div>
+
+																							</div>
+																						</div>
+																					</div>
+																				</ng-container>
+																			</ng-container>
+																			<!-- <div class="form-group">
+																					<label>Tab2 Heading</label>
+																					<input type="text" name=""
+																						class="form-control" value=""
+																						[formControl]="employerform.controls['heading_tab2']">
+																				</div>
+																				<div *ngIf="(employerform.touched || employerform.dirty) && employerform.invalid && employerform.controls.heading_tab2.errors?.required  "
+																					class="invalid">
+																					*Please enter heading
+																				</div>
+																				<div class="form-group">
+																					<label>Description</label>
+																					<textarea class="form-control"
+																						rows="4"
+																						[formControl]="employerform.controls['description_tab2']"></textarea>
+																				</div>
+																				<div *ngIf="(employerform.touched || employerform.dirty) && employerform.invalid && employerform.controls.description_tab2.errors?.required  "
+																					class="invalid">
+																					*Please enter description
+																				</div>
+																				<div class="form-group">
+																					<label>Tab2 Image</label>
+																					<div class="upld-body">
+																						<div class="prev-upld-img mb-3">
+																							<img src="assets/img/etabimg2.png"
+																								class="img-fluid">
+																							<div
+																								class="upload-imag text-center">
+																								<button
+																									class="btn-primary btn mt-3 position-relative">
+																									<input type="file"
+																										name=""
+																										class="img-input-upld"
+																										[formControl]="employerform.controls['image_tab2']">
+																									Upload Image
+																								</button>
+																							</div>
+																							<div *ngIf="(employerform.touched || employerform.dirty) && employerform.invalid && employerform.controls.image_tab2.errors?.required  "
+																								class="invalid">
+																								*Please upload image
+																							</div>
+																						</div>
+																					</div>
+																				</div>
+
+																				<div class="form-group">
+																					<label>Tab3 Heading</label>
+																					<input type="text" name=""
+																						class="form-control" value=""
+																						[formControl]="employerform.controls['heading_tab3']">
+																				</div>
+																				<div *ngIf="(employerform.touched || employerform.dirty) && employerform.invalid && employerform.controls.heading_tab3.errors?.required  "
+																					class="invalid">
+																					*Please enter heading
+																				</div>
+																				<div class="form-group">
+																					<label>Description</label>
+																					<textarea class="form-control"
+																						rows="4"
+																						[formControl]="employerform.controls['description_tab3']"></textarea>
+																				</div>
+																				<div *ngIf="(employerform.touched || employerform.dirty) && employerform.invalid && employerform.controls.description_tab3.errors?.required  "
+																					class="invalid">
+																					*Please enter description
+																				</div>
+																				<div class="form-group">
+																					<label>Tab3 Image</label>
+																					<div class="upld-body">
+																						<div class="prev-upld-img mb-3">
+																							<img src="assets/img/etabimg3.png"
+																								class="img-fluid">
+																							<div
+																								class="upload-imag text-center">
+																								<button
+																									class="btn-primary btn mt-3 position-relative">
+																									<input type="file"
+																										name=""
+																										class="img-input-upld"
+																										[formControl]="employerform.controls['image_tab3']">
+																									Upload Image
+																								</button>
+																							</div>
+																							<div *ngIf="(employerform.touched || employerform.dirty) && employerform.invalid && employerform.controls.image_tab3.errors?.required  "
+																								class="invalid">
+																								*Please upload image
+																							</div>
+																						</div>
+																					</div>
+																				</div> -->
+																			<div
+																				class="home-manage-btns edit-btns d-flex justify-content-end">
+																				<button class="btn btn-primary mr-4"
+																				(click)="postHomePageContent('mainBenefitsForBoth','employerTab')">Save</button>
+																				<!-- <button class="btn btn-primary">Cancel</button> -->
+																			</div>
+
+																		</div>
+
+
+																	</div>
+																</div>
+															</form>
+														</ng-template>
+													</div>
+
+												</mat-tab>
+												<mat-tab label="Graduates">
+													<div class="insid_tabs">
+														<ng-template matTabContent>
+															<form formGroupName="graduateTab">
+																<div class="grad_card">
+																	<div class="grad_tab">
+																		
+																		<div class="insid_tabs emp_home_page">
+																			<ng-container formArrayName="graduateArray"
+																				*ngFor="let alias of mainBenefitsForBoth.controls['graduateTab'].controls['graduateArray'].controls; let i=index">
+																				<ng-container [formGroupName]="i">
+																					<div class="slide-cs text-right">
+																						<span class="mr-2">Visibility </span>
+																						<mat-slide-toggle formControlName="is_visible" (change)="fun5($event)"></mat-slide-toggle>
+																					</div>
+																					<div class="form-group">
+
+																						<label>Tab Heading</label>
+																						<input type="text" name=""
+																							class="form-control"
+																							value=""
+																							formControlName="heading">
+																					</div>
+																					<div *ngIf="graduateArray.controls[i].controls['heading'].errors?.required  "
+																						class="invalid">
+																						*Please enter heading
+																					</div>
+																					<div *ngIf="graduateArray.controls[i].controls['heading'].errors?.maxlength  "
+																						class="invalid">
+																						*Maximum Length should be 50 characters
+																					</div>
+
+																					<div class="form-group">
+																						<label>Description</label>
+																						<textarea class="form-control"
+																							rows="4"
+																							formControlName="Description"></textarea>
+																					</div>
+																					<div *ngIf="graduateArray.controls[i].controls['Description'].errors?.required "
+																						class="invalid">
+																						*Please enter description
+																					</div>
+																					<div *ngIf="graduateArray.controls[i].controls['Description'].errors?.maxlength  "
+																						class="invalid">
+																						*Maximum Length should be 500 characters
+																					</div>
+
+																					<div class="form-group">
+																						<label>Tab Image</label>
+																						<div class="upld-body">
+																							<div
+																								class="prev-upld-img mb-3">
+																								<img [src]="graduateArray.controls[i].controls['image']?graduateArray.controls[i].controls['image'].value:'assets/img/etabimg1.png'"
+																									class="img-fluid">
+																								<div *ngIf="graduateArray.controls[i].controls['image'].errors?.required "
+																									class="invalid">
+																									*Please select image
+
+																								</div>
+																								<div *ngIf="graduateArray.controls[i]?.controls.county?.errors" class="invalid">
+																									*Only images are allowed
+																								</div>
+																								<div
+																									class="upload-imag text-center">
+																									<button
+																										class="btn-primary btn mt-3 position-relative">
+																										<input
+																											type="file"
+																											name=""
+																											class="img-input-upld"
+																											(change)="onGraduatesChange($event,i)"
+																											>
+																										Upload Image
+																									</button>
+																								</div>
+
+																							</div>
+																						</div>
+																					</div>
+																				</ng-container>
+																			</ng-container>
+																			<!-- 
+																				<div class="form-group">
+																					<label>Tab2 Heading</label>
+																					<input type="text" name=""
+																						class="form-control" value=""
+																						[formControl]="graduateform.controls['grad_heading_tab2']">
+																				</div>
+																				<div *ngIf="(graduateform.touched || graduateform.dirty) && graduateform.invalid && graduateform.controls.grad_heading_tab2?.errors?.required  "
+																					class="invalid">
+																					*Please enter title
+																				</div>
+																				<div class="form-group">
+																					<label>Description</label>
+																					<textarea class="form-control"
+																						rows="4"
+																						[formControl]="graduateform.controls['grad_description_tab2']"></textarea>
+																				</div>
+																				<div *ngIf="(graduateform.touched || graduateform.dirty) && graduateform.invalid && graduateform.controls.grad_description_tab2?.errors?.required  "
+																					class="invalid">
+																					*Please enter description
+																				</div>
+																				<div class="form-group">
+																					<label>Tab2 Image</label>
+																					<div class="upld-body">
+																						<div class="prev-upld-img mb-3">
+																							<img src="assets/img/gtabimg2.png"
+																								class="img-fluid">
+																							<div
+																								class="upload-imag text-center">
+																								<button
+																									class="btn-primary btn mt-3 position-relative">
+																									<input type="file"
+																										name=""
+																										class="img-input-upld"
+																										[formControl]="graduateform.controls['grad_image_tab2']">
+																									Upload Image
+																								</button>
+																							</div>
+																							<div *ngIf="(graduateform.touched || graduateform.dirty) && graduateform.invalid && graduateform.controls.grad_image_tab2?.errors?.required  "
+																								class="invalid">
+																								*Please upload image
+																							</div>
+																						</div>
+																					</div>
+																				</div>
+
+																				<div class="form-group">
+																					<label>Tab3 Heading</label>
+																					<input type="text" name=""
+																						class="form-control"
+																						[formControl]="graduateform.controls['grad_heading_tab3']">
+																				</div>
+																				<div *ngIf="(graduateform.touched || graduateform.dirty) && graduateform.invalid && graduateform.controls.grad_heading_tab3?.errors?.required  "
+																					class="invalid">
+																					*Please enter title
+																				</div>
+																				<div class="form-group">
+																					<label>Description</label>
+																					<textarea class="form-control"
+																						rows="4"
+																						[formControl]="graduateform.controls['grad_description_tab3']"></textarea>
+																				</div>
+																				<div *ngIf="(graduateform.touched || graduateform.dirty) && graduateform.invalid && graduateform.controls.grad_description_tab3?.errors?.required  "
+																					class="invalid">
+																					*Please enter description
+																				</div>
+																				<div class="form-group">
+																					<label>Tab3 Image</label>
+																					<div class="upld-body">
+																						<div class="prev-upld-img mb-3">
+																							<img src="assets/img/gtabimg3.png"
+																								class="img-fluid">
+																							<div
+																								class="upload-imag text-center">
+																								<button
+																									class="btn-primary btn mt-3 position-relative">
+																									<input type="file"
+																										name=""
+																										class="img-input-upld"
+																										[formControl]="graduateform.controls['grad_image_tab3']">
+																									Upload Image
+																								</button>
+																							</div>
+																							<div *ngIf="(graduateform.touched || graduateform.dirty) && graduateform.invalid && graduateform.controls.grad_image_tab3?.errors?.required  "
+																								class="invalid">
+																								*Please upload image
+																							</div>
+																						</div>
+																					</div>
+																				</div> -->
+
+																			<div
+																				class="home-manage-btns edit-btns d-flex justify-content-end">
+																				<button
+																					class="btn btn-primary mr-4" (click)="postHomePageContent('mainBenefitsForBoth','graduateTab')">Save</button>
+																				<!-- <button class="btn btn-primary">Cancel</button> -->
+																			</div>
+
+																		</div>
+																	</div>
+																</div>
+															</form>
+														</ng-template>
+													</div>
+												</mat-tab>
+											</mat-tab-group>
+										</div>
+									</div>
+								</div>
+
+
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+<section class="home-header-sec">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="card">
+					<form [formGroup]="Companies">
+					<div class="manage-home-header">
+						<div class="card-header d-flex justify-content-between">
+							<strong>These Companies Help..</strong>
+							<div class="slide-cs">
+								<span class="mr-2">Visibility </span>
+								<mat-slide-toggle formControlName="is_visible" (change)="fun6($event)"></mat-slide-toggle>
+							</div>
+						</div>
+						<div class="card-body">
+							
+								<div class="home-mng-form">
+									<div class="form-group">
+										<label>Heading</label>
+										<input type="text" name="" class="form-control"
+											value=""
+											formControlName="heading">
+									</div>
+									<div *ngIf="(Companies.controls.heading.touched || Companies.controls.heading.dirty) && Companies.controls.heading.invalid && Companies.controls.heading?.errors?.required  "
+										class="invalid">
+										*Please enter heading
+									</div>
+									<div *ngIf="(Companies.controls.heading.touched || Companies.controls.heading.dirty)  && Companies.controls.heading?.errors?.maxlength  "
+										class="invalid">
+										*Maximum Length should be 100 characters
+									</div>
+									<div class="form-group">
+										<label>Company's Logo</label>
+										<div class="enable-organise">
+											<ngx-dropzone  (change)="onSelectLogo($event)">
+												<ngx-dropzone-label>Drop your files here!</ngx-dropzone-label>
+												<ngx-dropzone-preview *ngFor="let f of logos;let i=index" [removable]="true"
+													(removed)="onRemove(i)">
+													<ngx-dropzone-label>{{ f.name }} ({{ f.type }})</ngx-dropzone-label>
+												</ngx-dropzone-preview>
+											</ngx-dropzone>
+										</div>
+										<div class="cmp_logos">
+											<ng-container *ngFor=" let logo of logosUrl">
+												<img [src]="logo" class="img-fluid">
+											</ng-container>
+											
+											<!-- <img src="assets/img/logo2.png" class="img-fluid">
+											<img src="assets/img/logo3.png" class="img-fluid">
+											<img src="assets/img/logo4.png" class="img-fluid">
+											<img src="assets/img/logo5.png" class="img-fluid">
+											<img src="assets/img/logo6.png" class="img-fluid">
+											<img src="assets/img/logo7.png" class="img-fluid"> -->
+										</div>
+									</div>
+
+									<div class="form-group">
+										<label>Section Image</label>
+										<div class="upld-body">
+											<div
+												class="prev-upld-img mb-3">
+												<img [src]="Companies.controls['image']?Companies.controls['image'].value:'assets/img/etabimg1.png'"
+													class="img-fluid">
+												<div *ngIf="Companies.controls['image'].errors?.required "
+													class="invalid">
+													*Please select image
+												</div>
+                                                <div *ngIf="Companies.controls['county'].errors?.required "
+													class="invalid">
+													*Only images are allowed
+												</div>
+												<div
+													class="upload-imag text-center">
+													<button
+														class="btn-primary btn mt-3 position-relative">
+														<input
+															type="file"
+															name=""
+															class="img-input-upld"
+															(change)="onCompaniesChangeImage($event)">
+														Upload Image
+													</button>
+												</div>
+
+											</div>
+										</div>
+									</div>
+									<div class="edit-btns d-flex justify-content-end">
+										<button class="btn btn-primary mr-4" (click)="postHomePageContent('Companies')">Save</button>
+										<!-- <button class="btn btn-primary">Back</button> -->
+									</div>
+								</div>
+							
+						</div>
+					</div>
+				</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+
+<section class="add-slider-item">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="card">
+					<div class="manage-home-header">
+						<form [formGroup]="successform">
+							<div class="card-header  d-flex justify-content-between">
+								<strong>Our Success Stories</strong>
+								<div class="slide-cs">
+									<span class="mr-2">Visibility </span>
+									<mat-slide-toggle formControlName="is_visible" (change)="fun7($event)"></mat-slide-toggle>
+								</div>
+							</div>
+							<div class="card-body">
+								
+									<div class="home-mng-form">
+										<div class="form-group">
+											<label>Heading</label>
+											<input type="text" name="" class="form-control" value=""
+												formControlName="heading">
+										</div>
+										<div *ngIf="(successform.touched || successform.dirty) && successform.invalid && successform.controls['heading'].errors?.required  "
+											class="invalid">
+											*Please enter heading
+										</div>
+										<div *ngIf="(successform.controls.heading.touched || successform.controls.heading.dirty)  && successform.controls.heading?.errors?.maxlength  "
+											class="invalid">
+											*Maximum Length should be 50 characters
+										</div>
+										<div class="form-group">
+											<label>Slider Video</label>
+											<div class="slider-video-cntnt">
+												<div class="video">
+
+												<iframe *ngIf="successform.controls['video'].value" 
+														width="420"
+														height="315" 
+														[src]="successform.controls['video'].value"
+														frameborder="0" 
+														allowfullscreen>
+												</iframe>
+													<div class="upload-imag text-center">
+														<button class="btn-primary btn mt-3 position-relative">
+															<input type="file" name="" class="img-input-upld"
+																(change)="onSelectVideo($event)">
+															Upload Video
+														</button>
+													</div>
+													<div *ngIf="(successform.touched || successform.dirty) && successform.invalid && successform.controls['video']?.errors?.required  "
+														class="invalid">
+														*Please upload video
+													</div>
+													<div *ngIf="successform.controls.video.valid && successform.controls.county?.errors?.required  "
+														class="invalid">
+														*Only videos are allowed
+													</div>
+												</div>
+											</div>
+										</div>
+										<ng-container formArrayName="discriptionArray"
+											*ngFor="let alias of successform.controls; let i=index">
+											<div class="form-group">
+												<label>Slider1: Description</label>
+												<quill-editor [modules]="modules" [formControlName]="i"></quill-editor>
+												<!-- <editor apiKey="zcwi1f81304uers1lcszh0iq2lbhcaxl5cj6ez0v89wr25z3" [formControlName]="i"></editor> -->
+											</div>
+											<div *ngIf="discriptionArray.controls[i].errors?.required " class="invalid">
+												*Please enter description
+											</div>
+										</ng-container>
+
+										<!-- <ng-container formArrayName="discriptionArray"
+  *ngFor="let alias of discriptionArray.controls; let i = index">
+  <div class="form-group">
+    <label>Slider1: Description</label>
+    <quill-editor [modules]="modules" [formControlName]="i"></quill-editor>
+  </div>
+  <div *ngIf="discriptionArray.controls[i].errors?.required" class="invalid">
+    *Please enter description
+  </div>
+</ng-container> -->
+
+										<!-- <div class="form-group">
+											<label>Slider2: Description</label>
+											<editor [formControl]="successform.controls['sliderdesc2']"></editor>
+										</div>
+										<div *ngIf="(successform.touched || successform.dirty) && successform.invalid && successform.controls.sliderdesc2?.errors?.required  "
+											class="invalid">
+											*Please enter description
+										</div>
+										<div class="form-group">
+											<label>Slider3: Description</label>
+											<editor [formControl]="successform.controls['sliderdesc3']"></editor>
+										</div>
+										<div *ngIf="(successform.touched || successform.dirty) && successform.invalid && successform.controls.sliderdesc3?.errors?.required  "
+											class="invalid">
+											*Please enter description
+										</div> -->
+										<div class="edit-btns d-flex justify-content-end">
+											<button class="btn btn-primary mr-4" (click)="postHomePageContent('successform')">Save</button>
+											<!-- <button class="btn btn-primary">Back</button> -->
+										</div>
+									</div>
+								
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+<section class="home-header-sec">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="card">
+					<div class="manage-home-header">
+						<form [formGroup]="newRegister">
+							<div class="card-header d-flex justify-content-between">
+								<strong>Register Now Section</strong>
+								<div class="slide-cs">
+									<span class="mr-2">Visibility </span>
+									<mat-slide-toggle formControlName="is_visible" (change)="fun8($event)"></mat-slide-toggle>
+								</div>
+							</div>
+							<div class="card-body">
+
+								<div class="grad-body">
+									<div class="home-mng-form">
+										<div class="form-group">
+											<label>Text</label>
+											<input type="text" name="" class="form-control" value=""
+												formControlName="text">
+												<div *ngIf="(newRegister.touched || newRegister.dirty) && newRegister.invalid && newRegister.controls.text?.errors?.required  "
+												class="invalid">
+												   *Please enter text
+											    </div>
+												<div *ngIf="(newRegister.controls.text.touched || newRegister.controls.text.dirty)  && newRegister.controls.text?.errors?.maxlength  "
+													class="invalid">
+													*Maximum Length should be 50 characters
+												</div>
+										</div>
+										<div class="form-group">
+											<label>Heading</label>
+											<input type="text" name="" class="form-control" value=""
+											formControlName="heading"
+											>
+											<div *ngIf="(newRegister.touched || newRegister.dirty) && newRegister.invalid && newRegister.controls.heading?.errors?.required  "
+											class="invalid">
+											   *Please enter heading
+										    </div>
+											<div *ngIf="(newRegister.controls.heading.touched || newRegister.controls.heading.dirty)  && newRegister.controls.heading?.errors?.maxlength  "
+												class="invalid">
+												*Maximum Length should be 50 characters
+											</div>
+										</div>
+										<div class="form-group">
+											<label>Description</label>
+											<textarea class="form-control" rows="4"
+											formControlName="description"></textarea>
+											<div *ngIf="(newRegister.touched || newRegister.dirty) && newRegister.invalid && newRegister.controls.description?.errors?.required  "
+											class="invalid">
+											   *Please enter description
+										    </div>
+											<div *ngIf="(newRegister.controls.description.touched || newRegister.controls.description.dirty)  && newRegister.controls.description?.errors?.maxlength  "
+												class="invalid">
+												*Maximum Length should be 500 characters
+											</div>
+										</div>
+										<div class="form-group">
+											<label>Graduate Image</label>
+											<div class="register-tday">
+												<div class="upld-body">
+													<div class="prev-upld-img  mb-3">
+														<img [src]="newRegister.controls['image'].value"
+															class="img-fluid">
+														<div class="upload-imag text-center">
+															<button class="btn-primary btn mt-3 position-relative">
+																<input type="file" name="" class="img-input-upld"
+																	(change)="setHeadingImage($event)">
+																Upload Image
+															</button>
+															<div *ngIf="(newRegister.touched || newRegister.dirty) && newRegister.invalid && newRegister.controls.description?.errors?.required"
+																class="invalid">
+																*Please upload image
+															</div>
+															<div *ngIf="newRegister?.controls['county'].errors?.required "
+																class="invalid">
+																*Only images are allowed
+															</div>
+														</div>
+
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="edit-btns d-flex justify-content-end">
+									<button class="btn btn-primary mr-4" (click)="postHomePageContent('newRegister')">Save</button>
+									<!-- <button class="btn btn-primary">Back</button> -->
+								</div>
+
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>

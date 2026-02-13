@@ -1,0 +1,771 @@
+<div class="page_header">
+    <a class="back_Link" (click)="goBack()">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+            <path d="M19 12H5" stroke="#464BA8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M12 19L5 12L12 5" stroke="#464BA8" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round" />
+        </svg>
+        Back to Form Editor</a>
+    <div class="page_header_container">
+        <div>
+            <h4>{{selectedForm?.title}}</h4>
+            <p>Conditional Logic</p>
+        </div>
+    </div>
+
+    <div class="row">
+         <div class="col-md-12 text-right searchbar-end">
+            <div class="d-inline-flex align-items-center">
+                <div class="search-container">
+                    <svg class="icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20"
+                        fill="none">
+                        <path
+                            d="M9.16667 15.8333C12.8486 15.8333 15.8333 12.8486 15.8333 9.16667C15.8333 5.48477 12.8486 2.5 9.16667 2.5C5.48477 2.5 2.5 5.48477 2.5 9.16667C2.5 12.8486 5.48477 15.8333 9.16667 15.8333Z"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                        <path d="M17.5 17.5L13.875 13.875" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                            stroke-linejoin="round" />
+                    </svg>
+                     <form autocomplete="off">
+                           <input type="text" class="form-control" placeholder="Search Keywords" [(ngModel)]="searchKeyword"  name="searchtask"
+                         (input)="getCompaniesList()" autocomplete="my-task-search" style="height: 44px;">
+                     </form>
+                 
+                </div>
+                <!-- <button mat-button class="theme_btn btn_primary ml-4" data-toggle="modal" data-target="#filter">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="23" viewBox="0 0 24 23" fill="none">
+                        <path d="M22 3.10669H2L10 11.9629V18.0854L14 19.9578V11.9629L22 3.10669Z" stroke="white"
+                            stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                    Filters
+                </button> -->
+            </div>
+            &nbsp;&nbsp;
+              <button mat-button class="theme_btn btn_primary" (click)="editLogicdata=null;addLogicForm.show()"><mat-icon>add</mat-icon> Create Logic</button>
+        </div>
+    </div>
+</div>
+<section>
+    <div *ngIf="companiesList.length==0 && !searchKeyword" class="d-flex align-items-center justify-content-between gap-4 flex-column">
+        <svg width="126" height="102" viewBox="0 0 126 102" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <g clip-path="url(#clip0_1510_119509)">
+        <path d="M95.371 100.666L11.656 100.696C7.45041 100.697 3.68314 98.508 1.57906 94.8402C0.526894 93.0061 0.000693685 90.9941 6.85071e-07 88.9817C-0.000692315 86.9695 0.52438 84.9569 1.57504 83.1223L43.4059 6.42095C45.5077 2.75144 49.2735 0.560059 53.4791 0.558594C57.6848 0.55713 61.452 2.74588 63.5564 6.41393L105.445 83.0956C106.495 84.9249 107.02 86.9345 107.02 88.9457C107.02 90.9568 106.495 92.9692 105.444 94.804C103.342 98.4733 99.5766 100.665 95.371 100.666ZM1.0523 88.9803C1.05217 90.812 10.2898 86.865 11.2468 88.5334C13.1611 91.8702 7.82944 99.6393 11.6557 99.638C11.6557 99.638 102.623 97.6137 104.534 94.2756C105.49 92.6065 105.968 90.7754 105.967 88.9447C105.967 87.1141 105.488 85.2836 104.531 83.6152L62.6416 6.93349C60.7327 3.6062 57.3057 1.61485 53.4795 1.61619C49.655 1.61752 1.05245 87.1483 1.0523 88.9803Z" fill="#3F3D56"/>
+        <path d="M77.9031 83.7511C99.0694 83.7511 116.228 66.4683 116.228 45.149C116.228 23.8296 99.0694 6.54688 77.9031 6.54688C56.7368 6.54688 39.5781 23.8296 39.5781 45.149C39.5781 66.4683 56.7368 83.7511 77.9031 83.7511Z" fill="#464BA8"/>
+        <path d="M76.4827 53.5585L69.6851 23.965L75.0264 22.8325L80.6501 52.6749L76.4827 53.5585ZM81.0383 64.798C80.1383 64.9888 79.2902 64.8415 78.4941 64.3561C77.7289 63.8232 77.2522 63.1065 77.064 62.206C76.8758 61.3054 77.0293 60.4755 77.5244 59.7163C78.0587 58.9488 78.7759 58.4697 79.6759 58.2788C80.5759 58.088 81.4044 58.2395 82.1614 58.7332C82.9184 59.2269 83.391 59.9241 83.5792 60.8246C83.7674 61.7252 83.618 62.5746 83.131 63.373C82.6359 64.1322 81.9383 64.6072 81.0383 64.798Z" fill="white"/>
+        </g>
+        <defs>
+        <clipPath id="clip0_1510_119509">
+        <rect width="126" height="101" fill="white" transform="translate(0 0.5)"/>
+        </clipPath>
+        </defs>
+        </svg>
+        <p class="no-p">
+            This form currently doesn’t have any Conditional Logic applied!<br />
+You can begin by clicking the Create Logic button on the top right.
+        </p>
+    </div>
+    <div *ngIf="companiesList.length==0 && searchKeyword" class="d-flex align-items-center justify-content-between gap-4 flex-column">
+        <svg width="126" height="102" viewBox="0 0 126 102" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <g clip-path="url(#clip0_1510_119509)">
+        <path d="M95.371 100.666L11.656 100.696C7.45041 100.697 3.68314 98.508 1.57906 94.8402C0.526894 93.0061 0.000693685 90.9941 6.85071e-07 88.9817C-0.000692315 86.9695 0.52438 84.9569 1.57504 83.1223L43.4059 6.42095C45.5077 2.75144 49.2735 0.560059 53.4791 0.558594C57.6848 0.55713 61.452 2.74588 63.5564 6.41393L105.445 83.0956C106.495 84.9249 107.02 86.9345 107.02 88.9457C107.02 90.9568 106.495 92.9692 105.444 94.804C103.342 98.4733 99.5766 100.665 95.371 100.666ZM1.0523 88.9803C1.05217 90.812 10.2898 86.865 11.2468 88.5334C13.1611 91.8702 7.82944 99.6393 11.6557 99.638C11.6557 99.638 102.623 97.6137 104.534 94.2756C105.49 92.6065 105.968 90.7754 105.967 88.9447C105.967 87.1141 105.488 85.2836 104.531 83.6152L62.6416 6.93349C60.7327 3.6062 57.3057 1.61485 53.4795 1.61619C49.655 1.61752 1.05245 87.1483 1.0523 88.9803Z" fill="#3F3D56"/>
+        <path d="M77.9031 83.7511C99.0694 83.7511 116.228 66.4683 116.228 45.149C116.228 23.8296 99.0694 6.54688 77.9031 6.54688C56.7368 6.54688 39.5781 23.8296 39.5781 45.149C39.5781 66.4683 56.7368 83.7511 77.9031 83.7511Z" fill="#464BA8"/>
+        <path d="M76.4827 53.5585L69.6851 23.965L75.0264 22.8325L80.6501 52.6749L76.4827 53.5585ZM81.0383 64.798C80.1383 64.9888 79.2902 64.8415 78.4941 64.3561C77.7289 63.8232 77.2522 63.1065 77.064 62.206C76.8758 61.3054 77.0293 60.4755 77.5244 59.7163C78.0587 58.9488 78.7759 58.4697 79.6759 58.2788C80.5759 58.088 81.4044 58.2395 82.1614 58.7332C82.9184 59.2269 83.391 59.9241 83.5792 60.8246C83.7674 61.7252 83.618 62.5746 83.131 63.373C82.6359 64.1322 81.9383 64.6072 81.0383 64.798Z" fill="white"/>
+        </g>
+        <defs>
+        <clipPath id="clip0_1510_119509">
+        <rect width="126" height="101" fill="white" transform="translate(0 0.5)"/>
+        </clipPath>
+        </defs>
+        </svg>
+        <p class="no-p">
+            We couldn’t find anything that matches your search. Please try a different keyword.
+        </p>
+    </div>
+    <ng-container *ngIf="companiesList.length>0">
+        <div class="table-responsive">
+            <table mat-table [dataSource]="companiesList" matSort #companiesTbSort="matSort" class="ch_table">
+                <!-- Company Name Column -->
+                <ng-container matColumnDef="Section" sticky>
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Page</th>
+                    <td mat-cell *matCellDef="let row" class="text-capitalize">
+                        {{ row?.page_type }}
+                    </td>
+                </ng-container>
+                <!-- Company Code Column -->
+                <ng-container matColumnDef="FieldName">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header="field_name">Field Name</th>
+                    <td mat-cell *matCellDef="let row" class="text-capitalize">
+                        {{ row.field_name }}
+                    </td>
+                </ng-container>
+
+                <!-- Vacancies Group column -->
+                <ng-container matColumnDef="FieldType">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header="type">
+                        Field Type
+                    </th>
+                    <td mat-cell *matCellDef="let row" class="position-relative text-capitalize">
+                         {{ row?.type == 'single' ? 'Single Line' : row?.type == 'radio' ? 'Radio Button' : row?.type== 'likert' ? 'Likert Scale': row?.type == 'multi' ? 'Multi Line':row?.type }}
+                    </td>
+                </ng-container>
+
+                <ng-container matColumnDef="IS">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header="is">IS</th>
+                    <td mat-cell *matCellDef="let row" class="text-capitalize">
+                      {{ getLabel(row?.type, row?.is, row) }}
+                    </td>
+                </ng-container>
+
+                <!-- Location Column -->
+                <ng-container matColumnDef="Value">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header="value">Value</th>
+                    <td mat-cell *matCellDef="let row" class="text-capitalize">
+                       <!-- {{ row?.type === 'date' ? (row?.value | date:'dd/MM/yyyy') : (row?.value ? row?.value : row?.and_number) }} -->
+{{ formatRowValue(row) }}
+                    </td>
+                </ng-container>
+
+                <!-- Action column -->
+                <ng-container matColumnDef="Action" stickyEnd>
+                    <th mat-header-cell *matHeaderCellDef>Options</th>
+                    <td mat-cell *matCellDef="let row">
+                        <button mat-icon-button [matMenuTriggerFor]="menu" class="td-btn">
+                            <mat-icon>more_horizantal</mat-icon>
+                        </button>
+                        <mat-menu #menu="matMenu" class="td-menu">
+                            <a mat-menu-item (click)="editLogic(row)">
+                                <span>Edit</span>
+                            </a>
+
+                            <a mat-menu-item (click)="editLogicdata=row;removeLogicModel.show()">
+                                <span class="item-danger">Remove Logic</span>
+                            </a>
+                        </mat-menu>
+                    </td>
+                </ng-container>
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+            </table>
+        </div>
+        <app-paginator [paginationObj]="paginationObj" (pagination)="getPaginationData($event)"></app-paginator>
+    </ng-container>
+</section>
+
+<!-- reminder to Staff popup -->
+<div bsModal #addLogicForm="bs-modal"  class="modal fade bsModal ch_modal" id="reminderToStaffCompanies" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static" 
+     data-bs-keyboard="false">
+    <div class="modal-dialog modal-dialog-centered" style="max-width: 700px" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title" id="exampleModalLabel">{{editLogicdata?._id?'Update':'Create'}} Conditional Logic</h2>
+                <button mat-icon-button type="button" class="close" (click)="addLogicForm.hide();ngOnInit()" aria-label="Close">
+                    <mat-icon>close</mat-icon>
+                </button>
+            </div>
+            <form [formGroup]="logicForm">
+                <div class="modal-body pt-3">
+                    <div class="row form-one">
+                        <div class="col-md-5" *ngIf="selectedForm?.type=='multi_step'">
+                            <div class="form-group">
+                                <label>Form Page</label>
+                                   <ng-select class="select_ng_custom ng-value-size"
+                                        [searchable]="true"
+                                        [multiple]="false"
+                                        [clearable]="false"
+                                        placeholder="Search"
+                                        formControlName="page_type" (change)="onPageTypeChange($event)">
+
+                                <ng-option [value]="field.name" *ngFor="let field of  selectedForm?.widgets?.values">
+                                      {{ field.name }}
+                                </ng-option>
+
+                                <!-- Selected Value Template -->
+                                <ng-template ng-label-tmp let-item="item">
+                                    {{ item }}
+                                </ng-template>
+
+                                </ng-select>
+
+
+                            </div>
+                        </div>
+
+                        <div class="col-md-7" *ngIf="selectedForm?.type=='multi_step'">
+                            <div class="form-group">
+                                <label>Field Name</label>
+                                   <ng-select class="select_ng_custom ng-value-size"
+                                        [searchable]="true"
+                                        [multiple]="false"
+                                        [clearable]="false"
+                                        placeholder="Search"
+                                        formControlName="field_name" (change)="setType()">
+
+                                    <ng-option [value]="field.name" *ngFor="let field of fieldList">
+                                        <div class="d-flex justify-content-between align-items-center w-100">
+                                        <div class="left-text" style="width:70%; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">
+                                            {{ field.name }}
+                                        </div>
+                                        <div class="right-text span-right text-end" style="width:30%; text-align:right;">
+                                            {{ field.id == 'single' ? 'Single Line' : field.id == 'radio' ? 'Radio Button' : field.id == 'likert' ? 'Likert Scale': field.id == 'multi' ? 'Multi Line':field.id }}
+                                        </div>
+                                        </div>
+                                    </ng-option>
+
+                                    <!-- Selected Value Template -->
+                                    <ng-template ng-label-tmp let-item="item">
+                                        {{ item }}
+                                    </ng-template>
+
+                                </ng-select>
+
+
+                            </div>
+                        </div>
+
+                        <div class="col-md-12"  *ngIf="selectedForm?.type!='multi_step'">
+                            <div class="form-group">
+                                <label>Field Name</label>
+                                   <ng-select class="select_ng_custom ng-value-size"
+                                        [searchable]="true"
+                                        [multiple]="false"
+                                        [clearable]="false"
+                                        placeholder="Search"
+                                        formControlName="field_name" (change)="setType()">
+
+                                <ng-option [value]="field.name" *ngFor="let field of fieldList">
+                                    <div class="d-flex justify-content-between align-items-center w-100">
+                                    <div class="left-text" style="width:70%; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">
+                                        {{ field.name }}
+                                    </div>
+                                    <div class="right-text span-right text-end" style="width:30%; text-align:right;">
+                                        {{ field.id == 'single' ? 'Single Line' : field.id == 'radio' ? 'Radio Button' : field.id == 'likert' ? 'Likert Scale': field.id == 'multi' ? 'Multi Line':field.id }}
+                                    </div>
+                                    </div>
+                                </ng-option>
+
+                                <!-- Selected Value Template -->
+                                <ng-template ng-label-tmp let-item="item">
+                                    {{ item }}
+                                </ng-template>
+
+                                </ng-select>
+
+
+                            </div>
+                        </div>
+                        <ng-container *ngIf="logicForm.get('field_name')?.value">
+                            <ng-container *ngIf="getData(logicForm.get('field_name')?.value)?.id=='date' || getData(logicForm.get('field_name')?.value)?.id=='time'">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>IS</label>
+                                        <ng-select class="select_ng_custom" [searchable]="true" [multiple]="false"
+                                            bindLabel="value" bindValue="value" [clearable]="false" placeholder="Search"
+                                            formControlName="is">
+                                            <ng-option [value]="field.value" *ngFor="let field of dates">
+                                                {{field.label}}
+                                            </ng-option>
+                                        </ng-select>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Value(s)</label>
+                                            <div class="form-group mb-0 custom_datepicker" *ngIf="getData(logicForm.get('field_name')?.value)?.id=='date'">
+                                                <div class="custom_datepicker_container">
+                                                    <input  formControlName="value"  placeholder="Select Date" class="form-control"
+                                                        [matDatepicker]="startDatePicker">
+                                                    <mat-datepicker-toggle matSuffix [for]="startDatePicker">
+                                                        <svg matDatepickerToggleIcon width="18" height="18" viewBox="0 0 18 18"
+                                                            fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                            <path
+                                                                d="M14.25 3H3.75C2.92157 3 2.25 3.67157 2.25 4.5V15C2.25 15.8284 2.92157 16.5 3.75 16.5H14.25C15.0784 16.5 15.75 15.8284 15.75 15V4.5C15.75 3.67157 15.0784 3 14.25 3Z"
+                                                                stroke="#2B2A35" stroke-width="1.5" stroke-linecap="round"
+                                                                stroke-linejoin="round" />
+                                                            <path d="M12 1.5V4.5" stroke="#2B2A35" stroke-width="1.5"
+                                                                stroke-linecap="round" stroke-linejoin="round" />
+                                                            <path d="M6 1.5V4.5" stroke="#2B2A35" stroke-width="1.5"
+                                                                stroke-linecap="round" stroke-linejoin="round" />
+                                                            <path d="M2.25 7.5H15.75" stroke="#2B2A35" stroke-width="1.5"
+                                                                stroke-linecap="round" stroke-linejoin="round" />
+                                                        </svg>
+                                                    </mat-datepicker-toggle>
+                                                    <mat-datepicker #startDatePicker></mat-datepicker>
+                                                </div>
+                                            </div>
+                                            <div class="form-group mb-0 custom_datepicker" *ngIf="getData(logicForm.get('field_name')?.value)?.id=='time'">
+                                                <div class="custom_timepicker_wrapper">
+                                                    <input  formControlName="value"  placeholder="Select Time" class="form-control"
+                                                        [ngxTimepicker]="toggleTimepicker">
+                                                     <ngx-material-timepicker-toggle
+                                        class="time_picker_toggle" [for]="toggleTimepicker">
+                                        <svg ngxMaterialTimepickerToggleIcon width="17" height="9" viewBox="0 0 17 9"
+                                            fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M1 1L8.5 8L16 0.999997" stroke="#2B2A35" stroke-width="2"
+                                                stroke-linecap="round" stroke-linejoin="round" />
+                                        </svg>
+                                    </ngx-material-timepicker-toggle>
+                                    <ngx-material-timepicker #toggleTimepicker></ngx-material-timepicker>
+                                                </div>
+                                            </div>
+                                    </div>
+                                </div>
+                            </ng-container>
+
+
+                            <ng-container *ngIf="getData(logicForm.get('field_name')?.value)?.id=='dropdown'">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>IS</label>
+                                        <ng-select class="select_ng_custom" [searchable]="true" [multiple]="false"
+                                            bindLabel="value" bindValue="value" [clearable]="false" placeholder="Search"
+                                            formControlName="is">
+                                            <ng-option [value]="field.value" *ngFor="let field of dropdowns">
+                                                   {{field.label}}
+                                            </ng-option>
+                                        </ng-select>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Value(s)</label>
+                                        
+                                        <ng-select class="select_ng_custom" [searchable]="true" [multiple]="true"
+                                            bindLabel="item" bindValue="item" [clearable]="false" placeholder="Search"
+                                            formControlName="value">
+                                            <ng-option [value]="field.item" *ngFor="let field of selectedField?.elementData?.items">
+                                               {{field.item}}
+                                            </ng-option>
+                                        </ng-select>
+                                    </div>
+                                </div>
+                            </ng-container>
+
+                            <ng-container *ngIf="getData(logicForm.get('field_name')?.value)?.id=='radio'">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>IS</label>
+                                        <ng-select class="select_ng_custom" [searchable]="true" [multiple]="false"
+                                            bindLabel="value" bindValue="value" [clearable]="false" placeholder="Search"
+                                            formControlName="is">
+                                            <ng-option [value]="field.value" *ngFor="let field of radios">
+                                                   {{field.label}}
+                                            </ng-option>
+                                        </ng-select>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Value(s)</label>
+                                        <ng-select class="select_ng_custom" [searchable]="true" [multiple]="true"
+                                            bindLabel="item" bindValue="item" [clearable]="false" placeholder="Search"
+                                            formControlName="value">
+                                            <ng-option [value]="field.item" *ngFor="let field of selectedField?.elementData?.items">
+                                               {{field.item}}
+                                            </ng-option>
+                                        </ng-select>
+                                    </div>
+                                </div>
+                            </ng-container>
+
+
+                            <ng-container *ngIf="getData(logicForm.get('field_name')?.value)?.id=='number'">
+                                <div class="col-md-5">
+                                    <div class="form-group">
+                                        <label>IS</label>
+                                        <ng-select class="select_ng_custom" [searchable]="true" [multiple]="false"
+                                            bindLabel="value" bindValue="value" [clearable]="false" placeholder="Search"
+                                            formControlName="is">
+                                            <ng-option [value]="field.value" *ngFor="let field of numbers">
+                                                   {{field.label}}
+                                            </ng-option>
+                                        </ng-select>
+                                    </div>
+                                </div>
+                                 <div class="col-md-2 d-flex align-items-center justify-content-center">
+                                    and
+                                 </div>
+                                <div class="col-md-5 d-flex align-items-center justify-content-center">
+                                    <div class="form-group w-100">
+                                        <label></label>
+                                        <ng-select class="select_ng_custom" [searchable]="true" [multiple]="false"
+                                            bindLabel="value" bindValue="value" [clearable]="false" placeholder="Search"
+                                            formControlName="number_grather">
+                                            <ng-option [value]="">
+                                                  No Operator
+                                            </ng-option>
+                                            <ng-option [value]="field.value" *ngFor="let field of numbers">
+                                                   {{field.label}}
+                                            </ng-option>
+                                        </ng-select>
+                                    </div>
+                                </div>
+                                <div class="col-md-5">
+                                    <div class="form-group">
+                                        <label>Value(s)</label>
+                                       <input type="text" class="form-control" placeholder="Enter value" formControlName="and_number">
+                                    </div>
+                                </div>
+                                <div class="col-md-2 d-flex align-items-center justify-content-center" *ngIf="logicForm.get('number_grather')?.value">
+                                    to
+                                 </div>
+                                 <div class="col-md-5 d-flex align-items-center justify-content-center" *ngIf="logicForm.get('number_grather')?.value">
+                                    <div class="form-group  w-100">
+                                        <label></label>
+                                          <input type="text" class="form-control" placeholder="Enter value" formControlName="to_number">
+                                    </div>
+                                </div>
+                            </ng-container>
+
+                            <ng-container *ngIf="getData(logicForm.get('field_name')?.value)?.id=='likert'">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>IS</label>
+                                        <ng-select class="select_ng_custom" [searchable]="true" [multiple]="false"
+                                            bindLabel="value" bindValue="value" [clearable]="false" placeholder="Search"
+                                            formControlName="is">
+                                            <ng-option [value]="field.value" *ngFor="let field of likerts">
+                                                   {{field.label}}
+                                            </ng-option>
+                                        </ng-select>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Value(s)</label>
+                                        
+                                        <ng-select class="select_ng_custom" [searchable]="true" [multiple]="true"
+                                            bindLabel="item" bindValue="item" [clearable]="false" placeholder="Search"
+                                            formControlName="value">
+                                            <ng-option [value]="field.item" *ngFor="let field of selectedField?.elementData?.items">
+                                               {{field.item}}
+                                            </ng-option>
+                                        </ng-select>
+                                    </div>
+                                </div>
+                            </ng-container>
+
+
+                            <ng-container *ngIf="getData(logicForm.get('field_name')?.value)?.id=='checkbox'">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>IS</label>
+                                        <ng-select class="select_ng_custom" [searchable]="true" [multiple]="false"
+                                            bindLabel="value" bindValue="value" [clearable]="false" placeholder="Search"
+                                            formControlName="is">
+                                            <ng-option [value]="field.value" *ngFor="let field of checkboxs">
+                                                   {{field.label}}
+                                            </ng-option>
+                                        </ng-select>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Value(s)</label>
+                                        
+                                        <ng-select class="select_ng_custom" [searchable]="true" [multiple]="true"
+                                            bindLabel="item" bindValue="item" [clearable]="false" placeholder="Search"
+                                            formControlName="value">
+                                            <ng-option [value]="field.item" *ngFor="let field of selectedField?.elementData?.items">
+                                               {{field.item}}
+                                            </ng-option>
+                                        </ng-select>
+                                    </div>
+                                </div>
+                            </ng-container>
+                            <ng-container *ngIf="getData(logicForm.get('field_name')?.value)?.id=='single' || getData(logicForm.get('field_name')?.value)?.id=='multi'">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>IS</label>
+                                        <ng-select class="select_ng_custom" [searchable]="true" [multiple]="false"
+                                            bindLabel="value" bindValue="value" [clearable]="false" placeholder="Search"
+                                            formControlName="is">
+                                            <ng-option [value]="field.value" *ngFor="let field of texts">
+                                                   {{field.label}}
+                                            </ng-option>
+                                        </ng-select>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 d-flex flex-row align-items-center gap-2">
+                                    <div class="form-group">
+                                        <label>Value(s)</label>
+                                        <input type="text" class="form-control" placeholder="Enter value" formControlName="value">
+                                    </div>
+                                    Characters
+                                </div>
+                            </ng-container>
+                        </ng-container>
+                        
+                    </div>
+                    <div class="row mt-3 form-two" *ngIf="logicForm.get('field_name')?.value">
+                         <div class="col-md-12">
+                            <div class="form-group">
+                                <label>Action</label>
+                                <ng-select class="select_ng_custom" [searchable]="true" [multiple]="false"
+                                    bindLabel="value" bindValue="value" [clearable]="false" placeholder="Select Action"
+                                    formControlName="action">
+                                    <ng-option [value]="field.value" *ngFor="let field of Actions">
+                                        {{field.label}}
+                                    </ng-option>
+                                </ng-select>
+                            </div>
+                        </div>
+
+                        <ng-container *ngIf="logicForm.get('action')?.value=='show_field' || logicForm.get('action')?.value=='hide_field'">
+                              
+                              
+                             
+
+                                <ng-container>
+                                <div class="col-md-12">
+                                    <h1 class="field-display">Field to {{logicForm.get('action')?.value=='hide_field'?'hide':'display'}}</h1>
+                                </div>
+                                  <div class="col-md-5" *ngIf="selectedForm?.type=='multi_step'">
+                                    <div class="form-group">
+                                        <label>Form Page</label>
+                                        <ng-select class="select_ng_custom ng-value-size"
+                                                [searchable]="true"
+                                                [multiple]="false"
+                                                [clearable]="false"
+                                                placeholder="Search"
+                                                formControlName="action_page_type" (change)="onPageTypeChange1($event)">
+
+                                        <ng-option [value]="field.name" *ngFor="let field of  selectedForm?.widgets?.values">
+                                            {{ field.name }}
+                                        </ng-option>
+
+                                        <!-- Selected Value Template -->
+                                        <ng-template ng-label-tmp let-item="item">
+                                            {{ item }}
+                                        </ng-template>
+
+                                        </ng-select>
+
+
+                                    </div>
+                                </div>
+                                <div class="col-md-7" *ngIf="selectedForm?.type=='multi_step'">
+                                    <div class="form-group">
+                                        <label>Field Name</label>
+                                        <ng-select class="select_ng_custom ng-value-size"
+                                                [searchable]="true"
+                                                [multiple]="false"
+                                                [clearable]="false"
+                                                placeholder="Search"
+                                                formControlName="hide_show_field">
+
+                                         <ng-container *ngFor="let field of fieldList2">
+                                            <ng-option 
+                                                [value]="field.name" 
+                                                *ngIf="logicForm.get('field_name')?.value != field.name">
+
+                                                <div class="d-flex justify-content-between align-items-center w-100">
+                                                <!-- Left side -->
+                                                <div class="left-text" style="width:70%; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">
+                                                    {{ field.name }}
+                                                </div>
+
+                                                <!-- Right side with condition -->
+                                                <div class="right-text span-right text-end" style="width:30%; text-align:right;">
+                                                    {{
+                                                    field.id == 'single' ? 'Single Line'
+                                                    : field.id == 'radio' ? 'Radio Button'
+                                                    : field.id == 'likert' ? 'Likert Scale'
+                                                    : field.id == 'multi' ? 'Multi Line'
+                                                    : field.id
+                                                    }}
+                                                </div>
+                                                </div>
+
+                                            </ng-option>
+                                        </ng-container>
+                                        <!-- Selected Value Template -->
+                                        <ng-template ng-label-tmp let-item="item">
+                                            {{ item }}
+                                        </ng-template>
+
+                                        </ng-select>
+
+
+                                    </div>
+                                </div>
+                                <div class="col-md-12" *ngIf="selectedForm?.type!='multi_step'">
+                                        <div class="form-group">
+                                            <label>Field Name</label>
+                                            <ng-select class="select_ng_custom ng-value-size"
+                                                    [searchable]="true"
+                                                    [multiple]="false"
+                                                    [clearable]="false"
+                                                    placeholder="Search"
+                                                    formControlName="hide_show_field">
+
+                                            <ng-container *ngFor="let field of fieldList">
+                                                <ng-option 
+                                                    [value]="field.name" 
+                                                    *ngIf="logicForm.get('field_name')?.value != field.name">
+
+                                                    <div class="d-flex justify-content-between align-items-center w-100">
+                                                    <!-- Left side -->
+                                                    <div class="left-text" style="width:70%; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">
+                                                        {{ field.name }}
+                                                    </div>
+
+                                                    <!-- Right side with condition -->
+                                                    <div class="right-text span-right text-end" style="width:30%; text-align:right;">
+                                                        {{
+                                                        field.id == 'single' ? 'Single Line'
+                                                        : field.id == 'radio' ? 'Radio Button'
+                                                        : field.id == 'likert' ? 'Likert Scale'
+                                                        : field.id == 'multi' ? 'Multi Line'
+                                                        : field.id
+                                                        }}
+                                                    </div>
+                                                    </div>
+
+                                                </ng-option>
+                                            </ng-container>
+                                            <!-- Selected Value Template -->
+                                            <ng-template ng-label-tmp let-item="item">
+                                                {{ item }}
+                                            </ng-template>
+
+                                            </ng-select>
+
+
+                                        </div>
+                                </div>
+                                </ng-container>
+
+                                <div class="col-md-12">
+                                    <div class="form-group hcaaf-toogle">
+                                        <label> Show Additional Message</label> &nbsp; &nbsp;
+                                        <mat-slide-toggle color="success" formControlName="show_message" name="checked"
+                                            [ngModelOptions]="{standalone: true}" class="ios-toggle p-0">
+                                        
+                                        </mat-slide-toggle>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-12" *ngIf="logicForm.get('show_message')?.value">
+                                    <div class="form-group">
+                                        <label>Message Output</label>
+                                        <textarea placeholder="What is your Specialisation?"
+                                            formControlName="message" class="form-control" name id cols="30"
+                                            rows="5"></textarea>
+                                    </div>
+                                </div>
+                        </ng-container>
+
+                         <div class="col-md-12" *ngIf="logicForm.get('action')?.value=='show_message' || logicForm.get('action')?.value=='block_submission' || logicForm.get('action')?.value=='end_process'">
+                            <div class="form-group">
+                                <label>Message Output</label>
+                                <textarea placeholder="What is your Specialisation?"
+                                    formControlName="message" class="form-control" name id cols="30"
+                                    rows="5"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer justify-content-between">
+                    <button #closeReminderModal mat-button type="button" class="theme_btn btn_outline_primary"
+                         (click)="addLogicForm.hide();ngOnInit()">
+                        Cancel
+                    </button>
+                    <button mat-button type="submit" class="theme_btn btn_primary" (click)="AddLogic()"
+                        [disabled]="logicForm.invalid">
+                        {{editLogicdata?._id?'Update':'Save'}}
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<!-- rename filter popup -->
+<div bsModal #removeLogicModel="bs-modal" class="modal fade bsModal ch_modal" id="addNewColumnPopup" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" style="max-width:700px" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <!-- <h2 class="modal-title " id="exampleModalLabel">Save as Favorite</h2> -->
+                <button mat-icon-button type="button" class="close" (click)="removeLogicModel.hide()" aria-label="Close">
+                    <mat-icon>close</mat-icon>
+                </button>
+            </div>
+            <form>
+                <div class="modal-body pt-3">
+                    <div class="row">
+                        <svg width="126" height="101" viewBox="0 0 126 101" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <g clip-path="url(#clip0_1514_66833)">
+                        <path d="M95.371 100.166L11.656 100.196C7.45041 100.197 3.68314 98.008 1.57906 94.3402C0.526894 92.5061 0.000693685 90.4941 6.85071e-07 88.4817C-0.000692315 86.4695 0.52438 84.4569 1.57504 82.6223L43.4059 5.92095C45.5077 2.25144 49.2735 0.0600592 53.4791 0.0585945C57.6848 0.0571297 61.452 2.24588 63.5564 5.91393L105.445 82.5956C106.495 84.4249 107.02 86.4345 107.02 88.4457C107.02 90.4568 106.495 92.4692 105.444 94.304C103.342 97.9733 99.5766 100.165 95.371 100.166ZM1.0523 88.4803C1.05217 90.312 10.2898 86.365 11.2468 88.0334C13.1611 91.3702 7.82944 99.1393 11.6557 99.138C11.6557 99.138 102.623 97.1137 104.534 93.7756C105.49 92.1065 105.968 90.2754 105.967 88.4447C105.967 86.6141 105.488 84.7836 104.531 83.1152L62.6416 6.43349C60.7327 3.1062 57.3057 1.11485 53.4795 1.11619C49.655 1.11752 1.05245 86.6483 1.0523 88.4803Z" fill="#3F3D56"/>
+                        <path d="M77.9031 83.2511C99.0694 83.2511 116.228 65.9683 116.228 44.649C116.228 23.3296 99.0694 6.04688 77.9031 6.04688C56.7368 6.04688 39.5781 23.3296 39.5781 44.649C39.5781 65.9683 56.7368 83.2511 77.9031 83.2511Z" fill="#464BA8"/>
+                        <path d="M76.3835 53.0796L69.5859 23.486L74.9271 22.3536L80.5508 52.196L76.3835 53.0796ZM81.0564 64.2942C80.0781 64.5016 79.191 64.3626 78.3948 63.8771C77.6296 63.3443 77.1488 62.608 76.9525 61.6683C76.7561 60.7286 76.9055 59.8791 77.4006 59.1199C77.9267 58.3133 78.6789 57.8062 79.6572 57.5988C80.5963 57.3997 81.4484 57.5666 82.2136 58.0995C83.0098 58.5849 83.506 59.2975 83.7024 60.2372C83.8988 61.1769 83.7339 62.05 83.2078 62.8567C82.7127 63.6159 81.9955 64.0951 81.0564 64.2942Z" fill="white"/>
+                        </g>
+                        <defs>
+                        <clipPath id="clip0_1514_66833">
+                        <rect width="126" height="101" fill="white"/>
+                        </clipPath>
+                        </defs>
+                        </svg>
+
+                        <h2 class="text-center mt-4">
+                            Are you sure you want to remove this logic?
+                           <!-- Removing this field will also remove the corresponding <br /> Conditional Logic. -->
+                        </h2>
+                        <!-- <p class="text-center mt-2">
+                            Please review the corresponding logic before proceeding.
+                        </p> -->
+                    </div>
+                </div>
+                <div class="modal-footer justify-content-between">
+                    <button  (click)="removeLogicModel.hide()" mat-button type="button" class="theme_btn btn_outline_primary">Cancel</button>
+                    <button mat-button type="submit" class="theme_btn btn_primary" (click)="removeLogic()">Proceed</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<div bsModal #alreadyLogicModel="bs-modal" class="modal fade bsModal ch_modal" id="addNewColumnPopup" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" style="max-width:700px" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <!-- <h2 class="modal-title " id="exampleModalLabel">Save as Favorite</h2> -->
+                <button mat-icon-button type="button" class="close" (click)="alreadyLogicModel.hide()" aria-label="Close">
+                    <mat-icon>close</mat-icon>
+                </button>
+            </div>
+            <form>
+                <div class="modal-body pt-3">
+                    <div class="row">
+                        <svg width="126" height="101" viewBox="0 0 126 101" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <g clip-path="url(#clip0_1514_66833)">
+                        <path d="M95.371 100.166L11.656 100.196C7.45041 100.197 3.68314 98.008 1.57906 94.3402C0.526894 92.5061 0.000693685 90.4941 6.85071e-07 88.4817C-0.000692315 86.4695 0.52438 84.4569 1.57504 82.6223L43.4059 5.92095C45.5077 2.25144 49.2735 0.0600592 53.4791 0.0585945C57.6848 0.0571297 61.452 2.24588 63.5564 5.91393L105.445 82.5956C106.495 84.4249 107.02 86.4345 107.02 88.4457C107.02 90.4568 106.495 92.4692 105.444 94.304C103.342 97.9733 99.5766 100.165 95.371 100.166ZM1.0523 88.4803C1.05217 90.312 10.2898 86.365 11.2468 88.0334C13.1611 91.3702 7.82944 99.1393 11.6557 99.138C11.6557 99.138 102.623 97.1137 104.534 93.7756C105.49 92.1065 105.968 90.2754 105.967 88.4447C105.967 86.6141 105.488 84.7836 104.531 83.1152L62.6416 6.43349C60.7327 3.1062 57.3057 1.11485 53.4795 1.11619C49.655 1.11752 1.05245 86.6483 1.0523 88.4803Z" fill="#3F3D56"/>
+                        <path d="M77.9031 83.2511C99.0694 83.2511 116.228 65.9683 116.228 44.649C116.228 23.3296 99.0694 6.04688 77.9031 6.04688C56.7368 6.04688 39.5781 23.3296 39.5781 44.649C39.5781 65.9683 56.7368 83.2511 77.9031 83.2511Z" fill="#464BA8"/>
+                        <path d="M76.3835 53.0796L69.5859 23.486L74.9271 22.3536L80.5508 52.196L76.3835 53.0796ZM81.0564 64.2942C80.0781 64.5016 79.191 64.3626 78.3948 63.8771C77.6296 63.3443 77.1488 62.608 76.9525 61.6683C76.7561 60.7286 76.9055 59.8791 77.4006 59.1199C77.9267 58.3133 78.6789 57.8062 79.6572 57.5988C80.5963 57.3997 81.4484 57.5666 82.2136 58.0995C83.0098 58.5849 83.506 59.2975 83.7024 60.2372C83.8988 61.1769 83.7339 62.05 83.2078 62.8567C82.7127 63.6159 81.9955 64.0951 81.0564 64.2942Z" fill="white"/>
+                        </g>
+                        <defs>
+                        <clipPath id="clip0_1514_66833">
+                        <rect width="126" height="101" fill="white"/>
+                        </clipPath>
+                        </defs>
+                        </svg>
+
+                        <h2 class="text-center mt-4">
+                         Duplicate Field Names Detected
+                        </h2>
+                        <p class="text-center">
+                            Conditional Logic can’t be applied to fields with identical names under the same <br /> page. Please rename one or more fields to continue.
+                        </p>
+                    </div>
+                </div>
+                <div class="modal-footer justify-content-between">
+                    <button  (click)="alreadyLogicModel.hide()" mat-button type="button" class="theme_btn btn_outline_primary">Cancel</button>
+                    <button mat-button type="submit" class="theme_btn btn_primary" (click)="alreadyLogicModel.hide()">Close</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

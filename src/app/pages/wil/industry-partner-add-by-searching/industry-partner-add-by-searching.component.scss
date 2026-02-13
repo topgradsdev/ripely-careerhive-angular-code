@@ -1,0 +1,140 @@
+.card_header {
+    background-image: url('../../../../assets/img/banner_linkedin.svg');
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    padding: 26px 26px 35px 26px;
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 35px;
+
+
+
+    .card_container {
+        display: flex;
+        column-gap: 42px;
+        align-items: center;
+        flex-wrap: wrap;
+        row-gap: 30px;
+
+        .header_card {
+            background-color: #fff;
+            display: inline-flex;
+            align-items: center;
+            padding: 17px 13px 17px 20px;
+            box-shadow: 2px 2px 4px 0px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(229, 229, 229, 1);
+            border-radius: 10px;
+            min-width: 220px;
+
+            .content {
+                width: calc(100% - 54px);
+                padding-right: 20px;
+
+                p {
+                    font-family: var(--font-third);
+                    font-size: 14px;
+                    font-weight: 400;
+                    line-height: 16px;
+                    letter-spacing: 0em;
+                    text-align: left;
+                    color: #000000;
+                    margin-bottom: 10px;
+                }
+
+                h4 {
+                    font-family: var(--font-third);
+                    font-size: 24px;
+                    font-weight: 400;
+                    line-height: 28px;
+                    letter-spacing: 0em;
+                    text-align: left;
+                    color: #000000;
+                    margin-bottom: 0px;
+
+                }
+            }
+        }
+
+        .search-container {
+            .form-control {
+                width: 408px;
+            }
+        }
+    }
+}
+
+.no_companies_added_section {
+    text-align: center;
+    margin: 50px 0px;
+
+    img {
+        margin-bottom: 32px;
+    }
+
+    p {
+        font-family: var(--font-primary);
+        font-size: 18px;
+        font-weight: 400;
+        line-height: 25.2px;
+        text-align: center;
+        color: #9A9A9A;
+
+    }
+}
+
+.place_footer_btn {
+    margin-top: 50px;
+
+    .theme_btn {
+        width: 196px;
+    }
+}
+
+.auto_complete {
+    border-radius: 3px;
+}
+
+.company_option {
+    .company_option_container {
+        display: flex;
+        align-items: center;
+
+        img {
+            width: 22px;
+            height: 22px;
+            object-fit: contain;
+            object-position: center;
+            margin-right: 8px;
+            flex: 0 0 22px;
+        
+        }
+
+        span {
+            font-family: var(--font-primary);
+            color: #545465;
+            font-size: 16px;
+            font-weight: 400;
+            line-height: 19.2px;
+            text-align: left;
+            text-overflow: ellipsis;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 1;
+            overflow: hidden;
+
+        }
+        small{
+            margin-left: auto;
+            font-family:var(--font-primary);
+font-size: 12px;
+font-weight: 400;
+line-height: 12px;
+color: var(--primary-color-first);
+text-align: right;
+
+        }
+        .add_icon {
+            margin-left: 20px;
+        }
+    }
+}

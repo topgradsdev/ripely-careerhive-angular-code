@@ -1,0 +1,424 @@
+<section class="padding">
+    <div class="page_header">
+        <a (click)="goBack()" class="back_Link"> <svg xmlns="http://www.w3.org/2000/svg"
+                width="24" height="24" viewBox="0 0 24 24" fill="none">
+                <path d="M19 12H5" stroke="#464BA8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                <path d="M12 19L5 12L12 5" stroke="#464BA8" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round" />
+            </svg> Back To Company Profile </a>
+    </div>
+
+    <div class="card_header">
+        <!-- <button mat-icon-button [matMenuTriggerFor]="moreAction"><svg width="36" height="36" viewBox="0 0 36 36"
+                fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path
+                    d="M18 19.5C18.8284 19.5 19.5 18.8284 19.5 18C19.5 17.1716 18.8284 16.5 18 16.5C17.1716 16.5 16.5 17.1716 16.5 18C16.5 18.8284 17.1716 19.5 18 19.5Z"
+                    stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                <path
+                    d="M18 9C18.8284 9 19.5 8.32843 19.5 7.5C19.5 6.67157 18.8284 6 18 6C17.1716 6 16.5 6.67157 16.5 7.5C16.5 8.32843 17.1716 9 18 9Z"
+                    stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                <path
+                    d="M18 30C18.8284 30 19.5 29.3284 19.5 28.5C19.5 27.6716 18.8284 27 18 27C17.1716 27 16.5 27.6716 16.5 28.5C16.5 29.3284 17.1716 30 18 30Z"
+                    stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+
+        </button> -->
+        <h3 class="title">{{employerProfile?.company_name}}</h3>
+        <h3 class="title mb-0">Site Visit {{selectedSiteVisit?.index}}</h3>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="details_card">
+                <div class="details_card_header">
+                    <h4>Site Visit Pictures</h4>
+                    <!-- <button data-toggle="modal" data-target="#manageImages" mat-icon-button><svg width="35" height="35"
+                            viewBox="0 0 35 35" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="17.5" cy="17.5" r="17.5" fill="#F8F8F8" />
+                            <path fill-rule="evenodd" clip-rule="evenodd"
+                                d="M20.7352 10.209C21.2127 10.209 21.6703 10.3996 22.0045 10.7365L24.2656 12.9976C24.6023 13.3342 24.7914 13.7908 24.7914 14.2669C24.7914 14.7429 24.6023 15.1995 24.2656 15.5362L16.0104 23.7888C15.501 24.3763 14.7791 24.7373 13.952 24.794H10.208V24.0648L10.2104 20.9914C10.2725 20.2225 10.63 19.5076 11.1752 19.0271L19.4651 10.7374C19.8012 10.3992 20.2584 10.209 20.7352 10.209ZM13.9005 23.3375C14.29 23.3099 14.6526 23.1286 14.9438 22.7956L20.4577 17.2817L17.7201 14.544L12.1739 20.0889C11.8785 20.3502 11.6957 20.7157 11.6663 21.0501V23.3361L13.9005 23.3375ZM18.7514 13.5129L21.4889 16.2505L23.2344 14.505C23.2976 14.4418 23.333 14.3562 23.333 14.2669C23.333 14.1775 23.2976 14.0919 23.2344 14.0288L20.9713 11.7657C20.9089 11.7027 20.8239 11.6673 20.7352 11.6673C20.6466 11.6673 20.5616 11.7027 20.4992 11.7657L18.7514 13.5129Z"
+                                fill="#2B2A35" />
+                        </svg>
+                    </button> -->
+                </div>
+                <div class="details_card_body">
+                    <div class="site_visit_carousel">
+                        <owl-carousel-o [options]="customOptions">
+                            <ng-template carouselSlide *ngFor="let picture of visiblePictures; let i = index">
+                                <img [src]="picture?.image?.url" (click)="openLightbox(visiblePictures, i) ">
+                            </ng-template>
+                        </owl-carousel-o>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-5">
+            <div class="details_card" *ngIf="!detailsContainer">
+                <div class="details_card_header">
+                    <h4>Details</h4>
+                    <!-- <button mat-icon-button (click)="detailsEdit()"><svg width="35" height="35" viewBox="0 0 35 35"
+                            fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="17.5" cy="17.5" r="17.5" fill="#F8F8F8" />
+                            <path fill-rule="evenodd" clip-rule="evenodd"
+                                d="M20.7352 10.209C21.2127 10.209 21.6703 10.3996 22.0045 10.7365L24.2656 12.9976C24.6023 13.3342 24.7914 13.7908 24.7914 14.2669C24.7914 14.7429 24.6023 15.1995 24.2656 15.5362L16.0104 23.7888C15.501 24.3763 14.7791 24.7373 13.952 24.794H10.208V24.0648L10.2104 20.9914C10.2725 20.2225 10.63 19.5076 11.1752 19.0271L19.4651 10.7374C19.8012 10.3992 20.2584 10.209 20.7352 10.209ZM13.9005 23.3375C14.29 23.3099 14.6526 23.1286 14.9438 22.7956L20.4577 17.2817L17.7201 14.544L12.1739 20.0889C11.8785 20.3502 11.6957 20.7157 11.6663 21.0501V23.3361L13.9005 23.3375ZM18.7514 13.5129L21.4889 16.2505L23.2344 14.505C23.2976 14.4418 23.333 14.3562 23.333 14.2669C23.333 14.1775 23.2976 14.0919 23.2344 14.0288L20.9713 11.7657C20.9089 11.7027 20.8239 11.6673 20.7352 11.6673C20.6466 11.6673 20.5616 11.7027 20.4992 11.7657L18.7514 13.5129Z"
+                                fill="#2B2A35" />
+                        </svg>
+                    </button> -->
+                </div>
+                <div class="details_card_body">
+                    <div class="row details_list_item">
+                        <div class="col-6">
+                            <h5>Site Visit Recorded By</h5>
+                        </div>
+                        <div class="col-6 text-right">
+                            <p>{{selectedSiteVisit?.recorded_by}}</p>
+                        </div>
+                    </div>
+                    <div class="row details_list_item">
+                        <div class="col-6">
+                            <h5>Company Supervisor</h5>
+                        </div>
+                        <div class="col-6 text-right">
+                            <p>{{selectedSiteVisit?.supervisor}}</p>
+                        </div>
+                    </div>
+                    <div class="row details_list_item">
+                        <div class="col-6">
+                            <h5>Upload Date</h5>
+                        </div>
+                        <div class="col-6 text-right">
+                            <p>{{selectedSiteVisit?.date | date: 'dd/MM/YYYY'}}, {{selectedSiteVisit?.time}}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="details_card" *ngIf="detailsContainer">
+                <div class="details_card_header">
+                    <h4>Edit Details</h4>
+                </div>
+                <div class="details_card_body">
+                    <div class="row" [formGroup]="siteVisitForm">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label>Site Visit Recorded By</label>
+                                <input type="text" class="form-control" value="Robert Smith"
+                                    formControlName="recorded_by">
+                                <div
+                                    *ngIf="siteVisitForm.get('recorded_by') && (siteVisitForm.get('recorded_by')?.touched || siteVisitForm.get('recorded_by')?.dirty) && siteVisitForm.get('recorded_by')?.invalid && siteVisitForm.get('recorded_by')?.errors?.required"
+                                    class="invalid-feedback">
+                                    Please enter site visit recorded by
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <ng-select [searchable]="false" [multiple]="false" bindLabel="name" bindValue="id"
+                                    [clearable]="false" placeholder="Select Employer" formControlName="supervisor">
+                                    <ng-option *ngFor="let supervisor of employerProfile?.contact_person"
+                                        value="{{supervisor.first_name}} {{supervisor.last_name}}">{{supervisor.first_name}}
+                                        {{supervisor.last_name}}</ng-option>
+
+                                </ng-select>
+                                <div
+                                    *ngIf="siteVisitForm.get('supervisor') && (siteVisitForm.get('supervisor')?.touched || siteVisitForm.get('supervisor')?.dirty) && siteVisitForm.get('supervisor')?.invalid && siteVisitForm.get('supervisor')?.errors?.required"
+                                    class="invalid-feedback">
+                                    Please select site visit supervisor
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group custom_datepicker">
+                                <label>Upload Date</label>
+                                <div class="custom_datepicker_container">
+                                    <input formControlName="date" placeholder="Select Date" class="form-control"
+                                        [matDatepicker]="projectStartPicker">
+                                    <mat-datepicker-toggle matSuffix [for]="projectStartPicker">
+
+                                        <svg matDatepickerToggleIcon width="18" height="18" viewBox="0 0 18 18"
+                                            fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path
+                                                d="M14.25 3H3.75C2.92157 3 2.25 3.67157 2.25 4.5V15C2.25 15.8284 2.92157 16.5 3.75 16.5H14.25C15.0784 16.5 15.75 15.8284 15.75 15V4.5C15.75 3.67157 15.0784 3 14.25 3Z"
+                                                stroke="#2B2A35" stroke-width="1.5" stroke-linecap="round"
+                                                stroke-linejoin="round" />
+                                            <path d="M12 1.5V4.5" stroke="#2B2A35" stroke-width="1.5"
+                                                stroke-linecap="round" stroke-linejoin="round" />
+                                            <path d="M6 1.5V4.5" stroke="#2B2A35" stroke-width="1.5"
+                                                stroke-linecap="round" stroke-linejoin="round" />
+                                            <path d="M2.25 7.5H15.75" stroke="#2B2A35" stroke-width="1.5"
+                                                stroke-linecap="round" stroke-linejoin="round" />
+                                        </svg>
+                                    </mat-datepicker-toggle>
+                                    <mat-datepicker #projectStartPicker></mat-datepicker>
+                                </div>
+                                <div
+                                    *ngIf="siteVisitForm.get('date') && (siteVisitForm.get('date')?.touched || siteVisitForm.get('date')?.dirty) && siteVisitForm.get('date')?.invalid && siteVisitForm.get('date')?.errors?.required"
+                                    class="invalid-feedback">
+                                    Please select site visit date
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group custom_datepicker">
+                                <label class="no_label invisible">Time</label>
+                                <div class="custom_datepicker_container">
+                                    <input class="form-control" placeholder="Select Time" matInput
+                                        formControlName="time"
+                                        [ngxTimepicker]="toggleTimepicker" readonly>
+                                    <ngx-material-timepicker-toggle class="time_picker_toggle" [for]="toggleTimepicker">
+                                        <svg ngxMaterialTimepickerToggleIcon width="17" height="9" viewBox="0 0 17 9"
+                                            fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M1 1L8.5 8L16 0.999997" stroke="#2B2A35" stroke-width="2"
+                                                stroke-linecap="round" stroke-linejoin="round" />
+                                        </svg>
+                                    </ngx-material-timepicker-toggle>
+                                    <ngx-material-timepicker #toggleTimepicker></ngx-material-timepicker>
+                                </div>
+                                <div
+                                    *ngIf="siteVisitForm.get('time') && (siteVisitForm.get('time')?.touched || siteVisitForm.get('time')?.dirty) && siteVisitForm.get('time')?.invalid && siteVisitForm.get('time')?.errors?.required"
+                                    class="invalid-feedback">
+                                    Please select site visit time
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="details_foot_btn">
+                        <button class="theme_btn btn_primary" mat-button [disabled]="siteVisitForm.invalid"
+                            (click)="updateSiteVisit()">Save</button>
+                        <button class="theme_btn btn_outline_danger" mat-button (click)="detailsEdit()">Cancel</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-7">
+            <div class="details_card">
+                <div class="details_card_header">
+                    <h4>Notes</h4>
+                    <!-- <button (click)="note = ''" mat-icon-button data-toggle="modal" data-target="#addNotes"><svg
+                            width="35" height="35" viewBox="0 0 35 35" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="17.5" cy="17.5" r="17.5" fill="#F8F8F8" />
+                            <path d="M17.585 10.2148V24.2148" stroke="#2B2A35" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" />
+                            <path d="M10.585 17.2148H24.585" stroke="#2B2A35" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" />
+                        </svg>
+                    </button> -->
+                </div>
+                <div class="details_card_body">
+                    <div class="notes_card" *ngFor="let note of sortedNotes; let i = index;">
+                        <div class="notes_card_header">
+                           <div class="avatar_container">
+                                <div class="avatar_icon">
+                                    <span>{{note?.created_by_name ?
+                                        note?.created_by_name.split(' ')[0][0] : ''}}
+                                        {{note?.created_by_name.split(' ')[1] ?
+                                        note?.created_by_name.split(' ')[1][0] : ''}}</span>
+                                    <!-- <img src="../../../../assets/img/avatars/8.jpg" alt="avatar"> -->
+                                </div>
+                                <p>{{note?.created_by_name}}</p>
+                            </div>
+                            <div class="date_container">{{(note?.created_at || selectedSiteVisit?.created_at) | date : 'dd/MM/YYYY, hh:mm a'}}</div>
+                            <!-- <button class="notes_action" mat-icon-button [matMenuTriggerFor]="notesAction"
+                                (click)="selectedNoteIndex = i; noteValue = note;">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path
+                                        d="M12 13C12.5523 13 13 12.5523 13 12C13 11.4477 12.5523 11 12 11C11.4477 11 11 11.4477 11 12C11 12.5523 11.4477 13 12 13Z"
+                                        stroke="#2B2A35" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round" />
+                                    <path
+                                        d="M12 6C12.5523 6 13 5.55228 13 5C13 4.44772 12.5523 4 12 4C11.4477 4 11 4.44772 11 5C11 5.55228 11.4477 6 12 6Z"
+                                        stroke="#2B2A35" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round" />
+                                    <path
+                                        d="M12 20C12.5523 20 13 19.5523 13 19C13 18.4477 12.5523 18 12 18C11.4477 18 11 18.4477 11 19C11 19.5523 11.4477 20 12 20Z"
+                                        stroke="#2B2A35" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round" />
+                                </svg>
+
+                            </button> -->
+                        </div>
+                        <div class="content">
+                            {{note.title}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="modal fade bsModal ch_modal" id="addNotes" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title" id="exampleModalLabel">Site Visit Notes</h2>
+            </div>
+            <form>
+                <div class="modal-body pt-3">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group mb-0">
+                                <textarea class="form-control" [ngModelOptions]="{standalone: true}"
+                                    placeholder="Set a note that is visible to other staff members" rows="8"
+                                    [(ngModel)]="noteValue"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer justify-content-center">
+                    <button id="cancel" mat-button type="button" class="theme_btn btn_outline_primary mr-4"
+                        data-dismiss="modal" (click)="selectedNoteIndex = null;">Cancel</button>
+                    <button *ngIf="selectedNoteIndex === null" mat-button data-dismiss="modal"
+                        class="theme_btn btn_primary" (click)="addNotes()">Add</button>
+                    <button *ngIf="selectedNoteIndex !== null" mat-button data-dismiss="modal"
+                        class="theme_btn btn_primary" (click)="editNotes()">Edit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<div class="modal fade bsModal ch_modal" id="deleteNotes" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header text-center justify-content-center">
+                <h2 class="modal-title" id="exampleModalLabel">Are you sure you want to delete your Site Visit
+                    note?</h2>
+            </div>
+            <div class="modal-footer justify-content-center">
+                <button id="cancel" mat-button type="button" class="theme_btn btn_outline_primary mr-4"
+                    data-dismiss="modal">No</button>
+                <button mat-button type="submit" class="theme_btn btn_primary" data-dismiss="modal"
+                    (click)="deleteNote()">Yes</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade bsModal ch_modal manage_image_popup" id="manageImages" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title" id="exampleModalLabel">Manage Images</h2>
+                <button type="button" mat-icon-button id="closeModal" class="close" data-dismiss="modal"
+                    aria-label="Close">
+                    <mat-icon>close</mat-icon>
+                </button>
+            </div>
+            <form>
+                <div class="modal-body pt-3">
+                    <label for="image" class="file_btn theme_btn btn_primary mb-3" matRipple>
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12 5V19" stroke="white" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" />
+                            <path d="M5 12H19" stroke="white" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" />
+                        </svg>
+                        Upload
+                        <input name="img" type="file" id="image"  accept=".jpg,.jpeg,.png,.gif,.heic" multiple
+                            (change)="getUploadedPictures($event)">
+                    </label>
+                    <div class="table-responsive manage_image_table position-relative " >
+                        <table class="ch_table">
+                            <thead>
+                                <tr class="mat-header-row">
+                                    <th class="mat-header-cell sticky_top">Image</th>
+                                    <th class="mat-header-cell sticky_top">Uploaded By</th>
+                                    <th class="mat-header-cell sticky_top">Upload Date</th>
+                                    <th class="mat-header-cell sticky_top text-center">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let picture of selectedSiteVisit?.pictures; let i = index;">
+                                    <td class="mat-cell">
+                                        <img class="image_table" [src]="picture?.image?.url" alt="image">
+                                    </td>
+                                    <td class="mat-cell">{{picture?.uploadedBy}}</td>
+                                    <td class="mat-cell">{{picture?.image?.date | date: 'dd/MM/YYYY'}}</td>
+                                    <td class="mat-cell text-center position-relative btn-delete">
+                                        <button mat-icon-button (click)="deletePicture(i)">
+                                            <svg width="15" height="16" viewBox="0 0 15 16" fill="none"
+                                                xmlns="http://www.w3.org/2000/svg">
+                                                <path fill-rule="evenodd" clip-rule="evenodd"
+                                                    d="M5.09063 0H9.45427C10.2576 0 10.9088 0.651222 10.9088 1.45455V2.1817H13.0909C13.8942 2.1817 14.5455 2.83293 14.5455 3.63625V5.09079C14.5455 5.89412 13.8942 6.54534 13.0909 6.54534H13.0326L12.3636 14.5456C12.3636 15.3489 11.7124 16.0001 10.9091 16.0001H3.63633C2.833 16.0001 2.18178 15.3489 2.18429 14.606L1.51257 6.54534H1.45455C0.651222 6.54534 0 5.89412 0 5.09079V3.63625C0 2.83293 0.651222 2.1817 1.45455 2.1817H3.63609V1.45455C3.63609 0.651222 4.28731 0 5.09063 0ZM3.63609 3.63636V3.63581H1.45459V5.09035H13.091V3.63581H10.9088V3.63636H3.63609ZM11.5727 6.54534H2.97148L3.63583 14.5451H10.9086L10.9111 14.4847L11.5727 6.54534ZM9.45446 1.4541V2.18137H5.09082V1.4541H9.45446Z"
+                                                    fill="#2B2A35" />
+                                            </svg>
+                                        </button></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="modal-footer justify-content-end">
+                    <button id="cancel" mat-button type="button" class="theme_btn btn_secondary mr-3"
+                        data-dismiss="modal">Cancel</button>
+                    <button mat-button data-dismiss="modal"
+                        class="theme_btn btn_primary" (click)="saveUploadedPictures()">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<div class="modal fade bsModal ch_modal delete_site_visit_modal" id="deleteSiteVisit" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header pt-4 text-center justify-content-center">
+                <button type="button" mat-icon-button id="closeModal" class="close" data-dismiss="modal"
+                    aria-label="Close">
+                    <mat-icon>close</mat-icon>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <img src="../../../../assets/img/undraw_warning.svg" alt="undraw_warning">
+                    </div>
+                    <div class="col-md-12 text-center">
+                        <h2 class="modal-title">Are you sure you want to delete this site visit?</h2>
+                        <p>Images uploaded to the site visit will also be deleted.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer justify-content-center">
+                <button id="cancel" mat-button type="button" class="theme_btn btn_secondary mr-3"
+                    data-dismiss="modal">No</button>
+                <button mat-button class="theme_btn btn_primary" data-dismiss="modal"
+                    (click)="deleteSiteVisit()">Yes</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade bsModal ch_modal site_visit_img_modal" id="imgSiteVisit" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header pt-4 text-center justify-content-center">
+                <button type="button" mat-icon-button id="closeModal" class="close" data-dismiss="modal"
+                    aria-label="Close">
+                    <mat-icon>close</mat-icon>
+                </button>
+            </div>
+            <div class="modal-body pb-4">
+                <div class="site_visit_carousel" style="width: 700px;">
+                    <img [src]="selectedImage" alt style="width: 100%;">
+                    <!-- <owl-carousel-o [options]="customOptionsPopup">
+                        <ng-template carouselSlide *ngFor="let picture of selectedSiteVisit?.pictures">
+                            <img [src]="picture?.image?.url" alt="">
+                        </ng-template>  
+                      </owl-carousel-o> -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<mat-menu #moreAction="matMenu" class="custome_theme_menu">
+    <a mat-menu-item class="danger" data-toggle="modal" data-target="#deleteSiteVisit">Delete Site Visit</a>
+</mat-menu>
+<mat-menu #notesAction="matMenu" class="custome_theme_menu">
+    <a mat-menu-item data-toggle="modal" data-target="#addNotes">Edit</a>
+    <a mat-menu-item class="danger" data-toggle="modal" data-target="#deleteNotes">Delete</a>
+</mat-menu>

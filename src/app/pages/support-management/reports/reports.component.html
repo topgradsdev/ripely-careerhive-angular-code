@@ -1,0 +1,247 @@
+<section class="payment-mngmnt">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="tabl_upr d-flex align-items-center justify-content-between">
+            <mat-form-field appearance="standard">
+              <mat-label>Filter</mat-label>
+              <input matInput (keyup)="applyFilter($event)" placeholder="Ex. Mia" class="filter_input" #input>
+            </mat-form-field>
+            <!-- <div class="fltr_div d-flex align-items-center">
+              <div class="form-group mb-0 ml-3">
+                <select class="form-control custom-select">
+                    <option selected>Select Report Type</option>
+                    <option>Messaging</option>
+                    <option>Jobs</option>
+                    <option>Grad Applications</option>
+                </select>
+              </div>
+  
+            </div> -->
+          </div>
+  
+          <div class="mat-elevation-z8">
+            <div class="table-responsive">
+              <table mat-table [dataSource]="sortedData" matSort>
+                <!-- Checkbox Column -->
+                <ng-container matColumnDef="select">
+                  <th mat-header-cell *matHeaderCellDef>
+                    <mat-checkbox  [checked]="findChecked()" (change)="selectAll($event)"
+                    class="td-check">
+                    </mat-checkbox>
+                  </th>
+                  <td mat-cell *matCellDef="let row">
+                    <mat-checkbox (change)="selectUser($event, row._id)" [(ngModel)]="row.checked" class="td-check">
+                    </mat-checkbox>
+                  </td>
+                  </ng-container>
+                <!-- ID Column -->
+                <ng-container matColumnDef="id">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header> S.No </th>
+                  <td mat-cell *matCellDef="let row; let i=index"> {{i+1}} </td>
+                </ng-container>
+  
+                <!-- postedby Column -->
+                <ng-container matColumnDef="employer">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header>Reported By</th>
+                  <td mat-cell *matCellDef="let row"> {{row?.employer_detail?.first_name}} {{row?.employer_detail?.last_name}}</td>
+                </ng-container>
+  
+                <!-- worktype Column -->
+                <ng-container matColumnDef="candidate">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header>Graduate Name</th>
+                  <td mat-cell *matCellDef="let row"> {{row?.graduate_detail?.first_name}} {{row?.graduate_detail?.last_name}} </td>
+                </ng-container>
+                
+                <!-- worktype Column -->
+                <ng-container matColumnDef="jobtitle">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header>Long Reason</th>
+                  <td mat-cell *matCellDef="let row"> {{row?.description}} </td>
+                </ng-container>
+  
+                <!-- postedby Column -->
+                <ng-container matColumnDef="interviewmethod">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header>Short Reason</th>
+                  <td mat-cell *matCellDef="let row"> {{row?.reasons?.name}} </td>
+                </ng-container>
+                <!-- Company Column -->
+                <ng-container matColumnDef="location">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header>Job Name</th>
+                  <td mat-cell *matCellDef="let row"> {{row?.job_post_detail?.job_title}} </td>
+                </ng-container>
+                 <!-- Job title Column -->
+                <ng-container matColumnDef="date">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header>Reported Date</th>
+                  <td mat-cell *matCellDef="let row"> {{row?.createdAt | date:'dd/MM/yyyy'}} </td>
+                </ng-container>
+
+                <!-- <ng-container matColumnDef="application date">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Job Application Date</th>
+                    <td mat-cell *matCellDef="let row"> {{row?.job_application_detail?.createdAt | date:'dd/MM/yyyy'}} </td>
+                  </ng-container> -->
+                
+                <!-- status column -->
+                <!-- <ng-container matColumnDef="time">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header> Status </th>
+                  <td mat-cell *matCellDef="let row"><span class="badge badge-warning">{{row?.reply_status | titlecase}}</span></td>
+                  
+                </ng-container> -->
+                 <!-- Action column -->
+                 <ng-container matColumnDef="action">
+                  <th mat-header-cell *matHeaderCellDef> Action </th>
+                  <td mat-cell *matCellDef="let row">
+                      <button mat-icon-button [matMenuTriggerFor]="menu" class="td-btn">
+                        <mat-icon>more_vert</mat-icon>
+                      </button>
+                      <mat-menu #menu="matMenu" class="td-menu">
+                        <a mat-menu-item class="" routerLink="/view-report/{{row._id}}">
+                          <mat-icon class="material-icons-outlined">visibility</mat-icon>
+                          <span>View</span>
+                        </a>
+                        <!-- <a mat-menu-item class="" data-toggle="modal" (click)="simple_reply(row._id)">
+                          <mat-icon class="material-icons-outlined">reply</mat-icon>
+                          <span *ngIf="row.reply_status=='pending' ">Reply</span>
+                          <span *ngIf="row.reply_status=='replied' ">Already Replied</span>
+                        </a> -->
+                        <a mat-menu-item class="" data-toggle="modal" (click)="simple_email(row._id,'employer')">
+                          <mat-icon class="material-icons-outlined">email</mat-icon>
+                          <span>Email Employer</span>
+                        </a>
+                        <a mat-menu-item class="" data-toggle="modal" (click)="simple_email(row._id,'graduate')">
+                          <mat-icon class="material-icons-outlined">email</mat-icon>
+                          <span>Email Graduate</span>
+                        </a>
+                        <a mat-menu-item class="" data-toggle="modal" (click)="block_graduate(row.graduate_detail._id,row.graduate_detail.blocked)">
+                          <mat-icon class="material-icons-outlined">not_interested</mat-icon>
+                          <span *ngIf="row.graduate_detail.blocked == false">Block Graduate Profile</span>
+                          <span *ngIf="row.graduate_detail.blocked == true">Unblock Graduate Profile</span>
+
+                        </a>
+                        <a mat-menu-item class="" data-toggle="modal" (click)="delete_id(row._id)">
+                          <mat-icon class="material-icons-outlined" >delete</mat-icon>
+                          <span>Delete</span>
+                        </a>
+                      </mat-menu>
+                  </td>
+                </ng-container>
+  
+                <!-- Progress Column -->
+                <!-- <ng-container matColumnDef="progress">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header> Progress </th>
+                  <td mat-cell *matCellDef="let row"> {{row.progress}}% </td>
+                </ng-container> -->
+  
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  
+                <!-- Row shown when there is no matching data. -->
+                <tr class="mat-row" *matNoDataRow>
+                  <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
+                </tr>
+              </table>
+            </div>
+            <mat-paginator [length]="totalRecords" [pageIndex]="topPage" [pageSize]="limit"
+                [pageSizeOptions]="getPageSizeOptions()" (page)="paginationOptionChange($event)" showFirstLastButtons>
+            </mat-paginator>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Modal -->
+  <div bsModal #smallModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="smallModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-sm" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close td-btn" (click)="smallModal.hide()" aria-label="Close">
+            <span aria-hidden="true" class="prof_modclose">
+              <img src="assets/img/Group 225.png">
+            </span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <p>Are you sure you want to delete this report?</p>
+        </div>
+        <div class="modal-footer justify-content-center">
+          <button type="button" class="btn btn-secondary" (click)="smallModal.hide()">No</button>
+          <button type="button" class="btn btn-primary" (click)="ReportDelete(this.item_id)">Yes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+    <!-- Modal -->
+    <div bsModal #blockModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="blockModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close td-btn" (click)="blockModal.hide()" aria-label="Close">
+              <span aria-hidden="true" class="prof_modclose">
+                <img src="assets/img/Group 225.png">
+              </span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <p>Are you sure you want to block this graduate profile?</p>
+          </div>
+          <div class="modal-footer justify-content-center">
+            <button type="button" class="btn btn-secondary" (click)="blockModal.hide()">No</button>
+            <button type="button" class="btn btn-primary" (click)="BlockProfile(this.block_id,this.type)">Yes</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+
+
+  <!-- Modal -->
+  <div bsModal #replyModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="replyModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header" style="padding:0px;">
+          <button type="button" class="close td-btn" aria-label="Close" (click)="replyModal1()">
+            <span aria-hidden="true" class="prof_modclose">
+              <img src="assets/img/Group 225.png">
+            </span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form [formGroup]="ReplyForm">
+            <div class="row">
+              <div class="col-sm-12">
+                <h1>Send Email</h1>
+                <div class="form-group">
+                  <div class="text-left">
+                    <label>To</label>
+                  </div>
+                  <input type="email" name="" class="form-control" value="" formControlName="email_to">
+                </div>
+                <div class="form-group">
+                  <div class="text-left">
+                    <label>Subject</label>
+                  </div>
+                  <input type="text" name="" class="form-control" value="" formControlName="subject">
+                </div>
+                <div class="form-group">
+                  <textarea class="form-control" rows="3" name="reply" placeholder="Write your message here..." formControlName="reply"></textarea>
+                  <div *ngIf="(ReplyForm.controls.reply?.touched || ReplyForm.controls.reply?.dirty)
+                    && ReplyForm.controls.reply?.invalid && ReplyForm.controls.reply?.errors?.required" style="color:red" >
+                    *Please enter your reply....
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer justify-content-center">
+          <button type="button" class="btn btn-secondary" (click)="replyModal1()">Cancel</button>
+          <button type="submit" class="btn btn-primary" (click)="SendEmail(this.email_id)" >Submit</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  
+  

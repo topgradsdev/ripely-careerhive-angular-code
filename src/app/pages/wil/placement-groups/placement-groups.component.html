@@ -1,0 +1,82 @@
+<div class="page_header">
+    <!-- <a routerLink="/" class="back_Link"> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+            viewBox="0 0 24 24" fill="none">
+            <path d="M19 12H5" stroke="#464BA8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M12 19L5 12L12 5" stroke="#464BA8" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round" />
+        </svg> Back to Students List</a> -->
+    <div class=" page_header_container">
+        <div>
+            <h4>{{placementGroupDetail?.title}}</h4>
+        </div>
+    </div>
+</div>
+
+<section>
+    <div class="bs_tab_nav placement">
+        <ul class="nav nav-pills" id="pills-tab" role="tablist" >
+            <li class="nav-item">
+                <a class="nav-link active" id="overview-tab" data-toggle="pill" href="#overview" role="tab"
+                    aria-controls="overview" aria-selected="true">Overview</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="workflow-tab" data-toggle="pill" href="#workflow" role="tab"
+                    aria-controls="workflow" aria-selected="false">Workflow</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="eligible-submissions-tab" data-toggle="pill" href="#eligible-submissions" role="tab"  (click)="onSubmissionsTabClick()"
+                    aria-controls="eligible-submissions" aria-selected="false">Submissions</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="eligible-students-tab" data-toggle="pill" href="#eligible-students" role="tab"  (click)="onEligibleStudentsTabClick()"
+                    aria-controls="eligible-students" aria-selected="false">Students</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="industry-partners-tab" data-toggle="pill" href="#industry-partners" role="tab" (click)="onCompanyPlacementsTabClick()"
+                    aria-controls="industry-partners" aria-selected="false">Companies</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="placements-tab" data-toggle="pill" href="#placements" role="tab"  (click)="onPlacementsTabClick()"
+                    aria-controls="placements" aria-selected="false">Placements</a>
+            </li>
+        </ul>
+        <div class="tab-content" id="pills-tabContent">
+            <div class="tab-pane fade show active" id="overview" role="tabpanel" aria-labelledby="overview-tab">
+                <app-placement-overview [mode]=actionType (placementDetail)="getPlacementDetails($event)"></app-placement-overview>
+            </div>
+            <div class="tab-pane fade" id="workflow" role="tabpanel" aria-labelledby="workflow-tab">
+                <app-placement-workflow [updatedPlacementDetail]="placementGroupDetails" ></app-placement-workflow>
+            </div>
+            <div class="tab-pane fade" id="eligible-submissions" role="tabpanel" aria-labelledby="eligible-submissions-tab">
+                <app-placement-submissions #placementSubmissions [updatedPlacementDetail]="placementGroupDetails" (refreshTabData)="refreshTabData($event)"></app-placement-submissions>
+            </div>
+            <div class="tab-pane fade" id="eligible-students" role="tabpanel" aria-labelledby="eligible-students-tab">
+                <app-placement-eligible-students #placementEligibleStudents [updatedPlacementDetail]="placementGroupDetails" (refreshTabData)="refreshTabData($event)"></app-placement-eligible-students>
+                <!-- <app-student-import-via-excel></app-student-import-via-excel> -->
+                <!-- <app-student-add-manually></app-student-add-manually> -->
+                <!-- <app-student-search-database></app-student-search-database> -->
+            </div>
+            <div class="tab-pane fade" id="industry-partners" role="tabpanel" aria-labelledby="industry-partners-tab">
+                <app-placement-industry-partners [updatedPlacementDetail]="placementGroupDetails" #companyPlacementTab (refreshTabData)="refreshTabData($event)"></app-placement-industry-partners>
+                <!-- <app-industry-partner-add-by-searching></app-industry-partner-add-by-searching> -->
+            </div>
+            <div class="tab-pane fade" id="placements" role="tabpanel" aria-labelledby="placements-tab">
+               <app-placements-tab [updatedPlacementDetail]="placementGroupDetails" #placementTab (refreshTabData)="refreshTabData($event)"></app-placements-tab>
+            </div>
+        </div>
+    </div>
+    <!-- <mat-tab-group animationDuration="0ms" class="custom_nav_tabs">
+        <mat-tab label="Overview">
+            <app-placement-overview></app-placement-overview>
+        </mat-tab>
+        <mat-tab label="Workflow">
+            <app-placement-workflow></app-placement-workflow>
+        </mat-tab>
+        <mat-tab label="Eligible Students">
+            <app-placement-eligible-students></app-placement-eligible-students>
+        </mat-tab>
+        <mat-tab label="Industry Partners">Content 3</mat-tab>
+        <mat-tab label="Placements">Content 3</mat-tab>
+      </mat-tab-group> -->
+
+</section>

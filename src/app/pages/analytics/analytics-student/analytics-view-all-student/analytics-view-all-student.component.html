@@ -1,0 +1,569 @@
+<div class="page_header">
+    <a routerLink="/admin/analytics/analytics-students" class="back_Link"> <svg xmlns="http://www.w3.org/2000/svg"
+            width="24" height="24" viewBox="0 0 24 24" fill="none">
+            <path d="M19 12H5" stroke="#464BA8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M12 19L5 12L12 5" stroke="#464BA8" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round" />
+        </svg> Back to Student Analytics</a>
+    <div class="page_header_container">
+        <div>
+            <h4>Analytics (Student by State & Suburb)</h4>
+        </div>
+    </div>
+</div>
+<section class="analytics">
+    <div class="anlytc_card">
+        <div class="row">
+            <div class="col-xl-5">
+                <div class="anlytc_card_header">
+                    <h3>Student Locations Across Australia</h3>
+                </div>
+                <div class="anlytc_card_body">
+
+                </div>
+            </div>
+            <div class="col-xl-7">
+                <div class="anlytc_card_header">
+                    <h3>Student Locations By State</h3>
+                </div>
+                <div class="anlytc_card_body">
+                    <ul class="location_state_progress_list">
+                        <li>
+                            <label><span>VIC</span> <span>57</span></label>
+                            <div class="progress">
+                                <div class="progress-bar" style="width: 100%;" role="progressbar" id="pp"
+                                    aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+                        </li>
+                        <li>
+                            <label><span>NSW</span> <span>34</span></label>
+                            <div class="progress">
+                                <div class="progress-bar" style="width: 75%;" role="progressbar" id="pp"
+                                    aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+                        </li>
+                        <li>
+                            <label><span>QLD</span> <span>30</span></label>
+                            <div class="progress">
+                                <div class="progress-bar" style="width: 60%;" role="progressbar" id="pp"
+                                    aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+                        </li>
+                        <li>
+                            <label><span>QLD</span> <span>30</span></label>
+                            <div class="progress">
+                                <div class="progress-bar" style="width: 60%;" role="progressbar" id="pp"
+                                    aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+                        </li>
+                        <li>
+                            <label><span>SA</span> <span>25</span></label>
+                            <div class="progress">
+                                <div class="progress-bar" style="width: 45%;" role="progressbar" id="pp"
+                                    aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row sub_header">
+        <!-- Begin:: Email and Download(xlsx) -->
+        <div class="col-md-7 action_btns_header">
+            <!-- <button mat-button class="theme_btn theme_link_btn" data-toggle="modal" data-target="#sendEmail">
+        <svg class="mr-2" xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 25 25"
+            fill="none">
+            <path
+                d="M4.5 4.5H20.5C21.6 4.5 22.5 5.4 22.5 6.5V18.5C22.5 19.6 21.6 20.5 20.5 20.5H4.5C3.4 20.5 2.5 19.6 2.5 18.5V6.5C2.5 5.4 3.4 4.5 4.5 4.5Z"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M22.5 6.5L12.5 13.5L2.5 6.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round" />
+        </svg> Email
+    </button>
+    <button mat-button class="theme_btn theme_link_btn">
+        <svg class="mr-2" xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 25 25"
+            fill="none">
+            <path
+                d="M21.5 15.5V19.5C21.5 20.0304 21.2893 20.5391 20.9142 20.9142C20.5391 21.2893 20.0304 21.5 19.5 21.5H5.5C4.96957 21.5 4.46086 21.2893 4.08579 20.9142C3.71071 20.5391 3.5 20.0304 3.5 19.5V15.5"
+                stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M7.5 10.5L12.5 15.5L17.5 10.5" stroke="currentColor" stroke-width="1.5"
+                stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M12.5 15.5L12.5 3.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+                stroke-linejoin="round" />
+        </svg> Download (xlsx)
+    </button> -->
+        </div>
+        <div class="col-md-5 text-right searchbar-end">
+            <div class="d-inline-flex align-items-center">
+                <div class="search-container">
+                    <svg class="icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20"
+                        fill="none">
+                        <path
+                            d="M9.16667 15.8333C12.8486 15.8333 15.8333 12.8486 15.8333 9.16667C15.8333 5.48477 12.8486 2.5 9.16667 2.5C5.48477 2.5 2.5 5.48477 2.5 9.16667C2.5 12.8486 5.48477 15.8333 9.16667 15.8333Z"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                        <path d="M17.5 17.5L13.875 13.875" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                            stroke-linejoin="round" />
+                    </svg>
+                    <input type="text" class="form-control" placeholder="Search Keywords">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="table-responsive">
+        <table mat-table [dataSource]="studentList" matSort class="ch_table">
+            <!-- Checkbox Column -->
+            <ng-container matColumnDef="checkbox" sticky>
+                <th mat-header-cell *matHeaderCellDef>
+                    <mat-checkbox class="example-margin"></mat-checkbox>
+                </th>
+                <td mat-cell *matCellDef="let element">
+                    <mat-checkbox class="example-margin"></mat-checkbox>
+                </td>
+            </ng-container>
+            <!-- Student ID Column -->
+            <ng-container matColumnDef="student_id" sticky>
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Student Id </th>
+                <td mat-cell *matCellDef="let row">s3515996 </td>
+            </ng-container>
+            <!-- Name Column -->
+            <ng-container matColumnDef="name" sticky>
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> First Name </th>
+                <td mat-cell *matCellDef="let row">
+                    <div class="profile">
+                        <img src="../../../../../assets/img/avatars/1.jpg" alt="avatars">
+                        <!-- <span class="text-uppercase">NK</span> -->
+                    </div>
+                    <a routerLink="#" class="td_link">Bob Jade</a>
+                </td>
+            </ng-container>
+            <ng-container matColumnDef="location" sticky>
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Location </th>
+                <td mat-cell *matCellDef="let row">
+                    Melbourne, VIC
+                </td>
+            </ng-container>
+            <!-- Major Column -->
+            <ng-container matColumnDef="major">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Major </th>
+                <td mat-cell *matCellDef="let row"> Bachelor of Civil Engineering</td>
+            </ng-container>
+            <!-- Assigned Column -->
+            <ng-container matColumnDef="assignedTo">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Assigned To </th>
+                <td mat-cell *matCellDef="let row">
+                    <div class="d-flex align-items-center mb-2">
+                        <div class="profile">
+                            <img src="../../../../../assets/img/avatars/1.jpg" alt="avatars">
+                            <!-- <span>
+                            {{getFirstLetter(row.assigned_to)}}
+                        </span> -->
+                        </div> <span>
+                            Tony Green
+                        </span>
+                    </div>
+                    <small>By Miranda Dawn</small>
+
+                </td>
+            </ng-container>
+            <!-- Priority Column -->
+            <ng-container matColumnDef="priority">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Priority</th>
+                <td mat-cell *matCellDef="let row">
+                    <div>
+                        <mat-select class="custom_dorp_select default">
+                            <mat-option [value]="'Low'">Low</mat-option>
+                            <mat-option [value]="'Medium'">Medium</mat-option>
+                            <mat-option [value]="'High'">High</mat-option>
+                        </mat-select>
+                    </div>
+                </td>
+            </ng-container>
+            <!-- status column -->
+            <ng-container matColumnDef="status">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Status </th>
+                <td mat-cell *matCellDef="let row">
+                    <mat-select class="custom_dorp_select default">
+                        <mat-option [value]="'Placed'">Placed</mat-option>
+                        <mat-option [value]="'In Progress'">In Progress</mat-option>
+                        <mat-option [value]="'Conditional Approval'">Conditional Approval</mat-option>
+                        <mat-option [value]="'Deferred'">Deferred</mat-option>
+                        <mat-option [value]="'Inactive'">Inactive</mat-option>
+                    </mat-select>
+                </td>
+            </ng-container>
+            <!-- Placement Group column -->
+            <ng-container matColumnDef="placementGroup">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Placement Group </th>
+                <td mat-cell *matCellDef="let row">
+                    Jan 2024 PY IT Internship
+                </td>
+            </ng-container>
+            <!-- Monthly Cohort  Column -->
+            <!-- <ng-container matColumnDef="monthlyCohort">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Monthly Cohort</th>
+                <td mat-cell *matCellDef="let row">25/02/24</td>
+            </ng-container> -->
+            <!-- Campus Column -->
+            <ng-container matColumnDef="campus">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Campus</th>
+                <td mat-cell *matCellDef="let row"> Parramatta Campus </td>
+            </ng-container>
+            <!-- Resume Level column -->
+            <ng-container matColumnDef="resumeLevel">
+                <th mat-header-cell *matHeaderCellDef> Resume Level </th>
+                <td mat-cell *matCellDef="let row">
+                    <mat-select class="custom_dorp_select default">
+                        <mat-option value="Select Level">Select Level</mat-option>
+                        <mat-option [value]="'A'">A</mat-option>
+                        <mat-option [value]="'B'">B</mat-option>
+                        <mat-option [value]="'C'">C</mat-option>
+                    </mat-select>
+                </td>
+            </ng-container>
+            <!-- Area Column -->
+            <ng-container matColumnDef="area">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Area</th>
+                <td mat-cell *matCellDef="let row"> Network Admin/Cyber Security </td>
+            </ng-container>
+            <!-- Skills Column -->
+            <ng-container matColumnDef="skills">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Skills</th>
+                <td mat-cell *matCellDef="let row"> n/a </td>
+            </ng-container>
+            <!-- Placement DOcs Received column -->
+            <ng-container matColumnDef="docs">
+                <th mat-header-cell *matHeaderCellDef> Placement Docs Received </th>
+                <td mat-cell *matCellDef="let row">
+                    <mat-select class="custom_dorp_select default">
+                        <mat-option [value]="'Received'">Received</mat-option>
+                        <mat-option [value]="'Not Received'">Not Received</mat-option>
+                    </mat-select>
+                </td>
+            </ng-container>
+            <!-- Email Column -->
+            <ng-container matColumnDef="email">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Email</th>
+                <td mat-cell *matCellDef="let row">bobjade@email.com.au</td>
+            </ng-container>
+            <!-- primary Email Column -->
+            <!-- <ng-container matColumnDef="primaryEmail">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Primary Email</th>
+            <td mat-cell *matCellDef="let row">{{row.primary_email}}</td>
+        </ng-container> -->
+            <!-- secondary Email Column -->
+            <!-- <ng-container matColumnDef="secondaryEmail">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Secondary Email</th>
+            <td mat-cell *matCellDef="let row">{{row.secondary_email}}</td>
+        </ng-container> -->
+            <!-- IIS Column -->
+            <ng-container matColumnDef="IIS">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>IIS</th>
+                <td mat-cell *matCellDef="let row">17/05/23</td>
+            </ng-container>
+            <!-- PPI Date Column -->
+            <ng-container matColumnDef="ppiDate">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>PPI Date</th>
+                <td mat-cell *matCellDef="let row"> 17/05/23 </td>
+            </ng-container>
+            <!-- PPI ID Column -->
+            <ng-container matColumnDef="ppiId">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>PPI ID</th>
+                <td mat-cell *matCellDef="let row">20230511_16</td>
+            </ng-container>
+            <!--School Name Column -->
+            <ng-container matColumnDef="schoolName">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>School Name</th>
+                <td mat-cell *matCellDef="let row">ECA Professional Year</td>
+            </ng-container>
+            <!-- Home Campus Column -->
+            <ng-container matColumnDef="homeCampus">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Home Campus</th>
+                <td mat-cell *matCellDef="let row">Sydney Campus (Parramatta)</td>
+            </ng-container>
+            <!-- Gender Column -->
+            <ng-container matColumnDef="gender">
+                <th mat-header-cell *matHeaderCellDef>Gender</th>
+                <td mat-cell *matCellDef="let row">M</td>
+            </ng-container>
+            <!-- Date of Birth Column -->
+            <ng-container matColumnDef="dob">
+                <th mat-header-cell *matHeaderCellDef>Date of Birth</th>
+                <td mat-cell *matCellDef="let row">05/08/1994</td>
+            </ng-container>
+            <!-- Course Code Column -->
+            <ng-container matColumnDef="courseCode">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Course Code</th>
+                <td mat-cell *matCellDef="let row">PYPIT</td>
+            </ng-container>
+            <!-- Course Name Column -->
+            <ng-container matColumnDef="courseName">
+                <th mat-header-cell *matHeaderCellDef>Course Name</th>
+                <td mat-cell *matCellDef="let row">ACS Professional Year</td>
+            </ng-container>
+            <!-- Course Start Date Column -->
+            <ng-container matColumnDef="coursStartDate">
+                <th mat-header-cell *matHeaderCellDef>Course Start Date</th>
+                <td mat-cell *matCellDef="let row">05/01/2022</td>
+            </ng-container>
+            <!-- Course End Date Column -->
+            <ng-container matColumnDef="coursEndDate">
+                <th mat-header-cell *matHeaderCellDef>Course End Date</th>
+                <td mat-cell *matCellDef="let row">14/12/2022</td>
+            </ng-container>
+            <!-- Subject Status Column -->
+            <ng-container matColumnDef="subjectStatus">
+                <th mat-header-cell *matHeaderCellDef>Subject Status</th>
+                <td mat-cell *matCellDef="let row">Current Student</td>
+            </ng-container>
+            <!-- Nationality Column -->
+            <ng-container matColumnDef="nationality">
+                <th mat-header-cell *matHeaderCellDef>Nationality</th>
+                <td mat-cell *matCellDef="let row">Australian</td>
+            </ng-container>
+            <!-- Address Line 1 Column -->
+            <ng-container matColumnDef="addressLine1">
+                <th mat-header-cell *matHeaderCellDef>Address Line 1</th>
+                <td mat-cell *matCellDef="let row">UNIT 9, 6-10 Railway Parade</td>
+            </ng-container>
+            <!-- Suburb Column -->
+            <ng-container matColumnDef="suburb">
+                <th mat-header-cell *matHeaderCellDef>Suburb</th>
+                <td mat-cell *matCellDef="let row">Westmead</td>
+            </ng-container>
+            <!-- State Column -->
+            <ng-container matColumnDef="state">
+                <th mat-header-cell *matHeaderCellDef>State</th>
+                <td mat-cell *matCellDef="let row">NSW</td>
+            </ng-container>
+            <!-- Postcode Column -->
+            <ng-container matColumnDef="postcode">
+                <th mat-header-cell *matHeaderCellDef>Postcode</th>
+                <td mat-cell *matCellDef="let row">2145</td>
+            </ng-container>
+            <!-- Country Column -->
+            <ng-container matColumnDef="country">
+                <th mat-header-cell *matHeaderCellDef>Country</th>
+                <td mat-cell *matCellDef="let row">Australia</td>
+            </ng-container>
+            <!-- Mobile Column -->
+            <ng-container matColumnDef="mobile">
+                <th mat-header-cell *matHeaderCellDef>Mobile</th>
+                <td mat-cell *matCellDef="let row">412345678</td>
+            </ng-container>
+            <!-- Tentative Start Date Column -->
+            <ng-container matColumnDef="tentativeStartDate">
+                <th mat-header-cell *matHeaderCellDef>Tentative Start Date</th>
+                <td mat-cell *matCellDef="let row">1/01/2024 </td>
+            </ng-container>
+            <!-- internship Start Date Column -->
+            <ng-container matColumnDef="internshipStartDate">
+                <th mat-header-cell *matHeaderCellDef>Internship Start Date</th>
+                <td mat-cell *matCellDef="let row">1/01/2024 <button mat-icon-button><svg width="16" height="16"
+                            viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="8" cy="8" r="8" fill="#F8F8F8" />
+                            <path fill-rule="evenodd" clip-rule="evenodd"
+                                d="M9.47847 4.66666C9.69671 4.66666 9.90592 4.7538 10.0587 4.9078L11.0924 5.94143C11.2462 6.09532 11.3327 6.30405 11.3327 6.52168C11.3327 6.73932 11.2462 6.94804 11.0924 7.10194L7.31852 10.8746C7.08569 11.1432 6.75565 11.3082 6.37755 11.3341H4.66602V11.0008L4.6671 9.59576C4.6955 9.24427 4.8589 8.91743 5.10818 8.6978L8.89781 4.9082C9.05148 4.7536 9.26047 4.66666 9.47847 4.66666ZM6.35401 10.6683C6.53208 10.6557 6.69784 10.5728 6.83095 10.4205L9.35158 7.8999L8.10012 6.64839L5.56472 9.18319C5.42967 9.30263 5.34612 9.46973 5.33268 9.6226V10.6676L6.35401 10.6683ZM8.57158 6.17704L9.82299 7.42849L10.6209 6.63053C10.6498 6.60166 10.666 6.56251 10.666 6.52168C10.666 6.48086 10.6498 6.4417 10.6209 6.41284L9.58639 5.37828C9.55785 5.34951 9.51899 5.33332 9.47847 5.33332C9.43794 5.33332 9.39909 5.34951 9.37054 5.37828L8.57158 6.17704Z"
+                                fill="#2B2A35" />
+                        </svg></button>
+                </td>
+            </ng-container>
+            <!-- Internship End Date Column -->
+            <ng-container matColumnDef="internshipEndDate">
+                <th mat-header-cell *matHeaderCellDef>Internship End Date</th>
+                <td mat-cell *matCellDef="let row">1/01/2024</td>
+            </ng-container>
+            <!-- Semester Name Column -->
+            <ng-container matColumnDef="semesterName">
+                <th mat-header-cell *matHeaderCellDef>Semester Name</th>
+                <td mat-cell *matCellDef="let row">2024</td>
+            </ng-container>
+            <!-- Year Column -->
+            <ng-container matColumnDef="year">
+                <th mat-header-cell *matHeaderCellDef>Year</th>
+                <td mat-cell *matCellDef="let row">2024</td>
+            </ng-container>
+            <!-- Subject Code Column -->
+            <ng-container matColumnDef="subjectCode">
+                <th mat-header-cell *matHeaderCellDef>Subject Code</th>
+                <td mat-cell *matCellDef="let row">INT</td>
+            </ng-container>
+            <!-- Subject Name Column -->
+            <ng-container matColumnDef="subjectName">
+                <th mat-header-cell *matHeaderCellDef>Subject Name</th>
+                <td mat-cell *matCellDef="let row">Internship</td>
+            </ng-container>
+            <!-- user Name Column -->
+            <ng-container matColumnDef="userName">
+                <th mat-header-cell *matHeaderCellDef>user Name</th>
+                <td mat-cell *matCellDef="let row">PY123456</td>
+            </ng-container>
+            <!-- VEVO/IIS/PPI Column -->
+            <ng-container matColumnDef="vivoMarketingIisPpi">
+                <th class="text-center" mat-header-cell *matHeaderCellDef mat-sort-header>VEVO/MARKING/IIS/PPI</th>
+                <td mat-cell *matCellDef="let row" class="text-center"> <mat-checkbox></mat-checkbox>
+                </td>
+            </ng-container>
+            <!-- MARKING Column -->
+            <!-- <ng-container matColumnDef="marketing">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Marking</th>
+            <td mat-cell *matCellDef="let row"> <mat-checkbox [(ngModel)]="row.marking"></mat-checkbox></td>
+        </ng-container> -->
+            <!-- VEVO Expiry Column -->
+            <ng-container matColumnDef="vivoExpiry">
+                <th class="text-center" mat-header-cell *matHeaderCellDef mat-sort-header>VEVO Expiry</th>
+                <td class="text-center" mat-cell *matCellDef="let row"> <mat-checkbox></mat-checkbox></td>
+            </ng-container>
+            <!-- Placement Type Column -->
+            <ng-container matColumnDef="placementType">
+                <th mat-header-cell *matHeaderCellDef>Placement Type</th>
+                <td mat-cell *matCellDef="let row">Own Employment</td>
+            </ng-container>
+            <!-- Notes Column -->
+            <ng-container matColumnDef="notes">
+                <th mat-header-cell *matHeaderCellDef>Notes</th>
+                <td mat-cell *matCellDef="let row">n/a <button mat-icon-button><svg width="16" height="16"
+                            viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="8" cy="8" r="8" fill="#F8F8F8" />
+                            <path fill-rule="evenodd" clip-rule="evenodd"
+                                d="M9.47847 4.66666C9.69671 4.66666 9.90592 4.7538 10.0587 4.9078L11.0924 5.94143C11.2462 6.09532 11.3327 6.30405 11.3327 6.52168C11.3327 6.73932 11.2462 6.94804 11.0924 7.10194L7.31852 10.8746C7.08569 11.1432 6.75565 11.3082 6.37755 11.3341H4.66602V11.0008L4.6671 9.59576C4.6955 9.24427 4.8589 8.91743 5.10818 8.6978L8.89781 4.9082C9.05148 4.7536 9.26047 4.66666 9.47847 4.66666ZM6.35401 10.6683C6.53208 10.6557 6.69784 10.5728 6.83095 10.4205L9.35158 7.8999L8.10012 6.64839L5.56472 9.18319C5.42967 9.30263 5.34612 9.46973 5.33268 9.6226V10.6676L6.35401 10.6683ZM8.57158 6.17704L9.82299 7.42849L10.6209 6.63053C10.6498 6.60166 10.666 6.56251 10.666 6.52168C10.666 6.48086 10.6498 6.4417 10.6209 6.41284L9.58639 5.37828C9.55785 5.34951 9.51899 5.33332 9.47847 5.33332C9.43794 5.33332 9.39909 5.34951 9.37054 5.37828L8.57158 6.17704Z"
+                                fill="#2B2A35" />
+                        </svg></button></td>
+            </ng-container>
+            <!-- Site Visit Date Column -->
+            <ng-container matColumnDef="siteVisitDate">
+                <th mat-header-cell *matHeaderCellDef>Site Visit Date</th>
+                <td mat-cell *matCellDef="let row">05/08/1994</td>
+            </ng-container>
+            <!-- Company Name Column -->
+            <ng-container matColumnDef="companyName">
+                <th mat-header-cell *matHeaderCellDef>Company Name </th>
+                <td mat-cell *matCellDef="let row">
+                    <div class="mod_groups">
+                        <div class="avatar">
+                            <img src="../../../../../assets/img/woolworths.svg" alt="woolworths">
+                        </div>
+                        <span routerLink="#"> Woolworths </span>
+                    </div>
+                </td>
+            </ng-container>
+            <!-- ABN (11 Digits) Column -->
+            <ng-container matColumnDef="ABN">
+                <th mat-header-cell *matHeaderCellDef>ABN (11 Digits)</th>
+                <td mat-cell *matCellDef="let row">26636806525 </td>
+            </ng-container>
+            <!-- Internship Position Title Column -->
+            <ng-container matColumnDef="internshipPositionTitle">
+                <th mat-header-cell *matHeaderCellDef>Internship Position Title</th>
+                <td mat-cell *matCellDef="let row">Network Support Analyst</td>
+            </ng-container>
+            <!-- Workplace Arrangement Title Column -->
+            <ng-container matColumnDef="workplaceArrangement">
+                <th mat-header-cell *matHeaderCellDef>Workplace Arrangement</th>
+                <td mat-cell *matCellDef="let row">WFH </td>
+            </ng-container>
+            <!-- Internship Days Column -->
+            <ng-container matColumnDef="internshipDays">
+                <th mat-header-cell *matHeaderCellDef>Internship Days</th>
+                <td mat-cell *matCellDef="let row">M, T, W </td>
+            </ng-container>
+            <!-- Hours/Week Column -->
+            <ng-container matColumnDef="hoursWeek">
+                <th mat-header-cell *matHeaderCellDef>Hours/Week</th>
+                <td mat-cell *matCellDef="let row">26<button mat-icon-button>
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="8" cy="8" r="8" fill="#F8F8F8" />
+                            <path fill-rule="evenodd" clip-rule="evenodd"
+                                d="M9.47847 4.66666C9.69671 4.66666 9.90592 4.7538 10.0587 4.9078L11.0924 5.94143C11.2462 6.09532 11.3327 6.30405 11.3327 6.52168C11.3327 6.73932 11.2462 6.94804 11.0924 7.10194L7.31852 10.8746C7.08569 11.1432 6.75565 11.3082 6.37755 11.3341H4.66602V11.0008L4.6671 9.59576C4.6955 9.24427 4.8589 8.91743 5.10818 8.6978L8.89781 4.9082C9.05148 4.7536 9.26047 4.66666 9.47847 4.66666ZM6.35401 10.6683C6.53208 10.6557 6.69784 10.5728 6.83095 10.4205L9.35158 7.8999L8.10012 6.64839L5.56472 9.18319C5.42967 9.30263 5.34612 9.46973 5.33268 9.6226V10.6676L6.35401 10.6683ZM8.57158 6.17704L9.82299 7.42849L10.6209 6.63053C10.6498 6.60166 10.666 6.56251 10.666 6.52168C10.666 6.48086 10.6498 6.4417 10.6209 6.41284L9.58639 5.37828C9.55785 5.34951 9.51899 5.33332 9.47847 5.33332C9.43794 5.33332 9.39909 5.34951 9.37054 5.37828L8.57158 6.17704Z"
+                                fill="#2B2A35" />
+                        </svg>
+                    </button>
+                </td>
+            </ng-container>
+            <!-- Total Hours Column -->
+            <!-- <ng-container matColumnDef="totalHours">
+            <th mat-header-cell *matHeaderCellDef>Total Hours</th>
+            <td mat-cell *matCellDef="let row">{{row.total_hours}} </td>
+        </ng-container> -->
+            <!-- TPAF Deadline Column -->
+            <ng-container matColumnDef="TPAFDeadline">
+                <th mat-header-cell *matHeaderCellDef>TPAF Deadline</th>
+                <td mat-cell *matCellDef="let row">n/a </td>
+            </ng-container>
+            <!-- TPAF Received Column -->
+            <ng-container matColumnDef="TPAFReceived">
+                <th class="text-center" mat-header-cell *matHeaderCellDef mat-sort-header>TPAF Received</th>
+                <td class="text-center" mat-cell *matCellDef="let row"> <mat-checkbox></mat-checkbox>
+                </td>
+            </ng-container>
+            <!-- Week 1 Check-in Column -->
+            <ng-container matColumnDef="week1CheckIn">
+                <th mat-header-cell *matHeaderCellDef>Week 1 Check-in</th>
+                <td mat-cell *matCellDef="let row">n/a</td>
+            </ng-container>
+            <!-- Week 1 Check-in Received Column -->
+            <ng-container matColumnDef="week1CheckInReceived">
+                <th class="text-center" mat-header-cell *matHeaderCellDef mat-sort-header>Wk 1 Checkin Received</th>
+                <td class="text-center" mat-cell *matCellDef="let row"> <mat-checkbox></mat-checkbox></td>
+            </ng-container>
+            <!-- MPR/ECV1-6 Deadline Column -->
+            <ng-container matColumnDef="MPR_ECV1_6Deadline">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>MPR/ECV1-6 Deadline</th>
+                <td mat-cell *matCellDef="let row">24/07/24</td>
+            </ng-container>
+            <!-- MPR/ECV1-6 Received Column -->
+            <ng-container matColumnDef="MPR_ECV1_6Received">
+                <th class="text-center" mat-header-cell *matHeaderCellDef mat-sort-header>MPR/ECV1-6 Received</th>
+                <td class="text-center" mat-cell *matCellDef="let row"> <mat-checkbox></mat-checkbox></td>
+            </ng-container>
+            <!-- Student MPC ID Column -->
+            <ng-container matColumnDef="studentMPC_ID">
+                <th mat-header-cell *matHeaderCellDef>Student MPC ID</th>
+                <td mat-cell *matCellDef="let row">20231009_151928 </td>
+            </ng-container>
+            <!-- Sup MPC ID Column -->
+            <ng-container matColumnDef="SUP_MPC_ID">
+                <th mat-header-cell *matHeaderCellDef>Sup MPC ID</th>
+                <td mat-cell *matCellDef="let row">20231009_151928 </td>
+            </ng-container>
+            <!-- EPR/ECV7-12 Deadline Column -->
+            <ng-container matColumnDef="EPR_ECV7_12Deadline">
+                <th mat-header-cell *matHeaderCellDef>EPR/ECV7-12 Deadline</th>
+                <td mat-cell *matCellDef="let row">24/07/24 </td>
+            </ng-container>
+            <!-- EPR/ECV7-12 Received Column -->
+            <ng-container matColumnDef="EPR_ECV7_12Received">
+                <th class="text-center" mat-header-cell *matHeaderCellDef>EPR/ECV7-12 Received</th>
+                <td class="text-center" mat-cell *matCellDef="let row"><mat-checkbox></mat-checkbox></td>
+            </ng-container>
+            <!-- Student EPC ID Column -->
+            <ng-container matColumnDef="studentEPC_ID">
+                <th mat-header-cell *matHeaderCellDef>Student EPC ID</th>
+                <td mat-cell *matCellDef="let row">20231009_151928</td>
+            </ng-container>
+            <!-- SUP EPC ID Column -->
+            <ng-container matColumnDef="SUP_EPC_ID">
+                <th mat-header-cell *matHeaderCellDef>SUP EPC ID</th>
+                <td mat-cell *matCellDef="let row">20231009_151928</td>
+            </ng-container>
+            <!-- Action column -->
+            <ng-container matColumnDef="actions" stickyEnd>
+                <th mat-header-cell *matHeaderCellDef> Actions </th>
+                <td mat-cell *matCellDef="let row">
+                    <button mat-icon-button [matMenuTriggerFor]="menu" class="td-btn">
+                        <mat-icon>more_horizantal</mat-icon>
+                    </button>
+                    <mat-menu #menu="matMenu" class="td-menu">
+                        <a mat-menu-item data-toggle="modal" data-target="#sendEmail">
+                            <span>Email</span>
+                        </a>
+                    </mat-menu>
+                </td>
+            </ng-container>
+            <tr mat-header-row *matHeaderRowDef="displayColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayColumns;"></tr>
+        </table>
+    </div>
+    <app-paginator></app-paginator>
+</section>
+<app-send-email-popup modalId="sendEmail"  [type]="'student'"></app-send-email-popup>

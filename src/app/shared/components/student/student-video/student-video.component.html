@@ -1,0 +1,41 @@
+<section>
+    <div class="page_sub_header">
+        <div class="custom_container">
+            <a routerLink="/student/my-placements">
+                < Back to My Tasks</a>
+                    <h3>{{taskDetail?.name}} - {{userDetail?.first_name}} {{userDetail?.last_name}}</h3>
+        </div>
+    </div>
+    <!-- <p *ngIf="showDownload">show</p>
+    <p *ngIf="!showDownload">hide</p> -->
+
+    <div class="custom_container d-flex justify-content-center align-items-center flex-column alert custom_alert alert-dismissible fade show alert_info mt-4 mb-4" role="alert" style="background:#fff !important">
+        <div class="video-div" *ngIf="taskDetail.safeVideoUrl">
+            <!-- <div class="mb-2" [ngClass]="{'border-discription': taskDetail.description}">
+                <p class="m-1" [innerHTML]="taskDetail.description"></p>
+            </div> -->
+            <iframe [src]="taskDetail.safeVideoUrl" title="{{taskDetail.name}}" frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                referrerpolicy="strict-origin-when-cross-origin" allowfullscreen
+                class="video-iframe"></iframe>
+        </div>     
+        
+        
+        <button
+
+            *ngIf="taskDetail.task_status === 'completed' || taskDetail.student_status === 'completed'" mat-button class="theme_btn btn_primary"
+             (click)="submitWorkflowVideo(taskDetail)">Acknowledge</button>
+
+        <button *ngIf="taskDetail.task_status === 'pending' && taskDetail.status == 'declined'"
+            mat-button class="theme_btn btn_primary"
+            (click)="submitWorkflowVideo(taskDetail)">Update the Acknowledge</button>
+
+        <button
+            *ngIf="taskDetail.task_status === 'pending' && taskDetail.status != 'declined' && taskDetail.student_status != 'completed'"
+            mat-button class="theme_btn btn_primary"
+            (click)="submitWorkflowVideo(taskDetail)">Acknowledge</button>
+
+        <button *ngIf="taskDetail.task_status === 'lock'" mat-button
+            class="theme_btn btn_primary"  (click)="submitWorkflowVideo(taskDetail)">Acknowledge</button>
+    </div>
+</section>
