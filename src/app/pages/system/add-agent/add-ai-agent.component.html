@@ -65,7 +65,7 @@
 
              
                 <div class="d-flex gap-3">
-                    <button mat-button class="theme_btn btn_danger" [routerLink]="['/admin/system/agent-list']">Delete Agent</button>
+                    <!-- <button mat-button class="theme_btn btn_danger" [routerLink]="['/admin/system/agent-list']">Delete Agent</button> -->
                     <button mat-button class="theme_btn btn_primary" [routerLink]="['/admin/system/agent-list']">Save Changes</button>
                 </div>
                 
@@ -74,7 +74,7 @@
 
 
 
-        <div class="layout">
+        <div class="layout" [class.chat-collapsed]="!isChatVisible">
 
             <div class="sidebar1">
                 <h3>Configure Agent</h3>
@@ -124,33 +124,389 @@
 
 
                 <!-- PERSONALITY -->
-                <div *ngIf="selectedSection === 'personality'" class="card">
-                <h2>Personality & Style</h2>
-                <p>Configure personality settings here...</p>
+                <div *ngIf="selectedSection === 'personality'" class="card personality-card">
+                    <div class="card-header">
+                        <h2>Personality</h2>
+                        <button class="primary-btn">Update</button>
+                    </div>
+
+                    <!-- Persona Tone & Style -->
+                    <div class="persona-select-section">
+                        <label class="persona-label">Persona Tone & Style</label>
+                        <div class="persona-dropdown">
+                            <select>
+                                <option value="" disabled selected>Select Persona</option>
+                            </select>
+                            <svg class="dropdown-arrow" width="20" height="20" viewBox="0 0 24 24" fill="none">
+                                <path d="M6 9L12 15L18 9" stroke="#2B2A35" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </div>
+                    </div>
+
+                    <!-- Personality Sliders -->
+                    <div class="personality-sliders">
+                        <div class="slider-column" *ngFor="let trait of personalityTraits; let i = index">
+                            <div class="slider-title">{{ trait.name }}</div>
+                            <div class="slider-high-label">{{ trait.highLabel }}</div>
+
+                            <div class="slider-track-wrapper">
+                                <div class="track-line"></div>
+                                <div class="slider-steps">
+                                    <div class="step"
+                                         *ngFor="let level of sliderLevels"
+                                         [class.active]="trait.value === level"
+                                         (click)="setTraitValue(i, level)">
+                                        <div class="active-dot" *ngIf="trait.value === level">{{ level }}</div>
+                                        <div class="tick-mark" *ngIf="trait.value !== level"></div>
+                                        <span class="step-number" *ngIf="trait.value !== level">{{ level }}</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="slider-low-label">{{ trait.lowLabel }}</div>
+                        </div>
+                    </div>
+
+                    <!-- Radar Chart -->
+                    <div class="radar-chart-container">
+                        <canvas baseChart
+                            [data]="radarChartData"
+                            [options]="radarChartOptions"
+                            type="radar">
+                        </canvas>
+                    </div>
                 </div>
 
-                <!-- KNOWLEDGE -->
-                <div *ngIf="selectedSection === 'knowledge'" class="card">
-                <h2>Knowledge Bank</h2>
-                <p>Upload or manage knowledge base...</p>
+                <!-- KNOWLEDGE BANK -->
+                <div *ngIf="selectedSection === 'knowledge'" class="card kb-card">
+                    <div class="card-header">
+                        <h2>Knowledge Bank</h2>
+                        <button class="primary-btn">Update</button>
+                    </div>
+
+                    <!-- Search -->
+                    <div class="kb-search-section">
+                        <label class="kb-search-label">Select Knowledge Bases</label>
+                        <div class="kb-search-input">
+                            <input type="text" placeholder="Search and Select Knowledge Base" />
+                        </div>
+                    </div>
+
+                    <!-- Knowledge Base Items -->
+                    <div class="kb-items">
+                        <div class="kb-item" *ngFor="let kb of knowledgeBases; let i = index"
+                             [class.expanded]="kb.expanded">
+
+                            <!-- Accordion Header -->
+                            <div class="kb-item-header" (click)="toggleKnowledgeBase(i)">
+                                <span class="kb-item-name">{{ kb.name }}</span>
+                                <div class="kb-item-actions">
+                                    <svg class="kb-icon-btn" (click)="removeKnowledgeBase(i, $event)" width="18" height="18" viewBox="0 0 24 24" fill="none">
+                                        <path d="M3 6H5H21" stroke="#9A9A9A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        <path d="M8 6V4C8 3.46957 8.21071 2.96086 8.58579 2.58579C8.96086 2.21071 9.46957 2 10 2H14C14.5304 2 15.0391 2.21071 15.4142 2.58579C15.7893 2.96086 16 3.46957 16 4V6M19 6V20C19 20.5304 18.7893 21.0391 18.4142 21.4142C18.0391 21.7893 17.5304 22 17 22H7C6.46957 22 5.96086 21.7893 5.58579 21.4142C5.21071 21.0391 5 20.5304 5 20V6H19Z" stroke="#9A9A9A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                    <svg class="kb-chevron" [class.rotated]="kb.expanded" width="20" height="20" viewBox="0 0 24 24" fill="none">
+                                        <path d="M6 9L12 15L18 9" stroke="#2B2A35" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                </div>
+                            </div>
+
+                            <!-- Accordion Body -->
+                            <div class="kb-item-body" *ngIf="kb.expanded">
+
+                                <!-- Brain & Knowledge -->
+                                <div class="kb-section" *ngIf="kb.brainFiles.length">
+                                    <h4 class="kb-section-title">Brain & Knowledge</h4>
+                                    <div class="kb-file" *ngFor="let file of kb.brainFiles">
+                                        <div class="kb-file-info">
+                                            <div class="kb-file-icon">
+                                                <svg width="28" height="32" viewBox="0 0 28 32" fill="none">
+                                                    <path d="M2 0C0.9 0 0 0.9 0 2V30C0 31.1 0.9 32 2 32H26C27.1 32 28 31.1 28 30V8L20 0H2Z" fill="#E8EAF6"/>
+                                                    <path d="M20 0V8H28L20 0Z" fill="#C5CAE9"/>
+                                                    <rect x="2" y="22" width="24" height="10" rx="1" fill="#E53935"/>
+                                                    <text x="14" y="30" text-anchor="middle" fill="white" font-size="7" font-weight="bold" font-family="sans-serif">PDF</text>
+                                                </svg>
+                                            </div>
+                                            <span class="kb-file-name">{{ file.name }}</span>
+                                        </div>
+                                        <svg class="kb-icon-btn" width="20" height="20" viewBox="0 0 24 24" fill="none">
+                                            <path d="M1 12C1 12 5 4 12 4C19 4 23 12 23 12C23 12 19 20 12 20C5 20 1 12 1 12Z" stroke="#9A9A9A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                            <circle cx="12" cy="12" r="3" stroke="#9A9A9A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        </svg>
+                                    </div>
+                                </div>
+
+                                <!-- Additional Prompts -->
+                                <div class="kb-section" *ngIf="kb.additionalPrompts">
+                                    <h4 class="kb-section-title">Additional Prompts</h4>
+                                    <div class="kb-prompts-box">
+                                        <p>{{ kb.additionalPrompts }}</p>
+                                    </div>
+                                </div>
+
+                                <!-- Knowledge Library (RAG) -->
+                                <div class="kb-section" *ngIf="kb.ragFiles.length">
+                                    <h4 class="kb-section-title">Knowledge Library (RAG)</h4>
+                                    <div class="kb-file" *ngFor="let file of kb.ragFiles">
+                                        <div class="kb-file-info">
+                                            <div class="kb-file-icon">
+                                                <svg width="28" height="32" viewBox="0 0 28 32" fill="none">
+                                                    <path d="M2 0C0.9 0 0 0.9 0 2V30C0 31.1 0.9 32 2 32H26C27.1 32 28 31.1 28 30V8L20 0H2Z" fill="#E8EAF6"/>
+                                                    <path d="M20 0V8H28L20 0Z" fill="#C5CAE9"/>
+                                                    <rect x="2" y="22" width="24" height="10" rx="1" fill="#E53935"/>
+                                                    <text x="14" y="30" text-anchor="middle" fill="white" font-size="7" font-weight="bold" font-family="sans-serif">PDF</text>
+                                                </svg>
+                                            </div>
+                                            <span class="kb-file-name">{{ file.name }}</span>
+                                        </div>
+                                        <svg class="kb-icon-btn" width="20" height="20" viewBox="0 0 24 24" fill="none">
+                                            <path d="M1 12C1 12 5 4 12 4C19 4 23 12 23 12C23 12 19 20 12 20C5 20 1 12 1 12Z" stroke="#9A9A9A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                            <circle cx="12" cy="12" r="3" stroke="#9A9A9A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        </svg>
+                                    </div>
+                                </div>
+
+                                <!-- Frameworks -->
+                                <div class="kb-section" *ngIf="kb.frameworks.length">
+                                    <h4 class="kb-section-title">Frameworks</h4>
+                                    <div class="kb-framework" *ngFor="let fw of kb.frameworks">
+                                        <span class="kb-framework-name">{{ fw.name }}</span>
+                                        <span class="kb-framework-status">{{ fw.status }}</span>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
-                <!-- MEMORY -->
-                <div *ngIf="selectedSection === 'memory'" class="card">
-                <h2>Memory</h2>
-                <p>Memory configuration options...</p>
+                <!-- TRANSCRIPTS -->
+                <div *ngIf="selectedSection === 'transcripts'" class="card transcript-card" (click)="closeTranscriptMenu()">
+
+                    <!-- ════ TABLE VIEW ════ -->
+                    <ng-container *ngIf="!viewingChat">
+                        <h2 class="transcript-title">Transcripts – Chat History</h2>
+
+                        <!-- Search -->
+                        <div class="transcript-search">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+                                <circle cx="11" cy="11" r="8" stroke="#464BA8" stroke-width="2"/>
+                                <path d="M21 21L16.65 16.65" stroke="#464BA8" stroke-width="2" stroke-linecap="round"/>
+                            </svg>
+                            <input type="text" placeholder="Search Messages" />
+                        </div>
+
+                        <!-- Table -->
+                        <div class="transcript-table">
+                            <div class="transcript-header">
+                                <div class="th-cell th-date">DATE
+                                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M7 15L12 20L17 15" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M7 9L12 4L17 9" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+                                </div>
+                                <div class="th-cell th-session">SESSION ID
+                                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M7 15L12 20L17 15" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M7 9L12 4L17 9" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+                                </div>
+                                <div class="th-cell th-student">STUDENT
+                                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M7 15L12 20L17 15" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M7 9L12 4L17 9" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+                                </div>
+                                <div class="th-cell th-options">OPTIONS</div>
+                            </div>
+
+                            <div class="transcript-row" *ngFor="let t of transcripts; let i = index"
+                                 [class.highlighted]="t.highlighted">
+                                <div class="td-cell td-date">
+                                    <svg *ngIf="t.highlighted" class="chat-flag-icon" width="18" height="18" viewBox="0 0 24 24" fill="none">
+                                        <path d="M4 15V4C4 4 5 3 8 3C11 3 13 5 16 5C19 5 20 4 20 4V15C20 15 19 16 16 16C13 16 11 14 8 14C5 14 4 15 4 15Z" stroke="#F47761" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        <path d="M4 22V15" stroke="#F47761" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                    {{ t.date }}
+                                </div>
+                                <div class="td-cell td-session">{{ t.sessionId }}</div>
+                                <div class="td-cell td-student">{{ t.student }}</div>
+                                <div class="td-cell td-options">
+                                    <!-- Copy icon / Copied check -->
+                                    <svg *ngIf="copiedIndex !== i" class="option-icon" (click)="copySessionId(t.sessionId, i, $event)" width="18" height="18" viewBox="0 0 24 24" fill="none">
+                                        <rect x="9" y="9" width="13" height="13" rx="2" stroke="#2B2A35" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        <path d="M5 15H4C2.89543 15 2 14.1046 2 13V4C2 2.89543 2.89543 2 4 2H13C14.1046 2 15 2.89543 15 4V5" stroke="#2B2A35" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                    <svg *ngIf="copiedIndex === i" class="option-icon copied" width="18" height="18" viewBox="0 0 24 24" fill="none">
+                                        <path d="M20 6L9 17L4 12" stroke="#26C296" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                    <div class="transcript-more-wrapper">
+                                        <svg class="option-icon" (click)="toggleTranscriptMenu(i, $event)" width="20" height="20" viewBox="0 0 24 24" fill="none">
+                                            <circle cx="12" cy="5" r="1.5" fill="#2B2A35"/>
+                                            <circle cx="12" cy="12" r="1.5" fill="#2B2A35"/>
+                                            <circle cx="12" cy="19" r="1.5" fill="#2B2A35"/>
+                                        </svg>
+                                        <div class="transcript-dropdown" *ngIf="transcriptMenuOpenIndex === i">
+                                            <div class="dropdown-item" (click)="openChatView()">View Chat</div>
+                                            <div class="dropdown-item danger" (click)="closeTranscriptMenu()">Delete History</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </ng-container>
+
+                    <!-- ════ CHAT VIEW ════ -->
+                    <ng-container *ngIf="viewingChat">
+                        <div class="cv-back" (click)="backToChatHistory()">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                                <path d="M19 12H5" stroke="#464BA8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M12 19L5 12L12 5" stroke="#464BA8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                            Back to Chat History
+                        </div>
+
+                        <!-- Agent banner -->
+                        <div class="cv-agent-banner">
+                            <img src="https://cdn-icons-png.flaticon.com/512/4712/4712139.png" class="cv-agent-avatar" />
+                            <span class="cv-agent-name">Robertson The Supervisor</span>
+                        </div>
+
+                        <!-- Chat messages -->
+                        <div class="cv-messages">
+                            <ng-container *ngFor="let msg of chatMessages">
+
+                                <!-- Date divider -->
+                                <div class="cv-date-divider" *ngIf="msg.type === 'date-divider'">
+                                    {{ msg.label }}
+                                </div>
+
+                                <!-- Left message (other person) -->
+                                <div class="cv-msg-group cv-left" *ngIf="msg.type === 'left'">
+                                    <div class="cv-sender-row">
+                                        <img [src]="msg.avatar" class="cv-sender-avatar" />
+                                        <span class="cv-sender-name">{{ msg.sender }}</span>
+                                    </div>
+                                    <div class="cv-bubbles">
+                                        <div class="cv-bubble cv-bubble-left" *ngFor="let m of msg.messages">
+                                            <p>{{ m.text }}</p>
+                                            <span class="cv-time" *ngIf="m.time">{{ m.time }}</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Right message (agent/self) -->
+                                <div class="cv-msg-group cv-right" *ngIf="msg.type === 'right'">
+                                    <div class="cv-bubbles">
+                                        <div class="cv-bubble cv-bubble-right" *ngFor="let m of msg.messages">
+                                            <p>{{ m.text }}</p>
+                                            <span class="cv-time">{{ m.time }}</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Right file attachment -->
+                                <div class="cv-msg-group cv-right" *ngIf="msg.type === 'right-file'">
+                                    <div class="cv-file-card">
+                                        <div class="cv-file-icon">
+                                            <svg width="24" height="28" viewBox="0 0 28 32" fill="none">
+                                                <path d="M2 0C0.9 0 0 0.9 0 2V30C0 31.1 0.9 32 2 32H26C27.1 32 28 31.1 28 30V8L20 0H2Z" fill="#E8EAF6"/>
+                                                <path d="M20 0V8H28L20 0Z" fill="#C5CAE9"/>
+                                                <rect x="2" y="22" width="24" height="10" rx="1" fill="#E53935"/>
+                                                <text x="14" y="30" text-anchor="middle" fill="white" font-size="7" font-weight="bold" font-family="sans-serif">PDF</text>
+                                            </svg>
+                                        </div>
+                                        <div class="cv-file-info">
+                                            <span class="cv-file-name">{{ msg.fileName }}</span>
+                                            <span class="cv-file-size">{{ msg.fileSize }}</span>
+                                        </div>
+                                        <svg class="cv-file-more" width="20" height="20" viewBox="0 0 24 24" fill="none">
+                                            <circle cx="5" cy="12" r="1.5" fill="#2B2A35"/>
+                                            <circle cx="12" cy="12" r="1.5" fill="#2B2A35"/>
+                                            <circle cx="19" cy="12" r="1.5" fill="#2B2A35"/>
+                                        </svg>
+                                    </div>
+                                    <span class="cv-time cv-time-below">{{ msg.time }}</span>
+                                </div>
+
+                            </ng-container>
+                        </div>
+                    </ng-container>
+
                 </div>
 
                 <!-- GUARDRAILS -->
-                <div *ngIf="selectedSection === 'guardrails'" class="card">
-                <h2>Guardrails</h2>
-                <p>Safety rules configuration...</p>
+                <div *ngIf="selectedSection === 'guardrails'" class="card guardrails-card">
+                    <div class="card-header">
+                        <h2>Guardrails</h2>
+                        <button class="primary-btn">Update</button>
+                    </div>
+
+                    <!-- Flag Moderated Memories -->
+                    <div class="gr-toggle-card">
+                        <div class="gr-toggle-info">
+                            <div class="gr-toggle-title">Flag Moderated Memories</div>
+                            <div class="gr-toggle-desc">When enabled, conversations that trigger the guardrails will be flagged in the memory bank</div>
+                        </div>
+                        <label class="gr-switch">
+                            <input type="checkbox" [(ngModel)]="flagModeratedMemories" />
+                            <span class="gr-slider"></span>
+                        </label>
+                    </div>
+
+                    <!-- Blocked Words & Phrases -->
+                    <div class="gr-blocked-section">
+                        <label class="gr-blocked-label">Blocked Words & Phrases</label>
+                        <input
+                            type="text"
+                            class="gr-blocked-input"
+                            placeholder="Add a word or phrase to block further responses"
+                            [(ngModel)]="newBlockedWord"
+                            (keydown)="onBlockedWordKeydown($event)"
+                        />
+                        <div class="gr-tags">
+                            <div class="gr-tag" *ngFor="let word of blockedWords; let i = index">
+                                {{ word }}
+                                <svg (click)="removeBlockedWord(i)" width="14" height="14" viewBox="0 0 24 24" fill="none">
+                                    <path d="M18 6L6 18" stroke="#2B2A35" stroke-width="2.5" stroke-linecap="round"/>
+                                    <path d="M6 6L18 18" stroke="#2B2A35" stroke-width="2.5" stroke-linecap="round"/>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
                 <!-- USAGE -->
-                <div *ngIf="selectedSection === 'usage'" class="card">
-                <h2>Usage</h2>
-                <p>Usage statistics...</p>
+                <div *ngIf="selectedSection === 'usage'" class="card usage-card">
+                    <h2 class="usage-title">Usage</h2>
+
+                    <div class="usage-top-row">
+                        <span class="usage-sync">Last Synchronised on 24/06/26, 1:40 PM</span>
+                        <div class="usage-search">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+                                <circle cx="11" cy="11" r="8" stroke="#464BA8" stroke-width="2"/>
+                                <path d="M21 21L16.65 16.65" stroke="#464BA8" stroke-width="2" stroke-linecap="round"/>
+                            </svg>
+                            <input type="text" placeholder="Search Usage" />
+                        </div>
+                    </div>
+
+                    <!-- Table -->
+                    <div class="usage-table">
+                        <!-- Header -->
+                        <div class="usage-header">
+                            <div class="uth-cell uth-workflow">WORKFLOW GROUP
+                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M7 15L12 20L17 15" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M7 9L12 4L17 9" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+                            </div>
+                            <div class="uth-cell uth-task">TASK NAME
+                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M7 15L12 20L17 15" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M7 9L12 4L17 9" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+                            </div>
+                            <div class="uth-cell uth-actions">ACTIONS</div>
+                        </div>
+
+                        <!-- Rows -->
+                        <div class="usage-row" *ngFor="let item of usageData">
+                            <div class="utd-cell utd-workflow">{{ item.workflowGroup }}</div>
+                            <div class="utd-cell utd-task">{{ item.taskName }}</div>
+                            <div class="utd-cell utd-actions">
+                                <svg class="usage-eye-icon" width="20" height="20" viewBox="0 0 24 24" fill="none">
+                                    <path d="M1 12C1 12 5 4 12 4C19 4 23 12 23 12C23 12 19 20 12 20C5 20 1 12 1 12Z" stroke="#9A9A9A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <circle cx="12" cy="12" r="3" stroke="#9A9A9A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
             </div>
@@ -159,89 +515,104 @@
             <!-- RIGHT CHAT -->
             <div class="chat">
 
-                <!-- Header -->
-                <div class="chat-top">
-                    <div class="chat-title">
-                    Chat Test
-                    <div class="underline"></div>
-                    </div>
-
-                    <div class="expand">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M4 14H10V20" stroke="#464BA8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                        <path d="M20 10H14V4" stroke="#464BA8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                        <path d="M14 10L21 3" stroke="#464BA8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                        <path d="M3 21L10 14" stroke="#464BA8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                        </svg>
-
-                    </div>
-                </div>
-
-                <!-- Agent Row -->
-                <div class="agent-row">
-                    <div class="agent-left">
-                    <img src="https://randomuser.me/api/portraits/men/32.jpg" />
-                    <span>Albert</span>
-                    </div>
-
-                    <button class="reset-btn">Reset Chat</button>
-                </div>
-
-                <!-- Divider -->
-                <div class="divider">
-                    <span></span>
-                    <label>Today</label>
-                    <span></span>
-                </div>
-
-                <!-- Messages -->
-                <div class="chat-body">
-
-                    <!-- Left Message -->
-                    <div class="msg-left">
-                    <img src="https://randomuser.me/api/portraits/men/32.jpg" />
-                    <div class="bubble light">
-                        Hey! Welcome 👋 I'll be your mentor as you explore the
-                        penetration testing pathway. Ready to get started?
-                    </div>
-                    </div>
-
-                    <!-- Right Message -->
-                    <div class="msg-right">
-                    <div class="bubble purple">
-                        Hi Albert — thanks! I’m really interested in penetration
-                        testing, but I’m not sure where to start or what skills I
-                        should focus on first.
-                    </div>
-                    </div>
-
-                    <!-- Long Left Message -->
-                    <div class="msg-left large">
-                    <div class="bubble light large">
-                        Great question — and totally normal. Penetration testing is best
-                        approached step by step. <br><br>
-
-                        Start with the fundamentals: basic networking, how systems
-                        (especially Linux) work, and a little scripting.
-                        Understanding how things operate comes before learning how
-                        to break them. <br><br>
-
-                        From there, you’ll move into hands-on labs where you practice
-                        finding and exploiting vulnerabilities in safe environments.
-                        That’s where the skills really come together. <br><br>
-
-                        For now, begin with the fundamentals module. It’ll give you
-                        the foundation you’ll build on throughout the pathway. And if
-                        you’re unsure at any point, just message me — I’m here to help.
-                    </div>
-                    </div>
+                <!-- Expand icon (visible only when collapsed) -->
+                <div class="expand-collapsed d-flex align-items-center justify-content-center" (click)="toggleChat()">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M21 10H3" stroke="#464BA8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M21 6H3" stroke="#464BA8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M21 14H3" stroke="#464BA8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M21 18H3" stroke="#464BA8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
 
                 </div>
 
-                <!-- Input -->
-                <div class="chat-input">
-                    <input type="text" placeholder="Message" />
-                    <button class="send-btn">➤</button>
+                <!-- Chat content wrapper (hides/shows with animation) -->
+                <div class="chat-content">
+
+                    <!-- Header -->
+                    <div class="chat-top">
+                        <div class="chat-title">
+                        Chat Test
+                        <div class="underline"></div>
+                        </div>
+
+                        <div class="expand" (click)="toggleChat()">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M4 14H10V20" stroke="#464BA8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M20 10H14V4" stroke="#464BA8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M14 10L21 3" stroke="#464BA8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M3 21L10 14" stroke="#464BA8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </div>
+                    </div>
+
+                    <!-- Agent Row -->
+                    <div class="agent-row">
+                        <div class="agent-left">
+                        <img src="https://randomuser.me/api/portraits/men/32.jpg" />
+                        <span>Albert</span>
+                        </div>
+
+                        <button class="reset-btn">Reset Chat</button>
+                    </div>
+
+                    <!-- Divider -->
+                    <div class="divider">
+                        <span></span>
+                        <label>Today</label>
+                        <span></span>
+                    </div>
+
+                    <!-- Messages -->
+                    <div class="chat-body">
+
+                        <!-- Left Message -->
+                        <div class="msg-left">
+                        <img src="https://randomuser.me/api/portraits/men/32.jpg" />
+                        <div class="bubble light">
+                            Hey! Welcome 👋 I’ll be your mentor as you explore the
+                            penetration testing pathway. Ready to get started?
+                        </div>
+                        </div>
+
+                        <!-- Right Message -->
+                        <div class="msg-right">
+                        <div class="bubble purple">
+                            Hi Albert — thanks! I’m really interested in penetration
+                            testing, but I’m not sure where to start or what skills I
+                            should focus on first.
+                        </div>
+                        </div>
+
+                        <!-- Long Left Message -->
+                        <div class="msg-left large">
+                        <div class="bubble light large">
+                            Great question — and totally normal. Penetration testing is best
+                            approached step by step. <br><br>
+
+                            Start with the fundamentals: basic networking, how systems
+                            (especially Linux) work, and a little scripting.
+                            Understanding how things operate comes before learning how
+                            to break them. <br><br>
+
+                            From there, you’ll move into hands-on labs where you practice
+                            finding and exploiting vulnerabilities in safe environments.
+                            That’s where the skills really come together. <br><br>
+
+                            For now, begin with the fundamentals module. It’ll give you
+                            the foundation you’ll build on throughout the pathway. And if
+                            you’re unsure at any point, just message me — I’m here to help.
+                        </div>
+                        </div>
+
+                    </div>
+
+                    <!-- Input -->
+                    <div class="chat-input">
+                        <input type="text" placeholder="Message" />
+                        <button class="send-btn">➤</button>
+                    </div>
+
                 </div>
 
             </div>
