@@ -254,11 +254,10 @@ export class AddAIAgentComponent implements OnInit {
   onPersonaChange() {
     const preset = this.personaPresets.find(p => p.name === this.selectedPersona);
     if (preset) {
-      this.personalityTraits = this.personalityTraits.map((trait, i) => ({
-        ...trait, value: preset.values[i]
-      }));
+      this.personalityTraits.forEach((trait, i) => {
+        trait.value = preset.values[i];
+      });
       this.updateRadarChart();
-      this.cdr.detectChanges();
     }
   }
 
@@ -270,7 +269,7 @@ export class AddAIAgentComponent implements OnInit {
     { name: 'Language Complexity', value: 4, highLabel: 'Highly Technical', lowLabel: 'Layman/Basic' }
   ];
 
-  sliderLevels = [5, 5, 5, 5, 5];
+  sliderLevels = [5, 4, 3, 2, 1];
 
   radarChartData: ChartData<'radar'> = {
     labels: ['Meticulousness', 'Communications', 'Flexibility', 'Agreeableness', ['Language', 'Complexity']],

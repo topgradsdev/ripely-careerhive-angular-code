@@ -192,9 +192,8 @@
                                 <div class="slider-steps">
                                     <div class="step"
                                          *ngFor="let level of sliderLevels"
-                                         [class.active]="trait.value === level"
-                                        >
-                                         <!-- (click)="setTraitValue(i, level)" -->
+                                         [class.active]="trait.value === level">
+                                          <!-- (click)="setTraitValue(i, level)" -->
                                         <div class="active-dot" *ngIf="trait.value === level">{{ level }}</div>
                                         <div class="tick-mark" *ngIf="trait.value !== level"></div>
                                         <span class="step-number" *ngIf="trait.value !== level">{{ level }}</span>
