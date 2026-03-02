@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { SystemRoutingModule } from './system-routing.module';
 import { AIAgentComponent } from './agent/ai-agent.component';
@@ -32,6 +32,7 @@ import { AddKnowledgeBaseComponent } from './add-knowledge-base/add-knowledge-ba
   imports: [
     CommonModule,
     FormsModule,
+    ReactiveFormsModule,
     SystemRoutingModule,
     MatIconModule,
     MatMenuModule,

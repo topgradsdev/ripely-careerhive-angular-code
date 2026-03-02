@@ -97,7 +97,7 @@
                 <div *ngIf="selectedSection === 'description'" class="desc-card" [formGroup]="agentForm">
                     <div class="desc-card-header">
                         <h2>Character Description</h2>
-                        <button mat-button class="theme_btn btn_primary" (click)="saveAgent()">Update</button>
+                        <!-- <button mat-button class="theme_btn btn_primary" (click)="saveAgent()">Update</button> -->
                     </div>
 
                     <!-- Character Avatar -->
@@ -193,7 +193,8 @@
                                     <div class="step"
                                          *ngFor="let level of sliderLevels"
                                          [class.active]="trait.value === level"
-                                         (click)="setTraitValue(i, level)">
+                                        >
+                                         <!-- (click)="setTraitValue(i, level)" -->
                                         <div class="active-dot" *ngIf="trait.value === level">{{ level }}</div>
                                         <div class="tick-mark" *ngIf="trait.value !== level"></div>
                                         <span class="step-number" *ngIf="trait.value !== level">{{ level }}</span>

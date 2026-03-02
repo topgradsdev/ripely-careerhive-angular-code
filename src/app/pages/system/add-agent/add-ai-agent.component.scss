@@ -982,7 +982,7 @@ a.td_link {
 
 .layout {
   display: grid;
-  grid-template-columns: 250px 1fr 380px;
+  grid-template-columns: 262px 1fr 380px;
   height: 100vh;
   background: #FFF;
   gap: 20px;
@@ -994,12 +994,12 @@ a.td_link {
 
 /* Collapsed Chat State */
 .layout.chat-collapsed {
-  grid-template-columns: 250px 1fr 80px;
+  grid-template-columns: 262px 1fr 80px;
 }
 
 /* No Chat (Add mode) */
 .layout.no-chat {
-  grid-template-columns: 250px 1fr;
+  grid-template-columns: 262px 1fr;
 }
 
 
@@ -1047,6 +1047,10 @@ a.td_link {
 
   &.has-error {
     color: #E53935;
+    svg path {
+      stroke: #E53935 !important;
+    }
+
   }
 
   .menu-error-dot {
