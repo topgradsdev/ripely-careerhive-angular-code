@@ -11,10 +11,10 @@
                 <div class="d-flex flex-column">
                     <div  class="d-flex gap-5">
                         <!-- total -->
-                         <div class="student_card" >
+                         <div class="student_card" *ngIf="selectedIndex==0">
                             <div class="content">
                                 <p>Total Agents</p>
-                                <h4>54</h4>
+                                <h4>{{ totalAgents }}</h4>
                             </div>
                             <div class="">
                                 <svg width="54" height="54" viewBox="0 0 54 54" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -26,11 +26,11 @@
                 
                             </div>
                         </div>
-<!-- total -->
-                        <div class="student_card ">
+<!--  -->
+                        <div class="student_card clickable total"  *ngIf="selectedIndex==0">
                             <div class="content">
-                                <p>Active Agents</p>
-                                <h4>24</h4>
+                                <p>Archived Agents</p>
+                                <h4>{{ archivedAgentsCount }}</h4>
                             </div>
                             <div class="">
                                <svg width="54" height="54" viewBox="0 0 54 54" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -39,18 +39,21 @@
                                 <path d="M31.0013 13.666H23.0013C22.2649 13.666 21.668 14.263 21.668 14.9993V17.666C21.668 18.4024 22.2649 18.9993 23.0013 18.9993H31.0013C31.7377 18.9993 32.3346 18.4024 32.3346 17.666V14.9993C32.3346 14.263 31.7377 13.666 31.0013 13.666Z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                                 </svg>
 
-            
+
+                            </div>
+                            <div class="action">
+                                <button  (click)="openArchivedAgents()" mat-button class="theme_btn btn_primary">View Archived Agents</button>
                             </div>
                         </div>
 
-                        <div class="student_card">
+                        <div class="student_card"  *ngIf="selectedIndex==1">
                             <div class="content">
-                                <p>Knowledge Bases</p>
-                                <h4>6</h4>
+                                <p>Total Knowledge Bases</p>
+                                <h4>{{ totalKnowledgeBases }}</h4>
                             </div>
                             <div class="">
                                <svg width="54" height="54" viewBox="0 0 54 54" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <circle cx="27" cy="27" r="27" fill="#F47761"/>
+                                <circle cx="27" cy="27" r="27" fill="#F2C94C"/>
                                 <path d="M27 17.667L27 36.3337" stroke="white" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
                                 <path d="M36.334 27L27.0007 36.3333L17.6673 27" stroke="white" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
                                 </svg>
@@ -60,6 +63,24 @@
                                 <button mat-button class="theme_btn btn_primary">View Students</button>
                             </div> -->
                         </div>
+                         <div class="student_card clickable total"  *ngIf="selectedIndex==1">
+                            <div class="content">
+                                <p>Archived Knowledge Bases</p>
+                                <h4>{{ archivedKBCount }}</h4>
+                            </div>
+                            <div class="">
+                               <svg width="54" height="54" viewBox="0 0 54 54" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <circle cx="27" cy="27" r="27" fill="#F47761"/>
+                                <path d="M27 17.667L27 36.3337" stroke="white" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M36.334 27L27.0007 36.3333L17.6673 27" stroke="white" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+
+
+                            </div>
+                             <div class="action">
+                                <button  (click)="openArchivedKB()" mat-button class="theme_btn btn_primary">View Archived Knowledge Bases</button>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -68,82 +89,170 @@
                     <button mat-button class="theme_btn btn_primary" [routerLink]="['/admin/system/add-agent']">+ Create Agent</button>
                 </div>
                   <div class="d-flex gap-3" *ngIf="selectedIndex==1">
-                    <button mat-button class="theme_btn btn_primary" [routerLink]="['/admin/system/add-agent']">+ Create Knowledge Base</button>
+                    <button mat-button class="theme_btn btn_primary" [routerLink]="['/admin/system/add-knowledge-base']">+ Create Knowledge Base</button>
                 </div>
             </div>
         </div>
 
 
 
-            <mat-tab-group [selectedIndex]="selectedIndex" (selectedTabChange)="onTabChange($event)" animationDuration="0ms" class="mat_tab_bordred" >
-                <mat-tab>
-                    <ng-template mat-tab-label>Agents</ng-template>
+            <!-- Active view -->
+            <div class="tab-wrapper" *ngIf="!showArchivedAgents && !showArchivedKB">
+                <mat-tab-group [selectedIndex]="selectedIndex" (selectedTabChange)="onTabChange($event)" animationDuration="0ms" class="mat_tab_bordred" >
+                    <mat-tab>
+                        <ng-template mat-tab-label>Agents</ng-template>
+                         <div class="empty-state flex-column" *ngIf="!reviewers.length" style="max-width: 100% !important;">
+                            <h2 class="m-0">
+                                You currently have no AI Agents
+                            </h2>
+                            <p>
+                                Get started by creating your first AI Agent above!
+                             </p>   
+                         </div>
 
-                    <div class="container">
-                        <div class="card" *ngFor="let reviewer of reviewers">
-                            
-                            <div class="image-wrapper">
-                            <img [src]="reviewer.image" [alt]="reviewer.name" />
+                        <div class="container" *ngIf="reviewers.length>0" style="max-width: 100% !important;">
+                            <div class="card" *ngFor="let reviewer of reviewers">
+
+                                <div class="image-wrapper">
+                                <img [src]="reviewer.image" [alt]="reviewer.name" />
+                                </div>
+
+                                <div class="content">
+                                <h3>{{ reviewer.name }}</h3>
+                                <p class="role">{{ reviewer.role }}</p>
+
+                                <div class="skills">
+                                    <span class="skill" *ngFor="let skill of reviewer.skills">
+                                    {{ skill }}
+                                    </span>
+                                </div>
+
+                                <button class="edit-btn" (click)="editReviewer(reviewer)">
+                                    Edit
+                                </button>
+                                </div>
+
                             </div>
+                        </div>
 
-                            <div class="content">
-                            <h3>{{ reviewer.name }}</h3>
-                            <p class="role">{{ reviewer.role }}</p>
+                    </mat-tab>
+                    <mat-tab>
+                        <ng-template mat-tab-label>Knowledge Base</ng-template>
 
-                            <div class="skills">
-                                <span class="skill" *ngFor="let skill of reviewer.skills">
-                                {{ skill }}
+                        <!-- No Knowledge Bases exist -->
+                        <div class="empty-state" *ngIf="!cards.length">
+                            <div class="empty-state-content">
+                                <h2>You currently have no Knowledge Bases</h2>
+                                <p>Get started by creating your first Knowledge Base above!</p>
+                            </div>
+                        </div>
+
+                        <!-- Search returned no results -->
+                        <div class="empty-state" *ngIf="cards.length && !filteredCards.length">
+                            <div class="empty-state-content">
+                                <svg width="126" height="101" viewBox="0 0 126 101" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <g clip-path="url(#clip0_1899_48225)">
+                                <path d="M95.371 100.166L11.656 100.196C7.45041 100.197 3.68314 98.008 1.57906 94.3402C0.526894 92.5061 0.000693685 90.4941 6.85071e-07 88.4817C-0.000692315 86.4695 0.52438 84.4569 1.57504 82.6223L43.4059 5.92095C45.5077 2.25144 49.2735 0.0600592 53.4791 0.0585945C57.6848 0.0571297 61.452 2.24588 63.5564 5.91393L105.445 82.5956C106.495 84.4249 107.02 86.4345 107.02 88.4457C107.02 90.4568 106.495 92.4692 105.444 94.304C103.342 97.9733 99.5766 100.165 95.371 100.166ZM1.0523 88.4803C1.05217 90.312 10.2898 86.365 11.2468 88.0334C13.1611 91.3702 7.82944 99.1393 11.6557 99.138C11.6557 99.138 102.623 97.1137 104.534 93.7756C105.49 92.1065 105.968 90.2754 105.967 88.4447C105.967 86.6141 105.488 84.7836 104.531 83.1152L62.6416 6.43349C60.7327 3.1062 57.3057 1.11485 53.4795 1.11619C49.655 1.11752 1.05245 86.6483 1.0523 88.4803Z" fill="#3F3D56"/>
+                                <path d="M77.9031 83.2511C99.0694 83.2511 116.228 65.9683 116.228 44.649C116.228 23.3296 99.0694 6.04688 77.9031 6.04688C56.7368 6.04688 39.5781 23.3296 39.5781 44.649C39.5781 65.9683 56.7368 83.2511 77.9031 83.2511Z" fill="#464BA8"/>
+                                <path d="M76.4827 53.0585L69.6851 23.465L75.0264 22.3325L80.6501 52.1749L76.4827 53.0585ZM81.0383 64.298C80.1383 64.4888 79.2902 64.3415 78.4941 63.8561C77.7289 63.3232 77.2522 62.6065 77.064 61.706C76.8758 60.8054 77.0293 59.9755 77.5244 59.2163C78.0587 58.4488 78.7759 57.9697 79.6759 57.7788C80.5759 57.588 81.4044 57.7395 82.1614 58.2332C82.9184 58.7269 83.391 59.4241 83.5792 60.3246C83.7674 61.2252 83.618 62.0746 83.131 62.873C82.6359 63.6322 81.9383 64.1072 81.0383 64.298Z" fill="white"/>
+                                </g>
+                                <defs>
+                                <clipPath id="clip0_1899_48225">
+                                <rect width="126" height="101" fill="white"/>
+                                </clipPath>
+                                </defs>
+                                </svg>
+
+                                <h2>No valid search results found</h2>
+                                <p>Try searching with different keywords!</p>
+                            </div>
+                        </div>
+
+                        <!-- Knowledge Base cards -->
+                        <div class="kb-container" *ngIf="filteredCards.length">
+                            <div class="kb-card" *ngFor="let card of filteredCards">
+
+                                <h3 class="kb-title">{{ card.title }}</h3>
+
+                                <p class="kb-desc">
+                                {{ card.description }}
+                                </p>
+
+                                <div class="kb-skills mt-4">
+                                <span class="kb-skill" *ngFor="let skill of card.skills">
+                                    {{ skill }}
                                 </span>
-                            </div>
+                                </div>
 
-                            <button class="edit-btn" (click)="editReviewer(reviewer)">
-                                Edit
-                            </button>
-                            </div>
+                                <div class="kb-footer">
+                                <button class="edit-btn" (click)="edit(card)">Edit</button>
+                                </div>
 
+                            </div>
                         </div>
-                    </div>
+                    </mat-tab>
+                </mat-tab-group>
 
-                </mat-tab>
-                <mat-tab>
-                    <ng-template mat-tab-label>Knowledge Base</ng-template>
-
-                    <div class="kb-container">
-                        <div class="kb-card" *ngFor="let card of cards">
-
-                            <h3 class="kb-title">{{ card.title }}</h3>
-
-                            <p class="kb-desc">
-                            {{ card.description }}
-                            </p>
-
-                            <div class="kb-skills mt-4">
-                            <span class="kb-skill" *ngFor="let skill of card.skills">
-                                {{ skill }}
-                            </span>
-                            </div>
-
-                            <div class="kb-footer">
-                            <button class="edit-btn" (click)="edit(card)">Edit</button>
-                            </div>
-
-                        </div>
-                    </div>
-                </mat-tab>
-          </mat-tab-group>
-
-<!-- 
-
-         <div class="row sub_header">
-            <div class="col-md-6">
-                <div class="btn_tab vacancies_tab">
-                    <button mat-button class="theme_btn btn_primary" (click)="btnTabs(1)"
-                        [ngClass]="selectedIndex === 1 ? 'active' :'inactive'">Agents</button>
-                    <button mat-button class="theme_btn btn_primary" (click)="btnTabs(2)"
-                        [ngClass]="selectedIndex === 2 ? 'active' :'inactive'">Knowledge Base</button>
+                <!-- Search bar for Knowledge Base tab -->
+                <div class="kb-search-bar" *ngIf="selectedIndex == 1">
+                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M9.16667 15.8333C12.8486 15.8333 15.8333 12.8486 15.8333 9.16667C15.8333 5.48477 12.8486 2.5 9.16667 2.5C5.48477 2.5 2.5 5.48477 2.5 9.16667C2.5 12.8486 5.48477 15.8333 9.16667 15.8333Z" stroke="#464BA8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M17.5 17.5L13.875 13.875" stroke="#464BA8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    <input type="text" placeholder="Search Usage" [(ngModel)]="kbSearchText" />
                 </div>
             </div>
-        </div> -->
+
+            <!-- Archived Agents View -->
+            <div *ngIf="showArchivedAgents" class="archived-view">
+                <div class="back-link" (click)="backToActiveAgents()">
+                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M15.8337 10H4.16699" stroke="#464BA8" stroke-width="1.67" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M10.0003 15.8337L4.16699 10.0003L10.0003 4.16699" stroke="#464BA8" stroke-width="1.67" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    <span>Back to Active Agents</span>
+                </div>
+
+                <div class="container">
+                    <div class="card" *ngFor="let reviewer of archivedReviewers">
+                        <div class="image-wrapper">
+                            <img [src]="reviewer.image" [alt]="reviewer.name" />
+                        </div>
+                        <div class="content">
+                            <h3>{{ reviewer.name }}</h3>
+                            <p class="role">{{ reviewer.role }}</p>
+                            <div class="skills">
+                                <span class="skill" *ngFor="let skill of reviewer.skills">{{ skill }}</span>
+                            </div>
+                            <button class="edit-btn" (click)="editReviewer(reviewer)">Edit</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Archived Knowledge Bases View -->
+            <div *ngIf="showArchivedKB" class="archived-view">
+                <div class="back-link" (click)="backToActiveKB()">
+                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M15.8337 10H4.16699" stroke="#464BA8" stroke-width="1.67" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M10.0003 15.8337L4.16699 10.0003L10.0003 4.16699" stroke="#464BA8" stroke-width="1.67" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    <span>Back to Active Knowledge Bases</span>
+                </div>
+
+                <div class="kb-container">
+                    <div class="kb-card" *ngFor="let card of archivedCards">
+                        <h3 class="kb-title">{{ card.title }}</h3>
+                        <p class="kb-desc">{{ card.description }}</p>
+                        <div class="kb-skills mt-4">
+                            <span class="kb-skill" *ngFor="let skill of card.skills">{{ skill }}</span>
+                        </div>
+                        <div class="kb-footer">
+                            <button class="edit-btn" (click)="edit(card)">Edit</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
 </section>
 

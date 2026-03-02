@@ -4142,6 +4142,69 @@ intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<an
     )
   }
 
+  createAgent(data: any): Observable<any> {
+    let API_URL = `${this.SERVER}add-agent`;
+    return this.http.post(API_URL, data).pipe(
+      map(res => {
+        return res
+      })
+    )
+  }
+
+  getAgentList(data: any): Observable<any> {
+    let API_URL = `${this.SERVER}get-agent-list`;
+    return this.http.post(API_URL, data).pipe(
+      map(res => {
+        return res
+      })
+    )
+  }
+
+  getArchivedAgentList(data: any): Observable<any> {
+    let API_URL = `${this.SERVER}get-archived-agent-list`;
+    return this.http.post(API_URL, data).pipe(
+      map(res => {
+        return res
+      })
+    )
+  }
+
+  deleteAgent(data: any): Observable<any> {
+    let API_URL = `${this.SERVER}delete-agent`;
+    return this.http.post(API_URL, data).pipe(
+      map(res => {
+        return res
+      })
+    )
+  }
+
+  createKnowledgeBase(data: any): Observable<any> {
+    let API_URL = `${this.SERVER}knowledge_base/create`;
+    return this.http.post(API_URL, data).pipe(
+      map(res => {
+        return res
+      })
+    )
+  }
+
+  getKnowledgeBaseList(data: any): Observable<any> {
+    let API_URL = `${this.SERVER}knowledge_base/list`;
+    return this.http.post(API_URL, data).pipe(
+      map(res => {
+        return res
+      })
+    )
+  }
+
+  getArchivedKnowledgeBaseList(data: any): Observable<any> {
+    let API_URL = `${this.SERVER}knowledge_base/archived-list`;
+    return this.http.post(API_URL, data).pipe(
+      map(res => {
+        return res
+      })
+    )
+  }
+
   deleteUserGroup(data: any): Observable<any> {
     let API_URL = `${this.SERVER}dlt-usr-grp`;
     return this.http.post(API_URL, data).pipe(

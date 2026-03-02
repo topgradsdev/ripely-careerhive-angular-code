@@ -1,0 +1,179 @@
+<div class="page_header">
+    <div class=" page_header_container">
+        <div>
+            <h4>Add Knowledge Base</h4>
+        </div>
+    </div>
+</div>
+<section>
+        <div class="card_header">
+            <div class="card_container  justify-content-between">
+                <div class="d-flex flex-column">
+                    <div  class="d-flex gap-5">
+                        <!-- total -->
+                         <div class="student_card" >
+                            <div class="content">
+                                <p>Total Deployments</p>
+                                <h4>54</h4>
+                            </div>
+                            <div class="">
+                                <svg width="54" height="54" viewBox="0 0 54 54" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <circle cx="27" cy="27" r="27" fill="#464BA8"/>
+                                <path d="M37.668 20.334H16.3346C14.8619 20.334 13.668 21.5279 13.668 23.0007V36.334C13.668 37.8067 14.8619 39.0007 16.3346 39.0007H37.668C39.1407 39.0007 40.3346 37.8067 40.3346 36.334V23.0007C40.3346 21.5279 39.1407 20.334 37.668 20.334Z" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M32.3346 39V17.6667C32.3346 16.9594 32.0537 16.2811 31.5536 15.781C31.0535 15.281 30.3752 15 29.668 15H24.3346C23.6274 15 22.9491 15.281 22.449 15.781C21.9489 16.2811 21.668 16.9594 21.668 17.6667V39" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+
+                
+                            </div>
+                        </div>
+<!-- total -->
+                        <div class="student_card ">
+                            <div class="content">
+                                <p>Total Agent Utilisation</p>
+                                <h4>15135</h4>
+                            </div>
+                            <div class="">
+                               <svg width="54" height="54" viewBox="0 0 54 54" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <circle cx="27" cy="27" r="27" fill="#26C296"/>
+                                <path d="M32.332 16.334H34.9987C35.7059 16.334 36.3842 16.6149 36.8843 17.115C37.3844 17.6151 37.6654 18.2934 37.6654 19.0007V37.6673C37.6654 38.3746 37.3844 39.0528 36.8843 39.5529C36.3842 40.053 35.7059 40.334 34.9987 40.334H18.9987C18.2915 40.334 17.6132 40.053 17.1131 39.5529C16.613 39.0528 16.332 38.3746 16.332 37.6673V19.0007C16.332 18.2934 16.613 17.6151 17.1131 17.115C17.6132 16.6149 18.2915 16.334 18.9987 16.334H21.6654" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M31.0013 13.666H23.0013C22.2649 13.666 21.668 14.263 21.668 14.9993V17.666C21.668 18.4024 22.2649 18.9993 23.0013 18.9993H31.0013C31.7377 18.9993 32.3346 18.4024 32.3346 17.666V14.9993C32.3346 14.263 31.7377 13.666 31.0013 13.666Z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+
+            
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+             
+                <div class="d-flex gap-3">
+                    <button mat-button class="theme_btn btn_primary" (click)="saveKnowledgeBase()">Save Changes</button>
+                </div>
+                
+            </div>
+        </div>
+
+
+
+        <div class="layout kb-layout">
+
+            <!-- TOP ROW -->
+            <div class="kb-grid-top">
+
+                <!-- INFORMATION PANEL -->
+                <div class="kb-panel kb-information" [formGroup]="kbForm">
+                    <h3 class="kb-panel-title">Information</h3>
+
+                    <div class="kb-form-group">
+                        <label>Knowledge Base Name <span class="required">*</span></label>
+                        <input type="text" placeholder="Enter knowledge name" formControlName="kbName"
+                               [class.is-invalid]="kbForm.get('kbName')?.touched && kbForm.get('kbName')?.invalid" />
+                        <div class="kb-error" *ngIf="kbForm.get('kbName')?.touched && kbForm.get('kbName')?.hasError('required')">
+                            Knowledge Base Name is required
+                        </div>
+                    </div>
+
+                    <div class="kb-form-group">
+                        <label>Description <span class="required">*</span></label>
+                        <textarea placeholder="Brief description of the knowledge base" rows="4" formControlName="kbDescription"
+                                  [class.is-invalid]="kbForm.get('kbDescription')?.touched && kbForm.get('kbDescription')?.invalid"></textarea>
+                        <div class="kb-error" *ngIf="kbForm.get('kbDescription')?.touched && kbForm.get('kbDescription')?.hasError('required')">
+                            Description is required
+                        </div>
+                    </div>
+
+                    <div class="kb-form-group">
+                        <label>Tags</label>
+                        <input type="text" placeholder="Add tags" [(ngModel)]="kbTagInput" [ngModelOptions]="{standalone: true}" (keydown)="onTagKeydown($event)" />
+                        <div class="kb-tags-list" *ngIf="kbTags.length">
+                            <span class="kb-tag-chip" *ngFor="let tag of kbTags; let i = index">
+                                {{ tag }}
+                                <span class="kb-tag-remove" (click)="removeTag(i)">&times;</span>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="kb-panel kb-brain-panel" [formGroup]="kbForm">
+                    <h3 class="kb-panel-title">Brain & Knowledge</h3>
+
+                    <!-- Upload dropzone when no files -->
+                    <div class="kb-upload-zone p-0" *ngIf="!kbBrainFiles.length" (click)="brainFileInput.click()">
+                        <div class="kb-upload-inner">
+                            <span class="kb-upload-title">Upload Knowledge Base</span>
+                            <span class="kb-upload-hint">Accepted file types: Adobe PDF (.pdf)<br>10MB size limit</span>
+                        </div>
+                        <input type="file" #brainFileInput accept=".pdf" hidden (change)="onBrainFileSelected($event)" />
+                    </div>
+
+                    <div class="kb-file-row" *ngFor="let file of kbBrainFiles; let i = index">
+                        <div class="kb-file-info">
+                            <div class="kb-pdf-icon">
+                                <svg width="28" height="32" viewBox="0 0 28 32" fill="none">
+                                    <path d="M2 0C0.9 0 0 0.9 0 2V30C0 31.1 0.9 32 2 32H26C27.1 32 28 31.1 28 30V8L20 0H2Z" fill="#E8EAF6"/>
+                                    <path d="M20 0V8H28L20 0Z" fill="#C5CAE9"/>
+                                    <rect x="2" y="22" width="24" height="10" rx="1" fill="#E53935"/>
+                                    <text x="14" y="30" text-anchor="middle" fill="white" font-size="7" font-weight="bold" font-family="sans-serif">PDF</text>
+                                </svg>
+                            </div>
+                            <span class="kb-file-name">{{ file.name }}</span>
+                        </div>
+                        <div class="kb-file-actions">
+                            <button mat-icon-button class="kb-icon-btn" (click)="viewFile(file.url)">
+                                <svg width="35" height="35" viewBox="0 0 35 35" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <circle cx="17.5" cy="17.5" r="17.5" fill="#F8F8F8"/>
+                                <path d="M17.8213 11.75C20.6262 11.75 22.9074 13.179 24.5244 14.6758C25.3281 15.4197 25.9508 16.1652 26.3721 16.7246C26.521 16.9224 26.6427 17.0971 26.7393 17.2383C26.6363 17.3817 26.5068 17.5611 26.3477 17.7637C25.9063 18.3255 25.2587 19.0738 24.4375 19.8203C22.7808 21.3264 20.499 22.75 17.8213 22.75C15.1436 22.75 12.8618 21.3264 11.2051 19.8203C10.3841 19.0739 9.73729 18.3254 9.2959 17.7637C9.1365 17.5608 9.0054 17.3818 8.90234 17.2383C8.99891 17.097 9.12141 16.9226 9.27051 16.7246C9.69173 16.1652 10.3145 15.4197 11.1182 14.6758C12.7352 13.1791 15.0165 11.75 17.8213 11.75Z" stroke="#2B2A35" stroke-width="1.5"/>
+                                <circle cx="17.8214" cy="17.2511" r="2.82143" stroke="#2B2A35" stroke-width="1.5"/>
+                                </svg>
+                            </button>
+
+                            <button mat-icon-button class="kb-icon-btn" (click)="removeBrainFile(i)">
+                                <svg width="35" height="35" viewBox="0 0 35 35" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <circle cx="17.5" cy="17.5" r="17.5" fill="#F8F8F8"/>
+                                <path fill-rule="evenodd" clip-rule="evenodd" d="M15.0874 9H19.451C20.2543 9 20.9055 9.65122 20.9055 10.4545V11.1817H23.0909C23.8942 11.1817 24.5455 11.8329 24.5455 12.6362V14.0908C24.5455 14.8941 23.8942 15.5453 23.0909 15.5453H23.0319L22.3628 23.5464C22.3628 24.3497 21.7116 25.001 20.9083 25.001H13.6356C12.8322 25.001 12.181 24.3497 12.1835 23.6068L11.5117 15.5453H11.4545C10.6512 15.5453 10 14.8941 10 14.0908V12.6362C10 11.8329 10.6512 11.1817 11.4545 11.1817H13.6328V10.4545C13.6328 9.65122 14.284 9 15.0874 9ZM13.6331 23.5469L12.9688 15.5469H21.57L20.9084 23.4865L20.9059 23.5469H13.6331ZM11.4531 14.0913V12.6368H23.0895V14.0913H11.4531ZM19.4574 10.4531V11.1804H15.0938V10.4531H19.4574Z" fill="#2B2A35"/>
+                                </svg>
+                            </button>
+
+                        </div>
+                    </div>
+
+                    <div class="kb-form-group">
+                        <label>URL (Optional)</label>
+                        <input type="text" placeholder="Enter URL to apply the knowledge" formControlName="kbBrainUrl" />
+                    </div>
+
+                    <div class="kb-prompts-section">
+                        <label>Additional Prompts (optional)</label>
+                        <textarea placeholder="Enter additional prompts..." rows="6" formControlName="kbAdditionalPrompts"></textarea>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+</section>
+
+<!-- Hidden trigger for success modal -->
+<button id="kb-save-success" style="visibility: hidden;" data-target="#kb_success_modal" data-toggle="modal"></button>
+
+<!-- Success Modal -->
+<div class="modal fade bsModal ch_modal" id="kb_success_modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content email_success_send">
+            <div class="modal-body text-center">
+                <svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" viewBox="0 0 115 115" fill="none">
+                    <circle cx="57.5" cy="57.5" r="57.5" fill="#E8FBF5"/>
+                    <circle cx="57.5" cy="57.5" r="40" fill="#26C296"/>
+                    <path d="M42 57.5L52 67.5L73 46.5" stroke="white" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <h2 class="mt-3">Knowledge Base Saved Successfully!</h2>
+                <p class="text-muted">Your knowledge base has been saved.</p>
+            </div>
+            <div class="modal-footer justify-content-center">
+                <button mat-button type="button" data-dismiss="modal" class="theme_btn btn_primary" [routerLink]="['/admin/system/agent-list']">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+

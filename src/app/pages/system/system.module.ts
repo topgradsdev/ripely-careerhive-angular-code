@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 import { SystemRoutingModule } from './system-routing.module';
 import { AIAgentComponent } from './agent/ai-agent.component';
@@ -20,14 +21,17 @@ import { NgxPermissionsModule } from 'ngx-permissions';
 import { NgChartsModule } from 'ng2-charts';
 import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
 import { AddAIAgentComponent } from './add-agent/add-ai-agent.component';
+import { AddKnowledgeBaseComponent } from './add-knowledge-base/add-knowledge-base.component';
 
 @NgModule({
   declarations: [
     AIAgentComponent,
-    AddAIAgentComponent
+    AddAIAgentComponent,
+    AddKnowledgeBaseComponent
   ],
   imports: [
     CommonModule,
+    FormsModule,
     SystemRoutingModule,
     MatIconModule,
     MatMenuModule,

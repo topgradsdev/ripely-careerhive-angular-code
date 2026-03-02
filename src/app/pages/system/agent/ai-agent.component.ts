@@ -26,11 +26,14 @@ import { MatTabChangeEvent } from '@angular/material/tabs';
   styleUrls: ['./ai-agent.component.scss'],
 })
 export class AIAgentComponent implements OnInit {
- 
+
   @ViewChild('closeRminderModal') closeRminderModal;
-  selectedIndex:any = 0;
+  selectedIndex: any = 0;
+  kbSearchText: string = '';
+  showArchivedAgents: boolean = false;
+  showArchivedKB: boolean = false;
 
-
+  // Data
   reviewers: any = [
     {
       name: 'Robert',
@@ -58,11 +61,29 @@ export class AIAgentComponent implements OnInit {
     }
   ];
 
-  editReviewer(reviewer: any) {
-    console.log('Edit clicked:', reviewer);
-  }
+  archivedReviewers: any = [
+    {
+      name: 'Robert',
+      role: 'Instant Resume Reviewer',
+      image: 'https://randomuser.me/api/portraits/men/32.jpg',
+      skills: ['Business Analysis', 'Advanced', 'MySQL', 'Information Technology']
+    },
+    {
+      name: 'Albert',
+      role: 'Instant Resume Reviewer',
+      image: 'https://randomuser.me/api/portraits/men/44.jpg',
+      skills: ['Business Analysis', 'Advanced', 'MySQL', 'Information Technology']
+    }
+  ];
 
-  cards: any[] = [
+  archivedCards: any[] = [
+    {
+      title: 'Advanced BA',
+      description: 'Advanced BA knowledge bases with multiple relevant skills to assist students.',
+      skills: ['Business Analysis', 'Advanced', 'MySQL', 'Information Technology']
+    }
+  ];
+   cards: any[] = [
     {
       title: 'Advanced BA',
       description: 'Advanced BA knowledge bases with multiple relevant skills to assist students.',
@@ -99,32 +120,146 @@ export class AIAgentComponent implements OnInit {
       skills: ['Business Analysis', 'Advanced', 'MySQL', 'Information Technology']
     }
   ];
+  // archivedCards: any[] = [];
 
-  edit(card: any) {
-    console.log('Edit clicked:', card);
+  // Counts
+  totalAgents: number = 0;
+  archivedAgentsCount: number = 0;
+  totalKnowledgeBases: number = 0;
+  archivedKBCount: number = 0;
+
+  get filteredCards() {
+    if (!this.kbSearchText.trim()) return this.cards;
+    const term = this.kbSearchText.toLowerCase().trim();
+    return this.cards.filter((card: any) =>
+      (card.title || '').toLowerCase().includes(term) ||
+      (card.skills || []).some((skill: string) => skill.toLowerCase().includes(term))
+    );
   }
 
+  constructor(
+    private fb: FormBuilder,
+    private service: TopgradserviceService,
+    private router: Router,
+    private ngxPermissionService: NgxPermissionsService,
+    private cdr: ChangeDetectorRef,
+    private loaderService: LoaderService,
+    private fileIconService: FileIconService,
+    private sanitizer: DomSanitizer
+  ) {}
 
-  constructor(private fb: FormBuilder, private service: TopgradserviceService,
-     private router: Router, private ngxPermissionService: NgxPermissionsService, private cdr: ChangeDetectorRef, private loaderService:LoaderService, private fileIconService:FileIconService, private sanitizer: DomSanitizer) {
+  getSafeSvg(documentName: string): SafeHtml {
+    return this.fileIconService.getFileIcon(documentName);
   }
- getSafeSvg(documentName: string): SafeHtml {
-   return this.fileIconService.getFileIcon(documentName);
-  }
-
 
   ngOnInit(): void {
-
-
+    this.getAgentList();
+    this.getKnowledgeBaseList();
   }
 
+  // ── API Calls ──
+
+  getAgentList() {
+    this.service.getAgentList({ status: 'active' }).subscribe({
+      next: (res: any) => {
+        if (res.status === HttpResponseCode.SUCCESS) {
+          this.reviewers = res.data || [];
+          this.totalAgents = res.total || this.reviewers.length;
+        }
+      },
+      error: (err) => {
+        this.service.showMessage({
+          message: err.error?.errors?.msg || 'Failed to load agents',
+        });
+      },
+    });
+  }
+
+  getArchivedAgentList() {
+    this.service.getArchivedAgentList({ status: 'archived' }).subscribe({
+      next: (res: any) => {
+        if (res.status === HttpResponseCode.SUCCESS) {
+          this.archivedReviewers = res.data || [];
+          this.archivedAgentsCount = res.total || this.archivedReviewers.length;
+        }
+      },
+      error: (err) => {
+        this.service.showMessage({
+          message: err.error?.errors?.msg || 'Failed to load archived agents',
+        });
+      },
+    });
+  }
+
+  getKnowledgeBaseList() {
+    this.service.getKnowledgeBaseList({ status: 'active' }).subscribe({
+      next: (res: any) => {
+        if (res.status === HttpResponseCode.SUCCESS) {
+          this.cards = res.data || [];
+          this.totalKnowledgeBases = res.total || this.cards.length;
+        }
+      },
+      error: (err) => {
+        this.service.showMessage({
+          message: err.error?.errors?.msg || 'Failed to load knowledge bases',
+        });
+      },
+    });
+  }
+
+  getArchivedKnowledgeBaseList() {
+    this.service.getArchivedKnowledgeBaseList({ status: 'archived' }).subscribe({
+      next: (res: any) => {
+        if (res.status === HttpResponseCode.SUCCESS) {
+          this.archivedCards = res.data || [];
+          this.archivedKBCount = res.total || this.archivedCards.length;
+        }
+      },
+      error: (err) => {
+        this.service.showMessage({
+          message: err.error?.errors?.msg || 'Failed to load archived knowledge bases',
+        });
+      },
+    });
+  }
+
+  // ── Click Events ──
+
+  editReviewer(reviewer: any) {
+    if (reviewer._id) {
+      this.router.navigate(['/admin/system/edit-agent', reviewer._id]);
+    }
+  }
+
+  edit(card: any) {
+    if (card._id) {
+      this.router.navigate(['/admin/system/edit-knowledge-base', card._id]);
+    }
+  }
+
+  openArchivedAgents() {
+    this.showArchivedAgents = true;
+    this.getArchivedAgentList();
+  }
+
+  backToActiveAgents() {
+    this.showArchivedAgents = false;
+  }
+
+  openArchivedKB() {
+    this.showArchivedKB = true;
+    this.getArchivedKnowledgeBaseList();
+  }
+
+  backToActiveKB() {
+    this.showArchivedKB = false;
+  }
 
   onTabChange(event: MatTabChangeEvent) {
     this.selectedIndex = event.index;
-    console.log('Selected Tab Index:', event.index);
   }
 
-  btnTabs(index){
+  btnTabs(index: any) {
     this.selectedIndex = index;
   }
 }
