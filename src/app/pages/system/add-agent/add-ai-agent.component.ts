@@ -521,6 +521,17 @@ export class AddAIAgentComponent implements OnInit {
       next: (res: any) => {
         if (res.status === HttpResponseCode.SUCCESS) {
           this.transcripts = res.data || [];
+          // Load the latest conversation messages into test chat preview
+          if (this.transcripts.length > 0 && this.testChatMessages.length === 0) {
+            const latest = this.transcripts[0];
+            this.testChatSessionId = latest.session_id || '';
+            this.testChatMessages = (latest.messages || []).map((msg: any) => ({
+              role: msg.role === 'assistant' ? 'agent' : msg.role,
+              message: msg.content,
+              sources: msg.sources || [],
+              flagged: msg.flagged || false
+            }));
+          }
           this.cdr.detectChanges();
         }
       },
@@ -528,22 +539,23 @@ export class AddAIAgentComponent implements OnInit {
     });
   }
 
-  openChatView(conversationId?: string) {
+  openChatView(transcript?: any) {
     this.transcriptMenuOpenIndex = null;
-    if (conversationId) {
-      this.selectedConversationId = conversationId;
-      this.service.getConversationById({ conversation_id: conversationId }).subscribe({
-        next: (res: any) => {
-          if (res.status === HttpResponseCode.SUCCESS) {
-            this.chatMessages = res.data?.messages || [];
-            this.viewingChat = true;
-            this.cdr.detectChanges();
-          }
-        },
-        error: () => {
-          this.service.showMessage({ message: 'Failed to load conversation' });
-        },
-      });
+    if (transcript) {
+      this.selectedConversationId = transcript._id;
+      this.chatMessages = (transcript.messages || []).map((msg: any) => ({
+        role: msg.role,
+        content: msg.content,
+        flagged: msg.flagged,
+        flag_reason: msg.flag_reason,
+        sources: msg.sources || [],
+        createdAt: msg.createdAt
+      }));
+      if (transcript.session_id) {
+        this.testChatSessionId = transcript.session_id;
+      }
+      this.viewingChat = true;
+      this.cdr.detectChanges();
     } else {
       this.viewingChat = true;
     }
@@ -553,6 +565,7 @@ export class AddAIAgentComponent implements OnInit {
     this.viewingChat = false;
     this.chatMessages = [];
     this.selectedConversationId = null;
+    this.loadTranscripts();
   }
 
   // ── Test Chat ──

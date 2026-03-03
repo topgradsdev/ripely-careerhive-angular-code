@@ -103,10 +103,10 @@
                     <div class="kb-upload-zone p-0" *ngIf="!kbBrainFiles.length" (click)="brainFileInput.click()">
                         <div class="kb-upload-inner">
                             <span class="kb-upload-title">Upload Knowledge Base</span>
-                            <span class="kb-upload-hint">Accepted file types: Adobe PDF (.pdf)<br>10MB size limit</span>
+                            <span class="kb-upload-hint">Accepted file types: Word Document, Excel, Powerpoint, Adobe PDF, Videos, Audio, Images, Markdown Files</span>
                         </div>
                     </div>
-                    <input type="file" #brainFileInput accept=".pdf" multiple hidden (change)="onBrainFileSelected($event)" />
+                    <input type="file" #brainFileInput multiple hidden (change)="onBrainFileSelected($event)" />
 
                     <!-- Brain files list -->
                     <div class="kb-file-row" *ngFor="let file of kbBrainFiles; let i = index">

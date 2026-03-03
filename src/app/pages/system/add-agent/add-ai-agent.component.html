@@ -107,7 +107,9 @@
                             <div class="avatar-img-wrapper">
                                 <div class="avatar-circle" (click)="avatarInput.click()">
                                     <img *ngIf="avatarPreview" [src]="avatarPreview" alt="Avatar" />
-                                    <span *ngIf="!avatarPreview" class="avatar-initials">{{ getAvatarInitials() }}</span>
+                                    <span *ngIf="!avatarPreview" class="avatar-initials">
+                                        <img src="../../../assets/img/image.png" />
+                                    </span>
                                 </div>
                                 <button type="button" class="avatar-edit-btn" (click)="avatarInput.click()">
                                     <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -402,26 +404,26 @@
                                 <div class="th-cell th-session">SESSION ID
                                     <svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M7 15L12 20L17 15" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M7 9L12 4L17 9" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
                                 </div>
-                                <div class="th-cell th-student">STUDENT
+                                <div class="th-cell th-student">TITLE
                                     <svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M7 15L12 20L17 15" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M7 9L12 4L17 9" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
                                 </div>
                                 <div class="th-cell th-options">OPTIONS</div>
                             </div>
 
                             <div class="transcript-row" *ngFor="let t of transcripts; let i = index"
-                                 [class.highlighted]="t.highlighted">
+                                 [class.highlighted]="t.is_flagged">
                                 <div class="td-cell td-date">
-                                    <svg *ngIf="t.highlighted" class="chat-flag-icon" width="18" height="18" viewBox="0 0 24 24" fill="none">
+                                    <svg *ngIf="t.is_flagged" class="chat-flag-icon" width="18" height="18" viewBox="0 0 24 24" fill="none">
                                         <path d="M4 15V4C4 4 5 3 8 3C11 3 13 5 16 5C19 5 20 4 20 4V15C20 15 19 16 16 16C13 16 11 14 8 14C5 14 4 15 4 15Z" stroke="#F47761" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                                         <path d="M4 22V15" stroke="#F47761" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                                     </svg>
-                                    {{ t.date }}
+                                    {{ t.createdAt | date:'dd MMM yyyy' }}
                                 </div>
-                                <div class="td-cell td-session">{{ t.sessionId }}</div>
-                                <div class="td-cell td-student">{{ t.student }}</div>
+                                <div class="td-cell td-session">{{ t.session_id }}</div>
+                                <div class="td-cell td-student">{{ t.title }}</div>
                                 <div class="td-cell td-options">
                                     <!-- Copy icon / Copied check -->
-                                    <svg *ngIf="copiedIndex !== i" class="option-icon" (click)="copySessionId(t.sessionId, i, $event)" width="18" height="18" viewBox="0 0 24 24" fill="none">
+                                    <svg *ngIf="copiedIndex !== i" class="option-icon" (click)="copySessionId(t.session_id, i, $event)" width="18" height="18" viewBox="0 0 24 24" fill="none">
                                         <rect x="9" y="9" width="13" height="13" rx="2" stroke="#2B2A35" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                                         <path d="M5 15H4C2.89543 15 2 14.1046 2 13V4C2 2.89543 2.89543 2 4 2H13C14.1046 2 15 2.89543 15 4V5" stroke="#2B2A35" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                                     </svg>
@@ -435,7 +437,7 @@
                                             <circle cx="12" cy="19" r="1.5" fill="#2B2A35"/>
                                         </svg>
                                         <div class="transcript-dropdown" *ngIf="transcriptMenuOpenIndex === i">
-                                            <div class="dropdown-item" (click)="openChatView()">View Chat</div>
+                                            <div class="dropdown-item" (click)="openChatView(t)">View Chat</div>
                                             <div class="dropdown-item danger" (click)="removechat.show()">Delete History</div>
                                         </div>
                                     </div>
@@ -456,7 +458,7 @@
 
                         <!-- Agent banner -->
                         <div class="cv-agent-banner">
-                            <img [src]="avatarPreview || 'https://cdn-icons-png.flaticon.com/512/4712/4712139.png'" class="cv-agent-avatar" />
+                            <img [src]="avatarPreview || '../../../assets/img/image.png'" class="cv-agent-avatar" />
                             <span class="cv-agent-name">{{ agentForm.get('agentName')?.value || 'Agent' }}</span>
                         </div>
 
@@ -464,57 +466,36 @@
                         <div class="cv-messages">
                             <ng-container *ngFor="let msg of chatMessages">
 
-                                <!-- Date divider -->
-                                <div class="cv-date-divider" *ngIf="msg.type === 'date-divider'">
-                                    {{ msg.label }}
+                                <!-- User message (right) -->
+                                <div class="cv-msg-group cv-right" *ngIf="msg.role === 'user'">
+                                    <div class="cv-bubbles">
+                                        <div class="cv-bubble cv-bubble-right">
+                                            <p>{{ msg.content }}</p>
+                                            <span class="cv-time">{{ msg.createdAt | date:'hh:mm a' }}</span>
+                                        </div>
+                                    </div>
                                 </div>
 
-                                <!-- Left message (other person) -->
-                                <div class="cv-msg-group cv-left" *ngIf="msg.type === 'left'">
+                                <!-- Assistant message (left) -->
+                                <div class="cv-msg-group cv-left" *ngIf="msg.role === 'assistant'">
                                     <div class="cv-sender-row">
-                                        <img [src]="msg.avatar" class="cv-sender-avatar" />
-                                        <span class="cv-sender-name">{{ msg.sender }}</span>
+                                        <img [src]="avatarPreview || '../../../assets/img/image.png'" class="cv-sender-avatar" />
+                                        <span class="cv-sender-name">{{ agentForm.get('agentName')?.value || 'Agent' }}</span>
                                     </div>
                                     <div class="cv-bubbles">
-                                        <div class="cv-bubble cv-bubble-left" *ngFor="let m of msg.messages">
-                                            <p>{{ m.text }}</p>
-                                            <span class="cv-time" *ngIf="m.time">{{ m.time }}</span>
+                                        <div class="cv-bubble cv-bubble-left" [class.flagged-msg]="msg.flagged">
+                                            <p>{{ msg.content }}</p>
+                                            <span class="cv-time">{{ msg.createdAt | date:'hh:mm a' }}</span>
+                                        </div>
+                                        <div class="chat-sources" *ngIf="msg.sources?.length">
+                                            <span class="sources-label">Sources:</span>
+                                            <span class="source-chip" *ngFor="let src of msg.sources" [title]="src.text">{{ src.file_name }}</span>
+                                        </div>
+                                        <div class="chat-flagged" *ngIf="msg.flagged">
+                                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z" stroke="#E53935" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><line x1="4" y1="22" x2="4" y2="15" stroke="#E53935" stroke-width="2" stroke-linecap="round"/></svg>
+                                            <span>{{ msg.flag_reason || 'Flagged by guardrails' }}</span>
                                         </div>
                                     </div>
-                                </div>
-
-                                <!-- Right message (agent/self) -->
-                                <div class="cv-msg-group cv-right" *ngIf="msg.type === 'right'">
-                                    <div class="cv-bubbles">
-                                        <div class="cv-bubble cv-bubble-right" *ngFor="let m of msg.messages">
-                                            <p>{{ m.text }}</p>
-                                            <span class="cv-time">{{ m.time }}</span>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <!-- Right file attachment -->
-                                <div class="cv-msg-group cv-right" *ngIf="msg.type === 'right-file'">
-                                    <div class="cv-file-card">
-                                        <div class="cv-file-icon">
-                                            <svg width="24" height="28" viewBox="0 0 28 32" fill="none">
-                                                <path d="M2 0C0.9 0 0 0.9 0 2V30C0 31.1 0.9 32 2 32H26C27.1 32 28 31.1 28 30V8L20 0H2Z" fill="#E8EAF6"/>
-                                                <path d="M20 0V8H28L20 0Z" fill="#C5CAE9"/>
-                                                <rect x="2" y="22" width="24" height="10" rx="1" fill="#E53935"/>
-                                                <text x="14" y="30" text-anchor="middle" fill="white" font-size="7" font-weight="bold" font-family="sans-serif">PDF</text>
-                                            </svg>
-                                        </div>
-                                        <div class="cv-file-info">
-                                            <span class="cv-file-name">{{ msg.fileName }}</span>
-                                            <span class="cv-file-size">{{ msg.fileSize }}</span>
-                                        </div>
-                                        <svg class="cv-file-more" width="20" height="20" viewBox="0 0 24 24" fill="none">
-                                            <circle cx="5" cy="12" r="1.5" fill="#2B2A35"/>
-                                            <circle cx="12" cy="12" r="1.5" fill="#2B2A35"/>
-                                            <circle cx="19" cy="12" r="1.5" fill="#2B2A35"/>
-                                        </svg>
-                                    </div>
-                                    <span class="cv-time cv-time-below">{{ msg.time }}</span>
                                 </div>
 
                             </ng-container>
@@ -666,7 +647,7 @@
                     <!-- Agent Row -->
                     <div class="agent-row">
                         <div class="agent-left">
-                        <img [src]="avatarPreview || 'https://cdn-icons-png.flaticon.com/512/4712/4712139.png'" />
+                        <img [src]="avatarPreview || '../../../assets/img/image.png'" />
                         <span>{{ agentForm.get('agentName')?.value || 'Agent' }}</span>
                         </div>
 
@@ -685,7 +666,7 @@
 
                         <!-- Empty state -->
                         <div class="msg-left" *ngIf="testChatMessages.length === 0 && !testChatLoading">
-                            <img [src]="avatarPreview || 'https://cdn-icons-png.flaticon.com/512/4712/4712139.png'" />
+                            <img [src]="avatarPreview || '../../../assets/img/image.png'" />
                             <div class="bubble light">
                                 Hey! Welcome! I'm {{ agentForm.get('agentName')?.value || 'your agent' }}. How can I help you today?
                             </div>
@@ -700,7 +681,7 @@
 
                             <!-- Agent Message (left) -->
                             <div class="msg-left" *ngIf="msg.role === 'agent'">
-                                <img [src]="avatarPreview || 'https://cdn-icons-png.flaticon.com/512/4712/4712139.png'" />
+                                <img [src]="avatarPreview || '../../../assets/img/image.png'" />
                                 <div class="chat-msg-wrapper">
                                     <div class="bubble light" [class.flagged-msg]="msg.flagged">{{ msg.message }}</div>
                                     <div class="chat-sources" *ngIf="msg.sources?.length">
@@ -717,7 +698,7 @@
 
                         <!-- Thinking indicator -->
                         <div class="msg-left thinking-row" *ngIf="testChatLoading">
-                            <img [src]="avatarPreview || 'https://cdn-icons-png.flaticon.com/512/4712/4712139.png'" />
+                            <img [src]="avatarPreview || '../../../assets/img/image.png'" />
                             <div class="bubble light thinking-bubble">
                                 <div class="thinking-dots">
                                     <span></span>
