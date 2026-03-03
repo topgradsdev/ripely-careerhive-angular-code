@@ -14,7 +14,7 @@
                          <div class="student_card" *ngIf="selectedIndex==0">
                             <div class="content">
                                 <p>Total Agents</p>
-                                <h4>{{ totalAgents }}</h4>
+                                <h4>{{ activeAgents }}</h4>
                             </div>
                             <div class="">
                                 <svg width="54" height="54" viewBox="0 0 54 54" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -49,7 +49,7 @@
                         <div class="student_card"  *ngIf="selectedIndex==1">
                             <div class="content">
                                 <p>Total Knowledge Bases</p>
-                                <h4>{{ totalKnowledgeBases }}</h4>
+                                <h4>{{ activeKBCount }}</h4>
                             </div>
                             <div class="">
                                <svg width="54" height="54" viewBox="0 0 54 54" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -114,16 +114,22 @@
                             <div class="card" *ngFor="let reviewer of reviewers">
 
                                 <div class="image-wrapper">
-                                <img [src]="reviewer.image" [alt]="reviewer.name" />
+                                    <img *ngIf="reviewer.image_url" [src]="reviewer.image_url" [alt]="reviewer.name" />
+                                    <div *ngIf="!reviewer.image_url" class="default-avatar">
+                                        <svg viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <circle cx="100" cy="75" r="35" fill="white"/>
+                                            <path d="M100 120C65 120 38 145 35 180H165C162 145 135 120 100 120Z" fill="white"/>
+                                        </svg>
+                                    </div>
                                 </div>
 
                                 <div class="content">
                                 <h3>{{ reviewer.name }}</h3>
-                                <p class="role">{{ reviewer.role }}</p>
+                                <p class="role">{{ reviewer.title }}</p>
 
                                 <div class="skills">
-                                    <span class="skill" *ngFor="let skill of reviewer.skills">
-                                    {{ skill }}
+                                    <span class="skill" *ngFor="let tag of reviewer.tags">
+                                    {{ tag }}
                                     </span>
                                 </div>
 
@@ -172,15 +178,15 @@
                         <div class="kb-container" *ngIf="filteredCards.length">
                             <div class="kb-card" *ngFor="let card of filteredCards">
 
-                                <h3 class="kb-title">{{ card.title }}</h3>
+                                <h3 class="kb-title">{{ card.name }}</h3>
 
                                 <p class="kb-desc">
                                 {{ card.description }}
                                 </p>
 
                                 <div class="kb-skills mt-4">
-                                <span class="kb-skill" *ngFor="let skill of card.skills">
-                                    {{ skill }}
+                                <span class="kb-skill" *ngFor="let tag of card.tags">
+                                    {{ tag }}
                                 </span>
                                 </div>
 
@@ -199,7 +205,7 @@
                         <path d="M9.16667 15.8333C12.8486 15.8333 15.8333 12.8486 15.8333 9.16667C15.8333 5.48477 12.8486 2.5 9.16667 2.5C5.48477 2.5 2.5 5.48477 2.5 9.16667C2.5 12.8486 5.48477 15.8333 9.16667 15.8333Z" stroke="#464BA8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                         <path d="M17.5 17.5L13.875 13.875" stroke="#464BA8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                     </svg>
-                    <input type="text" placeholder="Search Usage" [(ngModel)]="kbSearchText" />
+                    <input type="text" placeholder="Search Knowledge Base" [(ngModel)]="kbSearchText" (input)="onKBSearch()" />
                 </div>
             </div>
 
@@ -216,13 +222,19 @@
                 <div class="container">
                     <div class="card" *ngFor="let reviewer of archivedReviewers">
                         <div class="image-wrapper">
-                            <img [src]="reviewer.image" [alt]="reviewer.name" />
+                            <img *ngIf="reviewer.image_url" [src]="reviewer.image_url" [alt]="reviewer.name" />
+                            <div *ngIf="!reviewer.image_url" class="default-avatar">
+                                <svg viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <circle cx="100" cy="75" r="35" fill="white"/>
+                                    <path d="M100 120C65 120 38 145 35 180H165C162 145 135 120 100 120Z" fill="white"/>
+                                </svg>
+                            </div>
                         </div>
                         <div class="content">
                             <h3>{{ reviewer.name }}</h3>
-                            <p class="role">{{ reviewer.role }}</p>
+                            <p class="role">{{ reviewer.title }}</p>
                             <div class="skills">
-                                <span class="skill" *ngFor="let skill of reviewer.skills">{{ skill }}</span>
+                                <span class="skill" *ngFor="let tag of reviewer.tags">{{ tag }}</span>
                             </div>
                             <button class="edit-btn" (click)="editReviewer(reviewer)">Edit</button>
                         </div>
@@ -242,10 +254,10 @@
 
                 <div class="kb-container">
                     <div class="kb-card" *ngFor="let card of archivedCards">
-                        <h3 class="kb-title">{{ card.title }}</h3>
+                        <h3 class="kb-title">{{ card.name }}</h3>
                         <p class="kb-desc">{{ card.description }}</p>
                         <div class="kb-skills mt-4">
-                            <span class="kb-skill" *ngFor="let skill of card.skills">{{ skill }}</span>
+                            <span class="kb-skill" *ngFor="let tag of card.tags">{{ tag }}</span>
                         </div>
                         <div class="kb-footer">
                             <button class="edit-btn" (click)="edit(card)">Edit</button>

@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { TopgradserviceService } from '../../../topgradservice.service';
@@ -7,6 +7,7 @@ import { HttpResponseCode } from '../../../shared/enum';
 import { ChartData, ChartOptions } from 'chart.js';
 import { ModalDirective } from 'ngx-bootstrap/modal';
 import { FileIconService } from 'src/app/shared/file-icon.service';
+import { LoaderService } from '../../../loaderservice.service';
 
 @Component({
   selector: 'app-add-ai-agent',
@@ -15,8 +16,10 @@ import { FileIconService } from 'src/app/shared/file-icon.service';
 })
 export class AddAIAgentComponent implements OnInit {
 
-  @ViewChild('archiveAgent') archiveAgent: ModalDirective;
+  @ViewChild('archiveAgentModal') archiveAgentModal: ModalDirective;
   @ViewChild('removechat') removechat: ModalDirective;
+  @ViewChild('removeTestChat') removeTestChat: ModalDirective;
+  @ViewChild('chatBody') chatBody: ElementRef;
   
   selectedSection = 'description';
 
@@ -68,6 +71,7 @@ export class AddAIAgentComponent implements OnInit {
 
   isEditMode = false;
   agentId: string | null = null;
+  agentStats: any = {};
 
   constructor(
     private fb: FormBuilder,
@@ -76,7 +80,8 @@ export class AddAIAgentComponent implements OnInit {
     private route: ActivatedRoute,
     private cdr: ChangeDetectorRef,
     private sanitizer: DomSanitizer,
-    private fileIconService : FileIconService
+    private fileIconService: FileIconService,
+    private loaderService: LoaderService
   ) {}
 
   getSafeSvg(documentName: string) {
@@ -88,6 +93,11 @@ export class AddAIAgentComponent implements OnInit {
   }
 
   isChatVisible = true;
+  flaggedChatsCount = 0;
+
+  // ── Memory Settings ──
+  memoryEnabled = true;
+  memoryWindowSize = 10;
 
   toggleChat() {
     this.isChatVisible = !this.isChatVisible;
@@ -146,6 +156,7 @@ export class AddAIAgentComponent implements OnInit {
   resetAvatar() {
     this.avatarPreview = null;
     this.avatarFile = null;
+    this.avatarReset = true;
   }
 
   // Validation flags
@@ -201,38 +212,102 @@ export class AddAIAgentComponent implements OnInit {
       return;
     }
 
+    this.loaderService.show();
     const formVal = this.agentForm.value;
-    const payload = {
-      // Character Description
-      name: formVal.agentName,
-      title: formVal.agentTitle,
-      characterBackground: formVal.characterBackground,
-      tags: this.agentTags,
-      // Personality
-      persona: this.selectedPersona || '',
-      personality: {
+
+    // Use FormData if avatar file exists, otherwise JSON
+    if (this.avatarFile) {
+      const fd = new FormData();
+      if (this.isEditMode && this.agentId) {
+        fd.append('id', this.agentId);
+      }
+      fd.append('name', formVal.agentName);
+      fd.append('title', formVal.agentTitle);
+      fd.append('background', formVal.characterBackground);
+      fd.append('tags', JSON.stringify(this.agentTags));
+      fd.append('character', JSON.stringify({
+        persona: this.selectedPersona || '',
+        role: '',
+        tone: ''
+      }));
+      fd.append('personality', JSON.stringify({
         flexibility: this.personalityTraits[0].value,
         meticulousness: this.personalityTraits[1].value,
         agreeableness: this.personalityTraits[2].value,
         communications: this.personalityTraits[3].value,
-        languageComplexity: this.personalityTraits[4].value,
-      },
-      // Knowledge Bank
-      knowledgeBases: this.knowledgeBases.map((kb: any) => kb._id),
-      // Guardrails
-      flagModeratedMemories: this.flagModeratedMemories,
-      blockedWords: this.blockedWords,
-    };
+        language_complexity: this.personalityTraits[4].value,
+      }));
+      fd.append('knowledge_bases', JSON.stringify(this.knowledgeBases.map((kb: any) => kb._id)));
+      fd.append('guardrails', JSON.stringify({
+        blocked_words: this.blockedWords,
+        flag_inappropriate: this.flagModeratedMemories
+      }));
+      fd.append('memory_settings', JSON.stringify({
+        enabled: this.memoryEnabled,
+        window_size: this.memoryWindowSize
+      }));
+      fd.append('document', this.avatarFile);
 
-    this.service.createAgent(payload).subscribe({
+      this.callSaveApi(fd);
+    } else {
+      const payload: any = {
+        name: formVal.agentName,
+        title: formVal.agentTitle,
+        background: formVal.characterBackground,
+        tags: this.agentTags,
+        character: {
+          persona: this.selectedPersona || '',
+          role: '',
+          tone: ''
+        },
+        personality: {
+          flexibility: this.personalityTraits[0].value,
+          meticulousness: this.personalityTraits[1].value,
+          agreeableness: this.personalityTraits[2].value,
+          communications: this.personalityTraits[3].value,
+          language_complexity: this.personalityTraits[4].value,
+        },
+        knowledge_bases: this.knowledgeBases.map((kb: any) => kb._id),
+        guardrails: {
+          blocked_words: this.blockedWords,
+          flag_inappropriate: this.flagModeratedMemories
+        },
+        memory_settings: {
+          enabled: this.memoryEnabled,
+          window_size: this.memoryWindowSize
+        },
+      };
+
+      if (this.isEditMode && this.agentId) {
+        payload.id = this.agentId;
+        if (this.avatarReset) {
+          payload.reset_image = true;
+        }
+      }
+
+      this.callSaveApi(payload);
+    }
+  }
+
+  avatarReset = false;
+
+  private callSaveApi(payload: any) {
+    const apiCall = this.isEditMode
+      ? this.service.updateAgent(payload)
+      : this.service.createAgent(payload);
+
+    apiCall.subscribe({
       next: (res: any) => {
+        this.loaderService.hide();
         if (res.status === HttpResponseCode.SUCCESS) {
-          document.getElementById('agent-save-success')?.click();
+          this.service.showMessage({ message: this.isEditMode ? 'Agent updated successfully' : 'Agent created successfully' });
+          this.router.navigate(['/admin/system/agent-list']);
         } else {
           this.service.showMessage({ message: res.msg });
         }
       },
       error: (err) => {
+        this.loaderService.hide();
         this.service.showMessage({
           message: err.error?.errors?.msg || 'Something went wrong',
         });
@@ -342,7 +417,7 @@ export class AddAIAgentComponent implements OnInit {
   }
 
   loadKnowledgeBases() {
-    this.service.getKnowledgeBaseList({ status: 'active' }).subscribe({
+    this.service.searchKnowledgeBases({ search: '', limit: 100 }).subscribe({
       next: (res: any) => {
         if (res.status === HttpResponseCode.SUCCESS) {
           this.allKnowledgeBases = res.data || [];
@@ -357,12 +432,35 @@ export class AddAIAgentComponent implements OnInit {
   }
 
   selectKnowledgeBase(kb: any) {
-    if (!this.knowledgeBases.find((k: any) => k._id === kb._id)) {
-      this.knowledgeBases.push({ ...kb, expanded: false });
-      this.knowledgeError = false;
+    if (this.knowledgeBases.find((k: any) => k._id === kb._id)) {
+      this.kbSearchText = '';
+      this.kbDropdownOpen = false;
+      return;
     }
+    this.knowledgeBases.push({ ...kb, expanded: false });
+    this.knowledgeError = false;
     this.kbSearchText = '';
     this.kbDropdownOpen = false;
+
+    // Fetch full KB details (brain_files, additional_prompts, etc.)
+    this.service.getKnowledgeBaseById({ id: kb._id }).subscribe({
+      next: (res: any) => {
+        if (res.status === HttpResponseCode.SUCCESS && res.data) {
+          const idx = this.knowledgeBases.findIndex((k: any) => k._id === kb._id);
+          if (idx !== -1) {
+            this.knowledgeBases[idx] = { ...this.knowledgeBases[idx], ...res.data, expanded: this.knowledgeBases[idx].expanded };
+            this.cdr.detectChanges();
+          }
+        }
+      },
+      error: () => {},
+    });
+  }
+
+  viewBrainFile(file: any) {
+    if (file.file_url) {
+      window.open(file.file_url, '_blank');
+    }
   }
 
   onKbSearchFocus() {
@@ -386,14 +484,7 @@ export class AddAIAgentComponent implements OnInit {
 
   // ── Transcripts Section ──
 
-  transcripts = [
-    // { date: '24/06/25, 1:40 PM', sessionId: 'b91029b135g13', student: 'Dena Beanies', highlighted: true },
-    // { date: '24/06/25, 1:40 PM', sessionId: 'b91029b135g13', student: 'Dena Beanies', highlighted: false },
-    // { date: '24/06/25, 1:40 PM', sessionId: 'b91029b135g13', student: 'Dena Beanies', highlighted: false },
-    // { date: '24/06/25, 1:40 PM', sessionId: 'b91029b135g13', student: 'Dena Beanies', highlighted: false },
-    // { date: '24/06/25, 1:40 PM', sessionId: 'b91029b135g13', student: 'Dena Beanies', highlighted: false },
-    // { date: '24/06/25, 1:40 PM', sessionId: 'b91029b135g13', student: 'Dena Beanies', highlighted: false },
-  ];
+  transcripts: any[] = [];
 
   transcriptMenuOpenIndex: number | null = null;
 
@@ -421,35 +512,126 @@ export class AddAIAgentComponent implements OnInit {
   }
 
   viewingChat = false;
+  chatMessages: any[] = [];
+  selectedConversationId: string | null = null;
 
-  chatMessages = [
-    { type: 'date-divider', label: 'Friday' },
-    {
-      type: 'left', sender: 'Victoria Kay',
-      avatar: 'https://randomuser.me/api/portraits/women/44.jpg',
-      messages: [
-        { text: 'Thank you for the interview', time: '' },
-        { text: 'I would like to arrange a different time for interview with you.', time: '21:30' }
-      ]
-    },
-    { type: 'right', messages: [{ text: 'Sure no worries, please view my calendar.', time: '21:36' }] },
-    { type: 'right-file', fileName: 'Calendar.pdf', fileSize: 'PDF \u00B7 4MB', time: '21:40' },
-    { type: 'date-divider', label: 'Today' },
-    {
-      type: 'left', sender: 'Jason Stantler',
-      avatar: 'https://randomuser.me/api/portraits/men/75.jpg',
-      messages: [{ text: 'Hello, I\'m available anytime between tuesday to thursday.', time: '10:01' }]
-    },
-    { type: 'right', messages: [{ text: 'Sure no worries, I\'ll send you a voice message in a moment', time: '21:36' }] }
-  ];
+  loadTranscripts() {
+    if (!this.agentId) return;
+    this.service.getAgentConversations({ agent_id: this.agentId, page: 1, limit: 100 }).subscribe({
+      next: (res: any) => {
+        if (res.status === HttpResponseCode.SUCCESS) {
+          this.transcripts = res.data || [];
+          this.cdr.detectChanges();
+        }
+      },
+      error: () => {},
+    });
+  }
 
-  openChatView() {
+  openChatView(conversationId?: string) {
     this.transcriptMenuOpenIndex = null;
-    this.viewingChat = true;
+    if (conversationId) {
+      this.selectedConversationId = conversationId;
+      this.service.getConversationById({ conversation_id: conversationId }).subscribe({
+        next: (res: any) => {
+          if (res.status === HttpResponseCode.SUCCESS) {
+            this.chatMessages = res.data?.messages || [];
+            this.viewingChat = true;
+            this.cdr.detectChanges();
+          }
+        },
+        error: () => {
+          this.service.showMessage({ message: 'Failed to load conversation' });
+        },
+      });
+    } else {
+      this.viewingChat = true;
+    }
   }
 
   backToChatHistory() {
     this.viewingChat = false;
+    this.chatMessages = [];
+    this.selectedConversationId = null;
+  }
+
+  // ── Test Chat ──
+
+  testChatMessages: { role: string; message: string; sources?: any[]; flagged?: boolean }[] = [];
+  testChatInput = '';
+  testChatSessionId = '';
+  testChatLoading = false;
+
+  sendTestChat() {
+    const msg = this.testChatInput.trim();
+    if (!msg || !this.agentId || this.testChatLoading) return;
+
+    this.testChatMessages.push({ role: 'user', message: msg });
+    this.testChatInput = '';
+    this.testChatLoading = true;
+    this.cdr.detectChanges();
+    this.scrollChatToBottom();
+
+    this.service.agentChat({
+      agent_id: this.agentId,
+      message: msg,
+      session_id: this.testChatSessionId || ''
+    }).subscribe({
+      next: (res: any) => {
+        this.testChatLoading = false;
+        if (res.status === HttpResponseCode.SUCCESS) {
+          this.testChatSessionId = res.data?.session_id || this.testChatSessionId;
+          this.testChatMessages.push({
+            role: 'agent',
+            message: res.data?.message || '',
+            sources: res.data?.sources || [],
+            flagged: res.data?.flagged || false
+          });
+        } else {
+          this.testChatMessages.push({ role: 'agent', message: res.msg || 'Failed to get response' });
+        }
+        this.cdr.detectChanges();
+        this.scrollChatToBottom();
+      },
+      error: (err) => {
+        this.testChatLoading = false;
+        this.testChatMessages.push({ role: 'agent', message: err.error?.errors?.msg || 'Chat failed' });
+        this.cdr.detectChanges();
+        this.scrollChatToBottom();
+      },
+    });
+  }
+
+  resetTestChat() {
+    this.testChatMessages = [];
+    this.testChatSessionId = '';
+    this.testChatInput = '';
+  }
+
+  private scrollChatToBottom() {
+    setTimeout(() => {
+      if (this.chatBody?.nativeElement) {
+        this.chatBody.nativeElement.scrollTop = this.chatBody.nativeElement.scrollHeight;
+      }
+    }, 50);
+  }
+
+  confirmResetTestChat() {
+    this.resetTestChat();
+    this.removeTestChat.hide();
+  }
+
+  loadFlaggedChats() {
+    if (!this.agentId) return;
+    this.service.getAgentFlaggedChats({ agent_id: this.agentId, page: 1, limit: 1 }).subscribe({
+      next: (res: any) => {
+        if (res.status === HttpResponseCode.SUCCESS) {
+          this.flaggedChatsCount = res.total || res.data?.length || 0;
+          this.cdr.detectChanges();
+        }
+      },
+      error: () => {},
+    });
   }
 
   // ── Guardrails Section ──
@@ -481,17 +663,21 @@ export class AddAIAgentComponent implements OnInit {
 
   usageData: { workflowGroup: string; taskName: string }[] = [];
 
-  deleteAgent() {
+  archiveAgent() {
     if (!this.agentId) return;
-    this.service.deleteAgent({ id: this.agentId }).subscribe({
+    this.loaderService.show();
+    this.service.archiveAgent({ id: this.agentId }).subscribe({
       next: (res: any) => {
+        this.loaderService.hide();
         if (res.status === HttpResponseCode.SUCCESS) {
+          this.service.showMessage({ message: 'Agent archived successfully' });
           this.router.navigate(['/admin/system/agent-list']);
         } else {
           this.service.showMessage({ message: res.msg });
         }
       },
       error: (err) => {
+        this.loaderService.hide();
         this.service.showMessage({
           message: err.error?.errors?.msg || 'Something went wrong',
         });
@@ -510,6 +696,87 @@ export class AddAIAgentComponent implements OnInit {
     });
 
     this.loadKnowledgeBases();
+    this.getAgentStats();
+
+    if (this.isEditMode && this.agentId) {
+      this.loadAgentById(this.agentId);
+      this.loadTranscripts();
+      this.loadFlaggedChats();
+    }
+  }
+
+  getAgentStats() {
+    this.service.getAgentStats({}).subscribe({
+      next: (res: any) => {
+        if (res.status === HttpResponseCode.SUCCESS) {
+          this.agentStats = res.data || {};
+          this.cdr.detectChanges();
+        }
+      },
+      error: () => {},
+    });
+  }
+
+  loadAgentById(id: string) {
+    this.service.getAgentById({ id }).subscribe({
+      next: (res: any) => {
+        if (res.status === HttpResponseCode.SUCCESS && res.data) {
+          const agent = res.data;
+
+          // Character Description
+          this.agentForm.patchValue({
+            agentName: agent.name || '',
+            agentTitle: agent.title || '',
+            characterBackground: agent.background || '',
+          });
+          this.agentTags = agent.tags || [];
+          if (agent.image_url) {
+            this.avatarPreview = agent.image_url;
+          }
+
+          // Personality
+          if (agent.character?.persona) {
+            this.selectedPersona = agent.character.persona;
+          }
+          if (agent.personality) {
+            const p = agent.personality;
+            this.personalityTraits[0].value = p.flexibility ?? 3;
+            this.personalityTraits[1].value = p.meticulousness ?? 4;
+            this.personalityTraits[2].value = p.agreeableness ?? 4;
+            this.personalityTraits[3].value = p.communications ?? 4;
+            this.personalityTraits[4].value = p.language_complexity ?? 4;
+            this.updateRadarChart();
+          }
+
+          // Knowledge Bases
+          if (agent.knowledge_bases?.length) {
+            this.knowledgeBases = agent.knowledge_bases.map((kb: any) => ({
+              ...kb,
+              expanded: false
+            }));
+          }
+
+          // Guardrails
+          if (agent.guardrails) {
+            this.blockedWords = agent.guardrails.blocked_words || [];
+            this.flagModeratedMemories = agent.guardrails.flag_inappropriate ?? false;
+          }
+
+          // Memory Settings
+          if (agent.memory_settings) {
+            this.memoryEnabled = agent.memory_settings.enabled ?? true;
+            this.memoryWindowSize = agent.memory_settings.window_size ?? 10;
+          }
+
+          this.cdr.detectChanges();
+        }
+      },
+      error: (err) => {
+        this.service.showMessage({
+          message: err.error?.errors?.msg || 'Failed to load agent',
+        });
+      },
+    });
   }
 
 }

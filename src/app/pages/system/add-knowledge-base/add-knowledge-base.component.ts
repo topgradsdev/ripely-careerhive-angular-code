@@ -1,7 +1,11 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import { ModalDirective } from 'ngx-bootstrap/modal';
+import { forkJoin } from 'rxjs';
 import { TopgradserviceService } from '../../../topgradservice.service';
 import { HttpResponseCode } from '../../../shared/enum';
+import { LoaderService } from '../../../loaderservice.service';
 
 @Component({
   selector: 'app-add-knowledge-base',
@@ -10,19 +14,27 @@ import { HttpResponseCode } from '../../../shared/enum';
 })
 export class AddKnowledgeBaseComponent implements OnInit {
 
+  @ViewChild('archiveKBModal') archiveKBModal: ModalDirective;
+
   kbForm!: FormGroup;
+
+  isEditMode = false;
+  kbId: string | null = null;
 
   kbTags: string[] = [];
   kbTagInput = '';
 
-  kbBrainFiles: { name: string; url: string }[] = [
-    // { name: 'Uploaded_File.pdf', url: '' }
-  ];
+  kbBrainFiles: any[] = [];
+  pendingBrainFiles: File[] = [];
+  kbStats: any = {};
 
   constructor(
     private fb: FormBuilder,
     private service: TopgradserviceService,
-    private cdr: ChangeDetectorRef
+    private route: ActivatedRoute,
+    private router: Router,
+    private cdr: ChangeDetectorRef,
+    private loaderService: LoaderService
   ) {}
 
   addTag() {
@@ -51,24 +63,62 @@ export class AddKnowledgeBaseComponent implements OnInit {
   }
 
   removeBrainFile(index: number) {
-    this.kbBrainFiles.splice(index, 1);
+    const file = this.kbBrainFiles[index];
+    if (this.isEditMode && this.kbId && file) {
+      this.service.deleteKBBrainFile({ id: this.kbId, file_name: file.file_name, file_url: file.file_url }).subscribe({
+        next: (res: any) => {
+          if (res.status === HttpResponseCode.SUCCESS) {
+            this.kbBrainFiles.splice(index, 1);
+            this.service.showMessage({ message: 'File deleted successfully' });
+            this.cdr.detectChanges();
+          } else {
+            this.service.showMessage({ message: res.msg || 'Failed to delete file' });
+          }
+        },
+        error: (err) => {
+          this.service.showMessage({
+            message: err.error?.errors?.msg || 'Failed to delete file',
+          });
+        },
+      });
+    } else {
+      this.pendingBrainFiles.splice(index, 1);
+      this.kbBrainFiles.splice(index, 1);
+    }
   }
 
   onBrainFileSelected(event: Event) {
     const input = event.target as HTMLInputElement;
     if (input?.files?.length) {
-      const files = Array.from(input.files);
-      files.forEach((file) => {
-        const formData = new FormData();
-        formData.append('media', file);
+      Array.from(input.files).forEach((file) => {
+        if (this.isEditMode && this.kbId) {
+          // Edit mode: upload immediately
+          const fd = new FormData();
+          fd.append('document', file, file.name);
+          fd.append('id', this.kbId);
 
-        this.service.uploadOthersMedia(formData).subscribe({
-          next: (resp: any) => {
-            this.kbBrainFiles.push({ name: file.name, url: resp });
-            this.cdr.detectChanges();
-          },
-          error: (err) => console.error('Brain file upload failed:', err),
-        });
+          this.service.uploadKBBrainFile(fd).subscribe({
+            next: (res: any) => {
+              if (res.status === HttpResponseCode.SUCCESS) {
+                this.kbBrainFiles.push(res.data || { file_name: file.name, file_url: '' });
+                this.service.showMessage({ message: 'File uploaded successfully' });
+              } else {
+                this.service.showMessage({ message: res.msg || 'Upload failed' });
+              }
+              this.cdr.detectChanges();
+            },
+            error: (err) => {
+              this.service.showMessage({
+                message: err.error?.errors?.msg || 'File upload failed',
+              });
+            },
+          });
+        } else {
+          // Add mode: collect locally, upload on save
+          this.pendingBrainFiles.push(file);
+          this.kbBrainFiles.push({ file_name: file.name, file_url: '' });
+          this.cdr.detectChanges();
+        }
       });
       input.value = '';
     }
@@ -80,20 +130,125 @@ export class AddKnowledgeBaseComponent implements OnInit {
       return;
     }
 
+    this.loaderService.show();
+
     const formVal = this.kbForm.value;
-    const payload = {
+    const payload: any = {
       name: formVal.kbName,
       description: formVal.kbDescription,
       tags: this.kbTags,
-      additionalPrompts: formVal.kbAdditionalPrompts,
-      brainUrl: formVal.kbBrainUrl,
-      brainFiles: this.kbBrainFiles,
+      additional_prompts: formVal.kbAdditionalPrompts || '',
+      url: formVal.kbBrainUrl || '',
     };
 
-    this.service.createKnowledgeBase(payload).subscribe({
+    if (this.isEditMode && this.kbId) {
+      payload.id = this.kbId;
+      payload.brain_files = this.kbBrainFiles;
+
+      this.service.updateKnowledgeBase(payload).subscribe({
+        next: (res: any) => {
+          this.loaderService.hide();
+          if (res.status === HttpResponseCode.SUCCESS) {
+            this.service.showMessage({ message: 'Knowledge Base updated successfully' });
+            this.router.navigate(['/admin/system/agent-list'], { queryParams: { tab: 1 } });
+          } else {
+            this.service.showMessage({ message: res.msg });
+          }
+        },
+        error: (err) => {
+          this.loaderService.hide();
+          this.service.showMessage({
+            message: err.error?.errors?.msg || 'Something went wrong',
+          });
+        },
+      });
+    } else {
+      // Create mode: first create KB, then upload pending brain files
+      this.service.createKnowledgeBase(payload).subscribe({
+        next: (res: any) => {
+          if (res.status === HttpResponseCode.SUCCESS) {
+            const newKbId = res.data?._id || res.data?.id;
+            if (this.pendingBrainFiles.length && newKbId) {
+              this.uploadPendingBrainFiles(newKbId);
+            } else {
+              this.loaderService.hide();
+              this.service.showMessage({ message: 'Knowledge Base created successfully' });
+              this.router.navigate(['/admin/system/agent-list'], { queryParams: { tab: 1 } });
+            }
+          } else {
+            this.loaderService.hide();
+            this.service.showMessage({ message: res.msg });
+          }
+        },
+        error: (err) => {
+          this.loaderService.hide();
+          this.service.showMessage({
+            message: err.error?.errors?.msg || 'Something went wrong',
+          });
+        },
+      });
+    }
+  }
+
+  uploadPendingBrainFiles(kbId: string) {
+    const uploads = this.pendingBrainFiles.map((file) => {
+      const fd = new FormData();
+      fd.append('document', file, file.name);
+      fd.append('id', kbId);
+      return this.service.uploadKBBrainFile(fd);
+    });
+
+    forkJoin(uploads).subscribe({
+      next: () => {
+        this.loaderService.hide();
+        this.service.showMessage({ message: 'Knowledge Base created successfully' });
+        this.router.navigate(['/admin/system/agent-list'], { queryParams: { tab: 1 } });
+      },
+      error: () => {
+        this.loaderService.hide();
+        this.service.showMessage({ message: 'Knowledge Base created but some files failed to upload' });
+        this.router.navigate(['/admin/system/agent-list'], { queryParams: { tab: 1 } });
+      },
+    });
+  }
+
+  ngOnInit(): void {
+    this.kbId = this.route.snapshot.paramMap.get('id');
+    this.isEditMode = !!this.kbId;
+
+    this.kbForm = this.fb.group({
+      kbName: ['', [Validators.required]],
+      kbDescription: ['', [Validators.required]],
+      kbBrainUrl: [''],
+      kbAdditionalPrompts: [''],
+    });
+
+    this.getKBStats();
+
+    if (this.isEditMode && this.kbId) {
+      this.loadKnowledgeBaseById(this.kbId);
+    }
+  }
+
+  getKBStats() {
+    this.service.getKBStats({}).subscribe({
       next: (res: any) => {
         if (res.status === HttpResponseCode.SUCCESS) {
-          document.getElementById('kb-save-success')?.click();
+          this.kbStats = res.data || {};
+          this.cdr.detectChanges();
+        }
+      },
+      error: () => {},
+    });
+  }
+
+  archiveKB() {
+    if (!this.kbId) return;
+    this.service.archiveKnowledgeBase({ id: this.kbId }).subscribe({
+      next: (res: any) => {
+        if (res.status === HttpResponseCode.SUCCESS) {
+          this.service.showMessage({ message: 'Knowledge Base archived successfully' });
+          this.router.navigate(['/admin/system/agent-list'], { queryParams: { tab: 1 } });
         } else {
           this.service.showMessage({ message: res.msg });
         }
@@ -106,12 +261,30 @@ export class AddKnowledgeBaseComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void {
-    this.kbForm = this.fb.group({
-      kbName: ['', [Validators.required]],
-      kbDescription: ['', [Validators.required]],
-      kbBrainUrl: [''],
-      kbAdditionalPrompts: [''],
+  loadKnowledgeBaseById(id: string) {
+    this.service.getKnowledgeBaseById({ id }).subscribe({
+      next: (res: any) => {
+        if (res.status === HttpResponseCode.SUCCESS && res.data) {
+          const kb = res.data;
+
+          this.kbForm.patchValue({
+            kbName: kb.name || '',
+            kbDescription: kb.description || '',
+            kbBrainUrl: kb.url || '',
+            kbAdditionalPrompts: kb.additional_prompts || '',
+          });
+
+          this.kbTags = kb.tags || [];
+          this.kbBrainFiles = kb.brain_files || [];
+
+          this.cdr.detectChanges();
+        }
+      },
+      error: (err) => {
+        this.service.showMessage({
+          message: err.error?.errors?.msg || 'Failed to load knowledge base',
+        });
+      },
     });
   }
 

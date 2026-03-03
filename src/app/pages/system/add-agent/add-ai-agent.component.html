@@ -1,7 +1,7 @@
 <div class="page_header">
     <div class=" page_header_container">
         <div>
-            <h4>Manage Agent</h4>
+            <h4>{{ isEditMode ? 'Edit Agent' : 'Add Agent' }}</h4>
         </div>
     </div>
 </div>
@@ -14,7 +14,7 @@
                          <div class="student_card" >
                             <div class="content">
                                 <p>Total Deployments</p>
-                                <h4>0</h4>
+                                <h4>{{ agentStats.deployed || 0 }}</h4>
                             </div>
                             <div class="">
                                 <svg width="54" height="54" viewBox="0 0 54 54" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -30,7 +30,7 @@
                         <div class="student_card ">
                             <div class="content">
                                 <p>Knowledge Banks</p>
-                                <h4>0</h4>
+                                <h4>{{ knowledgeBases.length }}</h4>
                             </div>
                             <div class="">
                                <svg width="54" height="54" viewBox="0 0 54 54" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -46,7 +46,7 @@
                         <div class="student_card">
                             <div class="content">
                                 <p>Flagged Chats</p>
-                                <h4>0</h4>
+                                <h4>{{ flaggedChatsCount }}</h4>
                             </div>
                             <div class="">
                                <svg width="54" height="54" viewBox="0 0 54 54" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -62,8 +62,8 @@
 
              
                 <div class="d-flex gap-3">
-                    <button *ngIf="isEditMode" mat-button class="theme_btn btn_outline_danger" style="background: #fff;" (click)="archiveAgent.show()">Archive Agent</button>
-                    <button mat-button class="theme_btn btn_primary" (click)="saveAgent()">Save Changes</button>
+                    <button *ngIf="isEditMode" mat-button class="theme_btn btn_outline_danger" style="background: #fff;" (click)="archiveAgentModal.show()">Archive Agent</button>
+                    <button mat-button class="theme_btn btn_primary" (click)="saveAgent()">{{ isEditMode ? 'Update' : 'Save Changes' }}</button>
                 </div>
                 
             </div>
@@ -104,15 +104,17 @@
                     <div class="desc-field">
                         <label class="desc-label">Character Avatar</label>
                         <div class="avatar-wrapper">
-                            <div class="avatar-circle" (click)="avatarInput.click()">
-                                <img *ngIf="avatarPreview" [src]="avatarPreview" alt="Avatar" />
-                                <span *ngIf="!avatarPreview" class="avatar-initials">{{ getAvatarInitials() }}</span>
+                            <div class="avatar-img-wrapper">
+                                <div class="avatar-circle" (click)="avatarInput.click()">
+                                    <img *ngIf="avatarPreview" [src]="avatarPreview" alt="Avatar" />
+                                    <span *ngIf="!avatarPreview" class="avatar-initials">{{ getAvatarInitials() }}</span>
+                                </div>
+                                <button type="button" class="avatar-edit-btn" (click)="avatarInput.click()">
+                                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M11.333 2.00004C11.5081 1.82494 11.716 1.68605 11.9447 1.59129C12.1735 1.49653 12.4187 1.44775 12.6663 1.44775C12.914 1.44775 13.1592 1.49653 13.388 1.59129C13.6167 1.68605 13.8246 1.82494 13.9997 2.00004C14.1748 2.17513 14.3137 2.38308 14.4084 2.61181C14.5032 2.84054 14.552 3.08574 14.552 3.33337C14.552 3.58101 14.5032 3.82621 14.4084 4.05494C14.3137 4.28367 14.1748 4.49161 13.9997 4.66671L4.99967 13.6667L1.33301 14.6667L2.33301 11L11.333 2.00004Z" stroke="#2B2A35" stroke-width="1.33" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                </button>
                             </div>
-                            <button type="button" class="avatar-edit-btn" (click)="avatarInput.click()">
-                                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M11.333 2.00004C11.5081 1.82494 11.716 1.68605 11.9447 1.59129C12.1735 1.49653 12.4187 1.44775 12.6663 1.44775C12.914 1.44775 13.1592 1.49653 13.388 1.59129C13.6167 1.68605 13.8246 1.82494 13.9997 2.00004C14.1748 2.17513 14.3137 2.38308 14.4084 2.61181C14.5032 2.84054 14.552 3.08574 14.552 3.33337C14.552 3.58101 14.5032 3.82621 14.4084 4.05494C14.3137 4.28367 14.1748 4.49161 13.9997 4.66671L4.99967 13.6667L1.33301 14.6667L2.33301 11L11.333 2.00004Z" stroke="#2B2A35" stroke-width="1.33" stroke-linecap="round" stroke-linejoin="round"/>
-                                </svg>
-                            </button>
                             <input #avatarInput type="file" accept="image/*" hidden (change)="onAvatarSelected($event)" />
                             <button *ngIf="avatarPreview" type="button" class="avatar-reset-btn" (click)="resetAvatar()">Reset</button>
                         </div>
@@ -192,8 +194,8 @@
                                 <div class="slider-steps">
                                     <div class="step"
                                          *ngFor="let level of sliderLevels"
-                                         [class.active]="trait.value === level">
-                                          <!-- (click)="setTraitValue(i, level)" -->
+                                         [class.active]="trait.value === level" (click)="setTraitValue(i, level)">
+                                          <!--  -->
                                         <div class="active-dot" *ngIf="trait.value === level">{{ level }}</div>
                                         <div class="tick-mark" *ngIf="trait.value !== level"></div>
                                         <span class="step-number" *ngIf="trait.value !== level">{{ level }}</span>
@@ -243,8 +245,8 @@
                             <div class="kb-dropdown" *ngIf="kbDropdownOpen && filteredKBList.length > 0">
                                 <div class="kb-dropdown-item" *ngFor="let kb of filteredKBList" (mousedown)="selectKnowledgeBase(kb)">
                                     <span class="kb-dropdown-name">{{ kb.title || kb.name }}</span>
-                                    <span class="kb-dropdown-skills" *ngIf="kb.skills?.length">
-                                        {{ kb.skills.slice(0, 3).join(', ') }}
+                                    <span class="kb-dropdown-skills" *ngIf="kb.tags?.length">
+                                        {{ kb.tags.slice(0, 3).join(', ') }}
                                     </span>
                                 </div>
                             </div>
@@ -292,34 +294,29 @@
                             <div class="kb-item-body" *ngIf="kb.expanded">
 
                                 <!-- Brain & Knowledge -->
-                                <div class="kb-section" *ngIf="kb.brainFiles.length">
+                                <div class="kb-section" *ngIf="kb.brain_files?.length">
                                     <h4 class="kb-section-title">Brain & Knowledge</h4>
-                                    <div class="kb-file" *ngFor="let file of kb.brainFiles">
+                                    <div class="kb-file" *ngFor="let file of kb.brain_files">
                                         <div class="kb-file-info">
-                                            <div class="kb-file-icon" [innerHTML]="getSafeSvg(file.name)">
-                                                <!-- <svg width="28" height="32" viewBox="0 0 28 32" fill="none">
-                                                    <path d="M2 0C0.9 0 0 0.9 0 2V30C0 31.1 0.9 32 2 32H26C27.1 32 28 31.1 28 30V8L20 0H2Z" fill="#E8EAF6"/>
-                                                    <path d="M20 0V8H28L20 0Z" fill="#C5CAE9"/>
-                                                    <rect x="2" y="22" width="24" height="10" rx="1" fill="#E53935"/>
-                                                    <text x="14" y="30" text-anchor="middle" fill="white" font-size="7" font-weight="bold" font-family="sans-serif">PDF</text>
-                                                </svg> -->
+                                            <div class="kb-file-icon" [innerHTML]="getSafeSvg(file.file_name)">
                                             </div>
-                                            <span class="kb-file-name">{{ file.name }}</span>
+                                            <span class="kb-file-name">{{ file.file_name }}</span>
                                         </div>
-                                       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <circle cx="12" cy="12" r="12" fill="#F8F8F8"/>
-                                <path d="M12.2207 8.04297C14.1491 8.04297 15.717 9.02515 16.8271 10.0527C17.379 10.5636 17.8065 11.0758 18.0957 11.46C18.2009 11.5997 18.2874 11.7219 18.3545 11.8203C18.2828 11.9203 18.1907 12.0461 18.0781 12.1895C17.7751 12.5751 17.3313 13.0891 16.7676 13.6016C15.6304 14.6354 14.062 15.6143 12.2207 15.6143C10.3796 15.6141 8.81196 14.6353 7.6748 13.6016C7.11095 13.089 6.66632 12.5751 6.36328 12.1895C6.25059 12.046 6.15857 11.9204 6.08691 11.8203C6.15402 11.7219 6.24051 11.5997 6.3457 11.46C6.63495 11.0758 7.06333 10.5636 7.61523 10.0527C8.72533 9.02527 10.2926 8.04308 12.2207 8.04297Z" stroke="#2B2A35"/>
-                                <circle cx="12.2205" cy="11.8294" r="1.94898" stroke="#2B2A35"/>
-                                </svg>
-
+                                        <button mat-button-icon type="button" class="kb-view-btn" (click)="viewBrainFile(file)">
+                                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <circle cx="12" cy="12" r="12" fill="#F8F8F8"/>
+                                                <path d="M12.2207 8.04297C14.1491 8.04297 15.717 9.02515 16.8271 10.0527C17.379 10.5636 17.8065 11.0758 18.0957 11.46C18.2009 11.5997 18.2874 11.7219 18.3545 11.8203C18.2828 11.9203 18.1907 12.0461 18.0781 12.1895C17.7751 12.5751 17.3313 13.0891 16.7676 13.6016C15.6304 14.6354 14.062 15.6143 12.2207 15.6143C10.3796 15.6141 8.81196 14.6353 7.6748 13.6016C7.11095 13.089 6.66632 12.5751 6.36328 12.1895C6.25059 12.046 6.15857 11.9204 6.08691 11.8203C6.15402 11.7219 6.24051 11.5997 6.3457 11.46C6.63495 11.0758 7.06333 10.5636 7.61523 10.0527C8.72533 9.02527 10.2926 8.04308 12.2207 8.04297Z" stroke="#2B2A35"/>
+                                                <circle cx="12.2205" cy="11.8294" r="1.94898" stroke="#2B2A35"/>
+                                            </svg>
+                                        </button>
                                     </div>
                                 </div>
 
                                 <!-- Additional Prompts -->
-                                <div class="kb-section" *ngIf="kb.additionalPrompts">
+                                <div class="kb-section" *ngIf="kb.additional_prompts">
                                     <h4 class="kb-section-title">Additional Prompts</h4>
                                     <div class="kb-prompts-box">
-                                        <p>{{ kb.additionalPrompts }}</p>
+                                        <p>{{ kb.additional_prompts }}</p>
                                     </div>
                                 </div>
 
@@ -336,7 +333,7 @@
                                                     <text x="14" y="30" text-anchor="middle" fill="white" font-size="7" font-weight="bold" font-family="sans-serif">PDF</text>
                                                 </svg>
                                             </div>
-                                            <span class="kb-file-name">{{ file.name }}</span>
+                                            <span class="kb-file-name">{{ file.file_name }}</span>
                                         </div>
                                         <svg class="kb-icon-btn" width="20" height="20" viewBox="0 0 24 24" fill="none">
                                             <path d="M1 12C1 12 5 4 12 4C19 4 23 12 23 12C23 12 19 20 12 20C5 20 1 12 1 12Z" stroke="#9A9A9A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -459,8 +456,8 @@
 
                         <!-- Agent banner -->
                         <div class="cv-agent-banner">
-                            <img src="https://cdn-icons-png.flaticon.com/512/4712/4712139.png" class="cv-agent-avatar" />
-                            <span class="cv-agent-name">Robertson The Supervisor</span>
+                            <img [src]="avatarPreview || 'https://cdn-icons-png.flaticon.com/512/4712/4712139.png'" class="cv-agent-avatar" />
+                            <span class="cv-agent-name">{{ agentForm.get('agentName')?.value || 'Agent' }}</span>
                         </div>
 
                         <!-- Chat messages -->
@@ -669,8 +666,8 @@
                     <!-- Agent Row -->
                     <div class="agent-row">
                         <div class="agent-left">
-                        <img src="https://randomuser.me/api/portraits/men/32.jpg" />
-                        <span>Albert</span>
+                        <img [src]="avatarPreview || 'https://cdn-icons-png.flaticon.com/512/4712/4712139.png'" />
+                        <span>{{ agentForm.get('agentName')?.value || 'Agent' }}</span>
                         </div>
 
                         <button class="reset-btn" (click)="removeTestChat.show()">Reset Chat</button>
@@ -684,53 +681,63 @@
                     </div>
 
                     <!-- Messages -->
-                    <div class="chat-body">
+                    <div class="chat-body" #chatBody>
 
-                        <!-- Left Message -->
-                        <div class="msg-left">
-                        <img src="https://randomuser.me/api/portraits/men/32.jpg" />
-                        <div class="bubble light">
-                            Hey! Welcome 👋 I’ll be your mentor as you explore the
-                            penetration testing pathway. Ready to get started?
-                        </div>
-                        </div>
-
-                        <!-- Right Message -->
-                        <div class="msg-right">
-                        <div class="bubble purple">
-                            Hi Albert — thanks! I’m really interested in penetration
-                            testing, but I’m not sure where to start or what skills I
-                            should focus on first.
-                        </div>
+                        <!-- Empty state -->
+                        <div class="msg-left" *ngIf="testChatMessages.length === 0 && !testChatLoading">
+                            <img [src]="avatarPreview || 'https://cdn-icons-png.flaticon.com/512/4712/4712139.png'" />
+                            <div class="bubble light">
+                                Hey! Welcome! I'm {{ agentForm.get('agentName')?.value || 'your agent' }}. How can I help you today?
+                            </div>
                         </div>
 
-                        <!-- Long Left Message -->
-                        <div class="msg-left large">
-                        <div class="bubble light large">
-                            Great question — and totally normal. Penetration testing is best
-                            approached step by step. <br><br>
+                        <!-- Dynamic messages -->
+                        <ng-container *ngFor="let msg of testChatMessages">
+                            <!-- User Message (right) -->
+                            <div class="msg-right" *ngIf="msg.role === 'user'">
+                                <div class="bubble purple">{{ msg.message }}</div>
+                            </div>
 
-                            Start with the fundamentals: basic networking, how systems
-                            (especially Linux) work, and a little scripting.
-                            Understanding how things operate comes before learning how
-                            to break them. <br><br>
+                            <!-- Agent Message (left) -->
+                            <div class="msg-left" *ngIf="msg.role === 'agent'">
+                                <img [src]="avatarPreview || 'https://cdn-icons-png.flaticon.com/512/4712/4712139.png'" />
+                                <div class="chat-msg-wrapper">
+                                    <div class="bubble light" [class.flagged-msg]="msg.flagged">{{ msg.message }}</div>
+                                    <div class="chat-sources" *ngIf="msg.sources?.length">
+                                        <span class="sources-label">Sources:</span>
+                                        <span class="source-chip" *ngFor="let src of msg.sources" [title]="src.text">{{ src.file_name }}</span>
+                                    </div>
+                                    <div class="chat-flagged" *ngIf="msg.flagged">
+                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z" stroke="#E53935" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><line x1="4" y1="22" x2="4" y2="15" stroke="#E53935" stroke-width="2" stroke-linecap="round"/></svg>
+                                        <span>Flagged by guardrails</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </ng-container>
 
-                            From there, you’ll move into hands-on labs where you practice
-                            finding and exploiting vulnerabilities in safe environments.
-                            That’s where the skills really come together. <br><br>
-
-                            For now, begin with the fundamentals module. It’ll give you
-                            the foundation you’ll build on throughout the pathway. And if
-                            you’re unsure at any point, just message me — I’m here to help.
-                        </div>
+                        <!-- Thinking indicator -->
+                        <div class="msg-left thinking-row" *ngIf="testChatLoading">
+                            <img [src]="avatarPreview || 'https://cdn-icons-png.flaticon.com/512/4712/4712139.png'" />
+                            <div class="bubble light thinking-bubble">
+                                <div class="thinking-dots">
+                                    <span></span>
+                                    <span></span>
+                                    <span></span>
+                                </div>
+                            </div>
                         </div>
 
                     </div>
 
                     <!-- Input -->
                     <div class="chat-input">
-                        <input type="text" placeholder="Message" />
-                        <button class="send-btn">➤</button>
+                        <input type="text" placeholder="Type a message..." [(ngModel)]="testChatInput" (keydown.enter)="sendTestChat()" [disabled]="testChatLoading" />
+                        <button class="send-btn" (click)="sendTestChat()" [disabled]="!testChatInput.trim() || testChatLoading || !agentId">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                                <path d="M22 2L11 13" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M22 2L15 22L11 13L2 9L22 2Z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </button>
                     </div>
 
                 </div>
@@ -809,12 +816,12 @@
 
 
 <!-- Add Placement Group Modal -->
-<div bsModal #archiveAgent="bs-modal"  class="modal fade bsModal ch_modal" id="addPlacementGroup" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div bsModal #archiveAgentModal="bs-modal"  class="modal fade bsModal ch_modal" id="addPlacementGroup" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document" style="max-width:700px">
         <div class="modal-content"  style="max-height: calc(100vh - 150px) !important; overflow: auto;padding: 15px;" >
             <div class="modal-header">
                 <button type="button" mat-icon-button id="closeModal" class="close" data-dismiss="modal"
-                    aria-label="Close" (click)="archiveAgent.hide();">
+                    aria-label="Close" (click)="archiveAgentModal.hide();">
                     <mat-icon>close</mat-icon>
                 </button>
             </div>
@@ -834,14 +841,14 @@
                 </svg>
 
                 <h2  class="m-0  text-center">
-                  Are you sure you want to archive [Agent Name]?
+                  Are you sure you want to archive {{ agentForm.get('agentName')?.value || 'this Agent' }}?
                 </h2>
 
                 <!-- <p class="m-0 text-center">Only the history log will be removed. The actual conversation between the <br /> student and the agent will not be removed.</p> -->
             </div>
             <div class="modal-footer justify-content-around">
-                <button mat-button type="button" class="theme_btn btn_outline_primary" (click)="archiveAgent.hide();">Cancel</button>
-                <button mat-button type="submit" class="theme_btn btn_primary" (click)="archiveAgent.hide();">Delete</button>
+                <button mat-button type="button" class="theme_btn btn_outline_primary" (click)="archiveAgentModal.hide();">Cancel</button>
+                <button mat-button type="submit" class="theme_btn btn_primary" (click)="archiveAgentModal.hide(); archiveAgent();">Archive</button>
                 <!-- (click)="checkExist()" -->
             </div>
         </div>
@@ -883,7 +890,7 @@
             </div>
             <div class="modal-footer justify-content-around">
                 <button mat-button type="button" class="theme_btn btn_outline_primary" (click)="removeTestChat.hide();">No</button>
-                <button mat-button type="submit" class="theme_btn btn_primary" (click)="removeTestChat.hide();">Yes</button>
+                <button mat-button type="submit" class="theme_btn btn_primary" (click)="confirmResetTestChat()">Yes</button>
                 <!-- (click)="checkExist()" -->
             </div>
         </div>

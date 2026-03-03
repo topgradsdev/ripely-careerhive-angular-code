@@ -60,7 +60,7 @@ intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<an
     'employee/get', 'srch', 'placement-group-exist', 'get-plcmnt-grp-dtl',
     'get-wrkflw-new', 'get-cmpny-allcnts', 'student/me', 'check_deactivated_user',
     'srch-comp', 'get-all-cmpns', 'cmpny-fltr', 'email_category/get',
-    'srch-stdnt', 'get-all-stdnt', 'stdnt-fltr', 'skills/get'
+    'srch-stdnt', 'get-all-stdnt', 'stdnt-fltr', 'skills/get', 'ai_agent/chat'
   ];
 
   // ✅ Show loader only for relevant requests
@@ -4142,8 +4142,10 @@ intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<an
     )
   }
 
+  // ── AI Agent APIs ──
+
   createAgent(data: any): Observable<any> {
-    let API_URL = `${this.SERVER}add-agent`;
+    let API_URL = `${this.SERVER}ai_agent/create`;
     return this.http.post(API_URL, data).pipe(
       map(res => {
         return res
@@ -4152,7 +4154,7 @@ intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<an
   }
 
   getAgentList(data: any): Observable<any> {
-    let API_URL = `${this.SERVER}get-agent-list`;
+    let API_URL = `${this.SERVER}ai_agent/get`;
     return this.http.post(API_URL, data).pipe(
       map(res => {
         return res
@@ -4160,8 +4162,26 @@ intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<an
     )
   }
 
-  getArchivedAgentList(data: any): Observable<any> {
-    let API_URL = `${this.SERVER}get-archived-agent-list`;
+  getAgentById(data: any): Observable<any> {
+    let API_URL = `${this.SERVER}ai_agent/get_by_id`;
+    return this.http.post(API_URL, data).pipe(
+      map(res => {
+        return res
+      })
+    )
+  }
+
+  updateAgent(data: any): Observable<any> {
+    let API_URL = `${this.SERVER}ai_agent/update`;
+    return this.http.post(API_URL, data).pipe(
+      map(res => {
+        return res
+      })
+    )
+  }
+
+  archiveAgent(data: any): Observable<any> {
+    let API_URL = `${this.SERVER}ai_agent/archive`;
     return this.http.post(API_URL, data).pipe(
       map(res => {
         return res
@@ -4170,13 +4190,69 @@ intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<an
   }
 
   deleteAgent(data: any): Observable<any> {
-    let API_URL = `${this.SERVER}delete-agent`;
+    let API_URL = `${this.SERVER}ai_agent/delete`;
     return this.http.post(API_URL, data).pipe(
       map(res => {
         return res
       })
     )
   }
+
+  getAgentStats(data: any): Observable<any> {
+    let API_URL = `${this.SERVER}ai_agent/get_stats`;
+    return this.http.post(API_URL, data).pipe(
+      map(res => {
+        return res
+      })
+    )
+  }
+
+  agentChat(data: any): Observable<any> {
+    let API_URL = `${this.SERVER}ai_agent/chat`;
+    return this.http.post(API_URL, data).pipe(
+      map(res => {
+        return res
+      })
+    )
+  }
+
+  getAgentConversations(data: any): Observable<any> {
+    let API_URL = `${this.SERVER}ai_agent/get_conversations`;
+    return this.http.post(API_URL, data).pipe(
+      map(res => {
+        return res
+      })
+    )
+  }
+
+  getConversationById(data: any): Observable<any> {
+    let API_URL = `${this.SERVER}ai_agent/get_conversation_by_id`;
+    return this.http.post(API_URL, data).pipe(
+      map(res => {
+        return res
+      })
+    )
+  }
+
+  getAgentMemories(data: any): Observable<any> {
+    let API_URL = `${this.SERVER}ai_agent/get_memories`;
+    return this.http.post(API_URL, data).pipe(
+      map(res => {
+        return res
+      })
+    )
+  }
+
+  getAgentFlaggedChats(data: any): Observable<any> {
+    let API_URL = `${this.SERVER}ai_agent/get_flagged_chats`;
+    return this.http.post(API_URL, data).pipe(
+      map(res => {
+        return res
+      })
+    )
+  }
+
+  // ── Knowledge Base APIs ──
 
   createKnowledgeBase(data: any): Observable<any> {
     let API_URL = `${this.SERVER}knowledge_base/create`;
@@ -4188,7 +4264,7 @@ intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<an
   }
 
   getKnowledgeBaseList(data: any): Observable<any> {
-    let API_URL = `${this.SERVER}knowledge_base/list`;
+    let API_URL = `${this.SERVER}knowledge_base/get`;
     return this.http.post(API_URL, data).pipe(
       map(res => {
         return res
@@ -4196,8 +4272,80 @@ intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<an
     )
   }
 
-  getArchivedKnowledgeBaseList(data: any): Observable<any> {
-    let API_URL = `${this.SERVER}knowledge_base/archived-list`;
+  getKnowledgeBaseById(data: any): Observable<any> {
+    let API_URL = `${this.SERVER}knowledge_base/get_by_id`;
+    return this.http.post(API_URL, data).pipe(
+      map(res => {
+        return res
+      })
+    )
+  }
+
+  updateKnowledgeBase(data: any): Observable<any> {
+    let API_URL = `${this.SERVER}knowledge_base/update`;
+    return this.http.post(API_URL, data).pipe(
+      map(res => {
+        return res
+      })
+    )
+  }
+
+  archiveKnowledgeBase(data: any): Observable<any> {
+    let API_URL = `${this.SERVER}knowledge_base/archive`;
+    return this.http.post(API_URL, data).pipe(
+      map(res => {
+        return res
+      })
+    )
+  }
+
+  deleteKnowledgeBase(data: any): Observable<any> {
+    let API_URL = `${this.SERVER}knowledge_base/delete`;
+    return this.http.post(API_URL, data).pipe(
+      map(res => {
+        return res
+      })
+    )
+  }
+
+  uploadKBBrainFile(data: any): Observable<any> {
+    let API_URL = `${this.SERVER}knowledge_base/upload_brain_file`;
+    return this.http.post(API_URL, data).pipe(
+      map(res => {
+        return res
+      })
+    )
+  }
+
+  deleteKBBrainFile(data: any): Observable<any> {
+    let API_URL = `${this.SERVER}knowledge_base/delete_brain_file`;
+    return this.http.post(API_URL, data).pipe(
+      map(res => {
+        return res
+      })
+    )
+  }
+
+  getKBStats(data: any): Observable<any> {
+    let API_URL = `${this.SERVER}knowledge_base/get_stats`;
+    return this.http.post(API_URL, data).pipe(
+      map(res => {
+        return res
+      })
+    )
+  }
+
+  searchKnowledgeBases(data: any): Observable<any> {
+    let API_URL = `${this.SERVER}knowledge_base/search`;
+    return this.http.post(API_URL, data).pipe(
+      map(res => {
+        return res
+      })
+    )
+  }
+
+  processKBUrl(data: any): Observable<any> {
+    let API_URL = `${this.SERVER}knowledge_base/process_url`;
     return this.http.post(API_URL, data).pipe(
       map(res => {
         return res

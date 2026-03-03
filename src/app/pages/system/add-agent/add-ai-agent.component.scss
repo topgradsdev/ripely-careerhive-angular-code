@@ -1279,11 +1279,15 @@ textarea.is-invalid {
 // ── Character Avatar ──
 
 .avatar-wrapper {
-  position: relative;
   display: inline-flex;
   flex-direction: column;
   align-items: center;
   width: fit-content;
+}
+
+.avatar-img-wrapper {
+  position: relative;
+  display: inline-block;
 }
 
 .avatar-circle {
@@ -1575,20 +1579,52 @@ textarea.is-invalid {
   padding: 12px 16px;
   border-radius: 16px;
   font-size: 13px;
-  line-height: 1.5;
-  max-width: 75%;
+  line-height: 1.6;
+  max-width: 85%;
+  word-wrap: break-word;
+  white-space: pre-wrap;
 }
 
 .light {
-  background: #ececec;
+  background: #F4F4F4;
+  color: #2B2A35;
 }
 
 .purple {
-  background: #e6e7ff;
+  background: #464BA8;
+  color: #fff;
 }
 
-.large .bubble {
-  max-width: 85%;
+.flagged-msg {
+  border: 1px solid #E53935;
+  background: #FFF5F5;
+}
+
+.msg-right {
+  .bubble {
+    border-radius: 16px 16px 4px 16px;
+  }
+}
+
+.msg-left {
+  .bubble {
+    border-radius: 16px 16px 16px 4px;
+  }
+}
+
+/* ── Flagged Indicator ── */
+
+.chat-flagged {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 4px;
+
+  span {
+    font-size: 11px;
+    color: #E53935;
+    font-weight: 500;
+  }
 }
 
 
@@ -1620,11 +1656,92 @@ textarea.is-invalid {
   height: 36px;
   border-radius: 50%;
   border: none;
-  background: #4b4bb7;
+  background: #464BA8;
   color: white;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: background 0.2s;
+
+  &:hover:not(:disabled) {
+    background: #3a3f8f;
+  }
+
+  &:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+  }
 }
 
+/* ── Thinking Dots Animation ── */
+
+.thinking-bubble {
+  padding: 12px 18px !important;
+  min-width: 60px;
+}
+
+.thinking-dots {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+
+  span {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #464BA8;
+    animation: thinking-bounce 1.4s infinite ease-in-out both;
+
+    &:nth-child(1) { animation-delay: 0s; }
+    &:nth-child(2) { animation-delay: 0.2s; }
+    &:nth-child(3) { animation-delay: 0.4s; }
+  }
+}
+
+@keyframes thinking-bounce {
+  0%, 80%, 100% {
+    transform: scale(0.4);
+    opacity: 0.4;
+  }
+  40% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* ── Chat Sources ── */
+
+.chat-msg-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  max-width: 85%;
+}
+
+.chat-sources {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px;
+  padding: 0 4px;
+}
+
+.sources-label {
+  font-size: 11px;
+  color: #9A9A9A;
+  font-weight: 500;
+}
+
+.source-chip {
+  font-size: 10px;
+  background: #F0F0FF;
+  color: #464BA8;
+  padding: 2px 8px;
+  border-radius: 10px;
+  white-space: nowrap;
+}
 
 /* ===============================
    PERSONALITY SECTION
@@ -2046,7 +2163,7 @@ textarea.is-invalid {
 
 .kb-section {
   margin-bottom: 20px;
-
+  margin-top: 10px;
   &:last-child {
     margin-bottom: 0;
   }
@@ -2056,7 +2173,7 @@ textarea.is-invalid {
   font-family: 'DM Sans', sans-serif;
 font-weight: 400;
 font-style: Regular;
-font-size: 12px;
+font-size: 14px;
 leading-trim: NONE;
 line-height: 100%;
 letter-spacing: 0%;
@@ -2080,9 +2197,14 @@ vertical-align: middle;
 }
 
 .kb-file-icon {
-  width: 28px;
-  height: 32px;
   flex-shrink: 0;
+  overflow: hidden;
+
+  ::ng-deep svg {
+    width: 60px;
+    height: 60px;
+    display: block;
+  }
 }
 
 .kb-file-name {

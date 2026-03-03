@@ -6,7 +6,7 @@ import { CdkDragDrop, moveItemInArray, transferArrayItem, CdkDrag, CdkDropList }
 import { ModalDirective } from 'ngx-bootstrap/modal';
 import { TopgradserviceService } from '../../../topgradservice.service';
 import SignaturePad from 'signature_pad';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 // import { Message } from '@angular/compiler/src/i18n/i18n_ast';
 import { NgxPermissionsService } from 'ngx-permissions';
 import * as $ from "jquery";
@@ -34,113 +34,48 @@ export class AIAgentComponent implements OnInit {
   showArchivedKB: boolean = false;
 
   // Data
-  reviewers: any = [
-    {
-      name: 'Robert',
-      role: 'Instant Resume Reviewer',
-      image: 'https://randomuser.me/api/portraits/men/32.jpg',
-      skills: ['Business Analysis', 'Advanced', 'MySQL', 'Information Technology']
-    },
-    {
-      name: 'Albert',
-      role: 'Instant Resume Reviewer',
-      image: 'https://randomuser.me/api/portraits/men/44.jpg',
-      skills: ['Business Analysis', 'Advanced', 'MySQL', 'Information Technology']
-    },
-    {
-      name: 'Claire',
-      role: 'Instant Resume Reviewer',
-      image: 'https://randomuser.me/api/portraits/women/65.jpg',
-      skills: ['Business Analysis', 'Advanced', 'MySQL', 'Information Technology']
-    },
-    {
-      name: 'Brett',
-      role: 'Instant Resume Reviewer',
-      image: 'https://randomuser.me/api/portraits/men/12.jpg',
-      skills: ['Business Analysis', 'Advanced', 'MySQL', 'Information Technology']
-    }
-  ];
-
-  archivedReviewers: any = [
-    {
-      name: 'Robert',
-      role: 'Instant Resume Reviewer',
-      image: 'https://randomuser.me/api/portraits/men/32.jpg',
-      skills: ['Business Analysis', 'Advanced', 'MySQL', 'Information Technology']
-    },
-    {
-      name: 'Albert',
-      role: 'Instant Resume Reviewer',
-      image: 'https://randomuser.me/api/portraits/men/44.jpg',
-      skills: ['Business Analysis', 'Advanced', 'MySQL', 'Information Technology']
-    }
-  ];
-
-  archivedCards: any[] = [
-    {
-      title: 'Advanced BA',
-      description: 'Advanced BA knowledge bases with multiple relevant skills to assist students.',
-      skills: ['Business Analysis', 'Advanced', 'MySQL', 'Information Technology']
-    }
-  ];
-   cards: any[] = [
-    {
-      title: 'Advanced BA',
-      description: 'Advanced BA knowledge bases with multiple relevant skills to assist students.',
-      skills: ['Business Analysis', 'Advanced', 'MySQL', 'Information Technology']
-    },
-    {
-      title: 'Python',
-      description: 'Advanced BA knowledge bases with multiple relevant skills to assist students.',
-      skills: ['Business Analysis', 'Advanced', 'MySQL', 'Information Technology']
-    },
-    {
-      title: 'MySQL',
-      description: 'Advanced BA knowledge bases with multiple relevant skills to assist students.',
-      skills: ['Business Analysis', 'Advanced', 'MySQL', 'Information Technology']
-    },
-    {
-      title: 'UI/UX Design',
-      description: 'Advanced BA knowledge bases with multiple relevant skills to assist students.',
-      skills: ['Figma', 'Sketch (Design Software)', 'Paper Prototyping', 'Adobe XD', 'FigJam']
-    },
-    {
-      title: 'Advanced BA',
-      description: 'Advanced BA knowledge bases with multiple relevant skills to assist students.',
-      skills: ['Business Analysis', 'Advanced', 'MySQL', 'Information Technology']
-    },
-    {
-      title: 'Advanced BA',
-      description: 'Advanced BA knowledge bases with multiple relevant skills to assist students.',
-      skills: ['Business Analysis', 'Advanced', 'MySQL', 'Information Technology']
-    },
-    {
-      title: 'Advanced BA',
-      description: 'Advanced BA knowledge bases with multiple relevant skills to assist students.',
-      skills: ['Business Analysis', 'Advanced', 'MySQL', 'Information Technology']
-    }
-  ];
-  // archivedCards: any[] = [];
+  reviewers: any[] = [];
+  archivedReviewers: any[] = [];
+  cards: any[] = [];
+  archivedCards: any[] = [];
 
   // Counts
   totalAgents: number = 0;
+  activeAgents: number = 0;
   archivedAgentsCount: number = 0;
+  deployedAgents: number = 0;
   totalKnowledgeBases: number = 0;
+  activeKBCount: number = 0;
   archivedKBCount: number = 0;
 
-  get filteredCards() {
-    if (!this.kbSearchText.trim()) return this.cards;
-    const term = this.kbSearchText.toLowerCase().trim();
-    return this.cards.filter((card: any) =>
-      (card.title || '').toLowerCase().includes(term) ||
-      (card.skills || []).some((skill: string) => skill.toLowerCase().includes(term))
-    );
+  filteredCards: any[] = [];
+  private searchTimeout: any;
+
+  onKBSearch() {
+    clearTimeout(this.searchTimeout);
+    const term = this.kbSearchText.trim();
+    if (!term) {
+      this.filteredCards = this.cards;
+      return;
+    }
+    this.searchTimeout = setTimeout(() => {
+      this.service.searchKnowledgeBases({ search: term, limit: 100 }).subscribe({
+        next: (res: any) => {
+          if (res.status === HttpResponseCode.SUCCESS) {
+            this.filteredCards = res.data || [];
+            this.cdr.detectChanges();
+          }
+        },
+        error: () => {},
+      });
+    }, 400);
   }
 
   constructor(
     private fb: FormBuilder,
     private service: TopgradserviceService,
     private router: Router,
+    private route: ActivatedRoute,
     private ngxPermissionService: NgxPermissionsService,
     private cdr: ChangeDetectorRef,
     private loaderService: LoaderService,
@@ -153,18 +88,23 @@ export class AIAgentComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    const tab = this.route.snapshot.queryParamMap.get('tab');
+    if (tab) {
+      this.selectedIndex = +tab;
+    }
     this.getAgentList();
     this.getKnowledgeBaseList();
+    this.getAgentStats();
+    this.getKBStats();
   }
 
   // ── API Calls ──
 
   getAgentList() {
-    this.service.getAgentList({ status: 'active' }).subscribe({
+    this.service.getAgentList({ search: '', page: 1, limit: 100, status: 'active' }).subscribe({
       next: (res: any) => {
         if (res.status === HttpResponseCode.SUCCESS) {
           this.reviewers = res.data || [];
-          this.totalAgents = res.total || this.reviewers.length;
         }
       },
       error: (err) => {
@@ -176,11 +116,10 @@ export class AIAgentComponent implements OnInit {
   }
 
   getArchivedAgentList() {
-    this.service.getArchivedAgentList({ status: 'archived' }).subscribe({
+    this.service.getAgentList({ search: '', page: 1, limit: 100, status: 'archived' }).subscribe({
       next: (res: any) => {
         if (res.status === HttpResponseCode.SUCCESS) {
           this.archivedReviewers = res.data || [];
-          this.archivedAgentsCount = res.total || this.archivedReviewers.length;
         }
       },
       error: (err) => {
@@ -191,12 +130,26 @@ export class AIAgentComponent implements OnInit {
     });
   }
 
+  getAgentStats() {
+    this.service.getAgentStats({}).subscribe({
+      next: (res: any) => {
+        if (res.status === HttpResponseCode.SUCCESS) {
+          this.totalAgents = res.data?.total || 0;
+          this.activeAgents = res.data?.active || 0;
+          this.archivedAgentsCount = res.data?.archived || 0;
+          this.deployedAgents = res.data?.deployed || 0;
+        }
+      },
+      error: () => {},
+    });
+  }
+
   getKnowledgeBaseList() {
-    this.service.getKnowledgeBaseList({ status: 'active' }).subscribe({
+    this.service.getKnowledgeBaseList({ search: '', page: 1, limit: 100, status: 'active' }).subscribe({
       next: (res: any) => {
         if (res.status === HttpResponseCode.SUCCESS) {
           this.cards = res.data || [];
-          this.totalKnowledgeBases = res.total || this.cards.length;
+          this.filteredCards = this.cards;
         }
       },
       error: (err) => {
@@ -208,16 +161,64 @@ export class AIAgentComponent implements OnInit {
   }
 
   getArchivedKnowledgeBaseList() {
-    this.service.getArchivedKnowledgeBaseList({ status: 'archived' }).subscribe({
+    this.service.getKnowledgeBaseList({ search: '', page: 1, limit: 100, status: 'archived' }).subscribe({
       next: (res: any) => {
         if (res.status === HttpResponseCode.SUCCESS) {
           this.archivedCards = res.data || [];
-          this.archivedKBCount = res.total || this.archivedCards.length;
         }
       },
       error: (err) => {
         this.service.showMessage({
           message: err.error?.errors?.msg || 'Failed to load archived knowledge bases',
+        });
+      },
+    });
+  }
+
+  getKBStats() {
+    this.service.getKBStats({}).subscribe({
+      next: (res: any) => {
+        if (res.status === HttpResponseCode.SUCCESS) {
+          this.totalKnowledgeBases = res.data?.total || 0;
+          this.activeKBCount = res.data?.active || 0;
+          this.archivedKBCount = res.data?.archived || 0;
+        }
+      },
+      error: () => {},
+    });
+  }
+
+  archiveAgent(reviewer: any, event: Event) {
+    event.stopPropagation();
+    if (!reviewer._id) return;
+    this.service.archiveAgent({ id: reviewer._id }).subscribe({
+      next: (res: any) => {
+        if (res.status === HttpResponseCode.SUCCESS) {
+          this.getAgentList();
+          this.getAgentStats();
+        }
+      },
+      error: (err) => {
+        this.service.showMessage({
+          message: err.error?.errors?.msg || 'Failed to archive agent',
+        });
+      },
+    });
+  }
+
+  archiveKB(card: any, event: Event) {
+    event.stopPropagation();
+    if (!card._id) return;
+    this.service.archiveKnowledgeBase({ id: card._id }).subscribe({
+      next: (res: any) => {
+        if (res.status === HttpResponseCode.SUCCESS) {
+          this.getKnowledgeBaseList();
+          this.getKBStats();
+        }
+      },
+      error: (err) => {
+        this.service.showMessage({
+          message: err.error?.errors?.msg || 'Failed to archive knowledge base',
         });
       },
     });

@@ -1,7 +1,7 @@
 <div class="page_header">
     <div class=" page_header_container">
         <div>
-            <h4>Add Knowledge Base</h4>
+            <h4>{{ isEditMode ? 'Edit Knowledge Base' : 'Add Knowledge Base' }}</h4>
         </div>
     </div>
 </div>
@@ -13,8 +13,8 @@
                         <!-- total -->
                          <div class="student_card" >
                             <div class="content">
-                                <p>Total Deployments</p>
-                                <h4>54</h4>
+                                <p>Total Knowledge Bases</p>
+                                <h4>{{ kbStats.total || 0 }}</h4>
                             </div>
                             <div class="">
                                 <svg width="54" height="54" viewBox="0 0 54 54" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -29,8 +29,8 @@
 <!-- total -->
                         <div class="student_card ">
                             <div class="content">
-                                <p>Total Agent Utilisation</p>
-                                <h4>15135</h4>
+                                <p>Active Knowledge Bases</p>
+                                <h4>{{ kbStats.active || 0 }}</h4>
                             </div>
                             <div class="">
                                <svg width="54" height="54" viewBox="0 0 54 54" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -48,7 +48,8 @@
 
              
                 <div class="d-flex gap-3">
-                    <button mat-button class="theme_btn btn_primary" (click)="saveKnowledgeBase()">Save Changes</button>
+                    <button *ngIf="isEditMode" mat-button class="theme_btn btn_outline_danger" style="background: #fff;" (click)="archiveKBModal.show()">Archive Knowledge Base</button>
+                    <button mat-button class="theme_btn btn_primary" (click)="saveKnowledgeBase()">{{ isEditMode ? 'Update' : 'Save Changes' }}</button>
                 </div>
                 
             </div>
@@ -104,9 +105,10 @@
                             <span class="kb-upload-title">Upload Knowledge Base</span>
                             <span class="kb-upload-hint">Accepted file types: Adobe PDF (.pdf)<br>10MB size limit</span>
                         </div>
-                        <input type="file" #brainFileInput accept=".pdf" hidden (change)="onBrainFileSelected($event)" />
                     </div>
+                    <input type="file" #brainFileInput accept=".pdf" multiple hidden (change)="onBrainFileSelected($event)" />
 
+                    <!-- Brain files list -->
                     <div class="kb-file-row" *ngFor="let file of kbBrainFiles; let i = index">
                         <div class="kb-file-info">
                             <div class="kb-pdf-icon">
@@ -117,10 +119,10 @@
                                     <text x="14" y="30" text-anchor="middle" fill="white" font-size="7" font-weight="bold" font-family="sans-serif">PDF</text>
                                 </svg>
                             </div>
-                            <span class="kb-file-name">{{ file.name }}</span>
+                            <span class="kb-file-name">{{ file.file_name }}</span>
                         </div>
                         <div class="kb-file-actions">
-                            <button mat-icon-button class="kb-icon-btn" (click)="viewFile(file.url)">
+                            <button mat-icon-button class="kb-icon-btn" (click)="viewFile(file.file_url)">
                                 <svg width="35" height="35" viewBox="0 0 35 35" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <circle cx="17.5" cy="17.5" r="17.5" fill="#F8F8F8"/>
                                 <path d="M17.8213 11.75C20.6262 11.75 22.9074 13.179 24.5244 14.6758C25.3281 15.4197 25.9508 16.1652 26.3721 16.7246C26.521 16.9224 26.6427 17.0971 26.7393 17.2383C26.6363 17.3817 26.5068 17.5611 26.3477 17.7637C25.9063 18.3255 25.2587 19.0738 24.4375 19.8203C22.7808 21.3264 20.499 22.75 17.8213 22.75C15.1436 22.75 12.8618 21.3264 11.2051 19.8203C10.3841 19.0739 9.73729 18.3254 9.2959 17.7637C9.1365 17.5608 9.0054 17.3818 8.90234 17.2383C8.99891 17.097 9.12141 16.9226 9.27051 16.7246C9.69173 16.1652 10.3145 15.4197 11.1182 14.6758C12.7352 13.1791 15.0165 11.75 17.8213 11.75Z" stroke="#2B2A35" stroke-width="1.5"/>
@@ -138,6 +140,11 @@
                         </div>
                     </div>
 
+                    <!-- Add more files button -->
+                    <!-- <button *ngIf="kbBrainFiles.length" mat-button class="theme_btn btn_outline_primary mt-3" (click)="brainFileInput.click()">
+                        + Add More Files
+                    </button> -->
+
                     <div class="kb-form-group">
                         <label>URL (Optional)</label>
                         <input type="text" placeholder="Enter URL to apply the knowledge" formControlName="kbBrainUrl" />
@@ -154,24 +161,38 @@
         </div>
 </section>
 
-<!-- Hidden trigger for success modal -->
-<button id="kb-save-success" style="visibility: hidden;" data-target="#kb_success_modal" data-toggle="modal"></button>
-
-<!-- Success Modal -->
-<div class="modal fade bsModal ch_modal" id="kb_success_modal" tabindex="-1" role="dialog">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content email_success_send">
-            <div class="modal-body text-center">
-                <svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" viewBox="0 0 115 115" fill="none">
-                    <circle cx="57.5" cy="57.5" r="57.5" fill="#E8FBF5"/>
-                    <circle cx="57.5" cy="57.5" r="40" fill="#26C296"/>
-                    <path d="M42 57.5L52 67.5L73 46.5" stroke="white" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-                <h2 class="mt-3">Knowledge Base Saved Successfully!</h2>
-                <p class="text-muted">Your knowledge base has been saved.</p>
+<!-- Archive Knowledge Base Modal -->
+<div bsModal #archiveKBModal="bs-modal" class="modal fade bsModal ch_modal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document" style="max-width:700px">
+        <div class="modal-content" style="max-height: calc(100vh - 150px) !important; overflow: auto;padding: 15px;">
+            <div class="modal-header">
+                <button type="button" mat-icon-button class="close" (click)="archiveKBModal.hide();">
+                    <mat-icon>close</mat-icon>
+                </button>
             </div>
-            <div class="modal-footer justify-content-center">
-                <button mat-button type="button" data-dismiss="modal" class="theme_btn btn_primary" [routerLink]="['/admin/system/agent-list']">Close</button>
+            <div class="modal-body pt-3 d-flex flex-column gap-2 align-items-center justify-content-center">
+
+                <svg width="126" height="101" viewBox="0 0 126 101" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <g clip-path="url(#clip0_kb_archive)">
+                <path d="M95.371 100.166L11.656 100.196C7.45041 100.197 3.68314 98.008 1.57906 94.3402C0.526894 92.5061 0.000693685 90.4941 6.85071e-07 88.4817C-0.000692315 86.4695 0.52438 84.4569 1.57504 82.6223L43.4059 5.92095C45.5077 2.25144 49.2735 0.0600592 53.4791 0.0585945C57.6848 0.0571297 61.452 2.24588 63.5564 5.91393L105.445 82.5956C106.495 84.4249 107.02 86.4345 107.02 88.4457C107.02 90.4568 106.495 92.4692 105.444 94.304C103.342 97.9733 99.5766 100.165 95.371 100.166ZM1.0523 88.4803C1.05217 90.312 10.2898 86.365 11.2468 88.0334C13.1611 91.3702 7.82944 99.1393 11.6557 99.138C11.6557 99.138 102.623 97.1137 104.534 93.7756C105.49 92.1065 105.968 90.2754 105.967 88.4447C105.967 86.6141 105.488 84.7836 104.531 83.1152L62.6416 6.43349C60.7327 3.1062 57.3057 1.11485 53.4795 1.11619C49.655 1.11752 1.05245 86.6483 1.0523 88.4803Z" fill="#3F3D56"/>
+                <path d="M77.9031 83.2511C99.0694 83.2511 116.228 65.9683 116.228 44.649C116.228 23.3296 99.0694 6.04688 77.9031 6.04688C56.7368 6.04688 39.5781 23.3296 39.5781 44.649C39.5781 65.9683 56.7368 83.2511 77.9031 83.2511Z" fill="#464BA8"/>
+                <path d="M72.2285 53.8378L69.7828 44.4817L71.6023 44.0959C73.2458 43.7474 74.7905 43.3177 76.2366 42.8067C77.7136 42.2482 78.954 41.5354 79.9578 40.6684C81.0008 39.793 81.7363 38.7171 82.1642 37.4406C82.623 36.1166 82.6561 34.5149 82.2633 32.6355C81.9196 30.9911 81.2729 29.6562 80.3231 28.6309C79.4124 27.5973 78.2655 26.9 76.8824 26.539C75.5384 26.1698 74.0447 26.1593 72.4013 26.5078C70.7578 26.8562 69.395 27.4723 68.3129 28.3559C67.2308 29.2396 66.4758 30.3197 66.0479 31.5962C65.6118 32.8335 65.5574 34.2353 65.8847 35.8015L61.189 36.797C60.6981 34.4478 60.7968 32.2802 61.485 30.2942C62.2125 28.3 63.4326 26.6102 65.1454 25.2248C66.8582 23.8395 68.9864 22.8771 71.5298 22.3379C74.0733 21.7986 76.4255 21.811 78.5866 22.375C80.7477 22.9391 82.5643 24.0055 84.0363 25.5743C85.5084 27.1431 86.5021 29.1608 87.0176 31.6275C87.6232 34.5249 87.488 37.0069 86.6123 39.0735C85.7756 41.1318 84.3672 42.8002 82.3868 44.0787C80.4065 45.3572 78.0077 46.2952 75.1903 46.8925L75.9263 53.0538L72.2285 53.8378ZM76.6325 65.2321C75.7325 65.4229 74.8844 65.2756 74.0883 64.7902C73.3231 64.2573 72.8464 63.5406 72.6582 62.6401C72.47 61.7395 72.6235 60.9097 73.1186 60.1504C73.6529 59.3829 74.3701 58.9038 75.2701 58.713C76.1701 58.5222 76.9986 58.6736 77.7556 59.1673C78.5126 59.6611 78.9852 60.3582 79.1734 61.2587C79.3616 62.1593 79.2122 63.0087 78.7252 63.8071C78.23 64.5663 77.5325 65.0413 76.6325 65.2321Z" fill="white"/>
+                </g>
+                <defs>
+                <clipPath id="clip0_kb_archive">
+                <rect width="126" height="101" fill="white"/>
+                </clipPath>
+                </defs>
+                </svg>
+
+                <h2 class="m-0 text-center">
+                  Are you sure you want to archive this Knowledge Base?
+                </h2>
+
+            </div>
+            <div class="modal-footer justify-content-around">
+                <button mat-button type="button" class="theme_btn btn_outline_primary" (click)="archiveKBModal.hide();">Cancel</button>
+                <button mat-button type="submit" class="theme_btn btn_primary" (click)="archiveKBModal.hide(); archiveKB();">Archive</button>
             </div>
         </div>
     </div>
