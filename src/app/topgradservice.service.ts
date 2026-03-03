@@ -4216,6 +4216,15 @@ intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<an
     )
   }
 
+  resetChat(data: any): Observable<any> {
+    let API_URL = `${this.SERVER}ai_agent/reset_chat`;
+    return this.http.post(API_URL, data).pipe(
+      map(res => {
+        return res
+      })
+    )
+  }
+
   getAgentConversations(data: any): Observable<any> {
     let API_URL = `${this.SERVER}ai_agent/get_conversations`;
     return this.http.post(API_URL, data).pipe(

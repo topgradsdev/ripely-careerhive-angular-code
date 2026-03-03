@@ -630,8 +630,24 @@ export class AddAIAgentComponent implements OnInit {
   }
 
   confirmResetTestChat() {
-    this.resetTestChat();
-    this.removeTestChat.hide();
+    if (this.agentId && this.testChatSessionId) {
+      this.service.resetChat({
+        agent_id: this.agentId,
+        session_id: this.testChatSessionId
+      }).subscribe({
+        next: () => {
+          this.resetTestChat();
+          this.removeTestChat.hide();
+        },
+        error: () => {
+          this.resetTestChat();
+          this.removeTestChat.hide();
+        }
+      });
+    } else {
+      this.resetTestChat();
+      this.removeTestChat.hide();
+    }
   }
 
   loadFlaggedChats() {
