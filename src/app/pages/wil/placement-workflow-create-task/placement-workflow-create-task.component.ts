@@ -52,8 +52,84 @@ export class PlacementWorkflowCreateTaskComponent implements OnInit {
     getWatchVideo: 'Watch Video',
     getStaffAttachesDocuments: 'Staff Attaches Documents for Student Review',
     getStudentUploadsDocument:'Student Uploads Document',
-    getStudentUploadsVideo:'Submit Video (Upload URL)'
+    getStudentUploadsVideo:'Submit Video (Upload URL)',
+    meetAIAgent: 'Meet AI Agent'
   }
+  // AI Agent tab system
+  aiAgentActiveTab = 0;
+  aiAgentTabs = [
+    {name: 'Task Basics', icon: '\uD83D\uDCC4'},
+    {name: 'Task Context', icon: '\uD83E\uDD16'},
+    {name: 'Sandbox Config', icon: '\uD83D\uDEE0'},
+    {name: 'Validation', icon: '\u2611\uFE0F'},
+    {name: 'Guardrails', icon: '\uD83C\uDFE5'}
+  ];
+
+  // Tab 2: Task Context - Agent Management
+  availableAgentList: any[] = [
+    { _id: 'agent_jax', name: 'Jax', title: 'Senior Developer' },
+    { _id: 'agent_sarah', name: 'Sarah', title: 'Lead BA' },
+    { _id: 'agent_albert', name: 'Albert', title: 'QA Engineer' },
+    { _id: 'agent_maria', name: 'Maria', title: 'Product Owner' },
+    { _id: 'agent_chen', name: 'Chen', title: 'Data Analyst' }
+  ];
+  taskAgents: any[] = [
+    {
+      _id: 'agent_jax', name: 'Jax', title: 'Senior Developer',
+      agent_output: 'preset', initiation_message: 'Hello! I\'m Jax, your senior developer. Let\'s discuss the system architecture.',
+      subsequent_messages: ['Can you elaborate on the database design?'],
+      action_on_final: 'repeat', select_llm: '', agenda: '', hidden_facts: '',
+      max_responses: null, max_tokens: null,
+      enable_guardrails: false, guardrail_max_tokens: null, guardrail_max_responses: null,
+      submission_on_exhaustion: '', message_on_exhaustion: ''
+    },
+    {
+      _id: 'agent_sarah', name: 'Sarah', title: 'Lead BA',
+      agent_output: 'preset', initiation_message: 'Hi there! I\'m Sarah, the Lead Business Analyst. Let\'s review the requirements together.',
+      subsequent_messages: [],
+      action_on_final: 'repeat', select_llm: '', agenda: '', hidden_facts: '',
+      max_responses: 5, max_tokens: 500,
+      enable_guardrails: true, guardrail_max_tokens: 500, guardrail_max_responses: 5,
+      submission_on_exhaustion: 'auto_submit', message_on_exhaustion: 'Your progress has been saved, but we couldn\'t complete the full interaction or validation.\n\nPlease summarize your key points or submit what you have as your artefact to proceed to the next task.'
+    },
+    {
+      _id: 'agent_albert', name: 'Albert', title: 'QA Engineer',
+      agent_output: 'ai', initiation_message: 'Hey! I\'m Albert from QA. Let me test your understanding of quality processes.',
+      subsequent_messages: [],
+      action_on_final: 'roleplay', select_llm: 'gpt-4', agenda: 'Wants automation but fears job cuts', hidden_facts: 'No audit trail in current system',
+      max_responses: 10, max_tokens: 1000,
+      enable_guardrails: false, guardrail_max_tokens: null, guardrail_max_responses: null,
+      submission_on_exhaustion: '', message_on_exhaustion: ''
+    }
+  ];
+  selectedTaskAgentIndex = 1;
+  addAgentSelectedId: string | null = null;
+  removeAgentIndex: number | null = null;
+
+  // Tab 3: Sandbox Config
+  taskSandboxes: any[] = [
+    {
+      _id: 'sql_terminal', name: 'SQL Terminal', allow_grading: true,
+      validation_mode: 'ai_review', select_validator: 'multiple_agents',
+      validator_agents: ['agent_sarah', 'agent_jax'],
+      grading_rubric: 'Evaluate SQL query correctness, optimization, and proper use of JOINs.',
+      additional_documents: [], skills_to_verify: ['SQL', 'Database Design']
+    },
+    {
+      _id: 'document_editor', name: 'Document Editor', allow_grading: false,
+      validation_mode: '', select_validator: '',
+      validator_agents: [],
+      grading_rubric: '', additional_documents: [], skills_to_verify: []
+    }
+  ];
+  selectedSandboxIndex = 0;
+  addSandboxSelected: string | null = null;
+  removeSandboxIndex: number | null = null;
+  sandboxOptions = [
+    { _id: 'sql_terminal', name: 'SQL Terminal' },
+    { _id: 'document_editor', name: 'Document Editor' }
+  ];
+
   createTaskPayload = [
     {
       completionCriteria: 'Send Email',
@@ -356,6 +432,19 @@ export class PlacementWorkflowCreateTaskComponent implements OnInit {
         notification_followUp_voice_mail_text_message: null
       }
     },
+    {
+      completionCriteria: 'Meet AI Agent',
+      formElement : {
+        name: null,
+        completion_criteria: null,
+        description: null,
+        unlock_task_on: null,
+        required_activity: null,
+        agents: null,
+        sandboxes: null,
+        guardrails: null,
+      }
+    },
   ] 
   completionCriteriaList = [];
   unlockTaskOnList = [];
@@ -537,6 +626,11 @@ export class PlacementWorkflowCreateTaskComponent implements OnInit {
     //   } 
     // }
 
+    if (this.selectedCompletionCriteria === this.completionCriteria.meetAIAgent) {
+      this.loadAvailableAgents();
+      this.aiAgentActiveTab = 0;
+    }
+
     if (this.selectedCompletionCriteria === 'Send Email' || this.selectedCompletionCriteria === 'Attend Event' || this.selectedCompletionCriteria === 'Staff Attaches Documents for Student Review' || this.selectedCompletionCriteria === 'Student Uploads Document') {
       this.createTask.get('additional_criteria').clearValidators();
       this.createTask.get('additional_criteria').updateValueAndValidity();
@@ -598,12 +692,29 @@ export class PlacementWorkflowCreateTaskComponent implements OnInit {
 
   onCancelCreateTask() {
     this.createTask.reset();
+    let URL = '';
+    if (this.Projecttype == 'project') {
+      URL = `/admin/wil/placement-groups/project/${this.placementId}`;
+    } else {
+      URL = `/admin/wil/placement-groups/${this.placementId}`;
+    }
+    this.router.navigate([URL], { queryParams: { redirectTo: 'worfkflow', stage: this.stage }, state: { type: 'view' } });
   }
 
   onCreateTask() {
-    if (this.createTask.invalid) {
-      this.createTask.markAllAsTouched();
-      return;
+    // For Meet AI Agent, skip standard form validation (uses its own data)
+    if (this.selectedCompletionCriteria !== this.completionCriteria.meetAIAgent) {
+      if (this.createTask.invalid) {
+        this.createTask.markAllAsTouched();
+        return;
+      }
+    } else {
+      // Validate at least a name is provided
+      if (!this.createTask.get('name')?.value) {
+        this.service.showMessage({message: 'Please enter a task name'});
+        this.aiAgentActiveTab = 0;
+        return;
+      }
     }
 
     console.log(" this.createTask.value",  this.createTask.value,);
@@ -636,6 +747,42 @@ export class PlacementWorkflowCreateTaskComponent implements OnInit {
         return task.formElement; 
       }
     });
+
+    // For Meet AI Agent, attach agents/sandboxes/guardrails data
+    if (this.selectedCompletionCriteria === this.completionCriteria.meetAIAgent && payload.length) {
+      payload[0].formElement['agents'] = this.taskAgents.map(agent => ({
+        agent_id: agent._id,
+        agent_output: agent.agent_output,
+        initiation_message: agent.initiation_message,
+        subsequent_messages: agent.subsequent_messages,
+        action_on_final: agent.action_on_final,
+        select_llm: agent.select_llm,
+        agenda: agent.agenda,
+        hidden_facts: agent.hidden_facts,
+        max_responses: agent.max_responses,
+        max_tokens: agent.max_tokens,
+        guardrails: {
+          enabled: agent.enable_guardrails,
+          max_tokens: agent.guardrail_max_tokens,
+          max_responses: agent.guardrail_max_responses,
+          submission_on_exhaustion: agent.submission_on_exhaustion,
+          message_on_exhaustion: agent.message_on_exhaustion
+        }
+      }));
+      payload[0].formElement['sandboxes'] = this.taskSandboxes.map(sb => ({
+        sandbox_id: sb._id,
+        name: sb.name,
+        allow_grading: sb.allow_grading,
+        validation: {
+          validation_mode: sb.validation_mode,
+          select_validator: sb.select_validator,
+          validator_agents: sb.validator_agents,
+          grading_rubric: sb.grading_rubric,
+          additional_documents: sb.additional_documents,
+          skills_to_verify: sb.skills_to_verify
+        }
+      }));
+    }
 
     console.log("payload", payload, URL)
     if (payload.length) {
@@ -748,6 +895,46 @@ export class PlacementWorkflowCreateTaskComponent implements OnInit {
         });
         this.media.documents = data?.['documents'];
         this.selectedCompletionCriteria = data.completion_criteria;
+
+        // Load Meet AI Agent data in edit mode
+        if (data.completion_criteria === this.completionCriteria.meetAIAgent) {
+          this.aiAgentActiveTab = 0;
+          this.loadAvailableAgents();
+          if (data.agents && Array.isArray(data.agents)) {
+            this.taskAgents = data.agents.map((a: any) => ({
+              _id: a.agent_id,
+              name: a.name || '',
+              title: a.title || '',
+              agent_output: a.agent_output || 'preset',
+              initiation_message: a.initiation_message || '',
+              subsequent_messages: a.subsequent_messages || [],
+              action_on_final: a.action_on_final || 'repeat',
+              select_llm: a.select_llm || '',
+              agenda: a.agenda || '',
+              hidden_facts: a.hidden_facts || '',
+              max_responses: a.max_responses,
+              max_tokens: a.max_tokens,
+              enable_guardrails: a.guardrails?.enabled || false,
+              guardrail_max_tokens: a.guardrails?.max_tokens,
+              guardrail_max_responses: a.guardrails?.max_responses,
+              submission_on_exhaustion: a.guardrails?.submission_on_exhaustion || '',
+              message_on_exhaustion: a.guardrails?.message_on_exhaustion || ''
+            }));
+          }
+          if (data.sandboxes && Array.isArray(data.sandboxes)) {
+            this.taskSandboxes = data.sandboxes.map((sb: any) => ({
+              _id: sb.sandbox_id,
+              name: sb.name || '',
+              allow_grading: sb.allow_grading || false,
+              validation_mode: sb.validation?.validation_mode || '',
+              select_validator: sb.validation?.select_validator || '',
+              validator_agents: sb.validation?.validator_agents || [],
+              grading_rubric: sb.validation?.grading_rubric || '',
+              additional_documents: sb.validation?.additional_documents || [],
+              skills_to_verify: sb.validation?.skills_to_verify || []
+            }));
+          }
+        }
       }
     });
   }
@@ -942,5 +1129,109 @@ export class PlacementWorkflowCreateTaskComponent implements OnInit {
 
       return youtubeRegex.test(url) || vimeoRegex.test(url);
     }
-  
+
+  // ===== Meet AI Agent Methods =====
+
+  selectAiAgentTab(index: number) {
+    this.aiAgentActiveTab = index;
+  }
+
+  loadAvailableAgents() {
+    this.service.getAgentList({}).subscribe((response: any) => {
+      if (response.status == HttpResponseCode.SUCCESS) {
+        this.availableAgentList = response.result || [];
+      } else {
+        this.availableAgentList = response.result || response.data || [];
+      }
+    }, () => {
+      this.availableAgentList = [];
+    });
+  }
+
+  addAgentToTask() {
+    if (!this.addAgentSelectedId) return;
+    const agent = this.availableAgentList.find(a => a._id === this.addAgentSelectedId);
+    if (!agent) return;
+    if (this.taskAgents.find(a => a._id === this.addAgentSelectedId)) return;
+    this.taskAgents.push({
+      _id: agent._id,
+      name: agent.name || agent.agent_name || '',
+      title: agent.title || '',
+      agent_output: 'preset',
+      initiation_message: '',
+      subsequent_messages: [],
+      action_on_final: 'repeat',
+      select_llm: '',
+      agenda: '',
+      hidden_facts: '',
+      max_responses: null,
+      max_tokens: null,
+      enable_guardrails: false,
+      guardrail_max_tokens: null,
+      guardrail_max_responses: null,
+      submission_on_exhaustion: '',
+      message_on_exhaustion: ''
+    });
+    this.selectedTaskAgentIndex = this.taskAgents.length - 1;
+    this.addAgentSelectedId = null;
+  }
+
+  removeAgentFromTask(index: number) {
+    this.taskAgents.splice(index, 1);
+    if (this.selectedTaskAgentIndex >= this.taskAgents.length) {
+      this.selectedTaskAgentIndex = Math.max(0, this.taskAgents.length - 1);
+    }
+    this.removeAgentIndex = null;
+  }
+
+  selectTaskAgent(index: number) {
+    this.selectedTaskAgentIndex = index;
+  }
+
+  addSubsequentMessage(agentIndex: number) {
+    if (this.taskAgents[agentIndex]?.subsequent_messages?.length < 4) {
+      this.taskAgents[agentIndex].subsequent_messages.push('');
+    }
+  }
+
+  removeSubsequentMessage(agentIndex: number, msgIndex: number) {
+    this.taskAgents[agentIndex]?.subsequent_messages?.splice(msgIndex, 1);
+  }
+
+  addSandboxToTask() {
+    if (!this.addSandboxSelected) return;
+    const sandbox = this.sandboxOptions.find(s => s._id === this.addSandboxSelected);
+    if (!sandbox) return;
+    if (this.taskSandboxes.find(s => s._id === this.addSandboxSelected)) return;
+    this.taskSandboxes.push({
+      _id: sandbox._id,
+      name: sandbox.name,
+      allow_grading: false,
+      validation_mode: '',
+      select_validator: '',
+      validator_agents: [],
+      grading_rubric: '',
+      additional_documents: [],
+      skills_to_verify: []
+    });
+    this.selectedSandboxIndex = this.taskSandboxes.length - 1;
+    this.addSandboxSelected = null;
+  }
+
+  removeSandboxFromTask(index: number) {
+    this.taskSandboxes.splice(index, 1);
+    if (this.selectedSandboxIndex >= this.taskSandboxes.length) {
+      this.selectedSandboxIndex = Math.max(0, this.taskSandboxes.length - 1);
+    }
+    this.removeSandboxIndex = null;
+  }
+
+  selectSandbox(index: number) {
+    this.selectedSandboxIndex = index;
+  }
+
+  trackByIndex(index: number) {
+    return index;
+  }
+
 }

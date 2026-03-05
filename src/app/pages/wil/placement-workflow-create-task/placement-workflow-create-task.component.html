@@ -22,7 +22,7 @@
 
 <section>
     <form [formGroup]="createTask">
-        <div class="row">
+        <div class="row" *ngIf="selectedCompletionCriteria !== completionCriteria.meetAIAgent">
             <div class="col-md-6">
                 <div class="cards">
                     <div class="card_body">
@@ -1499,8 +1499,627 @@
             </div>
          
         </div>
+
+        <!-- ===== Meet AI Agent Tabbed Interface ===== -->
+        <ng-container *ngIf="selectedCompletionCriteria === completionCriteria.meetAIAgent">
+            <div class="ai-agent-task-wrapper">
+                <!-- Header -->
+                <div class="ai-task-header">
+                    <h3>[{{ createTask.get('name')?.value || 'Task Name from Basic Info' }}]</h3>
+                    <div class="ai-task-header-actions">
+                        <button type="button" class="ai-header-btn ai-header-btn-outline" (click)="onCancelCreateTask()">Cancel</button>
+                        <button type="button" class="ai-header-btn ai-header-btn-primary" (click)="onCreateTask()">{{ buttonText }}</button>
+                    </div>
+                </div>
+
+                <!-- Tab Bar -->
+                <div class="ai-task-tabs">
+                    <div *ngFor="let tab of aiAgentTabs; let i = index"
+                         class="ai-task-tab" [class.active]="aiAgentActiveTab === i"
+                         (click)="selectAiAgentTab(i)">
+                        {{ tab.name }} {{ tab.icon }}
+                    </div>
+                </div>
+
+                <!-- Tab Content -->
+                <div class="ai-task-content">
+
+                    <!-- ===== Tab 0: Task Basics ===== -->
+                    <div *ngIf="aiAgentActiveTab === 0">
+                        <div class="ai-task-basics-form">
+                            <div class="row form-group">
+                                <div class="col-md-3"><label class="label_title">Name</label></div>
+                                <div class="col-md-9">
+                                    <input formControlName="name" type="text" placeholder="Name of Task" class="form-control">
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <div class="col-md-3"><label class="label_title">Description</label></div>
+                                <div class="col-md-9">
+                                    <quill-editor [modules]="modules" formControlName="description"></quill-editor>
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <div class="col-md-3"><label class="label_title">Task Type</label></div>
+                                <div class="col-md-9">
+                                    <ng-select formControlName="completion_criteria" [searchable]="false"
+                                        [multiple]="false" bindLabel="name" bindValue="id" [clearable]="false"
+                                        placeholder="Select the criteria" (change)="onChangeCompletionCriteria($event)">
+                                        <ng-option *ngFor="let criteria of completionCriteriaList"
+                                            value="{{criteria.completion_criteria}}">{{criteria.completion_criteria}}</ng-option>
+                                    </ng-select>
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <div class="col-md-3"><label class="label_title">Unlock Task On</label></div>
+                                <div class="col-md-9">
+                                    <ng-select formControlName="unlock_task_on" [searchable]="false"
+                                        [multiple]="false" bindLabel="name" bindValue="id" [clearable]="false"
+                                        placeholder="Select Unlock Task On">
+                                        <ng-option *ngFor="let unlockTaskOn of unlockTaskOnList"
+                                            value="{{unlockTaskOn._id}}">{{unlockTaskOn.unlock_task_on}}</ng-option>
+                                    </ng-select>
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <div class="col-md-3"><label class="label_title">Required Activity</label></div>
+                                <div class="col-md-9">
+                                    <mat-radio-group formControlName="required_activity" class="radio_group">
+                                        <mat-radio-button class="mr-4" [value]="true">Yes</mat-radio-button>
+                                        <mat-radio-button [value]="false">No</mat-radio-button>
+                                    </mat-radio-group>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ===== Tab 1: Task Context ===== -->
+                    <div *ngIf="aiAgentActiveTab === 1">
+                        <div class="ai-task-two-col">
+                            <!-- Left sidebar -->
+                            <div class="ai-task-sidebar">
+                                <div class="ai-task-sidebar-header">
+                                    <h5>Manage Agents</h5>
+                                    <button type="button" class="ai-add-btn" data-toggle="modal" data-target="#addAgentModal">+</button>
+                                </div>
+                                <ul class="ai-task-sidebar-list">
+                                    <li *ngFor="let agent of taskAgents; let i = index"
+                                        class="ai-task-sidebar-item" [class.active]="selectedTaskAgentIndex === i"
+                                        (click)="selectTaskAgent(i)">
+                                        {{ agent.name || 'Agent ' + (i + 1) }}
+                                    </li>
+                                </ul>
+                                <div *ngIf="taskAgents.length === 0" class="ai-task-empty-state" style="min-height:100px;">
+                                    No agents added yet
+                                </div>
+                            </div>
+
+                            <!-- Right content -->
+                            <div class="ai-task-main-content">
+                                <ng-container *ngIf="taskAgents.length > 0 && taskAgents[selectedTaskAgentIndex]">
+                                    <!-- Agent name + title + remove button -->
+                                    <div class="ai-agent-top-row">
+                                        <div>
+                                            <h4 class="ai-agent-name">{{ taskAgents[selectedTaskAgentIndex].name }}</h4>
+                                            <span class="ai-agent-title">{{ taskAgents[selectedTaskAgentIndex].title || 'Lead BA' }}</span>
+                                        </div>
+                                        <button type="button" class="ai-remove-btn-rounded" (click)="removeAgentIndex = selectedTaskAgentIndex" data-toggle="modal" data-target="#removeAgentModal">Remove from Task</button>
+                                    </div>
+
+                                    <!-- Config card -->
+                                    <div class="ai-task-agent-config">
+                                        <!-- Agent Output -->
+                                        <div class="ai-task-config-row">
+                                            <div class="ai-config-label">Agent Output</div>
+                                            <div class="ai-config-control">
+                                                <div class="ai-task-radio-group">
+                                                    <label>
+                                                        <input type="radio" [(ngModel)]="taskAgents[selectedTaskAgentIndex].agent_output" [ngModelOptions]="{standalone: true}" value="preset"> Preset Messages
+                                                    </label>
+                                                    <label>
+                                                        <input type="radio" [(ngModel)]="taskAgents[selectedTaskAgentIndex].agent_output" [ngModelOptions]="{standalone: true}" value="ai"> AI Mode
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Agent Initiation Message (always shown) -->
+                                        <div class="ai-task-config-row">
+                                            <div class="ai-config-label"><strong>Agent Initiation Message</strong></div>
+                                            <div class="ai-config-control">
+                                                <textarea class="form-control" rows="4" placeholder="Message"
+                                                    [(ngModel)]="taskAgents[selectedTaskAgentIndex].initiation_message" [ngModelOptions]="{standalone: true}"></textarea>
+                                            </div>
+                                        </div>
+
+                                        <!-- Preset mode: Subsequent Messages -->
+                                        <ng-container *ngIf="taskAgents[selectedTaskAgentIndex].agent_output === 'preset'">
+                                            <div *ngFor="let msg of taskAgents[selectedTaskAgentIndex].subsequent_messages; let mi = index; trackBy: trackByIndex" class="ai-task-config-row">
+                                                <div class="ai-config-label">
+                                                    <strong>Agent's {{ mi === 0 ? 'Second' : mi === 1 ? 'Third' : mi === 2 ? 'Fourth' : 'Fifth' }} Message</strong>
+                                                    <br><span class="ai-remove-link" (click)="removeSubsequentMessage(selectedTaskAgentIndex, mi)">X Remove</span>
+                                                </div>
+                                                <div class="ai-config-control">
+                                                    <textarea class="form-control" rows="4" placeholder="Message"
+                                                        [(ngModel)]="taskAgents[selectedTaskAgentIndex].subsequent_messages[mi]" [ngModelOptions]="{standalone: true}"></textarea>
+                                                </div>
+                                            </div>
+
+                                            <div class="ai-add-subsequent-link" *ngIf="taskAgents[selectedTaskAgentIndex].subsequent_messages.length < 4">
+                                                <a (click)="addSubsequentMessage(selectedTaskAgentIndex)">+ Add Subsequent Response (max 4)</a>
+                                            </div>
+
+                                            <!-- Action on Final Message -->
+                                            <div class="ai-task-config-row">
+                                                <div class="ai-config-label">Action on Final Message</div>
+                                                <div class="ai-config-control">
+                                                    <div class="ai-task-radio-group">
+                                                        <label>
+                                                            <input type="radio" [(ngModel)]="taskAgents[selectedTaskAgentIndex].action_on_final" [ngModelOptions]="{standalone: true}" value="repeat"> Repeat Last Message
+                                                        </label>
+                                                        <label>
+                                                            <input type="radio" [(ngModel)]="taskAgents[selectedTaskAgentIndex].action_on_final" [ngModelOptions]="{standalone: true}" value="roleplay"> Enable Role Play Mode
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </ng-container>
+
+                                        <!-- LLM / Agenda / Hidden Facts / Max fields: shown in AI mode OR when Preset + Roleplay -->
+                                        <ng-container *ngIf="taskAgents[selectedTaskAgentIndex].agent_output === 'ai' || taskAgents[selectedTaskAgentIndex].action_on_final === 'roleplay'">
+                                            <!-- Select LLM -->
+                                            <div class="ai-task-config-row">
+                                                <div class="ai-config-label"><strong>Select LLM</strong></div>
+                                                <div class="ai-config-control">
+                                                    <ng-select [(ngModel)]="taskAgents[selectedTaskAgentIndex].select_llm" [ngModelOptions]="{standalone: true}"
+                                                        [searchable]="false" [clearable]="false" placeholder="Select">
+                                                        <ng-option value="gpt-4">GPT-4</ng-option>
+                                                        <ng-option value="gpt-3.5">GPT-3.5</ng-option>
+                                                        <ng-option value="claude">Claude</ng-option>
+                                                    </ng-select>
+                                                </div>
+                                            </div>
+
+                                            <!-- Agenda -->
+                                            <div class="ai-task-config-row">
+                                                <div class="ai-config-label">
+                                                    <strong>Agenda</strong>
+                                                    <span class="ai-info-icon" matTooltip="The agenda or goals for the agent conversation" matTooltipPosition="above">
+                                                        <svg width="16" height="16" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                            <path d="M12.25 22C17.7728 22 22.25 17.5228 22.25 12C22.25 6.47715 17.7728 2 12.25 2C6.72715 2 2.25 6.47715 2.25 12C2.25 17.5228 6.72715 22 12.25 22Z" stroke="#464BA8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                                            <path d="M12.25 16V12" stroke="#464BA8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                                            <path d="M12.25 8H12.2613" stroke="#464BA8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                                        </svg>
+                                                    </span>
+                                                </div>
+                                                <div class="ai-config-control">
+                                                    <textarea class="form-control" rows="4" placeholder='e.g., "Wants automation but fears job cuts"'
+                                                        [(ngModel)]="taskAgents[selectedTaskAgentIndex].agenda" [ngModelOptions]="{standalone: true}"></textarea>
+                                                </div>
+                                            </div>
+
+                                            <!-- Hidden Facts / Rules -->
+                                            <div class="ai-task-config-row">
+                                                <div class="ai-config-label">
+                                                    <strong>Hidden Facts / Rules</strong>
+                                                    <span class="ai-info-icon" matTooltip="Facts hidden from the student but known to the agent" matTooltipPosition="above">
+                                                        <svg width="16" height="16" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                            <path d="M12.25 22C17.7728 22 22.25 17.5228 22.25 12C22.25 6.47715 17.7728 2 12.25 2C6.72715 2 2.25 6.47715 2.25 12C2.25 17.5228 6.72715 22 12.25 22Z" stroke="#464BA8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                                            <path d="M12.25 16V12" stroke="#464BA8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                                            <path d="M12.25 8H12.2613" stroke="#464BA8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                                        </svg>
+                                                    </span>
+                                                </div>
+                                                <div class="ai-config-control">
+                                                    <textarea class="form-control" rows="4" placeholder='e.g., "No audit trail in current system"'
+                                                        [(ngModel)]="taskAgents[selectedTaskAgentIndex].hidden_facts" [ngModelOptions]="{standalone: true}"></textarea>
+                                                </div>
+                                            </div>
+
+                                            <!-- Maximum Responses -->
+                                            <div class="ai-task-config-row">
+                                                <div class="ai-config-label"><strong>Maximum Responses</strong></div>
+                                                <div class="ai-config-control">
+                                                    <ng-select [(ngModel)]="taskAgents[selectedTaskAgentIndex].max_responses" [ngModelOptions]="{standalone: true}"
+                                                        [searchable]="false" [clearable]="false" placeholder="5">
+                                                        <ng-option [value]="3">3</ng-option>
+                                                        <ng-option [value]="5">5</ng-option>
+                                                        <ng-option [value]="10">10</ng-option>
+                                                        <ng-option [value]="15">15</ng-option>
+                                                        <ng-option [value]="20">20</ng-option>
+                                                    </ng-select>
+                                                    <p class="ai-helper-text">Once the agent has sent this many replies, the conversation ends automatically. No further responses will be generated.</p>
+                                                </div>
+                                            </div>
+
+                                            <!-- Maximum Tokens -->
+                                            <div class="ai-task-config-row">
+                                                <div class="ai-config-label"><strong>Maximum Tokens</strong></div>
+                                                <div class="ai-config-control">
+                                                    <ng-select [(ngModel)]="taskAgents[selectedTaskAgentIndex].max_tokens" [ngModelOptions]="{standalone: true}"
+                                                        [searchable]="false" [clearable]="false" placeholder="500">
+                                                        <ng-option [value]="100">100</ng-option>
+                                                        <ng-option [value]="250">250</ng-option>
+                                                        <ng-option [value]="500">500</ng-option>
+                                                        <ng-option [value]="1000">1000</ng-option>
+                                                        <ng-option [value]="2000">2000</ng-option>
+                                                    </ng-select>
+                                                    <p class="ai-helper-text">Shared token budget for the whole attempt: includes agent replies and validation (scoring + feedback). Exceeding ends the task</p>
+                                                </div>
+                                            </div>
+                                        </ng-container>
+                                    </div>
+                                </ng-container>
+
+                                <div *ngIf="taskAgents.length === 0" class="ai-task-empty-state">
+                                    Add an agent to configure task context
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ===== Tab 2: Sandbox Config ===== -->
+                    <div *ngIf="aiAgentActiveTab === 2">
+                        <div class="ai-task-two-col">
+                            <div class="ai-task-sidebar">
+                                <div class="ai-task-sidebar-header">
+                                    <h5>Sandboxes</h5>
+                                    <button type="button" class="ai-add-btn" data-toggle="modal" data-target="#addSandboxModal">+</button>
+                                </div>
+                                <ul class="ai-task-sidebar-list">
+                                    <li *ngFor="let sandbox of taskSandboxes; let i = index"
+                                        class="ai-task-sidebar-item" [class.active]="selectedSandboxIndex === i"
+                                        (click)="selectSandbox(i)">
+                                        {{ sandbox.name }}
+                                    </li>
+                                </ul>
+                                <div *ngIf="taskSandboxes.length === 0" class="ai-task-empty-state" style="min-height:100px;">
+                                    No sandboxes added yet
+                                </div>
+                            </div>
+                            <div class="ai-task-main-content">
+                                <ng-container *ngIf="taskSandboxes.length > 0 && taskSandboxes[selectedSandboxIndex]">
+                                    <div class="ai-agent-top-row">
+                                        <div>
+                                            <h4 class="ai-agent-name">{{ taskSandboxes[selectedSandboxIndex].name }}</h4>
+                                        </div>
+                                        <button type="button" class="ai-remove-btn-rounded" (click)="removeSandboxIndex = selectedSandboxIndex" data-toggle="modal" data-target="#removeSandboxModal">Remove from Task</button>
+                                    </div>
+                                    <div class="ai-task-agent-config">
+                                        <div class="ai-task-config-row">
+                                            <div class="ai-config-label">Allow Grading Selected Sandbox</div>
+                                            <div class="ai-config-control">
+                                                <div class="hcaaf-toogle">
+                                                    <mat-slide-toggle color="success"
+                                                        [(ngModel)]="taskSandboxes[selectedSandboxIndex].allow_grading" [ngModelOptions]="{standalone: true}">
+                                                    </mat-slide-toggle>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </ng-container>
+                                <div *ngIf="taskSandboxes.length === 0" class="ai-task-empty-state">
+                                    Add a sandbox to configure
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ===== Tab 3: Validation ===== -->
+                    <div *ngIf="aiAgentActiveTab === 3">
+                        <div class="ai-task-two-col">
+                            <div class="ai-task-sidebar">
+                                <div class="ai-task-sidebar-header">
+                                    <h5>Active Sandboxes</h5>
+                                </div>
+                                <ul class="ai-task-sidebar-list">
+                                    <li *ngFor="let sandbox of taskSandboxes; let i = index"
+                                        class="ai-task-sidebar-item" [class.active]="selectedSandboxIndex === i"
+                                        (click)="selectSandbox(i)">
+                                        {{ sandbox.name }}
+                                    </li>
+                                </ul>
+                                <div *ngIf="taskSandboxes.length === 0" class="ai-task-empty-state" style="min-height:100px;">
+                                    No sandboxes configured
+                                </div>
+                            </div>
+                            <div class="ai-task-main-content">
+                                <ng-container *ngIf="taskSandboxes.length > 0 && taskSandboxes[selectedSandboxIndex]">
+                                    <div class="ai-agent-top-row">
+                                        <div>
+                                            <h4 class="ai-agent-name">{{ taskSandboxes[selectedSandboxIndex].name }}</h4>
+                                            <span class="ai-agent-title">[placeholder]</span>
+                                        </div>
+                                        <span class="ai-note-text">Sandboxes can be removed in the Sandbox Config</span>
+                                    </div>
+                                    <div class="ai-task-agent-config">
+                                        <!-- Validation Mode -->
+                                        <div class="ai-task-config-row">
+                                            <div class="ai-config-label"><strong>Validation Mode</strong></div>
+                                            <div class="ai-config-control">
+                                                <ng-select [(ngModel)]="taskSandboxes[selectedSandboxIndex].validation_mode" [ngModelOptions]="{standalone: true}"
+                                                    [searchable]="false" [clearable]="false" placeholder="Select Validation Mode">
+                                                    <ng-option value="ai_review">AI Review</ng-option>
+                                                    <ng-option value="manual">Manual</ng-option>
+                                                    <ng-option value="hybrid">Hybrid</ng-option>
+                                                </ng-select>
+                                            </div>
+                                        </div>
+                                        <!-- Select Validator -->
+                                        <div class="ai-task-config-row">
+                                            <div class="ai-config-label"><strong>Select Validator</strong></div>
+                                            <div class="ai-config-control">
+                                                <ng-select [(ngModel)]="taskSandboxes[selectedSandboxIndex].select_validator" [ngModelOptions]="{standalone: true}"
+                                                    [searchable]="false" [clearable]="false" placeholder="Select Validator">
+                                                    <ng-option value="multiple_agents">Multiple Agents</ng-option>
+                                                    <ng-option value="single_agent">Single Agent</ng-option>
+                                                </ng-select>
+                                                <!-- Validator agents chips -->
+                                                <ng-container *ngIf="taskSandboxes[selectedSandboxIndex].select_validator === 'multiple_agents'">
+                                                    <ng-select [(ngModel)]="taskSandboxes[selectedSandboxIndex].validator_agents" [ngModelOptions]="{standalone: true}"
+                                                        [multiple]="true" [searchable]="true" [clearable]="true" placeholder="Select agents" class="mt-2">
+                                                        <ng-option *ngFor="let agent of taskAgents" [value]="agent._id">
+                                                            {{ agent.name }}
+                                                        </ng-option>
+                                                    </ng-select>
+                                                </ng-container>
+                                            </div>
+                                        </div>
+                                        <!-- Grading Rubric & Response -->
+                                        <div class="ai-task-config-row">
+                                            <div class="ai-config-label"><strong>Grading Rubric & Response</strong></div>
+                                            <div class="ai-config-control">
+                                                <textarea class="form-control" rows="5" placeholder="Enter the grading rubric, e.g..."
+                                                    [(ngModel)]="taskSandboxes[selectedSandboxIndex].grading_rubric" [ngModelOptions]="{standalone: true}"></textarea>
+                                            </div>
+                                        </div>
+                                        <!-- Additional Documents -->
+                                        <div class="ai-task-config-row">
+                                            <div class="ai-config-label"><strong>Additional Documents</strong><br><span class="ai-optional-text">(optional)</span></div>
+                                            <div class="ai-config-control">
+                                                <div class="ai-upload-area">
+                                                    <p><strong>Upload Documents</strong><br>
+                                                    <span>Accepted file types: Adobe PDF (.pdf)</span><br>
+                                                    <span>5MB size limit</span></p>
+                                                    <input type="file" accept=".pdf" class="ai-upload-input"
+                                                        (change)="getFilDoc($event)">
+                                                </div>
+                                                <p class="ai-helper-text">These uploaded documents won't be visible in the students' libraries</p>
+                                            </div>
+                                        </div>
+                                        <!-- Skills to Verify -->
+                                        <div class="ai-task-config-row">
+                                            <div class="ai-config-label"><strong>Skills to Verify</strong></div>
+                                            <div class="ai-config-control">
+                                                <ng-select [(ngModel)]="taskSandboxes[selectedSandboxIndex].skills_to_verify" [ngModelOptions]="{standalone: true}"
+                                                    [multiple]="true" [addTag]="true" placeholder="Search and Add Skill (max 10)">
+                                                </ng-select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </ng-container>
+                                <div *ngIf="taskSandboxes.length === 0" class="ai-task-empty-state">
+                                    Add sandboxes in Sandbox Config tab first
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ===== Tab 4: Guardrails ===== -->
+                    <div *ngIf="aiAgentActiveTab === 4">
+                        <div class="ai-task-two-col">
+                            <div class="ai-task-sidebar">
+                                <div class="ai-task-sidebar-header">
+                                    <h5>Agents</h5>
+                                </div>
+                                <ul class="ai-task-sidebar-list">
+                                    <li *ngFor="let agent of taskAgents; let i = index"
+                                        class="ai-task-sidebar-item" [class.active]="selectedTaskAgentIndex === i"
+                                        (click)="selectTaskAgent(i)">
+                                        {{ agent.name || 'Agent ' + (i + 1) }}
+                                    </li>
+                                </ul>
+                                <div *ngIf="taskAgents.length === 0" class="ai-task-empty-state" style="min-height:100px;">
+                                    No agents configured
+                                </div>
+                            </div>
+                            <div class="ai-task-main-content">
+                                <ng-container *ngIf="taskAgents.length > 0 && taskAgents[selectedTaskAgentIndex]">
+                                    <div class="ai-agent-top-row">
+                                        <div>
+                                            <h4 class="ai-agent-name">{{ taskAgents[selectedTaskAgentIndex].name }}</h4>
+                                            <span class="ai-agent-title">{{ taskAgents[selectedTaskAgentIndex].title || 'Lead BA' }}</span>
+                                        </div>
+                                    </div>
+                                    <div class="ai-task-agent-config">
+                                        <p class="ai-guardrails-desc">Define interaction limits and fallback behaviors to cap token usage (including validation) and encourage concise, productive student engagement.</p>
+
+                                        <!-- Enable Guardrails -->
+                                        <div class="ai-task-config-row">
+                                            <div class="ai-config-label"><strong>Enable Guardrails</strong></div>
+                                            <div class="ai-config-control">
+                                                <div class="ai-task-radio-group">
+                                                    <label>
+                                                        <input type="radio" [value]="true" [(ngModel)]="taskAgents[selectedTaskAgentIndex].enable_guardrails" [ngModelOptions]="{standalone: true}"> Yes
+                                                    </label>
+                                                    <label>
+                                                        <input type="radio" [value]="false" [(ngModel)]="taskAgents[selectedTaskAgentIndex].enable_guardrails" [ngModelOptions]="{standalone: true}"> No
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <ng-container *ngIf="taskAgents[selectedTaskAgentIndex].enable_guardrails">
+                                            <!-- Maximum Tokens -->
+                                            <div class="ai-task-config-row">
+                                                <div class="ai-config-label"><strong>Maximum Tokens</strong></div>
+                                                <div class="ai-config-control">
+                                                    <ng-select [(ngModel)]="taskAgents[selectedTaskAgentIndex].guardrail_max_tokens" [ngModelOptions]="{standalone: true}"
+                                                        [searchable]="false" [clearable]="false" placeholder="500">
+                                                        <ng-option [value]="100">100</ng-option>
+                                                        <ng-option [value]="250">250</ng-option>
+                                                        <ng-option [value]="500">500</ng-option>
+                                                        <ng-option [value]="1000">1000</ng-option>
+                                                        <ng-option [value]="2000">2000</ng-option>
+                                                    </ng-select>
+                                                    <p class="ai-helper-text">Shared token budget for the whole attempt: includes agent replies and validation (scoring + feedback). Exceeding ends the task</p>
+                                                </div>
+                                            </div>
+
+                                            <!-- Maximum Responses -->
+                                            <div class="ai-task-config-row">
+                                                <div class="ai-config-label"><strong>Maximum Responses</strong></div>
+                                                <div class="ai-config-control">
+                                                    <ng-select [(ngModel)]="taskAgents[selectedTaskAgentIndex].guardrail_max_responses" [ngModelOptions]="{standalone: true}"
+                                                        [searchable]="false" [clearable]="false" placeholder="5">
+                                                        <ng-option [value]="3">3</ng-option>
+                                                        <ng-option [value]="5">5</ng-option>
+                                                        <ng-option [value]="10">10</ng-option>
+                                                        <ng-option [value]="15">15</ng-option>
+                                                        <ng-option [value]="20">20</ng-option>
+                                                    </ng-select>
+                                                    <p class="ai-helper-text">Once the agent has sent this many replies, the conversation ends automatically. No further responses will be generated.</p>
+                                                </div>
+                                            </div>
+
+                                            <!-- Submission on Exhaustion -->
+                                            <div class="ai-task-config-row">
+                                                <div class="ai-config-label"><strong>Submission on Exhaustion</strong></div>
+                                                <div class="ai-config-control">
+                                                    <ng-select [(ngModel)]="taskAgents[selectedTaskAgentIndex].submission_on_exhaustion" [ngModelOptions]="{standalone: true}"
+                                                        [searchable]="false" [clearable]="false" placeholder="Select">
+                                                        <ng-option value="auto_submit">Automatically submit as-is and mark task incomplete</ng-option>
+                                                        <ng-option value="force_acknowledge">Force acknowledgement only (no auto-submit)</ng-option>
+                                                    </ng-select>
+                                                </div>
+                                            </div>
+
+                                            <!-- Message on Exhaustion -->
+                                            <div class="ai-task-config-row">
+                                                <div class="ai-config-label"><strong>Message on Exhaustion</strong></div>
+                                                <div class="ai-config-control">
+                                                    <textarea class="form-control" rows="5" placeholder="progress has been saved, but we couldn't complete the full interaction or validation. Please summarize your key points or submit what you have as your artefact to proceed to the next task."
+                                                        [(ngModel)]="taskAgents[selectedTaskAgentIndex].message_on_exhaustion" [ngModelOptions]="{standalone: true}"></textarea>
+                                                </div>
+                                            </div>
+                                        </ng-container>
+                                    </div>
+                                </ng-container>
+                                <div *ngIf="taskAgents.length === 0" class="ai-task-empty-state">
+                                    Add agents in Task Context tab first
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </ng-container>
+
     </form>
 </section>
+
+<!-- ===== Add Agent Modal ===== -->
+<div class="modal fade bsModal ch_modal archived_placement_group_modal" id="addAgentModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header pt-4">
+                <h5 class="modal-title">Add Agent to Task</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>Select an Agent</label>
+                    <ng-select [(ngModel)]="addAgentSelectedId" [searchable]="true" [clearable]="true" placeholder="Choose an agent">
+                        <ng-option *ngFor="let agent of availableAgentList" [value]="agent._id">
+                            {{ agent.name || agent.agent_name }}
+                        </ng-option>
+                    </ng-select>
+                </div>
+            </div>
+            <div class="modal-footer justify-content-end">
+                <button type="button" class="theme_btn btn_outline_primary mr-3" data-dismiss="modal">Cancel</button>
+                <button type="button" class="theme_btn btn_primary" data-dismiss="modal" (click)="addAgentToTask()">Add</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ===== Remove Agent Modal ===== -->
+<div class="modal fade bsModal ch_modal archived_placement_group_modal" id="removeAgentModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header pt-4 text-center justify-content-center"></div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <img src="../../../../assets/img/undraw_warning.svg" alt="warning">
+                    </div>
+                    <div class="col-md-12 text-center">
+                        <h2 class="modal-title">Are you sure you want to remove this agent from the task?</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer justify-content-center">
+                <button type="button" class="theme_btn btn_outline_primary mr-3" data-dismiss="modal">No</button>
+                <button type="button" class="theme_btn btn_primary" data-dismiss="modal" (click)="removeAgentFromTask(removeAgentIndex)">Yes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ===== Add Sandbox Modal ===== -->
+<div class="modal fade bsModal ch_modal archived_placement_group_modal" id="addSandboxModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header pt-4">
+                <h5 class="modal-title">Add Sandbox to Task</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>Select a Sandbox</label>
+                    <ng-select [(ngModel)]="addSandboxSelected" [searchable]="false" [clearable]="true" placeholder="Choose a sandbox">
+                        <ng-option *ngFor="let sandbox of sandboxOptions" [value]="sandbox._id">
+                            {{ sandbox.name }}
+                        </ng-option>
+                    </ng-select>
+                </div>
+            </div>
+            <div class="modal-footer justify-content-end">
+                <button type="button" class="theme_btn btn_outline_primary mr-3" data-dismiss="modal">Cancel</button>
+                <button type="button" class="theme_btn btn_primary" data-dismiss="modal" (click)="addSandboxToTask()">Add</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ===== Remove Sandbox Modal ===== -->
+<div class="modal fade bsModal ch_modal archived_placement_group_modal" id="removeSandboxModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header pt-4 text-center justify-content-center"></div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <img src="../../../../assets/img/undraw_warning.svg" alt="warning">
+                    </div>
+                    <div class="col-md-12 text-center">
+                        <h2 class="modal-title">Are you sure you want to remove this sandbox from the task?</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer justify-content-center">
+                <button type="button" class="theme_btn btn_outline_primary mr-3" data-dismiss="modal">No</button>
+                <button type="button" class="theme_btn btn_primary" data-dismiss="modal" (click)="removeSandboxFromTask(removeSandboxIndex)">Yes</button>
+            </div>
+        </div>
+    </div>
+</div>
 <div class="modal fade bsModal ch_modal archived_placement_group_modal" id="cancelCreateTask" tabindex="-1"
     role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
