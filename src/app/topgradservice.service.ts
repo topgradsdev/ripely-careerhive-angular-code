@@ -4189,6 +4189,15 @@ intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<an
     )
   }
 
+  activateAgent(data: any): Observable<any> {
+    let API_URL = `${this.SERVER}ai_agent/activate`;
+    return this.http.post(API_URL, data).pipe(
+      map(res => {
+        return res
+      })
+    )
+  }
+
   deleteAgent(data: any): Observable<any> {
     let API_URL = `${this.SERVER}ai_agent/delete`;
     return this.http.post(API_URL, data).pipe(
@@ -4301,6 +4310,15 @@ intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<an
 
   archiveKnowledgeBase(data: any): Observable<any> {
     let API_URL = `${this.SERVER}knowledge_base/archive`;
+    return this.http.post(API_URL, data).pipe(
+      map(res => {
+        return res
+      })
+    )
+  }
+
+  activateKnowledgeBase(data: any): Observable<any> {
+    let API_URL = `${this.SERVER}knowledge_base/activate`;
     return this.http.post(API_URL, data).pipe(
       map(res => {
         return res

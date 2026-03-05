@@ -62,7 +62,7 @@
 
              
                 <div class="d-flex gap-3">
-                    <button *ngIf="isEditMode" mat-button class="theme_btn btn_outline_danger" style="background: #fff;" (click)="archiveAgentModal.show()">Archive Agent</button>
+                    <button *ngIf="isEditMode" mat-button class="theme_btn" [ngClass]="agentStatus === 'active' ? 'btn_outline_danger' : 'btn_outline_success'" style="background: #fff;" (click)="archiveAgentModal.show()">{{ agentStatus === 'active' ? 'Archive Agent' : 'Activate Agent' }}</button>
                     <button mat-button class="theme_btn btn_primary" (click)="saveAgent()">{{ isEditMode ? 'Update' : 'Save Changes' }}</button>
                 </div>
                 
@@ -147,8 +147,11 @@
                     </div>
 
                     <div class="desc-field">
-                        <label class="desc-label">Tags</label>
-                        <input class="desc-input" type="text" placeholder="Add tags" [(ngModel)]="agentTagInput" [ngModelOptions]="{standalone: true}" (keydown)="onTagKeydown($event)" />
+                        <label class="desc-label">Tags <span class="required">*</span></label>
+                        <input class="desc-input" [class.is-invalid]="tagsError" type="text" placeholder="Add tags" [(ngModel)]="agentTagInput" [ngModelOptions]="{standalone: true}" (keydown)="onTagKeydown($event)" />
+                        <div class="form-error" *ngIf="tagsError">
+                            At least one tag is required
+                        </div>
                         <div class="agent-tags-list" *ngIf="agentTags.length">
                             <span class="agent-tag-chip" *ngFor="let tag of agentTags; let i = index">
                                 {{ tag }}
@@ -223,13 +226,13 @@
                 <div *ngIf="selectedSection === 'knowledge'" class="card kb-card">
                     <div class="card-header">
                         <h2>Knowledge Bank</h2>
-                        <button mat-button class="theme_btn btn_primary" [routerLink]="['/admin/system/add-knowledge-base']">
+                        <!-- <button mat-button class="theme_btn btn_primary" [routerLink]="['/admin/system/add-knowledge-base']">
                             <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M8 3.33301V12.6663" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                                 <path d="M3.33398 8H12.6673" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                             </svg>
                             Add
-                        </button>
+                        </button> -->
                     </div>
 
                     <!-- Search & Select -->
@@ -278,15 +281,15 @@
                              [class.expanded]="kb.expanded">
 
                             <!-- Accordion Header -->
-                            <div class="kb-item-header" (click)="toggleKnowledgeBase(i)">
+                            <div class="kb-item-header" >
                                 <span class="kb-item-name">{{ kb.name }}</span>
                                 <div class="kb-item-actions">
-                                  <svg width="27" height="27" viewBox="0 0 27 27" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <circle cx="13.3438" cy="13.3438" r="13.3438" fill="#F8F8F8"/>
-                                    <path fill-rule="evenodd" clip-rule="evenodd" d="M11.5041 6.86084H14.8314C15.4439 6.86084 15.9405 7.3574 15.9405 7.96993V8.52556H17.6068C18.2194 8.52556 18.7159 9.02212 18.7159 9.63465V10.7437C18.7159 11.3563 18.2194 11.8528 17.6068 11.8528H17.5617L17.0515 17.9545C17.0515 18.567 16.5549 19.0636 15.9424 19.0636H10.3969C9.78439 19.0636 9.28784 18.567 9.28975 18.0006L8.77744 11.8528H8.73409C8.12156 11.8528 7.625 11.3563 7.625 10.7437V9.63465C7.625 9.02212 8.12156 8.52556 8.73409 8.52556H10.395V7.96993C10.395 7.3574 10.8916 6.86084 11.5041 6.86084ZM10.3951 17.9549L9.88848 11.8549H16.4469L15.9424 17.9089L15.9405 17.9549H10.3951ZM8.73301 10.7435V9.63445H17.6057V10.7435H8.73301ZM14.8363 7.96963V8.52417H11.509V7.96963H14.8363Z" fill="#2B2A35"/>
+                                   <svg (click)="removeKnowledgeBase(i, $event)" width="27" height="27" viewBox="0 0 27 27" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <circle cx="13.3438" cy="13.3438" r="13.3438" fill="#F8F8F8"/>
+                                        <path fill-rule="evenodd" clip-rule="evenodd" d="M11.5041 6.86084H14.8314C15.4439 6.86084 15.9405 7.3574 15.9405 7.96993V8.52556H17.6068C18.2194 8.52556 18.7159 9.02212 18.7159 9.63465V10.7437C18.7159 11.3563 18.2194 11.8528 17.6068 11.8528H17.5617L17.0515 17.9545C17.0515 18.567 16.5549 19.0636 15.9424 19.0636H10.3969C9.78439 19.0636 9.28784 18.567 9.28975 18.0006L8.77744 11.8528H8.73409C8.12156 11.8528 7.625 11.3563 7.625 10.7437V9.63465C7.625 9.02212 8.12156 8.52556 8.73409 8.52556H10.395V7.96993C10.395 7.3574 10.8916 6.86084 11.5041 6.86084ZM10.3951 17.9549L9.88848 11.8549H16.4469L15.9424 17.9089L15.9405 17.9549H10.3951ZM8.73301 10.7435V9.63445H17.6057V10.7435H8.73301ZM14.8363 7.96963V8.52417H11.509V7.96963H14.8363Z" fill="#2B2A35"/>
                                     </svg>
 
-                                    <svg class="kb-chevron" [class.rotated]="kb.expanded" width="20" height="20" viewBox="0 0 24 24" fill="none">
+                                    <svg (click)="toggleKnowledgeBase(i)" class="kb-chevron" [class.rotated]="kb.expanded" width="20" height="20" viewBox="0 0 24 24" fill="none">
                                         <path d="M6 9L12 15L18 9" stroke="#2B2A35" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                                     </svg>
                                 </div>
@@ -438,7 +441,7 @@
                                         </svg>
                                         <div class="transcript-dropdown" *ngIf="transcriptMenuOpenIndex === i">
                                             <div class="dropdown-item" (click)="openChatView(t)">View Chat</div>
-                                            <div class="dropdown-item danger" (click)="removechat.show()">Delete History</div>
+                                            <div class="dropdown-item danger" (click)="openDeleteHistory(t)">Delete History</div>
                                         </div>
                                     </div>
                                 </div>
@@ -712,7 +715,7 @@
 
                     <!-- Input -->
                     <div class="chat-input">
-                        <input type="text" placeholder="Type a message..." [(ngModel)]="testChatInput" (keydown.enter)="sendTestChat()" [disabled]="testChatLoading" />
+                        <input #chatInputRef type="text" placeholder="Type a message..." [(ngModel)]="testChatInput" (keydown.enter)="sendTestChat()" [disabled]="testChatLoading" />
                         <button class="send-btn" (click)="sendTestChat()" [disabled]="!testChatInput.trim() || testChatLoading || !agentId">
                             <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
                                 <path d="M22 2L11 13" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -757,7 +760,7 @@
 <!-- Add Placement Group Modal -->
 <div bsModal #removechat="bs-modal"  class="modal fade bsModal ch_modal" id="addPlacementGroup" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document" style="max-width:700px">
-        <div class="modal-content"  style="max-height: calc(100vh - 150px) !important; overflow: auto;padding: 15px;" >
+        <div class="modal-content"  style="max-height: calc(100vh - 150px) !important; overflow: hidden;padding: 15px;" >
             <div class="modal-header">
                 <button type="button" mat-icon-button id="closeModal" class="close" data-dismiss="modal"
                     aria-label="Close" (click)="removechat.hide();">
@@ -787,8 +790,7 @@
             </div>
             <div class="modal-footer justify-content-around">
                 <button mat-button type="button" class="theme_btn btn_outline_primary" (click)="removechat.hide();">No</button>
-                <button mat-button type="submit" class="theme_btn btn_primary" (click)="removechat.hide();">Yes</button>
-                <!-- (click)="checkExist()" -->
+                <button mat-button type="submit" class="theme_btn btn_primary" (click)="confirmDeleteHistory();">Yes</button>
             </div>
         </div>
     </div>
@@ -799,7 +801,7 @@
 <!-- Add Placement Group Modal -->
 <div bsModal #archiveAgentModal="bs-modal"  class="modal fade bsModal ch_modal" id="addPlacementGroup" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document" style="max-width:700px">
-        <div class="modal-content"  style="max-height: calc(100vh - 150px) !important; overflow: auto;padding: 15px;" >
+        <div class="modal-content"  style="max-height: calc(100vh - 150px) !important; overflow:  hidden;padding: 15px;" >
             <div class="modal-header">
                 <button type="button" mat-icon-button id="closeModal" class="close" data-dismiss="modal"
                     aria-label="Close" (click)="archiveAgentModal.hide();">
@@ -822,15 +824,14 @@
                 </svg>
 
                 <h2  class="m-0  text-center">
-                  Are you sure you want to archive {{ agentForm.get('agentName')?.value || 'this Agent' }}?
+                  Are you sure you want to {{ agentStatus === 'active' ? 'archive' : 'activate' }} {{ agentForm.get('agentName')?.value || 'this Agent' }}?
                 </h2>
 
-                <!-- <p class="m-0 text-center">Only the history log will be removed. The actual conversation between the <br /> student and the agent will not be removed.</p> -->
             </div>
             <div class="modal-footer justify-content-around">
                 <button mat-button type="button" class="theme_btn btn_outline_primary" (click)="archiveAgentModal.hide();">Cancel</button>
-                <button mat-button type="submit" class="theme_btn btn_primary" (click)="archiveAgentModal.hide(); archiveAgent();">Archive</button>
-                <!-- (click)="checkExist()" -->
+                <button *ngIf="agentStatus === 'active'" mat-button type="submit" class="theme_btn btn_primary" (click)="archiveAgentModal.hide(); archiveAgent();">Archive</button>
+                <button *ngIf="agentStatus !== 'active'" mat-button type="submit" class="theme_btn btn_primary" (click)="archiveAgentModal.hide(); archiveAgent();">Activate</button>
             </div>
         </div>
     </div>
@@ -841,7 +842,7 @@
 <!-- Add Placement Group Modal -->
 <div bsModal #removeTestChat="bs-modal"  class="modal fade bsModal ch_modal" id="addPlacementGroup" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document" style="max-width:700px">
-        <div class="modal-content"  style="max-height: calc(100vh - 150px) !important; overflow: auto;padding: 15px;" >
+        <div class="modal-content"  style="max-height: calc(100vh - 150px) !important; overflow:  hidden;padding: 15px;" >
             <div class="modal-header">
                 <button type="button" mat-icon-button id="closeModal" class="close" data-dismiss="modal"
                     aria-label="Close" (click)="removeTestChat.hide();">

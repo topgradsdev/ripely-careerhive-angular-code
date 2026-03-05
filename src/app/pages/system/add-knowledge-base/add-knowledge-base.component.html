@@ -48,7 +48,7 @@
 
              
                 <div class="d-flex gap-3">
-                    <button *ngIf="isEditMode" mat-button class="theme_btn btn_outline_danger" style="background: #fff;" (click)="archiveKBModal.show()">Archive Knowledge Base</button>
+                    <button *ngIf="isEditMode" mat-button class="theme_btn" [ngClass]="kbStatus === 'active' ? 'btn_outline_danger' : 'btn_outline_success'" style="background: #fff;" (click)="archiveKBModal.show()">{{ kbStatus === 'active' ? 'Archive Knowledge Base' : 'Activate Knowledge Base' }}</button>
                     <button mat-button class="theme_btn btn_primary" (click)="saveKnowledgeBase()">{{ isEditMode ? 'Update' : 'Save Changes' }}</button>
                 </div>
                 
@@ -76,12 +76,8 @@
                     </div>
 
                     <div class="kb-form-group">
-                        <label>Description <span class="required">*</span></label>
-                        <textarea placeholder="Brief description of the knowledge base" rows="4" formControlName="kbDescription"
-                                  [class.is-invalid]="kbForm.get('kbDescription')?.touched && kbForm.get('kbDescription')?.invalid"></textarea>
-                        <div class="kb-error" *ngIf="kbForm.get('kbDescription')?.touched && kbForm.get('kbDescription')?.hasError('required')">
-                            Description is required
-                        </div>
+                        <label>Description</label>
+                        <textarea placeholder="Brief description of the knowledge base" rows="4" formControlName="kbDescription"></textarea>
                     </div>
 
                     <div class="kb-form-group">
@@ -100,11 +96,14 @@
                     <h3 class="kb-panel-title">Brain & Knowledge</h3>
 
                     <!-- Upload dropzone when no files -->
-                    <div class="kb-upload-zone p-0" *ngIf="!kbBrainFiles.length" (click)="brainFileInput.click()">
+                    <div class="kb-upload-zone p-0" [class.is-invalid]="brainFileRequired" *ngIf="!kbBrainFiles.length" (click)="brainFileInput.click()">
                         <div class="kb-upload-inner">
-                            <span class="kb-upload-title">Upload Knowledge Base</span>
-                            <span class="kb-upload-hint">Accepted file types: Word Document, Excel, Powerpoint, Adobe PDF, Videos, Audio, Images, Markdown Files</span>
+                            <span class="kb-upload-title">Upload Knowledge Base <span class="required">*</span></span>
+                            <span class="kb-upload-hint">Accepted file types: Word Document, Excel, Powerpoint, Adobe PDF, Videos, Audio, Images, Markdown Files. Max 5MB per file.</span>
                         </div>
+                    </div>
+                    <div class="kb-error" *ngIf="brainFileRequired && !kbBrainFiles.length">
+                        Please upload at least one file
                     </div>
                     <input type="file" #brainFileInput multiple hidden (change)="onBrainFileSelected($event)" />
 
@@ -164,7 +163,7 @@
 <!-- Archive Knowledge Base Modal -->
 <div bsModal #archiveKBModal="bs-modal" class="modal fade bsModal ch_modal" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document" style="max-width:700px">
-        <div class="modal-content" style="max-height: calc(100vh - 150px) !important; overflow: auto;padding: 15px;">
+        <div class="modal-content" style="max-height: calc(100vh - 150px) !important; overflow:  hidden;padding: 15px;">
             <div class="modal-header">
                 <button type="button" mat-icon-button class="close" (click)="archiveKBModal.hide();">
                     <mat-icon>close</mat-icon>
@@ -186,13 +185,14 @@
                 </svg>
 
                 <h2 class="m-0 text-center">
-                  Are you sure you want to archive this Knowledge Base?
+                  Are you sure you want to {{ kbStatus === 'active' ? 'archive' : 'activate' }} this Knowledge Base?
                 </h2>
 
             </div>
             <div class="modal-footer justify-content-around">
                 <button mat-button type="button" class="theme_btn btn_outline_primary" (click)="archiveKBModal.hide();">Cancel</button>
-                <button mat-button type="submit" class="theme_btn btn_primary" (click)="archiveKBModal.hide(); archiveKB();">Archive</button>
+                <button *ngIf="kbStatus === 'active'" mat-button type="submit" class="theme_btn btn_primary" (click)="archiveKBModal.hide(); archiveKB();">Archive</button>
+                <button *ngIf="kbStatus !== 'active'" mat-button type="submit" class="theme_btn btn_primary" (click)="archiveKBModal.hide(); archiveKB();">Activate</button>
             </div>
         </div>
     </div>

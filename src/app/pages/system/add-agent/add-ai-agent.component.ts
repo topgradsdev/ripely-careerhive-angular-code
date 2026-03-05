@@ -20,7 +20,8 @@ export class AddAIAgentComponent implements OnInit {
   @ViewChild('removechat') removechat: ModalDirective;
   @ViewChild('removeTestChat') removeTestChat: ModalDirective;
   @ViewChild('chatBody') chatBody: ElementRef;
-  
+  @ViewChild('chatInputRef') chatInputRef: ElementRef;
+
   selectedSection = 'description';
 
   menuItems = [
@@ -72,6 +73,7 @@ export class AddAIAgentComponent implements OnInit {
   isEditMode = false;
   agentId: string | null = null;
   agentStats: any = {};
+  agentStatus: string = 'active';
 
   constructor(
     private fb: FormBuilder,
@@ -115,12 +117,16 @@ export class AddAIAgentComponent implements OnInit {
     const tag = this.agentTagInput.trim();
     if (tag && !this.agentTags.includes(tag)) {
       this.agentTags.push(tag);
+      this.tagsError = false;
     }
     this.agentTagInput = '';
   }
 
   removeTag(index: number) {
     this.agentTags.splice(index, 1);
+    if (this.submitted && this.agentTags.length < 1) {
+      this.tagsError = true;
+    }
   }
 
   onTagKeydown(event: KeyboardEvent) {
@@ -163,9 +169,10 @@ export class AddAIAgentComponent implements OnInit {
   submitted = false;
   personaError = false;
   knowledgeError = false;
+  tagsError = false;
 
   get descriptionValid(): boolean {
-    return this.agentForm?.valid ?? false;
+    return (this.agentForm?.valid ?? false) && this.agentTags.length >= 1;
   }
 
   get personalityValid(): boolean {
@@ -190,11 +197,15 @@ export class AddAIAgentComponent implements OnInit {
     this.submitted = true;
     this.personaError = !this.personalityValid;
     this.knowledgeError = !this.knowledgeValid;
+    this.tagsError = this.agentTags.length < 1;
 
     // Check Character Description
-    if (this.agentForm.invalid) {
+    if (this.agentForm.invalid || this.tagsError) {
       this.agentForm.markAllAsTouched();
       this.selectedSection = 'description';
+      if (this.tagsError) {
+        this.service.showMessage({ message: 'Please add at least one tag' });
+      }
       return;
     }
 
@@ -338,10 +349,10 @@ export class AddAIAgentComponent implements OnInit {
 
   personalityTraits = [
     { name: 'Flexibility', value: 3, highLabel: 'Very Adaptable', lowLabel: 'Rigid' },
-    { name: 'Meticulousness', value: 4, highLabel: 'Hyper-detailed', lowLabel: 'Carefree' },
-    { name: 'Agreeableness', value: 4, highLabel: 'Very Encouraging', lowLabel: 'Antagonistic' },
-    { name: 'Communications', value: 4, highLabel: 'Verbose', lowLabel: 'Terse' },
-    { name: 'Language Complexity', value: 4, highLabel: 'Highly Technical', lowLabel: 'Layman/Basic' }
+    { name: 'Meticulousness', value: 3, highLabel: 'Hyper-detailed', lowLabel: 'Carefree' },
+    { name: 'Agreeableness', value: 3, highLabel: 'Very Encouraging', lowLabel: 'Antagonistic' },
+    { name: 'Communications', value: 3, highLabel: 'Verbose', lowLabel: 'Terse' },
+    { name: 'Language Complexity', value: 3, highLabel: 'Highly Technical', lowLabel: 'Layman/Basic' }
   ];
 
   sliderLevels = [5, 4, 3, 2, 1];
@@ -349,7 +360,7 @@ export class AddAIAgentComponent implements OnInit {
   radarChartData: ChartData<'radar'> = {
     labels: ['Meticulousness', 'Communications', 'Flexibility', 'Agreeableness', ['Language', 'Complexity']],
     datasets: [{
-      data: [4, 4, 3, 4, 4],
+      data: [3, 3, 3, 3, 3],
       fill: true,
       backgroundColor: 'rgba(70, 75, 168, 0.2)',
       borderColor: '#464BA8',
@@ -487,6 +498,7 @@ export class AddAIAgentComponent implements OnInit {
   transcripts: any[] = [];
 
   transcriptMenuOpenIndex: number | null = null;
+  selectedTranscriptForDelete: any = null;
 
   toggleTranscriptMenu(index: number, event: Event) {
     event.stopPropagation();
@@ -495,6 +507,38 @@ export class AddAIAgentComponent implements OnInit {
 
   closeTranscriptMenu() {
     this.transcriptMenuOpenIndex = null;
+  }
+
+  openDeleteHistory(transcript: any) {
+    this.selectedTranscriptForDelete = transcript;
+    this.transcriptMenuOpenIndex = null;
+    this.removechat.show();
+  }
+
+  confirmDeleteHistory() {
+    if (this.agentId && this.selectedTranscriptForDelete?.session_id) {
+      this.service.resetChat({
+        agent_id: this.agentId,
+        session_id: this.selectedTranscriptForDelete.session_id
+      }).subscribe({
+        next: (res: any) => {
+          this.removechat.hide();
+          this.service.showMessage({ message: 'Chat history deleted successfully' });
+          this.selectedTranscriptForDelete = null;
+          this.loadTranscripts();
+        },
+        error: (err) => {
+          this.removechat.hide();
+          this.selectedTranscriptForDelete = null;
+          this.service.showMessage({
+            message: err.error?.errors?.msg || 'Failed to delete chat history',
+          });
+        }
+      });
+    } else {
+      this.removechat.hide();
+      this.selectedTranscriptForDelete = null;
+    }
   }
 
   copiedIndex: number | null = null;
@@ -605,12 +649,14 @@ export class AddAIAgentComponent implements OnInit {
         }
         this.cdr.detectChanges();
         this.scrollChatToBottom();
+        this.focusChatInput();
       },
       error: (err) => {
         this.testChatLoading = false;
         this.testChatMessages.push({ role: 'agent', message: err.error?.errors?.msg || 'Chat failed' });
         this.cdr.detectChanges();
         this.scrollChatToBottom();
+        this.focusChatInput();
       },
     });
   }
@@ -619,6 +665,7 @@ export class AddAIAgentComponent implements OnInit {
     this.testChatMessages = [];
     this.testChatSessionId = '';
     this.testChatInput = '';
+    this.focusChatInput();
   }
 
   private scrollChatToBottom() {
@@ -627,6 +674,12 @@ export class AddAIAgentComponent implements OnInit {
         this.chatBody.nativeElement.scrollTop = this.chatBody.nativeElement.scrollHeight;
       }
     }, 50);
+  }
+
+  private focusChatInput() {
+    setTimeout(() => {
+      this.chatInputRef?.nativeElement?.focus();
+    }, 100);
   }
 
   confirmResetTestChat() {
@@ -699,7 +752,29 @@ export class AddAIAgentComponent implements OnInit {
       next: (res: any) => {
         this.loaderService.hide();
         if (res.status === HttpResponseCode.SUCCESS) {
-          this.service.showMessage({ message: 'Agent archived successfully' });
+          // this.service.showMessage({ message: 'Agent archived successfully' });
+          this.router.navigate(['/admin/system/agent-list']);
+        } else {
+          this.service.showMessage({ message: res.msg });
+        }
+      },
+      error: (err) => {
+        this.loaderService.hide();
+        this.service.showMessage({
+          message: err.error?.errors?.msg || 'Something went wrong',
+        });
+      },
+    });
+  }
+
+  activateAgent() {
+    if (!this.agentId) return;
+    this.loaderService.show();
+    this.service.activateAgent({ id: this.agentId }).subscribe({
+      next: (res: any) => {
+        this.loaderService.hide();
+        if (res.status === HttpResponseCode.SUCCESS) {
+          this.service.showMessage({ message: 'Agent activated successfully' });
           this.router.navigate(['/admin/system/agent-list']);
         } else {
           this.service.showMessage({ message: res.msg });
@@ -752,6 +827,9 @@ export class AddAIAgentComponent implements OnInit {
         if (res.status === HttpResponseCode.SUCCESS && res.data) {
           const agent = res.data;
 
+          // Status
+          this.agentStatus = agent.status || 'active';
+
           // Character Description
           this.agentForm.patchValue({
             agentName: agent.name || '',
@@ -770,10 +848,10 @@ export class AddAIAgentComponent implements OnInit {
           if (agent.personality) {
             const p = agent.personality;
             this.personalityTraits[0].value = p.flexibility ?? 3;
-            this.personalityTraits[1].value = p.meticulousness ?? 4;
-            this.personalityTraits[2].value = p.agreeableness ?? 4;
-            this.personalityTraits[3].value = p.communications ?? 4;
-            this.personalityTraits[4].value = p.language_complexity ?? 4;
+            this.personalityTraits[1].value = p.meticulousness ?? 3;
+            this.personalityTraits[2].value = p.agreeableness ?? 3;
+            this.personalityTraits[3].value = p.communications ?? 3;
+            this.personalityTraits[4].value = p.language_complexity ?? 3;
             this.updateRadarChart();
           }
 

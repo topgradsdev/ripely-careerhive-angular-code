@@ -1749,6 +1749,7 @@ textarea.is-invalid {
 
 .personality-card {
   border: 1px solid #E5E5E5;
+  overflow: auto;
 }
 
 /* ── Persona Dropdown ── */
@@ -1826,16 +1827,18 @@ textarea.is-invalid {
 .personality-sliders {
   display: flex;
   justify-content: space-between;
+  flex-wrap: wrap;
   gap: 12px;
   padding: 10px 0 30px;
+  overflow: hidden;
 }
 
 .slider-column {
   display: flex;
   flex-direction: column;
   align-items: center;
-  flex: 1;
-  min-width: 0;
+  flex: 1 1 100px;
+  min-width: 100px;
 }
 
 .slider-title {
@@ -1952,8 +1955,10 @@ textarea.is-invalid {
 
 .radar-chart-container {
   max-width: 520px;
+  width: 100%;
   margin: 10px auto 0;
   padding: 0 20px;
+  box-sizing: border-box;
 }
 
 

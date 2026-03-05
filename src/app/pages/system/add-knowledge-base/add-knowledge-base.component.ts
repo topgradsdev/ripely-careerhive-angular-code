@@ -27,6 +27,8 @@ export class AddKnowledgeBaseComponent implements OnInit {
   kbBrainFiles: any[] = [];
   pendingBrainFiles: File[] = [];
   kbStats: any = {};
+  brainFileRequired = false;
+  kbStatus: string = 'active';
 
   constructor(
     private fb: FormBuilder,
@@ -39,6 +41,11 @@ export class AddKnowledgeBaseComponent implements OnInit {
 
   addTag() {
     const tag = this.kbTagInput.trim();
+    if (this.kbTags.length >= 5) {
+      this.service.showMessage({ message: 'Maximum 5 tags allowed' });
+      this.kbTagInput = '';
+      return;
+    }
     if (tag && !this.kbTags.includes(tag)) {
       this.kbTags.push(tag);
     }
@@ -90,7 +97,19 @@ export class AddKnowledgeBaseComponent implements OnInit {
   onBrainFileSelected(event: Event) {
     const input = event.target as HTMLInputElement;
     if (input?.files?.length) {
+      if (this.kbBrainFiles.length >= 1) {
+        this.service.showMessage({ message: 'Maximum 1 file allowed' });
+        input.value = '';
+        return;
+      }
+      this.brainFileRequired = false;
+      const maxSizeMB = 5;
       Array.from(input.files).forEach((file) => {
+        if (file.size > maxSizeMB * 1024 * 1024) {
+          this.service.showMessage({ message: `File size exceeds ${maxSizeMB}MB limit` });
+          input.value = '';
+          return;
+        }
         if (this.isEditMode && this.kbId) {
           // Edit mode: upload immediately
           const fd = new FormData();
@@ -99,8 +118,9 @@ export class AddKnowledgeBaseComponent implements OnInit {
 
           this.service.uploadKBBrainFile(fd).subscribe({
             next: (res: any) => {
+              console.log("resresres", res);
               if (res.status === HttpResponseCode.SUCCESS) {
-                this.kbBrainFiles.push(res.data || { file_name: file.name, file_url: '' });
+                this.kbBrainFiles = res.data.brain_files;
                 this.service.showMessage({ message: 'File uploaded successfully' });
               } else {
                 this.service.showMessage({ message: res.msg || 'Upload failed' });
@@ -125,7 +145,8 @@ export class AddKnowledgeBaseComponent implements OnInit {
   }
 
   saveKnowledgeBase() {
-    if (this.kbForm.invalid) {
+    this.brainFileRequired = this.kbBrainFiles.length === 0;
+    if (this.kbForm.invalid || this.brainFileRequired) {
       this.kbForm.markAllAsTouched();
       return;
     }
@@ -218,7 +239,7 @@ export class AddKnowledgeBaseComponent implements OnInit {
 
     this.kbForm = this.fb.group({
       kbName: ['', [Validators.required]],
-      kbDescription: ['', [Validators.required]],
+      kbDescription: [''],
       kbBrainUrl: [''],
       kbAdditionalPrompts: [''],
     });
@@ -247,7 +268,26 @@ export class AddKnowledgeBaseComponent implements OnInit {
     this.service.archiveKnowledgeBase({ id: this.kbId }).subscribe({
       next: (res: any) => {
         if (res.status === HttpResponseCode.SUCCESS) {
-          this.service.showMessage({ message: 'Knowledge Base archived successfully' });
+          // this.service.showMessage({ message: 'Knowledge Base archived successfully' });
+          this.router.navigate(['/admin/system/agent-list'], { queryParams: { tab: 1 } });
+        } else {
+          this.service.showMessage({ message: res.msg });
+        }
+      },
+      error: (err) => {
+        this.service.showMessage({
+          message: err.error?.errors?.msg || 'Something went wrong',
+        });
+      },
+    });
+  }
+
+  activateKB() {
+    if (!this.kbId) return;
+    this.service.activateKnowledgeBase({ id: this.kbId }).subscribe({
+      next: (res: any) => {
+        if (res.status === HttpResponseCode.SUCCESS) {
+          this.service.showMessage({ message: 'Knowledge Base activated successfully' });
           this.router.navigate(['/admin/system/agent-list'], { queryParams: { tab: 1 } });
         } else {
           this.service.showMessage({ message: res.msg });
@@ -266,6 +306,8 @@ export class AddKnowledgeBaseComponent implements OnInit {
       next: (res: any) => {
         if (res.status === HttpResponseCode.SUCCESS && res.data) {
           const kb = res.data;
+
+          this.kbStatus = kb.status || 'active';
 
           this.kbForm.patchValue({
             kbName: kb.name || '',
