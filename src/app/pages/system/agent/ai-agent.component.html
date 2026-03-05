@@ -184,10 +184,10 @@
                                 <h3 class="kb-title">{{ card.name }}</h3>
 
                                 <p class="kb-desc">
-                                {{ card.description }}
+                                {{ card.description?.length > 180 ? (card.description | slice:0:180) + '...' : card.description }}
                                 </p>
 
-                                <div class="kb-skills mt-4">
+                                <div class="kb-skills">
                                 <span class="kb-skill" *ngFor="let tag of card.tags">
                                     {{ tag }}
                                 </span>
@@ -258,7 +258,7 @@
                 <div class="kb-container">
                     <div class="kb-card" *ngFor="let card of archivedCards">
                         <h3 class="kb-title">{{ card.name }}</h3>
-                        <p class="kb-desc">{{ card.description }}</p>
+                        <p class="kb-desc">{{ card.description?.length > 180 ? (card.description | slice:0:180) + '...' : card.description }}</p>
                         <div class="kb-skills mt-4">
                             <span class="kb-skill" *ngFor="let tag of card.tags">{{ tag }}</span>
                         </div>
