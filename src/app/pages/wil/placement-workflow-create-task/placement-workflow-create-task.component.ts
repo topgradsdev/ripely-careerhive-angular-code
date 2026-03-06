@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import {HttpResponseCode} from '../../../shared/enum';
 import { TopgradserviceService } from '../../../topgradservice.service';
@@ -14,6 +14,11 @@ import { FileIconService } from '../../../shared/file-icon.service';
   styleUrls: ['./placement-workflow-create-task.component.scss']
 })
 export class PlacementWorkflowCreateTaskComponent implements OnInit {
+  @ViewChild('closeTaskPopup') closeTaskPopup: any;
+  @ViewChild('addAgentModal') addAgentModal: any;
+  @ViewChild('removeAgentModal') removeAgentModal: any;
+  @ViewChild('addSandboxModal') addSandboxModal: any;
+  @ViewChild('removeSandboxModal') removeSandboxModal: any;
   modules = {
     toolbar: [
       ['bold', 'italic', 'underline', 'strike'],        
@@ -57,70 +62,26 @@ export class PlacementWorkflowCreateTaskComponent implements OnInit {
   }
   // AI Agent tab system
   aiAgentActiveTab = 0;
-  aiAgentTabs = [
-    {name: 'Task Basics', icon: '\uD83D\uDCC4'},
-    {name: 'Task Context', icon: '\uD83E\uDD16'},
-    {name: 'Sandbox Config', icon: '\uD83D\uDEE0'},
-    {name: 'Validation', icon: '\u2611\uFE0F'},
-    {name: 'Guardrails', icon: '\uD83C\uDFE5'}
-  ];
+  aiAgentTabs: any[] = [];
 
   // Tab 2: Task Context - Agent Management
-  availableAgentList: any[] = [
-    { _id: 'agent_jax', name: 'Jax', title: 'Senior Developer' },
-    { _id: 'agent_sarah', name: 'Sarah', title: 'Lead BA' },
-    { _id: 'agent_albert', name: 'Albert', title: 'QA Engineer' },
-    { _id: 'agent_maria', name: 'Maria', title: 'Product Owner' },
-    { _id: 'agent_chen', name: 'Chen', title: 'Data Analyst' }
-  ];
-  taskAgents: any[] = [
-    {
-      _id: 'agent_jax', name: 'Jax', title: 'Senior Developer',
-      agent_output: 'preset', initiation_message: 'Hello! I\'m Jax, your senior developer. Let\'s discuss the system architecture.',
-      subsequent_messages: ['Can you elaborate on the database design?'],
-      action_on_final: 'repeat', select_llm: '', agenda: '', hidden_facts: '',
-      max_responses: null, max_tokens: null,
-      enable_guardrails: false, guardrail_max_tokens: null, guardrail_max_responses: null,
-      submission_on_exhaustion: '', message_on_exhaustion: ''
-    },
-    {
-      _id: 'agent_sarah', name: 'Sarah', title: 'Lead BA',
-      agent_output: 'preset', initiation_message: 'Hi there! I\'m Sarah, the Lead Business Analyst. Let\'s review the requirements together.',
-      subsequent_messages: [],
-      action_on_final: 'repeat', select_llm: '', agenda: '', hidden_facts: '',
-      max_responses: 5, max_tokens: 500,
-      enable_guardrails: true, guardrail_max_tokens: 500, guardrail_max_responses: 5,
-      submission_on_exhaustion: 'auto_submit', message_on_exhaustion: 'Your progress has been saved, but we couldn\'t complete the full interaction or validation.\n\nPlease summarize your key points or submit what you have as your artefact to proceed to the next task.'
-    },
-    {
-      _id: 'agent_albert', name: 'Albert', title: 'QA Engineer',
-      agent_output: 'ai', initiation_message: 'Hey! I\'m Albert from QA. Let me test your understanding of quality processes.',
-      subsequent_messages: [],
-      action_on_final: 'roleplay', select_llm: 'gpt-4', agenda: 'Wants automation but fears job cuts', hidden_facts: 'No audit trail in current system',
-      max_responses: 10, max_tokens: 1000,
-      enable_guardrails: false, guardrail_max_tokens: null, guardrail_max_responses: null,
-      submission_on_exhaustion: '', message_on_exhaustion: ''
-    }
-  ];
-  selectedTaskAgentIndex = 1;
+  availableAgentList: any[] = [];
+  taskAgents: any[] = [];
+  selectedTaskAgentIndex = 0;
   addAgentSelectedId: string | null = null;
   removeAgentIndex: number | null = null;
 
   // Tab 3: Sandbox Config
-  taskSandboxes: any[] = [
-    {
-      _id: 'sql_terminal', name: 'SQL Terminal', allow_grading: true,
-      validation_mode: 'ai_review', select_validator: 'multiple_agents',
-      validator_agents: ['agent_sarah', 'agent_jax'],
-      grading_rubric: 'Evaluate SQL query correctness, optimization, and proper use of JOINs.',
-      additional_documents: [], skills_to_verify: ['SQL', 'Database Design']
-    },
-    {
-      _id: 'document_editor', name: 'Document Editor', allow_grading: false,
-      validation_mode: '', select_validator: '',
-      validator_agents: [],
-      grading_rubric: '', additional_documents: [], skills_to_verify: []
-    }
+  taskSandboxes: any[] = [];
+  validationModeOptions = [
+    { value: 'ai_review', label: 'AI Review' },
+    { value: 'keyword_match', label: 'Keyword Match' },
+    { value: 'json_schema', label: 'JSON Schema' },
+    { value: 'keyword_syntax_constraint', label: 'Keyword/Syntax Constraint' },
+    { value: 'unit_test_script', label: 'Unit Test Script' },
+    { value: 'sql_query_result_match', label: 'SQL Query Result Match' },
+    { value: 'regex_pattern_match', label: 'Regex Pattern Match' },
+    { value: 'performance_benchmark', label: 'Performance Benchmark' }
   ];
   selectedSandboxIndex = 0;
   addSandboxSelected: string | null = null;
@@ -522,6 +483,13 @@ export class PlacementWorkflowCreateTaskComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.aiAgentTabs = [
+      {name: 'Task Basics', icon:  '📋' },
+      {name: 'Task Context', icon: `🤖`},
+      {name: 'Sandbox Config', icon: `🛠️`},
+      {name: 'Validation', icon: `☑️`},
+      {name: 'Guardrails', icon: `🛡️`}
+    ];
     this.activatedRoute.paramMap.subscribe((params: ParamMap) => {
       this.placementId = params.get('placement_id'); 
     });
@@ -691,6 +659,7 @@ export class PlacementWorkflowCreateTaskComponent implements OnInit {
   }
 
   onCancelCreateTask() {
+    this.closeTaskPopup.hide();
     this.createTask.reset();
     let URL = '';
     if (this.Projecttype == 'project') {
@@ -1137,11 +1106,9 @@ export class PlacementWorkflowCreateTaskComponent implements OnInit {
   }
 
   loadAvailableAgents() {
-    this.service.getAgentList({}).subscribe((response: any) => {
+    this.service.getAgentList({ search: '', page: 1, limit: 100, status: 'active' }).subscribe((response: any) => {
       if (response.status == HttpResponseCode.SUCCESS) {
-        this.availableAgentList = response.result || [];
-      } else {
-        this.availableAgentList = response.result || response.data || [];
+        this.availableAgentList = response.data || response.result || [];
       }
     }, () => {
       this.availableAgentList = [];
@@ -1174,6 +1141,12 @@ export class PlacementWorkflowCreateTaskComponent implements OnInit {
     });
     this.selectedTaskAgentIndex = this.taskAgents.length - 1;
     this.addAgentSelectedId = null;
+    this.addAgentModal.hide();
+  }
+
+  confirmRemoveAgent() {
+    this.removeAgentFromTask(this.removeAgentIndex);
+    this.removeAgentModal.hide();
   }
 
   removeAgentFromTask(index: number) {
@@ -1212,10 +1185,27 @@ export class PlacementWorkflowCreateTaskComponent implements OnInit {
       validator_agents: [],
       grading_rubric: '',
       additional_documents: [],
-      skills_to_verify: []
+      skills_to_verify: [],
+      forbidden_keywords: [],
+      required_keywords: [],
+      master_query: '',
+      unit_test_script: '',
+      regex_pattern: '',
+      time_limit: null,
+      memory_limit: null
     });
     this.selectedSandboxIndex = this.taskSandboxes.length - 1;
     this.addSandboxSelected = null;
+    this.addSandboxModal.hide();
+  }
+
+  confirmAddSandbox() {
+    this.addSandboxToTask();
+  }
+
+  confirmRemoveSandbox() {
+    this.removeSandboxFromTask(this.removeSandboxIndex);
+    this.removeSandboxModal.hide();
   }
 
   removeSandboxFromTask(index: number) {
