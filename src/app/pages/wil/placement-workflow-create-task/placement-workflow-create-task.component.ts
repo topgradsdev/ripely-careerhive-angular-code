@@ -92,10 +92,7 @@ export class PlacementWorkflowCreateTaskComponent implements OnInit {
   selectedSandboxIndex = 0;
   addSandboxSelected: string | null = null;
   removeSandboxIndex: number | null = null;
-  sandboxOptions = [
-    { _id: 'sql_terminal', name: 'SQL Terminal' },
-    { _id: 'document_editor', name: 'Document Editor' }
-  ];
+  sandboxOptions: any[] = [];
 
   createTaskPayload = [
     {
@@ -638,6 +635,7 @@ export class PlacementWorkflowCreateTaskComponent implements OnInit {
 
     if (this.selectedCompletionCriteria === this.completionCriteria.workOnVirtualLabs) {
       this.loadAvailableAgents();
+      this.loadSandboxOptions();
       this.aiAgentActiveTab = 0;
     }
 
@@ -921,6 +919,7 @@ export class PlacementWorkflowCreateTaskComponent implements OnInit {
         if (data.completion_criteria === this.completionCriteria.workOnVirtualLabs) {
           this.aiAgentActiveTab = 0;
           this.loadAvailableAgents();
+          this.loadSandboxOptions();
           if (data.agents && Array.isArray(data.agents)) {
             this.taskAgents = data.agents.map((a: any) => ({
               _id: a.agent_id,
@@ -1318,6 +1317,16 @@ export class PlacementWorkflowCreateTaskComponent implements OnInit {
     });
   }
 
+  loadSandboxOptions() {
+    this.service.getSandboxList({ search: '', page: 1, limit: 100, status: 'active' }).subscribe((response: any) => {
+      if (response.status == HttpResponseCode.SUCCESS) {
+        this.sandboxOptions = response.data || response.result || [];
+      }
+    }, () => {
+      this.sandboxOptions = [];
+    });
+  }
+
   addAgentToTask() {
     if (!this.addAgentSelectedId) return;
     const agent = this.availableAgentList.find(a => a._id === this.addAgentSelectedId);
@@ -1354,11 +1363,23 @@ export class PlacementWorkflowCreateTaskComponent implements OnInit {
   }
 
   removeAgentFromTask(index: number) {
+    const removedAgent = this.taskAgents[index];
     this.taskAgents.splice(index, 1);
     if (this.selectedTaskAgentIndex >= this.taskAgents.length) {
       this.selectedTaskAgentIndex = Math.max(0, this.taskAgents.length - 1);
     }
     this.removeAgentIndex = null;
+
+    // Clean up removed agent from sandbox validator_agents
+    if (removedAgent?._id) {
+      const remainingAgentIds = this.taskAgents.map(a => a._id);
+      for (const sb of this.taskSandboxes) {
+        if (sb.validator_agents?.length) {
+          sb.validator_agents = sb.validator_agents.filter((id: string) => remainingAgentIds.includes(id));
+        }
+      }
+    }
+
     this.revalidateIfNeeded();
   }
 
@@ -1378,6 +1399,7 @@ export class PlacementWorkflowCreateTaskComponent implements OnInit {
 
   addSandboxToTask() {
     if (!this.addSandboxSelected) return;
+    if (this.taskSandboxes.length >= 4) return;
     const sandbox = this.sandboxOptions.find(s => s._id === this.addSandboxSelected);
     if (!sandbox) return;
     if (this.taskSandboxes.find(s => s._id === this.addSandboxSelected)) return;
@@ -1429,6 +1451,24 @@ export class PlacementWorkflowCreateTaskComponent implements OnInit {
 
   trackByIndex(index: number) {
     return index;
+  }
+
+  addSkillTag = (term: string) => {
+    const current = this.taskSandboxes[this.selectedSandboxIndex]?.skills_to_verify || [];
+    if (current.length >= 10) return null;
+    return term;
+  }
+
+  addForbiddenKeywordTag = (term: string) => {
+    const current = this.taskSandboxes[this.selectedSandboxIndex]?.forbidden_keywords || [];
+    if (current.length >= 5) return null;
+    return term;
+  }
+
+  addRequiredKeywordTag = (term: string) => {
+    const current = this.taskSandboxes[this.selectedSandboxIndex]?.required_keywords || [];
+    if (current.length >= 5) return null;
+    return term;
   }
 
 }

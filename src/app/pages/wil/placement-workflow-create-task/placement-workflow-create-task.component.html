@@ -1909,7 +1909,7 @@
                                     <div class="ai-agent-top-row">
                                         <div>
                                             <h4 class="ai-agent-name">{{ taskSandboxes[selectedSandboxIndex].name }}</h4>
-                                            <span class="ai-agent-title">[placeholder]</span>
+                                            <!-- <span class="ai-agent-title">[placeholder]</span> -->
                                         </div>
                                         <span class="ai-note-text">Sandboxes can be removed in the Sandbox Config</span>
                                     </div>
@@ -1973,7 +1973,7 @@
                                                 <div class="ai-config-label"><strong>Skills to Verify</strong></div>
                                                 <div class="ai-config-control">
                                                     <ng-select [(ngModel)]="taskSandboxes[selectedSandboxIndex].skills_to_verify" [ngModelOptions]="{standalone: true}" (ngModelChange)="revalidateIfNeeded()"
-                                                        [multiple]="true" [addTag]="true" [maxSelectedItems]="10" placeholder="Search and Add Skill (max 10)">
+                                                        [multiple]="true" [addTag]="addSkillTag" [maxSelectedItems]="10" placeholder="Search and Add Skill (max 10)">
                                                     </ng-select>
                                                 </div>
                                             </div>
@@ -2007,7 +2007,7 @@
                                                 <div class="ai-config-label"><strong>Forbidden Keywords</strong></div>
                                                 <div class="ai-config-control">
                                                     <ng-select [(ngModel)]="taskSandboxes[selectedSandboxIndex].forbidden_keywords" [ngModelOptions]="{standalone: true}" (ngModelChange)="revalidateIfNeeded()"
-                                                        [multiple]="true" [addTag]="true" [maxSelectedItems]="5" placeholder="Search and Add Syntax (max 5)">
+                                                        [multiple]="true" [addTag]="addForbiddenKeywordTag" [maxSelectedItems]="5" placeholder="Search and Add Syntax (max 5)">
                                                     </ng-select>
                                                 </div>
                                             </div>
@@ -2015,7 +2015,7 @@
                                                 <div class="ai-config-label"><strong>Required Keywords</strong></div>
                                                 <div class="ai-config-control">
                                                     <ng-select [(ngModel)]="taskSandboxes[selectedSandboxIndex].required_keywords" [ngModelOptions]="{standalone: true}" (ngModelChange)="revalidateIfNeeded()"
-                                                        [multiple]="true" [addTag]="true" [maxSelectedItems]="5" placeholder="Search and Add Syntax (max 5)">
+                                                        [multiple]="true" [addTag]="addRequiredKeywordTag" [maxSelectedItems]="5" placeholder="Search and Add Syntax (max 5)">
                                                     </ng-select>
                                                 </div>
                                             </div>
@@ -2164,7 +2164,7 @@
                                             <div class="ai-task-config-row">
                                                 <div class="ai-config-label"><strong>Message on Exhaustion</strong></div>
                                                 <div class="ai-config-control">
-                                                    <textarea class="form-control" rows="5" placeholder="progress has been saved, but we couldn't complete the full interaction or validation. Please summarize your key points or submit what you have as your artefact to proceed to the next task."
+                                                    <textarea class="form-control" rows="5" placeholder="We've reached the token limit for this task attempt. Your progress has been saved, but we couldn't complete the full interaction or validation. Please summarize your key points or submit what you have as your artifact to proceed to the next task."
                                                         [(ngModel)]="taskAgents[selectedTaskAgentIndex].message_on_exhaustion" [ngModelOptions]="{standalone: true}"></textarea>
                                                 </div>
                                             </div>

@@ -61,57 +61,14 @@
         </div>
     </div>
 
-    <!-- Search and Filters -->
-    <div class="d-flex align-items-center justify-content-between flex-wrap mb-4 gap-3">
-        <div class="d-inline-flex align-items-center">
-            <div class="search-container">
-                <svg class="icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
-                    <path d="M9.16667 15.8333C12.8486 15.8333 15.8333 12.8486 15.8333 9.16667C15.8333 5.48477 12.8486 2.5 9.16667 2.5C5.48477 2.5 2.5 5.48477 2.5 9.16667C2.5 12.8486 5.48477 15.8333 9.16667 15.8333Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                    <path d="M17.5 17.5L13.875 13.875" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                </svg>
-                <input type="text" class="form-control" placeholder="Search Keywords" [(ngModel)]="searchText" (ngModelChange)="onSearchChange()">
-            </div>
-            <button mat-button class="theme_btn btn_primary ml-4" data-toggle="modal" data-target="#sandboxFilter">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="23" viewBox="0 0 24 23" fill="none">
-                    <path d="M22 3.10669H2L10 11.9629V18.0854L14 19.9578V11.9629L22 3.10669Z" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-                </svg> Filters
-            </button>
-        </div>
-        <div *ngIf="filterCategory || filterStatus" class="d-inline-flex align-items-center gap-2">
-            <span class="filter-tag" *ngIf="filterCategory">{{ filterCategory }} <span class="remove-tag" (click)="filterCategory=''; onFilterChange()">&times;</span></span>
-            <span class="filter-tag" *ngIf="filterStatus">{{ filterStatus }} <span class="remove-tag" (click)="filterStatus=''; onFilterChange()">&times;</span></span>
-            <a class="text_primary clear-all-link" (click)="clearFilters()">Clear All</a>
-        </div>
-    </div>
-
-    <!-- Filter Modal -->
-    <div class="modal fade bsModal ch_modal filter_modals" id="sandboxFilter" tabindex="-1" role="dialog">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header d-flex justify-content-between">
-                    <button mat-icon-button #closeFilterModal class="close" data-dismiss="modal" aria-label="Close">
-                        <mat-icon>close</mat-icon>
-                    </button>
-                    <h2 class="modal-title">Filters</h2>
-                    <button mat-button class="theme_btn btn_primary" (click)="onFilterChange()" data-dismiss="modal">Apply Filter</button>
-                </div>
-                <div class="modal-body pt-3 pb-5">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label class="filter_title">Category</label>
-                                <ng-select [items]="categoryOptions" bindLabel="label" bindValue="value" [(ngModel)]="filterCategory" placeholder="All Categories" [clearable]="true"></ng-select>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label class="filter_title">Status</label>
-                                <ng-select [items]="statusOptions" bindLabel="label" bindValue="value" [(ngModel)]="filterStatus" placeholder="All Status" [clearable]="true"></ng-select>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+    <!-- Search Bar -->
+    <div class="d-flex justify-content-end mb-4">
+        <div class="search-container">
+            <svg class="icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                <path d="M9.16667 15.8333C12.8486 15.8333 15.8333 12.8486 15.8333 9.16667C15.8333 5.48477 12.8486 2.5 9.16667 2.5C5.48477 2.5 2.5 5.48477 2.5 9.16667C2.5 12.8486 5.48477 15.8333 9.16667 15.8333Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                <path d="M17.5 17.5L13.875 13.875" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+            <input type="text" class="form-control" placeholder="Search Sandboxes" [(ngModel)]="searchText" (ngModelChange)="onSearchChange()">
         </div>
     </div>
 
@@ -127,8 +84,8 @@
             <thead>
                 <tr>
                     <th>Name</th>
-                    <th>Category</th>
                     <th>Language</th>
+                    <th>Editor Mode</th>
                     <th>Status</th>
                     <th>Created Date</th>
                     <th>Actions</th>
@@ -137,10 +94,8 @@
             <tbody>
                 <tr *ngFor="let sandbox of sandboxes">
                     <td>{{ sandbox.name }}</td>
-                    <td>
-                        <span class="category-badge" *ngIf="sandbox.category">{{ sandbox.category }}</span>
-                    </td>
                     <td>{{ sandbox.language }}</td>
+                    <td>{{ sandbox.editor_mode }}</td>
                     <td>
                         <span class="status-badge" [ngClass]="{'active': sandbox.status === 'active', 'inactive': sandbox.status === 'inactive'}">
                             {{ sandbox.status }}
