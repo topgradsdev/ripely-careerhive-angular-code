@@ -39,8 +39,6 @@
     "@swimlane/dragula": "^3.8.0",
     "@swimlane/ngx-dnd": "9.0.0",
     "@tinymce/tinymce-angular": "^8.0.1",
-    "ag-charts-angular": "^13.0.1",
-    "ag-charts-community": "^13.0.1",
     "ag-grid-angular": "^35.0.0",
     "ag-grid-community": "^35.0.0",
     "bootstrap": "^4.6.2",
