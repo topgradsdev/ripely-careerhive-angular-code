@@ -19,6 +19,8 @@ export class PlacementWorkflowCreateTaskComponent implements OnInit {
   @ViewChild('removeAgentModal') removeAgentModal: any;
   @ViewChild('addSandboxModal') addSandboxModal: any;
   @ViewChild('removeSandboxModal') removeSandboxModal: any;
+  @ViewChild('destructiveTypeChangeModal') destructiveTypeChangeModal: any;
+  pendingCompletionCriteria: string | null = null;
   modules = {
     toolbar: [
       ['bold', 'italic', 'underline', 'strike'],        
@@ -58,11 +60,15 @@ export class PlacementWorkflowCreateTaskComponent implements OnInit {
     getStaffAttachesDocuments: 'Staff Attaches Documents for Student Review',
     getStudentUploadsDocument:'Student Uploads Document',
     getStudentUploadsVideo:'Submit Video (Upload URL)',
-    meetAIAgent: 'Meet AI Agent'
+    workOnVirtualLabs: 'Work on Virtual Labs'
   }
   // AI Agent tab system
   aiAgentActiveTab = 0;
   aiAgentTabs: any[] = [];
+  vlErrors: { message: string; tab: number }[] = [];
+  vlTabErrors: { [tab: number]: string[] } = {};
+  vlSubmitted = false;
+  isPublished = false;
 
   // Tab 2: Task Context - Agent Management
   availableAgentList: any[] = [];
@@ -394,7 +400,7 @@ export class PlacementWorkflowCreateTaskComponent implements OnInit {
       }
     },
     {
-      completionCriteria: 'Meet AI Agent',
+      completionCriteria: 'Work on Virtual Labs',
       formElement : {
         name: null,
         completion_criteria: null,
@@ -550,6 +556,11 @@ export class PlacementWorkflowCreateTaskComponent implements OnInit {
       notification_followUp_voice_mail_text_message: new FormControl(null)
 
     });
+    // Live re-validation: clear resolved errors as user types
+    this.createTask.valueChanges.subscribe(() => {
+      this.revalidateIfNeeded();
+    });
+
     this.buttonText = 'Create Task';
     if (this.taskId) {
       this.buttonText = 'Update Task';
@@ -576,7 +587,38 @@ export class PlacementWorkflowCreateTaskComponent implements OnInit {
  
 
   onChangeCompletionCriteria(event) {
-    console.log("event", event)
+    // Destructive type change: switching away from Virtual Labs with existing data
+    const wasVirtualLabs = this.selectedCompletionCriteria === this.completionCriteria.workOnVirtualLabs;
+    const isVirtualLabs = event === this.completionCriteria.workOnVirtualLabs;
+    if (wasVirtualLabs && !isVirtualLabs && (this.taskAgents.length > 0 || this.taskSandboxes.length > 0)) {
+      this.pendingCompletionCriteria = event;
+      this.createTask.get('completion_criteria').setValue(this.completionCriteria.workOnVirtualLabs, { emitEvent: false });
+      this.destructiveTypeChangeModal.show();
+      return;
+    }
+    this.applyCompletionCriteriaChange(event);
+  }
+
+  confirmDestructiveTypeChange() {
+    this.destructiveTypeChangeModal.hide();
+    this.taskAgents = [];
+    this.taskSandboxes = [];
+    this.selectedTaskAgentIndex = 0;
+    this.selectedSandboxIndex = 0;
+    this.clearVlErrors();
+    if (this.pendingCompletionCriteria) {
+      this.createTask.get('completion_criteria').setValue(this.pendingCompletionCriteria, { emitEvent: false });
+      this.applyCompletionCriteriaChange(this.pendingCompletionCriteria);
+      this.pendingCompletionCriteria = null;
+    }
+  }
+
+  cancelDestructiveTypeChange() {
+    this.destructiveTypeChangeModal.hide();
+    this.pendingCompletionCriteria = null;
+  }
+
+  applyCompletionCriteriaChange(event) {
     this.selectedCompletionCriteria = event;
     this.createTask.get('required_activity').setValue(true);
     this.createTask.get('notification_completion_send_email').setValue(false);
@@ -594,7 +636,7 @@ export class PlacementWorkflowCreateTaskComponent implements OnInit {
     //   } 
     // }
 
-    if (this.selectedCompletionCriteria === this.completionCriteria.meetAIAgent) {
+    if (this.selectedCompletionCriteria === this.completionCriteria.workOnVirtualLabs) {
       this.loadAvailableAgents();
       this.aiAgentActiveTab = 0;
     }
@@ -671,17 +713,19 @@ export class PlacementWorkflowCreateTaskComponent implements OnInit {
   }
 
   onCreateTask() {
-    // For Meet AI Agent, skip standard form validation (uses its own data)
-    if (this.selectedCompletionCriteria !== this.completionCriteria.meetAIAgent) {
+    // For Work on Virtual Labs, skip standard form validation (uses its own data)
+    if (this.selectedCompletionCriteria !== this.completionCriteria.workOnVirtualLabs) {
       if (this.createTask.invalid) {
         this.createTask.markAllAsTouched();
         return;
       }
     } else {
-      // Validate at least a name is provided
-      if (!this.createTask.get('name')?.value) {
-        this.service.showMessage({message: 'Please enter a task name'});
-        this.aiAgentActiveTab = 0;
+      // Validate Work on Virtual Labs fields
+      this.vlSubmitted = true;
+      this.vlErrors = this.validateVirtualLabs();
+      this.vlTabErrors = this.groupErrorsByTab(this.vlErrors);
+      if (this.vlErrors.length > 0) {
+        this.aiAgentActiveTab = this.vlErrors[0].tab;
         return;
       }
     }
@@ -717,8 +761,8 @@ export class PlacementWorkflowCreateTaskComponent implements OnInit {
       }
     });
 
-    // For Meet AI Agent, attach agents/sandboxes/guardrails data
-    if (this.selectedCompletionCriteria === this.completionCriteria.meetAIAgent && payload.length) {
+    // For Work on Virtual Labs, attach agents/sandboxes/guardrails data
+    if (this.selectedCompletionCriteria === this.completionCriteria.workOnVirtualLabs && payload.length) {
       payload[0].formElement['agents'] = this.taskAgents.map(agent => ({
         agent_id: agent._id,
         agent_output: agent.agent_output,
@@ -748,7 +792,14 @@ export class PlacementWorkflowCreateTaskComponent implements OnInit {
           validator_agents: sb.validator_agents,
           grading_rubric: sb.grading_rubric,
           additional_documents: sb.additional_documents,
-          skills_to_verify: sb.skills_to_verify
+          skills_to_verify: sb.skills_to_verify,
+          forbidden_keywords: sb.forbidden_keywords,
+          required_keywords: sb.required_keywords,
+          master_query: sb.master_query,
+          unit_test_script: sb.unit_test_script,
+          regex_pattern: sb.regex_pattern,
+          time_limit: sb.time_limit,
+          memory_limit: sb.memory_limit
         }
       }));
     }
@@ -864,9 +915,10 @@ export class PlacementWorkflowCreateTaskComponent implements OnInit {
         });
         this.media.documents = data?.['documents'];
         this.selectedCompletionCriteria = data.completion_criteria;
+        this.isPublished = data?.is_published || false;
 
-        // Load Meet AI Agent data in edit mode
-        if (data.completion_criteria === this.completionCriteria.meetAIAgent) {
+        // Load Work on Virtual Labs data in edit mode
+        if (data.completion_criteria === this.completionCriteria.workOnVirtualLabs) {
           this.aiAgentActiveTab = 0;
           this.loadAvailableAgents();
           if (data.agents && Array.isArray(data.agents)) {
@@ -900,7 +952,14 @@ export class PlacementWorkflowCreateTaskComponent implements OnInit {
               validator_agents: sb.validation?.validator_agents || [],
               grading_rubric: sb.validation?.grading_rubric || '',
               additional_documents: sb.validation?.additional_documents || [],
-              skills_to_verify: sb.validation?.skills_to_verify || []
+              skills_to_verify: sb.validation?.skills_to_verify || [],
+              forbidden_keywords: sb.validation?.forbidden_keywords || [],
+              required_keywords: sb.validation?.required_keywords || [],
+              master_query: sb.validation?.master_query || '',
+              unit_test_script: sb.validation?.unit_test_script || '',
+              regex_pattern: sb.validation?.regex_pattern || '',
+              time_limit: sb.validation?.time_limit || null,
+              memory_limit: sb.validation?.memory_limit || null
             }));
           }
         }
@@ -1099,7 +1158,151 @@ export class PlacementWorkflowCreateTaskComponent implements OnInit {
       return youtubeRegex.test(url) || vimeoRegex.test(url);
     }
 
-  // ===== Meet AI Agent Methods =====
+  // ===== Work on Virtual Labs Methods =====
+
+  validateVirtualLabs(): { message: string; tab: number }[] {
+    const errors: { message: string; tab: number }[] = [];
+    const nameVal = this.createTask.get('name')?.value?.trim() || '';
+    const descVal = this.createTask.get('description')?.value?.trim() || '';
+
+    // === Tab 0: Basic Info ===
+    if (!nameVal || nameVal.length < 3) {
+      errors.push({ message: 'Title is required (min 3 characters).', tab: 0 });
+    }
+    if (!descVal || descVal.length < 3) {
+      errors.push({ message: 'Description is required (min 3 characters).', tab: 0 });
+    }
+    if (this.createTask.get('required_activity')?.value === null || this.createTask.get('required_activity')?.value === undefined) {
+      errors.push({ message: 'Please select a Required Activity.', tab: 0 });
+    }
+
+    // === Tab 1: Task Context ===
+    if (this.taskAgents.length === 0) {
+      errors.push({ message: 'No Agents Assigned: Minimum 1 agent required.', tab: 1 });
+    } else {
+      for (const agent of this.taskAgents) {
+        if (!agent.initiation_message?.trim()) {
+          errors.push({ message: `Missing Initiation Message for agent "${agent.name}".`, tab: 1 });
+        }
+        if (agent.agent_output === 'preset') {
+          if (!agent.subsequent_messages || agent.subsequent_messages.length === 0) {
+            errors.push({ message: `Preset Mode requires at least 1 predefined message for "${agent.name}".`, tab: 1 });
+          }
+        }
+        if (agent.agent_output === 'ai' || agent.action_on_final === 'roleplay') {
+          if (!agent.select_llm) {
+            errors.push({ message: `Missing AI Config: Please select an LLM for "${agent.name}".`, tab: 1 });
+          }
+          if (!agent.max_tokens) {
+            errors.push({ message: `Missing AI Config: Please define token limits for "${agent.name}".`, tab: 1 });
+          }
+          if (!agent.max_responses) {
+            errors.push({ message: `Missing AI Config: Please define response limits for "${agent.name}".`, tab: 1 });
+          }
+          if (agent.agent_output === 'ai' && !agent.agenda?.trim()) {
+            errors.push({ message: `Missing Agenda: AI Mode requires task context for "${agent.name}".`, tab: 1 });
+          }
+        }
+      }
+    }
+
+    // === Tab 2: Sandbox Config ===
+    if (this.taskSandboxes.length === 0) {
+      errors.push({ message: 'Sandbox count invalid: Please assign at least 1 sandbox.', tab: 2 });
+    } else if (this.taskSandboxes.length > 4) {
+      errors.push({ message: 'Sandbox count invalid: Maximum 4 sandboxes allowed.', tab: 2 });
+    }
+
+    // === Tab 3: Validation ===
+    for (const sb of this.taskSandboxes) {
+      if (!sb.validation_mode) {
+        errors.push({ message: `Please select a validation mode for sandbox "${sb.name}".`, tab: 3 });
+        continue;
+      }
+      if (sb.validation_mode === 'ai_review') {
+        if (!sb.select_validator) {
+          errors.push({ message: `Missing Validator: Please select an agent to grade "${sb.name}".`, tab: 3 });
+        }
+        if ((sb.select_validator === 'multiple_agents' || sb.select_validator === 'single_agent') && (!sb.validator_agents || sb.validator_agents.length === 0)) {
+          errors.push({ message: `Missing Validator: Please select validator agents for "${sb.name}".`, tab: 3 });
+        }
+        if (!sb.grading_rubric?.trim()) {
+          errors.push({ message: `Missing Rubric: The Validator requires grading instructions for "${sb.name}".`, tab: 3 });
+        }
+        if (!sb.skills_to_verify || sb.skills_to_verify.length === 0) {
+          errors.push({ message: `Skill Verification invalid: Select between 1 and 10 skills for "${sb.name}".`, tab: 3 });
+        } else if (sb.skills_to_verify.length > 10) {
+          errors.push({ message: `Skill Verification invalid: Maximum 10 skills allowed for "${sb.name}".`, tab: 3 });
+        }
+      }
+      if ((sb.validation_mode === 'keyword_match' || sb.validation_mode === 'json_schema') && !sb.grading_rubric?.trim()) {
+        errors.push({ message: `Missing Rubric for "${sb.name}".`, tab: 3 });
+      }
+      if (sb.validation_mode === 'keyword_syntax_constraint') {
+        if ((!sb.forbidden_keywords || sb.forbidden_keywords.length === 0) && (!sb.required_keywords || sb.required_keywords.length === 0)) {
+          errors.push({ message: `Please add at least one forbidden or required keyword for "${sb.name}".`, tab: 3 });
+        }
+        if (sb.forbidden_keywords?.length > 5) {
+          errors.push({ message: `Maximum 5 forbidden keywords allowed for "${sb.name}".`, tab: 3 });
+        }
+        if (sb.required_keywords?.length > 5) {
+          errors.push({ message: `Maximum 5 required keywords allowed for "${sb.name}".`, tab: 3 });
+        }
+      }
+      if (sb.validation_mode === 'sql_query_result_match' && !sb.master_query?.trim()) {
+        errors.push({ message: `Please enter a master query for "${sb.name}".`, tab: 3 });
+      }
+      if (sb.validation_mode === 'unit_test_script' && !sb.unit_test_script?.trim()) {
+        errors.push({ message: `Please enter a unit test script for "${sb.name}".`, tab: 3 });
+      }
+      if (sb.validation_mode === 'performance_benchmark' && !sb.time_limit && !sb.memory_limit) {
+        errors.push({ message: `Please enter a time or memory limit for "${sb.name}".`, tab: 3 });
+      }
+    }
+
+    // === Tab 4: Guardrails ===
+    for (const agent of this.taskAgents) {
+      if (agent.enable_guardrails) {
+        if (!agent.guardrail_max_tokens) {
+          errors.push({ message: `Please select maximum tokens for guardrails on "${agent.name}".`, tab: 4 });
+        }
+        if (!agent.guardrail_max_responses) {
+          errors.push({ message: `Please select maximum responses for guardrails on "${agent.name}".`, tab: 4 });
+        }
+        if (!agent.submission_on_exhaustion) {
+          errors.push({ message: `Please select submission on exhaustion for "${agent.name}".`, tab: 4 });
+        }
+      }
+    }
+
+    return errors;
+  }
+
+  groupErrorsByTab(errors: { message: string; tab: number }[]): { [tab: number]: string[] } {
+    const grouped: { [tab: number]: string[] } = {};
+    for (const err of errors) {
+      if (!grouped[err.tab]) grouped[err.tab] = [];
+      grouped[err.tab].push(err.message);
+    }
+    return grouped;
+  }
+
+  hasTabError(tabIndex: number): boolean {
+    return this.vlSubmitted && this.vlTabErrors[tabIndex]?.length > 0;
+  }
+
+  clearVlErrors() {
+    this.vlErrors = [];
+    this.vlTabErrors = {};
+    this.vlSubmitted = false;
+  }
+
+  revalidateIfNeeded() {
+    if (this.vlSubmitted) {
+      this.vlErrors = this.validateVirtualLabs();
+      this.vlTabErrors = this.groupErrorsByTab(this.vlErrors);
+    }
+  }
 
   selectAiAgentTab(index: number) {
     this.aiAgentActiveTab = index;
@@ -1142,6 +1345,7 @@ export class PlacementWorkflowCreateTaskComponent implements OnInit {
     this.selectedTaskAgentIndex = this.taskAgents.length - 1;
     this.addAgentSelectedId = null;
     this.addAgentModal.hide();
+    this.revalidateIfNeeded();
   }
 
   confirmRemoveAgent() {
@@ -1155,6 +1359,7 @@ export class PlacementWorkflowCreateTaskComponent implements OnInit {
       this.selectedTaskAgentIndex = Math.max(0, this.taskAgents.length - 1);
     }
     this.removeAgentIndex = null;
+    this.revalidateIfNeeded();
   }
 
   selectTaskAgent(index: number) {
@@ -1197,6 +1402,7 @@ export class PlacementWorkflowCreateTaskComponent implements OnInit {
     this.selectedSandboxIndex = this.taskSandboxes.length - 1;
     this.addSandboxSelected = null;
     this.addSandboxModal.hide();
+    this.revalidateIfNeeded();
   }
 
   confirmAddSandbox() {
@@ -1214,6 +1420,7 @@ export class PlacementWorkflowCreateTaskComponent implements OnInit {
       this.selectedSandboxIndex = Math.max(0, this.taskSandboxes.length - 1);
     }
     this.removeSandboxIndex = null;
+    this.revalidateIfNeeded();
   }
 
   selectSandbox(index: number) {

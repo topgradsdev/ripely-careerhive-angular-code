@@ -862,9 +862,16 @@ color: #545465;
   align-items: center;
   justify-content: center;
   min-height: 200px;
-  color: #9A9A9A;
+  color: #575757;
   font-family: var(--font-primary);
-  font-size: 14px;
+  font-weight: 400;
+  font-style: Regular;
+  font-size: 16px;
+  leading-trim: NONE;
+  line-height: 100%;
+  letter-spacing: 0%;
+  text-align: center;
+
 }
 
 .ai-remove-link {
@@ -879,8 +886,8 @@ color: #545465;
 }
 
 .ai-add-subsequent-link {
-  text-align: center;
-  margin: 12px 0 24px;
+  margin-top: -16px;
+  margin-bottom: 16px;
 
   a {
     color: #464BA8;
@@ -888,7 +895,9 @@ color: #545465;
     font-size: 16px;
     font-weight: 400;
     cursor: pointer;
-    text-decoration: underline;
+    text-decoration: none;
+    text-align: center;
+    display: block;
 
     &:hover {
       color: #3a3f8f;
@@ -975,9 +984,124 @@ color: #545465;
 .ai-task-basics-form {
   max-width: 700px;
 
-  .form-group {
-    margin-bottom: 24px;
+  .row.form-group {
+    margin-bottom: 30px !important;
+    align-items: baseline;
   }
+}
+
+// Empty state for tabs when no items exist
+.ai-tab-empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 300px;
+  padding: 60px 20px;
+  text-align: center;
+
+
+  p {
+    font-family: var(--font-primary);
+    margin-bottom: 24px;
+    line-height: 1.6;
+    color: #575757 !important;
+    font-weight: 400;
+    font-style: Regular;
+    font-size: 16px;
+    leading-trim: NONE;
+    line-height: 100%;
+    letter-spacing: 0%;
+    text-align: center;
+  }
+
+  .theme_btn {
+    min-width: 180px;
+  }
+}
+
+// Published state info box
+.ai-published-infobox {
+  background: #EBF8FF;
+  border: 1px solid #3182CE;
+  border-radius: 8px;
+  padding: 12px 20px;
+  margin: 0 30px 0;
+  color: #2B6CB0;
+  font-size: 14px;
+  font-family: var(--font-primary);
+
+  strong {
+    font-weight: 600;
+  }
+}
+
+// ===== Validation Error Styles =====
+
+// Error Infobox at top of task editor
+.ai-error-infobox {
+  background: #FFF5F5;
+  border: 1px solid #E53E3E;
+  border-radius: 8px;
+  padding: 16px 20px;
+  margin: 0 30px 0;
+
+  .ai-error-infobox-header {
+    color: #C53030;
+    font-size: 14px;
+    margin-bottom: 8px;
+  }
+
+  .ai-error-infobox-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+
+    li {
+      font-size: 13px;
+      color: #4A5568;
+      padding: 3px 0;
+      line-height: 1.5;
+
+      .ai-error-tab-label {
+        color: #C53030;
+        font-weight: 600;
+      }
+    }
+  }
+}
+
+// Red dot badge on tabs with errors
+.ai-task-tab {
+  position: relative;
+
+  .ai-tab-error-dot {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    background: #E53E3E;
+    border-radius: 50%;
+    margin-left: 6px;
+    vertical-align: middle;
+  }
+
+  &.has-error {
+    color: #C53030;
+  }
+}
+
+// Inline error text beneath fields
+.ai-inline-error {
+  display: block;
+  color: #E53E3E;
+  font-size: 12px;
+  margin-top: 4px;
+  font-weight: 500;
+}
+
+// Invalid field border
+.is-invalid, .form-control.is-invalid {
+  border-color: #E53E3E !important;
 }
 
 // Fix modal z-index - ensure modal dialog appears above backdrop
