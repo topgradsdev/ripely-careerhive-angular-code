@@ -6125,5 +6125,42 @@ checkStudentAlreadyPlaced(data: any): Observable<any> {
     return this.http.post(API_URL, data)
   }
 
+  
+  // Sandbox Library
+  createSandbox(data: any): Observable<any> {
+    let API_URL = `${this.SERVER}sandbox_library/create`;
+    return this.http.post(API_URL, data).pipe(map(res => res));
+  }
+
+  getSandboxList(data: any): Observable<any> {
+    let API_URL = `${this.SERVER}sandbox_library/get`;
+    return this.http.post(API_URL, data).pipe(map(res => res));
+  }
+
+  getSandboxById(data: any): Observable<any> {
+    let API_URL = `${this.SERVER}sandbox_library/get_by_id`;
+    return this.http.post(API_URL, data).pipe(map(res => res));
+  }
+
+  updateSandbox(data: any): Observable<any> {
+    let API_URL = `${this.SERVER}sandbox_library/update`;
+    return this.http.post(API_URL, data).pipe(map(res => res));
+  }
+
+  deleteSandbox(data: any): Observable<any> {
+    let API_URL = `${this.SERVER}sandbox_library/delete`;
+    return this.http.post(API_URL, data).pipe(map(res => res));
+  }
+
+  getSandboxStats(data: any): Observable<any> {
+    let API_URL = `${this.SERVER}sandbox_library/get_stats`;
+    return this.http.post(API_URL, data).pipe(map(res => res));
+  }
+
+  executeSandboxCode(data: any): Observable<any> {
+    let API_URL = `${this.SERVER}sandbox_library/execute`;
+    return this.http.post(API_URL, data).pipe(map(res => res));
+  }
+
 }
 
