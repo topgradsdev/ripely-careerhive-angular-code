@@ -1,0 +1,160 @@
+<div class="page_header">
+    <div class="page_header_container">
+        <div>
+            <h4>Sandbox Library</h4>
+        </div>
+    </div>
+</div>
+<section>
+    <div class="card_header">
+        <div class="card_container justify-content-between">
+            <div class="d-flex flex-column">
+                <div class="d-flex gap-5">
+                    <!-- Total Sandboxes -->
+                    <div class="student_card">
+                        <div class="content">
+                            <p>Total Sandboxes</p>
+                            <h4>{{ totalSandboxes }}</h4>
+                        </div>
+                        <div class="">
+                            <svg width="54" height="54" viewBox="0 0 54 54" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <circle cx="27" cy="27" r="27" fill="#464BA8"/>
+                                <path d="M37.668 20.334H16.3346C14.8619 20.334 13.668 21.5279 13.668 23.0007V36.334C13.668 37.8067 14.8619 39.0007 16.3346 39.0007H37.668C39.1407 39.0007 40.3346 37.8067 40.3346 36.334V23.0007C40.3346 21.5279 39.1407 20.334 37.668 20.334Z" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M32.3346 39V17.6667C32.3346 16.9594 32.0537 16.2811 31.5536 15.781C31.0535 15.281 30.3752 15 29.668 15H24.3346C23.6274 15 22.9491 15.281 22.449 15.781C21.9489 16.2811 21.668 16.9594 21.668 17.6667V39" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </div>
+                    </div>
+                    <!-- Active Sandboxes -->
+                    <div class="student_card">
+                        <div class="content">
+                            <p>Active Sandboxes</p>
+                            <h4>{{ activeSandboxes }}</h4>
+                        </div>
+                        <div class="">
+                            <svg width="54" height="54" viewBox="0 0 54 54" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <circle cx="27" cy="27" r="27" fill="#26C296"/>
+                                <path d="M32.332 16.334H34.9987C35.7059 16.334 36.3842 16.6149 36.8843 17.115C37.3844 17.6151 37.6654 18.2934 37.6654 19.0007V37.6673C37.6654 38.3746 37.3844 39.0528 36.8843 39.5529C36.3842 40.053 35.7059 40.334 34.9987 40.334H18.9987C18.2915 40.334 17.6132 40.053 17.1131 39.5529C16.613 39.0528 16.332 38.3746 16.332 37.6673V19.0007C16.332 18.2934 16.613 17.6151 17.1131 17.115C17.6132 16.6149 18.2915 16.334 18.9987 16.334H21.6654" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M31.0013 13.666H23.0013C22.2649 13.666 21.668 14.263 21.668 14.9993V17.666C21.668 18.4024 22.2649 18.9993 23.0013 18.9993H31.0013C31.7377 18.9993 32.3346 18.4024 32.3346 17.666V14.9993C32.3346 14.263 31.7377 13.666 31.0013 13.666Z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </div>
+                    </div>
+                    <!-- Inactive Sandboxes -->
+                    <div class="student_card">
+                        <div class="content">
+                            <p>Inactive Sandboxes</p>
+                            <h4>{{ inactiveSandboxes }}</h4>
+                        </div>
+                        <div class="">
+                            <svg width="54" height="54" viewBox="0 0 54 54" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <circle cx="27" cy="27" r="27" fill="#F47761"/>
+                                <path d="M27 17.667L27 36.3337" stroke="white" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M36.334 27L27.0007 36.3333L17.6673 27" stroke="white" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="d-flex gap-3">
+                <button mat-button class="theme_btn btn_primary" [routerLink]="['/admin/sandbox-library/create']">+ Create Sandbox</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Search and Filters -->
+    <div class="d-flex align-items-center justify-content-between flex-wrap mb-4 gap-3">
+        <div class="d-inline-flex align-items-center">
+            <div class="search-container">
+                <svg class="icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                    <path d="M9.16667 15.8333C12.8486 15.8333 15.8333 12.8486 15.8333 9.16667C15.8333 5.48477 12.8486 2.5 9.16667 2.5C5.48477 2.5 2.5 5.48477 2.5 9.16667C2.5 12.8486 5.48477 15.8333 9.16667 15.8333Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                    <path d="M17.5 17.5L13.875 13.875" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+                <input type="text" class="form-control" placeholder="Search Keywords" [(ngModel)]="searchText" (ngModelChange)="onSearchChange()">
+            </div>
+            <button mat-button class="theme_btn btn_primary ml-4" data-toggle="modal" data-target="#sandboxFilter">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="23" viewBox="0 0 24 23" fill="none">
+                    <path d="M22 3.10669H2L10 11.9629V18.0854L14 19.9578V11.9629L22 3.10669Z" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                </svg> Filters
+            </button>
+        </div>
+        <div *ngIf="filterCategory || filterStatus" class="d-inline-flex align-items-center gap-2">
+            <span class="filter-tag" *ngIf="filterCategory">{{ filterCategory }} <span class="remove-tag" (click)="filterCategory=''; onFilterChange()">&times;</span></span>
+            <span class="filter-tag" *ngIf="filterStatus">{{ filterStatus }} <span class="remove-tag" (click)="filterStatus=''; onFilterChange()">&times;</span></span>
+            <a class="text_primary clear-all-link" (click)="clearFilters()">Clear All</a>
+        </div>
+    </div>
+
+    <!-- Filter Modal -->
+    <div class="modal fade bsModal ch_modal filter_modals" id="sandboxFilter" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header d-flex justify-content-between">
+                    <button mat-icon-button #closeFilterModal class="close" data-dismiss="modal" aria-label="Close">
+                        <mat-icon>close</mat-icon>
+                    </button>
+                    <h2 class="modal-title">Filters</h2>
+                    <button mat-button class="theme_btn btn_primary" (click)="onFilterChange()" data-dismiss="modal">Apply Filter</button>
+                </div>
+                <div class="modal-body pt-3 pb-5">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="filter_title">Category</label>
+                                <ng-select [items]="categoryOptions" bindLabel="label" bindValue="value" [(ngModel)]="filterCategory" placeholder="All Categories" [clearable]="true"></ng-select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="filter_title">Status</label>
+                                <ng-select [items]="statusOptions" bindLabel="label" bindValue="value" [(ngModel)]="filterStatus" placeholder="All Status" [clearable]="true"></ng-select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Empty State -->
+    <div class="empty-state flex-column" *ngIf="!sandboxes.length" style="max-width: 100% !important;">
+        <h2 class="m-0">You currently have no Sandboxes</h2>
+        <p>Get started by creating your first Sandbox above!</p>
+    </div>
+
+    <!-- Sandbox Table -->
+    <div class="table-responsive" *ngIf="sandboxes.length > 0">
+        <table class="table sandbox-table">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Category</th>
+                    <th>Language</th>
+                    <th>Status</th>
+                    <th>Created Date</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let sandbox of sandboxes">
+                    <td>{{ sandbox.name }}</td>
+                    <td>
+                        <span class="category-badge" *ngIf="sandbox.category">{{ sandbox.category }}</span>
+                    </td>
+                    <td>{{ sandbox.language }}</td>
+                    <td>
+                        <span class="status-badge" [ngClass]="{'active': sandbox.status === 'active', 'inactive': sandbox.status === 'inactive'}">
+                            {{ sandbox.status }}
+                        </span>
+                    </td>
+                    <td>{{ sandbox.createdAt | date:'mediumDate' }}</td>
+                    <td>
+                        <div class="action-btns">
+                            <button class="edit-btn" (click)="editSandbox(sandbox)">Edit</button>
+                            <button class="delete-btn" (click)="deleteSandbox(sandbox, $event)">Delete</button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</section>

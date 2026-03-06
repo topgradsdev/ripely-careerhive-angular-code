@@ -146,6 +146,11 @@ const routes: Routes = [
         path: 'articles',
         canActivate: [AdminGuard],
         loadChildren: () => import('../admin/articles/articles.module').then(m => m.ArticlesModule)
+      },
+      {
+        path: 'sandbox-library',
+        canActivate: [AdminGuard],
+        loadChildren: () => import('../sandbox-library/sandbox-library.module').then(m => m.SandboxLibraryModule)
       }
     ]
   }

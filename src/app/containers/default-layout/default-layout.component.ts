@@ -244,6 +244,11 @@ export class DefaultLayoutComponent {
       is_write: true
     },
      {
+      module: "Sandbox Library",
+      is_view: true,
+      is_write: true
+    },
+     {
       module: "System",
       is_view: true,
       is_write: true
@@ -284,7 +289,7 @@ userProfile:any;
     this.Service.getAdminById(payload).subscribe(res => {
       if (res.status == HttpResponseCode.SUCCESS) {
         this.permissionsService.flushPermissions();
-        const perm = ['Dashboard', 'Analytics (Beta)', 'Need Support', 'Articles', 'System'];
+        const perm = ['Dashboard', 'Analytics (Beta)', 'Need Support', 'Articles', 'System', 'Sandbox Library'];
         if (res.result?.sub_type === 'admin') {
           this.permissions.forEach(permission => {
             if (permission.is_view) {

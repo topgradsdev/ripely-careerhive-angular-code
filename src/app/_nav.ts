@@ -72,6 +72,11 @@ import { INavData } from '@coreui/angular';
   },
 
   {
+    name: 'Sandbox Library',
+    url: '/admin/sandbox-library/manage',
+    iconComponent: { name: 'cil-library' },
+  },
+  {
     name: 'System',
     url: '/admin/system',
     iconComponent: { name: 'cil-list' },
