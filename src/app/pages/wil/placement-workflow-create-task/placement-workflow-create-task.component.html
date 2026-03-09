@@ -1519,16 +1519,26 @@
 
                 <!-- Error Infobox -->
                 <div class="ai-error-infobox" *ngIf="vlSubmitted && vlErrors.length > 0">
-                    <div class="ai-error-infobox-header">
-                        <strong>Cannot save task. Please resolve the following:</strong>
-                    </div>
-                    <ul class="ai-error-infobox-list">
-                        <ng-container *ngFor="let tabEntry of vlTabErrors | keyvalue">
-                            <li *ngFor="let msg of tabEntry.value">
-                                <span class="ai-error-tab-label">[{{ aiAgentTabs[tabEntry.key]?.name }}]</span>: {{ msg }}
+
+                    <svg width="47" height="48" viewBox="0 0 47 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M23.5003 44C34.3159 44 43.0837 35.0457 43.0837 24C43.0837 12.9543 34.3159 4 23.5003 4C12.6847 4 3.91699 12.9543 3.91699 24C3.91699 35.0457 12.6847 44 23.5003 44Z" stroke="#D73C3C" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M23.5 32V24" stroke="#D73C3C" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M23.5 16H23.5188" stroke="#D73C3C" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+
+
+
+                   <div>
+                        <div class="ai-error-infobox-header">
+                            <strong>Unable to Create Task</strong>
+                            <p>Please review the following outstanding fields</p>
+                        </div>
+                        <ul class="ai-error-infobox-list">
+                            <li *ngFor="let err of vlErrors; let i = index">
+                                {{ i + 1 }}. <span class="ai-error-tab-label">{{ aiAgentTabs[err.tab]?.name }}</span>: {{ err.message }}
                             </li>
-                        </ng-container>
-                    </ul>
+                        </ul>
+                   </div>
                 </div>
 
                 <!-- Tab Bar -->
@@ -1555,7 +1565,7 @@
                                         [class.is-invalid]="vlSubmitted && (!createTask.get('name')?.value?.trim() || createTask.get('name')?.value?.trim().length < 3)"
                                         [attr.disabled]="isPublished ? '' : null">
                                     <span class="ai-inline-error" *ngIf="vlSubmitted && (!createTask.get('name')?.value?.trim() || createTask.get('name')?.value?.trim().length < 3)">
-                                        Title is required (min 3 characters).
+                                        Title is required.
                                     </span>
                                 </div>
                             </div>
@@ -1566,7 +1576,7 @@
                                         [class.is-invalid]="vlSubmitted && (!createTask.get('description')?.value?.trim() || createTask.get('description')?.value?.trim().length < 3)"
                                         [readOnly]="isPublished"></quill-editor>
                                     <span class="ai-inline-error" *ngIf="vlSubmitted && (!createTask.get('description')?.value?.trim() || createTask.get('description')?.value?.trim().length < 3)">
-                                        Description is required (min 3 characters).
+                                        Description is required.
                                     </span>
                                 </div>
                             </div>
@@ -1685,22 +1695,42 @@
                                             <div class="ai-config-label"><strong>Agent Initiation Message</strong></div>
                                             <div class="ai-config-control">
                                                 <textarea class="form-control" rows="4" placeholder="Message"
+                                                    [class.is-invalid]="vlSubmitted && !taskAgents[selectedTaskAgentIndex]?.initiation_message?.trim()"
                                                     [(ngModel)]="taskAgents[selectedTaskAgentIndex].initiation_message" [ngModelOptions]="{standalone: true}" (ngModelChange)="revalidateIfNeeded()"></textarea>
+                                                <span class="ai-inline-error" *ngIf="vlSubmitted && !taskAgents[selectedTaskAgentIndex]?.initiation_message?.trim()">
+                                                    Initiation Message is required.
+                                                </span>
                                             </div>
                                         </div>
 
-                                        <!-- Preset mode: Subsequent Messages -->
+                                        <!-- Preset mode: First Response (mandatory) + Subsequent Responses -->
                                         <ng-container *ngIf="taskAgents[selectedTaskAgentIndex].agent_output === 'preset'">
-                                            <div *ngFor="let msg of taskAgents[selectedTaskAgentIndex].subsequent_messages; let mi = index; trackBy: trackByIndex" class="ai-task-config-row">
-                                                <div class="ai-config-label">
-                                                    <strong>Agent's {{ mi === 0 ? 'Second' : mi === 1 ? 'Third' : mi === 2 ? 'Fourth' : 'Fifth' }} Message</strong>
-                                                    <br><span class="ai-remove-link" (click)="removeSubsequentMessage(selectedTaskAgentIndex, mi)">X Remove</span>
-                                                </div>
+                                            <!-- Agent's First Response (mandatory) -->
+                                            <div class="ai-task-config-row">
+                                                <div class="ai-config-label"><strong>Agent's First Response</strong></div>
                                                 <div class="ai-config-control">
                                                     <textarea class="form-control" rows="4" placeholder="Message"
-                                                        [(ngModel)]="taskAgents[selectedTaskAgentIndex].subsequent_messages[mi]" [ngModelOptions]="{standalone: true}" (ngModelChange)="revalidateIfNeeded()"></textarea>
+                                                        [class.is-invalid]="vlSubmitted && !taskAgents[selectedTaskAgentIndex]?.subsequent_messages?.[0]?.trim()"
+                                                        [(ngModel)]="taskAgents[selectedTaskAgentIndex].subsequent_messages[0]" [ngModelOptions]="{standalone: true}" (ngModelChange)="revalidateIfNeeded()"></textarea>
+                                                    <span class="ai-inline-error" *ngIf="vlSubmitted && !taskAgents[selectedTaskAgentIndex]?.subsequent_messages?.[0]?.trim()">
+                                                        Agent's First Response is required.
+                                                    </span>
                                                 </div>
                                             </div>
+
+                                            <!-- Additional Subsequent Responses (from index 1+) -->
+                                            <ng-container *ngFor="let msg of taskAgents[selectedTaskAgentIndex].subsequent_messages; let mi = index; trackBy: trackByIndex">
+                                                <div *ngIf="mi > 0" class="ai-task-config-row">
+                                                    <div class="ai-config-label">
+                                                        <strong>Agent's {{ mi === 1 ? 'Second' : mi === 2 ? 'Third' : 'Fourth' }} Response</strong>
+                                                        <br><span class="ai-remove-link" (click)="removeSubsequentMessage(selectedTaskAgentIndex, mi)">X Remove</span>
+                                                    </div>
+                                                    <div class="ai-config-control">
+                                                        <textarea class="form-control" rows="4" placeholder="Message"
+                                                            [(ngModel)]="taskAgents[selectedTaskAgentIndex].subsequent_messages[mi]" [ngModelOptions]="{standalone: true}" (ngModelChange)="revalidateIfNeeded()"></textarea>
+                                                    </div>
+                                                </div>
+                                            </ng-container>
 
                                             <div class="ai-task-config-row ai-add-subsequent-link" *ngIf="taskAgents[selectedTaskAgentIndex].subsequent_messages.length < 4">
                                                 <div class="ai-config-label"></div>
@@ -1732,11 +1762,15 @@
                                                 <div class="ai-config-label"><strong>Select LLM</strong></div>
                                                 <div class="ai-config-control">
                                                     <ng-select [(ngModel)]="taskAgents[selectedTaskAgentIndex].select_llm" [ngModelOptions]="{standalone: true}" (ngModelChange)="revalidateIfNeeded()"
+                                                        [class.is-invalid]="vlSubmitted && !taskAgents[selectedTaskAgentIndex]?.select_llm"
                                                         [searchable]="false" [clearable]="false" placeholder="Select">
                                                         <ng-option value="gpt-4">GPT-4</ng-option>
                                                         <ng-option value="gpt-3.5">GPT-3.5</ng-option>
                                                         <ng-option value="claude">Claude</ng-option>
                                                     </ng-select>
+                                                    <span class="ai-inline-error" *ngIf="vlSubmitted && !taskAgents[selectedTaskAgentIndex]?.select_llm">
+                                                        Please select an LLM.
+                                                    </span>
                                                 </div>
                                             </div>
 
@@ -1762,7 +1796,11 @@
                                                 </div>
                                                 <div class="ai-config-control">
                                                     <textarea class="form-control" rows="4" placeholder='e.g., "Wants automation but fears job cuts"'
+                                                        [class.is-invalid]="vlSubmitted && taskAgents[selectedTaskAgentIndex]?.agent_output === 'ai' && !taskAgents[selectedTaskAgentIndex]?.agenda?.trim()"
                                                         [(ngModel)]="taskAgents[selectedTaskAgentIndex].agenda" [ngModelOptions]="{standalone: true}" (ngModelChange)="revalidateIfNeeded()"></textarea>
+                                                    <span class="ai-inline-error" *ngIf="vlSubmitted && taskAgents[selectedTaskAgentIndex]?.agent_output === 'ai' && !taskAgents[selectedTaskAgentIndex]?.agenda?.trim()">
+                                                        Agenda is required for AI Mode.
+                                                    </span>
                                                 </div>
                                             </div>
 
@@ -1797,6 +1835,7 @@
                                                 <div class="ai-config-label"><strong>Maximum Responses</strong></div>
                                                 <div class="ai-config-control">
                                                     <ng-select [(ngModel)]="taskAgents[selectedTaskAgentIndex].max_responses" [ngModelOptions]="{standalone: true}" (ngModelChange)="revalidateIfNeeded()"
+                                                        [class.is-invalid]="vlSubmitted && !taskAgents[selectedTaskAgentIndex]?.max_responses"
                                                         [searchable]="false" [clearable]="false" placeholder="5">
                                                         <ng-option [value]="3">3</ng-option>
                                                         <ng-option [value]="5">5</ng-option>
@@ -1804,6 +1843,9 @@
                                                         <ng-option [value]="15">15</ng-option>
                                                         <ng-option [value]="20">20</ng-option>
                                                     </ng-select>
+                                                    <span class="ai-inline-error" *ngIf="vlSubmitted && !taskAgents[selectedTaskAgentIndex]?.max_responses">
+                                                        Maximum Responses is required.
+                                                    </span>
                                                     <p class="ai-helper-text">Once the agent has sent this many replies, the conversation ends automatically. No further responses will be generated.</p>
                                                 </div>
                                             </div>
@@ -1813,6 +1855,7 @@
                                                 <div class="ai-config-label"><strong>Maximum Tokens</strong></div>
                                                 <div class="ai-config-control">
                                                     <ng-select [(ngModel)]="taskAgents[selectedTaskAgentIndex].max_tokens" [ngModelOptions]="{standalone: true}" (ngModelChange)="revalidateIfNeeded()"
+                                                        [class.is-invalid]="vlSubmitted && !taskAgents[selectedTaskAgentIndex]?.max_tokens"
                                                         [searchable]="false" [clearable]="false" placeholder="500">
                                                         <ng-option [value]="100">100</ng-option>
                                                         <ng-option [value]="250">250</ng-option>
@@ -1820,6 +1863,9 @@
                                                         <ng-option [value]="1000">1000</ng-option>
                                                         <ng-option [value]="2000">2000</ng-option>
                                                     </ng-select>
+                                                    <span class="ai-inline-error" *ngIf="vlSubmitted && !taskAgents[selectedTaskAgentIndex]?.max_tokens">
+                                                        Maximum Tokens is required.
+                                                    </span>
                                                     <p class="ai-helper-text">Shared token budget for the whole attempt: includes agent replies and validation (scoring + feedback). Exceeding ends the task</p>
                                                 </div>
                                             </div>
@@ -1887,25 +1933,25 @@
                     <!-- ===== Tab 3: Validation ===== -->
                     <div *ngIf="aiAgentActiveTab === 3">
                         <!-- Empty state -->
-                        <div *ngIf="taskSandboxes.length === 0" class="ai-tab-empty-state">
-                            <p>Validations require an active sandbox to proceed.<br>To get started, go to the Sandbox Config tab and add an active sandbox to add validations.</p>
+                        <div *ngIf="gradableSandboxes.length === 0" class="ai-tab-empty-state">
+                            <p>Validations require an active sandbox with grading enabled to proceed.<br>To get started, go to the Sandbox Config tab and enable "Allow Grading" on a sandbox.</p>
                         </div>
 
-                        <div class="ai-task-two-col" *ngIf="taskSandboxes.length > 0">
+                        <div class="ai-task-two-col" *ngIf="gradableSandboxes.length > 0">
                             <div class="ai-task-sidebar">
                                 <div class="ai-task-sidebar-header">
                                     <h5>Active Sandboxes</h5>
                                 </div>
                                 <ul class="ai-task-sidebar-list">
-                                    <li *ngFor="let sandbox of taskSandboxes; let i = index"
+                                    <li *ngFor="let sandbox of gradableSandboxes; let i = index"
                                         class="ai-task-sidebar-item" [class.active]="selectedSandboxIndex === i"
-                                        (click)="selectSandbox(i)">
+                                        (click)="selectSandbox(taskSandboxes.indexOf(sandbox))">
                                         {{ sandbox.name }}
                                     </li>
                                 </ul>
                             </div>
                             <div class="ai-task-main-content">
-                                <ng-container *ngIf="taskSandboxes.length > 0 && taskSandboxes[selectedSandboxIndex]">
+                                <ng-container *ngIf="gradableSandboxes.length > 0 && taskSandboxes[selectedSandboxIndex]">
                                     <div class="ai-agent-top-row">
                                         <div>
                                             <h4 class="ai-agent-name">{{ taskSandboxes[selectedSandboxIndex].name }}</h4>
@@ -1919,9 +1965,13 @@
                                             <div class="ai-config-label"><strong>Validation Mode</strong></div>
                                             <div class="ai-config-control">
                                                 <ng-select [(ngModel)]="taskSandboxes[selectedSandboxIndex].validation_mode" [ngModelOptions]="{standalone: true}" (ngModelChange)="revalidateIfNeeded()"
+                                                    [class.is-invalid]="vlSubmitted && taskSandboxes[selectedSandboxIndex]?.allow_grading && !taskSandboxes[selectedSandboxIndex]?.validation_mode"
                                                     [searchable]="false" [clearable]="false" placeholder="Select Validation Mode">
                                                     <ng-option *ngFor="let opt of validationModeOptions" [value]="opt.value">{{ opt.label }}</ng-option>
                                                 </ng-select>
+                                                <span class="ai-inline-error" *ngIf="vlSubmitted && taskSandboxes[selectedSandboxIndex]?.allow_grading && !taskSandboxes[selectedSandboxIndex]?.validation_mode">
+                                                    Please select a validation mode.
+                                                </span>
                                             </div>
                                         </div>
 
@@ -1932,17 +1982,25 @@
                                                 <div class="ai-config-label"><strong>Select Validator</strong></div>
                                                 <div class="ai-config-control">
                                                     <ng-select [(ngModel)]="taskSandboxes[selectedSandboxIndex].select_validator" [ngModelOptions]="{standalone: true}" (ngModelChange)="revalidateIfNeeded()"
+                                                        [class.is-invalid]="vlSubmitted && !taskSandboxes[selectedSandboxIndex]?.select_validator"
                                                         [searchable]="false" [clearable]="false" placeholder="Select Validator">
                                                         <ng-option value="multiple_agents">Multiple Agents</ng-option>
                                                         <ng-option value="single_agent">Single Agent</ng-option>
                                                     </ng-select>
+                                                    <span class="ai-inline-error" *ngIf="vlSubmitted && !taskSandboxes[selectedSandboxIndex]?.select_validator">
+                                                        Please select a validator.
+                                                    </span>
                                                     <ng-container *ngIf="taskSandboxes[selectedSandboxIndex].select_validator === 'multiple_agents' || taskSandboxes[selectedSandboxIndex].select_validator === 'single_agent'">
                                                         <ng-select [(ngModel)]="taskSandboxes[selectedSandboxIndex].validator_agents" [ngModelOptions]="{standalone: true}" (ngModelChange)="revalidateIfNeeded()"
+                                                            [class.is-invalid]="vlSubmitted && (!taskSandboxes[selectedSandboxIndex]?.validator_agents || taskSandboxes[selectedSandboxIndex]?.validator_agents?.length === 0)"
                                                             [multiple]="taskSandboxes[selectedSandboxIndex].select_validator === 'multiple_agents'" [searchable]="true" [clearable]="true" placeholder="Select agents" class="mt-2">
                                                             <ng-option *ngFor="let agent of taskAgents" [value]="agent._id">
                                                                 {{ agent.name }}
                                                             </ng-option>
                                                         </ng-select>
+                                                        <span class="ai-inline-error" *ngIf="vlSubmitted && (!taskSandboxes[selectedSandboxIndex]?.validator_agents || taskSandboxes[selectedSandboxIndex]?.validator_agents?.length === 0)">
+                                                            Please select validator agents.
+                                                        </span>
                                                     </ng-container>
                                                 </div>
                                             </div>
@@ -1951,7 +2009,11 @@
                                                 <div class="ai-config-label"><strong>Grading Rubric<br>& Response</strong></div>
                                                 <div class="ai-config-control">
                                                     <textarea class="form-control" rows="5" placeholder="Enter the grading rubric, e.g..."
+                                                        [class.is-invalid]="vlSubmitted && !taskSandboxes[selectedSandboxIndex]?.grading_rubric?.trim()"
                                                         [(ngModel)]="taskSandboxes[selectedSandboxIndex].grading_rubric" [ngModelOptions]="{standalone: true}" (ngModelChange)="revalidateIfNeeded()"></textarea>
+                                                    <span class="ai-inline-error" *ngIf="vlSubmitted && !taskSandboxes[selectedSandboxIndex]?.grading_rubric?.trim()">
+                                                        Grading Rubric is required.
+                                                    </span>
                                                 </div>
                                             </div>
                                             <!-- Additional Documents -->
@@ -1963,8 +2025,30 @@
                                                         <span>Accepted file types: Adobe PDF (.pdf)</span><br>
                                                         <span>5MB size limit</span></p>
                                                         <input type="file" accept=".pdf" class="ai-upload-input"
-                                                            (change)="getFilDoc($event)">
+                                                            (change)="uploadSandboxDoc($event)">
                                                     </div>
+                                                    <ul class="ai-sandbox-doc-list" *ngIf="taskSandboxes[selectedSandboxIndex]?.additional_documents?.length > 0">
+                                                        <li *ngFor="let doc of taskSandboxes[selectedSandboxIndex].additional_documents; let di = index;" class="ai-sandbox-doc-item">
+                                                            <div class="ai-sandbox-doc-info">
+                                                                <div class="ai-sandbox-doc-icon" [innerHTML]="getSafeSvg(doc?.name)"></div>
+                                                                <span class="ai-sandbox-doc-name">{{ doc.name }}</span>
+                                                            </div>
+                                                            <div class="ai-sandbox-doc-actions">
+                                                                <button type="button" mat-icon-button (click)="viewSandboxDoc(doc)" matTooltip="View">
+                                                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                                        <path d="M1 12C1 12 5 4 12 4C19 4 23 12 23 12C23 12 19 20 12 20C5 20 1 12 1 12Z" stroke="#555" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                                                        <circle cx="12" cy="12" r="3" stroke="#555" stroke-width="1.5"/>
+                                                                    </svg>
+                                                                </button>
+                                                                <button type="button" mat-icon-button (click)="removeSandboxDoc(di)" matTooltip="Remove" [disabled]="isPublished">
+                                                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                                        <path d="M3 6H5H21" stroke="#555" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                                                        <path d="M8 6V4C8 3.44772 8.44772 3 9 3H15C15.5523 3 16 3.44772 16 4V6M19 6V20C19 20.5523 18.5523 21 18 21H6C5.44772 21 5 20.5523 5 20V6H19Z" stroke="#555" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                                                    </svg>
+                                                                </button>
+                                                            </div>
+                                                        </li>
+                                                    </ul>
                                                     <p class="ai-helper-text">These uploaded documents won't be visible in the students' libraries</p>
                                                 </div>
                                             </div>
@@ -1973,8 +2057,12 @@
                                                 <div class="ai-config-label"><strong>Skills to Verify</strong></div>
                                                 <div class="ai-config-control">
                                                     <ng-select [(ngModel)]="taskSandboxes[selectedSandboxIndex].skills_to_verify" [ngModelOptions]="{standalone: true}" (ngModelChange)="revalidateIfNeeded()"
+                                                        [class.is-invalid]="vlSubmitted && (!taskSandboxes[selectedSandboxIndex]?.skills_to_verify || taskSandboxes[selectedSandboxIndex]?.skills_to_verify?.length === 0)"
                                                         [multiple]="true" [addTag]="addSkillTag" [maxSelectedItems]="10" placeholder="Search and Add Skill (max 10)">
                                                     </ng-select>
+                                                    <span class="ai-inline-error" *ngIf="vlSubmitted && (!taskSandboxes[selectedSandboxIndex]?.skills_to_verify || taskSandboxes[selectedSandboxIndex]?.skills_to_verify?.length === 0)">
+                                                        Please add at least 1 skill to verify.
+                                                    </span>
                                                 </div>
                                             </div>
                                         </ng-container>
@@ -1985,7 +2073,11 @@
                                                 <div class="ai-config-label"><strong>Grading Rubric<br>& Response</strong></div>
                                                 <div class="ai-config-control">
                                                     <textarea class="form-control" rows="5" placeholder="Enter the grading rubric, e.g..."
+                                                        [class.is-invalid]="vlSubmitted && !taskSandboxes[selectedSandboxIndex]?.grading_rubric?.trim()"
                                                         [(ngModel)]="taskSandboxes[selectedSandboxIndex].grading_rubric" [ngModelOptions]="{standalone: true}" (ngModelChange)="revalidateIfNeeded()"></textarea>
+                                                    <span class="ai-inline-error" *ngIf="vlSubmitted && !taskSandboxes[selectedSandboxIndex]?.grading_rubric?.trim()">
+                                                        Grading Rubric is required.
+                                                    </span>
                                                 </div>
                                             </div>
                                         </ng-container>
@@ -1996,7 +2088,11 @@
                                                 <div class="ai-config-label"><strong>Grading Rubric<br>& Response</strong></div>
                                                 <div class="ai-config-control">
                                                     <textarea class="form-control" rows="5" placeholder="Enter the grading rubric, e.g..."
+                                                        [class.is-invalid]="vlSubmitted && !taskSandboxes[selectedSandboxIndex]?.grading_rubric?.trim()"
                                                         [(ngModel)]="taskSandboxes[selectedSandboxIndex].grading_rubric" [ngModelOptions]="{standalone: true}" (ngModelChange)="revalidateIfNeeded()"></textarea>
+                                                    <span class="ai-inline-error" *ngIf="vlSubmitted && !taskSandboxes[selectedSandboxIndex]?.grading_rubric?.trim()">
+                                                        Grading Rubric is required.
+                                                    </span>
                                                 </div>
                                             </div>
                                         </ng-container>
@@ -2007,6 +2103,7 @@
                                                 <div class="ai-config-label"><strong>Forbidden Keywords</strong></div>
                                                 <div class="ai-config-control">
                                                     <ng-select [(ngModel)]="taskSandboxes[selectedSandboxIndex].forbidden_keywords" [ngModelOptions]="{standalone: true}" (ngModelChange)="revalidateIfNeeded()"
+                                                        [class.is-invalid]="vlSubmitted && (!taskSandboxes[selectedSandboxIndex]?.forbidden_keywords || taskSandboxes[selectedSandboxIndex]?.forbidden_keywords?.length === 0) && (!taskSandboxes[selectedSandboxIndex]?.required_keywords || taskSandboxes[selectedSandboxIndex]?.required_keywords?.length === 0)"
                                                         [multiple]="true" [addTag]="addForbiddenKeywordTag" [maxSelectedItems]="5" placeholder="Search and Add Syntax (max 5)">
                                                     </ng-select>
                                                 </div>
@@ -2015,8 +2112,12 @@
                                                 <div class="ai-config-label"><strong>Required Keywords</strong></div>
                                                 <div class="ai-config-control">
                                                     <ng-select [(ngModel)]="taskSandboxes[selectedSandboxIndex].required_keywords" [ngModelOptions]="{standalone: true}" (ngModelChange)="revalidateIfNeeded()"
+                                                        [class.is-invalid]="vlSubmitted && (!taskSandboxes[selectedSandboxIndex]?.forbidden_keywords || taskSandboxes[selectedSandboxIndex]?.forbidden_keywords?.length === 0) && (!taskSandboxes[selectedSandboxIndex]?.required_keywords || taskSandboxes[selectedSandboxIndex]?.required_keywords?.length === 0)"
                                                         [multiple]="true" [addTag]="addRequiredKeywordTag" [maxSelectedItems]="5" placeholder="Search and Add Syntax (max 5)">
                                                     </ng-select>
+                                                    <span class="ai-inline-error" *ngIf="vlSubmitted && (!taskSandboxes[selectedSandboxIndex]?.forbidden_keywords || taskSandboxes[selectedSandboxIndex]?.forbidden_keywords?.length === 0) && (!taskSandboxes[selectedSandboxIndex]?.required_keywords || taskSandboxes[selectedSandboxIndex]?.required_keywords?.length === 0)">
+                                                        Please add at least one forbidden or required keyword.
+                                                    </span>
                                                 </div>
                                             </div>
                                         </ng-container>
@@ -2027,7 +2128,11 @@
                                                 <div class="ai-config-label"><strong>Unit Test Script</strong></div>
                                                 <div class="ai-config-control">
                                                     <textarea class="form-control" rows="5" placeholder="Enter unit test script..."
+                                                        [class.is-invalid]="vlSubmitted && !taskSandboxes[selectedSandboxIndex]?.unit_test_script?.trim()"
                                                         [(ngModel)]="taskSandboxes[selectedSandboxIndex].unit_test_script" [ngModelOptions]="{standalone: true}" (ngModelChange)="revalidateIfNeeded()"></textarea>
+                                                    <span class="ai-inline-error" *ngIf="vlSubmitted && !taskSandboxes[selectedSandboxIndex]?.unit_test_script?.trim()">
+                                                        Unit Test Script is required.
+                                                    </span>
                                                 </div>
                                             </div>
                                         </ng-container>
@@ -2038,7 +2143,11 @@
                                                 <div class="ai-config-label"><strong>Master Query</strong></div>
                                                 <div class="ai-config-control">
                                                     <input type="text" class="form-control" placeholder="e.g SELECT name FROM marks WHERE score > 90;"
+                                                        [class.is-invalid]="vlSubmitted && !taskSandboxes[selectedSandboxIndex]?.master_query?.trim()"
                                                         [(ngModel)]="taskSandboxes[selectedSandboxIndex].master_query" [ngModelOptions]="{standalone: true}" (ngModelChange)="revalidateIfNeeded()">
+                                                    <span class="ai-inline-error" *ngIf="vlSubmitted && !taskSandboxes[selectedSandboxIndex]?.master_query?.trim()">
+                                                        Master Query is required.
+                                                    </span>
                                                 </div>
                                             </div>
                                         </ng-container>
@@ -2051,6 +2160,7 @@
                                                 <div class="ai-config-label"><strong>Time Limit</strong></div>
                                                 <div class="ai-config-control">
                                                     <input type="number" class="form-control" placeholder="Value in ms"
+                                                        [class.is-invalid]="vlSubmitted && !taskSandboxes[selectedSandboxIndex]?.time_limit && !taskSandboxes[selectedSandboxIndex]?.memory_limit"
                                                         [(ngModel)]="taskSandboxes[selectedSandboxIndex].time_limit" [ngModelOptions]="{standalone: true}" (ngModelChange)="revalidateIfNeeded()">
                                                 </div>
                                             </div>
@@ -2058,7 +2168,11 @@
                                                 <div class="ai-config-label"><strong>Memory Limit</strong></div>
                                                 <div class="ai-config-control">
                                                     <input type="number" class="form-control" placeholder="Limit in MB"
+                                                        [class.is-invalid]="vlSubmitted && !taskSandboxes[selectedSandboxIndex]?.time_limit && !taskSandboxes[selectedSandboxIndex]?.memory_limit"
                                                         [(ngModel)]="taskSandboxes[selectedSandboxIndex].memory_limit" [ngModelOptions]="{standalone: true}" (ngModelChange)="revalidateIfNeeded()">
+                                                    <span class="ai-inline-error" *ngIf="vlSubmitted && !taskSandboxes[selectedSandboxIndex]?.time_limit && !taskSandboxes[selectedSandboxIndex]?.memory_limit">
+                                                        Please enter a time or memory limit.
+                                                    </span>
                                                 </div>
                                             </div>
                                         </ng-container>
@@ -2120,6 +2234,7 @@
                                                 <div class="ai-config-label"><strong>Maximum Tokens</strong></div>
                                                 <div class="ai-config-control">
                                                     <ng-select [(ngModel)]="taskAgents[selectedTaskAgentIndex].guardrail_max_tokens" [ngModelOptions]="{standalone: true}" (ngModelChange)="revalidateIfNeeded()"
+                                                        [class.is-invalid]="vlSubmitted && !taskAgents[selectedTaskAgentIndex]?.guardrail_max_tokens"
                                                         [searchable]="false" [clearable]="false" placeholder="500">
                                                         <ng-option [value]="100">100</ng-option>
                                                         <ng-option [value]="250">250</ng-option>
@@ -2127,6 +2242,9 @@
                                                         <ng-option [value]="1000">1000</ng-option>
                                                         <ng-option [value]="2000">2000</ng-option>
                                                     </ng-select>
+                                                    <span class="ai-inline-error" *ngIf="vlSubmitted && !taskAgents[selectedTaskAgentIndex]?.guardrail_max_tokens">
+                                                        Maximum Tokens is required.
+                                                    </span>
                                                     <p class="ai-helper-text">Shared token budget for the whole attempt: includes agent replies and validation (scoring + feedback). Exceeding ends the task</p>
                                                 </div>
                                             </div>
@@ -2136,6 +2254,7 @@
                                                 <div class="ai-config-label"><strong>Maximum Responses</strong></div>
                                                 <div class="ai-config-control">
                                                     <ng-select [(ngModel)]="taskAgents[selectedTaskAgentIndex].guardrail_max_responses" [ngModelOptions]="{standalone: true}" (ngModelChange)="revalidateIfNeeded()"
+                                                        [class.is-invalid]="vlSubmitted && !taskAgents[selectedTaskAgentIndex]?.guardrail_max_responses"
                                                         [searchable]="false" [clearable]="false" placeholder="5">
                                                         <ng-option [value]="3">3</ng-option>
                                                         <ng-option [value]="5">5</ng-option>
@@ -2143,6 +2262,9 @@
                                                         <ng-option [value]="15">15</ng-option>
                                                         <ng-option [value]="20">20</ng-option>
                                                     </ng-select>
+                                                    <span class="ai-inline-error" *ngIf="vlSubmitted && !taskAgents[selectedTaskAgentIndex]?.guardrail_max_responses">
+                                                        Maximum Responses is required.
+                                                    </span>
                                                     <p class="ai-helper-text">Once the agent has sent this many replies, the conversation ends automatically. No further responses will be generated.</p>
                                                 </div>
                                             </div>
@@ -2152,10 +2274,14 @@
                                                 <div class="ai-config-label"><strong>Submission on Exhaustion</strong></div>
                                                 <div class="ai-config-control">
                                                     <ng-select [(ngModel)]="taskAgents[selectedTaskAgentIndex].submission_on_exhaustion" [ngModelOptions]="{standalone: true}" (ngModelChange)="revalidateIfNeeded()"
+                                                        [class.is-invalid]="vlSubmitted && !taskAgents[selectedTaskAgentIndex]?.submission_on_exhaustion"
                                                         [searchable]="false" [clearable]="false" placeholder="Select">
                                                         <ng-option value="auto_submit">Automatically submit as-is and mark task incomplete</ng-option>
                                                         <ng-option value="force_acknowledge">Force acknowledgement only (no auto-submit)</ng-option>
                                                     </ng-select>
+                                                    <span class="ai-inline-error" *ngIf="vlSubmitted && !taskAgents[selectedTaskAgentIndex]?.submission_on_exhaustion">
+                                                        Submission on Exhaustion is required.
+                                                    </span>
                                                     <p class="ai-helper-text">Determines system behavior when a student reaches the maximum allowed tokens or messages without completing validation.</p>
                                                 </div>
                                             </div>
@@ -2192,7 +2318,7 @@
                     <mat-icon>close</mat-icon>
                 </button>
             </div>
-            <div class="modal-body pt-3">
+            <div class="modal-body pt-3 ai-modal-capitalize">
                 <div class="form-group">
                     <label>Select an Agent</label>
                     <ng-select [(ngModel)]="addAgentSelectedId" [searchable]="true" [clearable]="true" placeholder="Choose an agent">
@@ -2238,7 +2364,7 @@
                     <mat-icon>close</mat-icon>
                 </button>
             </div>
-            <div class="modal-body pt-3">
+            <div class="modal-body pt-3 ai-modal-capitalize">
                 <div class="form-group">
                     <label>Select a Sandbox</label>
                     <ng-select [(ngModel)]="addSandboxSelected" [searchable]="false" [clearable]="true" placeholder="Choose a sandbox">

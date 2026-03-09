@@ -969,6 +969,76 @@ color: #545465;
   }
 }
 
+// Sandbox additional documents list
+.ai-sandbox-doc-list {
+  list-style: none;
+  padding: 0;
+  margin: 12px 0 0;
+
+  .ai-sandbox-doc-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 14px;
+    background: #f8f8fb;
+    border: 1px solid #e8e8ec;
+    border-radius: 8px;
+    margin-bottom: 8px;
+
+    .ai-sandbox-doc-info {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      min-width: 0;
+
+      .ai-sandbox-doc-icon {
+        width: 32px;
+        height: 32px;
+        flex-shrink: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        ::ng-deep svg {
+          width: 28px;
+          height: 28px;
+        }
+      }
+
+      .ai-sandbox-doc-name {
+        font-size: 13px;
+        font-weight: 500;
+        color: #333;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+    }
+
+    .ai-sandbox-doc-actions {
+      display: flex;
+      gap: 4px;
+      flex-shrink: 0;
+
+      button {
+        width: 32px;
+        height: 32px;
+        padding: 0;
+        min-width: unset;
+        line-height: 1;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        &:hover {
+          background: #eee;
+        }
+      }
+    }
+  }
+}
+
 .ai-guardrails-desc {
   font-family: var(--font-primary);
   font-size: 14px;
@@ -1040,16 +1110,44 @@ color: #545465;
 
 // Error Infobox at top of task editor
 .ai-error-infobox {
-  background: #FFF5F5;
-  border: 1px solid #E53E3E;
+  background: #F4776140;
+  box-shadow: 2px 2px 4px 0px #0000001A;
+
+  // border: 1px solid #E53E3E;
   border-radius: 8px;
   padding: 16px 20px;
   margin: 0 30px 0;
+  display: flex;
+  align-items: center;
+  gap: 20px;
 
   .ai-error-infobox-header {
-    color: #C53030;
+    color: #2B2A35;
     font-size: 14px;
     margin-bottom: 8px;
+    font-family: var(--font-primary);
+    font-weight: 700;
+    font-style: Bold;
+    font-size: 20px;
+    leading-trim: NONE;
+    line-height: 100%;
+    letter-spacing: 0%;
+    vertical-align: middle;
+
+    p{
+      margin-top: 10px;
+      font-family: var(--font-primary);
+      font-weight: 400;
+      font-style: Regular;
+      font-size: 14px;
+      leading-trim: NONE;
+      line-height: 100%;
+      letter-spacing: 0%;
+      vertical-align: middle;
+      color: var(--TG-Main-Black, #2B2A35);
+      margin-bottom: 0px;
+    }
+
   }
 
   .ai-error-infobox-list {
@@ -1064,8 +1162,17 @@ color: #545465;
       line-height: 1.5;
 
       .ai-error-tab-label {
-        color: #C53030;
-        font-weight: 600;
+        font-family: var(--font-primary);
+        font-family: DM Sans;
+        font-weight: 400;
+        font-style: Regular;
+        font-size: 14px;
+        leading-trim: NONE;
+        line-height: 100%;
+        letter-spacing: 0%;
+        vertical-align: middle;
+        color: var(--TG-Main-Black, #2B2A35);
+
       }
     }
   }
@@ -1102,6 +1209,25 @@ color: #545465;
 // Invalid field border
 .is-invalid, .form-control.is-invalid {
   border-color: #E53E3E !important;
+}
+
+// ng-select invalid border
+ng-select.is-invalid ::ng-deep .ng-select-container {
+  border-color: #E53E3E !important;
+}
+
+// quill editor invalid border
+quill-editor.is-invalid ::ng-deep .ql-container,
+quill-editor.is-invalid ::ng-deep .ql-toolbar {
+  border-color: #E53E3E !important;
+}
+
+// Capitalize agent & sandbox dialog option text
+.ai-modal-capitalize ::ng-deep {
+  .ng-value,
+  .ng-option {
+    text-transform: capitalize;
+  }
 }
 
 // Fix modal z-index - ensure modal dialog appears above backdrop

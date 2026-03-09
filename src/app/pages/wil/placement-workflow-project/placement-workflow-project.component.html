@@ -1,6 +1,84 @@
 <section class="form_main_container pt-0">
     <div class="left_side_bar">
         <mat-tab-group animationDuration="0ms" class="mat_tab_bordred mat_ink_hide">
+            <!-- Doc. Library Tab -->
+            <mat-tab>
+                <ng-template mat-tab-label>Doc. Library</ng-template>
+                <div class="history_container doc-library-container">
+                    <p class="doc-library-desc">Build the simulation's internal wiki. Upload reference materials, standard operating procedures, or external links for students to access independently during their tasks.</p>
+
+                    <div class="doc-library-folders">
+                        <div class="doc-folder" *ngFor="let folder of docLibraryFolders; let fi = index">
+                            <div class="doc-folder-header" (click)="folder.expanded = !folder.expanded">
+                                <div class="doc-folder-name">
+                                    <span>{{ folder.name }}</span>
+                                    <button type="button" mat-icon-button (click)="$event.stopPropagation(); openRenameFolderModal(fi)" data-toggle="modal" data-target="#renameFolderModal">
+                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <circle cx="12" cy="12" r="12" fill="#F8F8F8"/>
+                                            <path d="M14.5 7.50015C14.6313 7.36883 14.7872 7.26466 14.9588 7.19359C15.1304 7.12252 15.3143 7.08594 15.5 7.08594C15.6857 7.08594 15.8696 7.12252 16.0412 7.19359C16.2128 7.26466 16.3687 7.36883 16.5 7.50015C16.6313 7.63147 16.7355 7.78737 16.8066 7.95896C16.8776 8.13054 16.9142 8.31443 16.9142 8.50015C16.9142 8.68587 16.8776 8.86977 16.8066 9.04135C16.7355 9.21293 16.6313 9.36883 16.5 9.50015L9.75 16.2502L7 17.0002L7.75 14.2502L14.5 7.50015Z" stroke="black" stroke-linecap="round" stroke-linejoin="round"/>
+                                        </svg>
+                                    </button>
+                                    <button type="button" mat-icon-button (click)="$event.stopPropagation(); openDeleteFolderModal(fi)" data-toggle="modal" data-target="#deleteFolderModal">
+                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <circle cx="12" cy="12" r="12" fill="#F8F8F8"/>
+                                            <path fill-rule="evenodd" clip-rule="evenodd" d="M10.345 6.16797H13.3372C13.8881 6.16797 14.3346 6.61452 14.3346 7.16537V7.66654H15.8331C16.3839 7.66654 16.8305 8.11309 16.8305 8.66394V9.66135C16.8305 10.2122 16.3839 10.6587 15.8331 10.6587H15.7931L15.3343 16.1452C15.3343 16.6961 14.8878 17.1426 14.3369 17.1426H9.34993C8.79908 17.1426 8.35252 16.6961 8.35425 16.1867L7.89359 10.6587H7.85385C7.303 10.6587 6.85645 10.2122 6.85645 9.66135V8.66394C6.85645 8.11309 7.303 7.66654 7.85385 7.66654H9.34764V7.16537C9.34764 6.61452 9.79419 6.16797 10.345 6.16797ZM9.34807 16.1455L8.8925 10.6598H14.7905L14.3368 16.1041L14.3351 16.1455H9.34807ZM7.8535 9.66056V8.66316H15.8327V9.66056H7.8535ZM13.3422 7.16498V7.66368H10.35V7.16498H13.3422Z" fill="#2B2A35"/>
+                                        </svg>
+                                    </button>
+                                </div>
+                                <svg [class.expanded]="folder.expanded" class="doc-folder-chevron" width="14" height="8" viewBox="0 0 14 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M1 1L7 7L13 1" stroke="#2B2A35" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </div>
+                            <div class="doc-folder-body" *ngIf="folder.expanded">
+                                <!-- File List (sandbox style) -->
+                                <ul class="ai-sandbox-doc-list" *ngIf="folder.files?.length > 0">
+                                    <li *ngFor="let file of folder.files; let fii = index" class="ai-sandbox-doc-item">
+                                        <div class="ai-sandbox-doc-info">
+                                            <div class="ai-sandbox-doc-icon">
+                                                <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <path d="M18.6667 2.66669H8C7.29276 2.66669 6.61448 2.94764 6.11438 3.44774C5.61428 3.94783 5.33333 4.62611 5.33333 5.33335V26.6667C5.33333 27.3739 5.61428 28.0522 6.11438 28.5523C6.61448 29.0524 7.29276 29.3334 8 29.3334H24C24.7072 29.3334 25.3855 29.0524 25.8856 28.5523C26.3857 28.0522 26.6667 27.3739 26.6667 26.6667V10.6667L18.6667 2.66669Z" stroke="#999" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                                    <path d="M18.6667 2.66669V10.6667H26.6667" stroke="#999" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                                </svg>
+                                            </div>
+                                            <span class="ai-sandbox-doc-name">{{ file.name }}</span>
+                                        </div>
+                                        <div class="ai-sandbox-doc-actions">
+                                            <button type="button" mat-icon-button (click)="viewDocFile(fi, fii)" matTooltip="View">
+                                                <svg width="27" height="27" viewBox="0 0 27 27" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <circle cx="13.3438" cy="13.3438" r="13.3438" fill="#F8F8F8"/>
+                                                    <path d="M13.5889 9.13672C15.6646 9.13686 17.3621 10.1948 18.5781 11.3203C19.1812 11.8785 19.6493 12.4381 19.9658 12.8584C20.0438 12.962 20.1131 13.057 20.1719 13.1406C20.1083 13.227 20.034 13.3256 19.9492 13.4336C19.6172 13.8562 19.1308 14.4195 18.5137 14.9805C17.2652 16.1154 15.5667 17.1678 13.5889 17.168C11.6109 17.168 9.91161 16.1155 8.66309 14.9805C8.04601 14.4195 7.55958 13.8562 7.22754 13.4336C7.14271 13.3256 7.06851 13.227 7.00488 13.1406C7.06371 13.057 7.13291 12.962 7.21094 12.8584C7.52741 12.4381 7.99555 11.8785 8.59863 11.3203C9.81474 10.1947 11.5129 9.13672 13.5889 9.13672Z" stroke="#2B2A35" stroke-width="1.5"/>
+                                                    <circle cx="13.5884" cy="13.1529" r="1.97321" stroke="#2B2A35" stroke-width="1.5"/>
+                                                </svg>
+                                            </button>
+                                            <button type="button" mat-icon-button (click)="openDeleteFileModal(fi, fii)" matTooltip="Remove" data-toggle="modal" data-target="#deleteFileModal">
+                                                <svg width="27" height="27" viewBox="0 0 27 27" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <circle cx="13.3438" cy="13.3438" r="13.3438" fill="#F8F8F8"/>
+                                                    <path fill-rule="evenodd" clip-rule="evenodd" d="M11.5041 6.85938H14.8314C15.4439 6.85938 15.9405 7.35593 15.9405 7.96847V8.5241H17.6068C18.2194 8.5241 18.7159 9.02065 18.7159 9.63319V10.7423C18.7159 11.3548 18.2194 11.8514 17.6068 11.8514H17.5617L17.0515 17.953C17.0515 18.5656 16.5549 19.0621 15.9424 19.0621H10.3969C9.78439 19.0621 9.28784 18.5656 9.28975 17.9991L8.77744 11.8514H8.73409C8.12156 11.8514 7.625 11.3548 7.625 10.7423V9.63319C7.625 9.02065 8.12156 8.5241 8.73409 8.5241H10.395V7.96847C10.395 7.35593 10.8916 6.85938 11.5041 6.85938ZM10.3951 17.9534L9.88848 11.8534H16.4469L15.9424 17.9074L15.9405 17.9534H10.3951ZM8.73301 10.7421V9.63298H17.6057V10.7421H8.73301ZM14.8363 7.96816V8.52271H11.509V7.96816H14.8363Z" fill="#2B2A35"/>
+                                                </svg>
+                                            </button>
+                                        </div>
+                                    </li>
+                                </ul>
+                                <!-- Upload Area (sandbox style) -->
+                                <div class="ai-upload-area">
+                                    <p><strong>Upload Assets</strong><br><span>25MB size limit per file.</span></p>
+                                    <input type="file" class="ai-upload-input" (change)="onDocFileUpload($event, fi)" multiple>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button mat-button class="theme_btn btn_primary doc-create-folder-btn" (click)="createDocFolder()">
+                        <svg class="mr-1" width="19" height="19" viewBox="0 0 19 19" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M9.5 3.95825V15.0416" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M3.96094 9.5H15.0443" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                        Create New Folder
+                    </button>
+                </div>
+            </mat-tab>
+            <!-- Tasks Tab (hidden) -->
+            <ng-container *ngIf="false">
             <mat-tab>
                 <ng-template mat-tab-label>Tasks</ng-template>
                 <!-- <div class="search_header">
@@ -97,6 +175,7 @@
                     </div>
                 </div>
             </mat-tab>
+            </ng-container>
             <mat-tab>
                 <ng-template mat-tab-label>Workflows</ng-template>
                 <div class="history_container pt-4">
@@ -372,10 +451,6 @@
                                                             [queryParams]="{taskId: step._id, stepId: step.step_id, stage: stage, type:'project'}">
                                                             <span>Edit</span>
                                                         </a>
-                                                        <a mat-menu-item data-toggle="modal"
-                                                            data-target="#sendReminderModal" (click)="selectedTask = step;">
-                                                            <span>Send Reminder</span>
-                                                        </a>
                                                         <!-- <a *ngIf="!placementGroupDetails.is_publish" mat-menu-item
                                                             class="danger" (click)="deleteTask(step)">
                                                             <span>Delete==</span>
@@ -428,6 +503,49 @@
                                                                             stroke-width="2" stroke-linecap="round"
                                                                             stroke-linejoin="round" />
                                                                     </svg>
+                                                                </div>
+                                                            </div>
+                                                            <div class="task_status_card" *ngIf="step.completion_criteria === 'Work on Virtual Labs' && step?.agents?.length">
+                                                                <p>Agents</p>
+                                                                <h5>{{step?.agents?.length}}</h5>
+                                                                <div class="icon_container complete">
+                                                                    <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                                        <circle cx="11" cy="11" r="11" fill="#464BA8"/>
+                                                                        <path d="M16.3337 17V15.6667C16.3337 14.9594 16.0527 14.2811 15.5526 13.781C15.0525 13.281 14.3742 13 13.667 13H8.33366C7.62641 13 6.94814 13.281 6.44804 13.781C5.94794 14.2811 5.66699 14.9594 5.66699 15.6667V17" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                                                        <path d="M10.9997 10.3333C12.4724 10.3333 13.6663 9.13943 13.6663 7.66667C13.6663 6.19391 12.4724 5 10.9997 5C9.52692 5 8.33301 6.19391 8.33301 7.66667C8.33301 9.13943 9.52692 10.3333 10.9997 10.3333Z" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                                                    </svg>
+                                                                </div>
+                                                            </div>
+                                                            <div class="task_status_card" *ngIf="step.completion_criteria === 'Work on Virtual Labs' && step?.tokens_used">
+                                                                <p>Tokens Used</p>
+                                                                <h5>{{step?.tokens_used}}</h5>
+                                                                <div class="icon_container complete">
+                                                                    <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                                        <circle cx="11" cy="11" r="11" fill="#F2C94C"/>
+                                                                        <g clip-path="url(#clip0_2105_37863)">
+                                                                            <path d="M13.6663 13.6667L10.9997 11L8.33301 13.6667" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                                                            <path d="M11 11V17" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                                                            <path d="M16.5933 15.2584C17.2435 14.9039 17.7572 14.3429 18.0532 13.6641C18.3493 12.9853 18.4108 12.2272 18.2281 11.5095C18.0454 10.7918 17.629 10.1554 17.0444 9.70066C16.4599 9.24595 15.7406 8.99885 15 8.99836H14.16C13.9582 8.21786 13.5821 7.49325 13.0599 6.87902C12.5378 6.2648 11.8832 5.77693 11.1454 5.4521C10.4075 5.12727 9.60567 4.97393 8.80005 5.00362C7.99443 5.0333 7.20602 5.24523 6.49409 5.62347C5.78216 6.00172 5.16525 6.53643 4.68972 7.18742C4.2142 7.8384 3.89243 8.58872 3.74863 9.38196C3.60482 10.1752 3.64271 10.9907 3.85945 11.7672C4.07619 12.5437 4.46613 13.2609 4.99997 13.865" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                                                            <path d="M13.6663 13.6667L10.9997 11L8.33301 13.6667" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                                                        </g>
+                                                                        <defs>
+                                                                            <clipPath id="clip0_2105_37863">
+                                                                                <rect width="16" height="16" fill="white" transform="translate(3 3)"/>
+                                                                            </clipPath>
+                                                                        </defs>
+                                                                    </svg>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="right vl-agent-avatars" *ngIf="step.completion_criteria === 'Work on Virtual Labs' && step?.agents?.length">
+                                                            <div class="assigned_user_profiles">
+                                                                <ng-container *ngFor="let agent of step.agents; let ai = index">
+                                                                    <div class="profile" *ngIf="ai < 3" [title]="agent.name">
+                                                                        <img [src]="agent.image_url || 'assets/img/default-ai-agent.svg'" [alt]="agent.name">
+                                                                    </div>
+                                                                </ng-container>
+                                                                <div class="profile" *ngIf="step.agents.length > 3">
+                                                                    <span>+{{ step.agents.length - 3 }}</span>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -582,10 +700,6 @@
                                                             [queryParams]="{taskId: step._id, stepId: step.step_id, stage: stage, type:'project'}">
                                                             <span>Edit</span>
                                                         </a>
-                                                        <a mat-menu-item data-toggle="modal"
-                                                            data-target="#sendReminderModal" (click)="selectedTask = step;">
-                                                            <span>Send Reminder</span>
-                                                        </a>
 
                                                         <!-- <a *ngIf="!placementGroupDetails.is_publish" mat-menu-item
                                                             class="danger" (click)="deleteTask(step)">
@@ -639,6 +753,49 @@
                                                                             stroke-width="2" stroke-linecap="round"
                                                                             stroke-linejoin="round" />
                                                                     </svg>
+                                                                </div>
+                                                            </div>
+                                                            <div class="task_status_card" *ngIf="step.completion_criteria === 'Work on Virtual Labs' && step?.agents?.length">
+                                                                <p>Agents</p>
+                                                                <h5>{{step?.agents?.length}}</h5>
+                                                                <div class="icon_container complete">
+                                                                    <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                                        <circle cx="11" cy="11" r="11" fill="#464BA8"/>
+                                                                        <path d="M16.3337 17V15.6667C16.3337 14.9594 16.0527 14.2811 15.5526 13.781C15.0525 13.281 14.3742 13 13.667 13H8.33366C7.62641 13 6.94814 13.281 6.44804 13.781C5.94794 14.2811 5.66699 14.9594 5.66699 15.6667V17" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                                                        <path d="M10.9997 10.3333C12.4724 10.3333 13.6663 9.13943 13.6663 7.66667C13.6663 6.19391 12.4724 5 10.9997 5C9.52692 5 8.33301 6.19391 8.33301 7.66667C8.33301 9.13943 9.52692 10.3333 10.9997 10.3333Z" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                                                    </svg>
+                                                                </div>
+                                                            </div>
+                                                            <div class="task_status_card" *ngIf="step.completion_criteria === 'Work on Virtual Labs' && step?.tokens_used">
+                                                                <p>Tokens Used</p>
+                                                                <h5>{{step?.tokens_used}}</h5>
+                                                                <div class="icon_container complete">
+                                                                    <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                                        <circle cx="11" cy="11" r="11" fill="#F2C94C"/>
+                                                                        <g clip-path="url(#clip0_2105_37863)">
+                                                                            <path d="M13.6663 13.6667L10.9997 11L8.33301 13.6667" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                                                            <path d="M11 11V17" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                                                            <path d="M16.5933 15.2584C17.2435 14.9039 17.7572 14.3429 18.0532 13.6641C18.3493 12.9853 18.4108 12.2272 18.2281 11.5095C18.0454 10.7918 17.629 10.1554 17.0444 9.70066C16.4599 9.24595 15.7406 8.99885 15 8.99836H14.16C13.9582 8.21786 13.5821 7.49325 13.0599 6.87902C12.5378 6.2648 11.8832 5.77693 11.1454 5.4521C10.4075 5.12727 9.60567 4.97393 8.80005 5.00362C7.99443 5.0333 7.20602 5.24523 6.49409 5.62347C5.78216 6.00172 5.16525 6.53643 4.68972 7.18742C4.2142 7.8384 3.89243 8.58872 3.74863 9.38196C3.60482 10.1752 3.64271 10.9907 3.85945 11.7672C4.07619 12.5437 4.46613 13.2609 4.99997 13.865" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                                                            <path d="M13.6663 13.6667L10.9997 11L8.33301 13.6667" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                                                        </g>
+                                                                        <defs>
+                                                                            <clipPath id="clip0_2105_37863">
+                                                                                <rect width="16" height="16" fill="white" transform="translate(3 3)"/>
+                                                                            </clipPath>
+                                                                        </defs>
+                                                                    </svg>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="right vl-agent-avatars" *ngIf="step.completion_criteria === 'Work on Virtual Labs' && step?.agents?.length">
+                                                            <div class="assigned_user_profiles">
+                                                                <ng-container *ngFor="let agent of step.agents; let ai = index">
+                                                                    <div class="profile" *ngIf="ai < 3" [title]="agent.name">
+                                                                        <img [src]="agent.image_url || 'assets/img/default-ai-agent.svg'" [alt]="agent.name">
+                                                                    </div>
+                                                                </ng-container>
+                                                                <div class="profile" *ngIf="step.agents.length > 3">
+                                                                    <span>+{{ step.agents.length - 3 }}</span>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -1303,4 +1460,141 @@ aria-labelledby="exampleModalLabel" aria-hidden="true">
         </div>
     </div>
 </div>
+</div>
+
+<!-- Rename Folder Modal -->
+<div class="modal fade bsModal ch_modal" id="renameFolderModal" tabindex="-1" role="dialog" aria-hidden="true">
+       <div class="modal-dialog modal-dialog-centered" role="document" style="max-width:700px">
+        <div class="modal-content"  style="max-height: calc(100vh - 150px) !important; overflow:  hidden;padding: 15px;" >
+            <div class="modal-header">
+                 <h4 class="doc-modal-title">Rename Folder</h4>
+                <button type="button" mat-icon-button id="closeModal" class="close" data-dismiss="modal"
+                    aria-label="Close">
+                    <mat-icon>close</mat-icon>
+                </button>
+            </div>
+            <div class="modal-body pt-3 d-flex flex-column gap-2 align-items-center justify-content-center">
+
+                <div class="row">
+                    <div class="form-group mb-4">
+                        <label class="doc-modal-label">Folder Name</label>
+                        <input type="text" class="form-control doc-modal-input" [(ngModel)]="renameFolderName" [ngModelOptions]="{standalone: true}" placeholder="Folder Name">
+                    </div>
+                </div>
+
+            </div>
+            <div class="modal-footer justify-content-around">
+                 <button mat-button type="button" class="theme_btn btn_outline_primary doc-modal-btn" data-dismiss="modal">Cancel</button>
+                <button mat-button type="button" class="theme_btn btn_primary doc-modal-btn" data-dismiss="modal" (click)="confirmRenameFolder()">Save</button>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+
+<!-- Delete Folder Modal -->
+<div class="modal fade bsModal ch_modal" id="deleteFolderModal" tabindex="-1" role="dialog" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document" style="max-width:700px">
+        <div class="modal-content"  style="max-height: calc(100vh - 150px) !important; overflow: hidden;padding: 15px;" >
+            <div class="modal-header">
+                <button type="button" mat-icon-button id="closeModal" class="close" data-dismiss="modal"
+                    aria-label="Close">
+                    <mat-icon>close</mat-icon>
+                </button>
+            </div>
+            <div class="modal-body pt-3 d-flex flex-column gap-2 align-items-center justify-content-center">
+
+                <svg width="126" height="101" viewBox="0 0 126 101" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <g clip-path="url(#clip0_4405_48069)">
+                    <path d="M95.371 100.166L11.656 100.196C7.45041 100.197 3.68314 98.008 1.57906 94.3402C0.526894 92.5061 0.000693685 90.4941 6.85071e-07 88.4817C-0.000692315 86.4695 0.52438 84.4569 1.57504 82.6223L43.4059 5.92095C45.5077 2.25144 49.2735 0.0600592 53.4791 0.0585945C57.6848 0.0571297 61.452 2.24588 63.5564 5.91393L105.445 82.5956C106.495 84.4249 107.02 86.4345 107.02 88.4457C107.02 90.4568 106.495 92.4692 105.444 94.304C103.342 97.9733 99.5766 100.165 95.371 100.166ZM1.0523 88.4803C1.05217 90.312 10.2898 86.365 11.2468 88.0334C13.1611 91.3702 7.82944 99.1393 11.6557 99.138C11.6557 99.138 102.623 97.1137 104.534 93.7756C105.49 92.1065 105.968 90.2754 105.967 88.4447C105.967 86.6141 105.488 84.7836 104.531 83.1152L62.6416 6.43349C60.7327 3.1062 57.3057 1.11485 53.4795 1.11619C49.655 1.11752 1.05245 86.6483 1.0523 88.4803Z" fill="#3F3D56"/>
+                    <path d="M77.9031 83.2511C99.0694 83.2511 116.228 65.9683 116.228 44.649C116.228 23.3296 99.0694 6.04688 77.9031 6.04688C56.7368 6.04688 39.5781 23.3296 39.5781 44.649C39.5781 65.9683 56.7368 83.2511 77.9031 83.2511Z" fill="#464BA8"/>
+                    <path d="M72.2285 53.8378L69.7828 44.4817L71.6023 44.0959C73.2458 43.7474 74.7905 43.3177 76.2366 42.8067C77.7136 42.2482 78.954 41.5354 79.9578 40.6684C81.0008 39.793 81.7363 38.7171 82.1642 37.4406C82.623 36.1166 82.6561 34.5149 82.2633 32.6355C81.9196 30.9911 81.2729 29.6562 80.3231 28.6309C79.4124 27.5973 78.2655 26.9 76.8824 26.539C75.5384 26.1698 74.0447 26.1593 72.4013 26.5078C70.7578 26.8562 69.395 27.4723 68.3129 28.3559C67.2308 29.2396 66.4758 30.3197 66.0479 31.5962C65.6118 32.8335 65.5574 34.2353 65.8847 35.8015L61.189 36.797C60.6981 34.4478 60.7968 32.2802 61.485 30.2942C62.2125 28.3 63.4326 26.6102 65.1454 25.2248C66.8582 23.8395 68.9864 22.8771 71.5298 22.3379C74.0733 21.7986 76.4255 21.811 78.5866 22.375C80.7477 22.9391 82.5643 24.0055 84.0363 25.5743C85.5084 27.1431 86.5021 29.1608 87.0176 31.6275C87.6232 34.5249 87.488 37.0069 86.6123 39.0735C85.7756 41.1318 84.3672 42.8002 82.3868 44.0787C80.4065 45.3572 78.0077 46.2952 75.1903 46.8925L75.9263 53.0538L72.2285 53.8378ZM76.6325 65.2321C75.7325 65.4229 74.8844 65.2756 74.0883 64.7902C73.3231 64.2573 72.8464 63.5406 72.6582 62.6401C72.47 61.7395 72.6235 60.9097 73.1186 60.1504C73.6529 59.3829 74.3701 58.9038 75.2701 58.713C76.1701 58.5222 76.9986 58.6736 77.7556 59.1673C78.5126 59.6611 78.9852 60.3582 79.1734 61.2587C79.3616 62.1593 79.2122 63.0087 78.7252 63.8071C78.23 64.5663 77.5325 65.0413 76.6325 65.2321Z" fill="white"/>
+                    </g>
+                    <defs>
+                    <clipPath id="clip0_4405_48069">
+                    <rect width="126" height="101" fill="white"/>
+                    </clipPath>
+                    </defs>
+                </svg>
+
+                <h2 class="doc-modal-heading mt-3">Are you sure you want to delete this folder?</h2>
+                <p class="doc-modal-subtext mt-2">All files uploaded under this folder will also be removed</p>
+
+                <!-- <p class="m-0 text-center">Only the history log will be removed. The actual conversation between the <br /> student and the agent will not be removed.</p> -->
+            </div>
+            <div class="modal-footer justify-content-around">
+                <button mat-button type="button" class="theme_btn btn_outline_primary doc-modal-btn" data-dismiss="modal">Cancel</button>
+                <button mat-button type="button" class="theme_btn btn_primary doc-modal-btn" data-dismiss="modal" (click)="confirmDeleteFolder()">Proceed</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Delete File Modal -->
+<div class="modal fade bsModal ch_modal" id="deleteFileModal" tabindex="-1" role="dialog" aria-hidden="true">
+
+       <div class="modal-dialog modal-dialog-centered" role="document" style="max-width:700px">
+        <div class="modal-content"  style="max-height: calc(100vh - 150px) !important; overflow:  hidden;padding: 15px;" >
+            <div class="modal-header">
+                <button type="button" mat-icon-button id="closeModal" class="close" data-dismiss="modal"
+                    aria-label="Close">
+                    <mat-icon>close</mat-icon>
+                </button>
+            </div>
+            <div class="modal-body pt-3 d-flex flex-column gap-2 align-items-center justify-content-center">
+
+                <svg width="126" height="101" viewBox="0 0 126 101" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <g clip-path="url(#clip0_4405_48069)">
+                <path d="M95.371 100.166L11.656 100.196C7.45041 100.197 3.68314 98.008 1.57906 94.3402C0.526894 92.5061 0.000693685 90.4941 6.85071e-07 88.4817C-0.000692315 86.4695 0.52438 84.4569 1.57504 82.6223L43.4059 5.92095C45.5077 2.25144 49.2735 0.0600592 53.4791 0.0585945C57.6848 0.0571297 61.452 2.24588 63.5564 5.91393L105.445 82.5956C106.495 84.4249 107.02 86.4345 107.02 88.4457C107.02 90.4568 106.495 92.4692 105.444 94.304C103.342 97.9733 99.5766 100.165 95.371 100.166ZM1.0523 88.4803C1.05217 90.312 10.2898 86.365 11.2468 88.0334C13.1611 91.3702 7.82944 99.1393 11.6557 99.138C11.6557 99.138 102.623 97.1137 104.534 93.7756C105.49 92.1065 105.968 90.2754 105.967 88.4447C105.967 86.6141 105.488 84.7836 104.531 83.1152L62.6416 6.43349C60.7327 3.1062 57.3057 1.11485 53.4795 1.11619C49.655 1.11752 1.05245 86.6483 1.0523 88.4803Z" fill="#3F3D56"/>
+                <path d="M77.9031 83.2511C99.0694 83.2511 116.228 65.9683 116.228 44.649C116.228 23.3296 99.0694 6.04688 77.9031 6.04688C56.7368 6.04688 39.5781 23.3296 39.5781 44.649C39.5781 65.9683 56.7368 83.2511 77.9031 83.2511Z" fill="#464BA8"/>
+                <path d="M72.2285 53.8378L69.7828 44.4817L71.6023 44.0959C73.2458 43.7474 74.7905 43.3177 76.2366 42.8067C77.7136 42.2482 78.954 41.5354 79.9578 40.6684C81.0008 39.793 81.7363 38.7171 82.1642 37.4406C82.623 36.1166 82.6561 34.5149 82.2633 32.6355C81.9196 30.9911 81.2729 29.6562 80.3231 28.6309C79.4124 27.5973 78.2655 26.9 76.8824 26.539C75.5384 26.1698 74.0447 26.1593 72.4013 26.5078C70.7578 26.8562 69.395 27.4723 68.3129 28.3559C67.2308 29.2396 66.4758 30.3197 66.0479 31.5962C65.6118 32.8335 65.5574 34.2353 65.8847 35.8015L61.189 36.797C60.6981 34.4478 60.7968 32.2802 61.485 30.2942C62.2125 28.3 63.4326 26.6102 65.1454 25.2248C66.8582 23.8395 68.9864 22.8771 71.5298 22.3379C74.0733 21.7986 76.4255 21.811 78.5866 22.375C80.7477 22.9391 82.5643 24.0055 84.0363 25.5743C85.5084 27.1431 86.5021 29.1608 87.0176 31.6275C87.6232 34.5249 87.488 37.0069 86.6123 39.0735C85.7756 41.1318 84.3672 42.8002 82.3868 44.0787C80.4065 45.3572 78.0077 46.2952 75.1903 46.8925L75.9263 53.0538L72.2285 53.8378ZM76.6325 65.2321C75.7325 65.4229 74.8844 65.2756 74.0883 64.7902C73.3231 64.2573 72.8464 63.5406 72.6582 62.6401C72.47 61.7395 72.6235 60.9097 73.1186 60.1504C73.6529 59.3829 74.3701 58.9038 75.2701 58.713C76.1701 58.5222 76.9986 58.6736 77.7556 59.1673C78.5126 59.6611 78.9852 60.3582 79.1734 61.2587C79.3616 62.1593 79.2122 63.0087 78.7252 63.8071C78.23 64.5663 77.5325 65.0413 76.6325 65.2321Z" fill="white"/>
+                </g>
+                <defs>
+                <clipPath id="clip0_4405_48069">
+                <rect width="126" height="101" fill="white"/>
+                </clipPath>
+                </defs>
+                </svg>
+
+                 <h2 class="m-0 text-center">Are you sure you want to delete this file?</h2>
+                <p class="m-0 text-center">{{ deleteFileName }}</p>
+
+                <!-- <p class="m-0 text-center">Only the history log will be removed. The actual conversation between the <br /> student and the agent will not be removed.</p> -->
+            </div>
+            <div class="modal-footer justify-content-around">
+                 <button mat-button type="button" class="theme_btn btn_outline_primary" data-dismiss="modal">Cancel</button>
+                <button mat-button type="button" class="theme_btn btn_primary" data-dismiss="modal" (click)="confirmDeleteFile()">Proceed</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Import while Published Modal -->
+<div class="modal fade bsModal ch_modal" id="importPublishedModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document" style="max-width:700px">
+        <div class="modal-content" style="max-height: calc(100vh - 150px) !important; overflow: hidden; padding: 15px;">
+            <div class="modal-header">
+                <button type="button" mat-icon-button class="close" data-dismiss="modal" aria-label="Close">
+                    <mat-icon>close</mat-icon>
+                </button>
+            </div>
+            <div class="modal-body pt-3 d-flex flex-column gap-2 align-items-center justify-content-center">
+                <svg width="126" height="101" viewBox="0 0 126 101" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <g clip-path="url(#clip0_import_p)">
+                        <path d="M95.371 100.166L11.656 100.196C7.45041 100.197 3.68314 98.008 1.57906 94.3402C0.526894 92.5061 0.000693685 90.4941 6.85071e-07 88.4817C-0.000692315 86.4695 0.52438 84.4569 1.57504 82.6223L43.4059 5.92095C45.5077 2.25144 49.2735 0.0600592 53.4791 0.0585945C57.6848 0.0571297 61.452 2.24588 63.5564 5.91393L105.445 82.5956C106.495 84.4249 107.02 86.4345 107.02 88.4457C107.02 90.4568 106.495 92.4692 105.444 94.304C103.342 97.9733 99.5766 100.165 95.371 100.166Z" fill="#3F3D56"/>
+                        <path d="M77.9031 83.2511C99.0694 83.2511 116.228 65.9683 116.228 44.649C116.228 23.3296 99.0694 6.04688 77.9031 6.04688C56.7368 6.04688 39.5781 23.3296 39.5781 44.649C39.5781 65.9683 56.7368 83.2511 77.9031 83.2511Z" fill="#464BA8"/>
+                        <path d="M72.2285 53.8378L69.7828 44.4817L71.6023 44.0959C73.2458 43.7474 74.7905 43.3177 76.2366 42.8067C77.7136 42.2482 78.954 41.5354 79.9578 40.6684C81.0008 39.793 81.7363 38.7171 82.1642 37.4406C82.623 36.1166 82.6561 34.5149 82.2633 32.6355C81.9196 30.9911 81.2729 29.6562 80.3231 28.6309C79.4124 27.5973 78.2655 26.9 76.8824 26.539C75.5384 26.1698 74.0447 26.1593 72.4013 26.5078C70.7578 26.8562 69.395 27.4723 68.3129 28.3559C67.2308 29.2396 66.4758 30.3197 66.0479 31.5962C65.6118 32.8335 65.5574 34.2353 65.8847 35.8015L61.189 36.797C60.6981 34.4478 60.7968 32.2802 61.485 30.2942C62.2125 28.3 63.4326 26.6102 65.1454 25.2248C66.8582 23.8395 68.9864 22.8771 71.5298 22.3379C74.0733 21.7986 76.4255 21.811 78.5866 22.375C80.7477 22.9391 82.5643 24.0055 84.0363 25.5743C85.5084 27.1431 86.5021 29.1608 87.0176 31.6275C87.6232 34.5249 87.488 37.0069 86.6123 39.0735C85.7756 41.1318 84.3672 42.8002 82.3868 44.0787C80.4065 45.3572 78.0077 46.2952 75.1903 46.8925L75.9263 53.0538L72.2285 53.8378ZM76.6325 65.2321C75.7325 65.4229 74.8844 65.2756 74.0883 64.7902C73.3231 64.2573 72.8464 63.5406 72.6582 62.6401C72.47 61.7395 72.6235 60.9097 73.1186 60.1504C73.6529 59.3829 74.3701 58.9038 75.2701 58.713C76.1701 58.5222 76.9986 58.6736 77.7556 59.1673C78.5126 59.6611 78.9852 60.3582 79.1734 61.2587C79.3616 62.1593 79.2122 63.0087 78.7252 63.8071C78.23 64.5663 77.5325 65.0413 76.6325 65.2321Z" fill="white"/>
+                    </g>
+                    <defs><clipPath id="clip0_import_p"><rect width="126" height="101" fill="white"/></clipPath></defs>
+                </svg>
+                <h2 class="m-0 text-center">Are you sure you want to overwrite existing tasks?</h2>
+            </div>
+            <div class="modal-footer justify-content-around">
+                <button mat-button type="button" class="theme_btn btn_outline_primary" data-dismiss="modal">Cancel</button>
+                <button mat-button type="button" class="theme_btn btn_primary" data-dismiss="modal" (click)="confirmImportPublished()">Proceed</button>
+            </div>
+        </div>
+    </div>
 </div>

@@ -763,6 +763,9 @@ export class PlacementWorkflowCreateTaskComponent implements OnInit {
     if (this.selectedCompletionCriteria === this.completionCriteria.workOnVirtualLabs && payload.length) {
       payload[0].formElement['agents'] = this.taskAgents.map(agent => ({
         agent_id: agent._id,
+        name: agent.name,
+        title: agent.title,
+        image_url: agent.image_url,
         agent_output: agent.agent_output,
         initiation_message: agent.initiation_message,
         subsequent_messages: agent.subsequent_messages,
@@ -824,7 +827,8 @@ export class PlacementWorkflowCreateTaskComponent implements OnInit {
             if (response.status == HttpResponseCode.SUCCESS) {
               this.service.showMessage({message: response.msg});
               this.router.navigate([URL], navigationExtras);
-              // this.location.back();
+            } else {
+              this.service.showMessage({message: response.msg || 'Failed to create task'});
             }
           })
         } else {
@@ -842,8 +846,9 @@ export class PlacementWorkflowCreateTaskComponent implements OnInit {
           this.service.editTask(payload[0].formElement).subscribe((response: any) => {
             if (response.status == HttpResponseCode.SUCCESS) {
               this.router.navigate([URL], navigationExtras);
-              // this.location.back();
               this.service.showMessage({message: response.msg});
+            } else {
+              this.service.showMessage({message: response.msg || 'Failed to update task'});
             }
           })
         }
@@ -925,9 +930,10 @@ export class PlacementWorkflowCreateTaskComponent implements OnInit {
               _id: a.agent_id,
               name: a.name || '',
               title: a.title || '',
+              image_url: a.image_url || '',
               agent_output: a.agent_output || 'preset',
               initiation_message: a.initiation_message || '',
-              subsequent_messages: a.subsequent_messages || [],
+              subsequent_messages: (a.subsequent_messages && a.subsequent_messages.length > 0) ? a.subsequent_messages : [''],
               action_on_final: a.action_on_final || 'repeat',
               select_llm: a.select_llm || '',
               agenda: a.agenda || '',
@@ -1122,8 +1128,53 @@ export class PlacementWorkflowCreateTaskComponent implements OnInit {
     }
   
     viewFile(index, file){
-      console.log("index, file", index, file)
       window.open(file.url);
+    }
+
+    // === Sandbox Additional Documents ===
+    uploadSandboxDoc(event: any) {
+      const fileInput = event.target;
+      const fileList: FileList = fileInput.files;
+      if (fileList.length === 0) return;
+
+      const sandbox = this.taskSandboxes[this.selectedSandboxIndex];
+      if (!sandbox) return;
+      if (!sandbox.additional_documents) sandbox.additional_documents = [];
+
+      const fileArray = Array.from(fileList);
+      if (fileArray.some(file => file.size > 5242880)) {
+        this.service.showMessage({ message: 'Please select file less than 5 MB' });
+        fileInput.value = '';
+        return;
+      }
+
+      fileArray.forEach((file) => {
+        const formData = new FormData();
+        formData.append('media', file);
+        this.service.uploadOthersMedia(formData).subscribe((resp: any) => {
+          sandbox.additional_documents.push(resp);
+        });
+      });
+      fileInput.value = '';
+    }
+
+    removeSandboxDoc(docIndex: number) {
+      const sandbox = this.taskSandboxes[this.selectedSandboxIndex];
+      if (!sandbox || !sandbox.additional_documents) return;
+      const doc = sandbox.additional_documents[docIndex];
+      this.service.deleteFileS3({ file_url: doc.url }).subscribe(res => {
+        if (res.status == HttpResponseCode.SUCCESS) {
+          sandbox.additional_documents.splice(docIndex, 1);
+        } else {
+          this.service.showMessage({ message: res.msg });
+        }
+      }, err => {
+        this.service.showMessage({ message: err.error?.errors?.msg || 'Something went wrong' });
+      });
+    }
+
+    viewSandboxDoc(doc: any) {
+      window.open(doc.url);
     }
 
     optionShowEmail(unlockTaskOn: any): boolean {
@@ -1166,10 +1217,10 @@ export class PlacementWorkflowCreateTaskComponent implements OnInit {
 
     // === Tab 0: Basic Info ===
     if (!nameVal || nameVal.length < 3) {
-      errors.push({ message: 'Title is required (min 3 characters).', tab: 0 });
+      errors.push({ message: 'Title is required.', tab: 0 });
     }
     if (!descVal || descVal.length < 3) {
-      errors.push({ message: 'Description is required (min 3 characters).', tab: 0 });
+      errors.push({ message: 'Description is required.', tab: 0 });
     }
     if (this.createTask.get('required_activity')?.value === null || this.createTask.get('required_activity')?.value === undefined) {
       errors.push({ message: 'Please select a Required Activity.', tab: 0 });
@@ -1184,8 +1235,8 @@ export class PlacementWorkflowCreateTaskComponent implements OnInit {
           errors.push({ message: `Missing Initiation Message for agent "${agent.name}".`, tab: 1 });
         }
         if (agent.agent_output === 'preset') {
-          if (!agent.subsequent_messages || agent.subsequent_messages.length === 0) {
-            errors.push({ message: `Preset Mode requires at least 1 predefined message for "${agent.name}".`, tab: 1 });
+          if (!agent.subsequent_messages || agent.subsequent_messages.length === 0 || !agent.subsequent_messages[0]?.trim()) {
+            errors.push({ message: `Agent's First Response is required for "${agent.name}".`, tab: 1 });
           }
         }
         if (agent.agent_output === 'ai' || agent.action_on_final === 'roleplay') {
@@ -1210,10 +1261,16 @@ export class PlacementWorkflowCreateTaskComponent implements OnInit {
       errors.push({ message: 'Sandbox count invalid: Please assign at least 1 sandbox.', tab: 2 });
     } else if (this.taskSandboxes.length > 4) {
       errors.push({ message: 'Sandbox count invalid: Maximum 4 sandboxes allowed.', tab: 2 });
+    } else {
+      const gradedCount = this.taskSandboxes.filter(sb => sb.allow_grading).length;
+      if (gradedCount === 0) {
+        errors.push({ message: 'Sandbox state invalid: Please allow at least 1 sandbox to be graded.', tab: 2 });
+      }
     }
 
     // === Tab 3: Validation ===
-    for (const sb of this.taskSandboxes) {
+    const gradableSandboxes = this.taskSandboxes.filter(sb => sb.allow_grading);
+    for (const sb of gradableSandboxes) {
       if (!sb.validation_mode) {
         errors.push({ message: `Please select a validation mode for sandbox "${sb.name}".`, tab: 3 });
         continue;
@@ -1336,9 +1393,10 @@ export class PlacementWorkflowCreateTaskComponent implements OnInit {
       _id: agent._id,
       name: agent.name || agent.agent_name || '',
       title: agent.title || '',
+      image_url: agent.image_url || '',
       agent_output: 'preset',
       initiation_message: '',
-      subsequent_messages: [],
+      subsequent_messages: [''],
       action_on_final: 'repeat',
       select_llm: '',
       agenda: '',
@@ -1394,6 +1452,7 @@ export class PlacementWorkflowCreateTaskComponent implements OnInit {
   }
 
   removeSubsequentMessage(agentIndex: number, msgIndex: number) {
+    if (msgIndex === 0) return; // First Response is mandatory, cannot remove
     this.taskAgents[agentIndex]?.subsequent_messages?.splice(msgIndex, 1);
   }
 
@@ -1443,6 +1502,10 @@ export class PlacementWorkflowCreateTaskComponent implements OnInit {
     }
     this.removeSandboxIndex = null;
     this.revalidateIfNeeded();
+  }
+
+  get gradableSandboxes() {
+    return this.taskSandboxes.filter(sb => sb.allow_grading);
   }
 
   selectSandbox(index: number) {

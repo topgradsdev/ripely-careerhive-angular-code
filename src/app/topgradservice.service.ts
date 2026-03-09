@@ -6162,5 +6162,25 @@ checkStudentAlreadyPlaced(data: any): Observable<any> {
     return this.http.post(API_URL, data).pipe(map(res => res));
   }
 
+  createDocFolder(data: any): Observable<any> {
+    let API_URL = `${this.SERVER}ad-doc-fldr`;
+    return this.http.post(API_URL, data).pipe(map(res => res));
+  }
+
+  getDocFolders(data: any): Observable<any> {
+    let API_URL = `${this.SERVER}get-doc-fldrs`;
+    return this.http.post(API_URL, data).pipe(map(res => res));
+  }
+
+  updateDocFolder(data: any): Observable<any> {
+    let API_URL = `${this.SERVER}edt-doc-fldr`;
+    return this.http.post(API_URL, data).pipe(map(res => res));
+  }
+
+  deleteDocFolder(data: any): Observable<any> {
+    let API_URL = `${this.SERVER}dlt-doc-fldr`;
+    return this.http.post(API_URL, data).pipe(map(res => res));
+  }
+
 }
 
