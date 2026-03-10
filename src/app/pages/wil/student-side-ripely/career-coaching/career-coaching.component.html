@@ -1,0 +1,102 @@
+<div class="coaching-page">
+  <div class="page-card">
+    <!-- Header -->
+    <h1 class="page-title">Career Coaching</h1>
+    <p class="page-sub">Get personalized guidance from AI-powered career coaches and mentors</p>
+
+    <!-- Tabs -->
+    <div class="coaching-tabs">
+      <button class="tab-btn" [class.active]="activeTab === 'coaches'" (click)="setTab('coaches')">
+        <i class="fa fa-users"></i> Coaches
+      </button>
+      <button class="tab-btn" [class.active]="activeTab === 'resources'" (click)="setTab('resources')">
+        <i class="fa fa-book"></i> Resources
+      </button>
+    </div>
+
+    <!-- Coaches Tab -->
+    <div *ngIf="activeTab === 'coaches'" class="coaches-content">
+      <div class="agents-grid">
+        <div *ngFor="let agent of agents"
+             class="agent-card"
+             [class.unavailable]="!agent.available"
+             (click)="openChat(agent)">
+          <div class="agent-card-top">
+            <div class="agent-avatar">{{ agent.avatar }}</div>
+            <div class="agent-status" [class.online]="agent.available">
+              {{ agent.available ? 'Online' : 'Offline' }}
+            </div>
+          </div>
+          <div class="agent-info">
+            <h3>{{ agent.name }}</h3>
+            <div class="agent-role">{{ agent.role }}</div>
+            <div class="agent-spec">{{ agent.specialization }}</div>
+            <p class="agent-desc">{{ agent.description }}</p>
+          </div>
+          <div class="agent-skills">
+            <span *ngFor="let skill of agent.skills" class="agent-skill-tag">{{ skill }}</span>
+          </div>
+          <div class="agent-footer">
+            <div class="agent-rating">
+              <span class="stars">
+                <i *ngFor="let s of getStars(agent.rating)" class="fa fa-star"></i>
+              </span>
+              <span class="rating-num">{{ agent.rating }}</span>
+            </div>
+            <div class="agent-sessions">{{ agent.sessions }} sessions</div>
+          </div>
+          <button class="agent-btn" [disabled]="!agent.available">
+            {{ agent.available ? 'Start Chat' : 'Unavailable' }}
+            <i *ngIf="agent.available" class="fa fa-arrow-right"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Resources Tab -->
+    <div *ngIf="activeTab === 'resources'" class="resources-content">
+      <div class="resources-grid">
+        <div *ngFor="let res of resources" class="resource-card">
+          <div class="resource-icon">{{ res.icon }}</div>
+          <div class="resource-info">
+            <h4>{{ res.title }}</h4>
+            <p>{{ res.description }}</p>
+            <span class="resource-category">{{ res.category }}</span>
+          </div>
+          <button class="resource-btn"><i class="fa fa-external-link"></i></button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Chat Panel -->
+  <div class="chat-panel" *ngIf="chatOpen && activeAgent" [class.open]="chatOpen">
+    <div class="chat-header">
+      <div class="chat-header-info">
+        <span class="chat-avatar">{{ activeAgent.avatar }}</span>
+        <div>
+          <div class="chat-name">{{ activeAgent.name }}</div>
+          <div class="chat-role">{{ activeAgent.role }}</div>
+        </div>
+      </div>
+      <button class="chat-close" (click)="closeChat()"><i class="fa fa-times"></i></button>
+    </div>
+    <div class="chat-messages">
+      <div *ngFor="let msg of chatMessages"
+           class="chat-msg"
+           [class.user]="msg.role === 'user'"
+           [class.agent]="msg.role === 'agent'">
+        <div class="chat-msg-bubble">{{ msg.text }}</div>
+      </div>
+    </div>
+    <div class="chat-input-bar">
+      <input type="text"
+             placeholder="Type your message..."
+             [(ngModel)]="userMessage"
+             (keyup.enter)="sendMessage()">
+      <button class="chat-send" (click)="sendMessage()" [disabled]="!userMessage.trim()">
+        <i class="fa fa-paper-plane"></i>
+      </button>
+    </div>
+  </div>
+</div>

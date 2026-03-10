@@ -1,0 +1,64 @@
+<nav class="student-navbar" (clickOutside)="closeMenus()">
+  <div class="navbar-inner">
+    <!-- Brand -->
+    <div class="navbar-brand" routerLink="/student-portal/dashboard">
+      <span class="brand-text">ripe<span class="brand-accent">ly</span></span>
+    </div>
+
+    <!-- Desktop Nav Links -->
+    <div class="navbar-links">
+      <a *ngFor="let link of navLinks"
+         [routerLink]="link.route"
+         class="nav-link"
+         [class.active]="isActive(link.route)">
+        <span>{{ link.label }}</span>
+      </a>
+    </div>
+
+    <!-- Right Section -->
+    <div class="navbar-right">
+      <!-- Notifications -->
+      <button class="notif-btn" title="Notifications">
+        <i class="fa fa-bell"></i>
+        <span class="notif-badge" *ngIf="notificationCount > 0">{{ notificationCount }}</span>
+      </button>
+
+      <!-- User Avatar -->
+      <div class="user-menu-wrapper">
+        <button class="user-avatar-btn" (click)="toggleUserMenu()">
+          <div class="user-avatar">{{ studentInitials }}</div>
+        </button>
+        <div class="user-dropdown" *ngIf="showUserMenu">
+          <div class="dropdown-header">
+            <div class="dropdown-avatar">{{ studentName.charAt(0) }}</div>
+            <div>
+              <div class="dropdown-name">{{ studentName }}</div>
+              <div class="dropdown-role">Student</div>
+            </div>
+          </div>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item"><i class="fa fa-user"></i> My Profile</a>
+          <a class="dropdown-item"><i class="fa fa-cog"></i> Settings</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item text-danger"><i class="fa fa-sign-out"></i> Sign Out</a>
+        </div>
+      </div>
+
+      <!-- Mobile Toggle -->
+      <button class="mobile-toggle" (click)="toggleMobileMenu()">
+        <i class="fa" [ngClass]="showMobileMenu ? 'fa-times' : 'fa-bars'"></i>
+      </button>
+    </div>
+  </div>
+
+  <!-- Mobile Menu -->
+  <div class="mobile-menu" *ngIf="showMobileMenu">
+    <a *ngFor="let link of navLinks"
+       [routerLink]="link.route"
+       class="mobile-link"
+       [class.active]="isActive(link.route)"
+       (click)="showMobileMenu = false">
+      <span>{{ link.label }}</span>
+    </a>
+  </div>
+</nav>

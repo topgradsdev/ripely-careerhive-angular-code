@@ -1,0 +1,76 @@
+<div class="support-page">
+  <div class="page-card">
+    <!-- Header -->
+    <h1 class="page-title">Support Center</h1>
+    <p class="page-sub">Find answers, get help, and connect with our team</p>
+
+    <!-- Help Cards -->
+    <section class="help-cards">
+      <div *ngFor="let card of helpCards" class="help-card">
+        <div class="help-icon">{{ card.icon }}</div>
+        <h3>{{ card.title }}</h3>
+        <p>{{ card.description }}</p>
+        <button class="help-btn">{{ card.action }}</button>
+      </div>
+    </section>
+
+    <!-- Main Grid -->
+    <div class="support-grid">
+      <!-- FAQ Section -->
+      <section class="faq-section">
+        <h2>Frequently Asked Questions</h2>
+        <div class="faq-list">
+          <div *ngFor="let faq of faqs"
+               class="faq-item"
+               [class.open]="faq.open">
+            <button class="faq-question" (click)="toggleFaq(faq)">
+              <div class="faq-q-content">
+                <span class="faq-category">{{ faq.category }}</span>
+                <span class="faq-q-text">{{ faq.question }}</span>
+              </div>
+              <i class="fa" [ngClass]="faq.open ? 'fa-chevron-up' : 'fa-chevron-down'"></i>
+            </button>
+            <div class="faq-answer" *ngIf="faq.open">
+              <p>{{ faq.answer }}</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Contact Form -->
+      <section class="contact-section">
+        <h2>Contact Us</h2>
+        <div *ngIf="!formSubmitted" class="contact-form">
+          <div class="form-group">
+            <label>Your Name</label>
+            <input type="text" placeholder="Enter your name" [(ngModel)]="contactName">
+          </div>
+          <div class="form-group">
+            <label>Email</label>
+            <input type="email" placeholder="your@email.com" [(ngModel)]="contactEmail">
+          </div>
+          <div class="form-group">
+            <label>Subject</label>
+            <input type="text" placeholder="How can we help?" [(ngModel)]="contactSubject">
+          </div>
+          <div class="form-group">
+            <label>Message</label>
+            <textarea placeholder="Describe your issue or question..." rows="5" [(ngModel)]="contactMessage"></textarea>
+          </div>
+          <button class="submit-btn" (click)="submitContact()"
+                  [disabled]="!contactName || !contactEmail || !contactMessage">
+            Send Message <i class="fa fa-paper-plane"></i>
+          </button>
+        </div>
+
+        <!-- Success State -->
+        <div *ngIf="formSubmitted" class="contact-success">
+          <div class="success-icon">✓</div>
+          <h3>Message Sent</h3>
+          <p>Thanks for reaching out. We'll get back to you within 24 hours.</p>
+          <button class="reset-btn" (click)="resetForm()">Send Another Message</button>
+        </div>
+      </section>
+    </div>
+  </div>
+</div>

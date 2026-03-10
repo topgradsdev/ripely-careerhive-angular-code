@@ -150,7 +150,7 @@ export class ChangePasswordComponent implements OnInit {
 
   cancel() {
     if (this.userDetail?.role === 'student') {
-      this.router.navigate(['/student/dashboard']);
+      this.router.navigate(['/student-portal/dashboard']);
     } else if (this.userDetail?.role === 'employee') {
       this.router.navigate(['/employer/vacancies']);
     }else {

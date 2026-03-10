@@ -16,7 +16,7 @@
 
 //       if (data.role === 'student') {
 //         // Switch all tabs to student portal
-//         this.router.navigate(['/student/dashboard']);
+//         this.router.navigate(['/student-portal/dashboard']);
 //       } else if (data.role === 'admin') {
 //         // Switch all tabs to admin portal
 //         this.router.navigate(['/admin/dashboard']);
@@ -107,7 +107,7 @@ export class SessionSyncService {
                     localStorage.setItem('token', data.loginData.token);
 
                     this.router
-                    .navigateByUrl('/student/dashboard', { skipLocationChange: false })
+                    .navigateByUrl('/student-portal/dashboard', { skipLocationChange: false })
                     .then(success => {
                         if (!success) console.error('Navigation to student failed');
                     });

@@ -1,0 +1,77 @@
+<div class="simulations-page">
+  <div class="page-card">
+    <!-- Header -->
+    <h1 class="page-title">Simulations</h1>
+
+    <!-- Tab Filters -->
+    <div class="tab-filters">
+      <button class="tab-btn" [class.active]="activeFilter === 'all'" (click)="setFilter('all')">
+        <i class="fa fa-th"></i> All simulations
+      </button>
+      <button class="tab-btn" [class.active]="activeFilter === 'available'" (click)="setFilter('available')">
+        <i class="fa fa-check-circle"></i> Available
+      </button>
+      <button class="tab-btn" [class.active]="activeFilter === 'featured'" (click)="setFilter('featured')">
+        <i class="fa fa-star"></i> Featured
+      </button>
+      <button class="tab-btn" [class.active]="activeFilter === 'my'" (click)="setFilter('my')">
+        <i class="fa fa-folder-open"></i> My simulations
+      </button>
+    </div>
+
+    <!-- Category Pills -->
+    <div class="category-pills">
+      <button *ngFor="let filter of filters"
+              class="pill"
+              [class.active]="activeCategory === filter.key"
+              (click)="setCategory(filter.key)">
+        {{ filter.label }}
+      </button>
+    </div>
+
+    <!-- Top Simulations Section -->
+    <div class="section-header">
+      <h2>Top simulations for you</h2>
+      <span class="section-sub">Most recommended</span>
+    </div>
+
+    <!-- Simulation Cards Grid -->
+    <div class="sim-grid">
+      <div *ngFor="let sim of filteredSimulations"
+           class="sim-card"
+           [class.coming-soon]="sim.status === 'coming-soon'">
+        <!-- Card Image Area -->
+        <div class="sim-card-image" [style.background]="sim.status !== 'coming-soon' ? 'linear-gradient(135deg, #1a1030 0%, #2d1f4e 40%, #3a2a5c 100%)' : 'linear-gradient(135deg, #c4bdb6 0%, #b8b0a8 100%)'">
+          <!-- Badges -->
+          <div class="sim-badges" *ngIf="sim.status !== 'coming-soon'">
+            <span class="badge badge-red">{{ sim.category | uppercase }}</span>
+            <span class="badge badge-purple" *ngIf="sim.status === 'in-progress'">LIVE PROJECT</span>
+            <span class="badge badge-available" *ngIf="sim.status === 'available' || sim.status === 'in-progress'">
+              <i class="fa fa-check"></i> Available now
+            </span>
+          </div>
+          <!-- Coming Soon overlay -->
+          <div class="coming-soon-overlay" *ngIf="sim.status === 'coming-soon'">
+            <span class="badge-coming-soon"><i class="fa fa-lock"></i> Coming Soon</span>
+          </div>
+          <!-- Company badge at bottom of image -->
+          <div class="sim-company-badge" *ngIf="sim.status !== 'coming-soon'">
+            <span class="company-icon">{{ sim.icon }}</span> {{ sim.company | uppercase }}
+          </div>
+        </div>
+
+        <!-- Card Body -->
+        <div class="sim-card-body" [class.blurred]="sim.status === 'coming-soon'">
+          <h3 class="sim-title">{{ sim.title }}</h3>
+          <p class="sim-company">{{ sim.company }}</p>
+          <div class="sim-meta">
+            <span class="meta-pill">{{ sim.category | titlecase }}</span>
+            <span class="meta-pill">{{ sim.difficulty }}</span>
+            <span class="meta-pill"><i class="fa fa-clock-o"></i> {{ sim.duration }}</span>
+            <span class="sim-rating" *ngIf="sim.status !== 'coming-soon'"><i class="fa fa-star"></i> 4.9</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

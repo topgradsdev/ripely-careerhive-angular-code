@@ -459,7 +459,7 @@ export class ViewStudentProfileComponent implements OnInit {
             setTimeout(()=>{
               this.idleService.startTracking(student.student_id);
             }, 500)
-            this.router.navigate(['student/dashboard']);
+            this.router.navigate(['student-portal/dashboard']);
           } else {
             this.impersonateModel.hide();
             this.alertLogin.hide();

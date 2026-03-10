@@ -169,6 +169,11 @@ export const routes: Routes = [
     canActivate: [StudentGuard],
     loadChildren: () => import('./pages/student-side/student-side.module').then(m => m.StudentSideModule)
   },
+  {
+    path: 'student-portal',
+    canActivate: [StudentGuard],
+    loadChildren: () => import('./pages/wil/student-side-ripely/student-side-ripely.module').then(m => m.StudentSideRipelyModule)
+  },
   // {
   //   path: 'staff',
   //   canActivate: [StaffGuard],

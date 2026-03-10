@@ -47,7 +47,7 @@ export class StudentLoginComponent implements OnInit {
   //           this.router.navigate(['student/change-password']);
   //         } else {
   //           if (res.data?.student_profile) {
-  //             this.router.navigate(['student/dashboard']);
+  //             this.router.navigate(['student-portal/dashboard']);
   //           } else {
   //             this.router.navigate(['student/onboarding']);
   //           }
@@ -193,7 +193,7 @@ export class StudentLoginComponent implements OnInit {
             this.router.navigate(['student/change-password']);
           } else {
             if (res.data?.student_profile) {
-              this.router.navigate(['student/dashboard']);
+              this.router.navigate(['student-portal/dashboard']);
             } else {
               this.router.navigate(['student/onboarding']);
             }

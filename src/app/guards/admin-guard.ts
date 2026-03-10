@@ -18,7 +18,7 @@ export class AdminGuard implements CanActivate {
         const role = JSON.parse(localStorage.getItem("userDetail"))?.role;
         const userSDetail = JSON.parse(localStorage.getItem("userSDetail"));
         if(userSDetail && userSDetail.role=="student"){
-           this.router.navigate(['/student/dashboard']);
+           this.router.navigate(['/student-portal/dashboard']);
         }else if(!this.service.getToken() || role != "admin") {
         // this.service.showMessage({
         //   message: "Please Login First"

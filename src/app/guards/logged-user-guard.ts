@@ -49,7 +49,7 @@ export class LoggedUserGuard implements CanActivate {
 
     if (this.service.getToken()) {
       if (userSDetail?.role === 'student') {
-        this.router.navigate(['student/dashboard']);
+        this.router.navigate(['student-portal/dashboard']);
       }else if (userDetail?.role === 'admin') {
         this.router.navigate(['admin/my-task']);
       } else if (userDetail?.role === 'staff') {

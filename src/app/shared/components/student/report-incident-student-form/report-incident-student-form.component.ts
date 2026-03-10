@@ -300,7 +300,7 @@ getValueInsideSingleBracket(input: unknown): string[] {
       }else if(this.selectedTab.includes("completed")){
         this.router.navigate(['/student/my-placements'],  { queryParams: {stage: 'completed', placement_id: this?.placement_id, student_id: this.userDetail?._id, vacancy_id: this.params?.vacancy_id, id:this.params?.id, type:'completed'}  });
       }else if(this.selectedTab.includes("dashboard")){
-        this.router.navigate(['/student/dashboard']);
+        this.router.navigate(['/student-portal/dashboard']);
       }
   }
 

@@ -81,7 +81,7 @@ constructor(
             localStorage.setItem("token", res.token);
             if(userInfo.type=="student"){
                 if (res.data?.student_profile) {
-                  this.router.navigate(['student/dashboard']);
+                  this.router.navigate(['student-portal/dashboard']);
                 } else {
                   this.router.navigate(['student/onboarding']);
                 }

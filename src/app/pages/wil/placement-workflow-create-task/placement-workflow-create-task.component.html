@@ -2390,7 +2390,7 @@
             <div class="modal-body  d-flex  justify-content-center align-items-center gap-3 flex-column">           
                 <img src="../../../../assets/img/undraw_warning.svg" alt="warning">
                 <h2 class="modal-title">Are you sure you want to remove {{ removeSandboxIndex !== null ? taskSandboxes[removeSandboxIndex]?.name : '' }} from this task?</h2>
-                <!-- <p class="text-muted text-center mt-2" style="font-size: 14px;">Removing this sandbox will also delete its associated grading rubric and validation settings.</p> -->
+                <p class="text-muted text-center mt-2" style="font-size: 14px;">Removing this sandbox will also delete its associated grading rubric and validation settings. Do you wish to proceed?</p>
             </div>
             <div class="modal-footer justify-content-center">
                 <button type="button" mat-button class="theme_btn btn_outline_primary mr-3" (click)="removeSandboxModal.hide()">No</button>
@@ -2406,19 +2406,21 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Warning: Data Will Be Lost</h5>
+                <!-- <h5 class="modal-title">Warning: Data Will Be Lost</h5> -->
                 <button type="button" mat-icon-button class="close" aria-label="Close" (click)="cancelDestructiveTypeChange()">
                     <mat-icon>close</mat-icon>
                 </button>
             </div>
-            <div class="modal-body text-center">
+            <div class="modal-body   d-flex  justify-content-center align-items-center gap-3 flex-column  text-center">
+
                 <img src="../../../../assets/img/undraw_warning.svg" alt="warning" style="max-width:100px; margin-bottom:16px;">
-                <p>Changing the Task Type will permanently delete all Agent, Sandbox, Validation, and Guardrail configurations for this task.</p>
-                <p><strong>Are you sure you want to proceed?</strong></p>
+
+                <h2 class="modal-title">Changing the Task Type will remove all Virtual Labs <br /> configurations, are you sure you want to proceed?</h2>
+                <!-- <p><strong>Are you sure you want to proceed?</strong></p> -->
             </div>
             <div class="modal-footer justify-content-center">
-                <button type="button" class="theme_btn btn_outline_primary mr-3" (click)="cancelDestructiveTypeChange()">Cancel</button>
-                <button type="button" class="theme_btn btn_primary" (click)="confirmDestructiveTypeChange()">Yes, Change Type</button>
+                <button type="button" class="theme_btn btn_outline_primary mr-3" (click)="cancelDestructiveTypeChange()">No</button>
+                <button type="button" class="theme_btn btn_primary" (click)="confirmDestructiveTypeChange()">Yes</button>
             </div>
         </div>
     </div>

@@ -1,0 +1,305 @@
+.simulations-page {
+  width: 100%;
+}
+
+.page-card {
+  background: #fff;
+  border-radius: 20px;
+  border: 1px solid #e8e0d8;
+  padding: 40px;
+}
+
+.page-title {
+  font-size: 28px;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin: 0 0 24px;
+  letter-spacing: -0.02em;
+}
+
+// Tab Filters
+.tab-filters {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 24px;
+
+  .tab-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 18px;
+    border-radius: 100px;
+    border: 1px solid #e8e0d8;
+    background: #fff;
+    color: #888;
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+
+    i { font-size: 13px; }
+
+    &:hover {
+      background: #faf6f2;
+      color: #555;
+    }
+
+    &.active {
+      background: #1a1a1a;
+      border-color: #1a1a1a;
+      color: #fff;
+    }
+  }
+}
+
+// Category Pills
+.category-pills {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 32px;
+  flex-wrap: wrap;
+
+  .pill {
+    padding: 8px 18px;
+    border-radius: 100px;
+    border: 1px solid #e0d8d0;
+    background: #fff;
+    color: #666;
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+
+    &:hover {
+      background: #faf6f2;
+      border-color: #d0c8c0;
+    }
+
+    &.active {
+      background: #1a1a1a;
+      border-color: #1a1a1a;
+      color: #fff;
+    }
+  }
+}
+
+// Section Header
+.section-header {
+  margin-bottom: 24px;
+
+  h2 {
+    font-size: 20px;
+    font-weight: 700;
+    color: #1a1a1a;
+    margin: 0 0 4px;
+  }
+
+  .section-sub {
+    font-size: 14px;
+    color: #999;
+  }
+}
+
+// Simulation Grid
+.sim-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+// Simulation Card
+.sim-card {
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1px solid #eee;
+  background: #fff;
+  transition: all 0.25s ease;
+
+  &:hover {
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+    transform: translateY(-2px);
+  }
+
+  &.coming-soon {
+    .sim-card-body.blurred {
+      opacity: 0.45;
+    }
+
+    &:hover {
+      transform: none;
+      box-shadow: none;
+    }
+  }
+}
+
+.sim-card-image {
+  position: relative;
+  height: 200px;
+  border-radius: 16px 16px 0 0;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 16px;
+}
+
+.sim-badges {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.badge {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  padding: 5px 10px;
+  border-radius: 6px;
+  text-transform: uppercase;
+
+  &.badge-red {
+    background: #e8734a;
+    color: #fff;
+  }
+
+  &.badge-purple {
+    background: #6c5ce7;
+    color: #fff;
+  }
+
+  &.badge-available {
+    background: rgba(255, 255, 255, 0.2);
+    color: #fff;
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    text-transform: none;
+    font-weight: 500;
+
+    i {
+      margin-right: 2px;
+      font-size: 10px;
+    }
+  }
+}
+
+.coming-soon-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.badge-coming-soon {
+  background: rgba(255, 255, 255, 0.85);
+  color: #888;
+  font-size: 13px;
+  font-weight: 500;
+  padding: 8px 18px;
+  border-radius: 100px;
+  backdrop-filter: blur(4px);
+
+  i {
+    margin-right: 6px;
+    font-size: 12px;
+  }
+}
+
+.sim-company-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(0, 0, 0, 0.4);
+  color: #fff;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  padding: 6px 12px;
+  border-radius: 6px;
+  backdrop-filter: blur(8px);
+  align-self: flex-start;
+
+  .company-icon {
+    font-size: 12px;
+  }
+}
+
+.sim-card-body {
+  padding: 18px 20px 20px;
+
+  .sim-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: #1a1a1a;
+    margin: 0 0 4px;
+    letter-spacing: -0.01em;
+  }
+
+  .sim-company {
+    font-size: 13px;
+    color: #999;
+    margin: 0 0 14px;
+  }
+
+  .sim-meta {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .meta-pill {
+    font-size: 11px;
+    font-weight: 500;
+    color: #777;
+    background: #f5f0eb;
+    padding: 4px 10px;
+    border-radius: 100px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+
+    i {
+      font-size: 10px;
+    }
+  }
+
+  .sim-rating {
+    margin-left: auto;
+    font-size: 13px;
+    font-weight: 600;
+    color: #e8734a;
+
+    i {
+      color: #f5c518;
+      font-size: 12px;
+      margin-right: 2px;
+    }
+  }
+}
+
+@media (max-width: 1100px) {
+  .sim-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .page-card {
+    padding: 24px;
+    border-radius: 16px;
+  }
+
+  .sim-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .tab-filters {
+    flex-wrap: wrap;
+  }
+}
