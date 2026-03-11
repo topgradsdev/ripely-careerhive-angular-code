@@ -1,0 +1,96 @@
+<!-- ── sc4c  Task 4 — Watch Video ── -->
+<div class="comp-layout">
+
+  <!-- Float Titlebar -->
+  <header class="float-titlebar">
+    <span class="tb-dots"><i></i><i></i><i></i></span>
+    <span class="tb-title">Training Module &middot; Day 2</span>
+    <span class="tb-spacer"></span>
+  </header>
+
+  <!-- Scrollable workspace -->
+  <div class="comp-main">
+
+    <!-- Hero -->
+    <section class="comp-hero">
+      <span class="comp-kicker">Task 4</span>
+      <h1 class="comp-title">Watch Video</h1>
+    </section>
+
+    <!-- Task Brief from Marcus -->
+    <div class="txn" *ngIf="!taskComplete">
+      <div class="txn-flag-bar">
+        <span class="txn-flag-icon">&#128172;</span>
+        <span class="txn-flag-label">Task Brief from Marcus</span>
+      </div>
+      <div class="txn-inner">
+        <div class="marcus-q">
+          <span class="marcus-avatar">MW</span>
+          <p class="marcus-text">Before you head out to site, watch this training video on cooling tower water treatment. It covers the fundamentals you'll need for the site assessment tomorrow.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Video Card -->
+    <div class="txn" *ngIf="!taskComplete">
+      <div class="txn-flag-bar">
+        <span class="txn-flag-icon">&#9654;&#65039;</span>
+        <span class="txn-flag-label">Training Video</span>
+      </div>
+      <div class="txn-inner video-card-inner">
+        <div class="video-placeholder">
+          <div class="video-play-btn">
+            <svg viewBox="0 0 48 48" width="56" height="56">
+              <circle cx="24" cy="24" r="24" fill="rgba(255,107,44,0.15)"/>
+              <polygon points="19,14 19,34 36,24" fill="#ff6b2c"/>
+            </svg>
+          </div>
+          <div class="video-badges">
+            <span class="video-badge badge-duration">8:42</span>
+            <span class="video-badge badge-series">HVAC Training</span>
+          </div>
+        </div>
+        <div class="video-info">
+          <h3 class="video-title">Cooling Tower Water Treatment</h3>
+          <p class="video-subtitle">Fundamentals &middot; Water Balance &middot; AS/NZS 3666</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Confirmation -->
+    <div class="txn" *ngIf="!taskComplete">
+      <div class="txn-flag-bar">
+        <span class="txn-flag-icon">&#9989;</span>
+        <span class="txn-flag-label">Completion Confirmation</span>
+      </div>
+      <div class="txn-inner confirmation-inner">
+        <p class="ws-hint">Once you have watched the video, confirm below to unlock the next task.</p>
+        <button class="ws-confirm-btn" (click)="markVideoWatched()">
+          I've Watched the Video
+        </button>
+      </div>
+    </div>
+
+    <!-- Success State (after marking complete) -->
+    <div class="txn txn-success" *ngIf="taskComplete">
+      <div class="txn-flag-bar txn-flag-bar--success">
+        <span class="txn-flag-icon">&#9989;</span>
+        <span class="txn-flag-label">Task Complete</span>
+      </div>
+      <div class="txn-inner success-inner">
+        <div class="success-icon-wrap">
+          <svg viewBox="0 0 48 48" width="48" height="48">
+            <circle cx="24" cy="24" r="24" fill="rgba(0,184,148,0.15)"/>
+            <path d="M14 24l7 7 13-13" fill="none" stroke="#00b894" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <h3 class="success-title">Video Training Complete</h3>
+        <p class="success-text">You've completed the cooling tower water treatment module. You're ready for the site assessment.</p>
+        <button class="ws-submit-btn" (click)="openNextTask()">
+          Open Task 5 &rarr;
+        </button>
+      </div>
+    </div>
+
+  </div><!-- /comp-main -->
+</div><!-- /comp-layout -->

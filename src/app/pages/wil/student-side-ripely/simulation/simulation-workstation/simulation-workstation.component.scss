@@ -1,0 +1,196 @@
+.workstation-page {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 32px 24px;
+}
+
+/* ── Header ── */
+.ws-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 32px;
+}
+
+.ws-header-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  background: rgba(255, 107, 44, 0.1);
+  border: 1px solid rgba(255, 107, 44, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+
+  i {
+    font-size: 20px;
+    color: #ff6b2c;
+  }
+}
+
+.ws-header-text {
+  h1 {
+    font-size: 22px;
+    font-weight: 700;
+    margin: 0 0 2px;
+    color: #e8e8f0;
+  }
+
+  p {
+    font-size: 14px;
+    color: #9090a8;
+    margin: 0;
+  }
+}
+
+/* ── Resource Group ── */
+.resource-group {
+  margin-bottom: 28px;
+}
+
+.group-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+
+  i {
+    font-size: 13px;
+    color: #9090a8;
+  }
+}
+
+.group-label {
+  font-size: 13px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  color: #9090a8;
+}
+
+.group-count {
+  font-size: 11px;
+  color: #9090a8;
+  background: rgba(255, 255, 255, 0.05);
+  padding: 1px 8px;
+  border-radius: 10px;
+  margin-left: 4px;
+}
+
+/* ── Grid ── */
+.group-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 10px;
+}
+
+/* ── Workstation Card ── */
+.ws-card {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 16px;
+  background: #1a1a24;
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 12px;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.2s, transform 0.1s;
+
+  &:hover:not(.locked) {
+    background: rgba(255, 255, 255, 0.04);
+    border-color: rgba(255, 255, 255, 0.12);
+    transform: translateY(-1px);
+  }
+
+  &.locked {
+    opacity: 0.4;
+    cursor: not-allowed;
+  }
+
+  &.active {
+    border-color: rgba(255, 107, 44, 0.3);
+    background: rgba(255, 107, 44, 0.04);
+  }
+}
+
+.card-icon-wrap {
+  width: 42px;
+  height: 42px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+
+  i {
+    font-size: 16px;
+    color: #9090a8;
+  }
+
+  &.active {
+    background: rgba(255, 107, 44, 0.1);
+    border-color: rgba(255, 107, 44, 0.2);
+
+    i { color: #ff6b2c; }
+  }
+
+  &.available {
+    i { color: #00b894; }
+  }
+
+  &.locked {
+    i { color: #9090a8; }
+  }
+}
+
+.card-body {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.card-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: #e8e8f0;
+  margin-bottom: 2px;
+}
+
+.card-subtitle {
+  font-size: 12px;
+  color: #9090a8;
+}
+
+.card-status {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 10px;
+  flex-shrink: 0;
+
+  i {
+    font-size: 10px;
+  }
+
+  &.available {
+    background: rgba(0, 184, 148, 0.1);
+    color: #00b894;
+  }
+
+  &.active {
+    background: rgba(255, 107, 44, 0.1);
+    color: #ff6b2c;
+  }
+
+  &.locked {
+    background: rgba(255, 255, 255, 0.04);
+    color: #9090a8;
+  }
+}

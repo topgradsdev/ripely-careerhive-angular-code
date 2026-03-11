@@ -1,0 +1,334 @@
+.lib-window {
+  display: flex;
+  flex-direction: column;
+  height: calc(100vh - 56px);
+  background: #0a0a14;
+}
+
+/* ── Window Titlebar ── */
+.lib-titlebar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 20px;
+  background: #111118;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+  flex-shrink: 0;
+}
+
+.titlebar-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.window-dots {
+  display: flex;
+  gap: 6px;
+
+  .dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+
+    &.red { background: #d63031; }
+    &.yellow { background: #f39c12; }
+    &.green { background: #00b894; }
+  }
+}
+
+.titlebar-icon {
+  font-size: 16px;
+  color: #ff6b2c;
+}
+
+.titlebar-text {
+  font-size: 14px;
+  font-weight: 600;
+  color: #e8e8f0;
+}
+
+.titlebar-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.titlebar-subtitle {
+  font-size: 12px;
+  color: #9090a8;
+}
+
+.file-count {
+  font-size: 11px;
+  color: #9090a8;
+  background: rgba(255, 255, 255, 0.05);
+  padding: 3px 10px;
+  border-radius: 10px;
+}
+
+/* ── Body Layout ── */
+.lib-body {
+  flex: 1;
+  display: flex;
+  overflow: hidden;
+}
+
+/* ── Sidebar ── */
+.lib-sidebar {
+  width: 240px;
+  background: rgba(255, 255, 255, 0.02);
+  border-right: 1px solid rgba(255, 255, 255, 0.07);
+  flex-shrink: 0;
+  padding: 16px 0;
+}
+
+.sidebar-label {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  color: #9090a8;
+  padding: 0 16px;
+  margin-bottom: 8px;
+}
+
+.folder-tree {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 0 8px;
+}
+
+.folder-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 10px 12px;
+  border: none;
+  background: transparent;
+  border-radius: 8px;
+  cursor: pointer;
+  color: #e8e8f0;
+  font-size: 13px;
+  transition: background 0.15s;
+  text-align: left;
+
+  i {
+    font-size: 14px;
+    color: #9090a8;
+    width: 18px;
+    text-align: center;
+
+    &.folder-open {
+      color: #ff6b2c;
+    }
+  }
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.04);
+  }
+
+  &.active {
+    background: rgba(255, 107, 44, 0.08);
+    border-left: 2px solid #ff6b2c;
+
+    .folder-name {
+      color: #e8e8f0;
+      font-weight: 600;
+    }
+  }
+}
+
+.folder-name {
+  flex: 1;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.folder-badge {
+  font-size: 11px;
+  color: #9090a8;
+  background: rgba(255, 255, 255, 0.05);
+  padding: 2px 8px;
+  border-radius: 10px;
+  min-width: 24px;
+  text-align: center;
+}
+
+/* ── Main Area ── */
+.lib-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.main-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 24px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+  flex-shrink: 0;
+}
+
+.folder-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: #e8e8f0;
+  margin: 0;
+}
+
+.search-box {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 8px;
+
+  i {
+    color: #9090a8;
+    font-size: 13px;
+  }
+
+  input {
+    background: transparent;
+    border: none;
+    color: #e8e8f0;
+    font-size: 13px;
+    outline: none;
+    width: 180px;
+
+    &::placeholder {
+      color: #9090a8;
+    }
+  }
+}
+
+/* ── File Grid ── */
+.file-grid {
+  flex: 1;
+  overflow-y: auto;
+  padding: 16px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 3px;
+  }
+}
+
+.file-card {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 16px;
+  background: #1a1a24;
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: rgba(255, 255, 255, 0.12);
+  }
+}
+
+.file-icon-wrap {
+  width: 42px;
+  height: 42px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+
+  i {
+    font-size: 18px;
+  }
+}
+
+.file-details {
+  flex: 1;
+  min-width: 0;
+}
+
+.file-name {
+  font-size: 14px;
+  font-weight: 500;
+  color: #e8e8f0;
+  display: block;
+  margin-bottom: 4px;
+}
+
+.file-meta {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.file-type-badge {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.file-size {
+  font-size: 12px;
+  color: #9090a8;
+}
+
+.file-pages {
+  font-size: 12px;
+  color: #9090a8;
+}
+
+.file-action {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  color: #9090a8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+  flex-shrink: 0;
+
+  &:hover {
+    background: rgba(255, 107, 44, 0.1);
+    color: #ff6b2c;
+  }
+}
+
+/* ── Empty State ── */
+.empty-state {
+  text-align: center;
+  padding: 48px 20px;
+  color: #9090a8;
+
+  i {
+    font-size: 32px;
+    margin-bottom: 12px;
+    display: block;
+    opacity: 0.4;
+  }
+
+  p {
+    font-size: 14px;
+    margin: 0;
+  }
+}

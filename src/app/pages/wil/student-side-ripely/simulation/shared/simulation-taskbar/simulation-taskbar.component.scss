@@ -1,0 +1,805 @@
+// ============================================================
+// Simulation Taskbar — matches hvac-dashboard-v11b.html exactly
+// Same spacing, fonts, colors as reference
+// ============================================================
+
+$accent: #ff6b2c;
+$accent-hover: #ff8a55;
+$danger: #e74c3c;
+
+// ---- Taskbar ----
+.taskbar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 9000;
+  height: 48px;
+  background: rgba(20, 20, 32, 0.92);
+  backdrop-filter: blur(24px) saturate(1.6);
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  display: flex;
+  align-items: center;
+  padding: 0 12px 0 8px;
+  gap: 0;
+}
+
+// ---- Start Button ----
+.taskbar-start {
+  width: 40px;
+  height: 40px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  cursor: pointer;
+  color: rgba(255, 255, 255, 0.75);
+  transition: background 0.15s, color 0.15s;
+  margin-right: 4px;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+  }
+
+  &.active {
+    background: rgba(255, 255, 255, 0.12);
+    color: #fff;
+  }
+}
+
+.taskbar-start-inner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+// ---- Centre: Pinned Apps ----
+.taskbar-apps {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  flex: 1;
+  justify-content: center;
+}
+
+.tb-app {
+  position: relative;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  cursor: pointer;
+  border-radius: 8px;
+  transition: background 0.12s, transform 0.1s;
+  color: inherit;
+  padding: 0;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.1);
+    transform: translateY(-2px);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+}
+
+.tb-app-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  position: relative;
+  font-size: 18px;
+  line-height: 1;
+}
+
+.tb-app-dot {
+  position: absolute;
+  bottom: 4px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.5);
+  opacity: 0;
+  transition: opacity 0.15s;
+}
+
+.tb-app.tb-active .tb-app-dot {
+  opacity: 1;
+  background: $accent;
+}
+
+// ---- Separator ----
+.tb-separator {
+  width: 1px;
+  height: 28px;
+  background: rgba(255, 255, 255, 0.08);
+  margin: 0 4px;
+  flex-shrink: 0;
+}
+
+// ---- Workstation Button ----
+.tb-ws-btn {
+  position: relative;
+  width: 48px;
+}
+
+.tb-ws-label {
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  position: absolute;
+  bottom: 3px;
+  left: 50%;
+  transform: translateX(-50%);
+  white-space: nowrap;
+  color: rgba(255, 255, 255, 0.75);
+  line-height: 1;
+}
+
+.tb-app-badge {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  background: $danger;
+  color: #fff;
+  font-size: 9px;
+  font-weight: 700;
+  line-height: 1;
+  padding: 2px 4px;
+  border-radius: 8px;
+  min-width: 14px;
+  text-align: center;
+}
+
+// ---- Right: Clock + User ----
+.taskbar-right {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-left: auto;
+  padding-left: 12px;
+  flex-shrink: 0;
+  position: relative;
+}
+
+.tb-clock {
+  font-size: 12px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.85);
+  letter-spacing: 0.04em;
+  line-height: 1.2;
+  text-align: center;
+}
+
+.tb-date {
+  font-size: 10px;
+  color: rgba(255, 255, 255, 0.4);
+  letter-spacing: 0.02em;
+  line-height: 1.2;
+  margin-top: 1px;
+}
+
+.tb-avatar {
+  position: relative;
+  cursor: pointer;
+  margin-left: 6px;
+}
+
+.topnav-avatar {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: $accent;
+  color: #fff;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: box-shadow 0.15s, transform 0.1s;
+
+  &:hover {
+    box-shadow: 0 0 0 2px rgba(255, 107, 44, 0.5);
+    transform: scale(1.06);
+  }
+}
+
+// ---- Start Menu Panel ----
+.start-menu-panel {
+  position: fixed;
+  bottom: 52px;
+  left: 8px;
+  z-index: 9900;
+  width: 280px;
+  background: rgba(25, 25, 40, 0.97);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 12px 0;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+  animation: startMenuIn 0.15s ease;
+}
+
+@keyframes startMenuIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.sm-header {
+  padding: 8px 16px 10px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+  margin-bottom: 6px;
+}
+
+.sm-header-label {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.3);
+}
+
+.sm-section {
+  padding: 0 8px;
+}
+
+.sm-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 7px 10px;
+  border-radius: 7px;
+  cursor: pointer;
+  transition: background 0.12s;
+  font-size: 12px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.78);
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.08);
+  }
+
+  &.active {
+    background: rgba(124, 92, 252, 0.15);
+    color: #a78bfa;
+  }
+}
+
+.sm-icon {
+  font-size: 15px;
+  width: 22px;
+  text-align: center;
+  flex-shrink: 0;
+}
+
+.sm-label {
+  flex: 1;
+}
+
+.sm-badge {
+  background: $accent;
+  color: #fff;
+  font-size: 9px;
+  font-weight: 700;
+  border-radius: 8px;
+  padding: 1px 5px;
+  margin-left: auto;
+}
+
+.sm-ws-item {
+  color: rgba(255, 255, 255, 0.65);
+}
+
+.sm-ws-lock {
+  font-size: 10px;
+  margin-left: auto;
+  opacity: 0.5;
+}
+
+.sm-ws-header {
+  padding: 8px 16px 4px;
+  margin-top: 4px;
+  border-top: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+.sm-ws-header-label {
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.25);
+  margin-bottom: 4px;
+}
+
+.sm-footer {
+  padding: 2px 8px 2px;
+  border-top: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+.sm-item-danger {
+  color: rgba(255, 255, 255, 0.45);
+
+  &:hover {
+    background: rgba(255, 60, 60, 0.1);
+    color: rgba(255, 120, 120, 0.9);
+  }
+}
+
+// ---- Theme Toggle in Start Menu ----
+.sm-theme-section {
+  padding: 6px 8px 2px;
+  margin-top: 6px;
+  border-top: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+.sm-theme-row {
+  justify-content: space-between;
+}
+
+.sm-theme-switch {
+  position: relative;
+  width: 34px;
+  height: 19px;
+  flex-shrink: 0;
+  cursor: pointer;
+}
+
+.sm-theme-track {
+  position: absolute;
+  inset: 0;
+  border-radius: 100px;
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  transition: background 0.2s, border-color 0.2s;
+
+  &.active {
+    background: $accent;
+    border-color: $accent;
+  }
+}
+
+.sm-theme-thumb {
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  background: #fff;
+  opacity: 0.7;
+  transition: transform 0.2s, opacity 0.2s;
+
+  &.active {
+    transform: translateX(15px);
+    opacity: 1;
+  }
+}
+
+// ── Notification Badge on Avatar ──
+.tb-notif-badge {
+  position: absolute;
+  top: -3px;
+  right: -3px;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: $accent;
+  border: 2px solid #141420;
+  animation: notifPulse 2.5s ease-in-out infinite;
+  z-index: 2;
+}
+
+@keyframes notifPulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(255, 107, 44, 0.4); }
+  50% { box-shadow: 0 0 0 5px rgba(255, 107, 44, 0); }
+}
+
+// ── Notification Panel ──
+.notif-panel {
+  position: fixed;
+  bottom: 56px;
+  right: 8px;
+  width: 340px;
+  background: #1c1c28;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 14px;
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255, 255, 255, 0.04);
+  z-index: 9500;
+  overflow: hidden;
+  animation: startMenuIn 0.15s ease;
+}
+
+.notif-panel-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 16px 10px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+.notif-panel-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.85);
+  letter-spacing: -0.01em;
+}
+
+.notif-panel-clear {
+  font-size: 11px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.35);
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+  transition: color 0.15s;
+
+  &:hover { color: rgba(255, 255, 255, 0.65); }
+}
+
+.notif-date-label {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.25);
+  padding: 10px 16px 4px;
+}
+
+.notif-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 11px 16px;
+  cursor: pointer;
+  transition: background 0.12s;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+  position: relative;
+
+  &:last-child { border-bottom: none; }
+  &:hover { background: rgba(255, 255, 255, 0.04); }
+  &.notif-unread { background: rgba(255, 107, 44, 0.05); }
+  &.notif-unread:hover { background: rgba(255, 107, 44, 0.09); }
+}
+
+.notif-unread-dot {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: $accent;
+}
+
+.notif-app-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 9px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  background: rgba(255, 255, 255, 0.06);
+
+  &.accent-bg { background: rgba(255, 107, 44, 0.15); }
+  &.green-bg { background: rgba(0, 184, 148, 0.15); }
+  &.blue-bg { background: rgba(74, 138, 255, 0.15); }
+}
+
+.notif-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.notif-app-name {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.3);
+  margin-bottom: 2px;
+}
+
+.notif-body {
+  font-size: 12px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.82);
+  line-height: 1.45;
+  margin-bottom: 2px;
+}
+
+.notif-sub {
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.35);
+  line-height: 1.4;
+}
+
+.notif-time {
+  font-size: 10px;
+  color: rgba(255, 255, 255, 0.2);
+  white-space: nowrap;
+  margin-top: 1px;
+  flex-shrink: 0;
+}
+
+.notif-cta-row {
+  padding: 4px 16px 12px;
+}
+
+.notif-cta-btn {
+  width: 100%;
+  padding: 11px 16px;
+  background: $accent;
+  color: #fff;
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 700;
+  border: none;
+  border-radius: 100px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: background 0.15s, transform 0.12s;
+  box-shadow: 0 4px 16px rgba(255, 107, 44, 0.35);
+  letter-spacing: -0.01em;
+
+  &:hover {
+    background: $accent-hover;
+    transform: translateY(-1px);
+    box-shadow: 0 6px 20px rgba(255, 107, 44, 0.5);
+  }
+}
+
+.notif-panel-footer {
+  padding: 10px 16px;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  display: flex;
+  gap: 8px;
+}
+
+.notif-footer-btn {
+  flex: 1;
+  padding: 8px 12px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: rgba(255, 255, 255, 0.4);
+  font-family: inherit;
+  font-size: 11px;
+  font-weight: 500;
+  cursor: pointer;
+  text-align: center;
+  transition: all 0.15s;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.09);
+    color: rgba(255, 255, 255, 0.7);
+  }
+}
+
+// ============================================================
+// LIGHT MODE OVERRIDES
+// ============================================================
+
+.light-mode {
+  // ---- Taskbar ----
+  .taskbar {
+    background: rgba(242, 242, 250, 0.96);
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+  }
+
+  .taskbar-start {
+    color: rgba(0, 0, 0, 0.55);
+
+    &:hover {
+      background: rgba(0, 0, 0, 0.07);
+      color: #0a0a0a;
+    }
+
+    &.active {
+      background: rgba(0, 0, 0, 0.09);
+      color: #0a0a0a;
+    }
+  }
+
+  .tb-app {
+    color: rgba(0, 0, 0, 0.55);
+
+    &:hover {
+      background: rgba(0, 0, 0, 0.07);
+    }
+  }
+
+  .tb-separator {
+    background: rgba(0, 0, 0, 0.1);
+  }
+
+  .tb-ws-label {
+    color: rgba(0, 0, 0, 0.65);
+  }
+
+  .tb-app-badge {
+    background: $danger;
+  }
+
+  .tb-app.tb-active .tb-app-dot {
+    background: $accent;
+  }
+
+  .taskbar-right {
+    color: rgba(0, 0, 0, 0.62);
+  }
+
+  .tb-clock {
+    color: rgba(0, 0, 0, 0.65);
+  }
+
+  .tb-date {
+    color: rgba(0, 0, 0, 0.45);
+  }
+
+  .topnav-avatar {
+    background: rgba(0, 0, 0, 0.08);
+    color: rgba(0, 0, 0, 0.6);
+  }
+
+  // ---- Start Menu ----
+  .start-menu-panel {
+    background: rgba(248, 248, 255, 0.99);
+    border-color: rgba(0, 0, 0, 0.1);
+    box-shadow: 0 -8px 40px rgba(0, 0, 0, 0.15);
+  }
+
+  .sm-header-label {
+    color: rgba(0, 0, 0, 0.35);
+  }
+
+  .sm-item {
+    color: rgba(0, 0, 0, 0.7);
+
+    &:hover {
+      background: rgba(0, 0, 0, 0.06);
+    }
+
+    &.active {
+      background: rgba(124, 92, 252, 0.08);
+      color: #7c5cfc;
+    }
+  }
+
+  .sm-badge {
+    background: $accent;
+    color: #fff;
+  }
+
+  .sm-ws-item {
+    color: rgba(0, 0, 0, 0.6);
+  }
+
+  .sm-ws-lock {
+    opacity: 0.3;
+    filter: grayscale(1);
+  }
+
+  .sm-ws-header {
+    border-top-color: rgba(0, 0, 0, 0.08);
+  }
+
+  .sm-ws-header-label {
+    color: rgba(0, 0, 0, 0.3);
+  }
+
+  .sm-item-danger {
+    color: rgba(0, 0, 0, 0.58);
+
+    &:hover {
+      background: rgba(200, 40, 40, 0.07);
+      color: rgba(160, 20, 20, 0.85);
+    }
+  }
+
+  .sm-footer {
+    border-top-color: rgba(0, 0, 0, 0.08);
+  }
+
+  .sm-theme-section {
+    border-top-color: rgba(0, 0, 0, 0.08);
+  }
+
+  .sm-theme-track {
+    background: rgba(0, 0, 0, 0.1);
+    border-color: rgba(0, 0, 0, 0.15);
+
+    &.active {
+      background: $accent;
+      border-color: $accent;
+    }
+  }
+
+  .sm-theme-thumb {
+    background: #555;
+
+    &.active {
+      background: #fff;
+    }
+  }
+
+  // ── Notifications Light Mode ──
+  .tb-notif-badge {
+    border-color: #e8e8f4;
+  }
+
+  .notif-panel {
+    background: #f0f0f8;
+    border-color: rgba(0, 0, 0, 0.1);
+    box-shadow: 0 24px 64px rgba(0, 0, 0, 0.16);
+  }
+
+  .notif-panel-header {
+    border-color: rgba(0, 0, 0, 0.08);
+  }
+
+  .notif-panel-title { color: #0a0a0a; }
+
+  .notif-panel-clear {
+    color: rgba(0, 0, 0, 0.35);
+    &:hover { color: rgba(0, 0, 0, 0.65); }
+  }
+
+  .notif-date-label { color: rgba(0, 0, 0, 0.35); }
+
+  .notif-item {
+    border-color: rgba(0, 0, 0, 0.05);
+    &.notif-unread { background: rgba(255, 107, 44, 0.05); }
+    &:hover { background: rgba(0, 0, 0, 0.04); }
+  }
+
+  .notif-app-icon {
+    background: rgba(0, 0, 0, 0.06);
+    &.accent-bg { background: rgba(255, 107, 44, 0.1); }
+    &.green-bg { background: rgba(0, 184, 148, 0.1); }
+    &.blue-bg { background: rgba(74, 138, 255, 0.1); }
+  }
+
+  .notif-app-name { color: rgba(0, 0, 0, 0.38); }
+  .notif-body { color: #0a0a0a; }
+  .notif-sub { color: rgba(0, 0, 0, 0.45); }
+  .notif-time { color: rgba(0, 0, 0, 0.28); }
+
+  .notif-panel-footer {
+    border-color: rgba(0, 0, 0, 0.07);
+  }
+
+  .notif-footer-btn {
+    background: rgba(0, 0, 0, 0.04);
+    border-color: rgba(0, 0, 0, 0.1);
+    color: rgba(0, 0, 0, 0.5);
+
+    &:hover {
+      background: rgba(0, 0, 0, 0.08);
+      color: rgba(0, 0, 0, 0.75);
+    }
+  }
+}

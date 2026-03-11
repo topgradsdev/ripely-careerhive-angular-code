@@ -1,0 +1,169 @@
+<!-- ══ START MENU PANEL ══ -->
+<div class="start-menu-panel" *ngIf="showStartMenu">
+  <!-- Header -->
+  <div class="sm-header">
+    <div class="sm-header-label">Meridian Simulation</div>
+  </div>
+  <!-- Core apps -->
+  <div class="sm-section">
+    <div *ngFor="let item of coreMenuItems"
+         class="sm-item"
+         [class.active]="isActive(item.route)"
+         (click)="navigate(item.route)">
+      <span class="sm-icon">{{ item.icon }}</span>
+      <span class="sm-label">{{ item.label }}</span>
+      <span class="sm-badge" *ngIf="item.id === 'messages'">4</span>
+    </div>
+  </div>
+  <!-- Workstations section -->
+  <div class="sm-ws-header">
+    <div class="sm-ws-header-label">Workstations</div>
+  </div>
+  <div class="sm-section">
+    <div *ngFor="let item of wsMenuItems"
+         class="sm-item sm-ws-item"
+         (click)="navigate(item.route)">
+      <span class="sm-icon">{{ item.icon }}</span>
+      <span class="sm-label">{{ item.label }}</span>
+      <span class="sm-ws-lock">&#128274;</span>
+    </div>
+  </div>
+  <!-- Theme toggle -->
+  <div class="sm-theme-section">
+    <div class="sm-item sm-theme-row" (click)="onToggleTheme()">
+      <span class="sm-icon">{{ lightMode ? '☀️' : '🌙' }}</span>
+      <span class="sm-label">{{ lightMode ? 'Dark Mode' : 'Light Mode' }}</span>
+      <div class="sm-theme-switch" (click)="$event.stopPropagation(); onToggleTheme()">
+        <div class="sm-theme-track" [class.active]="lightMode"></div>
+        <div class="sm-theme-thumb" [class.active]="lightMode"></div>
+      </div>
+    </div>
+  </div>
+  <!-- Footer -->
+  <div class="sm-footer">
+    <div class="sm-item sm-item-danger" (click)="navigate('/student-portal/simulations')">
+      <span class="sm-icon" style="font-size:13px;">&#11013;</span>
+      <span class="sm-label">Return to Dashboard</span>
+    </div>
+  </div>
+</div>
+
+<!-- Taskbar -->
+<div class="taskbar">
+
+  <!-- Left: Start button -->
+  <div class="taskbar-start" [class.active]="showStartMenu" (click)="toggleStartMenu()" title="Start Menu">
+    <div class="taskbar-start-inner">
+      <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
+        <rect x="1" y="1" width="6.5" height="6.5" rx="1" fill="currentColor"/>
+        <rect x="8.5" y="1" width="6.5" height="6.5" rx="1" fill="currentColor"/>
+        <rect x="1" y="8.5" width="6.5" height="6.5" rx="1" fill="currentColor"/>
+        <rect x="8.5" y="8.5" width="6.5" height="6.5" rx="1" fill="currentColor"/>
+      </svg>
+    </div>
+  </div>
+
+  <!-- Centre: Pinned app icons -->
+  <div class="taskbar-apps">
+    <!-- Library -->
+    <button class="tb-app"
+            [class.tb-active]="isAppRunning(apps[0].route)"
+            (click)="navigate(apps[0].route)"
+            [title]="apps[0].label">
+      <span class="tb-app-icon">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+          <path d="M2 6a2 2 0 012-2h4l2 2h8a2 2 0 012 2v8a2 2 0 01-2 2H4a2 2 0 01-2-2V6z" fill="#e8a317" opacity="0.9"/>
+          <path d="M2 10h20" stroke="rgba(0,0,0,0.15)" stroke-width="1"/>
+        </svg>
+      </span>
+      <div class="tb-app-dot"></div>
+    </button>
+
+    <!-- Messages -->
+    <button class="tb-app"
+            [class.tb-active]="isAppRunning(apps[1].route)"
+            (click)="navigate(apps[1].route)"
+            [title]="apps[1].label">
+      <span class="tb-app-icon" style="font-size:19px;">&#128172;</span>
+      <span class="tb-app-badge" *ngIf="apps[1].badge">{{ apps[1].badge }}</span>
+      <div class="tb-app-dot"></div>
+    </button>
+
+    <!-- Separator -->
+    <div class="tb-separator"></div>
+
+    <!-- T2: Workstation -->
+    <button class="tb-app tb-ws-btn"
+            (click)="navigate(apps[2].route)"
+            [title]="apps[2].label">
+      <span class="tb-app-icon" style="font-size:16px;">&#128221;</span>
+      <span class="tb-ws-label">T2</span>
+      <div class="tb-app-dot"></div>
+    </button>
+  </div>
+
+  <!-- Right: Clock + user -->
+  <div class="taskbar-right">
+    <div class="tb-clock">{{ currentTime }}</div>
+    <div class="tb-date">{{ currentDate }}</div>
+    <div class="tb-avatar" title="Notifications" (click)="toggleNotifPanel()">
+      <div class="topnav-avatar">{{ userInitials }}</div>
+      <span class="tb-notif-badge" *ngIf="hasUnreadNotifs"></span>
+    </div>
+  </div>
+
+</div>
+
+<!-- ══ NOTIFICATION PANEL ══ -->
+<div class="notif-panel" *ngIf="showNotifPanel">
+  <div class="notif-panel-header">
+    <span class="notif-panel-title">Notifications</span>
+    <button class="notif-panel-clear" (click)="clearNotifs()">Clear all</button>
+  </div>
+
+  <!-- Urgent -->
+  <div class="notif-date-label">Now</div>
+  <div class="notif-item notif-unread" (click)="notifGoToMessages()">
+    <div class="notif-app-icon accent-bg">&#x1F4AC;</div>
+    <div class="notif-content">
+      <div class="notif-app-name">Messages &middot; Meridian BS</div>
+      <div class="notif-body">Marcus Webb sent you a brief</div>
+      <div class="notif-sub">Task 1 is ready &mdash; Read the Brief &amp; Know Your Job</div>
+    </div>
+    <div class="notif-time">Now</div>
+    <div class="notif-unread-dot"></div>
+  </div>
+  <div class="notif-cta-row">
+    <button class="notif-cta-btn" (click)="notifGoToMessages()">
+      Open Chat &amp; Begin Task 1
+      <svg width="13" height="13" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+  </div>
+
+  <!-- Secondary -->
+  <div class="notif-date-label">Today</div>
+  <div class="notif-item notif-unread" (click)="notifGoToMessages()">
+    <div class="notif-app-icon blue-bg">&#x1F4CB;</div>
+    <div class="notif-content">
+      <div class="notif-app-name">Tasks &middot; Module 1</div>
+      <div class="notif-body">6 tasks assigned &mdash; Module 1 &middot; Heron Gate</div>
+      <div class="notif-sub">Day 1 begins with the client brief and equipment data</div>
+    </div>
+    <div class="notif-time">Just now</div>
+    <div class="notif-unread-dot"></div>
+  </div>
+  <div class="notif-item" (click)="notifGoToMessages()">
+    <div class="notif-app-icon green-bg">&#x2705;</div>
+    <div class="notif-content">
+      <div class="notif-app-name">Career Hive</div>
+      <div class="notif-body">Enrolment confirmed</div>
+      <div class="notif-sub">Meridian BS &middot; Junior Mechanical Engineer simulation</div>
+    </div>
+    <div class="notif-time">1 min ago</div>
+  </div>
+
+  <div class="notif-panel-footer">
+    <button class="notif-footer-btn" (click)="notifGoToMessages()">Open Tasks</button>
+    <button class="notif-footer-btn" (click)="closeNotifPanel()">Dismiss</button>
+  </div>
+</div>

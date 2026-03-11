@@ -4,13 +4,19 @@ interface CoachAgent {
   id: string;
   name: string;
   role: string;
-  avatar: string;
-  specialization: string;
+  emoji: string;
+  avatarBg: string;
+  filter: string;
   description: string;
-  skills: string[];
+  bio: string;
   rating: number;
+  ratingCount: number;
+  satisfaction: number;
   sessions: number;
-  available: boolean;
+  online: boolean;
+  specialties: string[];
+  tags: string[];
+  reviews: { author: string; text: string; rating: number }[];
 }
 
 @Component({
@@ -19,108 +25,251 @@ interface CoachAgent {
   styleUrls: ['./career-coaching.component.scss']
 })
 export class StudentCareerCoachingComponent implements OnInit {
-  activeTab = 'coaches';
-  chatOpen = false;
-  activeAgent: CoachAgent | null = null;
-  chatMessages: { role: string; text: string }[] = [];
-  userMessage = '';
+  searchQuery = '';
+  activeFilter = 'all';
+  selectedAgent: CoachAgent | null = null;
+
+  filters = [
+    { key: 'all', label: 'All Agents' },
+    { key: 'career', label: 'Career Strategy' },
+    { key: 'technical', label: 'Technical' },
+    { key: 'interview', label: 'Interview Prep' },
+    { key: 'salary', label: 'Salary & Negotiation' },
+    { key: 'leadership', label: 'Leadership' }
+  ];
 
   agents: CoachAgent[] = [
     {
-      id: 'career-advisor',
-      name: 'Dr. Sarah Chen',
-      role: 'Career Strategy Advisor',
-      avatar: '👩‍💼',
-      specialization: 'Career Planning & Development',
-      description: 'Specializes in career transitions, personal branding, and long-term professional development strategies.',
-      skills: ['Resume Review', 'Interview Prep', 'Career Planning', 'Networking Strategy'],
+      id: 'nova-chen',
+      name: 'Nova Chen',
+      role: 'Career Strategist',
+      emoji: '🎯',
+      avatarBg: 'linear-gradient(135deg, #1a1a3e, #2d1a4e)',
+      filter: 'career',
+      description: 'Helps you map out your career trajectory with data-driven strategies and personalized action plans.',
+      bio: 'Nova is a certified career strategist with over 10 years of experience guiding professionals through pivotal career transitions. She combines data analytics with personalized coaching to create actionable roadmaps. Her clients have landed roles at top Fortune 500 companies and fast-growing startups alike.',
       rating: 4.9,
-      sessions: 1240,
-      available: true
+      ratingCount: 312,
+      satisfaction: 97,
+      sessions: 1840,
+      online: true,
+      specialties: ['Career Roadmapping', 'Personal Branding', 'Job Market Analysis', 'Goal Setting', 'LinkedIn Optimization', 'Career Transitions'],
+      tags: ['Career Strategy', 'Personal Branding', 'Job Search'],
+      reviews: [
+        { author: 'Alex M.', text: 'Nova helped me completely redefine my career path. Her data-driven approach gave me confidence in my decisions.', rating: 5 },
+        { author: 'Jordan K.', text: 'Incredible strategist. She saw opportunities I never considered and helped me land my dream role.', rating: 5 }
+      ]
     },
     {
-      id: 'industry-mentor',
-      name: 'Marcus Webb',
-      role: 'Senior Mechanical Engineer',
-      avatar: '👨‍🔧',
-      specialization: 'Engineering & Technical Mentorship',
-      description: 'Senior engineer with 15+ years in HVAC and building services. Direct, practical advice on technical careers.',
-      skills: ['Technical Skills', 'Industry Knowledge', 'Professional Standards', 'Project Management'],
+      id: 'marcus-reid',
+      name: 'Marcus Reid',
+      role: 'Resume & LinkedIn Coach',
+      emoji: '📝',
+      avatarBg: 'linear-gradient(135deg, #1e2d1a, #1a3028)',
+      filter: 'career',
+      description: 'Crafts compelling resumes and LinkedIn profiles that get you noticed by recruiters and hiring managers.',
+      bio: 'Marcus is a former tech recruiter turned career coach who has reviewed over 5,000 resumes. He understands what hiring managers look for and helps clients craft narratives that stand out. His LinkedIn optimization strategies have helped clients increase profile views by an average of 300%.',
       rating: 4.8,
-      sessions: 890,
-      available: true
+      ratingCount: 287,
+      satisfaction: 95,
+      sessions: 1520,
+      online: true,
+      specialties: ['Resume Writing', 'LinkedIn Profiles', 'Cover Letters', 'ATS Optimization', 'Portfolio Reviews', 'Personal Branding'],
+      tags: ['Resume', 'LinkedIn', 'Personal Branding'],
+      reviews: [
+        { author: 'Sam T.', text: 'Marcus transformed my resume from generic to outstanding. Started getting callbacks within a week!', rating: 5 },
+        { author: 'Priya D.', text: 'His LinkedIn tips were game-changing. My profile views tripled in the first month.', rating: 4 }
+      ]
     },
     {
-      id: 'skills-coach',
-      name: 'Priya Nair',
-      role: 'Skills Development Coach',
-      avatar: '👩‍🏫',
-      specialization: 'Workplace Skills & Communication',
-      description: 'Helps develop essential workplace skills including communication, teamwork, and professional writing.',
-      skills: ['Communication', 'Teamwork', 'Writing Skills', 'Presentation'],
-      rating: 4.7,
-      sessions: 760,
-      available: true
-    },
-    {
-      id: 'wellbeing-coach',
-      name: 'Dr. James Leung',
-      role: 'Wellbeing & Resilience Coach',
-      avatar: '👨‍⚕️',
-      specialization: 'Mental Health & Work-Life Balance',
-      description: 'Supports students with workplace stress, imposter syndrome, and maintaining work-life balance during placements.',
-      skills: ['Stress Management', 'Mindfulness', 'Work-Life Balance', 'Resilience'],
+      id: 'kai-tanaka',
+      name: 'Kai Tanaka',
+      role: 'Technical Interview Coach',
+      emoji: '💻',
+      avatarBg: 'linear-gradient(135deg, #1a2040, #152030)',
+      filter: 'technical',
+      description: 'Prepares you for technical interviews with mock sessions, coding challenges, and system design practice.',
+      bio: 'Kai is a senior software engineer and technical interview coach who has conducted over 500 mock interviews. With experience at major tech companies, he knows exactly what interviewers are looking for. His structured approach to problem-solving has helped hundreds of engineers ace their technical interviews.',
       rating: 4.9,
-      sessions: 540,
-      available: false
+      ratingCount: 241,
+      satisfaction: 98,
+      sessions: 980,
+      online: true,
+      specialties: ['Data Structures & Algorithms', 'System Design', 'Behavioral Questions', 'Mock Interviews', 'Code Review', 'Whiteboard Coding'],
+      tags: ['Technical', 'Coding', 'System Design'],
+      reviews: [
+        { author: 'Chris L.', text: 'Kai\'s mock interviews were tougher than the real thing. I felt completely prepared on interview day.', rating: 5 },
+        { author: 'Maya R.', text: 'His system design coaching was incredibly thorough. Landed a senior role at a FAANG company!', rating: 5 }
+      ]
+    },
+    {
+      id: 'elena-vasquez',
+      name: 'Elena Vasquez',
+      role: 'Salary Negotiation Expert',
+      emoji: '💰',
+      avatarBg: 'linear-gradient(135deg, #3a1a1a, #2d1a1a)',
+      filter: 'salary',
+      description: 'Empowers you to negotiate higher compensation packages with confidence and proven strategies.',
+      bio: 'Elena is a compensation consultant and negotiation expert who has helped clients collectively negotiate over $2M in additional compensation. She teaches evidence-based negotiation tactics that work across industries and seniority levels. Her approach combines market research with psychological strategies.',
+      rating: 4.7,
+      ratingCount: 198,
+      satisfaction: 94,
+      sessions: 760,
+      online: true,
+      specialties: ['Salary Negotiation', 'Offer Evaluation', 'Benefits Analysis', 'Equity Compensation', 'Promotion Strategies', 'Market Research'],
+      tags: ['Negotiation', 'Compensation', 'Offers'],
+      reviews: [
+        { author: 'Taylor B.', text: 'Elena helped me negotiate a 25% higher salary than the initial offer. Worth every minute!', rating: 5 },
+        { author: 'Raj P.', text: 'Her framework for evaluating total compensation was eye-opening. I now negotiate with confidence.', rating: 4 }
+      ]
+    },
+    {
+      id: 'james-okafor',
+      name: 'Dr. James Okafor',
+      role: 'Leadership & Management Coach',
+      emoji: '🧭',
+      avatarBg: 'linear-gradient(135deg, #1a1a3e, #201a3e)',
+      filter: 'leadership',
+      description: 'Develops your leadership skills and helps you transition into management roles with confidence.',
+      bio: 'Dr. James Okafor is an organizational psychologist and executive coach with 15 years of experience developing leaders. He specializes in first-time manager transitions and helps professionals build the emotional intelligence, communication skills, and strategic thinking needed for leadership success.',
+      rating: 4.8,
+      ratingCount: 156,
+      satisfaction: 96,
+      sessions: 640,
+      online: true,
+      specialties: ['Leadership Development', 'Team Management', 'Executive Presence', 'Conflict Resolution', 'Strategic Thinking', 'Emotional Intelligence'],
+      tags: ['Leadership', 'Management', 'Executive'],
+      reviews: [
+        { author: 'Nina W.', text: 'Dr. Okafor\'s coaching transformed my leadership style. My team engagement scores improved dramatically.', rating: 5 },
+        { author: 'David H.', text: 'His insights on emotional intelligence were practical and immediately applicable. Highly recommend.', rating: 5 }
+      ]
+    },
+    {
+      id: 'amara-singh',
+      name: 'Amara Singh',
+      role: 'Interview Confidence Coach',
+      emoji: '🎤',
+      avatarBg: 'linear-gradient(135deg, #2a1a1a, #301a20)',
+      filter: 'interview',
+      description: 'Builds your interview confidence through practice, feedback, and proven communication techniques.',
+      bio: 'Amara is a communications expert and confidence coach who has helped over 2,000 professionals master the art of interviewing. She focuses on body language, storytelling, and managing interview anxiety. Her holistic approach ensures clients feel confident and authentic in any interview setting.',
+      rating: 4.9,
+      ratingCount: 345,
+      satisfaction: 97,
+      sessions: 2100,
+      online: true,
+      specialties: ['Mock Interviews', 'Body Language', 'Storytelling', 'Anxiety Management', 'STAR Method', 'Communication Skills'],
+      tags: ['Interviews', 'Confidence', 'Communication'],
+      reviews: [
+        { author: 'Lisa F.', text: 'Amara completely changed my approach to interviews. I went from dreading them to actually enjoying them!', rating: 5 },
+        { author: 'Kevin O.', text: 'Her STAR method coaching was phenomenal. I aced my behavioral interviews after just two sessions.', rating: 5 }
+      ]
+    },
+    {
+      id: 'liam-foster',
+      name: 'Liam Foster',
+      role: 'Career Pivot Strategist',
+      emoji: '🔄',
+      avatarBg: 'linear-gradient(135deg, #0a2a2a, #0a2020)',
+      filter: 'career',
+      description: 'Guides you through career transitions with a structured framework for exploring new industries and roles.',
+      bio: 'Liam has personally navigated three major career pivots and now helps others do the same. From finance to tech to consulting, he understands the challenges of career transitions firsthand. His structured approach helps clients identify transferable skills and create actionable transition plans.',
+      rating: 4.6,
+      ratingCount: 124,
+      satisfaction: 92,
+      sessions: 480,
+      online: false,
+      specialties: ['Career Transitions', 'Skill Assessment', 'Industry Research', 'Networking Strategy', 'Transferable Skills', 'Action Planning'],
+      tags: ['Career Pivot', 'Transitions', 'Strategy'],
+      reviews: [
+        { author: 'Emma C.', text: 'Liam\'s framework made my career pivot feel manageable. I successfully transitioned from finance to tech!', rating: 5 },
+        { author: 'Andre M.', text: 'His own career pivot experience made his advice authentic and practical. Great coach for transitions.', rating: 4 }
+      ]
+    },
+    {
+      id: 'zara-mohammed',
+      name: 'Zara Mohammed',
+      role: 'Technical Resume Specialist',
+      emoji: '📄',
+      avatarBg: 'linear-gradient(135deg, #1a2040, #1a1a30)',
+      filter: 'technical',
+      description: 'Specializes in crafting technical resumes that highlight your engineering skills and project impact.',
+      bio: 'Zara is a former engineering hiring manager who now helps technical professionals showcase their skills effectively. She understands the nuances of technical resumes, from quantifying impact to highlighting the right technologies. Her clients consistently report higher callback rates after working with her.',
+      rating: 4.8,
+      ratingCount: 210,
+      satisfaction: 95,
+      sessions: 1200,
+      online: true,
+      specialties: ['Technical Resumes', 'GitHub Portfolios', 'Project Descriptions', 'Skills Assessment', 'ATS Optimization', 'Technical Writing'],
+      tags: ['Technical', 'Resume', 'Portfolio'],
+      reviews: [
+        { author: 'Mike J.', text: 'Zara knew exactly how to frame my projects for maximum impact. My callback rate doubled!', rating: 5 },
+        { author: 'Sophie L.', text: 'Her understanding of technical roles is unmatched. She helped me tailor my resume for each application.', rating: 5 }
+      ]
     }
   ];
 
-  resources = [
-    { title: 'Resume Writing Guide', icon: '📝', category: 'Career', description: 'How to write a standout engineering resume' },
-    { title: 'Interview Preparation Kit', icon: '🎯', category: 'Career', description: 'Common technical interview questions and strategies' },
-    { title: 'Workplace Communication', icon: '💬', category: 'Skills', description: 'Effective email, meeting, and presentation skills' },
-    { title: 'Industry Certifications', icon: '📋', category: 'Technical', description: 'Guide to relevant professional certifications' },
-    { title: 'Networking Tips', icon: '🤝', category: 'Career', description: 'Building professional connections during placement' },
-    { title: 'Mental Health Resources', icon: '🧠', category: 'Wellbeing', description: 'Managing stress and maintaining balance' }
-  ];
+  filteredAgents: CoachAgent[] = [];
 
-  ngOnInit(): void {}
-
-  setTab(tab: string): void {
-    this.activeTab = tab;
+  ngOnInit(): void {
+    this.applyFilters();
   }
 
-  openChat(agent: CoachAgent): void {
-    if (!agent.available) return;
-    this.activeAgent = agent;
-    this.chatOpen = true;
-    this.chatMessages = [
-      { role: 'agent', text: `Hi! I'm ${agent.name}. ${agent.description}\n\nHow can I help you today?` }
-    ];
+  setFilter(filter: string): void {
+    this.activeFilter = filter;
+    this.applyFilters();
   }
 
-  closeChat(): void {
-    this.chatOpen = false;
-    this.activeAgent = null;
-    this.chatMessages = [];
+  applyFilters(): void {
+    let results = [...this.agents];
+
+    if (this.activeFilter !== 'all') {
+      results = results.filter(a => a.filter === this.activeFilter);
+    }
+
+    if (this.searchQuery.trim()) {
+      const q = this.searchQuery.toLowerCase();
+      results = results.filter(a =>
+        a.name.toLowerCase().includes(q) ||
+        a.role.toLowerCase().includes(q) ||
+        a.description.toLowerCase().includes(q) ||
+        a.tags.some(t => t.toLowerCase().includes(q))
+      );
+    }
+
+    this.filteredAgents = results;
   }
 
-  sendMessage(): void {
-    if (!this.userMessage.trim()) return;
-    this.chatMessages.push({ role: 'user', text: this.userMessage });
-    const msg = this.userMessage;
-    this.userMessage = '';
+  onSearchChange(): void {
+    this.applyFilters();
+  }
 
-    setTimeout(() => {
-      this.chatMessages.push({
-        role: 'agent',
-        text: `Thanks for sharing that. Let me think about the best way to help you with "${msg.substring(0, 50)}..."\n\nThis is a simulation preview — in the full version, you'll get AI-powered coaching responses tailored to your career goals.`
-      });
-    }, 1000);
+  openProfile(agent: CoachAgent): void {
+    this.selectedAgent = agent;
+  }
+
+  closeProfile(): void {
+    this.selectedAgent = null;
   }
 
   getStars(rating: number): number[] {
     return Array(Math.floor(rating)).fill(0);
+  }
+
+  hasHalfStar(rating: number): boolean {
+    return rating % 1 >= 0.5;
+  }
+
+  getEmptyStars(rating: number): number[] {
+    const full = Math.floor(rating);
+    const half = this.hasHalfStar(rating) ? 1 : 0;
+    return Array(5 - full - half).fill(0);
+  }
+
+  formatSessions(n: number): string {
+    if (n >= 1000) {
+      return (n / 1000).toFixed(1).replace(/\.0$/, '') + 'k';
+    }
+    return n.toString();
   }
 }

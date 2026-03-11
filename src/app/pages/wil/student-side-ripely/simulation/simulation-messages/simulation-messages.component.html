@@ -1,0 +1,170 @@
+<!-- Backdrop -->
+<div class="float-backdrop" (click)="closeMessagesWindow()"></div>
+
+<!-- Floating DM Window -->
+<div class="dm-float-window">
+
+  <!-- Titlebar (spans full width) -->
+  <div class="float-titlebar">
+    <div class="titlebar-left">
+      <span class="titlebar-icon">&#x1F4AC;</span>
+      <span class="titlebar-label">Messages</span>
+      <span class="titlebar-sep">|</span>
+      <span class="titlebar-context">Direct Messages &middot; Meridian BS</span>
+    </div>
+    <div class="titlebar-controls">
+      <button class="titlebar-btn minimize" aria-label="Minimize" (click)="minimizeWindow()">&mdash;</button>
+      <button class="titlebar-btn close" aria-label="Close" (click)="closeMessagesWindow()">&times;</button>
+    </div>
+  </div>
+
+  <!-- Left Sidebar -->
+  <div class="dm-sidebar">
+    <!-- Return to task bar -->
+    <div class="dm-return-bar" *ngIf="showReturnBar">
+      <span>&#8592;</span>
+      <span>Return to Task</span>
+    </div>
+
+    <!-- Channels Section -->
+    <div class="dm-sidebar-section-label">Channels</div>
+    <button
+      *ngFor="let ch of channels"
+      class="dm-channel-row"
+      [class.active]="activeThreadId === ch.id"
+      (click)="selectThread(ch.id)"
+    >
+      <div class="dm-channel-hash">#</div>
+      <div class="dm-info">
+        <span class="dm-name">{{ ch.name }}</span>
+        <span class="dm-preview">{{ ch.preview }}</span>
+      </div>
+      <div class="dm-meta">
+        <span class="dm-time">{{ ch.time }}</span>
+        <span class="dm-badge" *ngIf="ch.unread > 0">{{ ch.unread }}</span>
+      </div>
+    </button>
+
+    <!-- Direct Messages Section -->
+    <div class="dm-sidebar-section-label">Direct Messages</div>
+    <div class="dm-threads">
+      <button
+        *ngFor="let thread of dmThreads"
+        class="dm-thread"
+        [class.active]="activeThreadId === thread.id"
+        [class.has-unread]="thread.unread > 0"
+        (click)="selectThread(thread.id)"
+      >
+        <div class="dm-av" [style.background]="thread.avatarColor">
+          {{ thread.initials }}
+          <span class="dm-av-status" [class.online]="thread.online"></span>
+        </div>
+        <div class="dm-info">
+          <span class="dm-name">{{ thread.name }}</span>
+          <span class="dm-role">{{ thread.role }}</span>
+          <span class="dm-preview">{{ thread.preview }}</span>
+        </div>
+        <div class="dm-meta">
+          <span class="dm-time">{{ thread.time }}</span>
+          <span class="dm-badge" *ngIf="thread.unread > 0">{{ thread.unread }}</span>
+        </div>
+      </button>
+    </div>
+
+    <!-- Sidebar Footer -->
+    <div class="dm-sidebar-footer">
+      <div class="dm-me-av" style="background: #ff6b2c;">YO</div>
+      <div class="dm-me-info">
+        <span class="dm-me-name">Junior Mechanical Engineer</span>
+        <span class="dm-me-role">You</span>
+      </div>
+      <span class="dm-me-status">Active</span>
+    </div>
+  </div>
+
+  <!-- Main Chat Area -->
+  <div class="dm-main">
+    <!-- Chat Header -->
+    <div class="dm-header">
+      <div class="dm-header-av"
+        [style.background]="isChannelActive ? '#2a2a3a' : activeHeaderAvatarColor">
+        {{ isChannelActive ? '#' : activeHeaderInitials }}
+      </div>
+      <div class="dm-header-info">
+        <span class="dm-header-name">{{ activeHeaderName }}</span>
+        <span class="dm-header-role" *ngIf="!isChannelActive">{{ activeHeaderRole }}</span>
+      </div>
+      <div class="dm-header-status" *ngIf="!isChannelActive">
+        <span class="dm-header-status-dot" [class.online]="activeHeaderOnline"></span>
+        {{ activeHeaderOnline ? 'Online' : 'Offline' }}
+      </div>
+    </div>
+
+    <!-- Chat Feed -->
+    <div class="dm-feed" #chatFeed>
+      <div
+        *ngFor="let msg of activeMessages"
+        class="dm-msg"
+        [class.mine]="msg.isMe"
+      >
+        <div class="dm-msg-av" [style.background]="msg.avatarColor">
+          {{ msg.initials }}
+        </div>
+        <div class="dm-msg-body">
+          <div class="dm-msg-meta">
+            <span>{{ msg.senderName }}</span>
+            <span class="dm-msg-meta-time">{{ msg.time }}</span>
+          </div>
+          <div class="dm-msg-text">{{ msg.text }}</div>
+        </div>
+      </div>
+
+      <!-- Typing Indicator -->
+      <div class="dm-typing" *ngIf="isTyping">
+        <div class="dm-typing-av" [style.background]="activeHeaderAvatarColor">
+          {{ activeHeaderInitials }}
+        </div>
+        <div>
+          <div class="dm-typing-dots">
+            <span class="td"></span>
+            <span class="td"></span>
+            <span class="td"></span>
+          </div>
+          <div class="dm-typing-who">{{ activeThread?.name }} is typing...</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Message Input Area -->
+    <div class="dm-input-area">
+      <div class="dm-compose">
+        <div class="dm-input-wrap">
+          <textarea
+            class="dm-input"
+            [(ngModel)]="newMessage"
+            placeholder="Type a message..."
+            rows="1"
+            (keydown)="onKeyDown($event)"
+          ></textarea>
+        </div>
+        <button class="dm-send-btn" (click)="sendMessage()" [disabled]="!newMessage.trim()">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="22" y1="2" x2="11" y2="13"></line>
+            <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Gate Bar -->
+    <div class="dm-gate-bar">
+      <div class="dm-gate-note">
+        <strong>&#10003;</strong> Briefing complete. Your workstation is ready.
+      </div>
+      <button class="dm-launch-btn" (click)="navigateToWorkstation()">
+        Open Workstation &mdash; Start Task 2
+        <svg width="13" height="13" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+    </div>
+  </div>
+</div>

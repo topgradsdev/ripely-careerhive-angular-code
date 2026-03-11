@@ -1,0 +1,70 @@
+<div class="sc-chat-fullscreen">
+  <div class="sc-chat-window">
+    <!-- Channel Header -->
+    <div class="channel-header">
+      <div class="channel-left">
+        <span class="channel-hash">{{ channelName }}</span>
+        <span class="channel-divider">&middot;</span>
+        <span class="channel-team">{{ teamName }}</span>
+      </div>
+      <div class="channel-right">
+        <span class="channel-status-text">{{ channelStatus }}</span>
+        <span class="channel-divider">&middot;</span>
+        <span class="channel-watching">watching live</span>
+        <span class="online-indicator"></span>
+        <span class="online-count">{{ onlineCount }} online</span>
+      </div>
+    </div>
+
+    <!-- Messages Area -->
+    <div class="messages-area">
+      <ng-container *ngFor="let msg of messages">
+        <!-- System message -->
+        <div *ngIf="msg.isSystem" class="system-message">
+          <div class="system-line"></div>
+          <span class="system-text">{{ msg.text }}</span>
+          <div class="system-line"></div>
+        </div>
+
+        <!-- User message -->
+        <div *ngIf="!msg.isSystem" class="chat-message" [class.is-me]="msg.isMe">
+          <div class="msg-avatar" [style.background]="msg.avatarColor">
+            {{ msg.avatar }}
+          </div>
+          <div class="msg-body">
+            <div class="msg-header">
+              <span class="msg-sender">{{ msg.sender }}</span>
+              <span class="msg-time">{{ msg.time }}</span>
+            </div>
+            <p class="msg-text">{{ msg.text }}</p>
+          </div>
+        </div>
+      </ng-container>
+    </div>
+
+    <!-- Footer -->
+    <div class="chat-footer">
+      <div class="footer-top">
+        <div class="typing-indicator">
+          <span class="typing-dots">
+            <span class="dot"></span>
+            <span class="dot"></span>
+            <span class="dot"></span>
+          </span>
+          <span class="typing-text">{{ typingUser }} is typing...</span>
+        </div>
+      </div>
+      <div class="footer-input-row">
+        <div class="input-wrapper">
+          <input type="text"
+                 [(ngModel)]="newMessage"
+                 placeholder="Message #general..."
+                 (keyup.enter)="sendMessage()">
+        </div>
+        <button class="btn-start-phase" (click)="startPhase()">
+          Start Phase {{ currentPhase }} &rarr;
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

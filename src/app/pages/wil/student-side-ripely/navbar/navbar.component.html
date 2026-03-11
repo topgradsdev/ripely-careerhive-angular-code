@@ -1,53 +1,53 @@
-<nav class="student-navbar" (clickOutside)="closeMenus()">
-  <div class="navbar-inner">
+<nav class="pill-nav-host">
+  <div class="pill-nav">
     <!-- Brand -->
-    <div class="navbar-brand" routerLink="/student-portal/dashboard">
-      <span class="brand-text">ripe<span class="brand-accent">ly</span></span>
+    <div class="pill-nav-logo" routerLink="/student-portal/dashboard">
+      ripe<span>ly</span>
     </div>
 
     <!-- Desktop Nav Links -->
-    <div class="navbar-links">
+    <div class="pill-nav-links">
       <a *ngFor="let link of navLinks"
          [routerLink]="link.route"
-         class="nav-link"
+         class="pill-nav-link"
          [class.active]="isActive(link.route)">
-        <span>{{ link.label }}</span>
+        {{ link.label }}
       </a>
     </div>
 
     <!-- Right Section -->
-    <div class="navbar-right">
+    <div class="pill-nav-right">
       <!-- Notifications -->
-      <button class="notif-btn" title="Notifications">
+      <button class="pill-nav-bell" title="Notifications">
         <i class="fa fa-bell"></i>
-        <span class="notif-badge" *ngIf="notificationCount > 0">{{ notificationCount }}</span>
       </button>
 
       <!-- User Avatar -->
-      <div class="user-menu-wrapper">
-        <button class="user-avatar-btn" (click)="toggleUserMenu()">
-          <div class="user-avatar">{{ studentInitials }}</div>
-        </button>
-        <div class="user-dropdown" *ngIf="showUserMenu">
+      <div class="pill-nav-avatar-wrap">
+        <div class="pill-nav-avatar" (click)="toggleUserMenu()" title="Account menu">
+          {{ studentInitials }}
+        </div>
+        <div class="pill-nav-dropdown" [class.open]="showUserMenu">
           <div class="dropdown-header">
-            <div class="dropdown-avatar">{{ studentName.charAt(0) }}</div>
-            <div>
-              <div class="dropdown-name">{{ studentName }}</div>
-              <div class="dropdown-role">Student</div>
-            </div>
+            <div class="dropdown-name">{{ studentName }}</div>
+            <div class="dropdown-email">Student</div>
           </div>
           <div class="dropdown-divider"></div>
-          <a class="dropdown-item"><i class="fa fa-user"></i> My Profile</a>
-          <a class="dropdown-item"><i class="fa fa-cog"></i> Settings</a>
+          <button class="dropdown-item">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+            My Profile
+          </button>
+          <button class="dropdown-item">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+            Settings
+          </button>
           <div class="dropdown-divider"></div>
-          <a class="dropdown-item text-danger"><i class="fa fa-sign-out"></i> Sign Out</a>
+          <button class="dropdown-item danger">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+            Log out
+          </button>
         </div>
       </div>
-
-      <!-- Mobile Toggle -->
-      <button class="mobile-toggle" (click)="toggleMobileMenu()">
-        <i class="fa" [ngClass]="showMobileMenu ? 'fa-times' : 'fa-bars'"></i>
-      </button>
     </div>
   </div>
 
@@ -58,7 +58,7 @@
        class="mobile-link"
        [class.active]="isActive(link.route)"
        (click)="showMobileMenu = false">
-      <span>{{ link.label }}</span>
+      {{ link.label }}
     </a>
   </div>
 </nav>

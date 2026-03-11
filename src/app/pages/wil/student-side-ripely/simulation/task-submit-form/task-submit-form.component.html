@@ -1,0 +1,185 @@
+<!-- ── sc4d  Task 5 — Submit Form ── -->
+<div class="comp-layout">
+
+  <!-- Float Titlebar -->
+  <header class="float-titlebar">
+    <span class="tb-dots"><i></i><i></i><i></i></span>
+    <span class="tb-title">Site Assessment &middot; Day 3</span>
+    <span class="tb-spacer"></span>
+  </header>
+
+  <!-- Scrollable workspace -->
+  <div class="comp-main">
+
+    <!-- Hero -->
+    <section class="comp-hero">
+      <span class="comp-kicker">Task 5</span>
+      <h1 class="comp-title">Submit Form</h1>
+    </section>
+
+    <!-- Page Dots -->
+    <div class="page-dots">
+      <span class="page-dot" [class.active]="currentPage === 1" (click)="currentPage = 1">1</span>
+      <span class="page-dot" [class.active]="currentPage === 2" (click)="currentPage = 2">2</span>
+    </div>
+
+    <!-- Page 1 : Equipment Status -->
+    <div *ngIf="currentPage === 1 && !submitted">
+
+      <div class="txn">
+        <div class="txn-flag-bar">
+          <span class="txn-flag-icon">&#128295;</span>
+          <span class="txn-flag-label">Equipment Status</span>
+          <span class="txn-flag-meta">Page 1 of 2</span>
+        </div>
+        <div class="txn-inner">
+
+          <!-- Overall condition -->
+          <div class="ws-field">
+            <label class="calc-label">Overall condition</label>
+            <select class="calc-input" [(ngModel)]="overallCondition">
+              <option value="">Select condition...</option>
+              <option value="good">Good — operational, no issues</option>
+              <option value="fair">Fair — minor wear, still functional</option>
+              <option value="poor">Poor — significant deterioration</option>
+              <option value="critical">Critical — immediate action required</option>
+            </select>
+          </div>
+
+          <!-- Site ref -->
+          <div class="ws-field">
+            <label class="calc-label">Site reference</label>
+            <input class="calc-input" type="text" [(ngModel)]="siteRef" placeholder="e.g. HG-CT-001">
+          </div>
+
+          <!-- Inspection notes -->
+          <div class="ws-field">
+            <label class="calc-label">Inspection notes</label>
+            <textarea class="calc-input" [(ngModel)]="inspectionNotes" rows="4" placeholder="Describe your observations during the site inspection..."></textarea>
+          </div>
+
+          <!-- Drift eliminator panel status -->
+          <div class="ws-field">
+            <label class="calc-label">Drift eliminator panel status</label>
+            <div class="ws-radio-group">
+              <label class="ws-radio-row" *ngFor="let opt of [
+                {value: 'intact', label: 'Intact — properly seated'},
+                {value: 'displaced', label: 'Displaced — partially unseated'},
+                {value: 'damaged', label: 'Damaged — cracked or broken'},
+                {value: 'missing', label: 'Missing — not installed'}
+              ]">
+                <input type="radio" name="driftEliminator" [value]="opt.value" [(ngModel)]="driftEliminatorStatus">
+                <span class="ws-radio-circle"></span>
+                <span class="ws-radio-label">{{ opt.label }}</span>
+              </label>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Next button -->
+      <div class="ws-submit-bar">
+        <button class="ws-submit-btn" [disabled]="!page1Valid" (click)="nextPage()">
+          Next: Risk Assessment &rarr;
+        </button>
+      </div>
+
+    </div>
+
+    <!-- Page 2 : Risk Assessment -->
+    <div *ngIf="currentPage === 2 && !submitted">
+
+      <div class="txn">
+        <div class="txn-flag-bar">
+          <span class="txn-flag-icon">&#9888;&#65039;</span>
+          <span class="txn-flag-label">Risk Assessment</span>
+          <span class="txn-flag-meta">Page 2 of 2</span>
+        </div>
+        <div class="txn-inner">
+
+          <!-- Risk categories checkboxes -->
+          <div class="ws-field">
+            <label class="calc-label">Identified risks (select all that apply)</label>
+            <div class="ws-check-group">
+              <label *ngFor="let risk of riskCategories"
+                     class="ws-check-row"
+                     [class.checked]="risk.checked">
+                <input type="checkbox" [checked]="risk.checked" (change)="toggleRisk(risk)">
+                <span class="ws-check-box">
+                  <svg *ngIf="risk.checked" viewBox="0 0 14 14" width="14" height="14"><path d="M2 7l3.5 3.5L12 4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </span>
+                <span class="ws-check-label">{{ risk.label }}</span>
+              </label>
+            </div>
+          </div>
+
+          <!-- Response urgency -->
+          <div class="ws-field">
+            <label class="calc-label">Response urgency</label>
+            <select class="calc-input" [(ngModel)]="responseUrgency">
+              <option value="">Select urgency...</option>
+              <option value="routine">Routine — schedule at next service</option>
+              <option value="priority">Priority — within 14 days</option>
+              <option value="urgent">Urgent — within 48 hours</option>
+              <option value="emergency">Emergency — immediate action</option>
+            </select>
+          </div>
+
+          <!-- Summary recommendation -->
+          <div class="ws-field">
+            <label class="calc-label">Summary recommendation</label>
+            <textarea class="calc-input" [(ngModel)]="summaryRecommendation" rows="4" placeholder="Summarise your recommended course of action..."></textarea>
+          </div>
+
+          <!-- Engineer sign-off -->
+          <div class="ws-field">
+            <label class="calc-label">Engineer sign-off</label>
+            <div class="ws-radio-group">
+              <label class="ws-radio-row" *ngFor="let opt of [
+                {value: 'approved', label: 'Approved — safe to continue operations'},
+                {value: 'conditional', label: 'Conditional — approved with noted caveats'},
+                {value: 'rejected', label: 'Rejected — operations must cease until resolved'}
+              ]">
+                <input type="radio" name="signOff" [value]="opt.value" [(ngModel)]="engineerSignOff">
+                <span class="ws-radio-circle"></span>
+                <span class="ws-radio-label">{{ opt.label }}</span>
+              </label>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Navigation buttons -->
+      <div class="ws-submit-bar ws-submit-bar--split">
+        <button class="ws-back-btn" (click)="prevPage()">
+          &larr; Back
+        </button>
+        <button class="ws-submit-btn" [disabled]="!page2Valid" (click)="submitForReview()">
+          Submit for Review
+        </button>
+      </div>
+
+    </div>
+
+    <!-- Submitted state -->
+    <div class="txn txn-success" *ngIf="submitted">
+      <div class="txn-flag-bar txn-flag-bar--success">
+        <span class="txn-flag-icon">&#9989;</span>
+        <span class="txn-flag-label">Submitted</span>
+      </div>
+      <div class="txn-inner success-inner">
+        <div class="success-icon-wrap">
+          <svg viewBox="0 0 48 48" width="48" height="48">
+            <circle cx="24" cy="24" r="24" fill="rgba(0,184,148,0.15)"/>
+            <path d="M14 24l7 7 13-13" fill="none" stroke="#00b894" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <h3 class="success-title">Form Submitted for Review</h3>
+        <p class="success-text">Your site assessment has been sent to Marcus for review. Moving to the final task...</p>
+      </div>
+    </div>
+
+  </div><!-- /comp-main -->
+</div><!-- /comp-layout -->

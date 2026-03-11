@@ -1,0 +1,58 @@
+<div class="tasks-page">
+  <!-- Header -->
+  <div class="tasks-header">
+    <div class="header-top">
+      <h1>Task Board</h1>
+      <span class="task-counter">{{ completedCount }}/{{ tasks.length }} complete</span>
+    </div>
+    <p class="tasks-subtitle">Complete each task to progress through the simulation.</p>
+  </div>
+
+  <!-- Progress Bar -->
+  <div class="progress-section">
+    <div class="progress-bar">
+      <div class="progress-fill" [style.width.%]="progressPercent"></div>
+    </div>
+    <span class="progress-percent">{{ progressPercent }}%</span>
+  </div>
+
+  <!-- Task Cards -->
+  <div class="task-list">
+    <div *ngFor="let task of tasks; let i = index"
+         class="task-card"
+         [class.completed]="task.status === 'completed'"
+         [class.active]="task.status === 'active'"
+         [class.locked]="task.status === 'locked'"
+         (click)="openTask(task)">
+
+      <!-- Status Icon -->
+      <div class="task-status-icon" [ngClass]="task.status">
+        <i class="fa" [ngClass]="getStatusIcon(task.status)"></i>
+      </div>
+
+      <!-- Task Icon -->
+      <div class="task-icon-wrap">
+        <i class="fa" [ngClass]="task.icon"></i>
+      </div>
+
+      <!-- Task Content -->
+      <div class="task-content">
+        <div class="task-title-row">
+          <h3 class="task-title">{{ task.title }}</h3>
+          <span class="task-status-badge" [ngClass]="task.status">
+            {{ getStatusLabel(task.status) }}
+          </span>
+        </div>
+        <p class="task-desc">{{ task.description }}</p>
+        <div class="task-footer">
+          <div class="task-skills">
+            <span *ngFor="let skill of task.skills" class="skill-tag">{{ skill }}</span>
+          </div>
+          <span class="task-duration">
+            <i class="fa fa-clock-o"></i> {{ task.duration }}
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

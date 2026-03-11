@@ -1,0 +1,26 @@
+<div class="simulation-shell"
+     [class.sim-desktop-mode]="!isOverviewPage"
+     [class.light-mode]="lightMode">
+
+  <!-- Top navbar: only on overview (pre-enrollment) page -->
+  <app-student-navbar *ngIf="isOverviewPage"></app-student-navbar>
+
+  <!-- Desktop background layer: only after joining (not overview) -->
+  <app-simulation-desktop *ngIf="!isOverviewPage" [simulationId]="simulationId"></app-simulation-desktop>
+
+  <!-- Page content (hidden when minimized) -->
+  <div class="simulation-viewport"
+       [class.has-taskbar]="!isOverviewPage"
+       [class.content-minimized]="isMinimized && !isOverviewPage">
+    <router-outlet></router-outlet>
+  </div>
+
+  <!-- Bottom taskbar: only after joining (not overview) -->
+  <app-simulation-taskbar *ngIf="!isOverviewPage"
+                          [simulationId]="simulationId"
+                          [lightMode]="lightMode"
+                          [isMinimized]="isMinimized"
+                          (themeToggle)="toggleTheme()"
+                          (restoreWindow)="restoreWindow()">
+  </app-simulation-taskbar>
+</div>

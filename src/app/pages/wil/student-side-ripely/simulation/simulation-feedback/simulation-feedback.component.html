@@ -1,0 +1,69 @@
+<div class="feedback-page">
+  <!-- Header -->
+  <div class="fb-header">
+    <h1>Task Feedback</h1>
+    <p class="fb-subtitle">Performance feedback from {{ managerName }} on each completed task.</p>
+  </div>
+
+  <!-- Manager intro -->
+  <div class="manager-intro">
+    <div class="manager-avatar">{{ managerAvatar }}</div>
+    <div class="manager-info">
+      <span class="manager-name">{{ managerName }}</span>
+      <span class="manager-role">{{ managerRole }}</span>
+    </div>
+  </div>
+
+  <!-- Feedback Cards -->
+  <div class="feedback-list">
+    <div *ngFor="let item of feedbackItems; let i = index" class="feedback-card">
+      <!-- Card Header -->
+      <div class="card-header">
+        <div class="card-header-left">
+          <div class="task-icon-wrap">
+            <i class="fa" [ngClass]="item.taskIcon"></i>
+          </div>
+          <span class="task-name">{{ item.taskName }}</span>
+        </div>
+        <div class="card-score" [style.color]="getScoreColor(item.score)">
+          <span class="score-value">{{ item.score }}</span>
+          <span class="score-max">/{{ item.maxScore }}</span>
+        </div>
+      </div>
+
+      <!-- Score Bar -->
+      <div class="score-bar">
+        <div class="score-fill"
+             [style.width.%]="item.score"
+             [style.background]="getScoreColor(item.score)"></div>
+      </div>
+
+      <!-- Manager Feedback -->
+      <div class="feedback-text">
+        <i class="fa fa-quote-left quote-icon"></i>
+        <p>{{ item.managerFeedback }}</p>
+      </div>
+
+      <!-- Skill Ratings -->
+      <div class="skill-ratings">
+        <div *ngFor="let skill of item.skills" class="skill-row">
+          <span class="skill-name">{{ skill.name }}</span>
+          <div class="skill-dots">
+            <span *ngFor="let filled of getRatingDots(skill.rating, skill.maxRating)"
+                  class="dot"
+                  [class.filled]="filled"
+                  [class.empty]="!filled"></span>
+          </div>
+          <span class="skill-value">{{ skill.rating }}/{{ skill.maxRating }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- View Scorecard Button -->
+  <div class="fb-footer">
+    <button class="btn-scorecard" (click)="goToScorecard()">
+      View Final Scorecard <i class="fa fa-arrow-right"></i>
+    </button>
+  </div>
+</div>

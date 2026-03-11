@@ -4,17 +4,34 @@ import { Router } from '@angular/router';
 interface TaskItem {
   key: string;
   label: string;
-  description: string;
-  icon: string;
-  status: 'complete' | 'in-progress' | 'locked';
+  subtitle: string;
+  category: string;
+  status: 'completed' | 'in-progress' | 'locked';
   score: number | null;
+  sparkPoints?: string;
 }
 
-interface SkillBadge {
-  name: string;
+interface OngoingSim {
+  id: string;
+  title: string;
+  company: string;
+  companyColor: string;
   category: string;
-  level: string;
-  icon: string;
+  thumbClass: string;
+  progress: number;
+  tasksDone: number;
+  totalTasks: number;
+}
+
+interface RecommendedSim {
+  id: string;
+  title: string;
+  company: string;
+  companyColor: string;
+  category: string;
+  thumbClass: string;
+  tags: { label: string; class: string }[];
+  extraTagCount: number;
 }
 
 @Component({
@@ -24,69 +41,141 @@ interface SkillBadge {
 })
 export class StudentDashboardComponent implements OnInit {
   studentName = 'Student';
-  overallScore = 0;
-  completedTasks = 0;
+  greeting = 'Good morning';
+  lastUpdated = '';
+  showNotification = true;
+
+  // Score & Progress
+  workReadyScore = 72;
+  completedTasks = 2;
   totalTasks = 6;
-  activeSim = 'HVAC Engineering Simulation';
-  streakDays = 5;
+  moduleProgressPercent = 33;
 
+  // Active Simulation
+  activeSimTitle = 'Heron Gate: Cooling Tower Assessment';
+  activeSimCompany = 'Meridian Building Systems';
+  activeSimCategory = 'HVAC';
+  activeSimDifficulty = 'Intermediate';
+  activeSimDuration = '3–4 hrs';
+  activeSimRating = 4.9;
+  activeSimProgress = 33;
+  activeSimId = 'hvac';
+
+  taskPills = [
+    { label: 'T1 · Brief', status: 'completed' },
+    { label: 'T2 · Data', status: 'completed' },
+    { label: 'T3 · Drift Loss T1', status: 'in-progress' },
+    { label: 'T4 · Video', status: 'locked' },
+    { label: 'T5 · Assessment', status: 'locked' },
+    { label: 'T6 · Report', status: 'locked' }
+  ];
+
+  // Stats
+  statCards = [
+    { value: 6, label: 'Total Tasks', colorClass: '', barWidth: 100, barColor: 'rgba(0,0,0,0.12)' },
+    { value: 2, label: 'Completed', colorClass: 'rd-stat-green', barWidth: 33, barColor: '#16a34a' },
+    { value: 1, label: 'In Progress', colorClass: 'rd-stat-amber', barWidth: 17, barColor: '#fb923c' },
+    { value: 3, label: 'Locked', colorClass: '', barWidth: 50, barColor: 'rgba(0,0,0,0.08)' }
+  ];
+
+  // Task Breakdown
   tasks: TaskItem[] = [
-    { key: 'briefing', label: 'Read the Brief', description: 'Review the client instruction letter and project scope', icon: '📋', status: 'complete', score: 85 },
-    { key: 'migration', label: 'Gather Your Data', description: 'Collect site data and equipment specifications', icon: '📊', status: 'complete', score: 78 },
-    { key: 'compliance', label: 'Drift Loss Calculation', description: 'Calculate Tower 1 drift loss using the percentage method', icon: '🔧', status: 'in-progress', score: null },
-    { key: 'hotfix', label: 'Watch Training Video', description: 'Cooling tower water treatment fundamentals', icon: '🎥', status: 'locked', score: null },
-    { key: 'waterbalance', label: 'Site Assessment Form', description: 'Complete the site assessment for Heron Gate', icon: '📝', status: 'locked', score: null },
-    { key: 'report', label: 'Produce the Report', description: 'Write the formal calculation report for the client', icon: '📄', status: 'locked', score: null }
+    { key: 'brief', label: 'T1 · Client Brief', subtitle: 'Introduction · HVAC', category: 'HVAC', status: 'completed', score: 88, sparkPoints: '4,28 20,22 36,18 52,14 68,10 76,10' },
+    { key: 'data', label: 'T2 · Gather Your Data', subtitle: 'Data collection · HVAC', category: 'HVAC', status: 'completed', score: 74, sparkPoints: '4,30 24,24 44,20 64,16 76,14' },
+    { key: 'drift', label: 'T3 · Tower 1 Drift Loss', subtitle: 'Engineering calc · HVAC', category: 'HVAC', status: 'in-progress', score: null, sparkPoints: '4,26 22,22 42,18 56,14' },
+    { key: 'video', label: 'T4 · Watch Video', subtitle: 'Learning · HVAC', category: 'HVAC', status: 'locked', score: null },
+    { key: 'assessment', label: 'T5 · Submit Assessment', subtitle: 'Evaluation · HVAC', category: 'HVAC', status: 'locked', score: null },
+    { key: 'report', label: 'T6 · Produce the Report', subtitle: 'Final deliverable · HVAC', category: 'HVAC', status: 'locked', score: null }
   ];
 
-  skills: SkillBadge[] = [
-    { name: 'Technical Writing', category: 'Professional', level: 'Developing', icon: '✍️' },
-    { name: 'Data Analysis', category: 'Technical', level: 'Proficient', icon: '📈' },
-    { name: 'Client Communication', category: 'Professional', level: 'Developing', icon: '💬' },
-    { name: 'Risk Assessment', category: 'Technical', level: 'Beginner', icon: '⚠️' },
-    { name: 'Engineering Calculations', category: 'Technical', level: 'Proficient', icon: '🔢' },
-    { name: 'Compliance Standards', category: 'Regulatory', level: 'Beginner', icon: '📋' }
+  // Ongoing Simulations
+  ongoingSims: OngoingSim[] = [
+    { id: 'cyber', title: 'Australian Cybersecurity Foundation', company: 'Career Hive', companyColor: '#f5c518', category: 'Cybersecurity', thumbClass: 'rd-thumb-cyber', progress: 15, tasksDone: 2, totalTasks: 4 },
+    { id: 'data', title: 'Basics of Data Analysis', company: 'Qantas Group', companyColor: '#e8192c', category: 'Data Analysis', thumbClass: 'rd-thumb-tech', progress: 15, tasksDone: 2, totalTasks: 4 },
+    { id: 'threat', title: 'Cybersecurity Threat Management', company: 'BGIS', companyColor: '#1a56db', category: 'Threat Mgmt', thumbClass: 'rd-thumb-checker', progress: 15, tasksDone: 2, totalTasks: 4 }
   ];
 
-  quickActions = [
-    { label: 'Continue Simulation', icon: '▶️', route: '/student-portal/simulations', accent: true },
-    { label: 'Message Mentor', icon: '💬', route: '/student-portal/career-coaching', accent: false },
-    { label: 'View Resources', icon: '📁', route: '/student-portal/support', accent: false }
+  // Recommended
+  recommendedSims: RecommendedSim[] = [
+    { id: 'rec1', title: 'Basics of Data Analysis', company: 'Qantas Group', companyColor: '#e8192c', category: 'Data', thumbClass: 'rd-thumb-tech', tags: [{ label: 'Info Tech', class: 'rd-tag-industry' }, { label: 'Python', class: 'rd-tag-skill' }], extraTagCount: 8 },
+    { id: 'rec2', title: 'Cybersecurity Threat Management', company: 'BGIS', companyColor: '#1a56db', category: 'Security', thumbClass: 'rd-thumb-checker', tags: [{ label: 'Info Tech', class: 'rd-tag-industry' }, { label: 'Python', class: 'rd-tag-skill' }], extraTagCount: 8 },
+    { id: 'rec3', title: 'F1 Advanced Data Analyst', company: 'Formula 1 Corps', companyColor: '#c8102e', category: 'F1', thumbClass: 'rd-thumb-track', tags: [{ label: 'Info Tech', class: 'rd-tag-industry' }, { label: 'Python', class: 'rd-tag-skill' }], extraTagCount: 8 }
   ];
 
   constructor(private router: Router) {}
 
   ngOnInit(): void {
-    this.completedTasks = this.tasks.filter(t => t.status === 'complete').length;
-    this.overallScore = this.calculateOverallScore();
+    const stored = localStorage.getItem('userSDetail');
+    if (stored) {
+      try {
+        const user = JSON.parse(stored);
+        this.studentName = (user.firstName || user.first_name || 'Student') + ' ' + (user.lastName || user.last_name || '');
+        this.studentName = this.studentName.trim();
+      } catch {}
+    }
+
+    const hour = new Date().getHours();
+    if (hour < 12) this.greeting = 'Good morning';
+    else if (hour < 17) this.greeting = 'Good afternoon';
+    else this.greeting = 'Good evening';
+
+    const now = new Date();
+    this.lastUpdated = now.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
   }
 
-  calculateOverallScore(): number {
-    const scored = this.tasks.filter(t => t.score !== null);
-    if (scored.length === 0) return 0;
-    return Math.round(scored.reduce((sum, t) => sum + (t.score || 0), 0) / scored.length);
+  get ringCircumference(): number {
+    return 2 * Math.PI * 30;
   }
 
-  getProgressPercent(): number {
-    return Math.round((this.completedTasks / this.totalTasks) * 100);
+  get ringDashOffset(): number {
+    return this.ringCircumference - (this.ringCircumference * this.activeSimProgress) / 100;
   }
 
-  getScoreClass(score: number | null): string {
-    if (score === null) return '';
-    if (score >= 80) return 'good';
-    if (score >= 60) return 'warn';
-    return 'bad';
+  dismissNotification(): void {
+    this.showNotification = false;
   }
 
-  getLevelClass(level: string): string {
-    switch (level) {
-      case 'Proficient': return 'proficient';
-      case 'Developing': return 'developing';
-      default: return 'beginner';
+  continueSimulation(): void {
+    this.router.navigate(['/student-portal/simulations', this.activeSimId, 'tasks']);
+  }
+
+  openSimulation(id: string): void {
+    this.router.navigate(['/student-portal/simulations', id, 'overview']);
+  }
+
+  getStatusLabel(status: string): string {
+    switch (status) {
+      case 'completed': return 'Completed';
+      case 'in-progress': return 'In Progress';
+      default: return 'Locked';
     }
   }
 
-  navigateTo(route: string): void {
-    this.router.navigateByUrl(route);
+  getStatusClass(status: string): string {
+    switch (status) {
+      case 'completed': return 'done';
+      case 'in-progress': return 'active';
+      default: return 'locked';
+    }
+  }
+
+  getScoreDisplay(score: number | null): string {
+    return score !== null ? `${score} / 100` : '— / 100';
+  }
+
+  getChipClass(status: string): string {
+    switch (status) {
+      case 'completed': return 'done';
+      case 'in-progress': return 'active';
+      default: return '';
+    }
+  }
+
+  getPillClass(status: string): string {
+    switch (status) {
+      case 'completed': return 'pill-done';
+      case 'in-progress': return 'pill-active';
+      default: return 'pill-locked';
+    }
   }
 }

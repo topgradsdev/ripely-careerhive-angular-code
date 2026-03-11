@@ -1,0 +1,65 @@
+// ============================================================
+// Simulation Shell
+// Overview page: light bg + top navbar
+// Sim desktop mode: dark wallpaper + bottom taskbar
+// ============================================================
+
+.simulation-shell {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  background: #FAF9F5;
+  color: #0a0a0a;
+}
+
+// Dark desktop mode (after joining — all pages except overview)
+.simulation-shell.sim-desktop-mode {
+  color: #e6edf3;
+
+  background:
+    radial-gradient(ellipse 55% 45% at 78% 8%, rgba(180, 100, 30, 0.18) 0%, transparent 70%),
+    radial-gradient(ellipse 60% 50% at 15% 92%, rgba(40, 50, 110, 0.45) 0%, transparent 65%),
+    radial-gradient(ellipse 35% 40% at 8% 40%, rgba(20, 80, 100, 0.22) 0%, transparent 60%),
+    linear-gradient(158deg, #0a0a16 0%, #080c1a 40%, #06070f 100%);
+
+  // Fine dot grid overlay
+  &::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    background-image: radial-gradient(circle, rgba(255, 255, 255, 0.07) 1px, transparent 1px);
+    background-size: 36px 36px;
+  }
+}
+
+.simulation-viewport {
+  position: relative;
+  z-index: 1;
+  height: 100vh;
+  overflow-y: auto;
+
+  &.has-taskbar {
+    height: calc(100vh - 48px);
+  }
+
+  // Minimized state: hide content but preserve in DOM
+  &.content-minimized {
+    visibility: hidden;
+    pointer-events: none;
+  }
+}
+
+// ============================================================
+// LIGHT MODE OVERRIDES — desktop wallpaper
+// ============================================================
+.simulation-shell.sim-desktop-mode.light-mode {
+  background: #ffffff;
+  color: #0a0a0a;
+
+  &::after {
+    display: none; // hide dark dot grid in light mode
+  }
+}

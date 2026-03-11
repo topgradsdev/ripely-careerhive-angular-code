@@ -1,0 +1,146 @@
+<!-- ── sc4  Task 3 — Drift Loss Calculator ── -->
+<div class="comp-layout">
+
+  <!-- Float Titlebar -->
+  <header class="float-titlebar">
+    <span class="tb-dots"><i></i><i></i><i></i></span>
+    <span class="tb-title">Tower 1 &middot; Day 2</span>
+    <span class="tb-spacer"></span>
+  </header>
+
+  <!-- Scrollable workspace -->
+  <div class="comp-main">
+
+    <!-- Hero -->
+    <section class="comp-hero">
+      <span class="comp-kicker">Task 3</span>
+      <h1 class="comp-title">Drift Loss Calculator</h1>
+    </section>
+
+    <!-- Project Information -->
+    <div class="txn">
+      <div class="txn-flag-bar">
+        <span class="txn-flag-icon">&#128196;</span>
+        <span class="txn-flag-label">Project Information</span>
+      </div>
+      <div class="txn-inner">
+        <div class="proj-info-grid">
+          <div class="proj-info-field">
+            <label class="calc-label">Project</label>
+            <input class="calc-input" type="text" [(ngModel)]="projectName" placeholder="Project name">
+          </div>
+          <div class="proj-info-field">
+            <label class="calc-label">Engineer</label>
+            <input class="calc-input" type="text" [(ngModel)]="engineerName" placeholder="Your name">
+          </div>
+          <div class="proj-info-field">
+            <label class="calc-label">Date</label>
+            <input class="calc-input" type="date" [(ngModel)]="calcDate">
+          </div>
+          <div class="proj-info-field">
+            <label class="calc-label">Checked by</label>
+            <input class="calc-input" type="text" [(ngModel)]="checkedBy" placeholder="Supervisor name">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Calculation Pad -->
+    <div class="txn">
+      <div class="txn-flag-bar">
+        <span class="txn-flag-icon">&#129518;</span>
+        <span class="txn-flag-label">Calculation Pad</span>
+      </div>
+      <div class="txn-inner">
+        <table class="calc-table">
+          <thead>
+            <tr>
+              <th class="ct-var">Variable</th>
+              <th class="ct-sym">Symbol</th>
+              <th class="ct-val">Value</th>
+              <th class="ct-unit">Unit</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let row of calcRows; let i = index">
+              <td>
+                <input *ngIf="row.editable" class="calc-input ct-input" type="text" [(ngModel)]="row.variable" [placeholder]="i < 2 ? '' : 'spare row'">
+                <span *ngIf="!row.editable" class="ct-readonly">{{ row.variable }}</span>
+              </td>
+              <td>
+                <input *ngIf="row.editable" class="calc-input ct-input ct-sym-input" type="text" [(ngModel)]="row.symbol">
+                <span *ngIf="!row.editable" class="ct-readonly">{{ row.symbol }}</span>
+              </td>
+              <td>
+                <input *ngIf="row.editable" class="calc-input ct-input" type="number" [(ngModel)]="row.value" placeholder="0">
+                <span *ngIf="!row.editable" class="ct-readonly ct-result-val">{{ row.value }}</span>
+              </td>
+              <td>
+                <input *ngIf="row.editable" class="calc-input ct-input ct-unit-input" type="text" [(ngModel)]="row.unit">
+                <span *ngIf="!row.editable" class="ct-readonly">{{ row.unit }}</span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <!-- Divider -->
+        <div class="calc-divider"></div>
+
+        <!-- Auto-computed results -->
+        <div class="calc-results">
+          <div class="calc-result-row">
+            <span class="calc-result-label">Drift Loss</span>
+            <span class="calc-result-value">{{ driftLossGPM | number:'1.4-4' }} <small>GPM</small></span>
+          </div>
+          <div class="calc-result-row">
+            <span class="calc-result-label">Drift Loss</span>
+            <span class="calc-result-value">{{ driftLossLPerHr | number:'1.2-2' }} <small>L / hr</small></span>
+          </div>
+          <div class="calc-result-row">
+            <span class="calc-result-label">Drift Loss</span>
+            <span class="calc-result-value">{{ driftLossLPerDay | number:'1.0-0' }} <small>L / day</small></span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Plain English Summary -->
+    <div class="txn">
+      <div class="txn-flag-bar">
+        <span class="txn-flag-icon">&#128172;</span>
+        <span class="txn-flag-label">Plain English Summary</span>
+      </div>
+      <div class="txn-inner">
+        <p class="ws-hint">Explain your result in one or two sentences a non-engineer could understand.</p>
+        <textarea class="calc-input summary-area"
+                  [(ngModel)]="summaryText"
+                  placeholder="e.g. Tower 1 loses approximately X litres of water per day through drift..."></textarea>
+      </div>
+    </div>
+
+    <!-- Follow-up from Marcus -->
+    <div class="txn txn-question">
+      <div class="txn-flag-bar txn-flag-bar--question">
+        <span class="txn-flag-icon">&#128172;</span>
+        <span class="txn-flag-label">Follow-up from Marcus</span>
+      </div>
+      <div class="txn-inner">
+        <div class="marcus-q">
+          <span class="marcus-avatar">MW</span>
+          <p class="marcus-text">{{ marcusQuestion }}</p>
+        </div>
+        <textarea class="calc-input marcus-reply"
+                  [(ngModel)]="marcusAnswer"
+                  placeholder="Type your answer..."></textarea>
+      </div>
+    </div>
+
+    <!-- Submit -->
+    <div class="ws-submit-bar">
+      <button class="ws-submit-btn" [disabled]="!isValid" (click)="submitCalculation()">
+        Submit Calculation &rarr;
+      </button>
+    </div>
+
+  </div><!-- /comp-main -->
+</div><!-- /comp-layout -->

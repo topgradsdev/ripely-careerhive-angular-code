@@ -1,0 +1,64 @@
+<div class="task-page">
+  <div class="task-header">
+    <span class="task-badge crisis">Crisis Scenario</span>
+    <h1>Crisis Response</h1>
+    <p>A critical issue has been reported. Navigate the decision tree to resolve it.</p>
+  </div>
+
+  <div *ngIf="!deployed">
+    <!-- Stage Progress -->
+    <div class="stage-progress">
+      <div *ngFor="let stage of stages; let i = index"
+           class="stage-dot"
+           [class.active]="currentStage === i"
+           [class.done]="currentStage > i">
+        {{ i + 1 }}
+      </div>
+    </div>
+
+    <!-- Current Stage -->
+    <div class="crisis-card">
+      <h2 class="crisis-title">{{ currentStageData.title }}</h2>
+      <p class="crisis-desc">{{ currentStageData.description }}</p>
+
+      <div class="decision-list">
+        <button *ngFor="let d of currentStageData.decisions"
+                class="decision-btn"
+                [class.selected]="isSelected(d.id)"
+                (click)="selectDecision(d.id)">
+          <span class="decision-radio"></span>
+          <span class="decision-label">{{ d.label }}</span>
+        </button>
+      </div>
+
+      <!-- Outcome -->
+      <div class="outcome-box" *ngIf="getSelectedOutcome()">
+        <span class="outcome-icon">💡</span>
+        <p>{{ getSelectedOutcome() }}</p>
+      </div>
+    </div>
+
+    <!-- Navigation -->
+    <div class="crisis-actions">
+      <button class="btn-primary"
+              *ngIf="currentStage < stages.length - 1"
+              [disabled]="!canProceed"
+              (click)="nextStage()">
+        Next Stage <i class="fa fa-arrow-right"></i>
+      </button>
+      <button class="btn-deploy"
+              *ngIf="currentStage === stages.length - 1"
+              [disabled]="!canProceed"
+              (click)="deploy()">
+        <i class="fa fa-rocket"></i> Deploy Solution
+      </button>
+    </div>
+  </div>
+
+  <!-- Deployed State -->
+  <div *ngIf="deployed" class="deployed-state">
+    <span class="deployed-icon">🎉</span>
+    <h2>Crisis Resolved!</h2>
+    <p>You successfully navigated the crisis scenario. Your decisions have been recorded and will factor into your final scorecard.</p>
+  </div>
+</div>

@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { StudentSideRipelyRoutingModule } from './student-side-ripely-routing.module';
 import { StudentSideRipelyComponent } from './student-side-ripely.component';
-import { StudentNavbarComponent } from './navbar/navbar.component';
+import { StudentNavbarModule } from './navbar/navbar.module';
 import { StudentFooterComponent } from './footer/footer.component';
 import { StudentDashboardComponent } from './dashboard/dashboard.component';
 import { StudentSimulationsComponent } from './simulations/simulations.component';
@@ -13,7 +13,6 @@ import { StudentSupportComponent } from './support/support.component';
 @NgModule({
   declarations: [
     StudentSideRipelyComponent,
-    StudentNavbarComponent,
     StudentFooterComponent,
     StudentDashboardComponent,
     StudentSimulationsComponent,
@@ -23,7 +22,8 @@ import { StudentSupportComponent } from './support/support.component';
   imports: [
     CommonModule,
     FormsModule,
-    StudentSideRipelyRoutingModule
+    StudentSideRipelyRoutingModule,
+    StudentNavbarModule
   ]
 })
 export class StudentSideRipelyModule { }

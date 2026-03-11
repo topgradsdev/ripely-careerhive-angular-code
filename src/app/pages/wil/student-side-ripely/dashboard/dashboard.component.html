@@ -1,129 +1,194 @@
 <div class="dashboard-page">
-  <div class="page-card">
-    <!-- Welcome Section -->
-    <section class="welcome-section">
-      <div class="welcome-content">
-        <div class="welcome-text">
-          <div class="welcome-eyebrow">Welcome back</div>
-          <h1 class="welcome-title">{{ studentName }}</h1>
-          <p class="welcome-sub">Continue your work-integrated learning journey. You have {{ totalTasks - completedTasks }} tasks remaining.</p>
-        </div>
-        <div class="welcome-stats">
-          <!-- Score Ring -->
-          <div class="score-ring-card">
-            <div class="score-ring">
-              <svg viewBox="0 0 120 120" width="100" height="100">
-                <circle cx="60" cy="60" r="52" fill="none" stroke="#f0ebe6" stroke-width="8"/>
-                <circle cx="60" cy="60" r="52" fill="none" stroke="#e8734a" stroke-width="8"
-                        stroke-linecap="round"
-                        [attr.stroke-dasharray]="326.7"
-                        [attr.stroke-dashoffset]="326.7 - (overallScore / 100) * 326.7"
-                        transform="rotate(-90 60 60)"/>
-              </svg>
-              <div class="score-ring-value">{{ overallScore }}<span>%</span></div>
-            </div>
-            <div class="score-ring-label">Overall Score</div>
-          </div>
 
-          <!-- Stat Cards -->
-          <div class="stat-card">
-            <div class="stat-icon">📊</div>
-            <div class="stat-value">{{ completedTasks }}/{{ totalTasks }}</div>
-            <div class="stat-label">Tasks Done</div>
-          </div>
-          <div class="stat-card">
-            <div class="stat-icon">🔥</div>
-            <div class="stat-value">{{ streakDays }}</div>
-            <div class="stat-label">Day Streak</div>
-          </div>
+  <!-- ==================== GREETING HEADER ==================== -->
+  <div class="rd-greeting">{{ greeting | uppercase }}</div>
+  <div class="rd-greeting-name">
+    {{ studentName }}.
+    <span class="rd-greeting-date">Last updated: {{ lastUpdated }}</span>
+  </div>
+
+  <!-- ==================== NOTIFICATION BANNER ==================== -->
+  <div class="rd-notif-bar" *ngIf="showNotification">
+    <span class="rd-notif-icon">💬</span>
+    <div class="rd-notif-body">
+      <div class="rd-notif-title">Marcus returned your Task 3 submission</div>
+      <div class="rd-notif-sub">2 minutes ago · Formula error in Section B — review and resubmit</div>
+    </div>
+    <button class="rd-notif-close" (click)="dismissNotification()">×</button>
+  </div>
+
+  <!-- ==================== HERO SCORE CARDS ==================== -->
+  <div class="rd-hero-row">
+    <!-- Work-Ready Score -->
+    <div class="rd-score-hero rd-score-hero-a">
+      <div class="rd-hero-eyebrow">Work-Ready Score</div>
+      <div class="rd-hero-number">{{ workReadyScore }}<span class="rd-hero-sub-num"> /100</span></div>
+      <div class="rd-hero-sub">On Track</div>
+      <div class="rd-hero-track-wrap">
+        <div class="rd-hero-track-labels"><span>0</span><span>60</span><span>80</span><span>100</span></div>
+        <div class="rd-hero-track">
+          <div class="rd-hero-fill-a" [style.width.%]="workReadyScore"></div>
+          <div class="rd-hero-thumb-a" [style.left.%]="workReadyScore"></div>
         </div>
+        <div class="rd-hero-track-label">Current position</div>
       </div>
-    </section>
+    </div>
 
-    <!-- Quick Actions -->
-    <section class="quick-actions">
-      <div class="action-card" *ngFor="let action of quickActions"
-           [class.accent]="action.accent"
-           (click)="navigateTo(action.route)">
-        <span class="action-icon">{{ action.icon }}</span>
-        <span class="action-label">{{ action.label }}</span>
-        <i class="fa fa-arrow-right"></i>
+    <!-- Module Progress -->
+    <div class="rd-score-hero rd-score-hero-b">
+      <div class="rd-hero-eyebrow">Module Progress</div>
+      <div class="rd-hero-number">{{ completedTasks }}<span class="rd-hero-sub-num"> / {{ totalTasks }} tasks</span></div>
+      <div class="rd-hero-sub">Heron Gate Assessment</div>
+      <div class="rd-hero-track-wrap">
+        <div class="rd-hero-track-labels"><span>Start</span><span></span><span></span><span>Done</span></div>
+        <div class="rd-hero-track">
+          <div class="rd-hero-fill-b" [style.width.%]="moduleProgressPercent"></div>
+          <div class="rd-hero-thumb-b" [style.left.%]="moduleProgressPercent"></div>
+        </div>
+        <div class="rd-hero-track-label">{{ moduleProgressPercent }}% complete</div>
       </div>
-    </section>
-
-    <!-- Active Simulation Banner -->
-    <section class="active-sim-banner">
-      <div class="sim-banner-content">
-        <div class="sim-badge">ACTIVE SIMULATION</div>
-        <h3>{{ activeSim }}</h3>
-        <p>Module 1 — Heron Gate Cooling Tower Assessment</p>
-        <div class="sim-progress">
-          <div class="sim-progress-bar">
-            <div class="sim-progress-fill" [style.width.%]="getProgressPercent()"></div>
-          </div>
-          <span class="sim-progress-label">{{ getProgressPercent() }}% complete</span>
-        </div>
-      </div>
-      <div class="sim-banner-visual">
-        <div class="sim-tower-icon">🏗️</div>
-      </div>
-    </section>
-
-    <!-- Main Grid: Tasks + Skills -->
-    <div class="dashboard-grid">
-      <!-- Tasks Section -->
-      <section class="tasks-section">
-        <div class="section-header">
-          <h2>Your Tasks</h2>
-          <span class="section-badge">{{ completedTasks }}/{{ totalTasks }} complete</span>
-        </div>
-        <div class="tasks-list">
-          <div *ngFor="let task of tasks; let i = index"
-               class="task-card"
-               [class.task-complete]="task.status === 'complete'"
-               [class.task-active]="task.status === 'in-progress'"
-               [class.task-locked]="task.status === 'locked'">
-            <div class="task-num" [class.done]="task.status === 'complete'">
-              {{ task.status === 'complete' ? '✓' : i + 1 }}
-            </div>
-            <div class="task-body">
-              <div class="task-label">{{ task.label }}</div>
-              <div class="task-desc">{{ task.description }}</div>
-            </div>
-            <div class="task-right">
-              <span class="task-status"
-                    [ngClass]="{
-                      'status-done': task.status === 'complete',
-                      'status-active': task.status === 'in-progress',
-                      'status-locked': task.status === 'locked'
-                    }">
-                {{ task.status === 'complete' ? 'Complete' : task.status === 'in-progress' ? 'In Progress' : 'Locked' }}
-              </span>
-              <span *ngIf="task.score !== null" class="task-score" [ngClass]="getScoreClass(task.score)">
-                {{ task.score }}%
-              </span>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- Skills Section -->
-      <section class="skills-section">
-        <div class="section-header">
-          <h2>Skills Developed</h2>
-          <span class="section-badge">{{ skills.length }} tracked</span>
-        </div>
-        <div class="skills-grid">
-          <div *ngFor="let skill of skills" class="skill-card">
-            <div class="skill-icon">{{ skill.icon }}</div>
-            <div class="skill-info">
-              <div class="skill-name">{{ skill.name }}</div>
-              <div class="skill-category">{{ skill.category }}</div>
-            </div>
-            <span class="skill-level" [ngClass]="getLevelClass(skill.level)">{{ skill.level }}</span>
-          </div>
-        </div>
-      </section>
     </div>
   </div>
+
+  <!-- ==================== CURRENTLY ACTIVE SIM ==================== -->
+  <div class="rd-active-sim">
+    <div class="rd-active-sim-header">
+      <div class="rd-active-label">Currently Active</div>
+      <div class="rd-active-status">
+        <div class="rd-active-status-dot"></div>
+        Live
+      </div>
+    </div>
+    <div class="rd-active-sim-body">
+      <div>
+        <div class="rd-active-company">{{ activeSimCompany }}</div>
+        <div class="rd-active-title">{{ activeSimTitle }}</div>
+        <div class="rd-active-meta">
+          <span>🏗️ {{ activeSimCategory }} · {{ activeSimDifficulty }}</span>
+          <span>⏱ {{ activeSimDuration }}</span>
+          <span>⭐ {{ activeSimRating }}</span>
+        </div>
+        <button class="rd-continue-btn" (click)="continueSimulation()">
+          Continue →
+        </button>
+      </div>
+      <div class="rd-ring-wrap">
+        <svg class="rd-ring-svg" viewBox="0 0 72 72">
+          <circle class="rd-ring-track" cx="36" cy="36" r="30"/>
+          <circle class="rd-ring-fill" cx="36" cy="36" r="30"
+                  [attr.stroke-dasharray]="ringCircumference"
+                  [attr.stroke-dashoffset]="ringDashOffset"/>
+          <text x="36" y="36" text-anchor="middle" dominant-baseline="middle"
+            class="rd-ring-text"
+            transform="rotate(90,36,36)">{{ activeSimProgress }}%</text>
+        </svg>
+        <div class="rd-ring-label">Progress</div>
+      </div>
+    </div>
+    <!-- Task Chips -->
+    <div class="rd-active-tasks-row">
+      <div *ngFor="let pill of taskPills"
+           class="rd-task-chip"
+           [ngClass]="getChipClass(pill.status)">
+        <div class="rd-task-chip-dot"></div>
+        {{ pill.label }}
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== STATS STRIP ==================== -->
+  <div class="rd-stats-row">
+    <div class="rd-stat-cell" *ngFor="let stat of statCards">
+      <div class="rd-stat-num" [ngClass]="stat.colorClass || ''">{{ stat.value }}</div>
+      <div class="rd-stat-lbl">{{ stat.label }}</div>
+      <div class="rd-stat-bar-track">
+        <div class="rd-stat-bar-fill" [style.width.%]="stat.barWidth" [style.background]="stat.barColor"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== TASK BREAKDOWN ==================== -->
+  <div class="rd-section-hdr">
+    <div class="rd-section-title">Task Breakdown</div>
+    <button class="rd-section-link" (click)="continueSimulation()">Open simulation →</button>
+  </div>
+  <div class="rd-task-rows">
+    <div *ngFor="let task of tasks"
+         class="rd-task-row"
+         [style.opacity]="task.status === 'locked' ? '0.55' : '1'">
+      <div>
+        <div class="rd-task-row-name">{{ task.label }}</div>
+        <div class="rd-task-row-sub">{{ task.subtitle }}</div>
+      </div>
+      <div class="rd-task-row-status" [ngClass]="'rd-status-' + getStatusClass(task.status)">
+        <div class="rd-task-row-status-dot"></div>
+        {{ getStatusLabel(task.status) }}
+      </div>
+      <div class="rd-task-row-val">{{ getScoreDisplay(task.score) }}</div>
+      <svg class="rd-task-sparkline" viewBox="0 0 80 36">
+        <ng-container *ngIf="task.status === 'completed'">
+          <polyline [attr.points]="task.sparkPoints || '4,28 20,22 36,18 52,14 68,10 76,10'"
+                    fill="none" stroke="#16a34a" stroke-width="1.5" opacity="0.7"/>
+          <circle cx="76" cy="10" r="3" fill="#16a34a"/>
+        </ng-container>
+        <ng-container *ngIf="task.status === 'in-progress'">
+          <polyline [attr.points]="task.sparkPoints || '4,26 22,22 42,18 56,14'"
+                    fill="none" stroke="#fb923c" stroke-width="1.5" opacity="0.7" stroke-dasharray="5,3"/>
+          <circle cx="56" cy="14" r="3" fill="#fb923c"/>
+        </ng-container>
+        <ng-container *ngIf="task.status === 'locked'">
+          <line x1="4" y1="18" x2="76" y2="18" stroke="rgba(0,0,0,0.07)" stroke-width="1.5" stroke-dasharray="4,4"/>
+        </ng-container>
+      </svg>
+    </div>
+  </div>
+
+  <!-- ==================== ALL ONGOING ==================== -->
+  <div class="rd-section-hdr">
+    <div class="rd-section-title">All Ongoing</div>
+    <button class="rd-section-link">View all</button>
+  </div>
+  <div class="rd-grid">
+    <div *ngFor="let sim of ongoingSims" class="rd-card" (click)="openSimulation(sim.id)">
+      <div class="rd-thumb" [ngClass]="sim.thumbClass">
+        <div class="rd-thumb-dots"></div>
+        <div class="rd-thumb-badge">{{ sim.category }}</div>
+      </div>
+      <div class="rd-card-body">
+        <div class="rd-card-company">
+          <div class="rd-card-dot" [style.background]="sim.companyColor"></div>
+          <div class="rd-card-company-name">{{ sim.company }}</div>
+        </div>
+        <div class="rd-card-title">{{ sim.title }}</div>
+        <div class="rd-progress-row"><span>{{ sim.progress }}%</span><span>{{ sim.tasksDone }} / {{ sim.totalTasks }} tasks</span></div>
+        <div class="rd-progress-track"><div class="rd-progress-fill" [style.width.%]="sim.progress"></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== RECOMMENDED FOR YOU ==================== -->
+  <div class="rd-section-hdr">
+    <div class="rd-section-title">Recommended for you</div>
+    <button class="rd-section-link" routerLink="/student-portal/simulations">Browse all →</button>
+  </div>
+  <div class="rd-grid">
+    <div *ngFor="let rec of recommendedSims" class="rd-card" (click)="openSimulation(rec.id)">
+      <div class="rd-thumb" [ngClass]="rec.thumbClass">
+        <div class="rd-thumb-dots"></div>
+        <div class="rd-thumb-badge">{{ rec.category }}</div>
+      </div>
+      <div class="rd-card-body">
+        <div class="rd-card-company">
+          <div class="rd-card-dot" [style.background]="rec.companyColor"></div>
+          <div class="rd-card-company-name">{{ rec.company }}</div>
+        </div>
+        <div class="rd-card-title">{{ rec.title }}</div>
+        <div class="rd-card-tags">
+          <span *ngFor="let tag of rec.tags" class="rd-card-tag" [ngClass]="tag.class">{{ tag.label }}</span>
+          <span class="rd-card-tag rd-tag-more" *ngIf="rec.extraTagCount">+{{ rec.extraTagCount }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
 </div>

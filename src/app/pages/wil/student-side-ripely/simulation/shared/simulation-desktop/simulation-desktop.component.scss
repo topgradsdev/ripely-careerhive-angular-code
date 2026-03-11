@@ -1,0 +1,321 @@
+// ============================================================
+// Desktop — matches hvac-dashboard-v11b.html exactly
+// MBS watermark, desktop icons, wallpaper clock, hint banner
+// ============================================================
+
+// ---- MBS Watermark ----
+.wallpaper-watermark {
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 0;
+  pointer-events: none;
+  text-align: center;
+  user-select: none;
+}
+
+.wm-logo {
+  font-size: clamp(80px, 14vw, 160px);
+  font-weight: 800;
+  letter-spacing: -0.06em;
+  color: rgba(255, 107, 44, 0.03);
+  line-height: 0.9;
+  font-family: 'Inter', sans-serif;
+}
+
+.wm-sub {
+  font-size: clamp(9px, 1vw, 12px);
+  font-weight: 600;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.025);
+  margin-top: 10px;
+}
+
+// ---- Wallpaper Clock ----
+.wallpaper-clock {
+  position: fixed;
+  bottom: 80px;
+  right: 48px;
+  z-index: 0;
+  pointer-events: none;
+  text-align: right;
+  user-select: none;
+}
+
+.wc-time {
+  font-size: clamp(52px, 7vw, 88px);
+  font-weight: 200;
+  letter-spacing: -0.04em;
+  color: rgba(255, 255, 255, 0.06);
+  line-height: 1;
+  font-family: 'Inter', sans-serif;
+}
+
+.wc-date {
+  font-size: clamp(12px, 1.4vw, 17px);
+  font-weight: 300;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.04);
+  margin-top: 4px;
+}
+
+// ---- Desktop Icon Grid ----
+.desktop-icon-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 20px 16px;
+  align-items: center;
+  width: 88px;
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  z-index: 1;
+}
+
+.di {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  width: 72px;
+  cursor: pointer;
+  padding: 8px 4px;
+  border-radius: 8px;
+  transition: background 0.12s;
+  user-select: none;
+  position: relative;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.1);
+  }
+
+  &:active {
+    background: rgba(255, 255, 255, 0.18);
+  }
+
+  &.di-locked {
+    cursor: not-allowed;
+    opacity: 0.45;
+
+    &:hover {
+      background: transparent;
+    }
+
+    .di-icon {
+      filter: grayscale(0.5);
+    }
+
+    .di-label {
+      color: rgba(255, 255, 255, 0.5);
+    }
+  }
+}
+
+.di-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  background: rgba(20, 20, 40, 0.75);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(12px);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  transition: transform 0.12s, box-shadow 0.12s;
+  position: relative;
+
+  &.di-icon-amber {
+    background: rgba(243, 156, 18, 0.2);
+    border-color: rgba(243, 156, 18, 0.3);
+  }
+
+  &.di-icon-blue {
+    background: rgba(74, 138, 255, 0.2);
+    border-color: rgba(74, 138, 255, 0.3);
+  }
+
+  &.di-icon-purple {
+    background: rgba(160, 122, 224, 0.2);
+    border-color: rgba(160, 122, 224, 0.3);
+  }
+
+  &.di-icon-green {
+    background: rgba(0, 184, 148, 0.2);
+    border-color: rgba(0, 184, 148, 0.3);
+  }
+
+  &.di-icon-accent {
+    background: rgba(255, 107, 44, 0.2);
+    border-color: rgba(255, 107, 44, 0.3);
+  }
+}
+
+.di:not(.di-locked):hover .di-icon {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+}
+
+.di-lock-badge {
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: rgba(30, 30, 48, 0.92);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 9px;
+  line-height: 1;
+}
+
+.di-label {
+  font-size: 11px;
+  font-weight: 500;
+  color: #fff;
+  text-align: center;
+  line-height: 1.3;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.8), 0 0 12px rgba(0, 0, 0, 0.6);
+  max-width: 68px;
+  word-break: break-word;
+  white-space: pre-line;
+}
+
+.di-active-dot {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.6);
+  position: absolute;
+  bottom: -2px;
+  left: 50%;
+  transform: translateX(-50%);
+  opacity: 0;
+}
+
+// ---- Hint Banner ----
+.desktop-hint-banner {
+  position: fixed;
+  bottom: 64px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
+  background: rgba(30, 28, 44, 0.85);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 10px;
+  padding: 12px 24px;
+  font-size: 13px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.55);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  white-space: nowrap;
+  user-select: none;
+}
+
+.hint-lock {
+  font-size: 14px;
+  opacity: 0.7;
+}
+
+// ============================================================
+// LIGHT MODE OVERRIDES — Desktop
+// ============================================================
+.light-mode {
+  .wallpaper-watermark {
+    .wm-logo {
+      color: rgba(0, 0, 0, 0.03);
+    }
+
+    .wm-sub {
+      color: rgba(0, 0, 0, 0.025);
+    }
+  }
+
+  .wallpaper-clock {
+    .wc-time {
+      color: rgba(0, 0, 0, 0.06);
+    }
+
+    .wc-date {
+      color: rgba(0, 0, 0, 0.04);
+    }
+  }
+
+  .di {
+    &:hover {
+      background: rgba(0, 0, 0, 0.07);
+    }
+
+    &:active {
+      background: rgba(0, 0, 0, 0.12);
+    }
+
+    &.di-locked {
+      .di-label {
+        color: rgba(0, 0, 0, 0.35);
+      }
+    }
+  }
+
+  .di-icon {
+    background: rgba(255, 255, 255, 0.85);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.5);
+
+    &.di-icon-amber {
+      background: rgba(243, 156, 18, 0.12);
+      border-color: rgba(243, 156, 18, 0.25);
+    }
+
+    &.di-icon-blue {
+      background: rgba(74, 138, 255, 0.12);
+      border-color: rgba(74, 138, 255, 0.25);
+    }
+
+    &.di-icon-purple {
+      background: rgba(160, 122, 224, 0.12);
+      border-color: rgba(160, 122, 224, 0.25);
+    }
+
+    &.di-icon-green {
+      background: rgba(0, 184, 148, 0.12);
+      border-color: rgba(0, 184, 148, 0.25);
+    }
+
+    &.di-icon-accent {
+      background: rgba(255, 107, 44, 0.12);
+      border-color: rgba(255, 107, 44, 0.25);
+    }
+  }
+
+  .di:not(.di-locked):hover .di-icon {
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.5);
+  }
+
+  .di-lock-badge {
+    background: rgba(255, 255, 255, 0.92);
+    border: 1px solid rgba(0, 0, 0, 0.12);
+  }
+
+  .di-label {
+    color: rgba(0, 0, 0, 0.7);
+    text-shadow: 0 1px 4px rgba(255, 255, 255, 0.8), 0 0 12px rgba(255, 255, 255, 0.6);
+  }
+
+  .desktop-hint-banner {
+    background: rgba(255, 255, 255, 0.88);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    color: rgba(0, 0, 0, 0.55);
+  }
+}

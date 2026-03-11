@@ -1,10 +1,12 @@
 .student-side-ripely-root {
+  padding: 0;
   min-height: 100vh;
-  background: #f5f0eb;
-  color: #1a1a1a;
-  font-family: -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', Roboto, sans-serif;
+  background: #f2f2f7;
+  color: #111118;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   display: flex;
   flex-direction: column;
+  -webkit-font-smoothing: antialiased;
 
   * {
     box-sizing: border-box;
@@ -14,10 +16,9 @@
 .student-main-content {
   flex: 1;
   min-height: calc(100vh - 64px);
-  max-width: 1400px;
   width: 100%;
-  margin: 24px auto;
-  padding: 0 24px;
+  margin: 0 auto;
+  padding: 0;
 }
 
 // Scrollbar styling

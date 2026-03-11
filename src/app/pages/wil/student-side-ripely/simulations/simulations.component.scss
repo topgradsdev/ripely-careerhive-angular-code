@@ -1,305 +1,737 @@
-.simulations-page {
+// ════════════════════════════════════════════
+// SIMULATIONS BROWSE PAGE — matching HTML reference
+// ════════════════════════════════════════════
+
+.bsim-page {
   width: 100%;
+  min-height: 100vh;
+  position: relative;
+  padding-top: 70px;
+  background: linear-gradient(160deg, #5c1e06 0%, #8b2e0a 35%, #6b1a06 65%, #3d1204 100%);
+  font-family: 'Inter', sans-serif;
 }
 
-.page-card {
-  background: #fff;
-  border-radius: 20px;
-  border: 1px solid #e8e0d8;
-  padding: 40px;
+// ── Background orbs ──
+.bsim-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
 }
 
-.page-title {
+.bsim-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(90px);
+  opacity: 0.65;
+}
+
+.bsim-orb-1 {
+  width: 700px;
+  height: 700px;
+  background: radial-gradient(circle, rgba(220, 80, 20, 0.55) 0%, transparent 70%);
+  top: -200px;
+  left: -180px;
+  animation: bsimOrb1 14s ease-in-out infinite alternate;
+}
+
+.bsim-orb-2 {
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, rgba(140, 30, 5, 0.8) 0%, transparent 70%);
+  bottom: -100px;
+  right: -100px;
+  animation: bsimOrb2 18s ease-in-out infinite alternate;
+}
+
+.bsim-orb-3 {
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, rgba(255, 120, 40, 0.2) 0%, transparent 70%);
+  top: 40%;
+  left: 55%;
+  animation: bsimOrb3 22s ease-in-out infinite alternate;
+}
+
+.bsim-noise {
+  position: absolute;
+  inset: 0;
+  opacity: 0.04;
+  background-size: 200px 200px;
+}
+
+@keyframes bsimOrb1 {
+  from { transform: translate(0, 0) scale(1); }
+  to   { transform: translate(60px, 40px) scale(1.12); }
+}
+@keyframes bsimOrb2 {
+  from { transform: translate(0, 0) scale(1); }
+  to   { transform: translate(-50px, -30px) scale(1.08); }
+}
+@keyframes bsimOrb3 {
+  from { transform: translate(0, 0); }
+  to   { transform: translate(-40px, 30px); }
+}
+
+// ── Main container ──
+.bsim-container {
+  position: relative;
+  z-index: 10;
+  background: #ffffff;
+  border-radius: 24px;
+  margin: 14px 20px 40px;
+  padding: 36px 40px 60px;
+  min-height: calc(100vh - 90px);
+  box-shadow: 0 32px 80px rgba(0, 0, 0, 0.35), 0 8px 24px rgba(0, 0, 0, 0.2);
+}
+
+// ── Heading ──
+.bsim-heading {
+  margin-bottom: 0;
+}
+
+.bsim-title {
   font-size: 28px;
   font-weight: 700;
-  color: #1a1a1a;
-  margin: 0 0 24px;
-  letter-spacing: -0.02em;
+  color: #111118;
+  letter-spacing: -0.03em;
+  margin-bottom: 4px;
+  font-family: 'DM Sans', sans-serif;
+  line-height: 1;
 }
 
-// Tab Filters
-.tab-filters {
+.bsim-page-sub {
+  font-size: 14px;
+  color: rgba(0, 0, 0, 0.35);
+  margin: 0 0 20px;
+  font-weight: 400;
+}
+
+// ── Category tabs ──
+.bsim-tab-row {
+  margin-bottom: 16px;
+}
+
+.bsim-tabs {
   display: flex;
   gap: 4px;
-  margin-bottom: 24px;
-
-  .tab-btn {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    padding: 10px 18px;
-    border-radius: 100px;
-    border: 1px solid #e8e0d8;
-    background: #fff;
-    color: #888;
-    font-family: inherit;
-    font-size: 13px;
-    font-weight: 500;
-    cursor: pointer;
-    transition: all 0.2s ease;
-
-    i { font-size: 13px; }
-
-    &:hover {
-      background: #faf6f2;
-      color: #555;
-    }
-
-    &.active {
-      background: #1a1a1a;
-      border-color: #1a1a1a;
-      color: #fff;
-    }
-  }
+  background: rgba(0, 0, 0, 0.05);
+  border-radius: 100px;
+  padding: 4px;
+  width: fit-content;
 }
 
-// Category Pills
-.category-pills {
+.bsim-tab {
   display: flex;
-  gap: 8px;
-  margin-bottom: 32px;
-  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 500;
+  color: rgba(0, 0, 0, 0.45);
+  cursor: pointer;
+  border: none;
+  background: none;
+  font-family: inherit;
+  padding: 7px 16px;
+  border-radius: 100px;
+  transition: color 0.15s, background 0.15s;
+  white-space: nowrap;
 
-  .pill {
-    padding: 8px 18px;
-    border-radius: 100px;
-    border: 1px solid #e0d8d0;
-    background: #fff;
-    color: #666;
-    font-family: inherit;
-    font-size: 13px;
-    font-weight: 500;
-    cursor: pointer;
-    transition: all 0.2s ease;
-
-    &:hover {
-      background: #faf6f2;
-      border-color: #d0c8c0;
-    }
-
-    &.active {
-      background: #1a1a1a;
-      border-color: #1a1a1a;
-      color: #fff;
-    }
+  svg {
+    flex-shrink: 0;
   }
-}
-
-// Section Header
-.section-header {
-  margin-bottom: 24px;
-
-  h2 {
-    font-size: 20px;
-    font-weight: 700;
-    color: #1a1a1a;
-    margin: 0 0 4px;
-  }
-
-  .section-sub {
-    font-size: 14px;
-    color: #999;
-  }
-}
-
-// Simulation Grid
-.sim-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 24px;
-}
-
-// Simulation Card
-.sim-card {
-  border-radius: 16px;
-  overflow: hidden;
-  border: 1px solid #eee;
-  background: #fff;
-  transition: all 0.25s ease;
 
   &:hover {
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
-    transform: translateY(-2px);
+    color: rgba(0, 0, 0, 0.75);
+    background: rgba(0, 0, 0, 0.04);
   }
 
-  &.coming-soon {
-    .sim-card-body.blurred {
-      opacity: 0.45;
-    }
+  &.active {
+    color: #111118;
+    background: #ffffff;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.12), 0 0 0 0.5px rgba(0, 0, 0, 0.06);
+    font-weight: 600;
+  }
+}
 
-    &:hover {
-      transform: none;
-      box-shadow: none;
+.bsim-tab-count {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 5px;
+  border-radius: 100px;
+  font-size: 10px;
+  font-weight: 700;
+  line-height: 1;
+  background: rgba(0, 0, 0, 0.08);
+  color: rgba(0, 0, 0, 0.45);
+  transition: background 0.15s, color 0.15s;
+
+  &:empty {
+    display: none;
+  }
+
+  .active & {
+    background: rgba(255, 107, 44, 0.12);
+    color: #ff6b2c;
+  }
+}
+
+// ── Quick filters ──
+.bsim-filters {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 28px;
+}
+
+.bsim-filter {
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  padding: 7px 18px;
+  border-radius: 100px;
+  cursor: pointer;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  color: rgba(0, 0, 0, 0.55);
+  background: transparent;
+  font-family: inherit;
+  transition: all 0.15s;
+
+  &:hover {
+    border-color: rgba(0, 0, 0, 0.3);
+    color: #111118;
+  }
+
+  &.active {
+    background: #111118;
+    border-color: #111118;
+    color: #fff;
+    font-weight: 600;
+  }
+}
+
+// ── Section header ──
+.bsim-section-hdr {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.bsim-section-title {
+  font-size: 20px;
+  font-weight: 700;
+  color: #111118;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+  font-family: 'DM Sans', sans-serif;
+}
+
+.bsim-section-sub {
+  font-size: 14px;
+  color: rgba(0, 0, 0, 0.35);
+  margin-top: 3px;
+  font-weight: 400;
+}
+
+.bsim-result-count {
+  font-size: 12px;
+  color: rgba(0, 0, 0, 0.35);
+  font-weight: 500;
+  align-self: flex-end;
+}
+
+// ── Cards grid ──
+.bsim-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 16px;
+
+  &.bsim-mine-view {
+    display: block;
+    gap: 0;
+  }
+}
+
+.bsim-mine-group {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 16px;
+  margin-bottom: 0;
+}
+
+// ── Mine section headers ──
+.bsim-mine-section {
+  margin-bottom: 10px;
+}
+
+.bsim-mine-section-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 16px;
+  margin-top: 28px;
+
+  &:first-child {
+    margin-top: 0;
+  }
+}
+
+.bsim-mine-section-label {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(0, 0, 0, 0.35);
+  white-space: nowrap;
+}
+
+.bsim-mine-section-line {
+  flex: 1;
+  height: 1px;
+  background: rgba(0, 0, 0, 0.07);
+}
+
+.bsim-mine-section-count {
+  font-size: 11px;
+  font-weight: 600;
+  color: rgba(0, 0, 0, 0.3);
+  white-space: nowrap;
+}
+
+// ── Card ──
+.bsim-card {
+  background: #f6f6f7;
+  border-radius: 16px;
+  overflow: hidden;
+  cursor: pointer;
+  position: relative;
+  border: 1px solid rgba(0, 0, 0, 0.07);
+  transition: transform 0.2s, box-shadow 0.2s;
+
+  &:hover:not(.bsim-card-locked) {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 36px rgba(0, 0, 0, 0.1);
+  }
+
+  &.bsim-card-locked {
+    pointer-events: none;
+    opacity: 0.85;
+  }
+}
+
+// ── Card badge (top-right) ──
+.bsim-card-badge {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  z-index: 3;
+  font-size: 10px;
+  font-weight: 600;
+  color: rgba(180, 90, 10, 0.9);
+  background: rgba(255, 255, 255, 0.92);
+  border: 1px solid rgba(200, 120, 40, 0.25);
+  padding: 3px 10px 3px 8px;
+  border-radius: 100px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  backdrop-filter: blur(8px);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+
+  &::before {
+    content: '\2713';
+    font-size: 9px;
+    color: rgba(180, 90, 10, 0.8);
+  }
+
+  &.bsim-badge-soon {
+    color: rgba(0, 0, 0, 0.35);
+    border-color: rgba(0, 0, 0, 0.1);
+
+    &::before {
+      content: '';
+      display: none;
     }
   }
 }
 
-.sim-card-image {
-  position: relative;
+// ── Card image ──
+.bsim-card-img {
   height: 200px;
-  border-radius: 16px 16px 0 0;
+  position: relative;
   overflow: hidden;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  padding: 16px;
+  padding: 14px;
 }
 
-.sim-badges {
+// ── Per-type image gradients ──
+.bsim-img-hvac {
+  background: linear-gradient(135deg, #0d1117 0%, #1a1d2e 50%, #0f1520 100%);
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(circle at 70% 25%, rgba(200, 110, 45, 0.4) 0%, transparent 55%),
+      radial-gradient(circle at 15% 80%, rgba(37, 99, 235, 0.2) 0%, transparent 50%);
+  }
+}
+
+.bsim-img-structural {
+  background: linear-gradient(135deg, #0a1520 0%, #0e1f30 50%, #091525 100%);
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(circle at 65% 30%, rgba(59, 130, 246, 0.35) 0%, transparent 55%),
+      radial-gradient(circle at 20% 75%, rgba(16, 185, 129, 0.15) 0%, transparent 50%);
+  }
+}
+
+.bsim-img-data {
+  background: linear-gradient(135deg, #0a1a14 0%, #0d2018 50%, #081510 100%);
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(circle at 70% 30%, rgba(16, 185, 129, 0.35) 0%, transparent 55%),
+      radial-gradient(circle at 15% 75%, rgba(59, 130, 246, 0.15) 0%, transparent 45%);
+  }
+}
+
+.bsim-img-compliance {
+  background: linear-gradient(135deg, #14100a 0%, #201808 50%, #160e06 100%);
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(circle at 65% 30%, rgba(139, 92, 246, 0.3) 0%, transparent 55%),
+      radial-gradient(circle at 20% 75%, rgba(245, 158, 11, 0.2) 0%, transparent 50%);
+  }
+}
+
+.bsim-img-cloud {
+  background: linear-gradient(135deg, #0d1219 0%, #121a26 50%, #0a1020 100%);
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(circle at 65% 30%, rgba(245, 158, 11, 0.3) 0%, transparent 55%),
+      radial-gradient(circle at 20% 75%, rgba(59, 130, 246, 0.2) 0%, transparent 50%);
+  }
+}
+
+.bsim-img-software {
+  background: linear-gradient(135deg, #0d0d1c 0%, #111228 50%, #090915 100%);
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(circle at 65% 30%, rgba(0, 82, 204, 0.4) 0%, transparent 55%),
+      radial-gradient(circle at 20% 75%, rgba(239, 68, 68, 0.2) 0%, transparent 50%);
+  }
+}
+
+.bsim-img-mechanical {
+  background: linear-gradient(135deg, #141008 0%, #1e180a 50%, #100c06 100%);
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(circle at 65% 30%, rgba(245, 158, 11, 0.3) 0%, transparent 55%),
+      radial-gradient(circle at 20% 75%, rgba(249, 115, 22, 0.15) 0%, transparent 50%);
+  }
+}
+
+// ── Chips (inside image area) ──
+.bsim-card-chips {
+  position: relative;
+  z-index: 2;
   display: flex;
-  gap: 6px;
+  gap: 5px;
   flex-wrap: wrap;
 }
 
-.badge {
-  font-size: 10px;
+.bsim-chip {
+  font-size: 9px;
   font-weight: 700;
-  letter-spacing: 0.04em;
-  padding: 5px 10px;
-  border-radius: 6px;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
+  padding: 3px 9px;
+  border-radius: 100px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: rgba(255, 255, 255, 0.55);
 
-  &.badge-red {
-    background: #e8734a;
-    color: #fff;
+  &.accent {
+    background: rgba(200, 110, 40, 0.2);
+    border-color: rgba(200, 110, 40, 0.4);
+    color: #ffb07a;
   }
 
-  &.badge-purple {
-    background: #6c5ce7;
-    color: #fff;
+  &.blue {
+    background: rgba(37, 99, 235, 0.2);
+    border-color: rgba(37, 99, 235, 0.4);
+    color: #7eb3ff;
   }
 
-  &.badge-available {
-    background: rgba(255, 255, 255, 0.2);
-    color: #fff;
-    backdrop-filter: blur(8px);
-    border: 1px solid rgba(255, 255, 255, 0.25);
-    text-transform: none;
-    font-weight: 500;
+  &.green {
+    background: rgba(0, 184, 148, 0.2);
+    border-color: rgba(0, 184, 148, 0.4);
+    color: #00ddb4;
+  }
 
-    i {
-      margin-right: 2px;
-      font-size: 10px;
-    }
+  &.purple {
+    background: rgba(160, 90, 200, 0.2);
+    border-color: rgba(160, 90, 200, 0.4);
+    color: #c084fc;
+  }
+
+  &.red {
+    background: rgba(239, 68, 68, 0.2);
+    border-color: rgba(239, 68, 68, 0.4);
+    color: #fca5a5;
+  }
+
+  &.muted {
+    opacity: 0.35;
   }
 }
 
-.coming-soon-overlay {
+// ── Company badge (bottom of image) ──
+.bsim-card-company-badge {
+  position: relative;
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(8px);
+  border-radius: 6px;
+  padding: 4px 9px;
+  align-self: flex-end;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.bsim-card-company-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 2px;
+  background: #ff8c32;
+  flex-shrink: 0;
+}
+
+// ── Card body ──
+.bsim-card-body {
+  padding: 16px 18px 18px;
+}
+
+.bsim-card-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: #111118;
+  letter-spacing: -0.01em;
+  line-height: 1.35;
+  margin-bottom: 3px;
+  font-family: 'DM Sans', sans-serif;
+}
+
+.bsim-card-provider {
+  font-size: 12px;
+  color: rgba(0, 0, 0, 0.4);
+  margin-bottom: 12px;
+}
+
+.bsim-card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.bsim-card-tags {
+  display: flex;
+  gap: 5px;
+  flex-wrap: wrap;
+}
+
+.bsim-tag {
+  font-size: 10px;
+  font-weight: 500;
+  padding: 2px 8px;
+  border-radius: 100px;
+  background: rgba(0, 0, 0, 0.06);
+  color: rgba(0, 0, 0, 0.5);
+  border: 1px solid rgba(0, 0, 0, 0.07);
+}
+
+.bsim-card-rating {
+  font-size: 11px;
+  font-weight: 600;
+  color: rgba(0, 0, 0, 0.5);
+  white-space: nowrap;
+}
+
+// ── Mine progress bar ──
+.bsim-mine-progress {
+  margin-bottom: 12px;
+}
+
+.bsim-mine-progress-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 5px;
+}
+
+.bsim-mine-progress-label {
+  font-size: 11px;
+  color: rgba(0, 0, 0, 0.45);
+}
+
+.bsim-mine-progress-pct {
+  font-size: 11px;
+  font-weight: 600;
+  color: rgba(0, 0, 0, 0.55);
+}
+
+.bsim-mine-track {
+  height: 4px;
+  background: rgba(0, 0, 0, 0.07);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.bsim-mine-fill {
+  height: 100%;
+  background: #ff6b2c;
+  border-radius: 2px;
+  transition: width 0.6s ease;
+}
+
+.bsim-mine-complete {
+  font-size: 11px;
+  font-weight: 600;
+  color: #007c58;
+  background: rgba(0, 184, 148, 0.08);
+  border: 1px solid rgba(0, 184, 148, 0.2);
+  border-radius: 100px;
+  padding: 3px 10px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  margin-bottom: 10px;
+}
+
+// ── Lock overlay ──
+.bsim-card-lock-overlay {
   position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
+  inset: 0;
+  z-index: 5;
+  background: rgba(246, 246, 247, 0.55);
+  backdrop-filter: blur(1.5px);
+  border-radius: 16px;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-.badge-coming-soon {
+.bsim-lock-badge {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  color: rgba(0, 0, 0, 0.4);
   background: rgba(255, 255, 255, 0.85);
-  color: #888;
-  font-size: 13px;
-  font-weight: 500;
+  border: 1px solid rgba(0, 0, 0, 0.1);
   padding: 8px 18px;
   border-radius: 100px;
-  backdrop-filter: blur(4px);
-
-  i {
-    margin-right: 6px;
-    font-size: 12px;
-  }
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
 }
 
-.sim-company-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  background: rgba(0, 0, 0, 0.4);
-  color: #fff;
-  font-size: 10px;
-  font-weight: 700;
-  letter-spacing: 0.06em;
-  padding: 6px 12px;
-  border-radius: 6px;
-  backdrop-filter: blur(8px);
-  align-self: flex-start;
-
-  .company-icon {
-    font-size: 12px;
-  }
+// ── Empty state ──
+.bsim-empty {
+  text-align: center;
+  padding: 64px 24px;
 }
 
-.sim-card-body {
-  padding: 18px 20px 20px;
-
-  .sim-title {
-    font-size: 16px;
-    font-weight: 700;
-    color: #1a1a1a;
-    margin: 0 0 4px;
-    letter-spacing: -0.01em;
-  }
-
-  .sim-company {
-    font-size: 13px;
-    color: #999;
-    margin: 0 0 14px;
-  }
-
-  .sim-meta {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    flex-wrap: wrap;
-  }
-
-  .meta-pill {
-    font-size: 11px;
-    font-weight: 500;
-    color: #777;
-    background: #f5f0eb;
-    padding: 4px 10px;
-    border-radius: 100px;
-    display: flex;
-    align-items: center;
-    gap: 4px;
-
-    i {
-      font-size: 10px;
-    }
-  }
-
-  .sim-rating {
-    margin-left: auto;
-    font-size: 13px;
-    font-weight: 600;
-    color: #e8734a;
-
-    i {
-      color: #f5c518;
-      font-size: 12px;
-      margin-right: 2px;
-    }
-  }
+.bsim-empty-icon {
+  font-size: 36px;
+  margin-bottom: 14px;
+  opacity: 0.5;
 }
 
-@media (max-width: 1100px) {
-  .sim-grid {
-    grid-template-columns: repeat(2, 1fr);
+.bsim-empty-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: rgba(0, 0, 0, 0.55);
+  margin-bottom: 6px;
+}
+
+.bsim-empty-sub {
+  font-size: 13px;
+  color: rgba(0, 0, 0, 0.35);
+}
+
+// ── Responsive ──
+@media (max-width: 900px) {
+  .bsim-container {
+    margin: 10px 12px 30px;
+    padding: 24px 20px 40px;
+  }
+
+  .bsim-grid,
+  .bsim-mine-group {
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
   }
 }
 
 @media (max-width: 768px) {
-  .page-card {
-    padding: 24px;
+  .bsim-container {
+    margin: 8px 8px 20px;
+    padding: 20px 16px 40px;
     border-radius: 16px;
   }
 
-  .sim-grid {
-    grid-template-columns: 1fr;
+  .bsim-title {
+    font-size: 22px;
   }
 
-  .tab-filters {
-    flex-wrap: wrap;
+  .bsim-tabs {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+
+  .bsim-grid,
+  .bsim-mine-group {
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .bsim-grid,
+  .bsim-mine-group {
+    grid-template-columns: 1fr;
   }
 }

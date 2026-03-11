@@ -1,102 +1,161 @@
 <div class="coaching-page">
-  <div class="page-card">
-    <!-- Header -->
-    <h1 class="page-title">Career Coaching</h1>
-    <p class="page-sub">Get personalized guidance from AI-powered career coaches and mentors</p>
+  <!-- Hero Section -->
+  <div class="cc-hero">
+    <div class="cc-hero-eyebrow">AI Career Agents</div>
+    <h1 class="cc-hero-h1">Find your <strong>coaching match.</strong></h1>
+    <p class="cc-hero-sub">Each agent is trained on industry data and real career paths. Book a session to get personalised guidance on your next move.</p>
+  </div>
 
-    <!-- Tabs -->
-    <div class="coaching-tabs">
-      <button class="tab-btn" [class.active]="activeTab === 'coaches'" (click)="setTab('coaches')">
-        <i class="fa fa-users"></i> Coaches
-      </button>
-      <button class="tab-btn" [class.active]="activeTab === 'resources'" (click)="setTab('resources')">
-        <i class="fa fa-book"></i> Resources
-      </button>
-    </div>
-
-    <!-- Coaches Tab -->
-    <div *ngIf="activeTab === 'coaches'" class="coaches-content">
-      <div class="agents-grid">
-        <div *ngFor="let agent of agents"
-             class="agent-card"
-             [class.unavailable]="!agent.available"
-             (click)="openChat(agent)">
-          <div class="agent-card-top">
-            <div class="agent-avatar">{{ agent.avatar }}</div>
-            <div class="agent-status" [class.online]="agent.available">
-              {{ agent.available ? 'Online' : 'Offline' }}
-            </div>
-          </div>
-          <div class="agent-info">
-            <h3>{{ agent.name }}</h3>
-            <div class="agent-role">{{ agent.role }}</div>
-            <div class="agent-spec">{{ agent.specialization }}</div>
-            <p class="agent-desc">{{ agent.description }}</p>
-          </div>
-          <div class="agent-skills">
-            <span *ngFor="let skill of agent.skills" class="agent-skill-tag">{{ skill }}</span>
-          </div>
-          <div class="agent-footer">
-            <div class="agent-rating">
-              <span class="stars">
-                <i *ngFor="let s of getStars(agent.rating)" class="fa fa-star"></i>
-              </span>
-              <span class="rating-num">{{ agent.rating }}</span>
-            </div>
-            <div class="agent-sessions">{{ agent.sessions }} sessions</div>
-          </div>
-          <button class="agent-btn" [disabled]="!agent.available">
-            {{ agent.available ? 'Start Chat' : 'Unavailable' }}
-            <i *ngIf="agent.available" class="fa fa-arrow-right"></i>
-          </button>
-        </div>
-      </div>
-    </div>
-
-    <!-- Resources Tab -->
-    <div *ngIf="activeTab === 'resources'" class="resources-content">
-      <div class="resources-grid">
-        <div *ngFor="let res of resources" class="resource-card">
-          <div class="resource-icon">{{ res.icon }}</div>
-          <div class="resource-info">
-            <h4>{{ res.title }}</h4>
-            <p>{{ res.description }}</p>
-            <span class="resource-category">{{ res.category }}</span>
-          </div>
-          <button class="resource-btn"><i class="fa fa-external-link"></i></button>
-        </div>
-      </div>
+  <!-- Search -->
+  <div class="cc-search-wrap">
+    <div class="cc-search-box">
+      <span class="cc-search-icon">🔍</span>
+      <input
+        class="cc-search-input"
+        type="text"
+        placeholder="Search by name, specialty, or industry..."
+        [(ngModel)]="searchQuery"
+        (ngModelChange)="onSearchChange()"
+      />
     </div>
   </div>
 
-  <!-- Chat Panel -->
-  <div class="chat-panel" *ngIf="chatOpen && activeAgent" [class.open]="chatOpen">
-    <div class="chat-header">
-      <div class="chat-header-info">
-        <span class="chat-avatar">{{ activeAgent.avatar }}</span>
-        <div>
-          <div class="chat-name">{{ activeAgent.name }}</div>
-          <div class="chat-role">{{ activeAgent.role }}</div>
+  <!-- Filters -->
+  <div class="cc-filters-wrap">
+    <button
+      *ngFor="let f of filters"
+      class="cc-filter-btn"
+      [class.active]="activeFilter === f.key"
+      (click)="setFilter(f.key)"
+    >
+      {{ f.label }}
+    </button>
+  </div>
+
+  <!-- Results label -->
+  <div class="cc-results-label">Showing {{ filteredAgents.length }} agent{{ filteredAgents.length !== 1 ? 's' : '' }}</div>
+
+  <!-- Agent Cards Grid -->
+  <div class="cc-grid">
+    <div
+      *ngFor="let agent of filteredAgents"
+      class="cc-card"
+      (click)="openProfile(agent)"
+    >
+      <!-- Online dot -->
+      <div class="cc-card-online-dot" *ngIf="agent.online"></div>
+
+      <!-- Card Top -->
+      <div class="cc-card-top">
+        <div class="cc-card-avatar" [style.background]="agent.avatarBg">
+          <span class="cc-avatar-emoji">{{ agent.emoji }}</span>
+        </div>
+        <div class="cc-card-info">
+          <div class="cc-card-name">{{ agent.name }}</div>
+          <div class="cc-card-role">{{ agent.role }}</div>
+          <div class="cc-card-tag">{{ agent.filter | uppercase }}</div>
         </div>
       </div>
-      <button class="chat-close" (click)="closeChat()"><i class="fa fa-times"></i></button>
-    </div>
-    <div class="chat-messages">
-      <div *ngFor="let msg of chatMessages"
-           class="chat-msg"
-           [class.user]="msg.role === 'user'"
-           [class.agent]="msg.role === 'agent'">
-        <div class="chat-msg-bubble">{{ msg.text }}</div>
+
+      <!-- Description -->
+      <div class="cc-card-desc">{{ agent.description }}</div>
+
+      <!-- Stats -->
+      <div class="cc-card-stats">
+        <div class="cc-card-stat">
+          <div class="cc-card-stat-val">{{ agent.rating }}</div>
+          <div class="cc-card-stat-lbl">Rating</div>
+        </div>
+        <div class="cc-card-stat">
+          <div class="cc-card-stat-val">{{ agent.satisfaction }}%</div>
+          <div class="cc-card-stat-lbl">Satisfaction</div>
+        </div>
+        <div class="cc-card-stat">
+          <div class="cc-card-stat-val">{{ formatSessions(agent.sessions) }}</div>
+          <div class="cc-card-stat-lbl">Sessions</div>
+        </div>
       </div>
-    </div>
-    <div class="chat-input-bar">
-      <input type="text"
-             placeholder="Type your message..."
-             [(ngModel)]="userMessage"
-             (keyup.enter)="sendMessage()">
-      <button class="chat-send" (click)="sendMessage()" [disabled]="!userMessage.trim()">
-        <i class="fa fa-paper-plane"></i>
+
+      <!-- Star Rating -->
+      <div class="cc-card-stars">
+        <span class="cc-card-star" *ngFor="let s of getStars(agent.rating)">⭐</span>
+        <span class="cc-card-star-count">({{ agent.ratingCount }})</span>
+      </div>
+
+      <!-- Book Button -->
+      <button class="cc-card-book-btn" (click)="$event.stopPropagation()">
+        Book a Session
       </button>
+    </div>
+  </div>
+
+  <!-- Profile Overlay -->
+  <div class="cc-profile-overlay" *ngIf="selectedAgent" (click)="closeProfile()">
+    <div class="cc-profile-panel" (click)="$event.stopPropagation()">
+      <!-- Header -->
+      <div class="cc-profile-header">
+        <div class="cc-profile-avatar" [style.background]="selectedAgent.avatarBg">
+          <span class="cc-profile-emoji">{{ selectedAgent.emoji }}</span>
+        </div>
+        <div>
+          <div class="cc-profile-name">{{ selectedAgent.name }}</div>
+          <div class="cc-profile-role">{{ selectedAgent.role }}</div>
+          <div class="cc-profile-tags">
+            <span *ngFor="let tag of selectedAgent.tags" class="cc-profile-tag">{{ tag }}</span>
+          </div>
+        </div>
+        <button class="cc-profile-close" (click)="closeProfile()">×</button>
+      </div>
+
+      <!-- Body -->
+      <div class="cc-profile-body">
+        <!-- Bio -->
+        <div class="cc-profile-section-h">About</div>
+        <div class="cc-profile-bio">{{ selectedAgent.bio }}</div>
+
+        <!-- Stats -->
+        <div class="cc-profile-section-h">Performance</div>
+        <div class="cc-profile-stats-row">
+          <div class="cc-profile-stat">
+            <div class="cc-profile-stat-val">{{ selectedAgent.rating }}</div>
+            <div class="cc-profile-stat-lbl">Avg Rating</div>
+          </div>
+          <div class="cc-profile-stat">
+            <div class="cc-profile-stat-val">{{ selectedAgent.ratingCount }}</div>
+            <div class="cc-profile-stat-lbl">Reviews</div>
+          </div>
+          <div class="cc-profile-stat">
+            <div class="cc-profile-stat-val">{{ selectedAgent.satisfaction }}%</div>
+            <div class="cc-profile-stat-lbl">Satisfaction</div>
+          </div>
+        </div>
+
+        <!-- Specialties -->
+        <div class="cc-profile-section-h">Specialties</div>
+        <div class="cc-profile-specialty-grid">
+          <div *ngFor="let spec of selectedAgent.specialties" class="cc-profile-specialty">
+            {{ spec }}
+          </div>
+        </div>
+
+        <!-- Reviews -->
+        <div class="cc-profile-section-h">Recent Reviews</div>
+        <div class="cc-profile-reviews">
+          <div *ngFor="let review of selectedAgent.reviews" class="cc-profile-review">
+            <div class="cc-profile-review-text">"{{ review.text }}"</div>
+            <div class="cc-profile-reviewer">— {{ review.author }}</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Book CTA -->
+      <div class="cc-profile-book-section">
+        <button class="cc-profile-book-btn">Book a Session with {{ selectedAgent.name.split(' ')[0] }}</button>
+        <div class="cc-profile-avail">
+          <span *ngIf="selectedAgent.online">Available Now</span>
+          <span *ngIf="!selectedAgent.online" style="color: #9090b0;">Currently Offline</span>
+        </div>
+      </div>
     </div>
   </div>
 </div>

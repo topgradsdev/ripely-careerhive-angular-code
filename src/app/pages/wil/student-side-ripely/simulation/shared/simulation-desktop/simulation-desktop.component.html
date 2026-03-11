@@ -1,0 +1,33 @@
+<!-- MBS Watermark -->
+<div class="wallpaper-watermark">
+  <div class="wm-logo">MBS</div>
+  <div class="wm-sub">Meridian Building Systems</div>
+</div>
+
+<!-- Wallpaper Clock -->
+<div class="wallpaper-clock">
+  <div class="wc-time">{{ wallpaperTime }}</div>
+  <div class="wc-date">{{ wallpaperDate }}</div>
+</div>
+
+<!-- Desktop Icons -->
+<div class="desktop-icon-grid">
+  <div *ngFor="let icon of icons"
+       class="di"
+       [class.di-locked]="icon.locked"
+       (click)="launch(icon)"
+       [title]="icon.label">
+    <div class="di-icon" [ngClass]="icon.colorClass">
+      {{ icon.icon }}
+      <span class="di-lock-badge" *ngIf="icon.locked">&#128274;</span>
+    </div>
+    <div class="di-active-dot"></div>
+    <div class="di-label">{{ icon.label }}</div>
+  </div>
+</div>
+
+<!-- Hint Banner -->
+<div class="desktop-hint-banner">
+  <span class="hint-lock">&#128274;</span>
+  Complete the previous task to unlock submission &mdash; you can explore and prepare here
+</div>

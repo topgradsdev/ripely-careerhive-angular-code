@@ -1,0 +1,337 @@
+<!-- ── HERO ── -->
+<div class="ov-hero">
+  <div class="ov-hero-bg">
+    <div class="ov-orb ov-orb-1"></div>
+    <div class="ov-orb ov-orb-2"></div>
+    <div class="ov-hero-grid"></div>
+  </div>
+  <div class="ov-hero-inner">
+    <button class="ov-back-btn" (click)="goBack()">
+      <i class="fa fa-chevron-left"></i> Back to Simulations
+    </button>
+    <div class="ov-hero-cols">
+      <div class="ov-hero-left">
+        <div class="ov-company-pill">
+          <span class="ov-company-dot"></span>
+          Meridian Building Systems · HVAC Engineering
+        </div>
+        <h1 class="ov-title">Welcome to Meridian<br>Building Systems.</h1>
+        <p class="ov-subtitle">You will be working as a junior mechanical engineer.</p>
+        <button class="ov-enrol-btn" (click)="enrol()">
+          Enrol &amp; Sign Offer Letter <i class="fa fa-arrow-right"></i>
+        </button>
+        <div class="ov-enrol-note">Free to enrol · Report shared with hiring partners</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── ACCREDITATION ── -->
+<div class="ov-accredit-bar">
+  <div class="ov-accredit-bar-label"><em>Where our engineers work &amp; get hired</em></div>
+  <div class="ov-accredit-logos-grid">
+    <span *ngFor="let p of partnersRow1" class="ov-accredit-name">{{ p }}</span>
+    <span *ngFor="let p of partnersRow2" class="ov-accredit-name">{{ p }}</span>
+  </div>
+</div>
+
+<!-- ── ABOUT / DESCRIPTION ── -->
+<div class="ov-about-section">
+  <div class="ov-about-inner">
+    <div class="ov-about-left">
+      <h2 class="ov-about-title">Real engineering.<br><em>Real standards.</em></h2>
+
+      <div class="ov-about-feature ov-about-feature-active">
+        <div class="ov-about-feature-icon"><i class="fa fa-check-circle-o"></i></div>
+        <div>
+          <div class="ov-about-feature-title">Live client project</div>
+          <div class="ov-about-feature-desc">Work on a real cooling tower assessment for Heron Gate Business Park, Brisbane. Your calculations form part of a formal engineering submission — your name appears on the report.</div>
+        </div>
+      </div>
+
+      <div class="ov-about-feature ov-about-feature-active">
+        <div class="ov-about-feature-icon"><i class="fa fa-file-text-o"></i></div>
+        <div>
+          <div class="ov-about-feature-title">Industry-standard calculations</div>
+          <div class="ov-about-feature-desc">Drift loss, water balance, and makeup water — all following ASHRAE, BSRIA, and CTI ATC-140 methodology. Built with practising CIBSE-registered engineers.</div>
+        </div>
+      </div>
+
+      <div class="ov-about-feature">
+        <div class="ov-about-feature-icon"><i class="fa fa-user-o"></i></div>
+        <div>
+          <div class="ov-about-feature-title">Supervisor review on everything</div>
+        </div>
+      </div>
+
+      <div class="ov-about-feature">
+        <div class="ov-about-feature-icon"><i class="fa fa-building-o"></i></div>
+        <div>
+          <div class="ov-about-feature-title">Real equipment datasheets</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="ov-about-right">
+      <div class="ov-about-icon-cell">
+        <i class="fa fa-globe ov-about-icon-svg"></i>
+        <div class="ov-about-icon-label">ASHRAE Standard</div>
+      </div>
+      <div class="ov-about-icon-cell">
+        <i class="fa fa-shield ov-about-icon-svg"></i>
+        <div class="ov-about-icon-label">CIBSE Verified</div>
+      </div>
+      <div class="ov-about-icon-cell">
+        <i class="fa fa-institution ov-about-icon-svg"></i>
+        <div class="ov-about-icon-label">Baltimore Aircoil</div>
+      </div>
+      <div class="ov-about-icon-cell">
+        <i class="fa fa-crosshairs ov-about-icon-svg"></i>
+        <div class="ov-about-icon-label">CTI ATC-140</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── STATS / SOCIAL PROOF ── -->
+<div class="ov-stats-section">
+  <div class="ov-stats-inner">
+    <p class="ov-stats-pullquote">"This is the closest thing to real site experience I've had before starting my graduate role. Marcus's feedback changed how I approach every calculation."</p>
+    <div class="ov-stats-readmore"><span>Read graduate reviews</span> <span>→</span></div>
+    <div class="ov-stats-cards">
+      <div class="ov-stats-card">
+        <div class="ov-stats-card-num">4<sup>×</sup></div>
+        <div class="ov-stats-card-qualifier">completers are</div>
+        <div class="ov-stats-card-label">more likely to receive a first-round interview at MEP and building services firms</div>
+      </div>
+      <div class="ov-stats-card">
+        <div class="ov-stats-card-num">3<sup>×</sup></div>
+        <div class="ov-stats-card-qualifier">the engineering experience of</div>
+        <div class="ov-stats-card-label">peers who graduate without a supervised simulation on their CV</div>
+      </div>
+      <div class="ov-stats-card">
+        <div class="ov-stats-card-num">89<sup>%</sup></div>
+        <div class="ov-stats-card-qualifier">of completers report</div>
+        <div class="ov-stats-card-label">feeling confident discussing HVAC calculations in a technical interview</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── SKILLS SCATTER ── -->
+<div class="ov-skills-scatter">
+  <div class="ov-skills-scatter-bg"></div>
+  <span class="ov-scatter-pill ov-sp-teal"   style="top:8%;  left:4%;">🌡️ Drift Loss Calculation</span>
+  <span class="ov-scatter-pill ov-sp-green"  style="top:20%; left:22%;">📋 ASHRAE Standards</span>
+  <span class="ov-scatter-pill ov-sp-blue"   style="top:6%;  left:56%;">💧 Water Balance</span>
+  <span class="ov-scatter-pill ov-sp-purple" style="top:5%;  right:5%;">⚙️ Unit Conversion</span>
+  <span class="ov-scatter-pill ov-sp-orange" style="top:38%; left:3%;">🏗️ Equipment Datasheets</span>
+  <span class="ov-scatter-pill ov-sp-yellow" style="top:30%; left:30%;">📐 BSRIA Methodology</span>
+  <span class="ov-scatter-pill ov-sp-pink"   style="top:28%; right:8%;">📄 Engineering Reporting</span>
+  <span class="ov-scatter-pill ov-sp-teal"   style="top:42%; right:3%;">🔬 CTI ATC-140</span>
+  <span class="ov-scatter-pill ov-sp-blue"   style="bottom:28%; left:6%;">✅ Formula Validation</span>
+  <span class="ov-scatter-pill ov-sp-green"  style="bottom:22%; left:28%;">⚠️ Legionella Risk</span>
+  <span class="ov-scatter-pill ov-sp-purple" style="bottom:18%; right:22%;">💬 Supervisor Comms</span>
+  <span class="ov-scatter-pill ov-sp-orange" style="bottom:10%; right:5%;">🔎 Site Assessment</span>
+
+  <div class="ov-skills-scatter-inner">
+    <div class="ov-skills-scatter-eyebrow">SKILLS YOU'LL GAIN</div>
+    <h2 class="ov-skills-scatter-title">12 verified<br>engineering<br><em>skills.</em></h2>
+  </div>
+</div>
+
+<!-- ── TASK ACCORDION ── -->
+<div class="ov-section ov-section-alt">
+  <div class="ov-section-inner">
+    <div style="text-align:center; margin-bottom:48px;">
+      <h2 class="ov-section-h2">Six tasks. Real calculations. <em>Supervised.</em></h2>
+    </div>
+
+    <div class="ov-task-accordion">
+      <div *ngFor="let task of tasks; let i = index"
+           class="ov-acc-item"
+           [class.ov-acc-open]="task.expanded">
+        <div class="ov-acc-header" (click)="toggleTask(i)">
+          <div class="ov-acc-left">
+            <div class="ov-acc-title">{{ task.title }}</div>
+          </div>
+          <div class="ov-acc-meta">
+            <div class="ov-acc-pills-preview">
+              <span *ngFor="let pill of task.skillPills"
+                    class="ov-pill-preview"
+                    [ngClass]="pill.colorClass">{{ pill.label }}</span>
+            </div>
+            <div class="ov-acc-toggle">{{ task.expanded ? '×' : '+' }}</div>
+          </div>
+        </div>
+        <div class="ov-acc-body" *ngIf="task.expanded">
+          <div class="ov-acc-body-inner">
+            <div class="ov-acc-body-left">
+              <p class="ov-acc-desc">{{ task.description }}</p>
+              <div class="ov-acc-skills">
+                <span *ngFor="let pill of task.skillPills"
+                      class="ov-task-skill"
+                      [ngClass]="pill.colorClass">{{ pill.label }}</span>
+              </div>
+              <div class="ov-acc-outcome">
+                <span class="ov-acc-outcome-check">✓</span>
+                <span class="ov-acc-outcome-text">{{ task.outcomeText }}</span>
+              </div>
+            </div>
+            <div class="ov-acc-card">
+              <div class="ov-acc-card-header">{{ task.cardHeader }}</div>
+              <div *ngFor="let row of task.cardRows" class="ov-acc-card-row">
+                <div class="ov-acc-card-row-left">
+                  <div class="ov-acc-card-row-dot" [style.background]="row.dot"></div>
+                  <span class="ov-acc-card-row-label">{{ row.label }}</span>
+                </div>
+                <span class="ov-acc-card-row-val">{{ row.val }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── VIDEO TESTIMONIALS ── -->
+<div class="ov-section">
+  <div class="ov-section-inner">
+    <div class="ov-testi-header-row">
+      <div>
+        <div class="ov-eyebrow">Student Reviews</div>
+        <h2 class="ov-section-h2">Hear from engineers<br><em>who've been through it</em></h2>
+      </div>
+    </div>
+    <div class="ov-video-carousel-wrap">
+      <div class="ov-video-carousel" [style.transform]="carouselTranslate">
+        <div *ngFor="let v of videos" class="ov-video-card">
+          <div class="ov-video-placeholder">
+            <div class="ov-video-play"><i class="fa fa-play"></i></div>
+          </div>
+          <div class="ov-video-card-meta">
+            <div class="ov-video-avatar" [style.background]="v.color">{{ v.initials }}</div>
+            <div class="ov-video-card-info">
+              <div class="ov-video-card-name">{{ v.name }} <span class="ov-video-verified"><i class="fa fa-check-circle"></i></span></div>
+              <div class="ov-video-card-role">{{ v.role }}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="ov-carousel-controls">
+      <button class="ov-carousel-btn" (click)="carouselNav(-1)"><i class="fa fa-chevron-left"></i></button>
+      <span class="ov-carousel-dot" [class.active]="carouselPage === 0"></span>
+      <span class="ov-carousel-dot" [class.active]="carouselPage === 1"></span>
+      <span class="ov-carousel-dot" [class.active]="carouselPage >= 2"></span>
+      <button class="ov-carousel-btn" (click)="carouselNav(1)"><i class="fa fa-chevron-right"></i></button>
+    </div>
+  </div>
+</div>
+
+<!-- ── FINAL CTA ── -->
+<div class="ov-final-cta">
+  <div class="ov-final-cta-inner">
+    <div class="ov-final-orb"></div>
+    <div class="ov-eyebrow" style="color:rgba(255,107,44,0.8);">READY?</div>
+    <h2 class="ov-final-title">Marcus is waiting.<br><em>Your first task is already live.</em></h2>
+    <button class="ov-enrol-btn" (click)="enrol()">
+      Enrol &amp; Sign Offer Letter <i class="fa fa-arrow-right"></i>
+    </button>
+    <div class="ov-enrol-note" style="color:rgba(255,255,255,0.3);">Free to enrol · Performance report shared with hiring partners</div>
+  </div>
+</div>
+
+<!-- ── OFFER LETTER OVERLAY ── -->
+<div class="ov-offer-overlay" *ngIf="showOfferOverlay" (click)="closeOfferOverlay()">
+  <div class="ov-offer-outer" (click)="$event.stopPropagation()">
+    <button class="ov-offer-close" (click)="closeOfferOverlay()">&#10005;</button>
+
+    <div class="ov-offer-letter">
+      <!-- Orange top bar -->
+      <div class="ov-offer-topbar"></div>
+
+      <!-- Letterhead -->
+      <div class="ov-offer-header">
+        <div class="ov-offer-stamp">
+          <svg width="18" height="18" viewBox="0 0 20 20" fill="white"><path d="M10 2L3 7v6l7 5 7-5V7L10 2z"/></svg>
+        </div>
+        <div>
+          <div class="ov-offer-company">Meridian Building Systems Ltd. &middot; HR &amp; Onboarding</div>
+          <div class="ov-offer-doc">Confidential &middot; Offer of Employment &mdash; Junior Mechanical Engineer</div>
+        </div>
+      </div>
+
+      <!-- Reference strip -->
+      <div class="ov-offer-ref">
+        <div class="ov-offer-ref-kv">
+          <span class="ov-offer-ref-key">Ref</span>
+          <span class="ov-offer-ref-val">MBS-HR-2025-0112</span>
+        </div>
+        <div class="ov-offer-ref-kv">
+          <span class="ov-offer-ref-key">Date</span>
+          <span class="ov-offer-ref-val">Monday 9th June &middot; Immediate</span>
+        </div>
+        <div class="ov-offer-ref-kv">
+          <span class="ov-offer-ref-key">Grade</span>
+          <span class="ov-offer-ref-val">JME-I &middot; Mechanical Division</span>
+        </div>
+      </div>
+
+      <!-- Letter body -->
+      <div class="ov-offer-body">
+        <p>Dear Candidate,</p>
+        <p>Following your interview with our technical team, we are pleased to offer you a position as <strong>Junior Mechanical Engineer</strong> at <strong>Meridian Building Systems Ltd.</strong>, based from our Melbourne office.</p>
+        <p>You will be joining our Mechanical Engineering division under the direct supervision of <span class="ov-offer-highlight">Marcus Webb, Senior Mechanical Engineer</span>, who has over 20 years of experience in commercial HVAC design and delivery.</p>
+        <p>You will be immediately assigned to the <strong>Heron Gate Business Park</strong> cooling tower assessment in Brisbane. This is a live client project with a paying client and a programme to meet. Your calculations will form part of a formal engineering submission &mdash; and your name will appear on the calculation sheet.</p>
+        <p><strong>Start date: Monday 9th June &nbsp;&#124;&nbsp; Salary: $26,500 p.a. &nbsp;&#124;&nbsp; Probation: 3 months</strong></p>
+        <p>To formally accept this offer and begin your first day at Meridian, please sign your full name below.</p>
+      </div>
+
+      <!-- Signature area -->
+      <div class="ov-offer-sig-row">
+        <div class="ov-offer-sig-block">
+          <div class="ov-offer-sig-script">Sandra Kohl</div>
+          <div class="ov-offer-sig-line"></div>
+          <div class="ov-offer-sig-name">Sandra Kohl</div>
+          <div class="ov-offer-sig-title">Project Manager &middot; Meridian Building Systems Ltd.</div>
+        </div>
+        <div class="ov-offer-wax">
+          <div class="ov-offer-wax-inner">MBS<br>SEAL</div>
+        </div>
+      </div>
+
+      <!-- Sign-here area -->
+      <div class="ov-offer-name-block">
+        <label class="ov-offer-name-label">Your signature</label>
+        <input
+          type="text"
+          class="ov-offer-name-input"
+          placeholder="Sign your full name&hellip;"
+          [(ngModel)]="candidateName"
+          autocomplete="off"
+        />
+      </div>
+
+      <!-- Accept button -->
+      <button class="ov-offer-accept-btn" (click)="acceptOffer()" [disabled]="!candidateName.trim()">
+        Accept Offer &amp; Join the Team
+        <span class="ov-offer-btn-arrow">
+          <svg width="10" height="10" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </span>
+      </button>
+
+      <!-- Footer -->
+      <div class="ov-offer-footer">
+        <div class="ov-offer-footer-stamps">
+          <span class="ov-offer-footer-stamp">CIBSE Registered</span>
+          <span class="ov-offer-footer-stamp">Scored Assessment</span>
+          <span class="ov-offer-footer-stamp">Industry Verified</span>
+        </div>
+        <div class="ov-offer-disclaimer">By accepting you confirm this is a scored simulation and that your performance may be shared with participating employers and training providers.</div>
+      </div>
+
+    </div><!-- /ov-offer-letter -->
+  </div><!-- /ov-offer-outer -->
+</div><!-- /ov-offer-overlay -->

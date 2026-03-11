@@ -1,0 +1,402 @@
+/* ── sc4d  Task 5 — Submit Form ── */
+
+$bg:       #111118;
+$card:     #1a1a24;
+$border:   rgba(255, 255, 255, 0.07);
+$text:     #e8e8f0;
+$sec:      #9090a8;
+$ter:      #5a5a72;
+$accent:   #ff6b2c;
+$success:  #00b894;
+
+/* ── Layout ── */
+.comp-layout {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background: $bg;
+  color: $text;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+/* ── Float Titlebar ── */
+.float-titlebar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 16px;
+  background: #0d0d14;
+  border-bottom: 1px solid $border;
+  flex-shrink: 0;
+}
+
+.tb-dots {
+  display: flex;
+  gap: 5px;
+
+  i {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: $ter;
+    display: block;
+
+    &:first-child { background: #ff5f56; }
+    &:nth-child(2) { background: #ffbd2e; }
+    &:last-child { background: #27c93f; }
+  }
+}
+
+.tb-title {
+  font-size: 12px;
+  font-weight: 500;
+  color: $sec;
+  letter-spacing: 0.02em;
+}
+
+.tb-spacer { flex: 1; }
+
+/* ── Scrollable workspace ── */
+.comp-main {
+  flex: 1;
+  overflow-y: auto;
+  padding: 28px 24px 40px;
+  max-width: 720px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+/* ── Hero ── */
+.comp-hero {
+  margin-bottom: 24px;
+}
+
+.comp-kicker {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: $accent;
+  margin-bottom: 6px;
+}
+
+.comp-title {
+  font-size: 22px;
+  font-weight: 700;
+  margin: 0;
+  color: $text;
+}
+
+/* ── Page Dots ── */
+.page-dots {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.page-dot {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.05);
+  border: 2px solid rgba(255, 255, 255, 0.12);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 600;
+  color: $ter;
+  cursor: pointer;
+  transition: all 0.15s;
+
+  &.active {
+    background: rgba($accent, 0.12);
+    border-color: $accent;
+    color: $accent;
+  }
+}
+
+/* ── Transaction card ── */
+.txn {
+  background: $card;
+  border: 1px solid $border;
+  border-radius: 10px;
+  margin-bottom: 16px;
+  overflow: hidden;
+}
+
+.txn-flag-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  background: rgba(255, 255, 255, 0.02);
+  border-bottom: 1px solid $border;
+}
+
+.txn-flag-icon { font-size: 14px; }
+
+.txn-flag-label {
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: $sec;
+}
+
+.txn-flag-meta {
+  margin-left: auto;
+  font-size: 12px;
+  font-weight: 600;
+  color: $ter;
+}
+
+.txn-inner {
+  padding: 16px;
+}
+
+/* ── Form fields ── */
+.ws-field {
+  margin-bottom: 18px;
+
+  &:last-child { margin-bottom: 0; }
+}
+
+.calc-label {
+  display: block;
+  font-size: 12px;
+  font-weight: 600;
+  color: $sec;
+  margin-bottom: 6px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.calc-input {
+  width: 100%;
+  padding: 10px 14px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid $border;
+  border-radius: 8px;
+  color: $text;
+  font-size: 14px;
+  font-family: inherit;
+  outline: none;
+  transition: border-color 0.15s;
+
+  &:focus { border-color: rgba(255, 107, 44, 0.45); }
+  &::placeholder { color: $ter; }
+}
+
+select.calc-input {
+  appearance: none;
+  cursor: pointer;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' fill='none'%3E%3Cpath d='M1 1.5l5 5 5-5' stroke='%235a5a72' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  padding-right: 36px;
+
+  option {
+    background: $card;
+    color: $text;
+  }
+}
+
+textarea.calc-input {
+  resize: vertical;
+  min-height: 80px;
+  line-height: 1.55;
+}
+
+/* ── Radio group ── */
+.ws-radio-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.ws-radio-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid $border;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s;
+
+  &:hover { background: rgba(255, 255, 255, 0.04); }
+
+  input[type="radio"] { display: none; }
+
+  input[type="radio"]:checked ~ .ws-radio-circle {
+    border-color: $accent;
+    background: rgba($accent, 0.15);
+
+    &::after {
+      content: '';
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: $accent;
+    }
+  }
+
+  input[type="radio"]:checked ~ .ws-radio-label {
+    color: $text;
+  }
+}
+
+.ws-radio-circle {
+  width: 20px;
+  height: 20px;
+  border: 2px solid rgba(255, 255, 255, 0.18);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: border-color 0.15s, background 0.15s;
+}
+
+.ws-radio-label {
+  font-size: 14px;
+  color: $sec;
+  transition: color 0.15s;
+}
+
+/* ── Checkbox group (Risk categories) ── */
+.ws-check-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.ws-check-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 11px 14px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid $border;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.15s;
+
+  &:hover { background: rgba(255, 255, 255, 0.04); }
+
+  &.checked {
+    border-color: rgba($success, 0.25);
+    background: rgba($success, 0.04);
+
+    .ws-check-label { color: $text; }
+
+    .ws-check-box {
+      background: rgba($success, 0.15);
+      border-color: $success;
+      color: $success;
+    }
+  }
+
+  input[type="checkbox"] { display: none; }
+}
+
+.ws-check-box {
+  width: 22px;
+  height: 22px;
+  border: 2px solid rgba(255, 255, 255, 0.18);
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: border-color 0.15s, background 0.15s;
+}
+
+.ws-check-label {
+  font-size: 14px;
+  color: $sec;
+  transition: color 0.15s;
+}
+
+/* ── Submit bar ── */
+.ws-submit-bar {
+  padding: 8px 0 0;
+  display: flex;
+  justify-content: flex-end;
+
+  &--split {
+    justify-content: space-between;
+  }
+}
+
+.ws-submit-btn {
+  padding: 12px 28px;
+  background: $accent;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s, opacity 0.2s;
+  letter-spacing: 0.01em;
+
+  &:hover:not(:disabled) { background: darken($accent, 6%); }
+  &:disabled { opacity: 0.35; cursor: not-allowed; }
+}
+
+.ws-back-btn {
+  padding: 12px 24px;
+  background: rgba(255, 255, 255, 0.06);
+  color: $sec;
+  border: 1px solid $border;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: $text;
+  }
+}
+
+/* ── Success State ── */
+.txn-success {}
+
+.txn-flag-bar--success {
+  background: rgba($success, 0.06);
+  border-bottom-color: rgba($success, 0.15);
+}
+
+.success-inner {
+  text-align: center;
+  padding: 32px 16px;
+}
+
+.success-icon-wrap {
+  margin-bottom: 16px;
+}
+
+.success-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: $text;
+  margin: 0 0 8px;
+}
+
+.success-text {
+  font-size: 14px;
+  color: $sec;
+  line-height: 1.6;
+  margin: 0;
+  max-width: 440px;
+  margin-left: auto;
+  margin-right: auto;
+}

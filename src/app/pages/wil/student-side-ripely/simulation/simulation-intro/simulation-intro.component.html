@@ -1,0 +1,92 @@
+<!-- Backdrop -->
+<div class="float-backdrop" (click)="closeWindow()"></div>
+
+<!-- Floating Window -->
+<div class="float-window">
+
+  <!-- Title Bar -->
+  <div class="float-titlebar">
+    <div class="float-titlebar-left">
+      <span class="float-titlebar-icon">&#127959;&#65039;</span>
+      <span class="float-titlebar-name">Program Overview</span>
+      <span class="float-titlebar-sep">&mdash;</span>
+      <span class="float-titlebar-sub">Heron Gate &middot; Cooling Tower Assessment</span>
+    </div>
+    <div class="float-titlebar-controls">
+      <button class="float-ctrl" (click)="minimizeWindow()" title="Minimise">&mdash;</button>
+      <button class="float-ctrl float-ctrl-close" (click)="closeWindow()" title="Close">&#10005;</button>
+    </div>
+  </div>
+
+  <!-- Scrollable Body -->
+  <div class="float-body">
+
+    <!-- Welcome Strip -->
+    <div class="ov-welcome">
+      <div class="ov-welcome-eyebrow">Day 1 &middot; Heron Gate Project</div>
+      <div class="ov-welcome-title">Meridian Building Systems<br><span class="ov-welcome-subtitle">Junior Mechanical Engineer</span></div>
+      <div class="ov-stats-row">
+        <div *ngFor="let s of stats" class="ov-stat">
+          <div class="ov-stat-value" [class.accent]="s.accent">{{ s.value }}</div>
+          <div class="ov-stat-label">{{ s.label }}</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- The Situation -->
+    <div class="ov-situation">
+      <div class="ov-section-label">The Situation</div>
+      <div class="ov-situation-heading">Two cooling towers. A car park full of deposits. A client who needs answers.</div>
+      <div class="ov-situation-body">Heron Gate Business Park has two Baltimore Aircoil open-circuit cooling towers. Tenants are complaining about white mineral deposits on vehicles in the adjacent car park. The previous contractor gave verbal observations only. You need a formal engineered report &mdash; calculations, findings, and recommendations.</div>
+      <div class="ov-situation-cards">
+        <div *ngFor="let card of situationCards" class="ov-sit-card">
+          <div class="ov-sit-card-icon">{{ card.icon }}</div>
+          <div class="ov-sit-card-title">{{ card.title }}</div>
+          <div class="ov-sit-card-desc">{{ card.description }}</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Your Team -->
+    <div class="ov-team">
+      <div class="ov-section-label">Your Team</div>
+      <div class="ov-team-list">
+        <div *ngFor="let m of team" class="ov-team-row">
+          <div class="ov-team-avatar" [ngClass]="m.avatarGradient">{{ m.initials }}</div>
+          <div class="ov-team-info">
+            <div class="ov-team-name">{{ m.name }}</div>
+            <div class="ov-team-sub">{{ m.subtitle }}</div>
+          </div>
+          <span class="ov-team-tag" [ngClass]="m.tagStyle">{{ m.tag }}</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Six Tasks -->
+    <div class="ov-tasks">
+      <div class="ov-section-label">Six Tasks &middot; Your Brief</div>
+      <div class="ov-tasks-list">
+        <div *ngFor="let t of tasks" class="ov-task-row">
+          <div class="ov-task-num">{{ t.number }}</div>
+          <div class="ov-task-body">
+            <div class="ov-task-title">{{ t.title }}</div>
+            <div class="ov-task-sub">{{ t.subtitle }}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Status Bar -->
+  <div class="float-statusbar">
+    <span>Module 1 &middot; Heron Gate Assessment</span>
+    <button class="ov-cta-btn" (click)="openChat()">
+      Open Chat &amp; Begin
+      <svg width="12" height="12" viewBox="0 0 16 16" fill="none">
+        <path d="M3 8h10M9 4l4 4-4 4" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </button>
+  </div>
+
+</div>

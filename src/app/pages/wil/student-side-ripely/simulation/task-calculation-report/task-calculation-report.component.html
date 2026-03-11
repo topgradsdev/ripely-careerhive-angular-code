@@ -1,0 +1,114 @@
+<!-- ── sc4b  Task 6 — Calculation Report ── -->
+<div class="comp-layout">
+
+  <!-- Float Titlebar -->
+  <header class="float-titlebar">
+    <span class="tb-dots"><i></i><i></i><i></i></span>
+    <span class="tb-title">Report Builder &middot; Day 3</span>
+    <span class="tb-spacer"></span>
+  </header>
+
+  <!-- Scrollable workspace -->
+  <div class="comp-main">
+
+    <!-- Hero -->
+    <section class="comp-hero">
+      <span class="comp-kicker">Task 6</span>
+      <h1 class="comp-title">Calculation Report</h1>
+    </section>
+
+    <!-- Report sections (before submission) -->
+    <div *ngIf="!submitted">
+
+      <!-- Executive Summary -->
+      <div class="txn">
+        <div class="txn-flag-bar">
+          <span class="txn-flag-icon">&#128196;</span>
+          <span class="txn-flag-label">Executive Summary</span>
+        </div>
+        <div class="txn-inner">
+          <p class="ws-hint">Provide a concise overview of the project, key findings, and primary recommendations.</p>
+          <textarea class="calc-input report-area"
+                    [(ngModel)]="executiveSummary"
+                    rows="5"
+                    placeholder="Summarise the purpose, scope, and headline conclusions of your assessment..."></textarea>
+        </div>
+      </div>
+
+      <!-- Methodology -->
+      <div class="txn">
+        <div class="txn-flag-bar">
+          <span class="txn-flag-icon">&#128300;</span>
+          <span class="txn-flag-label">Methodology</span>
+        </div>
+        <div class="txn-inner">
+          <p class="ws-hint">Describe the approach, standards referenced, and assumptions made during the analysis.</p>
+          <textarea class="calc-input report-area"
+                    [(ngModel)]="methodology"
+                    rows="5"
+                    placeholder="Outline the calculation methodology, reference standards (e.g. AS/NZS 3666), and key assumptions..."></textarea>
+        </div>
+      </div>
+
+      <!-- Results & Findings -->
+      <div class="txn">
+        <div class="txn-flag-bar">
+          <span class="txn-flag-icon">&#128202;</span>
+          <span class="txn-flag-label">Results &amp; Findings</span>
+        </div>
+        <div class="txn-inner">
+          <p class="ws-hint">Present your calculated results and any significant observations from the site assessment.</p>
+          <textarea class="calc-input report-area"
+                    [(ngModel)]="resultsFindings"
+                    rows="5"
+                    placeholder="Include drift loss values, comparisons against compliance thresholds, and notable equipment conditions..."></textarea>
+        </div>
+      </div>
+
+      <!-- Recommendations -->
+      <div class="txn">
+        <div class="txn-flag-bar">
+          <span class="txn-flag-icon">&#128161;</span>
+          <span class="txn-flag-label">Recommendations</span>
+        </div>
+        <div class="txn-inner">
+          <p class="ws-hint">State your professional recommendations for the client based on your analysis.</p>
+          <textarea class="calc-input report-area"
+                    [(ngModel)]="recommendations"
+                    rows="5"
+                    placeholder="e.g. Replace displaced drift-eliminator panel on Tower 1. Schedule follow-up inspection in 90 days..."></textarea>
+        </div>
+      </div>
+
+      <!-- Submit -->
+      <div class="ws-submit-bar">
+        <button class="ws-submit-btn" [disabled]="!isValid" (click)="submitToSupervisor()">
+          Submit to Supervisor &rarr;
+        </button>
+      </div>
+
+    </div>
+
+    <!-- Submitted State -->
+    <div class="txn txn-success" *ngIf="submitted">
+      <div class="txn-flag-bar txn-flag-bar--success">
+        <span class="txn-flag-icon">&#9989;</span>
+        <span class="txn-flag-label">Report Submitted</span>
+      </div>
+      <div class="txn-inner success-inner">
+        <div class="success-icon-wrap">
+          <svg viewBox="0 0 48 48" width="48" height="48">
+            <circle cx="24" cy="24" r="24" fill="rgba(0,184,148,0.15)"/>
+            <path d="M14 24l7 7 13-13" fill="none" stroke="#00b894" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <h3 class="success-title">Report Submitted Successfully</h3>
+        <p class="success-text">Your calculation report has been submitted to your supervisor for review. Great work completing all tasks!</p>
+        <button class="ws-submit-btn" (click)="goToScorecard()">
+          View Scorecard &rarr;
+        </button>
+      </div>
+    </div>
+
+  </div><!-- /comp-main -->
+</div><!-- /comp-layout -->

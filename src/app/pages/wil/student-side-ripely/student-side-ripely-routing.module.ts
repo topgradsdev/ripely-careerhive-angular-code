@@ -8,6 +8,10 @@ import { StudentSupportComponent } from './support/support.component';
 
 const routes: Routes = [
   {
+    path: 'simulations/:id',
+    loadChildren: () => import('./simulation/simulation.module').then(m => m.SimulationModule)
+  },
+  {
     path: '',
     component: StudentSideRipelyComponent,
     children: [

@@ -1,0 +1,71 @@
+<div class="lib-window">
+  <!-- Window Titlebar -->
+  <div class="lib-titlebar">
+    <div class="titlebar-left">
+      <div class="window-dots">
+        <span class="dot red"></span>
+        <span class="dot yellow"></span>
+        <span class="dot green"></span>
+      </div>
+      <span class="titlebar-icon"><i class="fa fa-folder"></i></span>
+      <span class="titlebar-text">Library</span>
+    </div>
+    <div class="titlebar-right">
+      <span class="titlebar-subtitle">Meridian Engineering Documents</span>
+      <span class="file-count">{{ totalFiles }} files</span>
+    </div>
+  </div>
+
+  <div class="lib-body">
+    <!-- Sidebar: Folder Tree -->
+    <div class="lib-sidebar">
+      <div class="sidebar-label">Folders</div>
+      <div class="folder-tree">
+        <button *ngFor="let folder of folders"
+                class="folder-item"
+                [class.active]="activeFolder === folder.id"
+                (click)="selectFolder(folder.id)">
+          <i class="fa" [ngClass]="activeFolder === folder.id ? 'fa-folder-open' : 'fa-folder'"
+             [class.folder-open]="activeFolder === folder.id"></i>
+          <span class="folder-name">{{ folder.name }}</span>
+          <span class="folder-badge">{{ folder.files.length }}</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Main Area: File Grid -->
+    <div class="lib-main">
+      <div class="main-header">
+        <h3 class="folder-title">{{ activeFolderName }}</h3>
+        <div class="search-box">
+          <i class="fa fa-search"></i>
+          <input type="text" [(ngModel)]="searchQuery" placeholder="Search files...">
+        </div>
+      </div>
+
+      <div class="file-grid">
+        <div *ngFor="let file of activeFiles" class="file-card">
+          <div class="file-icon-wrap" [style.borderColor]="getFileTypeColor(file.type)">
+            <i class="fa" [ngClass]="file.icon" [style.color]="getFileTypeColor(file.type)"></i>
+          </div>
+          <div class="file-details">
+            <span class="file-name">{{ file.name }}</span>
+            <div class="file-meta">
+              <span class="file-type-badge" [style.color]="getFileTypeColor(file.type)">{{ file.type }}</span>
+              <span class="file-size">{{ file.size }}</span>
+              <span *ngIf="file.pages" class="file-pages">{{ file.pages }} pages</span>
+            </div>
+          </div>
+          <button class="file-action">
+            <i class="fa fa-download"></i>
+          </button>
+        </div>
+
+        <div *ngIf="activeFiles.length === 0" class="empty-state">
+          <i class="fa fa-search"></i>
+          <p>No files match your search.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

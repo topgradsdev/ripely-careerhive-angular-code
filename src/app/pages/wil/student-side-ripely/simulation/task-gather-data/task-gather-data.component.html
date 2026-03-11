@@ -1,0 +1,74 @@
+<!-- ── sc3  Task 2 — Gather Your Data ── -->
+<div class="comp-layout">
+
+  <!-- Float Titlebar -->
+  <header class="float-titlebar">
+    <span class="tb-dots"><i></i><i></i><i></i></span>
+    <span class="tb-title">Engineering Notepad &middot; Day 1</span>
+    <span class="tb-spacer"></span>
+  </header>
+
+  <!-- Scrollable workspace -->
+  <div class="comp-main">
+
+    <!-- Hero -->
+    <section class="comp-hero">
+      <span class="comp-kicker">Task 2</span>
+      <h1 class="comp-title">Gather Your Data</h1>
+    </section>
+
+    <!-- Tab strip -->
+    <div class="ws-tab-strip">
+      <button class="ws-tab" [class.active]="activeTab === 'notepad'" (click)="activeTab = 'notepad'">
+        W1 &nbsp;Data List
+      </button>
+      <button class="ws-tab" [class.active]="activeTab === 'checklist'" (click)="activeTab = 'checklist'">
+        W2 &nbsp;Equipment Checklist
+      </button>
+    </div>
+
+    <!-- Panel 1 : Notepad -->
+    <div class="txn" *ngIf="activeTab === 'notepad'">
+      <div class="txn-flag-bar">
+        <span class="txn-flag-icon">&#128221;</span>
+        <span class="txn-flag-label">Engineering Notepad</span>
+      </div>
+      <div class="txn-inner">
+        <p class="ws-hint">Use this notepad to record data from the Library. Write down make/model, flow rates, DE efficiency, and any relevant figures you find.</p>
+        <textarea class="calc-input notepad-area"
+                  [(ngModel)]="notepadContent"
+                  placeholder="Start typing your notes here...&#10;&#10;e.g.&#10;Tower 1: BAC Series 3000&#10;Flow rate: 1 200 GPM&#10;DE efficiency: 99.99 %"></textarea>
+      </div>
+    </div>
+
+    <!-- Panel 2 : Equipment Checklist -->
+    <div class="txn" *ngIf="activeTab === 'checklist'">
+      <div class="txn-flag-bar">
+        <span class="txn-flag-icon">&#9745;</span>
+        <span class="txn-flag-label">Equipment Checklist</span>
+        <span class="txn-flag-meta">{{ completedCount }} / {{ checklist.length }}</span>
+      </div>
+      <div class="txn-inner">
+        <p class="ws-hint">Tick each item once you have recorded the value in your notepad.</p>
+
+        <label *ngFor="let item of checklist"
+               class="ws-check-row"
+               [class.checked]="item.checked">
+          <input type="checkbox" [checked]="item.checked" (change)="toggleItem(item)">
+          <span class="ws-check-box">
+            <svg *ngIf="item.checked" viewBox="0 0 14 14" width="14" height="14"><path d="M2 7l3.5 3.5L12 4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span>
+          <span class="ws-check-label">{{ item.label }}</span>
+        </label>
+      </div>
+    </div>
+
+    <!-- Submit bar -->
+    <div class="ws-submit-bar">
+      <button class="ws-submit-btn" [disabled]="!allComplete" (click)="submitToSupervisor()">
+        Send to Supervisor &rarr;
+      </button>
+    </div>
+
+  </div><!-- /comp-main -->
+</div><!-- /comp-layout -->
