@@ -440,7 +440,7 @@ $success: #00b894;
 // ============================================================
 // LIGHT MODE OVERRIDES — Floating Window
 // ============================================================
-.light-mode {
+:host-context(.light-mode) {
   .float-backdrop {
     background: rgba(0, 0, 0, 0.15);
   }

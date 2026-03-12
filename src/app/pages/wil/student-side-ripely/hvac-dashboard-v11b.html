@@ -232,10 +232,10 @@ body:has(#scBrowse.on) { padding-bottom: 0; }
   z-index: 8100;
   width: min(860px, 94vw);
   height: min(580px, 80vh);
-  background: #1c1c28;
-  border: 1px solid rgba(255,255,255,0.1);
+  background: #f8f8fc;
+  border: 1px solid rgba(0,0,0,0.1);
   border-radius: 12px;
-  box-shadow: 0 40px 120px rgba(0,0,0,0.8), 0 0 0 0.5px rgba(255,255,255,0.06);
+  box-shadow: 0 40px 120px rgba(0,0,0,0.22), 0 0 0 0.5px rgba(0,0,0,0.06);
   display: flex; flex-direction: column;
   overflow: hidden;
   opacity: 0; pointer-events: none;
@@ -251,71 +251,71 @@ body:has(#scBrowse.on) { padding-bottom: 0; }
   display: flex; align-items: center; justify-content: space-between;
   padding: 0 12px;
   height: 36px;
-  background: #141420;
-  border-bottom: 1px solid rgba(255,255,255,0.07);
+  background: #ebebf2;
+  border-bottom: 1px solid rgba(0,0,0,0.08);
   flex-shrink: 0;
   user-select: none;
 }
 .explorer-titlebar-left {
   display: flex; align-items: center; gap: 8px;
-  font-size: 12px; color: rgba(255,255,255,0.7);
+  font-size: 12px; color: rgba(0,0,0,0.65);
 }
 .explorer-titlebar-name { font-weight: 600; }
-.explorer-titlebar-sep { color: rgba(255,255,255,0.2); }
-.explorer-titlebar-path { color: rgba(255,255,255,0.45); font-size: 11px; }
+.explorer-titlebar-sep { color: rgba(0,0,0,0.25); }
+.explorer-titlebar-path { color: rgba(0,0,0,0.45); font-size: 11px; }
 .explorer-titlebar-controls { display: flex; gap: 6px; }
 .explorer-ctrl {
   width: 28px; height: 22px; border-radius: 4px;
-  border: none; background: rgba(255,255,255,0.06);
-  color: rgba(255,255,255,0.55); font-size: 11px;
+  border: none; background: rgba(0,0,0,0.06);
+  color: rgba(0,0,0,0.50); font-size: 11px;
   cursor: pointer; display: flex; align-items: center; justify-content: center;
   transition: background 0.12s, color 0.12s;
 }
-.explorer-ctrl:hover { background: rgba(255,255,255,0.12); color: #fff; }
-.explorer-ctrl-close:hover { background: rgba(214,48,49,0.7); color: #fff; }
+.explorer-ctrl:hover { background: rgba(0,0,0,0.11); color: #0a0a0a; }
+.explorer-ctrl-close:hover { background: rgba(214,48,49,0.65); color: #fff; }
 
 /* Toolbar */
 .explorer-toolbar {
   display: flex; align-items: center; gap: 8px;
   padding: 6px 12px;
-  background: #181826;
-  border-bottom: 1px solid rgba(255,255,255,0.06);
+  background: #f0f0f8;
+  border-bottom: 1px solid rgba(0,0,0,0.07);
   flex-shrink: 0;
 }
 .explorer-tb-btn {
   width: 28px; height: 28px; border-radius: 6px;
-  border: none; background: rgba(255,255,255,0.05);
-  color: rgba(255,255,255,0.5); font-size: 12px;
+  border: none; background: rgba(0,0,0,0.05);
+  color: rgba(0,0,0,0.50); font-size: 12px;
   cursor: pointer; display: flex; align-items: center; justify-content: center;
   transition: background 0.12s, color 0.12s;
 }
-.explorer-tb-btn:hover { background: rgba(255,255,255,0.1); color: #fff; }
+.explorer-tb-btn:hover { background: rgba(0,0,0,0.1); color: #0a0a0a; }
 .explorer-breadcrumb {
   flex: 1; display: flex; align-items: center; gap: 4px;
-  font-size: 12px; color: rgba(255,255,255,0.5);
-  background: rgba(255,255,255,0.05); border-radius: 6px;
+  font-size: 12px; color: rgba(0,0,0,0.55);
+  background: #fff; border: 1px solid rgba(0,0,0,0.08); border-radius: 6px;
   padding: 4px 10px; height: 28px;
   overflow: hidden;
 }
 .eb-crumb {
-  cursor: pointer; color: rgba(255,255,255,0.55);
+  cursor: pointer; color: rgba(0,0,0,0.55);
   transition: color 0.1s;
 }
-.eb-crumb:hover { color: rgba(255,255,255,0.9); }
-.eb-crumb-sep { color: rgba(255,255,255,0.2); margin: 0 2px; }
-.eb-crumb-current { color: rgba(255,255,255,0.85); font-weight: 500; cursor: default; }
+.eb-crumb:hover { color: rgba(0,0,0,0.85); }
+.eb-crumb-sep { color: rgba(0,0,0,0.2); margin: 0 2px; }
+.eb-crumb-current { color: rgba(0,0,0,0.75); font-weight: 500; cursor: default; }
 .explorer-search-box {
   display: flex; align-items: center; gap: 6px;
-  background: rgba(255,255,255,0.05); border-radius: 6px;
+  background: #fff; border: 1px solid rgba(0,0,0,0.08); border-radius: 6px;
   padding: 0 10px; height: 28px; width: 180px; flex-shrink: 0;
-  color: rgba(255,255,255,0.35);
+  color: rgba(0,0,0,0.35);
 }
 .explorer-search-box input {
   background: none; border: none; outline: none;
-  font-size: 11px; color: rgba(255,255,255,0.7); flex: 1;
+  font-size: 11px; color: rgba(0,0,0,0.7); flex: 1;
   font-family: inherit;
 }
-.explorer-search-box input::placeholder { color: rgba(255,255,255,0.3); }
+.explorer-search-box input::placeholder { color: rgba(0,0,0,0.35); }
 
 /* Body */
 .explorer-body {
@@ -325,29 +325,29 @@ body:has(#scBrowse.on) { padding-bottom: 0; }
 /* Left nav tree */
 .explorer-sidenav {
   width: 168px; flex-shrink: 0;
-  background: #141420;
-  border-right: 1px solid rgba(255,255,255,0.06);
+  background: #eeeef6;
+  border-right: 1px solid rgba(0,0,0,0.07);
   padding: 10px 6px;
   overflow-y: auto;
 }
 .explorer-sidenav::-webkit-scrollbar { width: 3px; }
-.explorer-sidenav::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); }
+.explorer-sidenav::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.1); }
 .explorer-sidenav-section {
   font-size: 10px; font-weight: 700; letter-spacing: 0.12em;
-  text-transform: uppercase; color: rgba(255,255,255,0.25);
+  text-transform: uppercase; color: rgba(0,0,0,0.40);
   padding: 6px 8px 4px;
 }
 .explorer-sn-item {
   display: flex; align-items: center; gap: 7px;
   width: 100%; padding: 6px 8px; border-radius: 6px;
   border: none; background: none; cursor: pointer;
-  font-size: 12px; font-weight: 500; color: rgba(255,255,255,0.55);
+  font-size: 12px; font-weight: 500; color: rgba(0,0,0,0.60);
   text-align: left; transition: background 0.1s, color 0.1s;
   font-family: inherit;
 }
-.explorer-sn-item:hover { background: rgba(255,255,255,0.07); color: rgba(255,255,255,0.85); }
+.explorer-sn-item:hover { background: rgba(0,0,0,0.06); color: rgba(0,0,0,0.85); }
 .explorer-sn-item.active {
-  background: rgba(255,107,44,0.15); color: rgba(255,255,255,0.9);
+  background: rgba(255,107,44,0.12); color: rgba(0,0,0,0.85);
 }
 
 /* Main file pane */
@@ -355,14 +355,15 @@ body:has(#scBrowse.on) { padding-bottom: 0; }
   flex: 1; overflow-y: auto;
   padding: 16px;
   display: flex; flex-direction: column; gap: 0;
+  background: #f8f8fc;
 }
 .explorer-pane::-webkit-scrollbar { width: 4px; }
-.explorer-pane::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.08); }
+.explorer-pane::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.08); }
 
 /* ── Section label inside pane ── */
 .exp-section-label {
   font-size: 10px; font-weight: 700; letter-spacing: 0.14em;
-  text-transform: uppercase; color: rgba(255,255,255,0.25);
+  text-transform: uppercase; color: rgba(0,0,0,0.40);
   padding: 6px 2px 8px; margin-top: 6px;
 }
 
@@ -383,12 +384,12 @@ body:has(#scBrowse.on) { padding-bottom: 0; }
   text-align: center;
 }
 .exp-file:hover {
-  background: rgba(255,255,255,0.06);
-  border-color: rgba(255,255,255,0.1);
+  background: rgba(0,0,0,0.04);
+  border-color: rgba(0,0,0,0.08);
 }
 .exp-file.exp-selected {
-  background: rgba(255,107,44,0.12);
-  border-color: rgba(255,107,44,0.3);
+  background: rgba(255,107,44,0.10);
+  border-color: rgba(255,107,44,0.25);
 }
 .exp-file.exp-locked { opacity: 0.4; cursor: not-allowed; }
 .exp-file-icon {
@@ -401,12 +402,12 @@ body:has(#scBrowse.on) { padding-bottom: 0; }
 }
 .exp-file-name {
   font-size: 11px; font-weight: 500;
-  color: rgba(255,255,255,0.75); line-height: 1.35;
+  color: rgba(0,0,0,0.70); line-height: 1.35;
   word-break: break-word;
 }
-.exp-file.exp-folder .exp-file-name { color: rgba(255,255,255,0.85); }
+.exp-file.exp-folder .exp-file-name { color: rgba(0,0,0,0.82); }
 .exp-file-sub {
-  font-size: 10px; color: rgba(255,255,255,0.35); line-height: 1.3;
+  font-size: 10px; color: rgba(0,0,0,0.40); line-height: 1.3;
 }
 .exp-file-status {
   font-size: 9px; font-weight: 700; letter-spacing: 0.05em;
@@ -415,8 +416,8 @@ body:has(#scBrowse.on) { padding-bottom: 0; }
 }
 .exp-file-status.done    { background: rgba(0,184,148,0.15); color: var(--success); }
 .exp-file-status.active  { background: rgba(255,107,44,0.15); color: var(--accent); }
-.exp-file-status.pending { background: rgba(255,255,255,0.06); color: rgba(255,255,255,0.35); }
-.exp-file-status.locked  { background: rgba(255,255,255,0.04); color: rgba(255,255,255,0.25); }
+.exp-file-status.pending { background: rgba(0,0,0,0.05); color: rgba(0,0,0,0.40); }
+.exp-file-status.locked  { background: rgba(0,0,0,0.04); color: rgba(0,0,0,0.30); }
 .exp-file-status.live    { background: rgba(0,184,148,0.15); color: var(--success); }
 
 /* ── List view (for tasks) ── */
@@ -429,13 +430,13 @@ body:has(#scBrowse.on) { padding-bottom: 0; }
   cursor: pointer; border: 1px solid transparent;
   transition: background 0.12s, border-color 0.12s;
 }
-.exp-list-item:hover { background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.08); }
+.exp-list-item:hover { background: rgba(0,0,0,0.04); border-color: rgba(0,0,0,0.08); }
 .exp-list-item.exp-locked { opacity: 0.45; cursor: not-allowed; }
 .exp-list-item.exp-done  { opacity: 0.6; }
 .exp-list-icon { font-size: 22px; flex-shrink: 0; }
 .exp-list-body { flex: 1; min-width: 0; }
-.exp-list-name { font-size: 13px; font-weight: 600; color: rgba(255,255,255,0.85); margin-bottom: 2px; }
-.exp-list-sub  { font-size: 11px; color: rgba(255,255,255,0.35); line-height: 1.4; }
+.exp-list-name { font-size: 13px; font-weight: 600; color: rgba(0,0,0,0.82); margin-bottom: 2px; }
+.exp-list-sub  { font-size: 11px; color: rgba(0,0,0,0.40); line-height: 1.4; }
 .exp-list-right { flex-shrink: 0; display: flex; flex-direction: column; align-items: flex-end; gap: 3px; }
 .exp-list-score { font-size: 12px; font-weight: 700; }
 .exp-list-score.good { color: var(--success); }
@@ -446,9 +447,9 @@ body:has(#scBrowse.on) { padding-bottom: 0; }
 .explorer-statusbar {
   display: flex; align-items: center; justify-content: space-between;
   padding: 5px 14px;
-  background: #141420;
-  border-top: 1px solid rgba(255,255,255,0.06);
-  font-size: 11px; color: rgba(255,255,255,0.35);
+  background: #ebebf2;
+  border-top: 1px solid rgba(0,0,0,0.07);
+  font-size: 11px; color: rgba(0,0,0,0.40);
   flex-shrink: 0;
 }
 
@@ -9157,47 +9158,7 @@ html.light-mode .fw-fb-row:hover:not(.fw-fb-pending) { background: rgba(0,0,0,0.
 html.light-mode .fw-fb-name { color: rgba(0,0,0,0.82); }
 html.light-mode .fw-fb-score.pending { background: rgba(0,0,0,0.05); color: rgba(0,0,0,0.58); }
 
-/* ── File Explorer window ── */
-html.light-mode .explorer-window {
-  background: #f5f5fb !important;
-  border-color: rgba(0,0,0,0.1) !important;
-  box-shadow: 0 40px 120px rgba(0,0,0,0.18) !important;
-}
-html.light-mode .explorer-titlebar {
-  background: #e8e8f2 !important;
-  border-bottom-color: rgba(0,0,0,0.08) !important;
-}
-html.light-mode .explorer-titlebar-left { color: rgba(0,0,0,0.65); }
-html.light-mode .explorer-titlebar-sep  { color: rgba(0,0,0,0.58); }
-html.light-mode .explorer-titlebar-path { color: rgba(0,0,0,0.58); }
-html.light-mode .explorer-ctrl { background: rgba(0,0,0,0.06); color: rgba(0,0,0,0.60); }
-html.light-mode .explorer-ctrl:hover { background: rgba(0,0,0,0.11); color: #0a0a0a; }
-html.light-mode .explorer-ctrl-close:hover { background: rgba(214,48,49,0.65); color: #fff; }
-html.light-mode .explorer-toolbar { background: #eeeef8 !important; border-bottom-color: rgba(0,0,0,0.07) !important; }
-html.light-mode .explorer-tb-btn { background: rgba(0,0,0,0.05); color: rgba(0,0,0,0.60); }
-html.light-mode .explorer-tb-btn:hover { background: rgba(0,0,0,0.1); color: #0a0a0a; }
-html.light-mode .explorer-breadcrumb { background: rgba(0,0,0,0.05); color: rgba(0,0,0,0.62); }
-html.light-mode .eb-crumb { color: rgba(0,0,0,0.62); }
-html.light-mode .eb-crumb:hover { color: rgba(0,0,0,0.85); }
-html.light-mode .eb-crumb-sep { color: rgba(0,0,0,0.58); }
-html.light-mode .eb-crumb-current { color: rgba(0,0,0,0.75); }
-html.light-mode .explorer-search-box { background: rgba(0,0,0,0.05); color: rgba(0,0,0,0.58); }
-html.light-mode .explorer-search-box input { color: rgba(0,0,0,0.7); }
-html.light-mode .explorer-search-box input::placeholder { color: rgba(0,0,0,0.3); }
-html.light-mode .explorer-sidenav { background: #eaeaf4 !important; border-right-color: rgba(0,0,0,0.07) !important; }
-html.light-mode .explorer-sidenav-section { color: rgba(0,0,0,0.58); }
-html.light-mode .explorer-sn-item { color: rgba(0,0,0,0.6); }
-html.light-mode .explorer-sn-item:hover { background: rgba(0,0,0,0.06); color: rgba(0,0,0,0.85); }
-html.light-mode .explorer-sn-item.active { background: rgba(255,107,44,0.12); color: rgba(0,0,0,0.85); }
-html.light-mode .explorer-pane { background: #f5f5fb; }
-html.light-mode .exp-section-label { color: rgba(0,0,0,0.58); }
-html.light-mode .exp-file:hover { background: rgba(0,0,0,0.05); border-color: rgba(0,0,0,0.1); }
-html.light-mode .exp-file-name { color: rgba(0,0,0,0.72); }
-html.light-mode .exp-file.exp-folder .exp-file-name { color: rgba(0,0,0,0.82); }
-html.light-mode .exp-file-sub { color: rgba(0,0,0,0.58); }
-html.light-mode .exp-file-status.pending { background: rgba(0,0,0,0.05); color: rgba(0,0,0,0.58); }
-html.light-mode .exp-file-status.locked  { background: rgba(0,0,0,0.04); color: rgba(0,0,0,0.58); }
-html.light-mode .explorer-statusbar { background: #e8e8f2 !important; border-top-color: rgba(0,0,0,0.07) !important; color: rgba(0,0,0,0.58) !important; }
+/* ── File Explorer light-mode overrides (now default, kept for compatibility) ── */
 
 /* ── Program Overview window (overviewWindow inline styles) ── */
 html.light-mode #overviewWindow { background: #ffffff !important; }
@@ -12767,7 +12728,7 @@ if (ccTarget) ccObserver.observe(ccTarget, { attributes: true, attributeFilter: 
         Feedback
       </button>
       <button class="explorer-sn-item" id="snLibrary" onclick="explorerNav('library')">
-        <span style="font-size:13px;">📁</span>
+        <span style="font-size:13px;">📄</span>
         Library
       </button>
       <button class="explorer-sn-item" id="snWorkstation" onclick="explorerNav('workstation')">
@@ -13004,7 +12965,7 @@ if (ccTarget) ccObserver.observe(ccTarget, { attributes: true, attributeFilter: 
 
     <!-- T4: Tower 2 & Site Total — unlocks after T3 -->
     <div class="di di-locked" id="di-ws4" onclick="diLaunch('ws4')" title="T4 — Tower 2 &amp; Site Total">
-      <div class="di-icon di-icon-amber">🔢
+      <div class="di-icon di-icon-green">🔢
         <span class="di-lock-badge">🔒</span>
       </div>
       <div class="di-active-dot"></div>
@@ -21877,7 +21838,7 @@ function explorerRender(folder, filter) {
       { id:'tasks',       icon:'☑️',  label:'Tasks',       sub:'Your objectives',   action: `openTasksWindow();closeExplorer();` },
       { id:'messages',    icon:'💬',  label:'Messages',    sub:'Direct messages',   locked: !gameStarted, action: `navGoMessagesFullscreen();closeExplorer();` },
       { id:'feedback',    icon:'📊',  label:'Feedback',    sub:'Task scores & skills', action: `openFeedbackWindow();closeExplorer();` },
-      { id:'library',     icon:'📁',  label:'Library',     sub:'Project documents', locked: !gameStarted, action: `navGoLibrary();closeExplorer();` },
+      { id:'library',     icon:'📄',  label:'Library',     sub:'Project documents', locked: !gameStarted, action: `navGoLibrary();closeExplorer();` },
       { id:'workstation', icon:'🖥️',  label:'Workstation', sub:'Engineering tools', action: `explorerNav('workstation')` },
     ];
 

@@ -193,12 +193,17 @@
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.6);
+  background: #ff6b2c;
   position: absolute;
   bottom: -2px;
   left: 50%;
   transform: translateX(-50%);
   opacity: 0;
+  transition: opacity 0.15s;
+
+  &.di-dot-visible {
+    opacity: 1;
+  }
 }
 
 // ---- Hint Banner ----
@@ -231,7 +236,7 @@
 // ============================================================
 // LIGHT MODE OVERRIDES — Desktop
 // ============================================================
-.light-mode {
+:host-context(.light-mode) {
   .wallpaper-watermark {
     .wm-logo {
       color: rgba(0, 0, 0, 0.03);

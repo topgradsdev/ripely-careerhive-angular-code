@@ -66,6 +66,8 @@ import { ViewCompanySiteVisitsComponent } from './view-company-details/view-comp
 import { ViewCompanySubmissionsComponent } from './view-company-details/view-company-submissions/view-company-submissions.component';
 import { WilCompaniesRequestListComponent } from './wil-companies-request-list/wil-companies-request-list.component';
 import { YoutubeVimeoUrlValidatorDirective } from 'src/app/youtube-vimeo-url.directive';
+import { SimulationGroupsListComponent } from './simulation-groups-list/simulation-groups-list.component';
+import { SimulationGroupsComponent } from './simulation-groups/simulation-groups.component';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { PlacementSubmissionsComponent } from './placement-submissions/placement-submissions.component';
 import { NgChartsModule } from 'ng2-charts';
@@ -122,6 +124,8 @@ const modalDefaults: ModalOptions = {
     PendingCompanyApprovavalsComponent,
     // EmailPreviewHtmlComponent,
     IndustryPartnerAddBySearchingComponent,
+    SimulationGroupsListComponent,
+    SimulationGroupsComponent,
     // YoutubeVimeoUrlValidatorDirective
   ],
   imports: [

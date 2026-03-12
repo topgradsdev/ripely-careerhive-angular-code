@@ -40,3 +40,21 @@
     }
   }
 }
+
+// ─── Dark Theme ───
+:host-context(body.dark-theme) {
+  .student-side-ripely-root {
+    background: #121218;
+    color: #f0f0f8;
+  }
+
+  .student-side-ripely-root {
+    ::-webkit-scrollbar-thumb {
+      background: rgba(255, 255, 255, 0.12);
+
+      &:hover {
+        background: rgba(255, 255, 255, 0.2);
+      }
+    }
+  }
+}

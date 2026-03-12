@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { TaskProgressionService } from '../shared/task-progression.service';
 
 interface RiskCheckItem {
   id: number;
@@ -39,7 +40,8 @@ export class TaskSubmitFormComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private taskService: TaskProgressionService
   ) {}
 
   ngOnInit(): void {
@@ -78,6 +80,7 @@ export class TaskSubmitFormComponent implements OnInit {
 
   submitForReview(): void {
     this.submitted = true;
+    this.taskService.completeTask('waterbalance');
     setTimeout(() => {
       this.router.navigate(['../calculation-report'], { relativeTo: this.route });
     }, 1500);

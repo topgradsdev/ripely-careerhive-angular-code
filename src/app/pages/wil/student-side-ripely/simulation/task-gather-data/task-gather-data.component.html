@@ -3,72 +3,176 @@
 
   <!-- Float Titlebar -->
   <header class="float-titlebar">
-    <span class="tb-dots"><i></i><i></i><i></i></span>
-    <span class="tb-title">Engineering Notepad &middot; Day 1</span>
-    <span class="tb-spacer"></span>
+    <div class="float-titlebar-left">
+      <span class="float-titlebar-icon">&nbsp;&#128221;</span>
+      <span class="float-titlebar-name">Task 2 &mdash; Gather Your Data</span>
+      <span class="float-titlebar-sep">&mdash;</span>
+      <span class="float-titlebar-sub">Engineering Notepad &middot; Day 1</span>
+    </div>
   </header>
 
-  <!-- Scrollable workspace -->
-  <div class="comp-main">
-
-    <!-- Hero -->
-    <section class="comp-hero">
-      <span class="comp-kicker">Task 2</span>
-      <h1 class="comp-title">Gather Your Data</h1>
-    </section>
-
-    <!-- Tab strip -->
-    <div class="ws-tab-strip">
-      <button class="ws-tab" [class.active]="activeTab === 'notepad'" (click)="activeTab = 'notepad'">
-        W1 &nbsp;Data List
-      </button>
-      <button class="ws-tab" [class.active]="activeTab === 'checklist'" (click)="activeTab = 'checklist'">
-        W2 &nbsp;Equipment Checklist
-      </button>
+  <!-- Tab Strip -->
+  <div class="ws-tabs">
+    <!-- W1: Data List -->
+    <div class="ws-tab"
+         [class.on]="activeTab === 'dataList'"
+         [class.done]="sandboxState['dataList'] === 'passed'"
+         (click)="activeTab = 'dataList'">
+      <span class="ws-tab-num">W1</span>
+      <span class="ws-tab-name">Data List</span>
+      <span class="ws-tab-check">&check;</span>
     </div>
 
-    <!-- Panel 1 : Notepad -->
-    <div class="txn" *ngIf="activeTab === 'notepad'">
-      <div class="txn-flag-bar">
-        <span class="txn-flag-icon">&#128221;</span>
-        <span class="txn-flag-label">Engineering Notepad</span>
-      </div>
-      <div class="txn-inner">
-        <p class="ws-hint">Use this notepad to record data from the Library. Write down make/model, flow rates, DE efficiency, and any relevant figures you find.</p>
-        <textarea class="calc-input notepad-area"
-                  [(ngModel)]="notepadContent"
-                  placeholder="Start typing your notes here...&#10;&#10;e.g.&#10;Tower 1: BAC Series 3000&#10;Flow rate: 1 200 GPM&#10;DE efficiency: 99.99 %"></textarea>
-      </div>
+    <!-- W2: Equipment Checklist -->
+    <div class="ws-tab"
+         [class.on]="activeTab === 'equip'"
+         [class.done]="sandboxState['equip'] === 'passed'"
+         (click)="activeTab = 'equip'">
+      <span class="ws-tab-num">W2</span>
+      <span class="ws-tab-name">Equipment Checklist</span>
+      <span class="ws-tab-check">&check;</span>
     </div>
 
-    <!-- Panel 2 : Equipment Checklist -->
-    <div class="txn" *ngIf="activeTab === 'checklist'">
-      <div class="txn-flag-bar">
-        <span class="txn-flag-icon">&#9745;</span>
-        <span class="txn-flag-label">Equipment Checklist</span>
-        <span class="txn-flag-meta">{{ completedCount }} / {{ checklist.length }}</span>
-      </div>
-      <div class="txn-inner">
-        <p class="ws-hint">Tick each item once you have recorded the value in your notepad.</p>
-
-        <label *ngFor="let item of checklist"
-               class="ws-check-row"
-               [class.checked]="item.checked">
-          <input type="checkbox" [checked]="item.checked" (change)="toggleItem(item)">
-          <span class="ws-check-box">
-            <svg *ngIf="item.checked" viewBox="0 0 14 14" width="14" height="14"><path d="M2 7l3.5 3.5L12 4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </span>
-          <span class="ws-check-label">{{ item.label }}</span>
-        </label>
-      </div>
+    <!-- Right side: counter + info -->
+    <div class="ws-tabs-right">
+      <span class="ws-counter-pill"
+            [class.partial]="submittedCount > 0 && submittedCount < totalSandboxes"
+            [class.complete]="submittedCount === totalSandboxes">
+        {{ submittedCount }} of {{ totalSandboxes }} submitted
+      </span>
     </div>
+  </div>
 
-    <!-- Submit bar -->
-    <div class="ws-submit-bar">
-      <button class="ws-submit-btn" [disabled]="!allComplete" (click)="submitToSupervisor()">
-        Send to Supervisor &rarr;
-      </button>
-    </div>
+  <!-- ═══════════════════════════════
+       PANEL 1 — Data List
+  ═══════════════════════════════ -->
+  <div class="ws-panel" [class.active]="activeTab === 'dataList'">
+    <div class="comp-main">
 
-  </div><!-- /comp-main -->
+      <!-- Hero header -->
+      <div class="comp-hero comp-hero--blue">
+        <div class="comp-kicker">Task 2 &middot; Day 1 &middot; Data Gathering</div>
+        <h2 class="comp-title">Engineering Notepad</h2>
+        <p class="comp-desc">Use the Library to find every equipment and system value you'll need for the drift loss calculation. Record each figure with its source document and section.</p>
+      </div>
+
+      <!-- Instruction card -->
+      <div class="txn">
+        <div class="txn-flag-bar txn-flag-bar--blue">
+          &#128194; How to complete this workstation
+        </div>
+        <div class="txn-inner">
+          <p class="ws-hint">Open the <strong>Library</strong> (top nav) to access the site documents. Find every value listed below, then record it in your notepad with its source.</p>
+          <div class="instruction-grid">
+            <div>&bull; Tower 1 &amp; 2 circulating flow rates</div>
+            <div>&bull; Drift eliminator efficiency (%)</div>
+            <div>&bull; Water temperatures (in / out)</div>
+            <div>&bull; Cycles of concentration (CoC)</div>
+            <div>&bull; Make &amp; model of both towers</div>
+            <div>&bull; Any site anomalies noted</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Notepad card -->
+      <div class="txn">
+        <div class="txn-flag-bar txn-flag-bar--blue txn-flag-bar--actions">
+          <span>Workstation 1 &mdash; Data List &amp; Sources</span>
+          <div class="txn-flag-actions">
+            <button class="tool-btn" (click)="clearNotepad()">&#8634; Clear</button>
+            <button class="tool-btn tool-btn--primary"
+                    [disabled]="sandboxState['dataList'] === 'passed'"
+                    (click)="submitSandbox('dataList')">&#10003; Validate</button>
+          </div>
+        </div>
+        <div class="txn-inner txn-inner--flush">
+          <textarea class="notepad-textarea"
+                    [(ngModel)]="notepadContent"
+                    [disabled]="sandboxState['dataList'] === 'passed'"
+                    placeholder="Record every value here with its source.&#10;&#10;Example:&#10;  Tower 1 circulating flow rate: 185 GPM&#10;  Source: Site Visit Notes, Paragraph 3&#10;&#10;  Tower 2 circulating flow rate: 192 GPM&#10;  Source: Site Visit Notes, Paragraph 5&#10;&#10;  Drift eliminator efficiency: 0.001%&#10;  Source: DE-47 Spec Sheet, §4.2&#10;&#10;Continue for all required values..."></textarea>
+        </div>
+      </div>
+
+      <!-- Submit bar -->
+      <div class="ws-submit-bar">
+        <div class="ws-submit-bar-inner">
+          <div class="ws-submit-bar-hint">Check your data list before sending to Marcus.</div>
+          <button class="ws-submit-btn"
+                  [disabled]="!canSubmitDataList || sandboxState['dataList'] === 'passed'"
+                  (click)="submitSandbox('dataList')">
+            {{ sandboxState['dataList'] === 'passed' ? 'Submitted ✓' : 'Send to Supervisor →' }}
+          </button>
+        </div>
+      </div>
+
+    </div><!-- /comp-main -->
+  </div><!-- /panel dataList -->
+
+  <!-- ═══════════════════════════════
+       PANEL 2 — Equipment Checklist
+  ═══════════════════════════════ -->
+  <div class="ws-panel" [class.active]="activeTab === 'equip'">
+    <div class="comp-main">
+
+      <!-- Hero header -->
+      <div class="comp-hero comp-hero--green">
+        <div class="comp-kicker">Task 2 &middot; Day 1 &middot; Equipment Verification</div>
+        <h2 class="comp-title">Equipment Checklist</h2>
+        <p class="comp-desc">Cross-reference every equipment item against your Library documents. Tick each item only once confirmed from the source. All {{ totalCount }} items must be verified before submitting.</p>
+      </div>
+
+      <!-- Progress summary card -->
+      <div class="txn">
+        <div class="txn-flag-bar txn-flag-bar--green">
+          Workstation 2 &mdash; Verification Progress
+        </div>
+        <div class="txn-inner">
+          <div class="equip-progress-row">
+            <div class="equip-progress-track">
+              <div class="equip-progress-fill" [style.width.%]="equipProgress"></div>
+            </div>
+            <div class="equip-progress-label">{{ completedCount }} / {{ totalCount }}</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Checklist card -->
+      <div class="txn">
+        <div class="txn-flag-bar txn-flag-bar--green">
+          &#128203; Equipment items &mdash; tick once confirmed from Library
+        </div>
+        <div class="txn-inner txn-inner--checklist">
+          <ng-container *ngFor="let group of equipGroups">
+            <div class="equip-group-label">{{ group.title }}</div>
+            <label *ngFor="let item of group.items; let last = last"
+                   class="equip-check-row"
+                   [class.checked]="item.checked"
+                   [class.last-in-group]="last">
+              <input type="checkbox"
+                     class="equip-chk"
+                     [checked]="item.checked"
+                     [disabled]="sandboxState['equip'] === 'passed'"
+                     (change)="toggleItem(item)">
+              <span class="equip-check-label">{{ item.label }}</span>
+              <span class="equip-check-sub">{{ item.sub }}</span>
+            </label>
+          </ng-container>
+        </div>
+      </div>
+
+      <!-- Submit bar -->
+      <div class="ws-submit-bar">
+        <div class="ws-submit-bar-inner">
+          <div class="ws-submit-bar-hint">Verify all {{ totalCount }} items before sending to Marcus.</div>
+          <button class="ws-submit-btn"
+                  [disabled]="!canSubmitEquip || sandboxState['equip'] === 'passed'"
+                  (click)="submitSandbox('equip')">
+            {{ sandboxState['equip'] === 'passed' ? 'Submitted ✓' : 'Send to Supervisor →' }}
+          </button>
+        </div>
+      </div>
+
+    </div><!-- /comp-main -->
+  </div><!-- /panel equip -->
+
 </div><!-- /comp-layout -->

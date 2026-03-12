@@ -1,71 +1,143 @@
-<div class="lib-window">
-  <!-- Window Titlebar -->
-  <div class="lib-titlebar">
-    <div class="titlebar-left">
-      <div class="window-dots">
-        <span class="dot red"></span>
-        <span class="dot yellow"></span>
-        <span class="dot green"></span>
-      </div>
-      <span class="titlebar-icon"><i class="fa fa-folder"></i></span>
-      <span class="titlebar-text">Library</span>
+<div class="lib-shell">
+
+  <!-- Window title bar -->
+  <div class="float-titlebar">
+    <div class="float-titlebar-left">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M2 6a2 2 0 012-2h4l2 2h8a2 2 0 012 2v8a2 2 0 01-2 2H4a2 2 0 01-2-2V6z" fill="#e8a317" opacity="0.85"/></svg>
+      <span class="float-titlebar-name">Library &mdash; Meridian BS</span>
+      <span class="float-titlebar-sep">&middot;</span>
+      <span class="float-titlebar-sub">Heron Gate Project Documents</span>
     </div>
-    <div class="titlebar-right">
-      <span class="titlebar-subtitle">Meridian Engineering Documents</span>
-      <span class="file-count">{{ totalFiles }} files</span>
+    <div class="float-titlebar-controls">
+      <button class="float-ctrl" (click)="minimiseLibrary()" title="Minimise">&mdash;</button>
+      <button class="float-ctrl float-ctrl-close" (click)="minimiseLibrary()" title="Close">&times;</button>
     </div>
   </div>
 
-  <div class="lib-body">
-    <!-- Sidebar: Folder Tree -->
-    <div class="lib-sidebar">
-      <div class="sidebar-label">Folders</div>
-      <div class="folder-tree">
-        <button *ngFor="let folder of folders"
-                class="folder-item"
-                [class.active]="activeFolder === folder.id"
-                (click)="selectFolder(folder.id)">
-          <i class="fa" [ngClass]="activeFolder === folder.id ? 'fa-folder-open' : 'fa-folder'"
-             [class.folder-open]="activeFolder === folder.id"></i>
-          <span class="folder-name">{{ folder.name }}</span>
-          <span class="folder-badge">{{ folder.files.length }}</span>
-        </button>
-      </div>
+  <!-- Toolbar bar -->
+  <div class="lib-bar">
+    <div class="lib-bar-nav">
+      <button class="lib-bar-navbtn" (click)="navigateBack()" title="Back" [disabled]="historyIdx <= 0">&#8592;</button>
+      <button class="lib-bar-navbtn" (click)="navigateForward()" title="Forward" [disabled]="historyIdx >= history.length - 1">&#8594;</button>
+      <button class="lib-bar-navbtn" (click)="navigateUp()" title="Up">&#8593;</button>
     </div>
-
-    <!-- Main Area: File Grid -->
-    <div class="lib-main">
-      <div class="main-header">
-        <h3 class="folder-title">{{ activeFolderName }}</h3>
-        <div class="search-box">
-          <i class="fa fa-search"></i>
-          <input type="text" [(ngModel)]="searchQuery" placeholder="Search files...">
-        </div>
-      </div>
-
-      <div class="file-grid">
-        <div *ngFor="let file of activeFiles" class="file-card">
-          <div class="file-icon-wrap" [style.borderColor]="getFileTypeColor(file.type)">
-            <i class="fa" [ngClass]="file.icon" [style.color]="getFileTypeColor(file.type)"></i>
-          </div>
-          <div class="file-details">
-            <span class="file-name">{{ file.name }}</span>
-            <div class="file-meta">
-              <span class="file-type-badge" [style.color]="getFileTypeColor(file.type)">{{ file.type }}</span>
-              <span class="file-size">{{ file.size }}</span>
-              <span *ngIf="file.pages" class="file-pages">{{ file.pages }} pages</span>
-            </div>
-          </div>
-          <button class="file-action">
-            <i class="fa fa-download"></i>
-          </button>
-        </div>
-
-        <div *ngIf="activeFiles.length === 0" class="empty-state">
-          <i class="fa fa-search"></i>
-          <p>No files match your search.</p>
-        </div>
-      </div>
+    <div class="lib-breadcrumb">
+      <ng-container *ngFor="let crumb of breadcrumbs; let last = last">
+        <span *ngIf="!last" class="lib-breadcrumb-part" (click)="goToBreadcrumb(crumb.folderId)">{{ crumb.label }}</span>
+        <span *ngIf="!last" class="lib-breadcrumb-sep">&rsaquo;</span>
+        <span *ngIf="last" class="lib-breadcrumb-part current">{{ crumb.label }}</span>
+      </ng-container>
     </div>
+    <input class="lib-search" placeholder="Search documents…" [(ngModel)]="searchQuery">
   </div>
+
+  <div class="lib-layout">
+
+    <!-- LEFT: Folder tree -->
+    <div class="lib-tree">
+      <div *ngFor="let section of treeSections" class="lib-tree-section">
+        <div class="lib-tree-section-label">{{ section.label }}</div>
+        <div *ngFor="let item of section.items"
+             class="lib-tree-item"
+             [class.lib-tree-child]="item.isChild"
+             [class.active]="currentFolder === item.id"
+             (click)="selectFolder(item.id)">
+          <span class="lib-icon">📁</span>
+          <span class="lib-label">{{ item.label }}</span>
+          <span class="lib-count" *ngIf="item.count > 0 || item.isChild">{{ item.count }}</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT: File view -->
+    <div class="lib-right">
+      <!-- Toolbar -->
+      <div class="lib-right-toolbar">
+        <div class="lib-right-toolbar-btn">
+          <span>📄</span> New Document
+        </div>
+        <div class="lib-right-toolbar-sep"></div>
+        <div class="lib-right-toolbar-btn">Name ↕</div>
+        <div class="lib-right-toolbar-btn">Date ↕</div>
+        <div class="lib-right-toolbar-view">
+          <div class="lib-view-btn" [class.active]="currentView === 'grid'" (click)="setView('grid')" title="Grid view">⊞</div>
+          <div class="lib-view-btn" [class.active]="currentView === 'list'" (click)="setView('list')" title="List view">≡</div>
+        </div>
+      </div>
+
+      <!-- File browser panel -->
+      <div class="lib-files">
+
+        <!-- GRID VIEW -->
+        <div class="lib-files-grid" *ngIf="currentView === 'grid'">
+          <!-- Subfolders -->
+          <div *ngFor="let sf of subfolders"
+               class="lib-file-item"
+               [class.selected]="selectedItemId === sf.id"
+               (click)="selectItem(sf.id)"
+               (dblclick)="selectFolder(sf.id)">
+            <div class="lib-file-icon">📁</div>
+            <div class="lib-file-name">{{ sf.label }}</div>
+            <div class="lib-file-type">Folder</div>
+          </div>
+          <!-- Files -->
+          <div *ngFor="let f of files"
+               class="lib-file-item"
+               [class.selected]="selectedItemId === f.id"
+               [class.lib-file-locked]="isFileLocked(f)"
+               (click)="selectItem(f.id, f)">
+            <div class="lib-file-icon">{{ isFileLocked(f) ? '🔒' : f.icon }}</div>
+            <div class="lib-file-name">{{ f.name }}<span *ngIf="isFileLocked(f)"> 🔒</span></div>
+            <div class="lib-file-type">{{ f.type }}</div>
+          </div>
+        </div>
+
+        <!-- LIST VIEW -->
+        <div class="lib-files-list" *ngIf="currentView === 'list'">
+          <div class="lib-file-row-header">
+            <div></div><div>Name</div><div>Date modified</div><div>Type</div><div>Size</div>
+          </div>
+          <!-- Subfolders -->
+          <div *ngFor="let sf of subfolders"
+               class="lib-file-row"
+               [class.selected]="selectedItemId === sf.id"
+               (click)="selectItem(sf.id)"
+               (dblclick)="selectFolder(sf.id)">
+            <div class="lib-file-row-icon">📁</div>
+            <div class="lib-file-row-name">{{ sf.label }}</div>
+            <div class="lib-file-row-date">&mdash;</div>
+            <div class="lib-file-row-type">Folder</div>
+            <div class="lib-file-row-size">&mdash;</div>
+          </div>
+          <!-- Files -->
+          <div *ngFor="let f of files"
+               class="lib-file-row"
+               [class.selected]="selectedItemId === f.id"
+               [class.lib-file-locked]="isFileLocked(f)"
+               (click)="selectItem(f.id, f)">
+            <div class="lib-file-row-icon">{{ isFileLocked(f) ? '🔒' : f.icon }}</div>
+            <div class="lib-file-row-name">{{ f.name }}<span *ngIf="isFileLocked(f)"> 🔒</span></div>
+            <div class="lib-file-row-date">{{ f.date }}</div>
+            <div class="lib-file-row-type">{{ f.type }}</div>
+            <div class="lib-file-row-size">{{ f.size }}</div>
+          </div>
+        </div>
+
+        <!-- Empty: submissions hint -->
+        <div *ngIf="currentFolder === 'submissions' && files.length === 0" class="lib-submissions-hint">
+          📁 Complete the previous task to unlock submission — you can explore and prepare here
+        </div>
+
+      </div>
+
+      <!-- Statusbar -->
+      <div class="lib-statusbar">
+        <span>{{ statusText }}</span>
+        <div class="lib-statusbar-sep"></div>
+        <span>{{ statusSelection }}</span>
+      </div>
+    </div>
+
+  </div>
+
 </div>

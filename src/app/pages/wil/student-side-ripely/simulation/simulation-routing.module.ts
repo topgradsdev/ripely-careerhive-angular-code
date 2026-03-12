@@ -16,6 +16,7 @@ import { TaskWatchVideoComponent } from './task-watch-video/task-watch-video.com
 import { TaskSubmitFormComponent } from './task-submit-form/task-submit-form.component';
 import { TaskCalculationReportComponent } from './task-calculation-report/task-calculation-report.component';
 import { TaskCrisisComponent } from './task-crisis/task-crisis.component';
+import { TaskGuard } from './shared/task.guard';
 
 const routes: Routes = [
   {
@@ -32,11 +33,11 @@ const routes: Routes = [
       { path: 'workstation', component: SimulationWorkstationComponent },
       { path: 'feedback', component: SimulationFeedbackComponent },
       { path: 'scorecard', component: SimulationScorecardComponent },
-      { path: 'task/gather-data', component: TaskGatherDataComponent },
-      { path: 'task/drift-calculator', component: TaskDriftCalculatorComponent },
-      { path: 'task/watch-video', component: TaskWatchVideoComponent },
-      { path: 'task/submit-form', component: TaskSubmitFormComponent },
-      { path: 'task/calculation-report', component: TaskCalculationReportComponent },
+      { path: 'task/gather-data', component: TaskGatherDataComponent, canActivate: [TaskGuard], data: { taskKey: 'migration' } },
+      { path: 'task/drift-calculator', component: TaskDriftCalculatorComponent, canActivate: [TaskGuard], data: { taskKey: 'compliance' } },
+      { path: 'task/watch-video', component: TaskWatchVideoComponent, canActivate: [TaskGuard], data: { taskKey: 'hotfix' } },
+      { path: 'task/submit-form', component: TaskSubmitFormComponent, canActivate: [TaskGuard], data: { taskKey: 'waterbalance' } },
+      { path: 'task/calculation-report', component: TaskCalculationReportComponent, canActivate: [TaskGuard], data: { taskKey: 'report' } },
       { path: 'crisis', component: TaskCrisisComponent }
     ]
   }

@@ -21,11 +21,11 @@
     <div class="group-grid">
       <div *ngFor="let item of group.items"
            class="ws-card"
-           [class.locked]="item.status === 'locked'"
-           [class.active]="item.status === 'active'"
+           [class.locked]="getItemStatus(item) === 'locked'"
+           [class.active]="getItemStatus(item) === 'active'"
            (click)="openItem(item)">
 
-        <div class="card-icon-wrap" [ngClass]="item.status">
+        <div class="card-icon-wrap" [ngClass]="getItemStatus(item)">
           <i class="fa" [ngClass]="item.icon"></i>
         </div>
 
@@ -34,9 +34,9 @@
           <span class="card-subtitle">{{ item.subtitle }}</span>
         </div>
 
-        <div class="card-status" [ngClass]="item.status">
-          <i class="fa" [ngClass]="getStatusIcon(item.status)"></i>
-          <span>{{ getStatusLabel(item.status) }}</span>
+        <div class="card-status" [ngClass]="getItemStatus(item)">
+          <i class="fa" [ngClass]="getStatusIcon(getItemStatus(item))"></i>
+          <span>{{ getStatusLabel(getItemStatus(item)) }}</span>
         </div>
       </div>
     </div>

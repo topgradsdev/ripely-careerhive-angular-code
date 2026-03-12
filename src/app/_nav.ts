@@ -31,6 +31,10 @@ import { INavData } from '@coreui/angular';
         url: '/admin/wil/wil-vacancies-list',
         // iconComponent: { name: 'cil-list' },
       },
+      {
+        name: 'Simulation Groups',
+        url: '/admin/wil/simulation-groups-list',
+      },
     ]
   },
   {

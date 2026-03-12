@@ -19,6 +19,8 @@ import { CreateProjectAdminComponent } from './create-project-admin/create-proje
 import { ProjectViewComponent } from './project-view/project-view.component';
 import { PlacementGroupsProjectComponent } from './placement-groups-project/placement-groups-project.component';
 import { WilCompaniesRequestListComponent } from './wil-companies-request-list/wil-companies-request-list.component';
+import { SimulationGroupsListComponent } from './simulation-groups-list/simulation-groups-list.component';
+import { SimulationGroupsComponent } from './simulation-groups/simulation-groups.component';
 
 
 const routes: Routes = [
@@ -99,6 +101,14 @@ const routes: Routes = [
   {
     path: 'pending-company-approvals',
     component: PendingCompanyApprovavalsComponent
+  },
+  {
+    path: 'simulation-groups-list',
+    component: SimulationGroupsListComponent
+  },
+  {
+    path: 'simulation-groups/:id',
+    component: SimulationGroupsComponent
   },
 ];
 

@@ -215,3 +215,46 @@
   font-size: 56px;
   display: block;
 }
+
+/* ── Light Mode ── */
+:host-context(.light-mode) {
+  .task-page { color: #0a0a0a; }
+
+  .task-header {
+    h1 { color: #0a0a0a; }
+    p { color: rgba(0, 0, 0, 0.5); }
+  }
+
+  .stage-dot {
+    background: rgba(0, 0, 0, 0.04);
+    border-color: rgba(0, 0, 0, 0.12);
+    color: rgba(0, 0, 0, 0.4);
+  }
+
+  .crisis-card {
+    background: #fff;
+    border-color: rgba(239, 68, 68, 0.15);
+  }
+
+  .crisis-desc { color: rgba(0, 0, 0, 0.7); }
+
+  .decision-btn {
+    background: #fff;
+    border-color: rgba(0, 0, 0, 0.08);
+    color: #0a0a0a;
+    &:hover { background: rgba(0, 0, 0, 0.02); }
+  }
+
+  .decision-radio {
+    border-color: rgba(0, 0, 0, 0.2);
+  }
+
+  .outcome-box {
+    p { color: rgba(0, 0, 0, 0.7); }
+  }
+
+  .deployed-state {
+    h2 { color: #0a0a0a; }
+    p { color: rgba(0, 0, 0, 0.6); }
+  }
+}

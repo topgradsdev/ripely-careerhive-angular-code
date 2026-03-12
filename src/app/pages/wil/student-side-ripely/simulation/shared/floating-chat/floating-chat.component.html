@@ -1,0 +1,63 @@
+<!-- LinkedIn-style floating mini chat windows -->
+<div class="fchat-root">
+
+  <!-- Open chat windows -->
+  <div *ngFor="let win of windowsArray"
+       class="fchat-window"
+       [class.collapsed]="win.collapsed">
+
+    <!-- Window header -->
+    <div class="fchat-win-header" (click)="toggleWindow(win.contact.id)">
+      <div class="fchat-win-av" [style.background]="win.contact.bg">
+        {{ win.contact.initials }}
+        <div class="fchat-win-av-online"></div>
+      </div>
+      <div class="fchat-win-info">
+        <div class="fchat-win-name">{{ win.contact.label }}</div>
+        <div class="fchat-win-role">{{ win.contact.sublabel }}</div>
+      </div>
+      <div class="fchat-win-btns">
+        <button class="fchat-win-btn" (click)="$event.stopPropagation(); closeWindow(win.contact.id)" title="Close">&times;</button>
+      </div>
+    </div>
+
+    <!-- Messages area -->
+    <div class="fchat-win-messages" *ngIf="!win.collapsed">
+      <div *ngFor="let msg of win.messages"
+           class="fchat-msg"
+           [class.them]="msg.sender === 'them'"
+           [class.me]="msg.sender === 'me'"
+           [class.system-inline]="msg.sender === 'system'">
+        <div class="fchat-msg-name" *ngIf="msg.name">{{ msg.name }}</div>
+        <div class="fchat-msg-bubble" *ngIf="msg.sender !== 'system'">{{ msg.text }}</div>
+        <span *ngIf="msg.sender === 'system'">{{ msg.text }}</span>
+      </div>
+    </div>
+
+    <!-- Input row -->
+    <div class="fchat-win-input-row" *ngIf="!win.collapsed">
+      <input class="fchat-win-input"
+              [placeholder]="'Message ' + win.contact.label + '...'"
+              [(ngModel)]="win.draft"
+              (keydown)="onKeydown($event, win.contact.id)">
+      <button class="fchat-win-send"
+              [disabled]="!win.draft?.trim()"
+              (click)="sendMessage(win.contact.id)">
+        <svg width="13" height="13" viewBox="0 0 16 16"><path d="M14 8L2 2l3 6-3 6 12-6z" fill="currentColor"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- Contact avatar bubbles bar -->
+  <div class="fchat-bubbles-bar">
+    <div *ngFor="let contact of contacts"
+         class="fchat-avatar-btn"
+         [style.background]="contact.bg"
+         [class.active]="isWindowOpen(contact.id)"
+         (click)="toggleBubble(contact)">
+      {{ contact.initials }}
+      <span class="fchat-avatar-name-tip">{{ contact.label }} &middot; {{ contact.sublabel }}</span>
+    </div>
+  </div>
+
+</div>

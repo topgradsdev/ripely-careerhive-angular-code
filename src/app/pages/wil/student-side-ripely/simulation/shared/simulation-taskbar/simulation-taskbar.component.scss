@@ -306,12 +306,31 @@ $danger: #e74c3c;
 
 .sm-ws-item {
   color: rgba(255, 255, 255, 0.65);
+
+  &.sm-locked {
+    opacity: 0.38;
+    pointer-events: none;
+    cursor: not-allowed;
+  }
+
+  &.sm-unlocked {
+    opacity: 1;
+    color: rgba(255, 255, 255, 0.78);
+    cursor: pointer;
+    pointer-events: auto;
+  }
 }
 
 .sm-ws-lock {
   font-size: 10px;
   margin-left: auto;
   opacity: 0.5;
+}
+
+.sm-ws-check {
+  font-size: 11px;
+  margin-left: auto;
+  color: rgba(0, 184, 148, 0.7);
 }
 
 .sm-ws-header {
@@ -600,10 +619,103 @@ $danger: #e74c3c;
 }
 
 // ============================================================
+// RIPELY DIALOG (Leave simulation popup) — matches reference
+// ============================================================
+
+.ripely-dialog-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(4px);
+  z-index: 9999;
+  display: none;
+  align-items: center;
+  justify-content: center;
+
+  &.show { display: flex; }
+}
+
+.ripely-dialog {
+  background: #1a1a24;
+  border-radius: 20px;
+  padding: 36px;
+  max-width: 420px;
+  width: 90%;
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.6);
+  animation: dialogPop 0.2s ease;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+
+  h3 {
+    font-size: 18px;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 10px;
+  }
+
+  p {
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.55);
+    line-height: 1.6;
+    margin-bottom: 24px;
+  }
+}
+
+@keyframes dialogPop {
+  from { transform: scale(0.94); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+.ripely-dialog-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 14px;
+  background: rgba(255, 107, 44, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.ripely-dialog-btns {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+}
+
+.ripely-dialog-cancel {
+  padding: 10px 20px;
+  border-radius: 100px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: none;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.55);
+  transition: background 0.12s;
+
+  &:hover { background: rgba(255, 255, 255, 0.07); }
+}
+
+.ripely-dialog-confirm {
+  padding: 10px 20px;
+  border-radius: 100px;
+  border: none;
+  background: $accent;
+  color: #fff;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  transition: background 0.15s;
+
+  &:hover { background: $accent-hover; }
+}
+
+// ============================================================
 // LIGHT MODE OVERRIDES
 // ============================================================
 
-.light-mode {
+:host-context(.light-mode) {
   // ---- Taskbar ----
   .taskbar {
     background: rgba(242, 242, 250, 0.96);
@@ -696,6 +808,10 @@ $danger: #e74c3c;
 
   .sm-ws-item {
     color: rgba(0, 0, 0, 0.6);
+
+    &.sm-unlocked {
+      color: rgba(0, 0, 0, 0.75);
+    }
   }
 
   .sm-ws-lock {
@@ -801,5 +917,22 @@ $danger: #e74c3c;
       background: rgba(0, 0, 0, 0.08);
       color: rgba(0, 0, 0, 0.75);
     }
+  }
+
+  // ── Ripely Dialog Light Mode ──
+  .ripely-dialog {
+    background: #fff;
+    border-color: transparent;
+    box-shadow: 0 24px 80px rgba(0, 0, 0, 0.2);
+
+    h3 { color: #0a0a0a; }
+    p { color: rgba(0, 0, 0, 0.55); }
+  }
+
+  .ripely-dialog-cancel {
+    border-color: rgba(0, 0, 0, 0.12);
+    color: rgba(0, 0, 0, 0.55);
+
+    &:hover { background: rgba(0, 0, 0, 0.05); }
   }
 }

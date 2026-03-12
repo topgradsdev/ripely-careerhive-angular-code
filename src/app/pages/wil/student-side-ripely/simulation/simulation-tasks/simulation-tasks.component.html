@@ -20,14 +20,14 @@
   <div class="task-list">
     <div *ngFor="let task of tasks; let i = index"
          class="task-card"
-         [class.completed]="task.status === 'completed'"
-         [class.active]="task.status === 'active'"
-         [class.locked]="task.status === 'locked'"
+         [class.completed]="getTaskStatus(task) === 'completed'"
+         [class.active]="getTaskStatus(task) === 'active'"
+         [class.locked]="getTaskStatus(task) === 'locked'"
          (click)="openTask(task)">
 
       <!-- Status Icon -->
-      <div class="task-status-icon" [ngClass]="task.status">
-        <i class="fa" [ngClass]="getStatusIcon(task.status)"></i>
+      <div class="task-status-icon" [ngClass]="getTaskStatus(task)">
+        <i class="fa" [ngClass]="getStatusIcon(getTaskStatus(task))"></i>
       </div>
 
       <!-- Task Icon -->
@@ -39,8 +39,8 @@
       <div class="task-content">
         <div class="task-title-row">
           <h3 class="task-title">{{ task.title }}</h3>
-          <span class="task-status-badge" [ngClass]="task.status">
-            {{ getStatusLabel(task.status) }}
+          <span class="task-status-badge" [ngClass]="getTaskStatus(task)">
+            {{ getStatusLabel(getTaskStatus(task)) }}
           </span>
         </div>
         <p class="task-desc">{{ task.description }}</p>

@@ -296,3 +296,43 @@ $success:  #00b894;
   &:hover:not(:disabled) { background: darken($accent, 6%); }
   &:disabled { opacity: 0.35; cursor: not-allowed; }
 }
+
+/* ── Light Mode ── */
+:host-context(.light-mode) {
+  .comp-layout { background: #faf9f5; color: #0a0a0a; }
+
+  .float-titlebar {
+    background: #f0efe8;
+    border-bottom-color: rgba(0, 0, 0, 0.08);
+  }
+
+  .tb-title { color: rgba(0, 0, 0, 0.5); }
+  .comp-title { color: #0a0a0a; }
+
+  .txn {
+    background: #fff;
+    border-color: rgba(0, 0, 0, 0.08);
+  }
+
+  .txn-flag-bar {
+    background: rgba(0, 0, 0, 0.02);
+    border-bottom-color: rgba(0, 0, 0, 0.06);
+  }
+
+  .txn-flag-label { color: rgba(0, 0, 0, 0.5); }
+  .ws-hint { color: rgba(0, 0, 0, 0.5); }
+  .marcus-text { color: #0a0a0a; }
+
+  .video-placeholder {
+    background: linear-gradient(135deg, #e8e7e0 0%, #f0efe8 50%, #faf9f5 100%);
+  }
+
+  .video-info { border-top-color: rgba(0, 0, 0, 0.08); }
+  .video-title { color: #0a0a0a; }
+  .video-subtitle { color: rgba(0, 0, 0, 0.5); }
+
+  .confirmation-inner { color: #0a0a0a; }
+
+  .success-title { color: #0a0a0a; }
+  .success-text { color: rgba(0, 0, 0, 0.5); }
+}

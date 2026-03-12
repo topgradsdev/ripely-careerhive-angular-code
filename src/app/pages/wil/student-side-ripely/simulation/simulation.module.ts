@@ -4,6 +4,8 @@ import { FormsModule } from '@angular/forms';
 import { SimulationRoutingModule } from './simulation-routing.module';
 import { StudentNavbarModule } from '../navbar/navbar.module';
 import { SimulationWindowService } from './shared/simulation-window.service';
+import { TaskProgressionService } from './shared/task-progression.service';
+import { TaskGuard } from './shared/task.guard';
 import { SimulationShellComponent } from './simulation-shell/simulation-shell.component';
 import { SimulationTaskbarComponent } from './shared/simulation-taskbar/simulation-taskbar.component';
 import { SimulationDesktopComponent } from './shared/simulation-desktop/simulation-desktop.component';
@@ -22,6 +24,7 @@ import { TaskWatchVideoComponent } from './task-watch-video/task-watch-video.com
 import { TaskSubmitFormComponent } from './task-submit-form/task-submit-form.component';
 import { TaskCalculationReportComponent } from './task-calculation-report/task-calculation-report.component';
 import { TaskCrisisComponent } from './task-crisis/task-crisis.component';
+import { FloatingChatComponent } from './shared/floating-chat/floating-chat.component';
 
 @NgModule({
   declarations: [
@@ -42,7 +45,8 @@ import { TaskCrisisComponent } from './task-crisis/task-crisis.component';
     TaskWatchVideoComponent,
     TaskSubmitFormComponent,
     TaskCalculationReportComponent,
-    TaskCrisisComponent
+    TaskCrisisComponent,
+    FloatingChatComponent
   ],
   imports: [
     CommonModule,
@@ -51,7 +55,9 @@ import { TaskCrisisComponent } from './task-crisis/task-crisis.component';
     StudentNavbarModule
   ],
   providers: [
-    SimulationWindowService
+    SimulationWindowService,
+    TaskProgressionService,
+    TaskGuard
   ]
 })
 export class SimulationModule { }

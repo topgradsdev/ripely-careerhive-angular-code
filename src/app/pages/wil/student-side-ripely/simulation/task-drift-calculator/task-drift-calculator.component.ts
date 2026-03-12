@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { TaskProgressionService } from '../shared/task-progression.service';
 
 interface CalcRow {
   variable: string;
@@ -40,7 +41,8 @@ export class TaskDriftCalculatorComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private taskService: TaskProgressionService
   ) {}
 
   ngOnInit(): void {
@@ -71,6 +73,7 @@ export class TaskDriftCalculatorComponent implements OnInit {
   }
 
   submitCalculation(): void {
+    this.taskService.completeTask('compliance');
     this.router.navigate(['../watch-video'], { relativeTo: this.route });
   }
 }

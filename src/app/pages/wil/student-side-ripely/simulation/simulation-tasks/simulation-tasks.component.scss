@@ -250,3 +250,42 @@
     font-size: 11px;
   }
 }
+
+/* ── Light Mode ── */
+:host-context(.light-mode) {
+  .tasks-page { color: #0a0a0a; }
+
+  .header-top h1 { color: #0a0a0a; }
+  .tasks-subtitle { color: rgba(0, 0, 0, 0.5); }
+
+  .progress-bar { background: rgba(0, 0, 0, 0.06); }
+
+  .task-card {
+    background: #fff;
+    border-color: rgba(0, 0, 0, 0.08);
+    &:hover:not(.locked) { background: rgba(0, 0, 0, 0.02); border-color: rgba(0, 0, 0, 0.14); }
+    &.active { border-color: rgba(255, 107, 44, 0.35); background: rgba(255, 107, 44, 0.03); }
+  }
+
+  .task-icon-wrap {
+    background: rgba(0, 0, 0, 0.03);
+    border-color: rgba(0, 0, 0, 0.08);
+    i { color: rgba(0, 0, 0, 0.45); }
+  }
+
+  .task-title { color: #0a0a0a; }
+  .task-desc { color: rgba(0, 0, 0, 0.5); }
+
+  .task-status-badge.locked {
+    background: rgba(0, 0, 0, 0.04);
+    color: rgba(0, 0, 0, 0.4);
+  }
+
+  .skill-tag {
+    color: rgba(0, 0, 0, 0.5);
+    background: rgba(0, 0, 0, 0.03);
+    border-color: rgba(0, 0, 0, 0.08);
+  }
+
+  .task-duration { color: rgba(0, 0, 0, 0.45); }
+}

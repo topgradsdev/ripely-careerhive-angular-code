@@ -3,6 +3,7 @@ import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { filter } from 'rxjs/operators';
 import { SimulationWindowService } from '../shared/simulation-window.service';
+import { ThemeService } from '../../../../../services/theme.service';
 
 @Component({
   selector: 'app-simulation-shell',
@@ -13,8 +14,13 @@ import { SimulationWindowService } from '../shared/simulation-window.service';
 export class SimulationShellComponent implements OnInit, OnDestroy {
   simulationId = '';
   isOverviewPage = true;
-  lightMode = true; // default: light
+  isTaskPage = false;
+  showFloatingChat = false;
   isMinimized = false;
+
+  get lightMode(): boolean {
+    return !this.themeService.isDarkMode;
+  }
 
   private routeSub!: Subscription;
   private minimizeSub!: Subscription;
@@ -22,7 +28,8 @@ export class SimulationShellComponent implements OnInit, OnDestroy {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private windowService: SimulationWindowService
+    private windowService: SimulationWindowService,
+    private themeService: ThemeService
   ) {}
 
   ngOnInit(): void {
@@ -48,7 +55,7 @@ export class SimulationShellComponent implements OnInit, OnDestroy {
   }
 
   toggleTheme(): void {
-    this.lightMode = !this.lightMode;
+    this.themeService.toggleTheme();
   }
 
   restoreWindow(): void {
@@ -56,6 +63,10 @@ export class SimulationShellComponent implements OnInit, OnDestroy {
   }
 
   private checkRoute(): void {
-    this.isOverviewPage = this.router.url.endsWith('/overview');
+    const url = this.router.url;
+    this.isOverviewPage = url.endsWith('/overview');
+    this.isTaskPage = url.includes('/task/');
+    // Show floating chat on task pages, messages, and workstation
+    this.showFloatingChat = url.includes('/task/') || url.includes('/messages') || url.includes('/workstation');
   }
 }

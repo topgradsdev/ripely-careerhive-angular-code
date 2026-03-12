@@ -561,6 +561,188 @@
   }
 }
 
+// ── Dark Theme ──
+:host-context(body.dark-theme) {
+  .cc-hero-h1 {
+    color: #f0f0f8;
+  }
+
+  .cc-hero-sub {
+    color: rgba(255, 255, 255, 0.5);
+  }
+
+  .cc-search-icon {
+    color: rgba(255, 255, 255, 0.35);
+  }
+
+  .cc-search-input {
+    background: #1c1c28;
+    border-color: rgba(255, 255, 255, 0.1);
+    color: #f0f0f8;
+
+    &::placeholder {
+      color: rgba(255, 255, 255, 0.3);
+    }
+
+    &:focus {
+      border-color: rgba(255, 107, 44, 0.5);
+      background: #22222e;
+    }
+  }
+
+  .cc-filter-btn {
+    border-color: rgba(255, 255, 255, 0.1);
+    color: rgba(255, 255, 255, 0.5);
+
+    &:hover {
+      border-color: rgba(255, 255, 255, 0.25);
+      color: #f0f0f8;
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    &.active {
+      background: #ff6b2c;
+      border-color: #ff6b2c;
+      color: #fff;
+    }
+  }
+
+  .cc-results-label {
+    color: rgba(255, 255, 255, 0.4);
+  }
+
+  .cc-card {
+    background: #1c1c28;
+    border-color: rgba(255, 255, 255, 0.08);
+
+    &:hover {
+      border-color: rgba(255, 107, 44, 0.3);
+      background: #22222e;
+    }
+  }
+
+  .cc-card-name {
+    color: #f0f0f8;
+  }
+
+  .cc-card-role {
+    color: rgba(255, 255, 255, 0.45);
+  }
+
+  .cc-card-tag {
+    background: rgba(255, 107, 44, 0.15);
+    border-color: rgba(255, 107, 44, 0.25);
+  }
+
+  .cc-card-desc {
+    color: rgba(255, 255, 255, 0.55);
+  }
+
+  .cc-card-stat-val {
+    color: #f0f0f8;
+  }
+
+  .cc-card-stat-lbl {
+    color: rgba(255, 255, 255, 0.4);
+  }
+
+  .cc-card-star-count {
+    color: rgba(255, 255, 255, 0.55);
+  }
+
+  .cc-card-book-btn {
+    background: rgba(255, 107, 44, 0.15);
+    border-color: rgba(255, 107, 44, 0.3);
+
+    &:hover {
+      background: #ff6b2c;
+      color: #fff;
+      border-color: #ff6b2c;
+    }
+  }
+
+  // Profile overlay
+  .cc-profile-panel {
+    background: #1c1c28;
+    border-color: rgba(255, 255, 255, 0.1);
+  }
+
+  .cc-profile-header {
+    border-bottom-color: rgba(255, 255, 255, 0.08);
+  }
+
+  .cc-profile-close {
+    background: rgba(255, 255, 255, 0.06);
+    color: rgba(255, 255, 255, 0.55);
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.1);
+    }
+  }
+
+  .cc-profile-name {
+    color: #f0f0f8;
+  }
+
+  .cc-profile-role {
+    color: rgba(255, 255, 255, 0.45);
+  }
+
+  .cc-profile-tag {
+    background: rgba(255, 255, 255, 0.06);
+    color: rgba(255, 255, 255, 0.55);
+    border-color: rgba(255, 255, 255, 0.1);
+  }
+
+  .cc-profile-section-h {
+    color: rgba(255, 255, 255, 0.35);
+  }
+
+  .cc-profile-bio {
+    color: rgba(255, 255, 255, 0.6);
+  }
+
+  .cc-profile-stat {
+    background: #22222e;
+    border-color: rgba(255, 255, 255, 0.08);
+  }
+
+  .cc-profile-stat-val {
+    color: #f0f0f8;
+  }
+
+  .cc-profile-stat-lbl {
+    color: rgba(255, 255, 255, 0.4);
+  }
+
+  .cc-profile-specialty {
+    background: #22222e;
+    border-color: rgba(255, 255, 255, 0.08);
+    color: rgba(255, 255, 255, 0.6);
+  }
+
+  .cc-profile-review {
+    background: #22222e;
+    border-color: rgba(255, 255, 255, 0.08);
+  }
+
+  .cc-profile-review-text {
+    color: rgba(255, 255, 255, 0.6);
+  }
+
+  .cc-profile-reviewer {
+    color: rgba(255, 255, 255, 0.4);
+  }
+
+  .cc-profile-avail {
+    color: rgba(255, 255, 255, 0.35);
+
+    span {
+      color: #4ade80;
+    }
+  }
+}
+
 // ── Responsive ──
 @media (max-width: 768px) {
   .cc-hero {

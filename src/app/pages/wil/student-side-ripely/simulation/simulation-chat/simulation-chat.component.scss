@@ -290,3 +290,41 @@
     transform: scale(0.98);
   }
 }
+
+/* ── Light Mode ── */
+:host-context(.light-mode) {
+  .sc-chat-fullscreen { background: rgba(0, 0, 0, 0.3); }
+
+  .sc-chat-window {
+    background: #fff;
+    border-color: rgba(0, 0, 0, 0.1);
+  }
+
+  .channel-header { border-bottom-color: rgba(0, 0, 0, 0.08); }
+  .channel-hash { color: #0a0a0a; }
+  .channel-divider, .channel-team { color: rgba(0, 0, 0, 0.45); }
+  .channel-status-text, .channel-watching { color: rgba(0, 0, 0, 0.45); }
+
+  .messages-area {
+    &::-webkit-scrollbar-thumb { background: rgba(0, 0, 0, 0.1); }
+  }
+
+  .system-line { background: rgba(0, 0, 0, 0.07); }
+  .system-text { color: rgba(0, 0, 0, 0.45); }
+
+  .chat-message:hover { background: rgba(0, 0, 0, 0.02); }
+  .msg-sender { color: #0a0a0a; }
+  .msg-time { color: rgba(0, 0, 0, 0.3); }
+  .msg-text { color: rgba(0, 0, 0, 0.75); }
+
+  .chat-footer { border-top-color: rgba(0, 0, 0, 0.08); }
+  .typing-text { color: rgba(0, 0, 0, 0.45); }
+
+  .input-wrapper input {
+    background: rgba(0, 0, 0, 0.03);
+    border-color: rgba(0, 0, 0, 0.1);
+    color: #0a0a0a;
+    &::placeholder { color: rgba(0, 0, 0, 0.35); }
+    &:focus { border-color: rgba(255, 107, 44, 0.4); }
+  }
+}

@@ -15,6 +15,9 @@
     <router-outlet></router-outlet>
   </div>
 
+  <!-- Floating chat bubbles: on task, messages, and workstation pages -->
+  <app-floating-chat *ngIf="showFloatingChat"></app-floating-chat>
+
   <!-- Bottom taskbar: only after joining (not overview) -->
   <app-simulation-taskbar *ngIf="!isOverviewPage"
                           [simulationId]="simulationId"

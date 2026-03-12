@@ -454,3 +454,70 @@
     flex-direction: column;
   }
 }
+
+/* ── Light Mode ── */
+:host-context(.light-mode) {
+  .scorecard-page { color: #0a0a0a; }
+
+  .score-hero {
+    background: linear-gradient(135deg, rgba(255, 107, 44, 0.06), rgba(255, 107, 44, 0.02));
+    border-color: rgba(255, 107, 44, 0.12);
+  }
+
+  .score-number { color: #0a0a0a; }
+  .score-of { color: rgba(0, 0, 0, 0.45); }
+  .hero-title { color: #0a0a0a; }
+  .hero-summary { color: rgba(0, 0, 0, 0.5); }
+
+  .summary-card {
+    background: #fff;
+    border-color: rgba(0, 0, 0, 0.08);
+  }
+
+  .summary-value { color: #0a0a0a; }
+  .summary-label { color: rgba(0, 0, 0, 0.5); }
+
+  .section-title { color: #0a0a0a; }
+  .section-desc { color: rgba(0, 0, 0, 0.5); }
+
+  .skill-tile {
+    background: #fff;
+    border-color: rgba(0, 0, 0, 0.08);
+  }
+
+  .skill-icon-wrap {
+    background: rgba(0, 0, 0, 0.03);
+    i { color: rgba(0, 0, 0, 0.45); }
+  }
+
+  .skill-name { color: #0a0a0a; }
+  .skill-bar { background: rgba(0, 0, 0, 0.06); }
+
+  .certificate-card {
+    background: #fff;
+    border-color: rgba(0, 0, 0, 0.08);
+  }
+
+  .cert-title { color: #0a0a0a; }
+  .cert-subtitle { color: rgba(0, 0, 0, 0.5); }
+  .cert-label { color: rgba(0, 0, 0, 0.5); }
+  .cert-value { color: #0a0a0a; }
+
+  .cert-row { border-bottom-color: rgba(0, 0, 0, 0.06); }
+
+  .cert-id {
+    color: rgba(0, 0, 0, 0.45);
+    background: rgba(0, 0, 0, 0.04);
+  }
+
+  .cert-email { border-top-color: rgba(0, 0, 0, 0.08); }
+  .email-label { color: #0a0a0a; }
+
+  .email-input-row input {
+    background: #fff;
+    border-color: rgba(0, 0, 0, 0.1);
+    color: #0a0a0a;
+    &::placeholder { color: rgba(0, 0, 0, 0.35); }
+    &:focus { border-color: rgba(255, 107, 44, 0.4); }
+  }
+}

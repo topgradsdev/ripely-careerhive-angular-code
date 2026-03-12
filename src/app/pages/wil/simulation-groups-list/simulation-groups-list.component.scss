@@ -1,0 +1,181 @@
+.placement_modal {
+    &.ch_modal {
+        .modal-header {
+            h2 {
+                margin-bottom: 30px !important;
+            }
+        }
+
+        .form-group {
+            .label_title {
+                font-size: 14px;
+                font-weight: 500;
+                line-height: 16px;
+                letter-spacing: 0em;
+                color: #000000;
+                font-family: var(--font-third);
+                margin-top: 16px;
+            }
+            .invalid_field {
+                border: 1px solid red;
+            }
+            .error {
+                color: red;
+            }
+        }
+    }
+}
+
+.sub_header {
+    row-gap: 15px;
+    .left {
+        display: inline-flex;
+        flex-wrap: wrap;
+        row-gap: 10px;
+        align-items: center;
+    }
+}
+
+a.td_link {
+    cursor: pointer;
+    &:hover {
+        color: var(--primary-color-first);
+        text-decoration: underline;
+    }
+}
+
+.div-flex-top {
+    display: flex;
+    gap: 15px;
+}
+
+.card_header {
+    background-image: url('../../../../assets/img/banner_linkedin.svg');
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    padding: 26px 26px 35px 26px;
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 35px;
+
+    .card_container {
+        display: flex;
+        column-gap: 42px;
+        align-items: center;
+        flex-wrap: wrap;
+        row-gap: 30px;
+        justify-content: space-between;
+
+        .header_card {
+            background-color: #fff;
+            display: inline-flex;
+            align-items: center;
+            padding: 17px 13px 17px 20px;
+            box-shadow: 2px 2px 4px 0px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(229, 229, 229, 1);
+            border-radius: 10px;
+
+            .content {
+                width: calc(100% - 54px);
+                padding-right: 20px;
+
+                p {
+                    font-family: var(--font-third);
+                    font-size: 14px;
+                    font-weight: 400;
+                    line-height: 16px;
+                    color: #000000;
+                    margin-bottom: 10px;
+                }
+
+                h4 {
+                    font-family: var(--font-third);
+                    font-size: 24px;
+                    font-weight: 400;
+                    line-height: 28px;
+                    color: #000000;
+                    margin-bottom: 0px;
+                }
+            }
+        }
+    }
+}
+
+.student_card {
+    box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.25);
+    background: #fff;
+    padding: 20px 25px;
+    display: flex;
+    margin-bottom: 0px;
+    height: 100%;
+    flex-direction: row;
+    border-radius: 10px;
+    position: relative;
+    overflow: hidden;
+
+    &.total {
+        background-color: #fff;
+
+        .action {
+            position: absolute;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 33px;
+            opacity: 0;
+            transition: all .3s ease-in-out;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 100%;
+        }
+
+        &:hover {
+            &>:not(.action) {
+                filter: blur(4px);
+            }
+
+            .action {
+                opacity: 1;
+
+                button {
+                    height: 36px;
+                }
+            }
+        }
+    }
+
+    .content {
+        width: calc(100% - 45px);
+        padding-right: 10px;
+
+        h4 {
+            font-family: var(--font-third);
+            font-size: 24px;
+            font-weight: 400;
+            line-height: 28px;
+            color: #000000;
+            margin-bottom: 0px;
+        }
+
+        p {
+            font-family: var(--font-third);
+            font-size: 14px;
+            font-weight: 400;
+            line-height: 16px;
+            color: #000000;
+            margin-bottom: 10px;
+        }
+
+        h1 {
+            font-family: var(--font-primary);
+            font-size: 26px;
+            font-weight: 500;
+            line-height: 34px;
+            color: #000000;
+            margin-bottom: 0px;
+        }
+    }
+}

@@ -194,3 +194,38 @@
     color: #9090a8;
   }
 }
+
+/* ── Light Mode ── */
+:host-context(.light-mode) {
+  .workstation-page { color: #0a0a0a; }
+
+  .ws-header-text {
+    h1 { color: #0a0a0a; }
+    p { color: rgba(0, 0, 0, 0.5); }
+  }
+
+  .group-header i { color: rgba(0, 0, 0, 0.45); }
+  .group-label { color: rgba(0, 0, 0, 0.5); }
+  .group-count { color: rgba(0, 0, 0, 0.45); background: rgba(0, 0, 0, 0.04); }
+
+  .ws-card {
+    background: #fff;
+    border-color: rgba(0, 0, 0, 0.08);
+    &:hover:not(.locked) { background: rgba(0, 0, 0, 0.02); border-color: rgba(0, 0, 0, 0.14); }
+    &.active { border-color: rgba(255, 107, 44, 0.3); background: rgba(255, 107, 44, 0.03); }
+  }
+
+  .card-icon-wrap {
+    background: rgba(0, 0, 0, 0.03);
+    border-color: rgba(0, 0, 0, 0.08);
+    i { color: rgba(0, 0, 0, 0.45); }
+  }
+
+  .card-title { color: #0a0a0a; }
+  .card-subtitle { color: rgba(0, 0, 0, 0.5); }
+
+  .card-status.locked {
+    background: rgba(0, 0, 0, 0.04);
+    color: rgba(0, 0, 0, 0.4);
+  }
+}

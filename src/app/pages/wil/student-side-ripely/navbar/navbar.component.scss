@@ -259,6 +259,94 @@
   }
 }
 
+// ─── Light Theme ───
+:host-context(body:not(.dark-theme)) {
+  .pill-nav {
+    background: rgba(255, 255, 255, 0.92);
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08), 0 1px 6px rgba(0, 0, 0, 0.04);
+  }
+
+  .pill-nav-logo {
+    color: #1a1a2e;
+  }
+
+  .pill-nav-link {
+    color: rgba(0, 0, 0, 0.5);
+
+    &:hover {
+      color: rgba(0, 0, 0, 0.85);
+      background: rgba(0, 0, 0, 0.06);
+    }
+
+    &.active {
+      color: #1a1a2e;
+      background: rgba(0, 0, 0, 0.08);
+    }
+  }
+
+  .pill-nav-bell {
+    color: rgba(0, 0, 0, 0.5);
+
+    &:hover {
+      background: rgba(0, 0, 0, 0.06);
+      color: #1a1a2e;
+    }
+  }
+
+  .pill-nav-dropdown {
+    background: #fff;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.12), 0 4px 16px rgba(0, 0, 0, 0.08);
+
+    .dropdown-header {
+      border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+    }
+
+    .dropdown-name {
+      color: #1a1a2e;
+    }
+
+    .dropdown-email {
+      color: rgba(0, 0, 0, 0.45);
+    }
+
+    .dropdown-divider {
+      background: rgba(0, 0, 0, 0.06);
+    }
+
+    .dropdown-item {
+      color: rgba(0, 0, 0, 0.7);
+
+      &:hover {
+        background: rgba(0, 0, 0, 0.04);
+      }
+
+      &.danger {
+        color: #e53e3e;
+      }
+    }
+  }
+
+  .mobile-menu {
+    background: rgba(255, 255, 255, 0.95);
+
+    .mobile-link {
+      color: rgba(0, 0, 0, 0.55);
+
+      &:hover {
+        background: rgba(0, 0, 0, 0.04);
+        color: rgba(0, 0, 0, 0.9);
+      }
+
+      &.active {
+        color: #1a1a2e;
+        background: rgba(0, 0, 0, 0.06);
+      }
+    }
+  }
+}
+
 @media (max-width: 768px) {
   .pill-nav-links {
     display: none;

@@ -102,6 +102,24 @@
   }
 }
 
+// ── Light Theme (footer stays dark by default, lighten in light mode) ──
+:host-context(body:not(.dark-theme)) {
+  .student-footer {
+    background: #1e1e2e;
+  }
+}
+
+// ── Dark Theme ──
+:host-context(body.dark-theme) {
+  .student-footer {
+    background: #161620;
+  }
+
+  .footer-bottom {
+    border-top-color: rgba(255, 255, 255, 0.06);
+  }
+}
+
 @media (max-width: 768px) {
   .footer-grid {
     grid-template-columns: 1fr 1fr;

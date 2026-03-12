@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { ThemeService } from '../../../../services/theme.service';
 
 @Component({
   selector: 'app-student-navbar',
@@ -20,7 +21,15 @@ export class StudentNavbarComponent implements OnInit {
     { label: 'Support', route: '/student-portal/support', icon: 'fa-life-ring' }
   ];
 
-  constructor(public router: Router) {}
+  constructor(public router: Router, public themeService: ThemeService) {}
+
+  get isDarkMode(): boolean {
+    return this.themeService.isDarkMode;
+  }
+
+  toggleTheme(): void {
+    this.themeService.toggleTheme();
+  }
 
   ngOnInit(): void {
     const userSDetail = JSON.parse(localStorage.getItem('userSDetail') || '{}');

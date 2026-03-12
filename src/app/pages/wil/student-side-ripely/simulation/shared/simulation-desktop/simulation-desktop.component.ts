@@ -1,5 +1,7 @@
 import { Component, Input, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
+import { TaskProgressionService, TaskKey } from '../task-progression.service';
 
 interface DesktopIcon {
   id: string;
@@ -7,7 +9,7 @@ interface DesktopIcon {
   label: string;
   route: string;
   colorClass: string;
-  locked: boolean;
+  taskKey?: TaskKey;
 }
 
 @Component({
@@ -22,33 +24,51 @@ export class SimulationDesktopComponent implements OnInit, OnDestroy {
   wallpaperTime = '';
   wallpaperDate = '';
   private clockInterval: any;
+  private taskSub!: Subscription;
 
-  constructor(private router: Router) {}
+  constructor(
+    private router: Router,
+    private taskService: TaskProgressionService
+  ) {}
 
   ngOnInit(): void {
     this.buildIcons();
     this.updateClock();
     this.clockInterval = setInterval(() => this.updateClock(), 60000);
+
+    this.taskSub = this.taskService.taskCompleted$.subscribe(() => {
+      // Icons reactively update via isLocked() check, no rebuild needed
+    });
   }
 
   ngOnDestroy(): void {
     if (this.clockInterval) clearInterval(this.clockInterval);
+    if (this.taskSub) this.taskSub.unsubscribe();
   }
 
   buildIcons(): void {
     const base = `/student-portal/simulations/${this.simulationId}`;
     this.icons = [
-      { id: 'ws2', icon: '\u{1F4DD}', label: 'T2 \u00B7 Gather\nData', route: `${base}/workstation`, colorClass: 'di-icon-amber', locked: true },
-      { id: 'ws3', icon: '\u{1F321}\uFE0F', label: 'T3 \u00B7 Drift\nLoss', route: `${base}/workstation`, colorClass: 'di-icon-amber', locked: true },
-      { id: 'ws4', icon: '\u{1F522}', label: 'T4 \u00B7 Site\nTotal', route: `${base}/workstation`, colorClass: 'di-icon-amber', locked: true },
-      { id: 'ws5', icon: '\u{1F4A7}', label: 'T5 \u00B7 Water\nBalance', route: `${base}/workstation`, colorClass: 'di-icon-blue', locked: true },
-      { id: 'ws6', icon: '\u{1F4C4}', label: 'T6 \u00B7 Report', route: `${base}/workstation`, colorClass: 'di-icon-purple', locked: true },
-      { id: 'files', icon: '\u{1F4C1}', label: 'Files', route: `${base}/library`, colorClass: '', locked: false }
+      { id: 'ws2', icon: '📝', label: 'T2 · Gather\nData',    route: `${base}/task/gather-data`,        colorClass: 'di-icon-amber',  taskKey: 'migration' },
+      { id: 'ws3', icon: '🌡️', label: 'T3 · Drift\nLoss',     route: `${base}/task/drift-calculator`,   colorClass: 'di-icon-amber',  taskKey: 'compliance' },
+      { id: 'ws4', icon: '🔢', label: 'T4 · Watch\nVideo',    route: `${base}/task/watch-video`,        colorClass: 'di-icon-amber',  taskKey: 'hotfix' },
+      { id: 'ws5', icon: '💧', label: 'T5 · Water\nBalance',  route: `${base}/task/submit-form`,        colorClass: 'di-icon-blue',   taskKey: 'waterbalance' },
+      { id: 'ws6', icon: '📄', label: 'T6 · Report',          route: `${base}/task/calculation-report`, colorClass: 'di-icon-purple', taskKey: 'report' },
+      { id: 'files', icon: '📁', label: 'Files',              route: `${base}/library`,                 colorClass: '' }
     ];
   }
 
+  isLocked(icon: DesktopIcon): boolean {
+    if (!icon.taskKey) return false; // Files icon is always unlocked
+    return !this.taskService.isTaskUnlocked(icon.taskKey);
+  }
+
+  isAppRunning(route: string): boolean {
+    return this.router.url === route;
+  }
+
   launch(icon: DesktopIcon): void {
-    if (icon.locked) return;
+    if (this.isLocked(icon)) return;
     this.router.navigateByUrl(icon.route);
   }
 

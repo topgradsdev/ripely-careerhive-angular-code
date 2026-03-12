@@ -22,10 +22,13 @@
   <div class="sm-section">
     <div *ngFor="let item of wsMenuItems"
          class="sm-item sm-ws-item"
-         (click)="navigate(item.route)">
+         [class.sm-locked]="!isWsUnlocked(item.taskKey)"
+         [class.sm-unlocked]="isWsUnlocked(item.taskKey)"
+         (click)="navigate(item.route, item.taskKey)">
       <span class="sm-icon">{{ item.icon }}</span>
       <span class="sm-label">{{ item.label }}</span>
-      <span class="sm-ws-lock">&#128274;</span>
+      <span class="sm-ws-lock" *ngIf="!isWsUnlocked(item.taskKey)">&#128274;</span>
+      <span class="sm-ws-check" *ngIf="isWsUnlocked(item.taskKey)">&#10003;</span>
     </div>
   </div>
   <!-- Theme toggle -->
@@ -92,14 +95,17 @@
     <!-- Separator -->
     <div class="tb-separator"></div>
 
-    <!-- T2: Workstation -->
-    <button class="tb-app tb-ws-btn"
-            (click)="navigate(apps[2].route)"
-            [title]="apps[2].label">
-      <span class="tb-app-icon" style="font-size:16px;">&#128221;</span>
-      <span class="tb-ws-label">T2</span>
-      <div class="tb-app-dot"></div>
-    </button>
+    <!-- Dynamic T2-T6 Workstation Buttons (shown when unlocked) -->
+    <ng-container *ngFor="let ws of wsTaskbarButtons">
+      <button class="tb-app tb-ws-btn"
+              [class.tb-active]="isAppRunning(ws.route)"
+              (click)="navigate(ws.route)"
+              [title]="ws.label">
+        <span class="tb-app-icon" style="font-size:16px;">{{ ws.icon }}</span>
+        <span class="tb-ws-label">{{ ws.label }}</span>
+        <div class="tb-app-dot"></div>
+      </button>
+    </ng-container>
   </div>
 
   <!-- Right: Clock + user -->
@@ -121,49 +127,47 @@
     <button class="notif-panel-clear" (click)="clearNotifs()">Clear all</button>
   </div>
 
-  <!-- Urgent -->
+  <!-- Dynamic notifications -->
   <div class="notif-date-label">Now</div>
-  <div class="notif-item notif-unread" (click)="notifGoToMessages()">
-    <div class="notif-app-icon accent-bg">&#x1F4AC;</div>
+  <div *ngFor="let notif of notifications"
+       class="notif-item"
+       [class.notif-unread]="notif.unread"
+       (click)="notif.action ? notif.action() : notifGoToMessages()">
+    <div class="notif-app-icon" [ngClass]="notif.iconClass">{{ notif.iconEmoji }}</div>
     <div class="notif-content">
-      <div class="notif-app-name">Messages &middot; Meridian BS</div>
-      <div class="notif-body">Marcus Webb sent you a brief</div>
-      <div class="notif-sub">Task 1 is ready &mdash; Read the Brief &amp; Know Your Job</div>
+      <div class="notif-app-name">{{ notif.appName }}</div>
+      <div class="notif-body">{{ notif.body }}</div>
+      <div class="notif-sub">{{ notif.sub }}</div>
     </div>
-    <div class="notif-time">Now</div>
-    <div class="notif-unread-dot"></div>
+    <div class="notif-time">{{ notif.time }}</div>
+    <div class="notif-unread-dot" *ngIf="notif.unread"></div>
   </div>
-  <div class="notif-cta-row">
+
+  <!-- CTA for first notification -->
+  <div class="notif-cta-row" *ngIf="notifications.length > 0">
     <button class="notif-cta-btn" (click)="notifGoToMessages()">
       Open Chat &amp; Begin Task 1
       <svg width="13" height="13" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
     </button>
   </div>
 
-  <!-- Secondary -->
-  <div class="notif-date-label">Today</div>
-  <div class="notif-item notif-unread" (click)="notifGoToMessages()">
-    <div class="notif-app-icon blue-bg">&#x1F4CB;</div>
-    <div class="notif-content">
-      <div class="notif-app-name">Tasks &middot; Module 1</div>
-      <div class="notif-body">6 tasks assigned &mdash; Module 1 &middot; Heron Gate</div>
-      <div class="notif-sub">Day 1 begins with the client brief and equipment data</div>
-    </div>
-    <div class="notif-time">Just now</div>
-    <div class="notif-unread-dot"></div>
-  </div>
-  <div class="notif-item" (click)="notifGoToMessages()">
-    <div class="notif-app-icon green-bg">&#x2705;</div>
-    <div class="notif-content">
-      <div class="notif-app-name">Career Hive</div>
-      <div class="notif-body">Enrolment confirmed</div>
-      <div class="notif-sub">Meridian BS &middot; Junior Mechanical Engineer simulation</div>
-    </div>
-    <div class="notif-time">1 min ago</div>
-  </div>
-
   <div class="notif-panel-footer">
     <button class="notif-footer-btn" (click)="notifGoToMessages()">Open Tasks</button>
     <button class="notif-footer-btn" (click)="closeNotifPanel()">Dismiss</button>
+  </div>
+</div>
+
+<!-- ══ LEAVE SIMULATION POPUP ══ -->
+<div class="ripely-dialog-overlay" [class.show]="showLeavePopup" (click)="cancelLeave()">
+  <div class="ripely-dialog" (click)="$event.stopPropagation()">
+    <div class="ripely-dialog-icon">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 2L2 7v10l10 5 10-5V7L12 2z" stroke="#ff6b2c" stroke-width="2" stroke-linejoin="round"/></svg>
+    </div>
+    <h3>Leave the simulation?</h3>
+    <p>You're in an active scored simulation. Returning to the dashboard will pause your session &mdash; your progress is saved, but your timer and team messages may continue running.</p>
+    <div class="ripely-dialog-btns">
+      <button class="ripely-dialog-cancel" (click)="cancelLeave()">Stay in Simulation</button>
+      <button class="ripely-dialog-confirm" (click)="confirmLeave()">Return to Dashboard</button>
+    </div>
   </div>
 </div>

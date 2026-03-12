@@ -306,6 +306,142 @@
   }
 }
 
+// ── Dark Theme ──
+:host-context(body.dark-theme) {
+  .page-card {
+    background: #1c1c28;
+    border-color: rgba(255, 255, 255, 0.08);
+  }
+
+  .page-title {
+    color: #f0f0f8;
+  }
+
+  .page-sub {
+    color: rgba(255, 255, 255, 0.45);
+  }
+
+  .help-card {
+    background: #22222e;
+    border-color: rgba(255, 255, 255, 0.06);
+
+    &:hover {
+      background: #2a2a38;
+      border-color: rgba(255, 255, 255, 0.1);
+    }
+
+    h3 {
+      color: #f0f0f8;
+    }
+
+    p {
+      color: rgba(255, 255, 255, 0.45);
+    }
+
+    .help-btn {
+      border-color: rgba(255, 255, 255, 0.1);
+      background: #1c1c28;
+      color: rgba(255, 255, 255, 0.6);
+
+      &:hover {
+        background: rgba(255, 107, 44, 0.1);
+        border-color: rgba(255, 107, 44, 0.3);
+        color: #ff8c5a;
+      }
+    }
+  }
+
+  .faq-section h2 {
+    color: #f0f0f8;
+  }
+
+  .faq-item {
+    background: #22222e;
+    border-color: rgba(255, 255, 255, 0.06);
+
+    &.open {
+      border-color: rgba(255, 107, 44, 0.25);
+      background: rgba(255, 107, 44, 0.06);
+    }
+
+    .faq-question {
+      .faq-category {
+        color: #ff8c5a;
+      }
+
+      .faq-q-text {
+        color: #f0f0f8;
+      }
+
+      i {
+        color: rgba(255, 255, 255, 0.25);
+      }
+    }
+
+    .faq-answer p {
+      color: rgba(255, 255, 255, 0.5);
+    }
+  }
+
+  .contact-section h2 {
+    color: #f0f0f8;
+  }
+
+  .contact-form {
+    background: #22222e;
+    border-color: rgba(255, 255, 255, 0.06);
+
+    .form-group {
+      label {
+        color: rgba(255, 255, 255, 0.45);
+      }
+
+      input, textarea {
+        background: #1c1c28;
+        border-color: rgba(255, 255, 255, 0.1);
+        color: #f0f0f8;
+
+        &::placeholder {
+          color: rgba(255, 255, 255, 0.25);
+        }
+
+        &:focus {
+          border-color: #ff8c5a;
+        }
+      }
+    }
+  }
+
+  .contact-success {
+    background: #22222e;
+    border-color: rgba(74, 222, 128, 0.2);
+
+    .success-icon {
+      background: rgba(74, 222, 128, 0.1);
+    }
+
+    h3 {
+      color: #f0f0f8;
+    }
+
+    p {
+      color: rgba(255, 255, 255, 0.45);
+    }
+
+    .reset-btn {
+      border-color: rgba(255, 255, 255, 0.1);
+      background: #1c1c28;
+      color: rgba(255, 255, 255, 0.6);
+
+      &:hover {
+        background: rgba(255, 107, 44, 0.1);
+        color: #ff8c5a;
+        border-color: rgba(255, 107, 44, 0.3);
+      }
+    }
+  }
+}
+
 @media (max-width: 768px) {
   .page-card {
     padding: 24px;

@@ -660,7 +660,7 @@ $accent-hover: #ff8a55;
 // ═══════════════════════════════════════════════
 // LIGHT MODE OVERRIDES
 // ═══════════════════════════════════════════════
-.light-mode {
+:host-context(.light-mode) {
   .dm-float-window {
     background: #f5f5fb;
     border-color: rgba(0, 0, 0, 0.1);

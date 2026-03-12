@@ -14,14 +14,14 @@
 <div class="desktop-icon-grid">
   <div *ngFor="let icon of icons"
        class="di"
-       [class.di-locked]="icon.locked"
+       [class.di-locked]="isLocked(icon)"
        (click)="launch(icon)"
        [title]="icon.label">
     <div class="di-icon" [ngClass]="icon.colorClass">
       {{ icon.icon }}
-      <span class="di-lock-badge" *ngIf="icon.locked">&#128274;</span>
+      <span class="di-lock-badge" *ngIf="isLocked(icon)">&#128274;</span>
     </div>
-    <div class="di-active-dot"></div>
+    <div class="di-active-dot" [class.di-dot-visible]="isAppRunning(icon.route)"></div>
     <div class="di-label">{{ icon.label }}</div>
   </div>
 </div>

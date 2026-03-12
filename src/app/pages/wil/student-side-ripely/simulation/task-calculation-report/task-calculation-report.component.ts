@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { TaskProgressionService } from '../shared/task-progression.service';
 
 @Component({
   selector: 'app-task-calculation-report',
@@ -18,7 +19,8 @@ export class TaskCalculationReportComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private taskService: TaskProgressionService
   ) {}
 
   ngOnInit(): void {
@@ -33,6 +35,7 @@ export class TaskCalculationReportComponent implements OnInit {
 
   submitToSupervisor(): void {
     if (this.isValid) {
+      this.taskService.completeTask('report');
       this.submitted = true;
     }
   }

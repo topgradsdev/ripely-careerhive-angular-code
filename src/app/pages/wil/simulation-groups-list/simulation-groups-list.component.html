@@ -1,0 +1,294 @@
+<div class="page_header">
+    <div class="page_header_container">
+        <div>
+            <h4>Simulation Groups</h4>
+        </div>
+    </div>
+</div>
+<section>
+    <div class="row sub_header">
+        <div class="col-md-12">
+            <ng-container>
+                <div class="card_header">
+                    <div class="card_container">
+                        <div class="div-flex-top">
+                            <div class="student_card">
+                                <div class="content">
+                                    <p>WIL Placements</p>
+                                    <h4>{{countObj.wilPlacements}}</h4>
+                                </div>
+                                <div>
+                                    <svg width="54" height="54" viewBox="0 0 54 54" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <circle cx="27" cy="27" r="27" fill="#464BA8"/>
+                                        <path d="M37.667 20.334H16.3337C14.8609 20.334 13.667 21.5279 13.667 23.0007V36.334C13.667 37.8067 14.8609 39.0007 16.3337 39.0007H37.667C39.1397 39.0007 40.3337 37.8067 40.3337 36.334V23.0007C40.3337 21.5279 39.1397 20.334 37.667 20.334Z" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                                        <path d="M32.3337 39V17.6667C32.3337 16.9594 32.0527 16.2811 31.5526 15.781C31.0525 15.281 30.3742 15 29.667 15H24.3337C23.6264 15 22.9481 15.281 22.448 15.781C21.9479 16.2811 21.667 16.9594 21.667 17.6667V39" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                </div>
+                            </div>
+
+                            <div class="student_card">
+                                <div class="content">
+                                    <p>Simulations</p>
+                                    <h4>{{countObj.simulations}}</h4>
+                                </div>
+                                <div>
+                                    <svg width="54" height="54" viewBox="0 0 54 54" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <circle cx="27" cy="27" r="27" fill="#26C296"/>
+                                        <path d="M32.333 16.334H34.9997C35.7069 16.334 36.3852 16.6149 36.8853 17.115C37.3854 17.6151 37.6663 18.2934 37.6663 19.0007V37.6673C37.6663 38.3746 37.3854 39.0528 36.8853 39.5529C36.3852 40.053 35.7069 40.334 34.9997 40.334H18.9997C18.2924 40.334 17.6142 40.053 17.1141 39.5529C16.614 39.0528 16.333 38.3746 16.333 37.6673V19.0007C16.333 18.2934 16.614 17.6151 17.1141 17.115C17.6142 16.6149 18.2924 16.334 18.9997 16.334H21.6663" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        <path d="M31.0003 13.666H23.0003C22.2639 13.666 21.667 14.263 21.667 14.9993V17.666C21.667 18.4024 22.2639 18.9993 23.0003 18.9993H31.0003C31.7367 18.9993 32.3337 18.4024 32.3337 17.666V14.9993C32.3337 14.263 31.7367 13.666 31.0003 13.666Z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                </div>
+                            </div>
+
+                            <div class="student_card total">
+                                <div class="content">
+                                    <p>Archived Placements</p>
+                                    <h4>{{countObj.archivedPlacements}}</h4>
+                                </div>
+                                <div>
+                                    <svg width="54" height="54" viewBox="0 0 54 54" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <circle cx="27" cy="27" r="27" fill="#F47761"/>
+                                        <path d="M27 17.666L27 36.3327" stroke="white" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+                                        <path d="M36.333 27L26.9997 36.3333L17.6663 27" stroke="white" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                </div>
+                                <div class="action">
+                                    <button mat-button class="theme_btn btn_primary">View Placements</button>
+                                </div>
+                            </div>
+
+                            <div class="student_card total">
+                                <div class="content">
+                                    <p>Archived Simulations</p>
+                                    <h4>{{countObj.archivedSims}}</h4>
+                                </div>
+                                <div>
+                                    <svg width="54" height="54" viewBox="0 0 54 54" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <circle cx="27" cy="27" r="27" fill="#9747FF"/>
+                                        <path d="M27 17.666L27 36.3327" stroke="white" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+                                        <path d="M36.333 27L26.9997 36.3333L17.6663 27" stroke="white" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                </div>
+                                <div class="action">
+                                    <button mat-button class="theme_btn btn_primary">View Simulations</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="div-flex-top">
+                            <button mat-button class="theme_btn btn_white ml-auto" (click)="exportStudentData()">
+                                Download (.xls)
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </ng-container>
+        </div>
+        <div class="col-md-12 text-right">
+            <div class="d-flex align-items-center justify-content-between">
+                <button mat-button class="theme_btn btn_primary" data-toggle="modal"
+                    data-target="#newSimulationGroup" (click)="createSimulationGroup.reset();">
+                    <mat-icon>add</mat-icon> Add New
+                </button>
+                <div class="search-container">
+                    <svg class="icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                        <path d="M9.16667 15.8333C12.8486 15.8333 15.8333 12.8486 15.8333 9.16667C15.8333 5.48477 12.8486 2.5 9.16667 2.5C5.48477 2.5 2.5 5.48477 2.5 9.16667C2.5 12.8486 5.48477 15.8333 9.16667 15.8333Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M17.5 17.5L13.875 13.875" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    <input type="text" class="form-control" [(ngModel)]="searchCriteria.keywords"
+                        placeholder="Search Keywords" (ngModelChange)="onChangeSearchKeyword()">
+                </div>
+            </div>
+        </div>
+    </div>
+    <ng-container>
+        <div class="table-responsive sticky-table" infiniteScroll
+            [infiniteScrollDistance]="2"
+            [infiniteScrollThrottle]="150"
+            (scrolled)="onScrollDown()"
+            [scrollWindow]="false">
+            <table mat-table [dataSource]="simulationGroupList" matSort #simulationGroupTbSort="matSort" class="ch_table">
+                <!-- Code Column -->
+                <ng-container matColumnDef="code">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Code </th>
+                    <td mat-cell *matCellDef="let row">{{row.code}}</td>
+                </ng-container>
+                <!-- Title Column -->
+                <ng-container matColumnDef="title">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Title</th>
+                    <td mat-cell *matCellDef="let row">
+                        <a class="td_link" [routerLink]="['/admin/wil/simulation-groups', row._id]">{{row.title}}</a>
+                    </td>
+                </ng-container>
+                <!-- Industry Column -->
+                <ng-container matColumnDef="industry">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Industry</th>
+                    <td mat-cell *matCellDef="let row">{{row.industry}}</td>
+                </ng-container>
+                <!-- Category Column -->
+                <ng-container matColumnDef="category">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Category</th>
+                    <td mat-cell *matCellDef="let row">{{row.category}}</td>
+                </ng-container>
+                <!-- Last Modified -->
+                <ng-container matColumnDef="updated_at">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Last Modified</th>
+                    <td mat-cell *matCellDef="let row">{{row.updated_at | date: 'dd/MM/YYYY'}}</td>
+                </ng-container>
+                <!-- Published On -->
+                <ng-container matColumnDef="publish_at">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Published On</th>
+                    <td mat-cell *matCellDef="let row">{{row.publish_on ? (row.publish_on | date: 'dd/MM/yyyy HH:mm:ss a') : '-'}}</td>
+                </ng-container>
+                <!-- Published By -->
+                <ng-container matColumnDef="publish_by">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Published By</th>
+                    <td mat-cell *matCellDef="let row">
+                        <div class="d-flex align-items-center" *ngIf="row.is_publish">
+                            <div class="profile mr-1">
+                                <span>{{ getInitials(row?.publish_by_name || row?.created_by) }}</span>
+                            </div>
+                            <span>{{row.publish_by_name ? row.publish_by_name : row.created_by}}</span>
+                        </div>
+                    </td>
+                </ng-container>
+                <!-- Students Column -->
+                <ng-container matColumnDef="student_count">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Students</th>
+                    <td mat-cell *matCellDef="let row">{{row.student_count}}</td>
+                </ng-container>
+                <!-- Actions Column -->
+                <ng-container matColumnDef="actions" stickyEnd>
+                    <th mat-header-cell *matHeaderCellDef>Actions</th>
+                    <td mat-cell *matCellDef="let row">
+                        <button mat-icon-button [matMenuTriggerFor]="menu" class="td-btn">
+                            <mat-icon>more_horiz</mat-icon>
+                        </button>
+                        <mat-menu #menu="matMenu" class="td-menu custome_theme_menu">
+                            <a mat-menu-item [routerLink]="['/admin/wil/simulation-groups', row._id]">
+                                <span>View</span>
+                            </a>
+                            <a mat-menu-item class="danger">
+                                <span>Archive</span>
+                            </a>
+                        </mat-menu>
+                    </td>
+                </ng-container>
+                <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+        </div>
+    </ng-container>
+</section>
+
+<!-- Create Simulation Group Modal -->
+<div class="modal fade bsModal ch_modal placement_modal" id="newSimulationGroup" tabindex="-1" role="dialog"
+    aria-labelledby="newSimulationGroupLabel" aria-hidden="true">
+    <form [formGroup]="createSimulationGroup">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 class="modal-title" id="newSimulationGroupLabel">Create Simulation Group</h2>
+                    <button type="button" mat-icon-button class="close" data-dismiss="modal" aria-label="Close">
+                        <mat-icon>close</mat-icon>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row form-group">
+                        <div class="col-3">
+                            <label class="label_title">Title</label>
+                        </div>
+                        <div class="col-9">
+                            <input formControlName="title" type="text" placeholder="Title"
+                                class="form-control" [class.invalid_field]="checkFieldInvalid('title')">
+                            <span *ngIf="checkFieldInvalid('title')" class="error">This field is required.</span>
+                        </div>
+                    </div>
+                    <div class="row form-group">
+                        <div class="col-3">
+                            <label class="label_title">Code</label>
+                        </div>
+                        <div class="col-9">
+                            <input formControlName="code" type="text" placeholder="e.g SIM2024"
+                                class="form-control" [class.invalid_field]="checkFieldInvalid('code')">
+                            <span *ngIf="checkFieldInvalid('code')" class="error">This field is required.</span>
+                        </div>
+                    </div>
+                    <div class="row form-group">
+                        <div class="col-3">
+                            <label class="label_title">Description</label>
+                        </div>
+                        <div class="col-9">
+                            <div class="placement-group-editor">
+                                <quill-editor [modules]="modules" formControlName="description"></quill-editor>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row form-group">
+                        <div class="col-3">
+                            <label class="label_title">Category</label>
+                        </div>
+                        <div class="col-9">
+                            <ng-select formControlName="category_id" [searchable]="false" [multiple]="false"
+                                bindLabel="name" bindValue="_id" [clearable]="false" placeholder="Category"
+                                [class.invalid_field]="checkFieldInvalid('category_id')">
+                                <ng-option *ngFor="let cat of categories" [value]="cat._id">{{cat.name}}</ng-option>
+                            </ng-select>
+                            <span *ngIf="checkFieldInvalid('category_id')" class="error">This field is required.</span>
+                        </div>
+                    </div>
+                    <div class="row form-group">
+                        <div class="col-3">
+                            <label class="label_title">Industry</label>
+                        </div>
+                        <div class="col-9">
+                            <ng-select formControlName="industry_id" [searchable]="false" [multiple]="false"
+                                bindLabel="name" bindValue="_id" [clearable]="false" placeholder="Industry"
+                                [class.invalid_field]="checkFieldInvalid('industry_id')">
+                                <ng-option *ngFor="let ind of industries" [value]="ind._id">{{ind.name}}</ng-option>
+                            </ng-select>
+                            <span *ngIf="checkFieldInvalid('industry_id')" class="error">This field is required.</span>
+                        </div>
+                    </div>
+                    <div class="row form-group">
+                        <div class="col-3 pr-0">
+                            <label class="label_title">Access</label>
+                        </div>
+                        <div class="col-9">
+                            <ng-select formControlName="access" [searchable]="true" [multiple]="true"
+                                bindLabel="name" bindValue="_id" [clearable]="false" placeholder="Select access level">
+                                <ng-option *ngFor="let opt of accessOptions" [value]="opt._id">{{opt.name}}</ng-option>
+                            </ng-select>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer justify-content-between">
+                    <button mat-button type="button" #closeCreateSimulationGroupModal
+                        class="theme_btn btn_outline_primary" data-dismiss="modal" (click)="onCancel()">Cancel</button>
+                    <button mat-button type="submit" class="theme_btn btn_primary"
+                        (click)="onSubmit()" [disabled]="createSimulationGroup.invalid">Create</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<!-- Success Modal -->
+<div class="modal fade bsModal ch_modal done_modal_popup" #successSimulationGroupModal tabindex="-1" role="dialog"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header"></div>
+            <div class="modal-body text-center">
+                <svg width="112" height="112" viewBox="0 0 112 112" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="56" cy="56" r="56" fill="#26C296"/>
+                    <path d="M65.3327 49L52.4993 61.8333L46.666 56" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <h2 class="mt-3">Simulation Group has been created</h2>
+            </div>
+            <div class="modal-footer justify-content-center">
+                <button mat-button type="button" class="theme_btn btn_primary" (click)="onCloseSuccessModal()">Close</button>
+            </div>
+        </div>
+    </div>
+</div>

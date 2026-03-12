@@ -248,3 +248,44 @@
     transform: scale(0.98);
   }
 }
+
+/* ── Light Mode ── */
+:host-context(.light-mode) {
+  .feedback-page { color: #0a0a0a; }
+
+  .fb-header h1 { color: #0a0a0a; }
+  .fb-subtitle { color: rgba(0, 0, 0, 0.5); }
+
+  .manager-intro {
+    background: #fff;
+    border-color: rgba(0, 0, 0, 0.08);
+  }
+
+  .manager-name { color: #0a0a0a; }
+  .manager-role { color: rgba(0, 0, 0, 0.5); }
+
+  .feedback-card {
+    background: #fff;
+    border-color: rgba(0, 0, 0, 0.08);
+  }
+
+  .task-icon-wrap {
+    background: rgba(0, 0, 0, 0.03);
+    border-color: rgba(0, 0, 0, 0.08);
+    i { color: rgba(0, 0, 0, 0.45); }
+  }
+
+  .task-name { color: #0a0a0a; }
+  .score-max { color: rgba(0, 0, 0, 0.45); }
+  .score-bar { background: rgba(0, 0, 0, 0.06); }
+
+  .feedback-text {
+    background: rgba(0, 0, 0, 0.02);
+    p { color: rgba(0, 0, 0, 0.7); }
+  }
+
+  .skill-name { color: rgba(0, 0, 0, 0.5); }
+  .skill-value { color: rgba(0, 0, 0, 0.45); }
+
+  .dot.empty { background: rgba(0, 0, 0, 0.08); }
+}

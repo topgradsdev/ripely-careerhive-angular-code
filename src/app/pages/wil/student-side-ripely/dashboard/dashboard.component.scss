@@ -777,6 +777,293 @@
   }
 }
 
+// ── DARK THEME ──
+:host-context(body.dark-theme) {
+  .rd-greeting {
+    color: #7878a0;
+  }
+
+  .rd-greeting-name {
+    color: #f0f0f8;
+  }
+
+  .rd-greeting-date {
+    color: #7878a0;
+  }
+
+  .rd-notif-bar {
+    background: rgba(200, 140, 60, 0.1);
+    border-color: rgba(200, 140, 60, 0.2);
+  }
+
+  .rd-notif-title {
+    color: #ffb070;
+  }
+
+  .rd-notif-sub {
+    color: #7878a0;
+  }
+
+  .rd-notif-close {
+    color: #7878a0;
+  }
+
+  .rd-score-hero-a {
+    background: linear-gradient(135deg, #2a1e10 0%, #301e08 100%);
+    border-color: rgba(200, 140, 60, 0.25);
+  }
+
+  .rd-score-hero-b {
+    background: linear-gradient(135deg, #0e2a20 0%, #0a2818 100%);
+    border-color: rgba(0, 150, 120, 0.25);
+  }
+
+  .rd-hero-eyebrow {
+    color: #ccc;
+  }
+
+  .rd-score-hero-a .rd-hero-number {
+    color: #ff9060;
+  }
+
+  .rd-score-hero-b .rd-hero-number {
+    color: #00d4a0;
+  }
+
+  .rd-hero-sub {
+    color: rgba(255, 255, 255, 0.4);
+  }
+
+  .rd-hero-track-labels {
+    color: rgba(255, 255, 255, 0.3);
+  }
+
+  .rd-hero-track {
+    background: rgba(255, 255, 255, 0.1);
+  }
+
+  .rd-hero-track-label {
+    color: rgba(255, 255, 255, 0.35);
+  }
+
+  .rd-active-sim {
+    background: #1c1c28;
+    border-color: rgba(255, 255, 255, 0.08);
+  }
+
+  .rd-active-label {
+    color: #7878a0;
+  }
+
+  .rd-active-status {
+    color: #4ade80;
+  }
+
+  .rd-active-status-dot {
+    background: #4ade80;
+  }
+
+  .rd-active-company {
+    color: #ffb070;
+  }
+
+  .rd-active-title {
+    color: #f0f0f8;
+  }
+
+  .rd-active-meta {
+    color: #7878a0;
+  }
+
+  .rd-ring-track {
+    stroke: rgba(255, 255, 255, 0.08);
+  }
+
+  .rd-ring-text {
+    fill: #f0f0f8;
+  }
+
+  .rd-ring-label {
+    color: #7878a0;
+  }
+
+  .rd-continue-btn {
+    background: rgba(170, 95, 30, 0.15);
+    color: #ffb070;
+    border-color: rgba(170, 95, 30, 0.35);
+
+    &:hover {
+      background: rgba(170, 95, 30, 0.25);
+    }
+  }
+
+  .rd-task-chip {
+    background: #22222e;
+    border-color: rgba(255, 255, 255, 0.08);
+    color: #a0a0b8;
+
+    &.done {
+      background: rgba(74, 222, 128, 0.08);
+      border-color: rgba(74, 222, 128, 0.2);
+      color: #4ade80;
+
+      .rd-task-chip-dot {
+        background: #4ade80;
+      }
+    }
+
+    &.active {
+      background: rgba(255, 176, 112, 0.08);
+      border-color: rgba(255, 176, 112, 0.2);
+      color: #ffb070;
+
+      .rd-task-chip-dot {
+        background: #ffb070;
+      }
+    }
+  }
+
+  .rd-task-chip-dot {
+    background: #7878a0;
+  }
+
+  .rd-stats-row {
+    background: rgba(255, 255, 255, 0.06);
+    border-color: rgba(255, 255, 255, 0.08);
+  }
+
+  .rd-stat-cell {
+    background: #1c1c28;
+  }
+
+  .rd-stat-num {
+    color: #f0f0f8;
+
+    &.rd-stat-green {
+      color: #4ade80;
+    }
+
+    &.rd-stat-amber {
+      color: #ffb070;
+    }
+  }
+
+  .rd-stat-lbl {
+    color: #7878a0;
+  }
+
+  .rd-stat-bar-track {
+    background: rgba(255, 255, 255, 0.08);
+  }
+
+  .rd-section-title {
+    color: #f0f0f8;
+  }
+
+  .rd-section-link {
+    color: #7878a0;
+
+    &:hover {
+      color: #f0f0f8;
+    }
+  }
+
+  .rd-task-rows {
+    background: #1c1c28;
+    border-color: rgba(255, 255, 255, 0.08);
+  }
+
+  .rd-task-row {
+    border-bottom-color: rgba(255, 255, 255, 0.06);
+
+    &:hover {
+      background: #22222e;
+    }
+  }
+
+  .rd-task-row-name {
+    color: #f0f0f8;
+  }
+
+  .rd-task-row-sub {
+    color: #7878a0;
+  }
+
+  .rd-task-row-status {
+    &.rd-status-done {
+      color: #4ade80;
+
+      .rd-task-row-status-dot {
+        background: #4ade80;
+      }
+    }
+
+    &.rd-status-active {
+      color: #ffb070;
+
+      .rd-task-row-status-dot {
+        background: #ffb070;
+      }
+    }
+
+    &.rd-status-locked {
+      color: #7878a0;
+
+      .rd-task-row-status-dot {
+        background: #7878a0;
+      }
+    }
+  }
+
+  .rd-task-row-val {
+    color: #a0a0b8;
+  }
+
+  .rd-card {
+    background: #1c1c28;
+    border-color: rgba(255, 255, 255, 0.08);
+
+    &:hover {
+      border-color: rgba(255, 176, 112, 0.25);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+    }
+  }
+
+  .rd-card-company-name {
+    color: #7878a0;
+  }
+
+  .rd-card-title {
+    color: #f0f0f8;
+  }
+
+  .rd-progress-row {
+    color: #7878a0;
+  }
+
+  .rd-progress-track {
+    background: rgba(255, 255, 255, 0.08);
+  }
+
+  .rd-card-tag {
+    &.rd-tag-industry {
+      background: rgba(37, 99, 235, 0.15);
+      color: #7eb3ff;
+    }
+
+    &.rd-tag-skill {
+      background: rgba(170, 95, 30, 0.15);
+      color: #ffb070;
+    }
+
+    &.rd-tag-more {
+      background: rgba(255, 255, 255, 0.04);
+      color: #7878a0;
+      border-color: rgba(255, 255, 255, 0.08);
+    }
+  }
+}
+
 // ── RESPONSIVE ──
 @media (max-width: 768px) {
   .dashboard-page {

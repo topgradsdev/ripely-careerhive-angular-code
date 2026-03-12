@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SimulationWindowService } from '../shared/simulation-window.service';
+import { TaskProgressionService } from '../shared/task-progression.service';
 
 interface TeamMember {
   initials: string;
@@ -89,7 +90,8 @@ export class SimulationIntroComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private windowService: SimulationWindowService
+    private windowService: SimulationWindowService,
+    private taskService: TaskProgressionService
   ) {}
 
   ngOnInit(): void {
@@ -97,6 +99,7 @@ export class SimulationIntroComponent implements OnInit {
   }
 
   openChat(): void {
+    this.taskService.completeTask('briefing');
     this.router.navigate(['../messages'], { relativeTo: this.route });
   }
 
@@ -107,6 +110,7 @@ export class SimulationIntroComponent implements OnInit {
 
   /** Close — navigate away, destroys the component */
   closeWindow(): void {
+    this.taskService.completeTask('briefing');
     this.windowService.restore();
     this.router.navigate(['../messages'], { relativeTo: this.route });
   }
