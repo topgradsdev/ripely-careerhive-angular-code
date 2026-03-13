@@ -1,0 +1,131 @@
+.main_container_place {
+    .card_header {
+        background-size: cover;
+        background-position: center;
+        position: relative;
+        padding: 26px 26px 35px 26px;
+        border-radius: 10px;
+        overflow: hidden;
+        margin-bottom: 35px;
+
+        .card_container {
+            display: inline-flex;
+            column-gap: 42px;
+            align-items: center;
+            flex-wrap: wrap;
+            row-gap: 30px;
+        }
+    }
+}
+
+.student_card {
+    box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.25);
+    background: #fff;
+    padding: 22px 30px;
+    display: flex;
+    margin-bottom: 0px;
+    height: 100%;
+    flex-direction: row;
+    border-radius: 10px;
+    position: relative;
+    overflow: hidden;
+
+    &.total {
+        background-color: #fff;
+
+        .action {
+            position: absolute;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 33px;
+            opacity: 0;
+            transition: all .3s ease-in-out;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 100%;
+        }
+
+        &:hover {
+            &>:not(.action) {
+                filter: blur(4px);
+            }
+
+            .action {
+                opacity: 1;
+
+                button {
+                    height: 36px;
+                }
+            }
+        }
+    }
+
+    .content {
+        width: calc(100% - 45px);
+        padding-right: 20px;
+
+        h4 {
+            font-family: var(--font-third);
+            font-size: 24px;
+            font-weight: 400;
+            line-height: 28px;
+            color: #000000;
+            margin-bottom: 0px;
+        }
+
+        p {
+            font-family: var(--font-third);
+            font-size: 14px;
+            font-weight: 400;
+            line-height: 16px;
+            color: #000000;
+            margin-bottom: 10px;
+        }
+    }
+}
+
+.testimony-sub-tabs {
+    display: flex;
+    gap: 10px;
+
+    .theme_btn {
+        &.active {
+            background-color: var(--primary-color-first);
+            color: #fff;
+        }
+    }
+}
+
+.stars {
+    .star {
+        color: #DDD;
+        font-size: 16px;
+
+        &.filled {
+            color: #F4A261;
+        }
+    }
+}
+
+.badge {
+    padding: 4px 12px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 500;
+
+    &.badge-success {
+        background-color: #E8F8F2;
+        color: #26C296;
+    }
+    &.badge-warning {
+        background-color: #FFF5EC;
+        color: #F4A261;
+    }
+    &.badge-secondary {
+        background-color: #F0F0F0;
+        color: #666;
+    }
+}

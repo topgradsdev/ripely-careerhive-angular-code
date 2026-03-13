@@ -596,7 +596,7 @@
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h2 class="modal-title" id="exampleModalLabel">Publish Placement Group</h2>
+                    <h2 class="modal-title" id="exampleModalLabel">Publish Simulation Group</h2>
                     <button type="button" mat-icon-button id="closeModal" class="close" data-dismiss="modal"
                         aria-label="Close">
                         <mat-icon>close</mat-icon>
@@ -1280,11 +1280,11 @@
                 </div>
                 <div class="modal-body pt-0 active_deactive_modal">
                     <h4 *ngIf="publishPlacement.publishedOn === 'Publish Instantly'" class="mb-5">To instantly publish
-                        this Placement Group, <br> please type your password to confirm:
+                        this Simulation Group, <br> please type your password to confirm:
                     </h4>
                     <!-- show after schedule select -->
                     <h4 *ngIf="publishPlacement.publishedOn === 'Schedule Date'" class="mb-5"> To schedule publishing
-                        this Placement Group, <br> please type your password to confirm:</h4>
+                        this Simulation Group, <br> please type your password to confirm:</h4>
 
                     <div class="form-group mb-0 position-relative">
                         <label>Password</label>
@@ -1381,15 +1381,15 @@
                 </svg>
 
 
-                <h2 class="mt-3">You cannot publish this Placement Group until <br /> you have at least the following:
+                <h2 class="mt-3">You cannot publish this Simulation Group until <br /> you have at least the following:
                 </h2>
                 <!-- show after schedule select -->
                 <ul class="point-error">
                     <!-- <li>
-                        <span></span> A student added to the Placement Group
+                        <span></span> A student added to the Simulation Group
                     </li> -->
                     <!-- <li>
-                        <span></span>A company with a vacancy added to the Placement Group
+                        <span></span>A company with a vacancy added to the Simulation Group
                     </li> -->
                     <li>
                         <span></span>A workflow with a task each under Pre-Placement and Ongoing Stage
@@ -1523,11 +1523,11 @@
                             <img src="../../../../assets/img/undraw_warning.svg" alt="undraw_warning">
                         </div>
                     </div>
-                    <h4 class="proceedFlow_h">Unpublishing a placement group will make <br /> selected workflows
+                    <h4 class="proceedFlow_h">Unpublishing a simulation group will make <br /> selected workflows
                         unavailable to the students.</h4>
                 </ng-container>
                 <ng-container *ngIf="proceedFlow == 'password'">
-                    <h4 class="proceedFlow_h_next">To unpublish this Placement Group, please type your password to
+                    <h4 class="proceedFlow_h_next">To unpublish this Simulation Group, please type your password to
                         confirm:</h4>
                     <div class="form-group position-relative">
                         <label>Password</label>
@@ -1600,7 +1600,7 @@
                         <img src="../../../../assets/img/undraw_warning.svg" alt="undraw_warning">
                     </div>
                     <div class="col-md-12 text-center">
-                        <h2 class="modal-title">You must unpublish the Placement Group before <br> you can archive it.
+                        <h2 class="modal-title">You must unpublish the Simulation Group before <br> you can archive it.
                         </h2>
                     </div>
                 </div>
@@ -1623,7 +1623,7 @@
                     </button>
                 </div>
                 <div class="modal-body pt-0 active_deactive_modal">
-                    <h4 class="mb-5">To instantly archive this Placement Group, <br> please type your password to
+                    <h4 class="mb-5">To instantly archive this Simulation Group, <br> please type your password to
                         confirm:
                     </h4>
                     <div class="form-group mb-0 position-relative">
@@ -1718,10 +1718,10 @@
 
                         <div class="right_container">
                             <ng-container *ngIf="activeFilter === 'placementGroups'">
-                                <h4 class="title">Placement Group</h4>
+                                <h4 class="title">Simulation Group</h4>
                                 <div class="form-group">
                                     <ng-select [searchable]="true" [multiple]="true" bindLabel="title" bindValue="_id"
-                                        [clearable]="false" placeholder="Select Placement Groups"
+                                        [clearable]="false" placeholder="Select Simulation Groups"
                                         [(ngModel)]="filterParameters.placementGroups">
                                         <ng-option *ngFor="let placementGroups of studentFilters?.placementGroups"
                                             [value]="placementGroups._id">{{placementGroups.title}}</ng-option>

@@ -17,7 +17,7 @@ import { INavData } from '@coreui/angular';
         // iconComponent: { name: 'cil-list' },
       },
       {
-        name: 'Placement Groups',
+        name: 'Simulation Groups',
         url: '/admin/wil/placement-groups-list',
         // iconComponent: { name: 'cil-list' },
       },
@@ -31,10 +31,10 @@ import { INavData } from '@coreui/angular';
         url: '/admin/wil/wil-vacancies-list',
         // iconComponent: { name: 'cil-list' },
       },
-      {
-        name: 'Simulation Groups',
-        url: '/admin/wil/simulation-groups-list',
-      },
+      // {
+      //   name: 'Simulation Groups',
+      //   url: '/admin/wil/simulation-groups-list',
+      // },
     ]
   },
   {
@@ -162,7 +162,7 @@ import { INavData } from '@coreui/angular';
 //         iconComponent: { name: 'ch-dot' },
 //       },
 //       {
-//         name: 'Placement Groups',
+//         name: 'Simulation Groups',
 //         url: '/admin/wil/placement-groups-list',
 //         // icon: 'ch-dot'
 //          iconComponent: { name: 'ch-dot' },

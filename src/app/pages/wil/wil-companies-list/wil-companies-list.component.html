@@ -343,7 +343,7 @@
                         <path d="M5 12H19" stroke="#464BA8" stroke-width="2" stroke-linecap="round"
                             stroke-linejoin="round" />
                     </svg>
-                    Add&nbsp;<b>{{selectedRecords.length + selectedInactiveRecords.length}}</b>&nbsp; companies to Placement Group
+                    Add&nbsp;<b>{{selectedRecords.length + selectedInactiveRecords.length}}</b>&nbsp; companies to Simulation Group
                 </button>
 
                 <button *ngIf="selectedInactiveRecords.length==0" mat-button class="theme_btn theme_link_btn" data-toggle="modal"
@@ -354,7 +354,7 @@
                         <path d="M5 12H19" stroke="#464BA8" stroke-width="2" stroke-linecap="round"
                             stroke-linejoin="round" />
                     </svg>
-                    Add&nbsp;<b>{{selectedRecords.length + selectedInactiveRecords.length}}</b>&nbsp; companies to Placement Group
+                    Add&nbsp;<b>{{selectedRecords.length + selectedInactiveRecords.length}}</b>&nbsp; companies to Simulation Group
                 </button>
             </div>
             <div class="col-md-5 text-right searchbar-end">
@@ -1140,12 +1140,12 @@
                         </div>  </th>
                     <td mat-cell *matCellDef="let row"> {{row?.student_placed ? row.student_placed : 0}} </td>
                 </ng-container>
-                <!-- Placement Groups Column -->
+                <!-- Simulation Groups Column -->
               
                 <!-- Vacancy count Column -->
                   <ng-container matColumnDef="vacancy_count">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header>
-                        <div class="header-wrapper"> Placement Group 
+                        <div class="header-wrapper"> Simulation Group 
                             <div class="hide-menu" [class.show]="menuTrigger.menuOpen">
                                 <button mat-icon-button class="rotate-180" [matMenuTriggerFor]="usernameMenu" (click)="selectedColumn = 'vacancy_count';$event.stopPropagation();" #menuTrigger="matMenuTrigger">
                                     <svg style="width: 18px;" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -1313,7 +1313,7 @@
                             </a>
 
                             <a mat-menu-item data-toggle="modal" data-target="#addPlacementGroup" (click)="row.selected=true ;selectCompany();selectedCompany= row;getPlacementGroups('');addCompanyPlacement.show()">
-                                <span>Add to Placement Group</span>
+                                <span>Add to Simulation Group</span>
                             </a>
 
 
@@ -1344,14 +1344,14 @@
                             <!-- <ng-container *ngxPermissionsOnly="['WIL_Write']">
                             <a *ngIf="row.site_status=='Blacklisted' || row.site_status=='Inactive'" mat-menu-item data-toggle="modal" data-target="#viewBlockListModel"
                                 (click)="row.selected = true; clearModel()">
-                                <span>Modify Placement Group</span>
+                                <span>Modify Simulation Group</span>
                             </a>
                             </ng-container>
 
                             <ng-container *ngxPermissionsOnly="['WIL_Write']">
                             <a  *ngIf="row.site_status!='Blacklisted' && row.site_status!='Inactive'" mat-menu-item data-toggle="modal" data-target="#modifyPlacement"
                             (click)="row.selected = true; clearModel()">
-                            <span>Modify Placement Group</span>
+                            <span>Modify Simulation Group</span>
                         </a>
                         </ng-container> -->
                         </mat-menu>
@@ -1503,9 +1503,9 @@
                                 <div class="col-md-7">
                                     <div class="right_container">
                                         <ng-container *ngIf="activeFilter?.name === 'placementGroups'">
-                                            <h4 class="title">Placement Group</h4>
+                                            <h4 class="title">Simulation Group</h4>
                                             <div class="form-group">
-                                                <ng-select name="anyName" placeholder="Select Placement Groups"
+                                                <ng-select name="anyName" placeholder="Select Simulation Groups"
                                                     bindLabel="name" [multiple]="true" [(ngModel)]="activeFilter.value">
                                                     <ng-option
                                                         *ngFor="let placementGroup of companyFilters?.placementGroups"
@@ -2388,7 +2388,7 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h2 class="modal-title">Modify Placement Groups</h2>
+                <h2 class="modal-title">Modify Simulation Groups</h2>
                 <button type="button" mat-icon-button id="closeModal" class="close" data-dismiss="modal"
                     aria-label="Close">
                     <mat-icon>close</mat-icon>
@@ -2397,7 +2397,7 @@
             <div class="modal-body pt-3">
                 <div class="form-group mb-0">
                     <ng-select [searchable]="true" bindLabel="title" bindValue="_id" [clearable]="false"
-                        placeholder="Search Placement Group" [multiple]="true" [items]="placementGroups"
+                        placeholder="Search Simulation Group" [multiple]="true" [items]="placementGroups"
                         (keyup)="getPlacementGroups($event)" [(ngModel)]="placemenGroupIds">
                         <ng-option *ngFor="let group of placementGroups" [value]="group._id">{{group.title}}</ng-option>
                     </ng-select>
@@ -2577,9 +2577,9 @@
                 <div class="modal-body pt-3">
                     <div class="table-responsive manage_table_scroll position-relative" >
                         <table mat-table [dataSource]="companyPlacementGroup" matSort class="ch_table">
-                            <!-- Placement Group Column -->
+                            <!-- Simulation Group Column -->
                             <ng-container matColumnDef="placement_group">
-                                <th mat-header-cell *matHeaderCellDef mat-sort-header>Placement Group </th>
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header>Simulation Group </th>
                                 <td mat-cell *matCellDef="let row">{{row.title}}
                                 </td>
                             </ng-container>
@@ -2637,7 +2637,7 @@
                 <div class="modal-body pt-3">
                     <div class="table-responsive manage_table_scroll position-relative" >
                         <table mat-table [dataSource]="companyPreferredContact" matSort class="ch_table">
-                            <!-- Placement Group Column -->
+                            <!-- Simulation Group Column -->
                             <ng-container matColumnDef="contact_name">
                                 <th mat-header-cell *matHeaderCellDef mat-sort-header>Contact Name </th>
                                 <td mat-cell *matCellDef="let row">{{row.first_name}} {{row.last_name}}
@@ -2710,7 +2710,7 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h2 class="modal-title primary" id="exampleModalLabel">View {{company?.company_name}} Placement Group</h2>
+                <h2 class="modal-title primary" id="exampleModalLabel">View {{company?.company_name}} Simulation Group</h2>
                 <button type="button" mat-icon-button id="closeModal" class="close" data-dismiss="modal"
                     aria-label="Close">
                     <mat-icon>close</mat-icon>
@@ -2720,9 +2720,9 @@
                 <div class="modal-body pt-3">
                     <div class="table-responsive manage_table_scroll position-relative" >
                         <table mat-table [dataSource]="companyPlacementGroup" matSort class="ch_table">
-                            <!-- Placement Group Column -->
+                            <!-- Simulation Group Column -->
                             <ng-container matColumnDef="placement_group">
-                                <th mat-header-cell *matHeaderCellDef mat-sort-header>Placement Group </th>
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header>Simulation Group </th>
                                 <!-- <td mat-cell *matCellDef="let row">{{row.title}}
                                 </td> -->
 
@@ -2786,7 +2786,7 @@
                 <div class="modal-body pt-3">
                     <div class="table-responsive manage_table_scroll position-relative" >
                         <table mat-table [dataSource]="companyVacancies" matSort class="ch_table">
-                            <!-- Placement Group Column -->
+                            <!-- Simulation Group Column -->
                             <ng-container matColumnDef="no">
                                 <th mat-header-cell *matHeaderCellDef mat-sort-header>No. </th>
                               <td mat-cell *matCellDef="let row; let i = index">{{ i + 1 }}</td>
@@ -2832,13 +2832,13 @@
 
 
 
-<!-- Add Placement Group Modal -->
+<!-- Add Simulation Group Modal -->
 <div  bsModal #addCompanyPlacement="bs-modal"  class="modal fade bsModal ch_modal" id="addPlacementGroup" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document" style="max-width:700px">
         <div class="modal-content">
             <div class="modal-header">
-                <!-- <h2 class="modal-title">Add&nbsp;<b>{{selectedRecords.length}}</b>&nbsp; companies to Placement Group</h2> -->
-                <h2 class="modal-title">Add to Placement Group</h2>
+                <!-- <h2 class="modal-title">Add&nbsp;<b>{{selectedRecords.length}}</b>&nbsp; companies to Simulation Group</h2> -->
+                <h2 class="modal-title">Add to Simulation Group</h2>
                 <button type="button" mat-icon-button id="closeModal" class="close" data-dismiss="modal"
                     aria-label="Close" (click)="addCompanyPlacement.hide(); resetForm()">
                     <mat-icon>close</mat-icon>
@@ -2863,7 +2863,7 @@
 
                 <div class="form-group mb-0 mt-4">
                     <ng-select [searchable]="true" bindLabel="title" bindValue="_id" [clearable]="false"
-                        placeholder="Search Placement Group" [multiple]="false" [items]="placementGroups"
+                        placeholder="Search Simulation Group" [multiple]="false" [items]="placementGroups"
                         (keyup)="getPlacementGroups($event)" [(ngModel)]="placemenGroupIds" (ngModelChange)="onSelectionChange($event)">
                         <!-- <ng-option *ngFor="let group of placementGroups" [value]="group._id">{{group.title}}</ng-option> -->
                         <ng-template ng-option-tmp let-group="item">
@@ -3055,7 +3055,7 @@
         <div class="modal-content">
             <div class="modal-header justify-content-center">
                 <h2 class="modal-title text-center" id="exampleModalLabel"> You cannot add the selected company to 
-                    a Placement Group as the company is
+                    a Simulation Group as the company is
                     either Inactive or Blacklisted.</h2>
                 <button mat-icon-button class="close" aria-label="Close" data-dismiss="modal">
                     <mat-icon>close</mat-icon>

@@ -371,7 +371,7 @@ export class PlacementOverviewComponent implements OnInit {
                 const names = ids
                   .map(id => this.studentFilters?.placementGroups?.find(pg => pg._id === id)?.title || id)
                   .join(", ");
-                return { key: "Placement Groups", value: names };
+                return { key: "Simulation Groups", value: names };
               }
 
               // Assigned To → lookup user name
@@ -409,7 +409,7 @@ export class PlacementOverviewComponent implements OnInit {
 
   prettyKey(key: string): string {
       const map: Record<string, string> = {
-        placementGroups: 'Placement Groups',
+        placementGroups: 'Simulation Groups',
         major: 'Major',
         minor: 'Minor',
         priority: 'Priority',
@@ -891,7 +891,7 @@ private formatDate(dateStr: any): string {
   selectedParameters:any="";
   // activeFilter:any =  'placementGroups';
   filters = [
-    // { name: 'Placement Groups', field: 'placementGroups', selected: false },
+    // { name: 'Simulation Groups', field: 'placementGroups', selected: false },
     { name: 'Major', field: 'major', selected: false },
     { name: 'Minor', field: 'minor', selected: false },
     { name: 'Location', field: 'post_code', selected: false },

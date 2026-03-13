@@ -1859,7 +1859,7 @@ intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<an
       )
   }
 
-  // Begin:: Placement Groups
+  // Begin:: Simulation Groups
 
   getPlacementGroups(data: any): Observable<any> {
     const API_URL = `${this.SERVER}get-plcmnt-grp`
@@ -2465,7 +2465,7 @@ intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<an
   }
 
 
-  //End:: Placement Groups
+  //End:: Simulation Groups
 
   // email template api methods
 

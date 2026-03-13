@@ -37,7 +37,7 @@ export class PlacementIndustryPartnersComponent implements OnInit {
   //   PLACEMENT_GROUPS : 'placement_groups',
   // }
   filters = [
-    { name: "placementGroups", label: "Placement Group", selected: false, value: "" },
+    { name: "placementGroups", label: "Simulation Group", selected: false, value: "" },
     { name: "post_code", label: "Location", selected: false, value: "" },
     { name: "no_of_employees", label: "No. of Employees", selected: false, value: "" },
     // { name: "lead_source", label: "Lead Source", selected: false, value: ""},

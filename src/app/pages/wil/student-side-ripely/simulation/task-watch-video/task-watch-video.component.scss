@@ -16,7 +16,7 @@ $success:  #00b894;
   height: 100%;
   background: $bg;
   color: $text;
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-family: var(--font-primary);
 }
 
 /* ── Float Titlebar ── */

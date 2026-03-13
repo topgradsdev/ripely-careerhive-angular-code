@@ -253,9 +253,9 @@
                    
                 </td>
             </ng-container>
-            <!-- Placement Groups Column -->
+            <!-- Simulation Groups Column -->
             <ng-container matColumnDef="placement_groups">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header> Placement Groups </th>
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Simulation Groups </th>
                 <td mat-cell *matCellDef="let row" class="position-relative"> 
                     <div class="d-flex align-items-center">
                     {{row.placementGroupCount}} &nbsp; {{row.placement_groups}}
@@ -273,7 +273,7 @@
                     </button> </div></td>
             </ng-container>
 
-            <!-- Placement Groups Column -->
+            <!-- Simulation Groups Column -->
             <ng-container matColumnDef="contact">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header>Contacts </th>
                 <td mat-cell *matCellDef="let row" class="position-relative"> 
@@ -295,7 +295,7 @@
             </ng-container>
 
 
-             <!-- Placement Groups Column -->
+             <!-- Simulation Groups Column -->
             <ng-container matColumnDef="vacancies">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header> Vacancies </th>
                 <td mat-cell *matCellDef="let row" class="position-relative">
@@ -494,10 +494,10 @@
                     <div class="col-md-7">
                         <div class="right_container">
                             <ng-container *ngIf="activeFilter?.name === 'placementGroups'">
-                                <h4 class="title">Placement Group</h4>
+                                <h4 class="title">Simulation Group</h4>
                                 <div class="form-group">
                                     <ng-select name="anyName"
-                                        placeholder="Select Placement Groups" bindLabel="name"
+                                        placeholder="Select Simulation Groups" bindLabel="name"
                                         [multiple]="true" [(ngModel)]="activeFilter.value">
                                         <ng-option *ngFor="let placementGroup of companyFilters?.placementGroups" [value]="placementGroup._id">{{placementGroup.title}}</ng-option>
                                     </ng-select>
@@ -687,7 +687,7 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h2 class="modal-title primary" id="exampleModalLabel">View {{company?.company_name}} Placement Groups</h2>
+                <h2 class="modal-title primary" id="exampleModalLabel">View {{company?.company_name}} Simulation Groups</h2>
                 <button type="button" mat-icon-button id="closeModal" class="close" data-dismiss="modal"
                     aria-label="Close">
                     <mat-icon>close</mat-icon>
@@ -697,9 +697,9 @@
                 <div class="modal-body pt-3">
                     <div class="table-responsive manage_table_scroll position-relative" >
                         <table mat-table [dataSource]="companyPlacementGroup" matSort class="ch_table">
-                            <!-- Placement Group Column -->
+                            <!-- Simulation Group Column -->
                             <ng-container matColumnDef="placement_group">
-                                <th mat-header-cell *matHeaderCellDef mat-sort-header>Placement Group </th>
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header>Simulation Group </th>
                                 <td mat-cell *matCellDef="let row">{{row.title}}
                                 </td>
                             </ng-container>
@@ -756,7 +756,7 @@
                 <div class="modal-body pt-3">
                     <div class="table-responsive manage_table_scroll position-relative" >
                         <table mat-table [dataSource]="companyVacancies" matSort class="ch_table">
-                            <!-- Placement Group Column -->
+                            <!-- Simulation Group Column -->
                             <ng-container matColumnDef="no">
                                 <th mat-header-cell *matHeaderCellDef mat-sort-header>No. </th>
                               <td mat-cell *matCellDef="let row; let i = index">{{ i + 1 }}</td>
@@ -812,7 +812,7 @@
                 <div class="modal-body pt-3">
                     <div class="table-responsive manage_table_scroll position-relative" >
                         <table mat-table [dataSource]="companyPreferredContact" matSort class="ch_table">
-                            <!-- Placement Group Column -->
+                            <!-- Simulation Group Column -->
                             <ng-container matColumnDef="contact_name">
                                 <th mat-header-cell *matHeaderCellDef mat-sort-header>Contact Name </th>
                                 <td mat-cell *matCellDef="let row">{{row.first_name}} {{row.last_name}}
@@ -871,7 +871,7 @@
                 <div class="modal-body pt-3">
                     <div class="table-responsive manage_table_scroll position-relative" >
                         <table mat-table [dataSource]="studentlist?.allocated_students" matSort class="ch_table">
-                            <!-- Placement Group Column -->
+                            <!-- Simulation Group Column -->
                             <ng-container matColumnDef="Student_Name">
                                 <th mat-header-cell *matHeaderCellDef mat-sort-header>Student Name </th>
                                 <td mat-cell *matCellDef="let row">{{row.first_name}} {{row.last_name}}

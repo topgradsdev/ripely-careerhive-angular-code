@@ -65,7 +65,7 @@
                             <path d="M5 12H19" stroke="#464BA8" stroke-width="2" stroke-linecap="round"
                                 stroke-linejoin="round" />
                         </svg>
-                        Add&nbsp;<b>{{selectedRecords.length}}</b>&nbsp;students to Placement Group
+                        Add&nbsp;<b>{{selectedRecords.length}}</b>&nbsp;students to Simulation Group
                     </button>
 
                     <button mat-button class="theme_btn theme_link_btn" data-toggle="modal" data-target="#resendOTPEmailStudentBulk">
@@ -376,7 +376,7 @@
                     </ng-container>
 
                     <ng-container matColumnDef="placement_group">
-                        <th mat-header-cell *matHeaderCellDef mat-sort-header>Placement Group
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header>Simulation Group
                         </th>
 
                         <td mat-cell *matCellDef="let row"  class="position-relative">
@@ -698,7 +698,7 @@
                         <path d="M5 12H19" stroke="#464BA8" stroke-width="2" stroke-linecap="round"
                             stroke-linejoin="round" />
                     </svg>
-                    Add&nbsp;<b>{{selectedRecords.length + selectedInactiveRecords.length}}</b>&nbsp; companies to Placement Group
+                    Add&nbsp;<b>{{selectedRecords.length + selectedInactiveRecords.length}}</b>&nbsp; companies to Simulation Group
                 </button>
 
                 <button *ngIf="selectedInactiveRecords.length==0" mat-button class="theme_btn theme_link_btn" data-toggle="modal"
@@ -709,7 +709,7 @@
                         <path d="M5 12H19" stroke="#464BA8" stroke-width="2" stroke-linecap="round"
                             stroke-linejoin="round" />
                     </svg>
-                    Add&nbsp;<b>{{selectedRecords.length + selectedInactiveRecords.length}}</b>&nbsp; companies to Placement Group
+                    Add&nbsp;<b>{{selectedRecords.length + selectedInactiveRecords.length}}</b>&nbsp; companies to Simulation Group
                 </button>
             </div> -->
             <div class="col-md-12 text-right searchbar-end">
@@ -1174,11 +1174,11 @@
                        </th>
                     <td mat-cell *matCellDef="let row"> {{row?.student_placed ? row.student_placed : 0}} </td>
                 </ng-container>
-                <!-- Placement Groups Column -->
+                <!-- Simulation Groups Column -->
               
                 <!-- Vacancy count Column -->
                   <ng-container matColumnDef="vacancy_count">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Placement Group 
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Simulation Group 
                        
                     </th>
                     <td mat-cell *matCellDef="let row"> 
@@ -1302,7 +1302,7 @@
                 <div class="modal-body pt-3">
                     <div class="table-responsive manage_table_scroll position-relative" >
                         <table mat-table [dataSource]="companyVacancies" matSort class="ch_table">
-                            <!-- Placement Group Column -->
+                            <!-- Simulation Group Column -->
                             <ng-container matColumnDef="no">
                                 <th mat-header-cell *matHeaderCellDef mat-sort-header>No. </th>
                               <td mat-cell *matCellDef="let row; let i = index">{{ i + 1 }}</td>
@@ -1349,7 +1349,7 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h2 class="modal-title primary" id="exampleModalLabel">View {{company?.company_name}} Placement Group</h2>
+                <h2 class="modal-title primary" id="exampleModalLabel">View {{company?.company_name}} Simulation Group</h2>
                 <button type="button" mat-icon-button id="closeModal" class="close" data-dismiss="modal"
                     aria-label="Close">
                     <mat-icon>close</mat-icon>
@@ -1359,9 +1359,9 @@
                 <div class="modal-body pt-3">
                     <div class="table-responsive manage_table_scroll position-relative" >
                         <table mat-table [dataSource]="companyPlacementGroup" matSort class="ch_table">
-                            <!-- Placement Group Column -->
+                            <!-- Simulation Group Column -->
                             <ng-container matColumnDef="placement_group">
-                                <th mat-header-cell *matHeaderCellDef mat-sort-header>Placement Group </th>
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header>Simulation Group </th>
                                 <!-- <td mat-cell *matCellDef="let row">{{row.title}}
                                 </td> -->
 
@@ -1425,9 +1425,9 @@
                 <div class="modal-body pt-3">
                     <div class="table-responsive manage_table_scroll position-relative" >
                         <table mat-table [dataSource]="companyPlacementGroup" matSort class="ch_table">
-                            <!-- Placement Group Column -->
+                            <!-- Simulation Group Column -->
                             <ng-container matColumnDef="placement_group">
-                                <th mat-header-cell *matHeaderCellDef mat-sort-header>Placement Group </th>
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header>Simulation Group </th>
                                 <td mat-cell *matCellDef="let row">{{row.title}}
                                 </td>
                             </ng-container>
@@ -1485,7 +1485,7 @@
                 <div class="modal-body pt-3">
                     <div class="table-responsive manage_table_scroll position-relative" >
                         <table mat-table [dataSource]="companyPreferredContact" matSort class="ch_table">
-                            <!-- Placement Group Column -->
+                            <!-- Simulation Group Column -->
                             <ng-container matColumnDef="contact_name">
                                 <th mat-header-cell *matHeaderCellDef mat-sort-header>Contact Name </th>
                                 <td mat-cell *matCellDef="let row">{{row.first_name}} {{row.last_name}}
@@ -1559,7 +1559,7 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h2 class="modal-title primary" id="exampleModalLabel">View {{selectedStudents?.first_name}} {{selectedStudents?.last_name}}'s Placement Groups</h2> 
+                <h2 class="modal-title primary" id="exampleModalLabel">View {{selectedStudents?.first_name}} {{selectedStudents?.last_name}}'s Simulation Groups</h2> 
                 <button type="button" mat-icon-button id="closeModal" class="close" data-dismiss="modal"
                     aria-label="Close">
                     <mat-icon>close</mat-icon>
@@ -1570,7 +1570,7 @@
                  <!--  -->
                     <div class="table-responsive manage_table_scroll position-relative">
                       <table mat-table [dataSource]="studentPGs" matSort class="ch_table">
-                            <!-- Placement Group Column -->
+                            <!-- Simulation Group Column -->
                             <ng-container matColumnDef="code">
                                 <th mat-header-cell *matHeaderCellDef mat-sort-header>Code </th>
                               <td mat-cell *matCellDef="let row">{{ row.code }}</td>

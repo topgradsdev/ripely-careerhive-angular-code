@@ -134,9 +134,9 @@
                             <th mat-header-cell *matHeaderCellDef mat-sort-header> Students Placed </th>
                             <td mat-cell *matCellDef="let row"> {{row.student_placed}} </td>
                         </ng-container>
-                        <!-- Placement Groups Column -->
+                        <!-- Simulation Groups Column -->
                         <ng-container matColumnDef="placement_groups">
-                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Placement Groups </th>
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Simulation Groups </th>
                             <td mat-cell *matCellDef="let row"> {{row.placement_groups}} </td>
                         </ng-container>
 
@@ -204,7 +204,7 @@
         <div class="modal-content">
             <div class="modal-header text-center justify-content-center">
                <h2 class="modal-title"> You have selected [x] companies. <br><br>
-                Do you want to proceed and add them into <br> [Placement Group Name]?</h2>
+                Do you want to proceed and add them into <br> [Simulation Group Name]?</h2>
             </div>
             <div class="modal-footer justify-content-center">                
                 <button mat-button class="theme_btn btn_outline_primary mr-4" data-dismiss="modal">No</button>
@@ -223,7 +223,7 @@
             </div>
             <div class="modal-body text-center">
                 <h2 class="mb-1">[x] companies have been successfully added to <br>
-                    [Placement Group Name].</h2>
+                    [Simulation Group Name].</h2>
             </div>
             <div class="modal-footer justify-content-center">
                 <button mat-button class="theme_btn btn_primary" data-dismiss="modal">Close</button>

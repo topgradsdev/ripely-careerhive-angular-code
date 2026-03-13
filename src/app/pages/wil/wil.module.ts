@@ -71,6 +71,11 @@ import { SimulationGroupsComponent } from './simulation-groups/simulation-groups
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { PlacementSubmissionsComponent } from './placement-submissions/placement-submissions.component';
 import { NgChartsModule } from 'ng2-charts';
+import { SimulationOverviewComponent } from './simulation-overview/simulation-overview.component';
+import { SimulationProgressComponent } from './simulation-progress/simulation-progress.component';
+import { SimulationWorkflowComponent } from './simulation-workflow/simulation-workflow.component';
+import { SimulationEligibleStudentsComponent } from './simulation-eligible-students/simulation-eligible-students.component';
+import { SimulationTestimoniesComponent } from './simulation-testimonies/simulation-testimonies.component';
 
 const modalDefaults: ModalOptions = {
   backdrop: 'static',
@@ -126,6 +131,11 @@ const modalDefaults: ModalOptions = {
     IndustryPartnerAddBySearchingComponent,
     SimulationGroupsListComponent,
     SimulationGroupsComponent,
+    SimulationOverviewComponent,
+    SimulationProgressComponent,
+    SimulationWorkflowComponent,
+    SimulationEligibleStudentsComponent,
+    SimulationTestimoniesComponent,
     // YoutubeVimeoUrlValidatorDirective
   ],
   imports: [

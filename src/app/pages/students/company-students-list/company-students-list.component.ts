@@ -33,7 +33,7 @@ export class CompanyStudentsListComponent implements AfterViewInit {
   @ViewChild('closeConfirmDeleteModal') closeConfirmDeleteModal;
 
 
-  // { name: 'Placement Groups', field: 'placementGroups', selected: false },
+  // { name: 'Simulation Groups', field: 'placementGroups', selected: false },
   // { name: 'Major', field: 'major', selected: false },
   // { name: 'Priority', field: 'priority', selected: false },
   // { name: 'Status', field: 'status', selected: false },

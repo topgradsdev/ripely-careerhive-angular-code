@@ -1,0 +1,1686 @@
+<section>
+    <form [formGroup]="placementOverView">
+        <div class="cards">
+            <div class="card_header" [ngStyle]="{'background-image': 'url('+ imageURL +')'}">
+                <ng-container *ngIf="overviewEditForm">
+                    <label for="files">
+                        <svg class="edit_btn" width="28" height="28" viewBox="0 0 28 28" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="14" cy="14" r="14" fill="#F8F8F8" />
+                            <path fill-rule="evenodd" clip-rule="evenodd"
+                                d="M16.5883 8.16663C16.9702 8.16663 17.3363 8.31912 17.6037 8.58862L19.4126 10.3975C19.6819 10.6668 19.8332 11.0321 19.8332 11.4129C19.8332 11.7938 19.6819 12.1591 19.4126 12.4284L12.8084 19.0305C12.4009 19.5005 11.8234 19.7893 11.1617 19.8347H8.1665V19.2513L8.1684 16.7926C8.21809 16.1774 8.50406 15.6055 8.94029 15.2211L15.5721 8.58933C15.8411 8.31878 16.2068 8.16663 16.5883 8.16663ZM11.1205 18.6694C11.4321 18.6474 11.7222 18.5023 11.9551 18.2359L16.3662 13.8248L14.1762 11.6347L9.73923 16.0706C9.50289 16.2796 9.35668 16.572 9.33317 16.8395V18.6683L11.1205 18.6694ZM15.0012 10.8098L17.1912 12.9998L18.5876 11.6034C18.6382 11.5529 18.6665 11.4844 18.6665 11.4129C18.6665 11.3415 18.6382 11.273 18.5876 11.2224L16.7772 9.41196C16.7272 9.36161 16.6592 9.33329 16.5883 9.33329C16.5174 9.33329 16.4494 9.36161 16.3994 9.41196L15.0012 10.8098Z"
+                                fill="#2B2A35" />
+                        </svg>
+                        <input class="invisible" id="files" type="file" accept="image/*"
+                            (change)="showPreview($event)" />
+                    </label>
+                </ng-container>
+                <ng-container *ngxPermissionsOnly="['WIL_Write']">
+                <ng-container *ngIf="!overviewEditForm">
+                    <button *ngIf="!placementGroupDetails?.is_publish" mat-button
+                        class="theme_btn btn_primary publish_btn" data-toggle="modal"
+                        data-target="#publishPlacement" (click)="getPlacementTypes()">Publish</button>
+                    <button *ngIf="placementGroupDetails?.is_publish" mat-button
+                        class="theme_btn btn_primary publish_btn" data-toggle="modal"
+                        data-target="#unpublish">Unpublish</button>
+                </ng-container>
+                </ng-container>
+                <ng-container *ngIf="!overviewEditForm">
+                    <h3 class="title">{{placementGroupDetails.title}}</h3>
+                    <h3 class="title">{{placementGroupDetails.code}}</h3>
+                </ng-container>
+                <ng-container *ngIf="overviewEditForm">
+                    <div class="row ">
+                        <div class="col-md-7">
+                            <input type="text" formControlName="title" class="form-control title_input"
+                                value="Jan 2024 PY IT Internship">
+                        </div>
+                        <div class="col-md-7">
+                            <input type="text" formControlName="code" class="form-control sub_title_input"
+                                value="PYIT2024">
+                        </div>
+                    </div>
+                </ng-container>
+                <div class="card_container">
+                    <div class="header_card">
+                        <div class="content flex-column align-items-start">
+                            <p class="m-0">Eligible Students</p>
+                            <h4>{{overAllCount.eligibleStudent}}</h4>
+                        </div>
+                        <svg width="54" height="54" viewBox="0 0 54 54" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="27" cy="27" r="27" fill="#65DAB9" />
+                            <g clip-path="url(#clip0_14064_85084)">
+                                <path
+                                    d="M40.2274 22.882L28.0238 19.0322C27.3588 18.8224 26.6413 18.8224 25.9767 19.0322L13.7727 22.882C12.7428 23.2068 12.7428 24.6052 13.7727 24.93L15.9002 25.6011C15.4334 26.1937 15.1464 26.9165 15.118 27.708C14.6967 27.9559 14.4 28.4034 14.4 28.9375C14.4 29.4217 14.6485 29.8292 15.0064 30.0897L13.8895 35.2504C13.7923 35.6991 14.1248 36.125 14.5724 36.125H17.0272C17.4752 36.125 17.8077 35.6991 17.7106 35.2504L16.5937 30.0897C16.9515 29.8292 17.2 29.4217 17.2 28.9375C17.2 28.4177 16.917 27.9829 16.5149 27.7304C16.5482 27.0557 16.8842 26.4592 17.4201 26.0809L25.9763 28.7803C26.3727 28.9051 27.133 29.061 28.0233 28.7803L40.2274 24.9305C41.2577 24.6052 41.2577 23.2073 40.2274 22.882ZM28.4346 30.1544C27.1864 30.5479 26.1228 30.3305 25.565 30.1544L19.2204 28.1532L18.6 33.25C18.6 34.838 22.3608 36.125 27 36.125C31.6393 36.125 35.4 34.838 35.4 33.25L34.7797 28.1527L28.4346 30.1544Z"
+                                    fill="white" />
+                            </g>
+                            <defs>
+                                <clipPath id="clip0_14064_85084">
+                                    <rect width="28" height="23" fill="white" transform="translate(13 16)" />
+                                </clipPath>
+                            </defs>
+                        </svg>
+                    </div>
+                    <div class="header_card">
+                        <div class="content flex-column align-items-start">
+                            <p class="m-0">Pending Placements</p>
+                            <h4>{{overAllCount.pendingPlacement}}</h4>
+                        </div>
+
+                        <svg width="54" height="54" viewBox="0 0 54 54" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="27" cy="27" r="27" fill="#202C76" />
+                            <path d="M17.6667 27H36.3334" stroke="white" stroke-width="4" stroke-linecap="round"
+                                stroke-linejoin="round" />
+                            <path d="M27 17.6666L36.3333 27L27 36.3333" stroke="white" stroke-width="4"
+                                stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+
+                    </div>
+                    <div class="header_card">
+                     <div class="content flex-column align-items-start">
+                            <p class="m-0">Placed Candidates</p>
+                            <h4>{{overAllCount.placed}}</h4>
+                        </div>
+
+                        <svg width="54" height="54" viewBox="0 0 54 54" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="27" cy="27" r="27" fill="#F47761" />
+                            <path d="M37.6666 19L22.9999 33.6667L16.3333 27" stroke="white" stroke-width="4"
+                                stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+
+                    </div>
+                </div>
+            </div>
+           
+            <div class="card_body">
+                
+      
+                <div class="form_heading">
+                    <!-- <div class="d-flex" style="gap:20px">
+                        <h5 (click)="setActiveTab('tab1')" [ngClass]="activeTab=='tab1' ? 'tab-active tab-active-border' : 'tab-inactive'">Details</h5>
+                        <h5 (click)="setActiveTab('tab2')" [ngClass]="activeTab=='tab2' ? 'tab-active tab-active-border' : 'tab-inactive'">Project Info</h5>
+                    </div> -->
+                    <div class="d-flex" style="gap:20px">
+                        <h5 (click)="setActiveTab('tab1', $event)"
+                            [ngClass]="activeTab === 'tab1' ? 'tab-active tab-active-border' : 'tab-inactive'">
+                          Details
+                        </h5>
+                      
+                        <h5 tabindex="-1" (click)="setActiveTab('tab2', $event)"
+                            [ngClass]="activeTab === 'tab2' ? 'tab-active tab-active-border' : 'tab-inactive'" class="tab-button-style">
+                          Project Info
+                        </h5>
+
+                        <h5 tabindex="-1" (click)="setActiveTab('tab3', $event)"
+                            [ngClass]="activeTab === 'tab3' ? 'tab-active tab-active-border' : 'tab-inactive'" class="tab-button-style">
+                          Pre-Enrolment
+                        </h5>
+                      </div>
+                    <div>
+                        <ng-container *ngIf="overviewEditForm">
+                            <button mat-button class="theme_btn btn_primary mr-3"
+                                (click)="onSave(placementOverView)">Save</button>
+                            <button mat-button class="theme_btn btn_outline_primary"
+                                (click)="onCancel()">Cancel</button>
+                        </ng-container>
+                        <ng-container *ngIf="!overviewEditForm && activeTab=='tab1'">
+                            <button *ngxPermissionsOnly="['WIL_Write']" mat-icon-button (click)="onEdit()">
+                                <svg width="40" height="40" viewBox="0 0 40 40" fill="none"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <circle cx="20" cy="20" r="20" fill="#F8F8F8" />
+                                    <path fill-rule="evenodd" clip-rule="evenodd"
+                                        d="M23.6979 11.6666C24.2435 11.6666 24.7665 11.8845 25.1485 12.2695L27.7326 14.8536C28.1173 15.2383 28.3335 15.7601 28.3335 16.3042C28.3335 16.8483 28.1173 17.3701 27.7326 17.7548L18.298 27.1864C17.7159 27.8579 16.8908 28.2704 15.9456 28.3352H11.6667V27.5019L11.6695 23.9894C11.7404 23.1107 12.149 22.2936 12.7722 21.7445L22.2462 12.2705C22.6304 11.884 23.1529 11.6666 23.6979 11.6666ZM15.8867 26.6706C16.3319 26.6391 16.7463 26.4319 17.0791 26.0513L23.3807 19.7497L20.252 16.621L13.9135 22.958C13.5759 23.2566 13.367 23.6743 13.3334 24.0565V26.6691L15.8867 26.6706ZM21.4307 15.4426L24.5592 18.5712L26.5541 16.5763C26.6262 16.5041 26.6668 16.4063 26.6668 16.3042C26.6668 16.2021 26.6262 16.1042 26.5541 16.0321L23.9677 13.4457C23.8963 13.3737 23.7992 13.3333 23.6979 13.3333C23.5966 13.3333 23.4994 13.3737 23.4281 13.4457L21.4307 15.4426Z"
+                                        fill="#2B2A35" />
+                                </svg>
+                            </button>
+
+                        </ng-container>
+                        <ng-container *ngIf="activeTab=='tab1'">
+                            <button *ngxPermissionsOnly="['WIL_Write']" mat-icon-button [matMenuTriggerFor]="menu" class="td-btn">
+                                <svg width="32" height="32" viewBox="0 0 32 32" fill="none"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path
+                                        d="M15.9998 17.3333C16.7362 17.3333 17.3332 16.7363 17.3332 16C17.3332 15.2636 16.7362 14.6666 15.9998 14.6666C15.2635 14.6666 14.6665 15.2636 14.6665 16C14.6665 16.7363 15.2635 17.3333 15.9998 17.3333Z"
+                                        fill="#575757" stroke="#575757" stroke-width="3" stroke-linecap="round"
+                                        stroke-linejoin="round" />
+                                    <path
+                                        d="M15.9998 8.00004C16.7362 8.00004 17.3332 7.40309 17.3332 6.66671C17.3332 5.93033 16.7362 5.33337 15.9998 5.33337C15.2635 5.33337 14.6665 5.93033 14.6665 6.66671C14.6665 7.40309 15.2635 8.00004 15.9998 8.00004Z"
+                                        fill="#575757" stroke="#575757" stroke-width="3" stroke-linecap="round"
+                                        stroke-linejoin="round" />
+                                    <path
+                                        d="M15.9998 26.6667C16.7362 26.6667 17.3332 26.0697 17.3332 25.3333C17.3332 24.597 16.7362 24 15.9998 24C15.2635 24 14.6665 24.597 14.6665 25.3333C14.6665 26.0697 15.2635 26.6667 15.9998 26.6667Z"
+                                        fill="#575757" stroke="#575757" stroke-width="3" stroke-linecap="round"
+                                        stroke-linejoin="round" />
+                                </svg>
+                            </button>
+                            <mat-menu #menu="matMenu" class="td-menu custome_theme_menu">
+                                <!-- <a mat-menu-item data-toggle="modal" data-target="#inviteStaff">
+                                    <span>Invite Staff</span>
+                                </a> -->
+                                <a mat-menu-item class="danger" (click)="archiveGroup()">
+                                    <span>Archive</span>
+                                </a>
+                                <!-- <a mat-menu-item class="danger" data-toggle="modal" data-target="#archived">
+                                    <span>Archive</span>
+                                </a> -->
+                            </mat-menu>
+                        </ng-container>
+
+                        <ng-container *ngIf="activeTab=='tab2' && projectDetails && !placementGroupDetails?.is_publish">
+                            <button *ngxPermissionsOnly="['WIL_Write']" mat-icon-button [matMenuTriggerFor]="menu" class="td-btn">
+                                <svg width="32" height="32" viewBox="0 0 32 32" fill="none"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path
+                                        d="M15.9998 17.3333C16.7362 17.3333 17.3332 16.7363 17.3332 16C17.3332 15.2636 16.7362 14.6666 15.9998 14.6666C15.2635 14.6666 14.6665 15.2636 14.6665 16C14.6665 16.7363 15.2635 17.3333 15.9998 17.3333Z"
+                                        fill="#575757" stroke="#575757" stroke-width="3" stroke-linecap="round"
+                                        stroke-linejoin="round" />
+                                    <path
+                                        d="M15.9998 8.00004C16.7362 8.00004 17.3332 7.40309 17.3332 6.66671C17.3332 5.93033 16.7362 5.33337 15.9998 5.33337C15.2635 5.33337 14.6665 5.93033 14.6665 6.66671C14.6665 7.40309 15.2635 8.00004 15.9998 8.00004Z"
+                                        fill="#575757" stroke="#575757" stroke-width="3" stroke-linecap="round"
+                                        stroke-linejoin="round" />
+                                    <path
+                                        d="M15.9998 26.6667C16.7362 26.6667 17.3332 26.0697 17.3332 25.3333C17.3332 24.597 16.7362 24 15.9998 24C15.2635 24 14.6665 24.597 14.6665 25.3333C14.6665 26.0697 15.2635 26.6667 15.9998 26.6667Z"
+                                        fill="#575757" stroke="#575757" stroke-width="3" stroke-linecap="round"
+                                        stroke-linejoin="round" />
+                                </svg>
+                            </button>
+                            <mat-menu #menu="matMenu" class="td-menu custome_theme_menu">
+                                <a mat-menu-item class="danger" (click)="checkRemove()">
+                                    <span>Remove Project</span>
+                                </a>
+                            </mat-menu>
+                        </ng-container>
+                   
+                    </div>
+                </div>
+
+                <ng-container *ngIf="overviewEditForm && activeTab=='tab1'">
+                    <div class="bold_lable_form">
+                        <div class="row form-group">
+                            <div class="col-2"><label class="label_title">Description</label></div>
+                            <div class="col-10">
+                                <!-- <textarea formControlName="description" class="form-control" cols="30" rows="8"
+                                    [class.invalid_field]="checkFieldInvalid('description')"></textarea> -->
+                                    <!-- [class.invalid_field]="checkFieldInvalid('description')" -->
+                                    <quill-editor [modules]="modules" formControlName="description" ></quill-editor>
+                                <!-- <editor formControlName="description" class="ch_editor"
+                                    apiKey="zcwi1f81304uers1lcszh0iq2lbhcaxl5cj6ez0v89wr25z3" [init]="{
+                                    height: 178,
+                                    menubar: false,
+                                    statusbar: true,
+                                    placeholder: 'Description',
+                                    plugins: [
+                                    'textcolor',
+                                    'advlist autolink lists link image charmap print preview anchor',
+                                    'searchreplace visualblocks code fullscreen',
+                                    'insertdatetime media table paste code help wordcount'
+                                    ],
+                                    toolbar:
+                                    'bold italic | \
+                                    bullist | formatselect | link |',
+                                    contextmenu: false
+                                    }" [class.invalid_field]="checkFieldInvalid('description')"></editor> -->
+                                <!-- <span *ngIf="checkFieldInvalid('description')" class="error">This field is
+                                    required.</span> -->
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col-2"><label class="label_title">Category</label></div>
+                            <div class="col-6">
+                                <div>
+                                    <ng-select formControlName="category_id" [searchable]="false" [multiple]="false"
+                                        bindLabel="name" bindValue="id" [clearable]="false" placeholder="Category"
+                                        [class.invalid_field]="checkFieldInvalid('category')" [readonly]="true">
+                                        <ng-container *ngFor="let category of placementCategories">
+                                            <ng-option value="{{category._id}}">{{category.Category_name}}</ng-option>
+                                        </ng-container>
+                                    </ng-select>
+                                    <span *ngIf="checkFieldInvalid('category')" class="error">This field is
+                                        required.</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col-2"><label class="label_title">Industry</label></div>
+                            <div class="col-6">
+                                <div>
+                                    <ng-select formControlName="industry_id" [searchable]="false" [multiple]="false"
+                                        bindLabel="name" bindValue="id" [clearable]="false" placeholder="Industry"
+                                        [class.invalid_field]="checkFieldInvalid('industry')">
+                                        <ng-container *ngFor="let industry of placementIndustries">
+                                            <ng-option value="{{industry._id}}">{{industry.industry}}</ng-option>
+                                        </ng-container>
+                                    </ng-select>
+                                    <span *ngIf="checkFieldInvalid('industry')" class="error">This field is
+                                        required.</span>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- <div class="row form-group">
+                            <div class="col-2"><label class="label_title">Date</label></div>
+                            <div class="col-8 date_group ml-0">
+                                <div class="form-group mb-0 custom_datepicker">
+                                    <div class="custom_datepicker_container">
+                                        <input formControlName="start_date" placeholder="Start Date"
+                                            class="form-control" [matDatepicker]="projectStartPicker"
+                                            [class.invalid_field]="checkFieldInvalid('startDate')">
+                                        <mat-datepicker-toggle matSuffix [for]="projectStartPicker">
+
+                                            <svg matDatepickerToggleIcon width="18" height="18" viewBox="0 0 18 18"
+                                                fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path
+                                                    d="M14.25 3H3.75C2.92157 3 2.25 3.67157 2.25 4.5V15C2.25 15.8284 2.92157 16.5 3.75 16.5H14.25C15.0784 16.5 15.75 15.8284 15.75 15V4.5C15.75 3.67157 15.0784 3 14.25 3Z"
+                                                    stroke="#2B2A35" stroke-width="1.5" stroke-linecap="round"
+                                                    stroke-linejoin="round" />
+                                                <path d="M12 1.5V4.5" stroke="#2B2A35" stroke-width="1.5"
+                                                    stroke-linecap="round" stroke-linejoin="round" />
+                                                <path d="M6 1.5V4.5" stroke="#2B2A35" stroke-width="1.5"
+                                                    stroke-linecap="round" stroke-linejoin="round" />
+                                                <path d="M2.25 7.5H15.75" stroke="#2B2A35" stroke-width="1.5"
+                                                    stroke-linecap="round" stroke-linejoin="round" />
+                                            </svg>
+                                        </mat-datepicker-toggle>
+                                        <mat-datepicker #projectStartPicker></mat-datepicker>
+                                    </div>
+                                    <span *ngIf="checkFieldInvalid('startDate')" class="error">This field is
+                                        required.</span>
+                                </div>
+                                <div class="to">to</div>
+                                <div class="form-group mb-0 custom_datepicker">
+                                    <div class="custom_datepicker_container">
+                                        <input formControlName="end_date" placeholder="End Date" class="form-control"
+                                            [matDatepicker]="projectEndPicker"
+                                            [class.invalid_field]="checkFieldInvalid('endDate')">
+                                        <mat-datepicker-toggle matSuffix [for]="projectEndPicker">
+                                            <svg matDatepickerToggleIcon width="18" height="18" viewBox="0 0 18 18"
+                                                fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path
+                                                    d="M14.25 3H3.75C2.92157 3 2.25 3.67157 2.25 4.5V15C2.25 15.8284 2.92157 16.5 3.75 16.5H14.25C15.0784 16.5 15.75 15.8284 15.75 15V4.5C15.75 3.67157 15.0784 3 14.25 3Z"
+                                                    stroke="#2B2A35" stroke-width="1.5" stroke-linecap="round"
+                                                    stroke-linejoin="round" />
+                                                <path d="M12 1.5V4.5" stroke="#2B2A35" stroke-width="1.5"
+                                                    stroke-linecap="round" stroke-linejoin="round" />
+                                                <path d="M6 1.5V4.5" stroke="#2B2A35" stroke-width="1.5"
+                                                    stroke-linecap="round" stroke-linejoin="round" />
+                                                <path d="M2.25 7.5H15.75" stroke="#2B2A35" stroke-width="1.5"
+                                                    stroke-linecap="round" stroke-linejoin="round" />
+                                            </svg>
+                                        </mat-datepicker-toggle>
+                                        <mat-datepicker #projectEndPicker></mat-datepicker>
+                                    </div>
+                                    <span *ngIf="checkFieldInvalid('endDate')" class="error">This field is
+                                        required.</span>
+                                </div>
+                            </div>
+                        </div> -->
+                        <div class="form_heading mb-4">
+                            <h5>Administrative Info</h5>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col-2"><label class="label_title">Creation Date</label></div>
+                            <div class="col-10">
+                                <p>{{placementGroupDetails.publish_at}}</p>
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col-2"><label class="label_title">Staff</label></div>
+                            <div class="col-10">
+                                <div class="user_profiles">
+                                    <div *ngFor="let staff of placementGroupDetails.staff" class="profile"
+                                        matTooltip="{{staff.first_name}} {{staff.last_name}}"
+                                        matTooltipPosition="above">
+                                        <!-- <img src="../../../../assets/img/avatars/1.jpg" alt="avatars"> -->
+                                        <span>{{utils.extractCharacter(staff.first_name, 0)}}
+                                            {{utils.extractCharacter(staff.last_name, 0)}}</span>
+                                    </div>
+                                    <span class="more_profile">
+                                        <svg class="" data-toggle="modal" data-target="#modifyStaff" width="48"
+                                            height="48" viewBox="0 0 48 48" fill="none"
+                                            xmlns="http://www.w3.org/2000/svg">
+                                            <circle cx="24" cy="24" r="24" fill="#F8F8F8" />
+                                            <line x1="24.3145" y1="13.7143" x2="24.3145" y2="35.6572" stroke="#2B2A35"
+                                                stroke-width="2" />
+                                            <line x1="13.7144" y1="25.0571" x2="35.6572" y2="25.0571" stroke="#2B2A35"
+                                                stroke-width="2" />
+                                        </svg>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col-2"><label class="label_title">Last Modified</label></div>
+                            <div class="col-10">
+                                <span>{{placementGroupDetails.updated_at ? (placementGroupDetails.updated_at):''}}</span>
+                               <div class="user_profiles d-inline-flex" *ngIf="placementGroupDetails?.created_by">
+                                    <div class="profile" matTooltip="{{placementGroupDetails?.created_by}}"
+                                        matTooltipPosition="above">
+                                        <!-- <img src="../../../../assets/img/avatars/1.jpg" alt="avatars"> -->
+                                        <span
+                                            *ngIf="placementGroupDetails.created_by">{{getLastModifiedInitial()}}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </ng-container>
+                <ng-container *ngIf="!overviewEditForm && activeTab=='tab1'">
+                    <div class="bold_lable_form">
+                        <div class="row form-group">
+                            <div class="col-2"><label class="label_title">Description</label></div>
+                            <div class="col-10">
+                                <p class="view_content">{{removeHTMLTags(placementGroupDetails.description)}}</p>
+
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col-2"><label class="label_title">Category</label></div>
+                            <div class="col-6">
+                                <p class="view_content">{{placementGroupDetails.category_name}}</p>
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col-2"><label class="label_title">Industry</label></div>
+                            <div class="col-6">
+                                <p class="view_content">{{placementGroupDetails.industry}}</p>
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col-2"><label class="label_title">Published On</label></div>
+                            <div class="col-8 ml-0">
+                                <p class="view_content">
+                                    {{placementGroupDetails.publish_on}}</p>
+                            </div>
+                        </div>
+                        <div class="form_heading mb-4">
+                            <h5 class="view_content">Administrative Info</h5>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col-2"><label class="label_title">Creation Date</label></div>
+                            <div class="col-10">
+                                <p class="view_content">{{placementGroupDetails.publish_at}}</p>
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col-2"><label class="label_title">Staff</label></div>
+                            <div class="col-10">
+                                <div class="user_profiles">
+                                    <div *ngFor="let staff of placementGroupDetails.staff" class="profile"
+                                        matTooltip="{{staff.first_name}} {{staff.last_name}}"
+                                        matTooltipPosition="above">
+                                        <!-- <img src="../../../../assets/img/avatars/1.jpg" alt="avatars"> -->
+                                        <span>{{utils.extractCharacter(staff.first_name,
+                                            0)}}{{utils.extractCharacter(staff.last_name, 0)}}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col-2"><label class="label_title">Last Modified</label></div>
+                            <div class="col-10">
+                                <span>{{placementGroupDetails.updated_at}}</span>
+                                <div class="user_profiles d-inline-flex">
+                                    <div class="profile" matTooltip="{{placementGroupDetails?.created_by}}"
+                                        matTooltipPosition="above">
+                                        <!-- <img src="../../../../assets/img/avatars/1.jpg" alt="avatars"> -->
+                                        <!-- <span
+                                            *ngIf="placementGroupDetails.created_by">{{placementGroupDetails?.created_by[0]}}
+                                            {{placementGroupDetails?.created_by[1]}}</span> -->
+                                        <span
+                                            *ngIf="placementGroupDetails.created_by">{{getLastModifiedInitial()}}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                   
+                </ng-container>
+
+
+                <ng-container *ngIf="activeTab=='tab2'">
+                    <div class="vacancy_preview" *ngIf="projectDetails">
+                        <div class="preview_container">
+                          <!-- Job Title -->
+                          <h1 class="job_title mb-2 m-0 review-h1">{{ projectDetails?.job_title }}</h1>
+                      
+                          <div class="d-flex justify-content-between">
+                            <div style="flex: 1; max-width: 50%;">
+                              <div style="display: flex; gap: 15px;">
+                                <!-- Company Logo -->
+                                <figure *ngIf="projectDetails?.company_info?.length > 0; else defaultLogo">
+                                    <img 
+                                      [src]="projectDetails.company_info[0].company_logo || 'assets/img/company-logo-placeholder.svg'" 
+                                      class="img-fluid" 
+                                      alt="Company Logo">
+                                  </figure>
+                                  
+                                  <ng-template #defaultLogo>
+                                    <img src="assets/img/company-logo-placeholder.svg" class="img-fluid" alt="Default Company Logo">
+                                  </ng-template>
+                                  
+                                  <div style="display: flex; flex: 1; margin-right: 15px; flex-direction: column;">
+                                    <h2 class="company_name m-0" (click)="goToCompanyProfile(projectDetails)">
+                                      {{ projectDetails?.company_info?.length > 0 ? projectDetails.company_info[0].company_name : '' }}
+                                    </h2>
+                                    <p class="location">{{ projectDetails?.job_location?.name }}</p>
+                                  </div>
+                                  
+                              </div>
+                      
+                              <!-- Work Commitment & Workplace Arrangement -->
+                              <div class="job_details">
+                                <p class="m-0">Work Commitment:</p>
+                                <h2 class="company_name mb-2 m-0">
+                                  <span *ngIf="projectDetails?.contract_type">
+                                    {{
+                                      {
+                                        'any': 'Any',
+                                        'part_time': 'Part Time',
+                                        'full_time': 'Full Time',
+                                        'casual': 'Casual',
+                                        'temp_contract': 'Temp/Contract',
+                                        'Full Time': projectDetails.contract_type,
+                                        'Part Time': projectDetails.contract_type
+                                      }[projectDetails.contract_type] || projectDetails.contract_type
+                                    }}
+                                  </span>
+                                </h2>
+                                <p class="m-0">Workplace Arrangement:</p>
+                                <h2 class="company_name mb-2 m-0">{{ projectDetails?.work_type }}</h2>
+                              </div>
+                            </div>
+                      
+                            <!-- Skills Section -->
+                            <div class="skills_section m-0" style="flex: 1; max-width: 50%; flex-direction: column; gap: 20px;">
+                              <div>
+                                <h4 class="heading fw-post mb-1">Posted By</h4>
+                               
+
+
+                                              <div class="mod_groups p-0">
+                                            <div class="avatar">
+                                            <img *ngIf="userDetail?.image && !projectDetails?.created_by_logo" [src]="userDetail.image" class="rounded-circle	" alt="avatar" />
+
+                                                <img *ngIf="projectDetails?.created_by_logo" [src]="projectDetails.created_by_logo" class="rounded-circle	" alt="company logo" />
+
+                                                <div class="profile" *ngIf="!projectDetails?.created_by_logo && !userDetail?.image">
+                                                    <span style="color: #fff;display: flex
+                                                    ;
+                                                        justify-content: center;
+                                                        margin-top: 8px;">
+                                                        {{ 
+                                                        projectDetails?.created_by_name 
+                                                            ? projectDetails.created_by_name.split(' ')[0].charAt(0) + projectDetails.created_by_name.split(' ')[1]?.charAt(0) 
+                                                            : userDetail?.first_name?.charAt(0) + userDetail?.last_name?.charAt(0)
+                                                        }}
+
+                                                <!-- {{selectedCompany?.created_by_name ?
+                                                selectedCompany?.created_by_name.split(' ')[0][0] : ''}}
+                                                {{selectedCompany?.created_by_name.split(' ')[1] ?
+                                                selectedCompany?.created_by_name.split(' ')[1][0] :userDetail?.first_name?.charAt(0) + userDetail?.last_name?.charAt(1)}} -->
+                                                
+                                            </span>    
+                                                </div>
+                                            </div>
+                                            <span style="font: size 16px;">{{projectDetails && projectDetails?.created_by_name ? projectDetails?. created_by_name:userDetail?.first_name+' ' +userDetail?.last_name}}</span>
+                                        
+                                    </div>
+                                  
+                              </div>
+
+                              <!-- {{projectDetails.skills | json}} -->
+                      
+                              <!-- Required Skills -->
+                              <div class="skills_wrapper">
+                                <h5>Required Skills:</h5>
+                                <div class="skills_list">
+                                  <span *ngFor="let item of projectDetails.skills" class="skill_chip">
+                                    {{ item.name }}
+                                </span>
+                                </div>
+                              </div>
+                      
+                              <!-- Develop Skills (Only if available) -->
+                              <div class="skills_wrapper" *ngIf="projectDetails.skills_to_develop?.length > 0">
+                                <h5>Develop Skills:</h5>
+                                <div class="skills_list">
+                                  <span *ngFor="let skill of projectDetails?.skills_to_develop" class="skill_chip">{{ skill.name }}</span>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                      
+                          <!-- Description Section -->
+                          <div class="description_section">
+                            <h4 class="heading fw">Description:</h4>
+                            <div class="description_content">
+                              <p class="discription" [innerHTML]="projectDetails?.job_description"></p>
+                            </div>
+                          </div>
+                      
+                          <!-- Number of Vacancies -->
+                          <div class="vacancies_section">
+                            <h5 class="heading fw">Number of Vacancies:</h5>
+                            <!-- <p>{{ projectDetails?.no_of_vacancy }}</p> -->
+                            <p>{{ projectDetails?.no_limit?'No Limit' : projectDetails?.no_of_vacancy }}</p>
+                          </div>
+                      
+                          <!-- Certifications -->
+                          <div class="certifications_section" *ngIf="projectDetails.license_certification">
+                            <h5 class="heading fw">Licenses & Certifications required:</h5>
+                            <span class="certification_chip" *ngFor="let certification of (projectDetails.license_certification?.split(',') || [])">
+                              {{ certification }}
+                            </span>
+                          </div>
+                      
+                          <!-- Document Section -->
+
+                          <div class="certifications_section"  *ngIf="projectDetails.documents.length > 0">
+                            <h5 class="heading fw">Project Documents</h5>
+                            <ul class="files_list d-flex flex-wrap mt-3" *ngIf="projectDetails.documents.length > 0">
+                              <li class="file-item" *ngFor="let file of projectDetails.documents; let i = index;">
+                                <div class="file_card">
+                                  <div class="content">
+                                    <div class="svg-width d-flex justify-content-center align-items-center" style="width: 60px;height:48px;padding-right: 8px;" [innerHTML]="getSafeSvg(file?.name)"></div>
+
+                                        
+                                    <p>{{ file.name }}</p>
+                                  </div>
+                                  <div class="btn_group">
+                                    <!-- View Button -->
+                                    <button (click)="viewFile(i, file)" mat-icon-button>
+                                        <svg width="35" height="35" viewBox="0 0 35 35" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <circle cx="17.5" cy="17.5" r="17.5" fill="#F8F8F8"/>
+                                            <path d="M9.29565 17.7632C9.1361 17.5601 9.00404 17.3822 8.90095 17.2387C8.99761 17.0973 9.1211 16.923 9.27053 16.7246C9.69179 16.1651 10.3145 15.4194 11.1183 14.6754C12.7353 13.1787 15.0165 11.75 17.8214 11.75C20.6263 11.75 22.9076 13.1787 24.5246 14.6754C25.3283 15.4194 25.9511 16.1651 26.3723 16.7246C26.5218 16.923 26.6452 17.0973 26.7419 17.2387C26.6388 17.3822 26.5068 17.5601 26.3472 17.7632C25.9058 18.325 25.2587 19.0735 24.4375 19.82C22.7807 21.3262 20.4992 22.75 17.8214 22.75C15.1437 22.75 12.8621 21.3262 11.2054 19.82C10.3842 19.0735 9.73706 18.325 9.29565 17.7632Z" stroke="#2B2A35" stroke-width="1.5"/>
+                                            <circle cx="17.8214" cy="17.2511" r="2.82143" stroke="#2B2A35" stroke-width="1.5"/>
+                                            </svg>
+                                            
+                                    </button>
+                      
+                                    <!-- Delete Button -->
+                                    <button (click)="downloadFile(i, file)" mat-icon-button>
+                                        <svg width="35" height="35" viewBox="0 0 35 35" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <circle cx="17.5" cy="17.5" r="17.5" fill="#F8F8F8"/>
+                                            <path fill-rule="evenodd" clip-rule="evenodd" d="M24.7923 20.4141V23.3307C24.7923 24.1361 24.1394 24.7891 23.334 24.7891H11.6673C10.8619 24.7891 10.209 24.1361 10.209 23.3307V20.4141H11.6673V23.3307H23.334V20.4141H24.7923Z" fill="#2B2A35"/>
+                                            <path fill-rule="evenodd" clip-rule="evenodd" d="M18.2295 17.9258L20.6305 15.5248L21.6617 16.556L17.5003 20.7174L13.3389 16.556L14.3701 15.5248L16.7711 17.9258V10.207H18.2295V17.9258Z" fill="#2B2A35"/>
+                                            </svg>
+                                            
+                                            
+                                    </button>
+                                  </div>
+                                </div>
+                              </li>
+                            </ul>
+                          </div>
+                        </div>
+                      </div>
+
+                       <div class="vacancy_preview d-flex flex-column justify-content-center align-items-center" *ngIf="!projectDetails">
+                        <svg width="174" height="139" viewBox="0 0 174 139" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <g clip-path="url(#clip0_7570_48078)">
+                        <path d="M131.703 137.85L16.0964 137.89C10.2887 137.892 5.08624 134.88 2.18061 129.832C0.727615 127.308 0.000957946 124.539 9.4605e-07 121.769C-0.000956054 119 0.724144 116.23 2.17505 113.705L59.9415 8.14611C62.844 3.096 68.0443 0.0801419 73.8521 0.078126C79.6599 0.0761101 84.8623 3.08835 87.7683 8.13645L145.615 113.669C147.064 116.186 147.789 118.952 147.789 121.72C147.789 124.488 147.064 127.257 145.613 129.782C142.711 134.832 137.511 137.848 131.703 137.85ZM1.45318 121.767C1.45299 124.288 14.2098 118.856 15.5314 121.152C18.1749 125.745 10.8121 136.437 16.0959 136.435C16.0959 136.435 141.717 133.649 144.357 129.055C145.677 126.758 146.337 124.238 146.336 121.718C146.335 119.199 145.674 116.68 144.352 114.384L86.5051 8.8515C83.869 4.27236 79.1365 1.53179 73.8526 1.53362C68.5712 1.53546 1.45338 119.246 1.45318 121.767Z" fill="#3F3D56"/>
+                        <path d="M107.58 114.571C136.81 114.571 160.505 90.7855 160.505 61.445C160.505 32.1045 136.81 8.31934 107.58 8.31934C78.3506 8.31934 54.6553 32.1045 54.6553 61.445C54.6553 90.7855 78.3506 114.571 107.58 114.571Z" fill="#464BA8"/>
+                        <path d="M110.696 77.0835L94.737 31.1951L103.04 28.4787L117.174 74.9641L110.696 77.0835ZM119.898 94.1732C118.499 94.631 117.124 94.5422 115.773 93.9068C114.463 93.1908 113.58 92.1329 113.124 90.7333C112.668 89.3337 112.768 87.9879 113.424 86.6958C114.141 85.3839 115.198 84.4991 116.598 84.0413C117.997 83.5836 119.341 83.6824 120.632 84.3376C121.922 84.9928 122.795 86.0202 123.251 87.4198C123.707 88.8194 123.617 90.1957 122.981 91.5486C122.325 92.8406 121.297 93.7155 119.898 94.1732Z" fill="white"/>
+                        </g>
+                        <defs>
+                        <clipPath id="clip0_7570_48078">
+                        <rect width="174" height="139" fill="white"/>
+                        </clipPath>
+                        </defs>
+                        </svg>
+                        <h2 class="no-h2 mt-3 mb-0">No project linked yet!</h2>
+                        <p class="no-p">Please add a Project via the Companies list.</p>
+                    </div>
+                </ng-container>
+
+                <!-- ===== Pre-Enrolment Sub-Tab ===== -->
+                <ng-container *ngIf="activeTab=='tab3'">
+                    <div class="bold_lable_form" [formGroup]="preEnrolmentForm">
+                        <!-- Hero Text -->
+                        <div class="row form-group align-items-center">
+                            <div class="col-2"><label class="label_title mb-0">Hero Text <span class="text-danger">*</span></label></div>
+                            <div class="col-6">
+                                <input type="text" class="form-control" formControlName="hero_text" placeholder="Lorem Ipsum"
+                                    [ngClass]="{'invalid_field': checkPreEnrolmentFieldInvalid('hero_text')}">
+                                <small class="text-danger" *ngIf="checkPreEnrolmentFieldInvalid('hero_text')">Hero text is required</small>
+                            </div>
+                        </div>
+
+                        <!-- Subheading -->
+                        <div class="row form-group align-items-center">
+                            <div class="col-2"><label class="label_title mb-0">Subheading <span class="text-danger">*</span></label></div>
+                            <div class="col-6">
+                                <input type="text" class="form-control" formControlName="subheading" placeholder="Lorem Ipsum 2"
+                                    [ngClass]="{'invalid_field': checkPreEnrolmentFieldInvalid('subheading')}">
+                                <small class="text-danger" *ngIf="checkPreEnrolmentFieldInvalid('subheading')">Subheading is required</small>
+                            </div>
+                        </div>
+
+                        <!-- Companies -->
+                        <div class="row form-group">
+                            <div class="col-2"><label class="label_title mb-0">Companies</label></div>
+                            <div class="col-10">
+                                <div class="companies-logos">
+                                    <ng-container *ngIf="companiesList?.length > 0; else noCompanies">
+                                        <div class="company-logo-item" *ngFor="let company of companiesList">
+                                            <img [src]="company.logo || 'assets/img/company-logo-placeholder.svg'"
+                                                [alt]="company.name" class="company-logo-img">
+                                        </div>
+                                    </ng-container>
+                                    <ng-template #noCompanies>
+                                        <span class="text-muted">No companies linked yet</span>
+                                    </ng-template>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Show Files Accordion -->
+                        <div class="row form-group align-items-center">
+                            <div class="col-2"><label class="label_title mb-0">Show Files</label></div>
+                            <div class="col-6">
+                                <div class="accordion-select" (click)="showFilesExpanded = !showFilesExpanded">
+                                    <span>Show Files</span>
+                                    <svg [class.expanded]="showFilesExpanded" class="chevron-icon" width="14" height="8" viewBox="0 0 14 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M1 1L7 7L13 1" stroke="#2B2A35" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                </div>
+                                <div class="accordion-body" *ngIf="showFilesExpanded">
+                                    <p class="text-muted mb-0">No files uploaded yet.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Overview -->
+                        <div class="row form-group">
+                            <div class="col-2"><label class="label_title mb-0">Overview</label></div>
+                            <div class="col-10">
+                                <quill-editor [modules]="modules" formControlName="overview"
+                                    placeholder="Enter overview content..."></quill-editor>
+                            </div>
+                        </div>
+
+                        <!-- Proposition -->
+                        <div class="row form-group align-items-center">
+                            <div class="col-2"><label class="label_title mb-0">Proposition</label></div>
+                            <div class="col-6">
+                                <input type="text" class="form-control" formControlName="proposition" placeholder="Lorem Ipsum">
+                            </div>
+                        </div>
+
+                        <!-- Proposition Content Accordion -->
+                        <div class="row form-group align-items-center">
+                            <div class="col-2"><label class="label_title mb-0">Proposition Content</label></div>
+                            <div class="col-6">
+                                <div class="accordion-select" (click)="propositionContentExpanded = !propositionContentExpanded">
+                                    <span>Proposition Content</span>
+                                    <svg [class.expanded]="propositionContentExpanded" class="chevron-icon" width="14" height="8" viewBox="0 0 14 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M1 1L7 7L13 1" stroke="#2B2A35" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                </div>
+                                <div class="accordion-body" *ngIf="propositionContentExpanded">
+                                    <textarea class="form-control mt-2" formControlName="proposition_content" rows="4"
+                                        placeholder="Enter proposition content..."></textarea>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Offer Letter -->
+                        <div class="row form-group">
+                            <div class="col-2"><label class="label_title mb-0">Offer Letter</label></div>
+                            <div class="col-10">
+                                <quill-editor [modules]="modules" formControlName="offer_letter"
+                                    placeholder="Enter offer letter content..."></quill-editor>
+                            </div>
+                        </div>
+
+                        <!-- Save / Update Button -->
+                        <div class="row form-group mb-0">
+                            <div class="col-2"></div>
+                            <div class="col-10">
+                                <button mat-button class="theme_btn btn_primary" (click)="onSavePreEnrolment()">
+                                    {{ isPreEnrolmentSaved ? 'Update' : 'Save' }}
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </ng-container>
+            </div>
+
+
+
+
+        </div>
+    </form>
+</section>
+
+<!-- Invite Staff -->
+
+<!-- Publish -->
+<div class="modal fade bsModal ch_modal placement_modal_publish" id="publishPlacement" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <form [formGroup]="publishPlacementGroup">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 class="modal-title" id="exampleModalLabel">Publish Placement</h2>
+                    <button type="button" mat-icon-button id="closeModal" class="close" data-dismiss="modal"
+                        aria-label="Close">
+                        <mat-icon>close</mat-icon>
+                    </button>
+                </div>
+                <div class="modal-body bold_lable_form pt-4">
+                    <div class="row form-group">
+                        <div class="col-3">
+                            <label class="label_title">Publish On</label>
+                        </div>
+                        <div class="col-9">
+                            <mat-radio-group formControlName="publish_on" class="no-label-margin" aria-label="Select an option"
+                                (change)="onChangePublishOn($event)">
+                                <mat-radio-button class="mr-4" value="Publish Instantly"  [checked]="true">Publish
+                                    Instantly</mat-radio-button>
+                                <mat-radio-button value="Schedule Date">Schedule Date</mat-radio-button>
+                            </mat-radio-group>
+                            <!-- <div class="error_information mt-3">
+                                <div class="left">
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <path
+                                            d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z"
+                                            stroke="#F47761" stroke-width="1.5" stroke-linecap="round"
+                                            stroke-linejoin="round" />
+                                        <path d="M12.0112 8L12.0112 12" stroke="#F47761" stroke-width="1.5"
+                                            stroke-linecap="round" stroke-linejoin="round" />
+                                        <path d="M12.0112 16L11.9999 16" stroke="#F47761" stroke-width="1.5"
+                                            stroke-linecap="round" stroke-linejoin="round" />
+                                    </svg>
+
+                                </div>
+                                <div class="right">
+                                    <p>Please make sure the eligible students & industry partners list
+                                        have been imported & finalised before you publish!</p>
+                                </div>
+                            </div> -->
+                        </div>
+                    </div>
+                    <ng-container *ngIf="publishPlacement.publishedOn == 'Publish Instantly'">
+                        <!-- Starting Date -->
+                        <div class="row form-group">
+                            <div class="col-3">
+                                <label class="label_title">Starting Date</label>
+                            </div>
+                            <div class="col-9 date_group">
+                                <div class="form-group custom_datepicker">
+                                    <p class="mb-0">{{todayDate}}</p>
+                                </div>
+                                <div class="to">until</div>
+                                <div class="form-group custom_datepicker">
+                                    <div class="custom_datepicker_container">
+                                        <input placeholder="End Date" class="form-control"
+                                            [matDatepicker]="projectEndPicker1" [min]="minDate" formControlName="end_date">
+                                        <mat-datepicker-toggle matSuffix [for]="projectEndPicker1">
+                                            <svg matDatepickerToggleIcon width="18" height="18" viewBox="0 0 18 18"
+                                                fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path
+                                                    d="M14.25 3H3.75C2.92157 3 2.25 3.67157 2.25 4.5V15C2.25 15.8284 2.92157 16.5 3.75 16.5H14.25C15.0784 16.5 15.75 15.8284 15.75 15V4.5C15.75 3.67157 15.0784 3 14.25 3Z"
+                                                    stroke="#2B2A35" stroke-width="1.5" stroke-linecap="round"
+                                                    stroke-linejoin="round" />
+                                                <path d="M12 1.5V4.5" stroke="#2B2A35" stroke-width="1.5"
+                                                    stroke-linecap="round" stroke-linejoin="round" />
+                                                <path d="M6 1.5V4.5" stroke="#2B2A35" stroke-width="1.5"
+                                                    stroke-linecap="round" stroke-linejoin="round" />
+                                                <path d="M2.25 7.5H15.75" stroke="#2B2A35" stroke-width="1.5"
+                                                    stroke-linecap="round" stroke-linejoin="round" />
+                                            </svg>
+                                        </mat-datepicker-toggle>
+                                        <mat-datepicker #projectEndPicker1></mat-datepicker>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Description -->
+                        <div class="row form-group">
+                            <div class="col-3">
+                                <label class="label_title">Description <svg matTooltipClass="info_primary_my_task"
+                                        matTooltipPosition="above" matTooltip="Students will receive a notification with this text in their Placement
+                                    Hive & Career Hive dashboards." width="24" height="24" viewBox="0 0 24 24"
+                                        fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path
+                                            d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z"
+                                            stroke="#464BA8" stroke-width="1.5" stroke-linecap="round"
+                                            stroke-linejoin="round" />
+                                        <path d="M12 16V12" stroke="#464BA8" stroke-width="1.5" stroke-linecap="round"
+                                            stroke-linejoin="round" />
+                                        <path d="M12 8H12.0113" stroke="#464BA8" stroke-width="1.5"
+                                            stroke-linecap="round" stroke-linejoin="round" />
+                                    </svg>
+                                </label>
+                            </div>
+                            <div class="col-9">
+                                <div>
+                                    <!-- [class.invalid_field]="checkFieldInvalidPublishPlacement('description')" -->
+                                    <quill-editor [modules]="modules" formControlName="description" ></quill-editor>
+                                    <!-- <editor formControlName="description" class="ch_editor"
+                                        apiKey="zcwi1f81304uers1lcszh0iq2lbhcaxl5cj6ez0v89wr25z3" [init]="{
+                                    height: 178,
+                                    menubar: false,
+                                    statusbar: true,
+                                    placeholder: 'Description',
+                                    plugins: [
+                                    'textcolor',
+                                    'advlist autolink lists link image charmap print preview anchor',
+                                    'searchreplace visualblocks code fullscreen',
+                                    'insertdatetime media table paste code help wordcount'
+                                    ],
+                                    toolbar:
+                                    'bold italic | \
+                                    bullist | formatselect | link |',
+                                    contextmenu: false
+                                    }" [class.invalid_field]="checkFieldInvalidPublishPlacement('description')"></editor> -->
+                                    <!-- <span *ngIf="checkFieldInvalidPublishPlacement('description')" class="error">This field is
+                                        required.</span> -->
+
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Placement Types To Publish -->
+                        <div class="row form-group">
+                            <div class="col-3">
+                                <label class="label_title">Placement Types to Publish</label>
+                            </div>
+                            <div class="col-9">
+                                <ng-select formControlName="placement_type" class="select_ng_custom static_check"
+                                    [searchable]="false" [multiple]="true" bindLabel="name" bindValue="id"
+                                    [clearable]="false" placeholder="Select a Placement Type" [class.invalid_field]="checkFieldInvalidPublishPlacement('placement_type')">
+                                    <ng-option *ngFor="let placementType of placementTypes" value="{{placementType.type}}">
+                                        <!-- <mat-checkbox [checked]="false" class="empty"></mat-checkbox>
+                                        <mat-checkbox [checked]="true" class="checked"></mat-checkbox> -->
+                                        {{placementType.type}}
+                                    </ng-option>
+                                    <!-- <ng-option value="Provider Placed">
+                                        <mat-checkbox [checked]="false" class="empty"></mat-checkbox>
+                                        <mat-checkbox [checked]="true" class="checked"></mat-checkbox>
+                                        Provider Placed
+                                    </ng-option>
+                                    <ng-option value="Self-sourced">
+                                        <mat-checkbox [checked]="false" class="empty"></mat-checkbox>
+                                        <mat-checkbox [checked]="true" class="checked"></mat-checkbox>
+                                        Self-sourced
+                                    </ng-option>
+                                    <ng-option value="WIL">
+                                        <mat-checkbox [checked]="false" class="empty"></mat-checkbox>
+                                        <mat-checkbox [checked]="true" class="checked"></mat-checkbox>
+                                        WIL
+                                    </ng-option> -->
+                                </ng-select>
+                                <span *ngIf="checkFieldInvalidPublishPlacement('placement_type')" class="error">This field is
+                                    required.</span>
+                            </div>
+                        </div>
+                        <!-- Additional Email on Publication -->
+                        <div class="row form-group">
+                            <div class="col-3">
+                                <label class="label_title">Additional Email on Publication</label>
+                            </div>
+                            <div class="col-9">
+                                <mat-radio-group formControlName="is_email" aria-label="Select an option"
+                                    (change)="onChangeAdditionalEmail($event)">
+                                    <mat-radio-button class="mr-4" value="false">No</mat-radio-button>
+                                    <mat-radio-button value="true">Yes</mat-radio-button>
+                                </mat-radio-group>
+                            </div>
+                        </div>
+                        <!-- Email Category & Template -->
+                        <div class="row" *ngIf="publishPlacement.additionalEmailOnPublication">
+                            <div class="col-md-6">
+                                <div class=" form-group">
+                                    <label>Category</label>
+                                    <ng-select formControlName="category" placeholder="Select Category"
+                                        [searchable]="false" [multiple]="false" bindLabel="name" bindValue="id"
+                                        [clearable]="false" (change)="selectCategory($event)" >
+                                        <!-- [readonly]="true" -->
+                                        <ng-container *ngFor="let category of categories">
+                                            <ng-option [value]="category._id">{{category.category_title}}</ng-option>
+                                        </ng-container>
+                                    </ng-select>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class=" form-group">
+                                    <label>Select a Template</label>
+                                    <ng-select formControlName="template" placeholder="Select a Template"
+                                        [searchable]="false" [multiple]="false" bindLabel="name" bindValue="id"
+                                        [clearable]="false" (change)="selectTemplate($event)">
+                                        <ng-container>
+                                            <ng-option *ngFor="let template of emailTemplateList"
+                                                [value]="template._id">{{template.template_name}}</ng-option>
+                                        </ng-container>
+                                    </ng-select>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label>Email Subject</label>
+                                    <input formControlName="subject" type="text" class="form-control"
+                                        placeholder="Subject">
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label>Message</label>
+                                    <quill-editor [modules]="modules" formControlName="message"></quill-editor>
+                                    <!-- <editor formControlName="message" class="ch_editor"
+                                        apiKey="zcwi1f81304uers1lcszh0iq2lbhcaxl5cj6ez0v89wr25z3" [init]="{
+                                        height: 178,
+                                        menubar: false,
+                                        statusbar: true,
+                                        placeholder: 'Description',
+                                        plugins: [
+                                        'textcolor',
+                                        'advlist autolink lists link image charmap print preview anchor',
+                                        'searchreplace visualblocks code fullscreen',
+                                        'insertdatetime media table paste code help wordcount'
+                                        ],
+                                        toolbar:
+                                        'bold italic | \
+                                        bullist | formatselect | link |',
+                                        contextmenu: false
+                                        }"></editor> -->
+                                </div>
+                            </div>
+                        </div>
+                    </ng-container>
+                    <ng-container *ngIf="publishPlacement.publishedOn == 'Schedule Date'">
+                        <!-- Starting Date -->
+                        <div class="row form-group">
+                            <div class="col-3">
+                                <label class="label_title">Starting Date</label>
+                            </div>
+                            <div class="col-9 date_group">
+                                <div class="form-group custom_datepicker">
+                                    <div class="custom_datepicker_container">
+                                        <input placeholder="Start Date" class="form-control"
+                                            [matDatepicker]="projectEndPicker2" formControlName="start_date" [min]="minDate" [max]="maxDate" (dateChange)="onScheuleDateRangeStart($event)">
+                                        <mat-datepicker-toggle matSuffix [for]="projectEndPicker2">
+                                            <svg matDatepickerToggleIcon width="18" height="18" viewBox="0 0 18 18"
+                                                fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path
+                                                    d="M14.25 3H3.75C2.92157 3 2.25 3.67157 2.25 4.5V15C2.25 15.8284 2.92157 16.5 3.75 16.5H14.25C15.0784 16.5 15.75 15.8284 15.75 15V4.5C15.75 3.67157 15.0784 3 14.25 3Z"
+                                                    stroke="#2B2A35" stroke-width="1.5" stroke-linecap="round"
+                                                    stroke-linejoin="round" />
+                                                <path d="M12 1.5V4.5" stroke="#2B2A35" stroke-width="1.5"
+                                                    stroke-linecap="round" stroke-linejoin="round" />
+                                                <path d="M6 1.5V4.5" stroke="#2B2A35" stroke-width="1.5"
+                                                    stroke-linecap="round" stroke-linejoin="round" />
+                                                <path d="M2.25 7.5H15.75" stroke="#2B2A35" stroke-width="1.5"
+                                                    stroke-linecap="round" stroke-linejoin="round" />
+                                            </svg>
+                                        </mat-datepicker-toggle>
+                                        <mat-datepicker #projectEndPicker2></mat-datepicker>
+                                    </div>
+                                </div>
+                                <div class="to">until</div>
+                                <div class="form-group custom_datepicker">
+                                    <div class="custom_datepicker_container">
+                                        <input placeholder="End Date" class="form-control"
+                                            [matDatepicker]="projectEndPicker1" formControlName="end_date" [min]="minDate" (dateChange)="onScheuleDateRangeEnd($event)">
+                                        <mat-datepicker-toggle matSuffix [for]="projectEndPicker1">
+                                            <svg matDatepickerToggleIcon width="18" height="18" viewBox="0 0 18 18"
+                                                fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path
+                                                    d="M14.25 3H3.75C2.92157 3 2.25 3.67157 2.25 4.5V15C2.25 15.8284 2.92157 16.5 3.75 16.5H14.25C15.0784 16.5 15.75 15.8284 15.75 15V4.5C15.75 3.67157 15.0784 3 14.25 3Z"
+                                                    stroke="#2B2A35" stroke-width="1.5" stroke-linecap="round"
+                                                    stroke-linejoin="round" />
+                                                <path d="M12 1.5V4.5" stroke="#2B2A35" stroke-width="1.5"
+                                                    stroke-linecap="round" stroke-linejoin="round" />
+                                                <path d="M6 1.5V4.5" stroke="#2B2A35" stroke-width="1.5"
+                                                    stroke-linecap="round" stroke-linejoin="round" />
+                                                <path d="M2.25 7.5H15.75" stroke="#2B2A35" stroke-width="1.5"
+                                                    stroke-linecap="round" stroke-linejoin="round" />
+                                            </svg>
+                                        </mat-datepicker-toggle>
+                                        <mat-datepicker #projectEndPicker1></mat-datepicker>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Publish Time -->
+                        <div class="row form-group">
+                            <div class="col-3">
+                                <label class="label_title">Publish Time</label>
+                            </div>
+                            <div class="col-9 date_group">
+                                <div class="form-group custom_datepicker">
+                                    <div class="custom_datepicker_container">
+                                        <input formControlName="publish_time" class="form-control" placeholder="hh:mm"
+                                            [ngxTimepicker]="toggleTimepicker" [disableClick]="true" readonly>
+                                        <ngx-material-timepicker-toggle class="time_picker_toggle"
+                                            [for]="toggleTimepicker">
+                                            <svg ngxMaterialTimepickerToggleIcon width="17" height="9"
+                                                viewBox="0 0 17 9" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M1 1L8.5 8L16 0.999997" stroke="#2B2A35" stroke-width="2"
+                                                    stroke-linecap="round" stroke-linejoin="round" />
+                                            </svg>
+                                        </ngx-material-timepicker-toggle>
+                                        <ngx-material-timepicker #toggleTimepicker></ngx-material-timepicker>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Description -->
+                        <div class="row form-group">
+                            <div class="col-3">
+                                <label class="label_title">Description <svg matTooltipClass="info_primary_my_task"
+                                        matTooltipPosition="above" matTooltip="Students will receive a notification with this text in their Placement
+                                Hive & Career Hive dashboards." width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <path
+                                            d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z"
+                                            stroke="#464BA8" stroke-width="1.5" stroke-linecap="round"
+                                            stroke-linejoin="round" />
+                                        <path d="M12 16V12" stroke="#464BA8" stroke-width="1.5" stroke-linecap="round"
+                                            stroke-linejoin="round" />
+                                        <path d="M12 8H12.0113" stroke="#464BA8" stroke-width="1.5"
+                                            stroke-linecap="round" stroke-linejoin="round" />
+                                    </svg>
+                                </label>
+                            </div>
+                            <div class="col-9">
+                                <div>
+                                     <!-- [class.invalid_field]="checkFieldInvalidPublishPlacement('description')" -->
+                                    <quill-editor [modules]="modules" formControlName="description"></quill-editor>
+                                    <!-- <editor formControlName="description" class="ch_editor"
+                                        apiKey="zcwi1f81304uers1lcszh0iq2lbhcaxl5cj6ez0v89wr25z3" [init]="{
+                                height: 178,
+                                menubar: false,
+                                statusbar: true,
+                                placeholder: 'Description',
+                                plugins: [
+                                'textcolor',
+                                'advlist autolink lists link image charmap print preview anchor',
+                                'searchreplace visualblocks code fullscreen',
+                                'insertdatetime media table paste code help wordcount'
+                                ],
+                                toolbar:
+                                'bold italic | \
+                                bullist | formatselect | link |',
+                                contextmenu: false
+                                }" [class.invalid_field]="checkFieldInvalidPublishPlacement('description')"></editor> -->
+                                <!-- <span *ngIf="checkFieldInvalidPublishPlacement('description')" class="error">This field is
+                                    required.</span> -->
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Placement Types To Publish -->
+                        <div class="row form-group">
+                            <div class="col-3">
+                                <label class="label_title">Placement Types to Publish</label>
+                            </div>
+                            <div class="col-9">
+                                <ng-select formControlName="placement_type" class="select_ng_custom static_check"
+                                    [searchable]="false" [multiple]="true" bindLabel="name" bindValue="id"
+                                    [clearable]="false" placeholder="Select a Placement Type" [class.invalid_field]="checkFieldInvalidPublishPlacement('placement_type')">
+                                    <ng-option *ngFor="let placementType of placementTypes" value="{{placementType.type}}">
+                                        <!-- <mat-checkbox [checked]="false" class="empty"></mat-checkbox>
+                                        <mat-checkbox [checked]="true" class="checked"></mat-checkbox> -->
+                                        {{placementType.type}}
+                                    </ng-option>
+                                    <!-- <ng-option value="Provider Placed">
+                                        <mat-checkbox [checked]="false" class="empty"></mat-checkbox>
+                                        <mat-checkbox [checked]="true" class="checked"></mat-checkbox>
+                                        Provider Placed
+                                    </ng-option>
+                                    <ng-option value="Self-sourced">
+                                        <mat-checkbox [checked]="false" class="empty"></mat-checkbox>
+                                        <mat-checkbox [checked]="true" class="checked"></mat-checkbox>
+                                        Self-sourced
+                                    </ng-option>
+                                    <ng-option value="WIL">
+                                        <mat-checkbox [checked]="false" class="empty"></mat-checkbox>
+                                        <mat-checkbox [checked]="true" class="checked"></mat-checkbox>
+                                        WIL
+                                    </ng-option> -->
+                                </ng-select>
+                                <span *ngIf="checkFieldInvalidPublishPlacement('placement_type')" class="error">This field is
+                                    required.</span>
+                            </div>
+                        </div>
+                        <!-- Additional Email on Publication -->
+                        <div class="row form-group">
+                            <div class="col-3">
+                                <label class="label_title">Additional Email on Publication</label>
+                            </div>
+                            <div class="col-9">
+                                <mat-radio-group formControlName="is_email" class="no-label-margin" aria-label="Select an option"
+                                    (change)="onChangeAdditionalEmail($event)">
+                                    <mat-radio-button class="mr-4" value="false">No</mat-radio-button>
+                                    <mat-radio-button value="true">Yes</mat-radio-button>
+                                </mat-radio-group>
+                            </div>
+                        </div>
+                        <!-- Email Category & Template -->
+                        <div class="row" *ngIf="publishPlacement.additionalEmailOnPublication">
+                            <div class="col-md-6">
+                                <div class=" form-group">
+                                    <label>Category</label>
+                                    <ng-select formControlName="category" placeholder="Select Category"
+                                        [searchable]="false" [multiple]="false" bindLabel="name" bindValue="id"
+                                        [clearable]="false" (change)="selectCategory($event)" [readonly]="true">
+                                        <ng-container *ngFor="let category of categories">
+                                            <ng-option [value]="category._id">{{category.category_title}}</ng-option>
+                                        </ng-container>
+                                    </ng-select>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class=" form-group">
+                                    <label>Select a Template</label>
+                                    <ng-select formControlName="template" placeholder="Select a Template"
+                                        [searchable]="false" [multiple]="false" bindLabel="name" bindValue="id"
+                                        [clearable]="false" (change)="selectTemplate($event)">
+                                        <ng-container>
+                                            <ng-option *ngFor="let template of emailTemplateList"
+                                                [value]="template._id">{{template.template_name}}</ng-option>
+                                        </ng-container>
+                                    </ng-select>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label>Email Subject</label>
+                                    <input formControlName="subject" type="text" class="form-control"
+                                        placeholder="Subject">
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label>Message</label>
+                                    
+                                    <quill-editor [modules]="modules" formControlName="message"></quill-editor>
+                                    <!-- <editor formControlName="message" class="ch_editor"
+                                        apiKey="zcwi1f81304uers1lcszh0iq2lbhcaxl5cj6ez0v89wr25z3" [init]="{
+                                        height: 178,
+                                        menubar: false,
+                                        statusbar: true,
+                                        placeholder: 'Description',
+                                        plugins: [
+                                        'textcolor',
+                                        'advlist autolink lists link image charmap print preview anchor',
+                                        'searchreplace visualblocks code fullscreen',
+                                        'insertdatetime media table paste code help wordcount'
+                                        ],
+                                        toolbar:
+                                        'bold italic | \
+                                        bullist | formatselect | link |',
+                                        contextmenu: false
+                                        }"></editor> -->
+                                </div>
+                            </div>
+                        </div>
+                    </ng-container>
+                </div>
+                <div class="modal-footer justify-content-between">
+                    <button #closePublishModal mat-button class="theme_btn btn_outline_primary" data-dismiss="modal" (click)="cancelPublishPlacementForm()">Cancel</button>
+                    <!-- <button mat-button data-dismiss="modal" class="theme_btn btn_primary" data-toggle="modal"
+                        data-target="#unpublishConfirmStep">Confirm==</button> -->
+                    <button mat-button class="theme_btn btn_primary" (click)="checkValidation()" data-toggle="modal"
+                    data-target="#unpublishConfirmStep">Confirm</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<div *ngIf="showModalBox" class="modal fade bsModal ch_modal" #unpublishConfirmStep id="unpublishConfirmStep" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <form [formGroup]="confirmPassword">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" mat-icon-button id="closeModal" class="close" data-dismiss="modal"
+                        aria-label="Close">
+                        <mat-icon>close</mat-icon>
+                    </button>
+                </div>
+                <div class="modal-body pt-0 active_deactive_modal">
+                    <h4 *ngIf="publishPlacement.publishedOn === 'Publish Instantly'" class="mb-5">To instantly publish this Simulation Group, <br> please type your password to confirm:
+                    </h4>
+                         <!-- show after schedule select -->
+                    <h4 *ngIf="publishPlacement.publishedOn === 'Schedule Date'" class="mb-5"> To schedule publishing this Simulation Group, <br> please type your password to confirm:</h4>
+    
+                    <div class="form-group mb-0 position-relative">
+                        <label>Password</label>
+                        <input [type]="pass" class="form-control" [(ngModel)]="password" formControlName="password" [class.invalid_field]="checkInvalidFieldPassrordForm('password')">
+                        <span class="eye_icon" *ngIf="pass == 'text'" (click)="onEyeClick('pass', 'password')">
+                            <svg width="20" height="13" viewBox="0 0 20 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path
+                                    d="M1.29565 6.7632C1.1361 6.56013 1.00404 6.38224 0.900947 6.23866C0.997612 6.09726 1.1211 5.92302 1.27053 5.72458C1.69179 5.16511 2.31455 4.41936 3.11828 3.6754C4.7353 2.17866 7.01653 0.75 9.82143 0.75C12.6263 0.75 14.9076 2.17866 16.5246 3.6754C17.3283 4.41936 17.9511 5.16511 18.3723 5.72458C18.5218 5.92302 18.6452 6.09726 18.7419 6.23866C18.6388 6.38224 18.5068 6.56013 18.3472 6.7632C17.9058 7.32498 17.2587 8.07347 16.4375 8.82004C14.7807 10.3262 12.4992 11.75 9.82143 11.75C7.14368 11.75 4.86212 10.3262 3.2054 8.82004C2.38417 8.07347 1.73706 7.32498 1.29565 6.7632Z"
+                                    stroke="#545465" stroke-width="1.5" />
+                                <circle cx="9.82143" cy="6.24965" r="2.82143" stroke="#545465" stroke-width="1.5" />
+                            </svg>
+                        </span>
+                        <span *ngIf="pass == 'password'" class="eye_icon pswrd_hide" (click)="onEyeClick('pass', 'text')">
+                            <svg width="20" height="16" viewBox="0 0 20 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path
+                                    d="M1.30849 8.89459C1.14302 8.68399 1.00656 8.49996 0.900682 8.35228C0.999999 8.20676 1.12767 8.0264 1.28274 7.82046C1.71202 7.25034 2.34663 6.49038 3.16572 5.73222C4.81343 4.20707 7.1393 2.75 10 2.75C12.8607 2.75 15.1866 4.20707 16.8343 5.73222C17.6534 6.49038 18.288 7.25034 18.7173 7.82046C18.8723 8.0264 19 8.20676 19.0993 8.35228C18.9934 8.49996 18.857 8.68399 18.6915 8.89459C18.2417 9.46703 17.5824 10.2297 16.7455 10.9905C15.0575 12.525 12.7313 13.9773 10 13.9773C7.26867 13.9773 4.94248 12.525 3.2545 10.9905C2.41765 10.2297 1.75826 9.46703 1.30849 8.89459Z"
+                                    stroke="#545465" stroke-width="1.5" />
+                                <circle cx="10.0001" cy="8.36293" r="2.88636" stroke="#545465" stroke-width="1.5" />
+                                <rect x="2.1875" y="1.44922" width="1.52727" height="20.3636"
+                                    transform="rotate(-45 2.1875 1.44922)" fill="#545465" />
+                            </svg>
+                        </span>
+                        <span *ngIf="checkInvalidFieldPassrordForm('password')" class="error">This field is required.</span>
+                    </div>
+                </div>
+                <div class="modal-footer justify-content-around">
+                    <button #closeConfirmPasswordModal mat-button type="button" class="theme_btn btn_outline_primary" data-dismiss="modal" (click)="onCancelPublishPlacementGroup()">Cancel</button>
+                    <button mat-button type="submit" class="theme_btn btn_primary" data-toggle="modal"
+                        (click)="onPublishPlacementGroup()">Confirm</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+
+<div class="modal fade bsModal ch_modal done_modal_popup" id="publishedDone" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+            </div>
+            <div class="modal-body text-center">
+               <svg width="112" height="112" viewBox="0 0 112 112" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="56" cy="56" r="56" fill="#26C296"/>
+                <path d="M65.3327 49L52.4993 61.8333L46.666 56" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              
+                <br />
+                
+                <h2 style="margin-top: 15px;" *ngIf="publishPlacement.publishedOn === 'Publish Instantly'">{{placementGroupDetails?.title}} has
+                    been successfully published.</h2>
+                <!-- show after schedule select -->
+                <h2 style="margin-top: 15px;" *ngIf="publishPlacement.publishedOn === 'Schedule Date'">{{placementGroupDetails?.title}} has been
+                    successfully scheduled.</h2>
+            </div>
+            <div class="modal-footer justify-content-center">
+                <button mat-button class="theme_btn btn_primary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade bsModal ch_modal done_modal_popup" id="publishedErrorDone" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+            </div>
+            <div class="modal-body text-center">
+                <svg width="126" height="101" viewBox="0 0 126 101" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <g clip-path="url(#clip0_9261_457054)">
+                    <path d="M95.371 100.164L11.656 100.194C7.45041 100.195 3.68314 98.0061 1.57906 94.3383C0.526894 92.5041 0.000693685 90.4921 6.85071e-07 88.4797C-0.000692315 86.4676 0.52438 84.455 1.57504 82.6203L43.4059 5.91899C45.5077 2.24948 49.2735 0.0581061 53.4791 0.0566414C57.6848 0.0551766 61.452 2.24393 63.5564 5.91197L105.445 82.5937C106.495 84.4229 107.02 86.4326 107.02 88.4437C107.02 90.4548 106.495 92.4672 105.444 94.3021C103.342 97.9713 99.5766 100.163 95.371 100.164ZM1.0523 88.4783C1.05217 90.31 10.2898 86.363 11.2468 88.0314C13.1611 91.3683 7.82944 99.1373 11.6557 99.136C11.6557 99.136 102.623 97.1118 104.534 93.7736C105.49 92.1045 105.968 90.2734 105.967 88.4428C105.967 86.6122 105.488 84.7817 104.531 83.1133L62.6416 6.43154C60.7327 3.10425 57.3057 1.1129 53.4795 1.11423C49.655 1.11557 1.05245 86.6464 1.0523 88.4783Z" fill="#3F3D56"/>
+                    <path d="M77.9031 83.2491C99.0694 83.2491 116.228 65.9664 116.228 44.647C116.228 23.3277 99.0694 6.04492 77.9031 6.04492C56.7368 6.04492 39.5781 23.3277 39.5781 44.647C39.5781 65.9664 56.7368 83.2491 77.9031 83.2491Z" fill="#464BA8"/>
+                    <path d="M76.3835 53.0815L69.5859 23.488L74.9271 22.3555L80.5508 52.198L76.3835 53.0815ZM81.0564 64.2961C80.0781 64.5035 79.191 64.3645 78.3948 63.8791C77.6296 63.3462 77.1488 62.6099 76.9525 61.6702C76.7561 60.7305 76.9055 59.8811 77.4006 59.1219C77.9267 58.3152 78.6789 57.8082 79.6572 57.6008C80.5963 57.4017 81.4484 57.5685 82.2136 58.1014C83.0098 58.5868 83.506 59.2994 83.7024 60.2391C83.8988 61.1788 83.7339 62.052 83.2078 62.8586C82.7127 63.6178 81.9955 64.097 81.0564 64.2961Z" fill="white"/>
+                    </g>
+                    <defs>
+                    <clipPath id="clip0_9261_457054">
+                    <rect width="126" height="101" fill="white"/>
+                    </clipPath>
+                    </defs>
+                </svg>
+
+                    
+                <h2 class="mt-3">You cannot publish this Simulation Group until <br /> you have at least the following:</h2>
+                <!-- show after schedule select -->
+                <ul class="point-error d-flex flex-column align-items-start">
+                    <li>
+                        <span></span> A project attached to the Simulation Group
+                    </li>
+                    <li>
+                        <span></span> A workflow with a task each under Pre-Placement and Ongoing Stage
+                    </li>
+                    <li>
+                        <span></span> A student added to the Simulation Group
+                    </li>
+                </ul>
+            </div>
+            <div class="modal-footer justify-content-center">
+                <button mat-button class="theme_btn btn_primary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade bsModal ch_modal" id="inviteStaff" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title" id="exampleModalLabel">Invite Staff Member
+
+                </h2>
+                <button mat-icon-button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <mat-icon>close</mat-icon>
+                </button>
+            </div>
+            <form>
+                <div class="modal-body pt-3">
+                    <div class="form-group">
+                        <ng-select class="select_ng_custom" [searchable]="true" [multiple]="true" bindLabel="name"
+                            bindValue="id" [clearable]="false" placeholder="Select Staff Member">
+                            <ng-option value="Victoria Kay">
+                                Victoria Kay
+                            </ng-option>
+                            <ng-option value="Adi Baskara">
+                                Adi Baskara
+                            </ng-option>
+                        </ng-select>
+                    </div>
+                </div>
+                <div class="modal-footer justify-content-center">
+                    <button mat-button type="button" class="theme_btn btn_outline_primary  mr-4"
+                        data-dismiss="modal">Cancel</button>
+                    <button mat-button class="theme_btn btn_primary">Update</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Modify Staff -->
+
+<div class="modal fade bsModal ch_modal" id="modifyStaff" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document" style="max-width: 700px;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title" id="exampleModalLabel">Modify Staff Member</h2>
+                <button mat-icon-button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <mat-icon>close</mat-icon>
+                </button>
+            </div>
+            <form>
+                <div class="modal-body pt-3">
+                    <div class="form-group">
+                        <!-- <ng-select class="select_ng_custom" [searchable]="true" [multiple]="true" bindLabel="name"
+                            bindValue="id" [clearable]="false" placeholder="Select Staff Member" [(ngModel)]="staffArr">
+                            <ng-option *ngFor="let staff of placementGroupDetails.staff" value="{{staff.staff_id}}"> {{staff.first_name}} {{staff.last_name}}</ng-option>
+                        </ng-select> -->
+                        <!-- <ng-select class="select_ng_custom" placeholder="Select Staff Member"
+                            [items]="staffMembers" bindLabel="name" bindValue="staff_id"
+                            [multiple]="true" [searchable]="true" [clearable]="false" [(ngModel)]="staffIds"
+                            name="staffIds">
+                        </ng-select> -->
+
+                        <ng-select [formControl]="staffControl" [searchable]="true" [multiple]="true"
+                        bindLabel="first_name" bindValue="_id" [clearable]="false"
+                        placeholder="Select staff members">
+                            <ng-option *ngFor="let staffMember of staffMembers" [value]="staffMember._id">
+                                {{ staffMember.first_name }} {{ staffMember.last_name }}
+                            </ng-option>
+                        </ng-select>
+                        
+                        <!-- <p>Selected IDs: {{ staffControl.value | json }}</p> -->
+             
+                    </div>
+                </div>
+                <div class="modal-footer justify-content-center">
+                    <button mat-button type="button" class="theme_btn btn_outline_primary  mr-4"
+                        data-dismiss="modal">Cancel</button>
+                    <button mat-button class="theme_btn btn_primary" (click)="onUpdateStaffMember()" data-dismiss="modal">Update</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade bsModal ch_modal done_modal_popup" id="archived" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+            </div>
+            <div class="modal-body text-center">
+                <h2>{{placementGroupDetails.title}} has been archived</h2>
+            </div>
+            <div class="modal-footer justify-content-center">
+                <button mat-button class="theme_btn btn_primary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Submit Apllication -->
+
+<div class="modal fade bsModal ch_modal unpublish_modal" id="unpublish" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" mat-icon-button id="closeModal" class="close" data-dismiss="modal"
+                    aria-label="Close" (click)="onCancelUnpublishPlacementGroup()">
+                    <mat-icon>close</mat-icon>
+                </button>
+            </div>
+            <div class="modal-body pt-0 active_deactive_modal">
+                <ng-container *ngIf="proceedFlow !== 'password'">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <img src="../../../../assets/img/undraw_warning.svg" alt="undraw_warning">
+                        </div>
+                    </div>
+                    <h4 class="proceedFlow_h">Unpublishing a simulation group will make <br /> selected workflows unavailable to the students.</h4>
+                </ng-container>
+                <ng-container *ngIf="proceedFlow == 'password'">
+                    <h4 class="proceedFlow_h_next">To unpublish this Simulation Group, please type your password to
+                        confirm:</h4>
+                    <div class="form-group position-relative">
+                        <label>Password</label>
+                        <input [type]="pass" class="form-control" [(ngModel)]="password">
+                        <span class="eye_icon" *ngIf="pass == 'text'" (click)="onEyeClick('pass', 'password')">
+                            <svg width="20" height="13" viewBox="0 0 20 13" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path
+                                    d="M1.29565 6.7632C1.1361 6.56013 1.00404 6.38224 0.900947 6.23866C0.997612 6.09726 1.1211 5.92302 1.27053 5.72458C1.69179 5.16511 2.31455 4.41936 3.11828 3.6754C4.7353 2.17866 7.01653 0.75 9.82143 0.75C12.6263 0.75 14.9076 2.17866 16.5246 3.6754C17.3283 4.41936 17.9511 5.16511 18.3723 5.72458C18.5218 5.92302 18.6452 6.09726 18.7419 6.23866C18.6388 6.38224 18.5068 6.56013 18.3472 6.7632C17.9058 7.32498 17.2587 8.07347 16.4375 8.82004C14.7807 10.3262 12.4992 11.75 9.82143 11.75C7.14368 11.75 4.86212 10.3262 3.2054 8.82004C2.38417 8.07347 1.73706 7.32498 1.29565 6.7632Z"
+                                    stroke="#545465" stroke-width="1.5" />
+                                <circle cx="9.82143" cy="6.24965" r="2.82143" stroke="#545465" stroke-width="1.5" />
+                            </svg>
+                        </span>
+                        <span *ngIf="pass == 'password'" class="eye_icon pswrd_hide"
+                            (click)="onEyeClick('pass', 'text')">
+                            <svg width="20" height="16" viewBox="0 0 20 16" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path
+                                    d="M1.30849 8.89459C1.14302 8.68399 1.00656 8.49996 0.900682 8.35228C0.999999 8.20676 1.12767 8.0264 1.28274 7.82046C1.71202 7.25034 2.34663 6.49038 3.16572 5.73222C4.81343 4.20707 7.1393 2.75 10 2.75C12.8607 2.75 15.1866 4.20707 16.8343 5.73222C17.6534 6.49038 18.288 7.25034 18.7173 7.82046C18.8723 8.0264 19 8.20676 19.0993 8.35228C18.9934 8.49996 18.857 8.68399 18.6915 8.89459C18.2417 9.46703 17.5824 10.2297 16.7455 10.9905C15.0575 12.525 12.7313 13.9773 10 13.9773C7.26867 13.9773 4.94248 12.525 3.2545 10.9905C2.41765 10.2297 1.75826 9.46703 1.30849 8.89459Z"
+                                    stroke="#545465" stroke-width="1.5" />
+                                <circle cx="10.0001" cy="8.36293" r="2.88636" stroke="#545465" stroke-width="1.5" />
+                                <rect x="2.1875" y="1.44922" width="1.52727" height="20.3636"
+                                    transform="rotate(-45 2.1875 1.44922)" fill="#545465" />
+                            </svg>
+                        </span>
+                    </div>
+                </ng-container>
+            </div>
+            <div class="modal-footer justify-content-around">
+                <ng-container *ngIf="proceedFlow !== 'password'">
+                    <button mat-button type="button" class="theme_btn btn_primary" data-dismiss="modal">Close</button>
+                    <button mat-button type="submit" class="theme_btn btn_outline_primary"
+                        (click)="proceed('password')">Proceed</button>
+                </ng-container>
+                <ng-container *ngIf="proceedFlow == 'password'">
+                    <button mat-button type="button" class="theme_btn btn_primary" data-dismiss="modal" (click)="onCancelUnpublishPlacementGroup()">Cancel</button>
+                    <button mat-button type="submit" class="theme_btn btn_outline_danger"  style="background: transparent;" data-dismiss="modal"
+                         [disabled]="!password"
+                        (click)="unpublishPlacementGroup()">Unpublish</button>
+                </ng-container>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade bsModal ch_modal done_modal_popup" id="unpublished" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+            </div>
+            <div class="modal-body text-center">
+                <h2>{{placementGroupDetails.title}} has been successfully unpublished.</h2>
+            </div>
+            <div class="modal-footer justify-content-center">
+                <button mat-button class="theme_btn btn_primary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade bsModal ch_modal archived_placement_group_modal" id="archivedPlacement" tabindex="-1"
+    role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header pt-4 text-center justify-content-center">
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <img src="../../../../assets/img/undraw_warning.svg" alt="undraw_warning">
+                    </div>
+                    <div class="col-md-12 text-center">
+                        <h2 class="modal-title">You must unpublish the Simulation Group before <br> you can archive it.
+                        </h2>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer justify-content-center">
+                <button mat-button type="button" class="theme_btn btn_primary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade bsModal ch_modal password_modal" id="archivePassword" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <form [formGroup]="confirmPassword">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" mat-icon-button id="closeModal" class="close" data-dismiss="modal"
+                        aria-label="Close">
+                        <mat-icon>close</mat-icon>
+                    </button>
+                </div>
+                <div class="modal-body pt-0 active_deactive_modal">
+                    <h4 class="mb-5">To instantly archive this Simulation Group, <br> please type your password to confirm:
+                    </h4>
+                    <div class="form-group mb-0 position-relative">
+                        <label>Password</label>
+                        <input [type]="pass" class="form-control" [(ngModel)]="password" formControlName="password" [class.invalid_field]="checkInvalidFieldPassrordForm('password')">
+                        <span class="eye_icon" *ngIf="pass == 'text'" (click)="onEyeClick('pass', 'password')">
+                            <svg width="20" height="13" viewBox="0 0 20 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path
+                                    d="M1.29565 6.7632C1.1361 6.56013 1.00404 6.38224 0.900947 6.23866C0.997612 6.09726 1.1211 5.92302 1.27053 5.72458C1.69179 5.16511 2.31455 4.41936 3.11828 3.6754C4.7353 2.17866 7.01653 0.75 9.82143 0.75C12.6263 0.75 14.9076 2.17866 16.5246 3.6754C17.3283 4.41936 17.9511 5.16511 18.3723 5.72458C18.5218 5.92302 18.6452 6.09726 18.7419 6.23866C18.6388 6.38224 18.5068 6.56013 18.3472 6.7632C17.9058 7.32498 17.2587 8.07347 16.4375 8.82004C14.7807 10.3262 12.4992 11.75 9.82143 11.75C7.14368 11.75 4.86212 10.3262 3.2054 8.82004C2.38417 8.07347 1.73706 7.32498 1.29565 6.7632Z"
+                                    stroke="#545465" stroke-width="1.5" />
+                                <circle cx="9.82143" cy="6.24965" r="2.82143" stroke="#545465" stroke-width="1.5" />
+                            </svg>
+                        </span>
+                        <span *ngIf="pass == 'password'" class="eye_icon pswrd_hide" (click)="onEyeClick('pass', 'text')">
+                            <svg width="20" height="16" viewBox="0 0 20 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path
+                                    d="M1.30849 8.89459C1.14302 8.68399 1.00656 8.49996 0.900682 8.35228C0.999999 8.20676 1.12767 8.0264 1.28274 7.82046C1.71202 7.25034 2.34663 6.49038 3.16572 5.73222C4.81343 4.20707 7.1393 2.75 10 2.75C12.8607 2.75 15.1866 4.20707 16.8343 5.73222C17.6534 6.49038 18.288 7.25034 18.7173 7.82046C18.8723 8.0264 19 8.20676 19.0993 8.35228C18.9934 8.49996 18.857 8.68399 18.6915 8.89459C18.2417 9.46703 17.5824 10.2297 16.7455 10.9905C15.0575 12.525 12.7313 13.9773 10 13.9773C7.26867 13.9773 4.94248 12.525 3.2545 10.9905C2.41765 10.2297 1.75826 9.46703 1.30849 8.89459Z"
+                                    stroke="#545465" stroke-width="1.5" />
+                                <circle cx="10.0001" cy="8.36293" r="2.88636" stroke="#545465" stroke-width="1.5" />
+                                <rect x="2.1875" y="1.44922" width="1.52727" height="20.3636"
+                                    transform="rotate(-45 2.1875 1.44922)" fill="#545465" />
+                            </svg>
+                        </span>
+                        <span *ngIf="checkInvalidFieldPassrordForm('password')" class="error">This field is required.</span>
+                    </div>
+                </div>
+                <div class="modal-footer justify-content-around">
+                    <button #closePasswordModal mat-button type="button" class="theme_btn btn_outline_primary" data-dismiss="modal" (click)="onCancelPassword()">Cancel</button>
+                    <button mat-button type="submit" class="theme_btn btn_primary" data-dismiss="modal"
+                        (click)="archivePlacementGroup()">Confirm</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<a style="visibility:hidden" id="archivedPopup" data-toggle="modal" data-target="#archivedPlacement">
+    <span>Archive</span>
+</a>
+<a style="visibility:hidden" id="archiveConfirmPassword" data-toggle="modal" data-target="#archivePassword"></a>
+<a style="visibility:hidden" id="publishedDonePopup" data-toggle="modal" data-target="#publishedDone"></a>
+<a style="visibility:hidden" id="publishedDoneErrorPopup" data-toggle="modal" data-target="#publishedErrorDone"></a>
+<a style="visibility:hidden" id="unpublishedPopup" data-toggle="modal" data-target="#unpublished"></a>
+<a style="visibility:hidden" id="archivedDonePopup" data-toggle="modal" data-target="#archived"></a>
+
+
+<div bsModal #removenotPublish="bs-modal"  class="modal fade bsModal ch_modal done_modal_popup" id="reminderToStaffDone" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" style="max-width: 600px;" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+            </div>
+            <div class="modal-body text-center">
+                <svg class="mb-3" width="126" height="101" viewBox="0 0 126 101" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <g clip-path="url(#clip0_7577_56688)">
+                    <path d="M95.371 100.164L11.656 100.194C7.45041 100.195 3.68314 98.0061 1.57906 94.3383C0.526894 92.5041 0.000693685 90.4921 6.85071e-07 88.4797C-0.000692315 86.4676 0.52438 84.455 1.57504 82.6203L43.4059 5.91899C45.5077 2.24948 49.2735 0.0581061 53.4791 0.0566414C57.6848 0.0551766 61.452 2.24393 63.5564 5.91197L105.445 82.5937C106.495 84.4229 107.02 86.4326 107.02 88.4437C107.02 90.4548 106.495 92.4672 105.444 94.3021C103.342 97.9713 99.5766 100.163 95.371 100.164ZM1.0523 88.4783C1.05217 90.31 10.2898 86.363 11.2468 88.0314C13.1611 91.3683 7.82944 99.1373 11.6557 99.136C11.6557 99.136 102.623 97.1118 104.534 93.7736C105.49 92.1045 105.968 90.2734 105.967 88.4428C105.967 86.6122 105.488 84.7817 104.531 83.1133L62.6416 6.43154C60.7327 3.10425 57.3057 1.1129 53.4795 1.11423C49.655 1.11557 1.05245 86.6464 1.0523 88.4783Z" fill="#3F3D56"/>
+                    <path d="M77.9031 83.2491C99.0694 83.2491 116.228 65.9664 116.228 44.647C116.228 23.3277 99.0694 6.04492 77.9031 6.04492C56.7368 6.04492 39.5781 23.3277 39.5781 44.647C39.5781 65.9664 56.7368 83.2491 77.9031 83.2491Z" fill="#464BA8"/>
+                    <path d="M76.3835 53.0815L69.5859 23.488L74.9271 22.3555L80.5508 52.198L76.3835 53.0815ZM81.0564 64.2961C80.0781 64.5035 79.191 64.3645 78.3948 63.8791C77.6296 63.3462 77.1488 62.6099 76.9525 61.6702C76.7561 60.7305 76.9055 59.8811 77.4006 59.1219C77.9267 58.3152 78.6789 57.8082 79.6572 57.6008C80.5963 57.4017 81.4484 57.5685 82.2136 58.1014C83.0098 58.5868 83.506 59.2994 83.7024 60.2391C83.8988 61.1788 83.7339 62.052 83.2078 62.8586C82.7127 63.6178 81.9955 64.097 81.0564 64.2961Z" fill="white"/>
+                    </g>
+                    <defs>
+                    <clipPath id="clip0_7577_56688">
+                    <rect width="126" height="101" fill="white"/>
+                    </clipPath>
+                    </defs>
+                    </svg>
+                    
+                <h2>You cannot remove the associated Project while the Simulation Group is published.</h2> 
+            </div>
+            <div class="modal-footer justify-content-center" style="padding: 26px 0 50px 0;">
+                <button mat-button class="theme_btn btn_primary" (click)="removenotPublish.hide();">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div bsModal #removeProject="bs-modal"  class="modal fade bsModal ch_modal done_modal_popup" id="reminderToStaffDone" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" style="max-width: 600px;" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+            </div>
+            <div class="modal-body text-center">
+                
+                <h2>Would you like to remove the following 
+                    Simulation Group?
+                    <br /><br />
+                    {{projectDetails?.job_title}}</h2> 
+            </div>
+            <div class="modal-footer justify-content-around" style="padding: 26px 0 50px 0;">
+                <button mat-button class="theme_btn btn_outline_primary" (click)="removeProject.hide();">No</button>
+                <button mat-button class="theme_btn btn_primary" (click)="removeProjectForPG();removeProject.hide();">Yes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div bsModal #removeProjectDone="bs-modal"  class="modal fade bsModal ch_modal done_modal_popup" id="reminderToStaffDone" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" style="max-width: 600px;" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+            </div>
+            <div class="modal-body text-center">
+                <svg  class="mb-3" width="112" height="112" viewBox="0 0 112 112" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="56" cy="56" r="56" fill="#26C296"/>
+                    <path d="M65.3332 49L52.4998 61.8333L46.6665 56" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    
+                <h2>{{title}} has been successfully removed!</h2> 
+            </div>
+            <div class="modal-footer justify-content-center" style="padding: 26px 0 50px 0;">
+                <button mat-button class="theme_btn btn_primary" (click)="removeProjectDone.hide();projectDetails=null">Close</button>
+            </div>
+        </div>
+    </div>
+</div>

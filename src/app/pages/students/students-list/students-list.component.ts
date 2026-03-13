@@ -38,7 +38,7 @@ export class StudentsListComponent implements AfterViewInit {
   @ViewChild('closeConfirmDeleteModal') closeConfirmDeleteModal;
 
 
-  // { name: 'Placement Groups', field: 'placementGroups', selected: false },
+  // { name: 'Simulation Groups', field: 'placementGroups', selected: false },
   // { name: 'Major', field: 'major', selected: false },
   // { name: 'Priority', field: 'priority', selected: false },
   // { name: 'Status', field: 'status', selected: false },
@@ -58,7 +58,7 @@ export class StudentsListComponent implements AfterViewInit {
   selectedParameters:any="";
   asignNextStep: boolean;
   filters = [
-    { name: 'Placement Groups', field: 'placementGroups', selected: false },
+    { name: 'Simulation Groups', field: 'placementGroups', selected: false },
     { name: 'Major', field: 'major', selected: false },
     { name: 'Minor', field: 'minor', selected: false },
     { name: 'Priority', field: 'priority', selected: false },
@@ -2154,11 +2154,11 @@ this.filters = this.filters.map((option) => {
           return;
         }else{
           
-        //No students can be added in a Placement Group
+        //No students can be added in a Simulation Group
         this.noStudentsAddPopUp.ripple.trigger.click();
         }
       } else if (res.result.length && res.result.length != this.selectedStudentsCanAddToPlacementGroup.length) {
-        //Partial students can be added in a Placement Group
+        //Partial students can be added in a Simulation Group
         
         if(find.category_id == "65a21e64fa6a8e4f5b252994"){
           this.addStudentList = new MatTableDataSource(res.result);
@@ -2171,7 +2171,7 @@ this.filters = this.filters.map((option) => {
           this.partialStudentAddPopup.ripple.trigger.click();
         }
       } else {
-        //All students can be added in a Placement Group
+        //All students can be added in a Simulation Group
         this.addStudentList = new MatTableDataSource(res.result);
         this.allStudentAddPopUp.ripple.trigger.click();
         this.addToPlacementGroup();

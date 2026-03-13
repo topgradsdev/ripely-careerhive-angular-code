@@ -119,7 +119,7 @@ export class PlacementEligibleStudentsComponent implements OnInit {
   }
 
   filters = [
-    // { name: 'Placement Groups', field: 'placementGroups', selected: false },
+    // { name: 'Simulation Groups', field: 'placementGroups', selected: false },
     // { name: 'Major', field: 'major', selected: false },
     { name: 'Priority', field: 'priority', selected: false },
     { name: 'Status', field: 'status', selected: false },
@@ -486,7 +486,7 @@ onScoreInput(event: Event, type: 'min' | 'max') {
 
  
   // filters = [
-  //   // { name: 'Placement Groups', field: 'placementGroups', selected: false },
+  //   // { name: 'Simulation Groups', field: 'placementGroups', selected: false },
   //   // { name: 'Major', field: 'major', selected: false },
   //   { name: 'Priority', field: 'priority', selected: false },
   //   { name: 'Status', field: 'status', selected: false },
@@ -1188,7 +1188,7 @@ eligibleStudentdata:any = [];
   //       if(i == this.selectedStudent.length-1){
   //             this.selectedStudent = []
   //             this.service.showMessage({
-  //               message: "Student removed from Placement Group successfully"
+  //               message: "Student removed from Simulation Group successfully"
   //             });
   //             this.getEligibleStudents();
   //       }
@@ -1199,7 +1199,7 @@ eligibleStudentdata:any = [];
   //     this.service.removeStudentFromPlacementGroup({student_id:this.selectedStudent[0]._id}).subscribe(res => {
   //       if (res.status == HttpResponseCode.SUCCESS) {
   //         this.service.showMessage({
-  //           message: "Student removed from Placement Group successfully"
+  //           message: "Student removed from Simulation Group successfully"
   //         });
   //         this.selectedStudent = []
   //         this.getEligibleStudents();
@@ -1242,7 +1242,7 @@ eligibleStudentdata:any = [];
 
     if (allSuccess) {
       this.service.showMessage({
-        message: "Student(s) removed from Placement Group successfully"
+        message: "Student(s) removed from Simulation Group successfully"
       });
     } else {
       this.service.showMessage({

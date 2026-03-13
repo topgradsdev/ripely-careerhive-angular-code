@@ -1,0 +1,252 @@
+.main_container_place {
+    .card_header {
+        background-size: cover;
+        background-position: center;
+        position: relative;
+        padding: 26px 26px 35px 26px;
+        border-radius: 10px;
+        overflow: hidden;
+        margin-bottom: 35px;
+
+        .card_container {
+            display: inline-flex;
+            column-gap: 42px;
+            align-items: center;
+            flex-wrap: wrap;
+            row-gap: 30px;
+        }
+    }
+
+    .sub_header {
+        row-gap: 15px;
+        margin-bottom: 15px;
+    }
+
+    a.td_link {
+        cursor: pointer;
+        &:hover {
+            color: var(--primary-color-first);
+            text-decoration: underline;
+        }
+    }
+}
+
+.student_card {
+    box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.25);
+    background: #fff;
+    padding: 22px 30px;
+    display: flex;
+    margin-bottom: 0px;
+    height: 100%;
+    flex-direction: row;
+    border-radius: 10px;
+    position: relative;
+    overflow: hidden;
+
+    &.total {
+        background-color: #fff;
+
+        .action {
+            position: absolute;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 33px;
+            opacity: 0;
+            transition: all .3s ease-in-out;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 100%;
+        }
+
+        &:hover {
+            &>:not(.action) {
+                filter: blur(4px);
+            }
+
+            .action {
+                opacity: 1;
+
+                button {
+                    height: 36px;
+                }
+            }
+        }
+    }
+
+    .content {
+        width: calc(100% - 45px);
+        padding-right: 20px;
+
+        h4 {
+            font-family: var(--font-third);
+            font-size: 24px;
+            font-weight: 400;
+            line-height: 28px;
+            color: #000000;
+            margin-bottom: 0px;
+        }
+
+        p {
+            font-family: var(--font-third);
+            font-size: 14px;
+            font-weight: 400;
+            line-height: 16px;
+            color: #000000;
+            margin-bottom: 10px;
+        }
+    }
+}
+
+// === Progress Bar (percentage inside, striped unfilled) ===
+.sim-progress-bar {
+    min-width: 180px;
+    max-width: 220px;
+}
+
+.sim-progress-track {
+    position: relative;
+    width: 100%;
+    height: 28px;
+    border-radius: 14px;
+    background: transparent;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+}
+
+.sim-progress-fill {
+    height: 100%;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding-right: 8px;
+    position: relative;
+    z-index: 2;
+    min-width: 0;
+    transition: width 0.4s ease;
+}
+
+.sim-progress-text {
+    color: #fff;
+    font-size: 12px;
+    font-weight: 600;
+    white-space: nowrap;
+    letter-spacing: 0.3px;
+
+    &.outside {
+        color: #8B8FAD;
+        font-size: 12px;
+        font-weight: 600;
+        position: relative;
+        z-index: 3;
+        margin-left: 4px;
+    }
+}
+
+.sim-progress-stripes {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1;
+    border-radius: 0 14px 14px 0;
+    background: repeating-linear-gradient(
+        90deg,
+        #C8CBDF 0px,
+        #C8CBDF 3px,
+        transparent 3px,
+        transparent 7px
+    );
+    width: auto;
+    // left is set via [style.left.%] in template
+    // right: 0 fills the remaining space
+}
+
+// === Priority Pill Select ===
+::ng-deep .priority-pill {
+    border-radius: 20px !important;
+    padding: 2px 8px !important;
+    font-size: 12px !important;
+    font-weight: 600 !important;
+    min-width: 70px;
+    max-width: 80px;
+    height: 28px !important;
+    line-height: 28px !important;
+    text-align: center;
+
+    .mat-select-trigger {
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .mat-select-value {
+        text-align: center;
+    }
+
+    .mat-select-arrow-wrapper {
+        .mat-select-arrow {
+            margin: 0 0 0 4px;
+        }
+    }
+}
+
+::ng-deep .priority-pill-low {
+    background-color: #E8F8F2 !important;
+    color: #26C296 !important;
+    border: none !important;
+
+    .mat-select-value-text,
+    .mat-select-value {
+        color: #26C296 !important;
+    }
+    .mat-select-arrow {
+        color: #26C296 !important;
+    }
+}
+
+::ng-deep .priority-pill-high {
+    background-color: #FFECEC !important;
+    color: #F47761 !important;
+    border: none !important;
+
+    .mat-select-value-text,
+    .mat-select-value {
+        color: #F47761 !important;
+    }
+    .mat-select-arrow {
+        color: #F47761 !important;
+    }
+}
+
+::ng-deep .priority-pill-medium {
+    background-color: #FFF5EC !important;
+    color: #F4A261 !important;
+    border: none !important;
+
+    .mat-select-value-text,
+    .mat-select-value {
+        color: #F4A261 !important;
+    }
+    .mat-select-arrow {
+        color: #F4A261 !important;
+    }
+}
+
+.profile {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: var(--primary-color-first);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: 600;
+}

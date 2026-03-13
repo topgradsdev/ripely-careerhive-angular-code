@@ -90,7 +90,7 @@ export class DefaultLayoutComponent {
     // },
     // {
     //   id: 6,
-    //   "title": "Edgar Garcia has invited you to collaborate on [Placement Group Name]",
+    //   "title": "Edgar Garcia has invited you to collaborate on [Simulation Group Name]",
     //   "type": 'placementgroup',
     //   "desicription": '',
     //   "name": 'tester',

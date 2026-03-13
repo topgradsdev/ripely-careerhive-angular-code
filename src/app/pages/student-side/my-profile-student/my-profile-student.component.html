@@ -246,7 +246,7 @@
 )
                 }">
                     <div class="content">
-                       <h5>Placement Group</h5>
+                       <h5>Simulation Group</h5>
                         <p class="pg-name" >
                                    
                                     <!-- Show placement_groups if it exists and is not 'NA' -->
@@ -3287,7 +3287,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h2 class="modal-title primary" id="exampleModalLabel">View {{selectedStudents?.first_name}}
-                    {{selectedStudents?.last_name}}'s Placement Groups</h2>
+                    {{selectedStudents?.last_name}}'s Simulation Groups</h2>
                 <button type="button" mat-icon-button id="closeModal" class="close" data-dismiss="modal"
                     aria-label="Close">
                     <mat-icon>close</mat-icon>
@@ -3297,7 +3297,7 @@
                 <div class="modal-body pt-3">
                     <div class="table-responsive manage_table_scroll position-relative">
                         <table mat-table [dataSource]="studentPGs" matSort class="ch_table">
-                            <!-- Placement Group Column -->
+                            <!-- Simulation Group Column -->
                             <ng-container matColumnDef="code">
                                 <th mat-header-cell *matHeaderCellDef mat-sort-header>Code </th>
                                 <td mat-cell *matCellDef="let row">{{ row.code }}</td>

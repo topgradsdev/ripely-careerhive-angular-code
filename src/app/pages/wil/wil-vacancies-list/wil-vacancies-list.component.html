@@ -232,7 +232,7 @@
                         <path d="M5 12H19" stroke="#464BA8" stroke-width="2" stroke-linecap="round"
                             stroke-linejoin="round" />
                     </svg>
-                    Add to Placement Group
+                    Add to Simulation Group
                 </button>
 
                 
@@ -649,7 +649,7 @@
                             </a>
                             <!-- <a mat-menu-item  *ngIf="!applyStatus" (click)="job_details = row;"  data-toggle="modal"
                             data-target="#addPlacementGroup">
-                                <span>Add to Placement Group</span>
+                                <span>Add to Simulation Group</span>
                             </a> -->
                             <a mat-menu-item *ngIf="!applyStatus && row.is_editable" class="danger" data-toggle="modal" data-target="#archiveDialog" (click)="job_details = row;selectedJob=row;">
                                 <span>Unpublish & Archive</span>
@@ -1261,13 +1261,13 @@
 </div>
 
 
-<!-- Add Placement Group Modal -->
+<!-- Add Simulation Group Modal -->
 <!-- <div class="modal fade bsModal ch_modal" id="addPlacementGroup" tabindex="-1" role="dialog"
     aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header" style="flex-direction: column;align-items: start;">
-                <h2 class="modal-title">Add Vacancies to Placement Group</h2>
+                <h2 class="modal-title">Add Vacancies to Simulation Group</h2>
                 <p style="color:#9A9A9A">Internship Vacancies can only be added to Internship Placements</p>
                 <button type="button" mat-icon-button id="closeModal" class="close" data-dismiss="modal"
                     aria-label="Close">
@@ -1280,7 +1280,7 @@
                     bindLabel="title"
                     bindValue="_id"
                     [clearable]="false"
-                    placeholder="Search Placement Group"
+                    placeholder="Search Simulation Group"
                     [items]="placementGroups"
                     (ngModelChange)="getPlacementGroups($event)"
                     [(ngModel)]="placemenGroupIds">
@@ -1462,13 +1462,13 @@ aria-labelledby="exampleModalLabel" aria-hidden="true">
     </div>
 </div>
 </div>
-<!-- Add Placement Group Modal -->
+<!-- Add Simulation Group Modal -->
 <div  bsModal #addCompanyPlacement="bs-modal"  class="modal fade bsModal ch_modal" id="addPlacementGroup" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document" style="max-width:700px">
         <div class="modal-content">
             <div class="modal-header"  style="flex-direction: column;align-items: start;">
-                <!-- <h2 class="modal-title">Add&nbsp;<b>{{selectedRecords.length}}</b>&nbsp; companies to Placement Group</h2> -->
-                <h2 class="modal-title">Add Vacancy to Placement Group</h2>
+                <!-- <h2 class="modal-title">Add&nbsp;<b>{{selectedRecords.length}}</b>&nbsp; companies to Simulation Group</h2> -->
+                <h2 class="modal-title">Add Vacancy to Simulation Group</h2>
                 <p style="color:#9A9A9A">Internship Vacancies can only be added to Internship Placements</p>
                 <button type="button" mat-icon-button id="closeModal" class="close" data-dismiss="modal"
                     aria-label="Close" (click)="addCompanyPlacement.hide(); resetForm();isSelectedActiveList=false;selectedActiveList=[];">
@@ -1494,7 +1494,7 @@ aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="form-group mb-0">
                     <!-- (ngModelChange)="onSelectionChange($event)" -->
                     <ng-select [searchable]="true" bindLabel="title" bindValue="_id" [clearable]="false"
-                        placeholder="Search Placement Group" [multiple]="false" [items]="placementGroups"
+                        placeholder="Search Simulation Group" [multiple]="false" [items]="placementGroups"
                         (keyup)="getPlacementGroups($event)" [(ngModel)]="placemenGroupIds" >
                         <ng-template ng-option-tmp let-group="item">
                             <div class="option-container">

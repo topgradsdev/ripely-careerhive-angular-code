@@ -92,7 +92,7 @@ export class WilCompaniesRequestListComponent implements OnInit {
     private ngxPermissionService: NgxPermissionsService, private cdRef: ChangeDetectorRef, private loader: LoaderService, private location: Location,   private sanitizer: DomSanitizer) { }
   activeFilter:any = { name: 'placementGroups', value: '' };
   filters = [
-    { name: "placementGroups", label: "Placement Group", selected: false, value: "" },
+    { name: "placementGroups", label: "Simulation Group", selected: false, value: "" },
     { name: "currently_placed", label: "Currently Placed", selected: false, value: "" },
     { name: "location", label: "Location", selected: false, value: "", suburb:'' },
     { name: "no_of_employees", label: "No. of Employees", selected: false, value: "" },
@@ -194,7 +194,7 @@ export class WilCompaniesRequestListComponent implements OnInit {
     { name: "HCAAF Status", value: "hcaaf_status" },
     { name: "Last HCAAF Update", value: "last_hcaaf_update" },
     { name: "Students Placed", value: "student_placed" },
-    { name: "Placement Group", value: "vacancy_count" },
+    { name: "Simulation Group", value: "vacancy_count" },
     { name: "WHS Check", value: "whs_check" },
     { name: "Site Consent To Use Logo", value: "company_concent_to_use_logo" }
   ]

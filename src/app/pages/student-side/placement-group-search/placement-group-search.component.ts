@@ -268,7 +268,7 @@ objectKeys(obj: any): string[] {
 
   prettyKey(key: string): string {
       const map: Record<string, string> = {
-        placementGroups: 'Placement Groups',
+        placementGroups: 'Simulation Groups',
         major: 'Major',
         minor: 'Minor',
         priority: 'Priority',

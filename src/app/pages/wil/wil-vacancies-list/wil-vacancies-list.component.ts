@@ -887,15 +887,15 @@ this.paginationObj.pageIndex=0;
   //     this.service.getUnplacementStudent(payload).subscribe((res: any) => {
   //       if (res.status != HttpResponseCode.SUCCESS) {
          
-  //         //No students can be added in a Placement Group
+  //         //No students can be added in a Simulation Group
   //         this.noStudentsAddPopUp.ripple.trigger.click();
   //       } else if (res.result.length && res.result.length != this.selectedStudentsCanAddToPlacementGroup.length) {
-  //         //Partial students can be added in a Placement Group
+  //         //Partial students can be added in a Simulation Group
           
   //         this.addStudentList = new MatTableDataSource(res.result);
   //         this.partialStudentAddPopup.ripple.trigger.click();
   //       } else {
-  //         //All students can be added in a Placement Group
+  //         //All students can be added in a Simulation Group
   //         this.addStudentList = new MatTableDataSource(res.result);
   //         this.allStudentAddPopUp.ripple.trigger.click();
   //         this.addToPlacementGroup();

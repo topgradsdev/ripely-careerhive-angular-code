@@ -288,7 +288,7 @@
                             <path d="M5 12H19" stroke="#464BA8" stroke-width="2" stroke-linecap="round"
                                 stroke-linejoin="round" />
                         </svg>
-                        Add&nbsp;<b>{{selectedRecords.length}}</b>&nbsp;students to Placement Group
+                        Add&nbsp;<b>{{selectedRecords.length}}</b>&nbsp;students to Simulation Group
                     </button>
 
                     <button mat-button class="theme_btn theme_link_btn" data-toggle="modal" data-target="#resendOTPEmailStudentBulk">
@@ -299,13 +299,13 @@
                             Send OTP Email
                     </button>
 
-                    <!-- All students can add to placement group -->
+                    <!-- All students can add to simulation group -->
                     <button #allStudentAddPopUp mat-button class="theme_btn theme_link_btn hidden" data-toggle="modal"
                         data-target="#allStudentsCanAdd"></button>
-                    <!-- Partial student can be add to placement group -->
+                    <!-- Partial student can be add to simulation group -->
                     <button #partialStudentAddPopup mat-button class="theme_btn theme_link_btn hidden" data-toggle="modal"
                         data-target="#partialStudentsCanAdd"></button>
-                    <!-- Students cannot be added to a placement group -->
+                    <!-- Students cannot be added to a simulation group -->
                     <button #noStudentsAddPopUp mat-button class="theme_btn theme_link_btn hidden" data-toggle="modal"
                         data-target="#noStudentsCanAdd"></button>
                 </div>
@@ -929,7 +929,7 @@
                     </ng-container>
 
                     <ng-container matColumnDef="placement_group">
-                        <th mat-header-cell *matHeaderCellDef mat-sort-header> <div class="header-wrapper"> Placement Group
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> <div class="header-wrapper"> Simulation Group
                             <div class="hide-menu" [class.show]="menuTrigger.menuOpen">
                                 <button mat-icon-button class="rotate-180" [matMenuTriggerFor]="usernameMenu" (click)="selectedColumn = 'placement_group';$event.stopPropagation();" #menuTrigger="matMenuTrigger">
                                     <svg style="width: 18px;" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -2248,7 +2248,7 @@
                     </ng-container>
 
                     <ng-container matColumnDef="placement_group">
-                        <th mat-header-cell *matHeaderCellDef mat-sort-header> <div class="header-wrapper"> Placement Group
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> <div class="header-wrapper"> Simulation Group
                             <div class="hide-menu" [class.show]="menuTrigger.menuOpen">
                                 <button mat-icon-button class="rotate-180" [matMenuTriggerFor]="usernameMenu" (click)="selectedColumn = 'placement_group';$event.stopPropagation();" #menuTrigger="matMenuTrigger">
                                     <svg style="width: 18px;" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -3019,13 +3019,13 @@
 </div>
 
 
-<!-- Add Placement Group Modal -->
+<!-- Add Simulation Group Modal -->
 <div class="modal fade bsModal ch_modal" id="addPlacementGroup" tabindex="-1" role="dialog"
     aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h2 class="modal-title">Add&nbsp;<b>{{selectedRecords.length}}</b>&nbsp;students to Placement Group</h2>
+                <h2 class="modal-title">Add&nbsp;<b>{{selectedRecords.length}}</b>&nbsp;students to Simulation Group</h2>
                 <button type="button" mat-icon-button id="closeModal" class="close" data-dismiss="modal"
                     aria-label="Close">
                     <mat-icon>close</mat-icon>
@@ -3034,7 +3034,7 @@
             <div class="modal-body pt-3">
                 <div class="form-group mb-0">
                     <ng-select [searchable]="true" bindLabel="title" bindValue="_id" [clearable]="false"
-                        placeholder="Search Placement Group" [items]="placementGroups"
+                        placeholder="Search Simulation Group" [items]="placementGroups"
                         (keyup)="getPlacementGroups($event)" [(ngModel)]="placemenGroupIds">
                         <!-- <ng-option *ngFor="let group of placementGroups" [value]="group._id">
                             <div class="option-container">
@@ -3730,7 +3730,7 @@
 </div>
 
 
-<!-- Students can be added to a placement group -->
+<!-- Students can be added to a simulation group -->
 <div class="modal fade bsModal ch_modal unpublish_modal" id="allStudentsCanAdd" tabindex="-1" role="dialog"
     aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
@@ -3752,7 +3752,7 @@
     </div>
 </div>
 
-<!-- Partial student can be add to a placement group -->
+<!-- Partial student can be add to a simulation group -->
 <div class="modal fade bsModal ch_modal" id="partialStudentsCanAdd" tabindex="-1" role="dialog"
     aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
@@ -3766,7 +3766,7 @@
             <div class="modal-body pt-3 active_deactive_modal">
                 <h4 class="proceedFlow_h">{{selectedStudentsCanAddToPlacementGroup.length -
                     addStudentList?.data.length}} Selected candidates cannot be transferred as they already belong in a
-                    Placement Group.</h4>
+                    Simulation Group.</h4>
                 <h4>Proceed with the following students?</h4>
                 <div class="modal-body pt-3 active_deactive_modal">
                     <div class="table-responsive">
@@ -3812,7 +3812,7 @@
     </div>
 </div>
 
-<!-- Students cannot be added to a placement group -->
+<!-- Students cannot be added to a simulation group -->
 <div class="modal fade bsModal ch_modal unpublish_modal" id="noStudentsCanAdd" tabindex="-1" role="dialog"
     aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
@@ -3830,10 +3830,10 @@
                     </div>
                 </div>
                 <h4 class="proceedFlow_h" *ngIf="selectedStudentsCanAddToPlacementGroup.length == 1">The
-                    {{selectedStudentsCanAddToPlacementGroup.length}} selected candidates already belong in another Internship-based Placement Group and cannot be added.</h4>
+                    {{selectedStudentsCanAddToPlacementGroup.length}} selected candidates already belong in another Internship-based Simulation Group and cannot be added.</h4>
 
                 <h4 class="proceedFlow_h" *ngIf="selectedStudentsCanAddToPlacementGroup.length > 1">The
-                    {{selectedStudentsCanAddToPlacementGroup.length}} selected candidates already belong in another Internship-based Placement Group and cannot be added. </h4>
+                    {{selectedStudentsCanAddToPlacementGroup.length}} selected candidates already belong in another Internship-based Simulation Group and cannot be added. </h4>
             </div>
             <div class="modal-footer justify-content-around">
                 <button mat-button type="button" class="theme_btn btn_primary" data-dismiss="modal">Close</button>
@@ -4261,7 +4261,7 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h2 class="modal-title primary" id="exampleModalLabel">View {{selectedStudents?.first_name}} {{selectedStudents?.last_name}}'s Placement Groups</h2> 
+                <h2 class="modal-title primary" id="exampleModalLabel">View {{selectedStudents?.first_name}} {{selectedStudents?.last_name}}'s Simulation Groups</h2> 
                 <button type="button" mat-icon-button id="closeModal" class="close" data-dismiss="modal"
                     aria-label="Close">
                     <mat-icon>close</mat-icon>
@@ -4272,7 +4272,7 @@
                  <!--  -->
                     <div class="table-responsive manage_table_scroll position-relative">
                       <table mat-table [dataSource]="studentPGs" matSort class="ch_table">
-                            <!-- Placement Group Column -->
+                            <!-- Simulation Group Column -->
                             <ng-container matColumnDef="code">
                                 <th mat-header-cell *matHeaderCellDef mat-sort-header>Code </th>
                               <td mat-cell *matCellDef="let row">{{ row.code }}</td>
@@ -4575,11 +4575,11 @@
                                 <div class="col-md-7">
                                    <div class="right_container">
                                         <ng-container *ngIf="activeFilter === 'placementGroups'">
-                                            <h4 class="title">Placement Group</h4>
+                                            <h4 class="title">Simulation Group</h4>
                                             <div class="form-group">
                                                 <ng-select [searchable]="true" [multiple]="true" bindLabel="title"
                                                     bindValue="_id" [clearable]="false"
-                                                    placeholder="Select Placement Groups"
+                                                    placeholder="Select Simulation Groups"
                                                     [(ngModel)]="filterParameters.placementGroups">
                                                     <ng-option
                                                         *ngFor="let placementGroups of studentFilters?.placementGroups"

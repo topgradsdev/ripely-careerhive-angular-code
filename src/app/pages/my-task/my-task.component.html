@@ -707,7 +707,7 @@
                                 </div>
                                 <div class="profile_des">
                                     <div>
-                                        <span class="badge">{{task.created_At}} {{task.placementGroup?task.placementGroup:'No Placement Group'}}</span>
+                                        <span class="badge">{{task.created_At}} {{task.placementGroup?task.placementGroup:'No Simulation Group'}}</span>
                                         <p class="date">Updated at {{task.staff_allocation_updated_at | date: 'dd/MM/YYYY'}}</p>
                                     </div>
                                     <div class="user_profiles">
@@ -813,7 +813,7 @@
                             </div>
                             <div class="profile_des">
                                 <div>
-                                    <span class="badge">{{task.created_At}}  {{task.placementGroup?task.placementGroup:'No Placement Group'}}</span>
+                                    <span class="badge">{{task.created_At}}  {{task.placementGroup?task.placementGroup:'No Simulation Group'}}</span>
                                     <p class="date">Updated at {{task.staff_allocation_updated_at | date: 'dd/MM/YYYY'}}</p>
                                 </div>
                                 <div class="user_profiles">
@@ -918,7 +918,7 @@
                             </div>
                             <div class="profile_des">
                                 <div>
-                                    <span class="badge">{{task.created_at}}  {{task.placementGroup?task.placementGroup:'No Placement Group'}}</span>
+                                    <span class="badge">{{task.created_at}}  {{task.placementGroup?task.placementGroup:'No Simulation Group'}}</span>
                                     <p class="date">Updated at {{task.staff_allocation_updated_at | date: 'dd/MM/YYYY'}}</p>
                                 </div>
                                 <div class="user_profiles">
@@ -1868,7 +1868,7 @@
                             <div class="card_container">
                                 <div class="card">
                                     <div class="content">
-                                        <h4>Placement Group
+                                        <h4>Simulation Group
                                         </h4>
                                         <p>{{profileDetail?.placementGroup}}</p>
                                         <span>{{profileDetail?.placement_type}}</span>
@@ -2071,7 +2071,7 @@
                             <div class="card_container">
                                 <div class="card">
                                     <div class="content">
-                                        <h4>Placement Group
+                                        <h4>Simulation Group
                                         </h4>
                                         <p>{{profileDetail?.placement_group}}</p>
                                         <span>{{profileDetail?.placement_type}}</span>
@@ -2288,7 +2288,7 @@
                                     (click)="applyFilter(filters.PLACEMENT_GROUP)">
                                     <div class="check_box">
                                         <mat-checkbox [(ngModel)]="checked"></mat-checkbox>
-                                        <span class="check_box_label">Placement Group</span>
+                                        <span class="check_box_label">Simulation Group</span>
                                     </div>
                                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
                                         xmlns="http://www.w3.org/2000/svg">
@@ -2398,10 +2398,10 @@
                     <div class="col-md-7">
                         <div class="right_container">
                             <ng-container *ngIf="activeFilter === filters.PLACEMENT_GROUP">
-                                <h4 class="title">Placement Group</h4>
+                                <h4 class="title">Simulation Group</h4>
                                 <div class="form-group">
                                     <ng-select [searchable]="false" [multiple]="true" bindLabel="name" bindValue="id"
-                                        [clearable]="false" placeholder="Select Placement Groups">
+                                        [clearable]="false" placeholder="Select Simulation Groups">
                                         <ng-option value="Jan 2024 PY IT Internship">Jan 2024 PY IT
                                             Internship</ng-option>
                                         <ng-option value="UI/UX Group">UI/UX Group</ng-option>
@@ -2423,7 +2423,7 @@
                                 <h4 class="title">Major</h4>
                                 <div class="form-group">
                                     <ng-select [searchable]="false" [multiple]="true" bindLabel="name" bindValue="id"
-                                        [clearable]="false" placeholder="Select Placement Groups">
+                                        [clearable]="false" placeholder="Select Simulation Groups">
                                         <ng-option value="Jan 2024 PY IT Internship">Jan 2024 PY IT
                                             Internship</ng-option>
                                         <ng-option value="UI/UX Group">UI/UX Group</ng-option>
@@ -2445,7 +2445,7 @@
                                 <h4 class="title">Student Name</h4>
                                 <div class="form-group">
                                     <ng-select [searchable]="false" [multiple]="true" bindLabel="name" bindValue="id"
-                                        [clearable]="false" placeholder="Select Placement Groups">
+                                        [clearable]="false" placeholder="Select Simulation Groups">
                                         <ng-option value="Jan 2024 PY IT Internship">Jan 2024 PY IT
                                             Internship</ng-option>
                                         <ng-option value="UI/UX Group">UI/UX Group</ng-option>
@@ -2467,7 +2467,7 @@
                                 <h4 class="title">Select Status</h4>
                                 <div class="form-group">
                                     <ng-select [searchable]="false" [multiple]="true" bindLabel="name" bindValue="id"
-                                        [clearable]="false" placeholder="Select Placement Groups">
+                                        [clearable]="false" placeholder="Select Simulation Groups">
                                         <ng-option value="Jan 2024 PY IT Internship">Jan 2024 PY IT
                                             Internship</ng-option>
                                         <ng-option value="UI/UX Group">UI/UX Group</ng-option>
@@ -2489,7 +2489,7 @@
                                 <h4 class="title">Select Staff Member</h4>
                                 <div class="form-group">
                                     <ng-select [searchable]="false" [multiple]="true" bindLabel="name" bindValue="id"
-                                        [clearable]="false" placeholder="Select Placement Groups">
+                                        [clearable]="false" placeholder="Select Simulation Groups">
                                         <ng-option value="Jan 2024 PY IT Internship">Jan 2024 PY IT
                                             Internship</ng-option>
                                         <ng-option value="UI/UX Group">UI/UX Group</ng-option>
@@ -2558,10 +2558,10 @@
                                 </div>
                             </ng-container>
                             <ng-container *ngIf="activeFilter === filters.PRIORITY">
-                                <h4 class="title">Placement Group</h4>
+                                <h4 class="title">Simulation Group</h4>
                                 <div class="form-group">
                                     <ng-select [searchable]="false" [multiple]="true" bindLabel="name" bindValue="id"
-                                        [clearable]="false" placeholder="Select Placement Groups">
+                                        [clearable]="false" placeholder="Select Simulation Groups">
                                         <ng-option value="Jan 2024 PY IT Internship">Jan 2024 PY IT
                                             Internship</ng-option>
                                         <ng-option value="UI/UX Group">UI/UX Group</ng-option>
@@ -2583,7 +2583,7 @@
                                 <h4 class="title">Select Workflow</h4>
                                 <div class="form-group">
                                     <ng-select [searchable]="false" [multiple]="true" bindLabel="name" bindValue="id"
-                                        [clearable]="false" placeholder="Select Placement Groups">
+                                        [clearable]="false" placeholder="Select Simulation Groups">
                                         <ng-option value="Jan 2024 PY IT Internship">Jan 2024 PY IT
                                             Internship</ng-option>
                                         <ng-option value="UI/UX Group">UI/UX Group</ng-option>
@@ -2605,7 +2605,7 @@
                                 <h4 class="title">Select Course Codes</h4>
                                 <div class="form-group">
                                     <ng-select [searchable]="false" [multiple]="true" bindLabel="name" bindValue="id"
-                                        [clearable]="false" placeholder="Select Placement Groups">
+                                        [clearable]="false" placeholder="Select Simulation Groups">
                                         <ng-option value="Jan 2024 PY IT Internship">Jan 2024 PY IT
                                             Internship</ng-option>
                                         <ng-option value="UI/UX Group">UI/UX Group</ng-option>

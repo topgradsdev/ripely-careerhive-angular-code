@@ -60,7 +60,7 @@ export class WilCompaniesListComponent implements OnInit {
     private ngxPermissionService: NgxPermissionsService, private cdRef: ChangeDetectorRef, private loader: LoaderCustomService, private ngZone:NgZone) { }
   activeFilter:any = { name: 'placementGroups', value: '' };
   filters = [
-    { name: "placementGroups", label: "Placement Group", selected: false, value: "" },
+    { name: "placementGroups", label: "Simulation Group", selected: false, value: "" },
     { name: "currently_placed", label: "Currently Placed", selected: false, value: "" },
     { name: "location", label: "Location", selected: false, value: "", suburb:'' },
     // { name: "post_code", label: "Location", selected: false, value: "" },
@@ -258,7 +258,7 @@ export class WilCompaniesListComponent implements OnInit {
 //         "value": "company_phone"
 //     },
 //     {
-//         "name": "Placement Group",
+//         "name": "Simulation Group",
 //         "value": "vacancy_count"
 //     },
 //     {
@@ -492,7 +492,7 @@ export class WilCompaniesListComponent implements OnInit {
     { name: "HCAAF Status", value: "hcaaf_status" },
     { name: "Last HCAAF Update", value: "last_hcaaf_update" },
     { name: "Students Placed", value: "student_placed" },
-    { name: "Placement Group", value: "vacancy_count" },
+    { name: "Simulation Group", value: "vacancy_count" },
     { name: "WHS Check", value: "whs_check" },
     { name: "Site Consent To Use Logo", value: "company_concent_to_use_logo" }
   ]

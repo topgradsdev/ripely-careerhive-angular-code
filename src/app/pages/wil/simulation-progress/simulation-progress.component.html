@@ -1,0 +1,43 @@
+<!-- ===== Overall Project Progress Banner ===== -->
+<div class="overall-progress-banner">
+    <h5 class="banner-title">Overall Project Progress</h5>
+    <div class="progress-track">
+        <div class="progress-fill" [style.width.%]="overallProgress">
+            <span class="progress-pct">{{overallProgress}}%</span>
+        </div>
+        <div class="progress-unfilled" [style.width.%]="100 - overallProgress"></div>
+    </div>
+</div>
+
+<!-- ===== Student Progress Card ===== -->
+<div class="student-progress-card">
+    <h5 class="card-title">Student Progress</h5>
+
+    <div class="student-row" *ngFor="let student of studentProgress">
+        <!-- Left: Avatar + Name -->
+        <div class="student-info">
+            <div class="avatar" *ngIf="student.avatarUrl; else initialsAvatar">
+                <img [src]="student.avatarUrl" [alt]="student.name">
+            </div>
+            <ng-template #initialsAvatar>
+                <div class="avatar initials">{{ student.avatar || getInitials(student.name) }}</div>
+            </ng-template>
+            <div class="name-block">
+                <span class="name">{{student.name}}</span>
+                <span class="sid">{{student.studentId}}</span>
+            </div>
+        </div>
+
+        <!-- Right: Next Task + Progress Bar -->
+        <div class="progress-block">
+            <span class="next-task" *ngIf="student.allComplete">All tasks complete!</span>
+            <span class="next-task" *ngIf="!student.allComplete">Next Task: &nbsp;{{student.nextTask}}</span>
+            <div class="progress-track">
+                <div class="progress-fill" [style.width.%]="student.progress">
+                    <span class="progress-pct">{{student.progress}}%</span>
+                </div>
+                <div class="progress-unfilled" [style.width.%]="100 - student.progress"></div>
+            </div>
+        </div>
+    </div>
+</div>

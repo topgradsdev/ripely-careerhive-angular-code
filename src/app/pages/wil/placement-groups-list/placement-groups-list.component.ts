@@ -113,6 +113,21 @@ export class PlacementGroupsListComponent implements OnInit {
   placementIndustries = [];
   staffMembers = [];
 
+  clearFomr(){
+     this.createPlacementGroup = new FormGroup({
+      background: new FormControl('', []),
+      title: new FormControl('', [Validators.required]),
+      code: new FormControl('', Validators.required),
+      description: new FormControl('', Validators.nullValidator),
+      category_id: new FormControl('', Validators.required),
+      industry_id: new FormControl('', Validators.required),
+      staff_id: new FormControl('', Validators.required),
+      show_eligible_criteria:new FormControl(true, Validators.nullValidator),
+      // start_date: new FormControl(''),
+      // end_date: new FormControl('')
+    });
+    this.getPlacementCategories();
+  }
   ngOnInit(): void {
     this.createPlacementGroup = new FormGroup({
       background: new FormControl('', []),
@@ -131,7 +146,7 @@ export class PlacementGroupsListComponent implements OnInit {
     });
     this.getPlacementGroupsCount();
     this.getPlacementGroups(this.placementGroupStatus);
-    this.getPlacementCategories();
+    // this.getPlacementCategories();
     this.getPlacementIndustries();
     this.getStaffMembers();
   }
@@ -216,11 +231,24 @@ export class PlacementGroupsListComponent implements OnInit {
   }
   
   getPlacementCategories() {
-    this.service.getPlacementCategories({}).subscribe((response: any)=>{
+    this.service.getPlacementCategories({}).subscribe((response: any) => {
       if (response.status == HttpResponseCode.SUCCESS) {
         this.placementCategories = response.result;
+
+        if (this.placementCategories?.length) {
+          const lastCategory = this.placementCategories[this.placementCategories.length - 1];
+
+          this.createPlacementGroup.patchValue({
+            category_id: lastCategory._id
+          });
+
+          // Disable after value is set
+          setTimeout(() => {
+            this.createPlacementGroup.get('category_id')?.disable();
+          });
+        }
       }
-    })
+    });
   }
 
   getPlacementIndustries() {
@@ -254,10 +282,10 @@ export class PlacementGroupsListComponent implements OnInit {
  
 
   onSubmit(){
-    console.log("this.createPlacementGroup", this.createPlacementGroup)
+    console.log("this.createPlacementGroup", this.createPlacementGroup.getRawValue())
     if (this.createPlacementGroup.valid) {
       const userDetail = JSON.parse(localStorage.getItem('userDetail'));
-      this.placementGroup = this.createPlacementGroup.value;
+      this.placementGroup = this.createPlacementGroup.getRawValue();
       this.placementGroup.created_by_id =  userDetail?._id;
       this.placementGroup.created_by = `${userDetail.first_name} ${userDetail.last_name}`;
       if(!this.placementGroup.description){

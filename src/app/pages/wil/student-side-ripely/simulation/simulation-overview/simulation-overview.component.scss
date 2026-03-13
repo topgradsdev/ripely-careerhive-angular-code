@@ -3,7 +3,7 @@ $accent: #ff6b2c;
 $accent-hover: #ff5214;
 $text: #0a0a0a;
 $muted: rgba(0, 0, 0, 0.5);
-$serif: "DM Serif Display", "Georgia", serif;
+$serif: var(--font-primary);
 
 em { font-style: italic; color: $accent; }
 
@@ -1098,7 +1098,7 @@ em { font-style: italic; color: $accent; }
 
 .ov-offer-ref-val {
   font-size: 8px;
-  font-family: 'IBM Plex Mono', monospace;
+  font-family: var(--font-primary);
   color: rgba(0, 0, 0, 0.6);
 }
 
@@ -1137,7 +1137,7 @@ em { font-style: italic; color: $accent; }
 .ov-offer-sig-block { flex: 1; }
 
 .ov-offer-sig-script {
-  font-family: 'Georgia', serif;
+  font-family: var(--font-primary);
   font-style: italic;
   font-size: 26px;
   color: #1a3268;
@@ -1234,7 +1234,7 @@ em { font-style: italic; color: $accent; }
   background: #fff;
   border: 1.5px solid rgba(0, 0, 0, 0.1);
   border-radius: 100px;
-  font-family: 'Georgia', serif;
+  font-family: var(--font-primary);
   font-size: 17px;
   font-weight: 400;
   font-style: italic;

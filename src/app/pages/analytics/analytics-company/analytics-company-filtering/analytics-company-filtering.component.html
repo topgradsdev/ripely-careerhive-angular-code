@@ -486,9 +486,9 @@
                         <th mat-header-cell *matHeaderCellDef mat-sort-header> Students Placed </th>
                         <td mat-cell *matCellDef="let row"> {{row.placed_student}} </td>
                     </ng-container>
-                    <!-- Placement Groups Column -->
+                    <!-- Simulation Groups Column -->
                     <ng-container matColumnDef="placement_group">
-                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Placement Groups </th>
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Simulation Groups </th>
                         <td mat-cell *matCellDef="let row"> {{row.placement_group}} <button mat-icon-button
                                 data-toggle="modal" data-target="#viewPlacement"><svg width="20" height="20"
                                     viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -747,7 +747,7 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h2 class="modal-title primary" id="exampleModalLabel">View Woolworth's Placement Groups</h2>
+                <h2 class="modal-title primary" id="exampleModalLabel">View Woolworth's Simulation Groups</h2>
                 <button type="button" mat-icon-button id="closeModal" class="close" data-dismiss="modal"
                     aria-label="Close">
                     <mat-icon>close</mat-icon>
@@ -758,9 +758,9 @@
                      <!--  -->
                     <div class="table-responsive manage_table_scroll position-relative">
                         <table mat-table [dataSource]="placementLists" matSort class="ch_table">
-                            <!-- Placement Group Column -->
+                            <!-- Simulation Group Column -->
                             <ng-container matColumnDef="placement_group">
-                                <th mat-header-cell *matHeaderCellDef mat-sort-header>Placement Group </th>
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header>Simulation Group </th>
                                 <td mat-cell *matCellDef="let row">Test
                                 </td>
                             </ng-container>

@@ -1,0 +1,192 @@
+/* ===== Overall Project Progress Banner ===== */
+.overall-progress-banner {
+    background: linear-gradient(135deg, #1a1a4e 0%, #1e2264 30%, #252b78 60%, #2a3080 100%);
+    border-radius: 12px;
+    padding: 28px 36px 32px;
+    position: relative;
+    overflow: hidden;
+
+    /* Geometric decorative lines */
+    &::before {
+        content: '';
+        position: absolute;
+        top: -30px;
+        right: -30px;
+        width: 250px;
+        height: 250px;
+        border: 1px solid rgba(255, 255, 255, 0.06);
+        border-radius: 50%;
+    }
+    &::after {
+        content: '';
+        position: absolute;
+        top: -60px;
+        right: -60px;
+        width: 350px;
+        height: 350px;
+        border: 1px solid rgba(255, 255, 255, 0.04);
+        border-radius: 50%;
+    }
+
+    .banner-title {
+        font-family: var(--font-primary);
+        font-weight: 600;
+        font-size: 20px;
+        color: #fff;
+        margin-bottom: 20px;
+    }
+}
+
+/* ===== Student Progress Card ===== */
+.student-progress-card {
+    background: #fff;
+    border: 1px solid #E5E5E5;
+    border-radius: 12px;
+    padding: 32px 36px;
+    margin-top: 24px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+
+    .card-title {
+        font-family: var(--font-primary);
+        font-weight: 600;
+        font-size: 20px;
+        color: #2B2A35;
+        margin-bottom: 30px;
+    }
+}
+
+/* ===== Student Row ===== */
+.student-row {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    padding: 20px 0;
+
+    &:not(:last-child) {
+        border-bottom: 1px solid #F5F5F5;
+    }
+}
+
+.student-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-width: 160px;
+    flex-shrink: 0;
+
+    .avatar {
+        width: 44px;
+        height: 44px;
+        border-radius: 50%;
+        overflow: hidden;
+        flex-shrink: 0;
+
+        img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        &.initials {
+            background: linear-gradient(135deg, #26C296, #464BA8);
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--font-primary);
+            font-weight: 600;
+            font-size: 14px;
+        }
+    }
+
+    .name-block {
+        display: flex;
+        flex-direction: column;
+
+        .name {
+            font-family: var(--font-primary);
+            font-weight: 500;
+            font-size: 14px;
+            color: #2B2A35;
+            line-height: 1.3;
+        }
+
+        .sid {
+            font-family: var(--font-primary);
+            font-size: 12px;
+            color: #9A9A9A;
+            line-height: 1.3;
+        }
+    }
+}
+
+.progress-block {
+    flex: 1;
+    min-width: 0;
+
+    .next-task {
+        display: block;
+        font-family: var(--font-primary);
+        font-size: 13px;
+        font-weight: 500;
+        color: #2B2A35;
+        margin-bottom: 6px;
+    }
+}
+
+/* ===== Shared Progress Track ===== */
+.progress-track {
+    display: flex;
+    align-items: center;
+    height: 36px;
+    border-radius: 20px;
+    overflow: hidden;
+    background: transparent;
+    width: 100%;
+}
+
+.progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #2a3080, #35a88d, #4cd9a5);
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding-right: 16px;
+    min-width: 60px;
+    position: relative;
+    transition: width 0.5s ease;
+
+    .progress-pct {
+        font-family: var(--font-primary);
+        font-weight: 700;
+        font-size: 14px;
+        color: #fff;
+        white-space: nowrap;
+    }
+}
+
+.progress-unfilled {
+    height: 100%;
+    position: relative;
+    overflow: hidden;
+    border-radius: 0 20px 20px 0;
+
+    /* Striped / hatched pattern */
+    &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: repeating-linear-gradient(
+            90deg,
+            #d5d5e8 0px,
+            #d5d5e8 2px,
+            transparent 2px,
+            transparent 6px
+        );
+        opacity: 0.6;
+    }
+}

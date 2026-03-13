@@ -1,0 +1,107 @@
+<div class="main_container_place">
+    <div class="card_header" style="background-image: url('../../../../assets/img/banner_linkedin.svg'); background-size: cover; background-position: center;">
+        <div class="card_container">
+            <div class="student_card total">
+                <div class="content">
+                    <p>Total Testimonies</p>
+                    <h4>{{testimoniesStats.total}}</h4>
+                </div>
+                <svg width="54" height="54" viewBox="0 0 54 54" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="27" cy="27" r="27" fill="#65DAB9"/>
+                    <path d="M18 24L22 28L36 20" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M18 30H36V36H18V30Z" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <div class="action">
+                    <button mat-button class="theme_btn btn_primary btn_sm">View All</button>
+                </div>
+            </div>
+            <div class="student_card total">
+                <div class="content">
+                    <p>Published</p>
+                    <h4>{{testimoniesStats.published}}</h4>
+                </div>
+                <svg width="54" height="54" viewBox="0 0 54 54" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="27" cy="27" r="27" fill="#202C76"/>
+                    <path d="M37.6666 19L22.9999 33.6667L16.3333 27" stroke="white" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <div class="action">
+                    <button mat-button class="theme_btn btn_primary btn_sm" (click)="filterTestimonies('published')">View Published</button>
+                </div>
+            </div>
+            <div class="student_card total">
+                <div class="content">
+                    <p>Submitted</p>
+                    <h4>{{testimoniesStats.submitted}}</h4>
+                </div>
+                <svg width="54" height="54" viewBox="0 0 54 54" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="27" cy="27" r="27" fill="#F4A261"/>
+                    <path d="M17.6667 27H36.3334" stroke="white" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M27 17.6666L36.3333 27L27 36.3333" stroke="white" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <div class="action">
+                    <button mat-button class="theme_btn btn_primary btn_sm" (click)="filterTestimonies('submitted')">View Submitted</button>
+                </div>
+            </div>
+            <div class="student_card total">
+                <div class="content">
+                    <p>Archived</p>
+                    <h4>{{testimoniesStats.archived}}</h4>
+                </div>
+                <svg width="54" height="54" viewBox="0 0 54 54" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="27" cy="27" r="27" fill="#F47761"/>
+                    <path d="M20 22H34" stroke="white" stroke-width="3" stroke-linecap="round"/>
+                    <path d="M21 22V34C21 35.1 21.9 36 23 36H31C32.1 36 33 35.1 33 34V22" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <div class="action">
+                    <button mat-button class="theme_btn btn_primary btn_sm" (click)="filterTestimonies('archived')">View Archived</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="testimony-sub-tabs mb-3 mt-4">
+        <button mat-button [class.active]="activeTestimonySubTab === 'published'"
+            (click)="filterTestimonies('published')" class="theme_btn btn_sm">Published</button>
+        <button mat-button [class.active]="activeTestimonySubTab === 'submitted'"
+            (click)="filterTestimonies('submitted')" class="theme_btn btn_sm">Submitted</button>
+        <button mat-button [class.active]="activeTestimonySubTab === 'archived'"
+            (click)="filterTestimonies('archived')" class="theme_btn btn_sm">Archived</button>
+    </div>
+    <div class="table-responsive">
+        <table mat-table [dataSource]="testimoniesList" class="ch_table">
+            <ng-container matColumnDef="name">
+                <th mat-header-cell *matHeaderCellDef>Student Name</th>
+                <td mat-cell *matCellDef="let row">{{row.name}}</td>
+            </ng-container>
+            <ng-container matColumnDef="date">
+                <th mat-header-cell *matHeaderCellDef>Date</th>
+                <td mat-cell *matCellDef="let row">{{row.date | date: 'dd/MM/yyyy'}}</td>
+            </ng-container>
+            <ng-container matColumnDef="rating">
+                <th mat-header-cell *matHeaderCellDef>Rating</th>
+                <td mat-cell *matCellDef="let row">
+                    <span class="stars">
+                        <span *ngFor="let star of getStarArray(row.rating)" class="star filled">&#9733;</span>
+                        <span *ngFor="let star of getStarArray(5 - row.rating)" class="star">&#9733;</span>
+                    </span>
+                </td>
+            </ng-container>
+            <ng-container matColumnDef="excerpt">
+                <th mat-header-cell *matHeaderCellDef>Excerpt</th>
+                <td mat-cell *matCellDef="let row">{{row.excerpt}}</td>
+            </ng-container>
+            <ng-container matColumnDef="status">
+                <th mat-header-cell *matHeaderCellDef>Status</th>
+                <td mat-cell *matCellDef="let row">
+                    <span class="badge" [ngClass]="{
+                        'badge-success': row.status === 'published',
+                        'badge-warning': row.status === 'submitted',
+                        'badge-secondary': row.status === 'archived'
+                    }">{{row.status}}</span>
+                </td>
+            </ng-container>
+            <tr mat-header-row *matHeaderRowDef="testimoniesColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: testimoniesColumns;"></tr>
+        </table>
+    </div>
+</div>

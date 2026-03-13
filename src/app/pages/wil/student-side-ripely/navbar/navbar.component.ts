@@ -1,6 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ThemeService } from '../../../../services/theme.service';
+import { TopgradserviceService } from '../../../../topgradservice.service';
+import { SessionSyncService } from '../../../../session-sync.service';
+import OktaAuth from '@okta/okta-auth-js';
+import { OKTA_AUTH } from '@okta/okta-angular';
 
 @Component({
   selector: 'app-student-navbar',
@@ -13,6 +17,7 @@ export class StudentNavbarComponent implements OnInit {
   showUserMenu = false;
   showMobileMenu = false;
   notificationCount = 0;
+  userSDetail: any;
 
   navLinks = [
     { label: 'Dashboard', route: '/student-portal/dashboard', icon: 'fa-th-large' },
@@ -21,7 +26,13 @@ export class StudentNavbarComponent implements OnInit {
     { label: 'Support', route: '/student-portal/support', icon: 'fa-life-ring' }
   ];
 
-  constructor(public router: Router, public themeService: ThemeService) {}
+  constructor(
+    public router: Router,
+    public themeService: ThemeService,
+    private service: TopgradserviceService,
+    private sessionSync: SessionSyncService,
+    @Inject(OKTA_AUTH) private oktaAuth: OktaAuth
+  ) {}
 
   get isDarkMode(): boolean {
     return this.themeService.isDarkMode;
@@ -32,13 +43,35 @@ export class StudentNavbarComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    const userSDetail = JSON.parse(localStorage.getItem('userSDetail') || '{}');
-    if (userSDetail?.first_name) {
-      const first = userSDetail.first_name || '';
-      const last = userSDetail.last_name || '';
+    this.userSDetail = JSON.parse(localStorage.getItem('userSDetail') || '{}');
+    if (this.userSDetail?.first_name) {
+      const first = this.userSDetail.first_name || '';
+      const last = this.userSDetail.last_name || '';
       this.studentName = `${first} ${last}`.trim();
       this.studentInitials = `${first.charAt(0)}${last.charAt(0)}`.toUpperCase();
     }
+  }
+
+  goToProfile(): void {
+    this.showUserMenu = false;
+    this.router.navigate(['/student/my-profile']);
+  }
+
+  logout(): void {
+    this.showUserMenu = false;
+    const body = {
+      student_id: this.userSDetail._id,
+      type: 'student',
+    };
+    this.service.autoLogout(body).subscribe((res: any) => {
+      if (res.result === 'success') {
+        this.sessionSync.broadcastLogout(this.userSDetail.email);
+        localStorage.clear();
+        sessionStorage.clear();
+        this.router.navigate(['/student-login']);
+        this.oktaAuth.signOut({ postLogoutRedirectUri: 'https://monash.careerhive.com.au/' });
+      }
+    });
   }
 
   toggleUserMenu(): void {
