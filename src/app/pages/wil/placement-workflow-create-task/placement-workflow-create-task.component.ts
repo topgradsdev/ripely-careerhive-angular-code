@@ -496,19 +496,6 @@ export class PlacementWorkflowCreateTaskComponent implements OnInit {
     this.activatedRoute.paramMap.subscribe((params: ParamMap) => {
       this.placementId = params.get('placement_id'); 
     });
-    this.activatedRoute.queryParamMap.subscribe((params: ParamMap) => {
-      this.taskId = params.get('taskId');
-      this.stepId = params.get('stepId');
-      this.workflowTypeId = params.get('workflowTypeId');
-      this.stage = params.get('stage');
-      this.Projecttype = params.get('type');
-
-         this.getCompletionCriteria();
-    this.getUnlockTaskOn();
-    this.getForm();
-    // this.getEmailTemplate();
-    this.getEmailCategories();
-    });
     this.createTask = new FormGroup({
       name: new FormControl(null, [Validators.required]),
       completion_criteria: new FormControl(null, [Validators.required]),
@@ -547,7 +534,7 @@ export class PlacementWorkflowCreateTaskComponent implements OnInit {
       notification_followUp_send_email: new FormControl(null),
       notification_followUp_email_category: new FormControl(null),
       notification_followUp_email_template: new FormControl(null),
-      notification_followUp_send_text_message: new FormControl(null), 
+      notification_followUp_send_text_message: new FormControl(null),
       notification_followUp_text_message: new FormControl(null),
       notification_followUp_voice_mail: new FormControl(null),
       notification_followUp_voice_mail_text_message: new FormControl(null)
@@ -558,17 +545,25 @@ export class PlacementWorkflowCreateTaskComponent implements OnInit {
       this.revalidateIfNeeded();
     });
 
-    this.buttonText = 'Create Task';
-    if (this.taskId) {
-      this.buttonText = 'Update Task';
-      this.getTaskDetail();
-    }
-    this.getCompletionCriteria();
-    this.getUnlockTaskOn();
-    this.getForm();
-     this.getStaffMembers();
-    // this.getEmailTemplate();
-    this.getEmailCategories();
+    this.activatedRoute.queryParamMap.subscribe((params: ParamMap) => {
+      this.taskId = params.get('taskId');
+      this.stepId = params.get('stepId');
+      this.workflowTypeId = params.get('workflowTypeId');
+      this.stage = params.get('stage');
+      this.Projecttype = params.get('type');
+
+      this.getCompletionCriteria();
+      this.getUnlockTaskOn();
+      this.getForm();
+      this.getEmailCategories();
+      this.getStaffMembers();
+
+      this.buttonText = 'Create Task';
+      if (this.taskId) {
+        this.buttonText = 'Update Task';
+        this.getTaskDetail();
+      }
+    });
   }
 
   getCustomFormBySubmitter(event) {
@@ -702,7 +697,9 @@ export class PlacementWorkflowCreateTaskComponent implements OnInit {
     this.closeTaskPopup.hide();
     this.createTask.reset();
     let URL = '';
-    if (this.Projecttype == 'project') {
+    if (this.Projecttype == 'simulation') {
+      URL = `/admin/wil/simulation-groups/${this.placementId}`;
+    } else if (this.Projecttype == 'project') {
       URL = `/admin/wil/placement-groups/project/${this.placementId}`;
     } else {
       URL = `/admin/wil/placement-groups/${this.placementId}`;
@@ -731,7 +728,9 @@ export class PlacementWorkflowCreateTaskComponent implements OnInit {
     console.log(" this.createTask.value",  this.createTask.value,);
     // sudarshan
     let URL= "";
-    if(this.Projecttype=="project"){
+    if(this.Projecttype=="simulation"){
+      URL = `/admin/wil/simulation-groups/${this.placementId}`;
+    }else if(this.Projecttype=="project"){
       URL = `/admin/wil/placement-groups/project/${this.placementId}`;
     }else{
       URL = `/admin/wil/placement-groups/${this.placementId}`;
@@ -823,7 +822,10 @@ export class PlacementWorkflowCreateTaskComponent implements OnInit {
           if(this.media && this.media.documents && this.media.documents.length>0){
             payload[0].formElement['documents'] = this.media.documents;
           }
-          this.service.createTask(payload[0].formElement).subscribe((response: any) => {
+          const createService$ = this.Projecttype === 'simulation'
+            ? this.service.createSimulationTask(payload[0].formElement)
+            : this.service.createTask(payload[0].formElement);
+          createService$.subscribe((response: any) => {
             if (response.status == HttpResponseCode.SUCCESS) {
               this.service.showMessage({message: response.msg});
               this.router.navigate([URL], navigationExtras);
@@ -834,7 +836,7 @@ export class PlacementWorkflowCreateTaskComponent implements OnInit {
         } else {
           payload[0].formElement['task_id'] = this.taskId;
           // payload[0].formElement['set_days'] = this.taskId;
-          
+
           payload[0].formElement['created_by_id'] = userDetail?._id;
           payload[0].formElement['created_by'] = `${userDetail.first_name} ${userDetail.last_name}`;
 
@@ -843,7 +845,10 @@ export class PlacementWorkflowCreateTaskComponent implements OnInit {
           }
           console.log("payload[0]", payload[0], this.media.documents);
 
-          this.service.editTask(payload[0].formElement).subscribe((response: any) => {
+          const editService$ = this.Projecttype === 'simulation'
+            ? this.service.editSimulationTask(payload[0].formElement)
+            : this.service.editTask(payload[0].formElement);
+          editService$.subscribe((response: any) => {
             if (response.status == HttpResponseCode.SUCCESS) {
               this.router.navigate([URL], navigationExtras);
               this.service.showMessage({message: response.msg});
@@ -859,7 +864,10 @@ export class PlacementWorkflowCreateTaskComponent implements OnInit {
 
   getTaskDetail() {
     let payload = {task_id: this.taskId};
-    this.service.getTaskDetail(payload).subscribe((response: any) => {
+    const detail$ = this.Projecttype === 'simulation'
+      ? this.service.getSimulationTaskDetail(payload)
+      : this.service.getTaskDetail(payload);
+    detail$.subscribe((response: any) => {
       if (response.status == HttpResponseCode.SUCCESS) {
         let data = response.result;
         if (data?.['completion_criteria']) {

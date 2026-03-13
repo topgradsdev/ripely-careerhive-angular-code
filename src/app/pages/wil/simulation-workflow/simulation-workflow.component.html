@@ -107,7 +107,7 @@
                     <div class="history_container">
                         <ng-container>
                             <button *ngxPermissionsOnly="['WIL_Write']" mat-button class="theme_btn sm-theme_btn btn_primary w-auto"
-                            routerLink="/admin/wil/workflow-task/{{placementId}}" [queryParams]="{ type:'internship'}">
+                            routerLink="/admin/wil/workflow-task/{{placementId}}" [queryParams]="{ type:'simulation'}">
                             <svg class="mr-1" width="19" height="19" viewBox="0 0 19 19" fill="none"
                                 xmlns="http://www.w3.org/2000/svg">
                                 <path d="M9.5 3.95825V15.0416" stroke="currentColor" stroke-width="2" stroke-linecap="round"
@@ -176,7 +176,7 @@
                                 <mat-menu #menu="matMenu" class="td-menu custome_theme_menu">
                                     <!-- -->
                                     <a  mat-menu-item routerLink="/admin/wil/workflow-task/{{placementId}}"
-                                        [queryParams]="{taskId: task._id, type:'internship'}">
+                                        [queryParams]="{taskId: task._id, type:'simulation'}">
                                         <span>Edit Task</span>
                                     </a>
                                     <a mat-menu-item data-toggle="modal" (click)="onSlectedTask(task)"
@@ -184,7 +184,7 @@
                                         <span>Duplicate</span>
                                     </a>
                                     <a *ngIf="!placementGroupDetails.is_publish" mat-menu-item class="danger"
-                                        data-toggle="modal" data-target="#deleteTask" (click)="onSlectedTask(task)">
+                                        (click)="deleteSimTask(task)">
                                         <span>Delete Task</span>
                                     </a>
                                 </mat-menu>
@@ -273,7 +273,12 @@
     <!-- </div> -->
 
     <!-- ===== Right Content Area ===== -->
-    <div class="workflow-main">
+    <div class="workflow-main"
+        cdkDropList
+        id="dropZone"
+        [cdkDropListData]="taskList"
+        [cdkDropListConnectedTo]="[]"
+        (cdkDropListDropped)="onWorkflowDrop($event.item.data)">
         <div class="workflow-card">
             <!-- Workflow Header -->
             <div class="workflow-card-header">
@@ -287,9 +292,9 @@
             </div>
 
             <!-- Task Cards (when tasks exist) -->
-            <ng-container *ngIf="workflowTasks.length > 0">
+            <ng-container *ngIf="taskList.length > 0">
                 <div class="workflow-tasks">
-                    <div class="task-card" *ngFor="let task of workflowTasks"
+                    <div class="task-card" *ngFor="let task of taskList"
                         [style.border-left-color]="task.borderColor">
                         <!-- Three-dot menu -->
                         <button mat-icon-button [matMenuTriggerFor]="taskMenu" class="task-menu-btn">
@@ -307,16 +312,17 @@
                             </svg>
                         </button>
                         <mat-menu #taskMenu="matMenu" class="td-menu custome_theme_menu">
-                            <a mat-menu-item><span>Edit</span></a>
-                            <a mat-menu-item class="danger"><span>Delete</span></a>
+                            <a mat-menu-item routerLink="/admin/wil/workflow-task/{{placementId}}"
+                                [queryParams]="{taskId: task._id, type:'simulation'}"><span>Edit</span></a>
+                            <a mat-menu-item class="danger" (click)="deleteSimTask(task)"><span>Delete</span></a>
                         </mat-menu>
 
                         <!-- Task Content -->
                         <div class="task-card-body">
                             <h5 class="task-name">{{task.name}}</h5>
                             <p class="task-criteria">Completion Criteria: {{task.completion_criteria}}</p>
-                            <p class="task-criteria" *ngIf="task.additional_criteria">Additional Criteria:
-                                {{task.additional_criteria}}</p>
+                            <p class="task-criteria" *ngIf="task.additional_criteria_title">Additional Criteria:
+                                {{task.additional_criteria_title}}</p>
 
                             <!-- Stats Row -->
                             <div class="task-stats">
@@ -372,7 +378,8 @@
 
                 <!-- Create Task Button -->
                 <div class="create-task-wrapper">
-                    <button mat-button class="theme_btn btn_primary create-task-btn">
+                    <button mat-button class="theme_btn btn_primary create-task-btn"
+                        routerLink="/admin/wil/workflow-task/{{placementId}}" [queryParams]="{ type:'simulation'}">
                         <svg width="19" height="19" viewBox="0 0 19 19" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M9.5 3.9585V15.0418" stroke="white" stroke-width="2" stroke-linecap="round"
                                 stroke-linejoin="round" />
@@ -385,11 +392,12 @@
             </ng-container>
 
             <!-- Empty State (when no tasks) -->
-            <div class="workflow-empty-state" *ngIf="workflowTasks.length === 0">
+            <div class="workflow-empty-state" *ngIf="taskList.length === 0">
                 <h5 class="empty-title">This simulation currently has no tasks!</h5>
-                <p class="empty-subtitle">Get started by creating a task below.</p>
+                <p class="empty-subtitle">Get started by creating a task below, or drag a workflow from the sidebar.</p>
                 <div class="create-task-wrapper">
-                    <button mat-button class="theme_btn btn_primary create-task-btn">
+                    <button mat-button class="theme_btn btn_primary create-task-btn"
+                        routerLink="/admin/wil/workflow-task/{{placementId}}" [queryParams]="{ type:'simulation'}">
                         <svg width="19" height="19" viewBox="0 0 19 19" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M9.5 3.9585V15.0418" stroke="white" stroke-width="2" stroke-linecap="round"
                                 stroke-linejoin="round" />

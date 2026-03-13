@@ -22,15 +22,13 @@ export class SimulationWorkflowComponent implements OnInit {
   deleteFileName: string = '';
 
   // Workflow
-  workflowTitle = 'F1 Advanced Data Analyst Workflow';
+  workflowTitle = '';
   isFavorite = true;
   placementGroupDetails: any = {};
   taskList: any[] = [];
   selectedTask: any = {};
   selectedPTabIndex: number = 0;
   taskOfPlacementType: any[] = [];
-
-  workflowTasks: any[] = [];
 
   // Workflows tab (left sidebar)
   allPlacementTypes: any[] = [];
@@ -72,14 +70,35 @@ export class SimulationWorkflowComponent implements OnInit {
     const payload = { id: this.placementId };
     this.service.getPlacementGroupDetails(payload).subscribe((response: any) => {
       this.placementGroupDetails = response.result;
+      this.workflowTitle = response.result?.placement_group_title || '';
     });
   }
 
+  private borderColors = ['#FFD569', '#26C296', '#464BA8', '#F47761', '#6C63FF', '#00BCD4'];
+
   getAllTask() {
     const payload = { placement_id: this.placementId };
-    this.service.getAllTask(payload).subscribe((response: any) => {
+    this.service.getSimulationTasks(payload).subscribe((response: any) => {
       if (response.status == HttpResponseCode.SUCCESS) {
-        this.taskList = response.result;
+        this.taskList = (response.result || []).map((task, index) => {
+          const stats = [];
+
+          // Virtual Labs tasks: show agents & sandboxes stats
+          if (task.completion_criteria === 'Work on Virtual Labs') {
+            if (task.agents?.length) {
+              stats.push({ label: 'Agents', value: task.agents.length, type: 'agents' });
+            }
+            if (task.sandboxes?.length) {
+              stats.push({ label: 'Sandboxes', value: task.sandboxes.length, type: 'completed' });
+            }
+          }
+
+          return {
+            ...task,
+            borderColor: this.borderColors[index % this.borderColors.length],
+            stats
+          };
+        });
       } else {
         this.taskList = [];
       }
@@ -92,7 +111,7 @@ export class SimulationWorkflowComponent implements OnInit {
 
   // === Workflows Tab (left sidebar list) ===
   getAllWorkflowTypes() {
-    this.service.getAllWorkflowTypes({ placement_id: this.placementId }).subscribe((response: any) => {
+    this.service.getSimulationWorkflows({}).subscribe((response: any) => {
       if (response.status == HttpResponseCode.SUCCESS) {
         this.allPlacementTypes = response.result.map(item => ({
           ...item,
@@ -262,6 +281,36 @@ export class SimulationWorkflowComponent implements OnInit {
         this.deleteFileName = '';
       }
     }
+  }
+
+  onWorkflowDrop(event: any) {
+    const droppedWorkflow = event.data || event;
+    if (!droppedWorkflow || !droppedWorkflow._id) return;
+
+    const payload = {
+      source_placement_id: droppedWorkflow._id,
+      target_placement_id: this.placementId
+    };
+    this.service.copySimulationWorkflow(payload).subscribe((response: any) => {
+      if (response.status == HttpResponseCode.SUCCESS) {
+        this.service.showMessage({ message: response.msg });
+        this.getAllTask();
+      } else {
+        this.service.showMessage({ message: response.msg || 'Failed to copy workflow' });
+      }
+    });
+  }
+
+  deleteSimTask(task: any) {
+    if (!task?._id) return;
+    this.service.deleteSimulationTask({ task_id: task._id }).subscribe((response: any) => {
+      if (response.status == HttpResponseCode.SUCCESS) {
+        this.service.showMessage({ message: response.msg });
+        this.getAllTask();
+      } else {
+        this.service.showMessage({ message: response.msg || 'Failed to delete task' });
+      }
+    });
   }
 
   confirmImportPublished() {

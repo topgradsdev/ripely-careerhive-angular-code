@@ -2372,6 +2372,54 @@ intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<an
       )
   }
 
+  // Simulation Task APIs
+  createSimulationTask(data: any): Observable<any> {
+    const API_URL = `${this.SERVER}ad-sim-tsk`;
+    return this.http.post(API_URL, data);
+  }
+
+  editSimulationTask(data: any): Observable<any> {
+    const API_URL = `${this.SERVER}edt-sim-tsk`;
+    return this.http.post(API_URL, data);
+  }
+
+  deleteSimulationTask(data: any): Observable<any> {
+    const API_URL = `${this.SERVER}dlt-sim-tsk`;
+    return this.http.post(API_URL, data);
+  }
+
+  getSimulationTasks(data: any): Observable<any> {
+    const API_URL = `${this.SERVER}get-sim-tsks`;
+    return this.http.post(API_URL, data).pipe(
+      map(res => res),
+      catchError(this.error)
+    );
+  }
+
+  getSimulationTaskDetail(data: any): Observable<any> {
+    const API_URL = `${this.SERVER}sim-tsk-dtl`;
+    return this.http.post(API_URL, data).pipe(
+      map(res => res),
+      catchError(this.error)
+    );
+  }
+
+  getSimulationWorkflows(data: any): Observable<any> {
+    const API_URL = `${this.SERVER}get-sim-wrkflws`;
+    return this.http.post(API_URL, data).pipe(
+      map(res => res),
+      catchError(this.error)
+    );
+  }
+
+  copySimulationWorkflow(data: any): Observable<any> {
+    const API_URL = `${this.SERVER}copy-sim-wrkflw`;
+    return this.http.post(API_URL, data).pipe(
+      map(res => res),
+      catchError(this.error)
+    );
+  }
+
   getEmailTemplate(data: any): Observable<any> {
     const API_URL = `${this.SERVER}get-eml-tmplts`
     return this.http.post(API_URL, {})
